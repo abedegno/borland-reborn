@@ -1,0 +1,2 @@
+# segment LD2DBL base 0x1259b size 0xab org 0x12b
+RTL_LDOUBLE_TO_DOUBLE	RTL_LDOUBLE_TO_DOUBLE	0x0	0xab

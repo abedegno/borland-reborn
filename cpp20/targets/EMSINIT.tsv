@@ -1,0 +1,2 @@
+# segment EMSINIT base 0x3D86 size 0x120 org 0x2246
+INIT_EMS_BANK	INIT_EMS_BANK	0x0	0x120

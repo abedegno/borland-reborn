@@ -1,0 +1,2 @@
+# segment ULONG2LD base 0x127dd size 0x2f org 0x19d
+RTL_ULONG_TO_LDOUBLE	RTL_ULONG_TO_LDOUBLE	0x0	0x2f

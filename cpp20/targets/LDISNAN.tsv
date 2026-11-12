@@ -1,0 +1,2 @@
+# segment LDISNAN base 0x11d84 size 0x43 org 0x24
+BCC_EXTENDED_HAS_PAYLOAD	R9SPEC	0x0	0x43

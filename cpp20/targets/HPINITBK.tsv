@@ -1,0 +1,2 @@
+# segment HPINITBK base 0x2B36 size 0x10B org 0xFF6
+INIT_BANK	INIT_BANK	0x0	0x10B

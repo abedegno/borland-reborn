@@ -1,0 +1,2 @@
+# segment RSCMP base 0x12fc0 size 0x21 org 0x0
+COMPARE_NAME	COMPARE_NAME	0x0	0x21

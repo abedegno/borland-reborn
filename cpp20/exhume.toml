@@ -1,0 +1,54 @@
+[project]
+name = "Borland C++ 2.0 CPP.EXE (standalone preprocessor) source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+# The user's own copy, read-only, through the toolchain symlink.
+exe = "toolchain/BC20/BIN/CPP.EXE"
+# C0 starts with mov dx,122Ah (DGROUP); MZ header is 0x1600 bytes, so DS:0 is file 0x138A0.
+dgroup_para = 0x122A
+
+[toolchain]
+profile = "borland-bc20"
+home = "toolchain/BC20"
+stage = ["toolchain/BC20/BIN", "toolchain/BC20/INCLUDE"]
+# CPP.EXE is not overlaid: no -Y (110 compiler-made `push cs; call near` sequences, none of
+# TLINK's overlay rewrite `nop; push cs; call near`).
+c_opts = "-mm -G -O -Z -p"
+asm_opts = "/ml"
+dos = "dosbox-x"
+sessions = 4
+
+[toolchain.compilers.TC201]
+stage = ["toolchain/TC201/BIN", "toolchain/TC201/INCLUDE", "toolchain/BC20/BIN/TASM.EXE"]
+c_command = "TCC -c {opts} -IC:\\ {file}"
+
+# Names the BCC reconstruction gives one function twice (taken from its exhume.toml).
+[names.extern_aliases]
+# errno is DGROUP:0000; the heap code names offset 0 of its own heap DS ACTIVE_HEAP.
+ERRNO = "ACTIVE_HEAP"
+# Turbo C 2.01 names the long helpers without the F_ prefix.
+"LXMUL@" = "F_LXMUL@"
+"LDIV@" = "F_LDIV@"
+"LMOD@" = "F_LMOD@"
+"LXURSH@" = "F_LXURSH@"
+"F_SCOPY@" = "BCC_RUNTIME_COPY"
+"F_SPUSH@" = "BCC_RUNTIME_BUILD"
+
+[gate]
+# The exact link: data modules (src/data, written by tools/gendata.py), the matched objects in
+# link order (the run-time modules last), TLINK 4.0; tools/link.py runs exediff itself, and
+# the gate judges the EXE it leaves. One step besides TLINK: tools/fixorder.py puts the
+# fixups of one object (HPSHRINK) in CPP.EXE's order (tools/fixorder.tsv says why). The
+# link is byte-identical, so there are no known_diffs.
+link = "{python} {root}/tools/link.py"
+exact_exe = "LINK/out/CPP.EXE"
+
+

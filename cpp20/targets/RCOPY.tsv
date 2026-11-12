@@ -1,0 +1,2 @@
+# segment RCOPY base 0x192d size 0x16 org 0x32d
+BCC_RUNTIME_COPY	BCC_RUNTIME_COPY	0x0	0x16

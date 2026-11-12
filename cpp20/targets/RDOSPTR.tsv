@@ -1,0 +1,2 @@
+# segment RDOSPTR base 0x12abb size 0x1a org 0xb
+RTL_DOS_CALL_PTR	RTL_DOS_CALL_PTR	0x0	0x1a

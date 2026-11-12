@@ -1,0 +1,20 @@
+# Fixup order for tools/fixorder.py: object stem, then every fixup of the object as a data
+# offset (hex, from the start of its code segment), in the order TLINK must see them.
+#
+# HPSHRINK (src/heap/HPSHRINK.C, image 0x1676..0x1754). CPP.EXE's relocation table lists
+# entries #33-#36 as 16A5h (SHRINK_HEAP_FULLY's far call to SHRINK_HEAP_TO, the segment
+# word of offset 2Dh), 167Bh, 169Ah and 16B3h (the DGROUP loads at 5h, 24h and 3Dh).
+# Turbo C 2.01 -B, which gives every byte of the file, writes them through TASM 2.51 as
+# 5h, 24h, 3Dh, 2Dh. Evidence for moving the far call to the front, and nothing else:
+#  - TASM 2.51 only puts a far call before such DGROUP/seg fixups when the call's target
+#    is already declared at the call (tested with small TASM modules: only a target declared before the call moves it). Here the
+#    target is a later function of the same file, and Turbo C writes its extrns at the
+#    end of its -B output, so no source we can write gives the order. Split files cannot
+#    give it either: TLINK keeps object order, and GATHER_ALL_FREE_SPACE's load (167Bh)
+#    would then come first.
+#  - BC 2.0 and Turbo C 2.01 compiled directly give fully descending order; TASM 1.0, 2.0
+#    and 2.51, TLINK 3.0 and 4.0, and Turbo C++ 1.01 were also tried (docs/FINDINGS.md).
+#  - BCC.EXE has the same relocation order for the same functions, so it is how the
+#    original was built, not a slip in CPP.EXE alone.
+# The other fixups keep TASM's order; loc-1 (offset) fixups make no relocation entries.
+HPSHRINK	2D 5 24 3D B 13 17 1A 49 4D 51 57 5A 5E 63 6F 73 77 7A 81 8B 8F 92 96 B6 C2 CA CD D0 D4

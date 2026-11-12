@@ -1,0 +1,2 @@
+# segment HPALLOC base 0x25C6 size 0xA7 org 0xA86
+HEAP_ALLOC_NODE	HEAP_ALLOC_NODE	0x0	0xA7

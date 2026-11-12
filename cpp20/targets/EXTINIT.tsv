@@ -1,0 +1,2 @@
+# segment EXTINIT base 0x3FA3 size 0x151 org 0x2463
+INIT_EXT_BANK	INIT_EXT_BANK	0x0	0x151

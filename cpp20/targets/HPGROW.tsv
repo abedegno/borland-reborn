@@ -1,0 +1,2 @@
+# segment HPGROW base 0x2D54 size 0x3D org 0x1214
+GROW_HEAP_TO	GROW_HEAP_TO	0x0	0x3D

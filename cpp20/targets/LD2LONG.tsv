@@ -1,0 +1,2 @@
+# segment LD2LONG base 0x1274d size 0x34 org 0x10d
+RTL_LDOUBLE_TO_LONG	RTL_LDOUBLE_TO_LONG	0x0	0x34

@@ -1,0 +1,23 @@
+# frame	module start (image offset)	module name	evidence
+0000	0x0	c0000_C0	MZ entry 0000:0000; start-up code like BCC's C0.ASM (similarity 0.60, smaller); ends where the long-division entry points begin
+0000	0x1f4	c0000_RDIV	F_LDIV@ entry stubs (xor cx,cx / mov cx,1..3) then F_LUMOD@ exact with BCC CODE_0_RDIV; size 0xA3 as in BCC
+0000	0x297	c0000_RLSHL	exact BCC CODE_0_RLSHL
+0000	0x2b6	c0000_RSHAR	exact BCC CODE_0_RSHAR
+0000	0x2d4	c0000_RLMUL	exact BCC CODE_0_RLMUL
+0000	0x2ed	c0000_RSTACK	exact BCC CODE_0_RSTACK
+0000	0x30e	c0000_RLSHR	exact BCC CODE_0_RLSHR
+0000	0x32d	c0000_RCOPY	exact BCC CODE_0_RCOPY (0x16 bytes, runs to 0x343, past frame 0034's paragraph)
+0034	0x343	c0034_MAIN	one descending relocation run 0x534..0x348 (BC 2.0 object, one record) covers the whole frame: main, usage, puts and strupr are one source here, unlike BCC's Turbo C 2.01 modules
+0054	0x54c	c0054_HPCORE	each heap module starts with an empty near function 55 8B EC 5D C3 (8 in CPP.EXE, none in BCC.EXE)
+0054	0x1f21	c0054_HPTAGS	empty near function at module start
+0054	0x201c	c0054_HPINIT	empty near function at module start
+0054	0x22ae	c0054_HEAPMAIN	empty near function at module start
+0054	0x2536	c0054_NULLBANK	empty near function at module start
+0054	0x2585	c0054_EMSBANK	empty near function at module start
+0054	0x28b0	c0054_EXTBANK	empty near function at module start
+0054	0x2b0b	c0054_OVREXMEM	exact BCC TASM module overlay/OVREXMEM.ASM (CODE_2_RG2BREST) from DETECT_EMS on
+0054	0x314f	c0054_HPSTUBS	empty near function, then `ret` and `retf`: a stub module, runs to 0x3156 (frame 0315 org 6)
+0B39	0xb39d	c0B39_CPPIFEXP	segment starts at 0xB39D (org 0xD): SCAN_EMPTY at 0xB396 is the tail of the COMMENT routines (exact BCC COMMENT.C match), CPPIFEXP exact from 0xB39D
+0A35	0xa35d	c0A35_PREPROC	one code frame for the whole directive processor and the comment scanners: C code compiled through TASM (all 110 fixups ascending, as TASM writes them); BCC splits the same code into PREPROC/DIRTAIL/SKIPLINE/COMMENT (overlay 105), but in a medium-model C build separate files get separate segments and frames, so this is taken as one source file
+11AF	0x11af4	c11AF_DPRINTF	BCC rtl/DPRINTF.C, matched alone: compiled in one file with DVPRINTF the call to it becomes push cs/call near, but CPP.EXE has a far call 9A (11AF:002A), so they are two files sharing one segment name
+11AF	0x11b1a	c11AF_DVPRINTF	BCC rtl/DVPRINTF.C, matched alone

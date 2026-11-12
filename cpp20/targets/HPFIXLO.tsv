@@ -1,0 +1,2 @@
+# segment HPFIXLO base 0x266D size 0x98 org 0xB2D
+ALLOC_FIXED_LOW	ALLOC_FIXED_LOW	0x0	0x98

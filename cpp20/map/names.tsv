@@ -1,0 +1,158 @@
+old name	new name	basis	evidence
+CPP_00000	CPP_START	descriptive	C0.ASM: the program entry (MZ entry 0000:0000)
+CPP_000B1	_exit	descriptive	C0.ASM: cdecl exit (C library name)
+CPP_001F4	F_LDIV@	BCC source	RDIV: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_001F8	F_LUDIV@	BCC source	RDIV: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_001FD	F_LMOD@	BCC source	RDIV: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0036B	_main	descriptive	CPPMAIN.C: main, called by C0 as cdecl main(argc,argv)
+CPP_0054C	RHCYCLE	BCC source	RHCYCLE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00616	RH_PREPARE_DESCRIPTORS	BCC source	HPDESC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_006CB	RRETNDES	BCC source	RRETNDES: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_008AD	RHSWAP	BCC source	RHSWAP: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00933	ADD_FREE_NODE	BCC source	HPADDFRE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00967	RHUNLINK	BCC source	RHUNLINK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00990	RHLINK	BCC source	RHLINK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_009E3	RHSLICE	BCC source	HPSLICE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00A6F	RH_COALESCE_FREE	BCC source	HPSLICE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00ACB	RH_MARK_FREE_AND_MERGE	BCC source	HPSLICE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00B0D	UNFIX_LOW_NODE	BCC source	HPUNFXLO: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00B50	UNFIX_HIGH_NODE	BCC source	HPUNFXHI: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00B8E	RH_RELEASE_SPECIAL	BCC source	HPRELFIX: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00BAB	RH_RELEASE_DESCRIPTOR	BCC source	HPRELND: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00BF9	RH_TRY_FLAG20	BCC source	HPEVICT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00CDA	RH_TRY_FLAG40	BCC source	HPEVICT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00DAF	RH_RECLAIM_NODE	BCC source	HPRCLNOD: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00DE0	RECLAIM_FOR_SPACE	BCC source	HPRCLSPC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00E42	GATHER_FREE_AT_HIGH_END	BCC source	HPGATHHI: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00F04	GATHER_FREE_AT_LOW_END	BCC source	HPGATHLO: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_00FC6	HEAP_ALLOC_NODE	BCC source	HPALLOC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0106D	ALLOC_FIXED_LOW	BCC source	HPFIXLO: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01105	ALLOC_FIXED_HIGH	BCC source	HPFIXHI: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_011AF	SHRINK_NODE	BCC source	HPSHRNKN: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0122B	SWAP_WITH_FREE_NODE	BCC source	HPRESIZE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01261	RESIZE_NODE	BCC source	HPRESIZE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_014D1	EXTEND_HEAP	BCC source	HPEXTEND: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01536	INIT_BANK	BCC source	HPINITBK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01641	NEW_BANK5_NODE	BCC source	HPNEWB5: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01754	GROW_HEAP_TO	BCC source	HPGROW: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01791	POOL_INIT	BCC source	POOLINIT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_017E9	HEAP_ALLOC_HANDLE	BCC source	HPALLOCH: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_018D5	FREE_TAG_NODES	BCC source	HPFREETG: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+HANDLE_BLOCK_SIZE	GET_HEAP_NODE_FLAGS	BCC source	RHAPI: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01AAC	ALLOC_BANK0_NODE	BCC source	RHAPI: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01B6D	CHANGE_HEAP_NODE_MODE	BCC source	RHAPI: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_01F21	CALL_SELF_FOREVER	BCC source	HPSTUBAP: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0201C	RH_SELF_CALL_BEFORE_INIT	BCC source	HPSTUBIN: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_02021	INIT_HEAP	BCC source	RHINIT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_020A1	SHUTDOWN_HEAP_BANKS	BCC source	HPSHUTDN: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0225E	CONV_FIND_FREE_NODE	BCC source	HPMAINHD: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_022AE	RH_SELF_CALL_BEFORE_MOVES	BCC source	HPSTUBMV: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_02536	RH_SELF_CALL_AFTER_SWAP_BANK	BCC source	HPSTUBSW: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_02585	CALL_SELF_FOREVER_RG2BEND	BCC source	HPSTUBEB: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0258A	EMS_READ_NODE	BCC source	EMSBANK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_02627	EMS_WRITE_NODE	BCC source	EMSBANK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0272F	EMS_FIND_FREE_NODE	BCC source	EMSBANK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+RH_CALL_EXT_RELEASE	RELEASE_EMS_BANK	BCC source	HPEMSREL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_028B0	RH_SELF_CALL_AFTER_EMS_BANK	BCC source	HPSTUBEM: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0296A	EXT_FIND_FREE_NODE	BCC source	EXTBANK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_029A3	INIT_EXT_BANK	BCC source	EXTINIT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_02AF4	RH_CALL_EXT_RELEASE	BCC source	HPEXTREL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0314F	RH_SELF_CALL_AFTER_OVR_CODE	BCC source	HPSTUBOV: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03156	NEXT_LITERAL_CHAR	BCC source	TOKADV: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0319D	PEEK_TOKEN	BCC source	TOKADV: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03223	WRITE_PREPROCESSED_TOKENS	descriptive	TOKADV.C: the preprocessor output loop (reads tokens to end of input, writes each one)
+CPP_032E4	RESOLVE_SYMBOL_REFERENCE	BCC source	EXPRDISP: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03325	C78_special_symbol	BCC source	EXPRDISP: the same static function as in BCC.EXE's expr/EXPRDISP.C (matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0336E	C78_reconcile_pair	BCC source	EXPRDISP: the same static function as in BCC.EXE's expr/EXPRDISP.C (matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03683	C78_lower_value	BCC source	EXPRDISP: the same static function as in BCC.EXE's expr/EXPRDISP.C (matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_036F0	C78_apply_value_type	BCC source	EXPRDISP: the same static function as in BCC.EXE's expr/EXPRDISP.C (matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0377A	ANALYZE_EXPRESSION	BCC source	EXPRDISP: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03DEF	CHECK_ADDITION	BCC source	EXPRCHK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03E83	CHECK_SUBTRACTION	BCC source	EXPRCHK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03EB1	CHECK_LOGICAL_OP	BCC source	EXPRCHK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_03FA2	CHECK_COMPARISON	BCC source	EXPRCHK: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_04314	CONVERT_EXPR_TO_TYPE	BCC source	CONVERT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+STORAGE_IDENTITY	CONVERT_TO_RVALUE	BCC source	CONVERT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_043F3	CHECK_CAST	BCC source	CONVERT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_048B8	INIT_EMS_EXT_BANKS	BCC source	MEMINIT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_04950	INITTYPE	BCC source	INITTYPE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+RH_SELF_CALL_BEFORE_SWAP	C9BANKS	BCC source	INITTYPE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_049E0	C9TYPES	BCC source	INITTYPE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_04AEC	INIT_PARSER	BCC source	INITTYPE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_04C49	TYPES_COMPATIBLE	BCC source	TYPESIZE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+C14CHAR	APPEND_NAME_BYTE	BCC source	DIAG: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+C14TEXT	APPEND_NAME_TEXT	BCC source	DIAG: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_05071	COMPILE_ONE_FILE	BCC source	OPTIONS: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_1D	MODE_FALLBACK	BCC source	OPTIONS: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_05334	HANDLE_NEGATED_FLAG_OPTION	BCC source	OPTIONS: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+IGNORE_OPTION	IGNORE_OPTION_2	descriptive	OPTIONS.C: second handler with IGNORE_OPTION's code, where BCC has -T/-P/-l handlers
+IGNORE_OPTION	IGNORE_OPTION_3	descriptive	OPTIONS.C: third such handler
+CPP_05D4A	BEGIN_SESSION	BCC source	INITPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_05E25	BEGIN_BACKEND_PHASE	BCC source	INITPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_064CE	IS_VOID_PARAM_LIST	BCC source	DECLSPEC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_064E1	PARSE_PARAM_LIST	BCC source	DECLSPEC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+REPORT_WARNING	_REPORT_WARNING	BCC source	DIAGFMT: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_07A49	REDUCE_OPERATOR	BCC source	OPPREC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X022_04	PARSE_TYPE_NAME	BCC source	OPPREC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_081AD	PARSE_EXPRESSION_PREC	BCC source	OPPREC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X022_00	PARSE_ASSIGNMENT_EXPR	BCC source	OPPREC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+RESET_EXPR_POOL	RESET_EXPR_POOL_ALT	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_20	FREE_EXPR_TREE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_1D	FREE_EXPR_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_02	MAKE_LIST_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+FREE_EXPR_TREE	MAKE_INT_CONSTANT	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_17	MAKE_SYMBOL_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_0E	MAKE_UNARY_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_05	MAKE_BINARY_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_0F	MAKE_CONDITIONAL_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_12	MAKE_CAST_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_14	MAKE_CALL_NODE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_21	REPORT_EXPR_ERROR	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_09	REPORT_EXPR_ERROR_PLAIN	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_0A	PICK_WIDER_TYPE	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X023_1C	IS_CONSTANT_EXPR	BCC source	EXPRPOOL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_09D03	INIT_SEGMENT_NAMES	BCC source	SEGNAMES: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+READ_DIRECTIVE_LINE	PARSE_PRAGMA	BCC source	PREPROC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+PCH_DIRECTIVE_IF	PARSE_IFDEF_DIRECTIVE	BCC source	PREPROC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+PRAGMA_STARTUP	PARSE_IFNDEF_DIRECTIVE	BCC source	PREPROC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+SCAN_EMIT	SCAN_EMIT_FAR	BCC source	PREPROC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+BCC_SCAN_FINISH_FAR	SCAN_FINISH	BCC source	PREPROC: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+FOLD_ADD_SIGNED	FOLD_ADD_UNSIGNED	BCC source	SIMPLIFY: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+FOLD_SUB_SIGNED	FOLD_SUB_UNSIGNED	BCC source	SIMPLIFY: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+FOLD_MUL_SIGNED	FOLD_MUL_UNSIGNED	BCC source	SIMPLIFY: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+FOLD_DIV_SIGNED	FOLD_DIV_UNSIGNED	BCC source	SIMPLIFY: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+FOLD_SHIFT_SIGNED	FOLD_SHIFT_UNSIGNED	BCC source	SIMPLIFY: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0DA3D	MAKE_VOID_ZERO_NODE	BCC source	SIMPLIFY: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0DC1B	SIMPLIFY_NODE	BCC source	SIMPLIFY: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+LEXER_POOL_INIT	INIT_LEXER_POOLS	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+LEXER_STATE_INIT	INIT_LEXER_STATE	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+X031_09	LEX_NEXT_TOKEN	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0EF3A	LEX_NEWLINE	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CLASSIFY_IDENTIFIER_BODY	CLASSIFY_IDENTIFIER	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0F3E5	SCAN_NUMBER_TEXT	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_0F9B5	LEX_CHARACTER	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+LEX_ESCAPE	DECODE_ESCAPE_CHAR	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+LEX_POOL_CHAR	NEXT_POOL_CHARACTER	BCC source	LEXER: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+C9_ALLOC_MEMBER	ALLOC_TYPE_RECORD	BCC source	CPPSCOPE: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+TOKEN_IS_TYPE_START_BODY	TOKEN_IS_TYPE_START	BCC source	PARSEUTL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+REQUIRE_TOKEN_BODY	REQUIRE_TOKEN_ELSE_ERROR	BCC source	PARSEUTL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_10072	COLLECT_STRING_LITERAL	BCC source	PARSEUTL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CONST_EXPR_VALUE_BODY	PARSE_CONSTANT_EXPR_VALUE	BCC source	PARSEUTL: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+CPP_10123	PREPROCESS_ONE_FILE	descriptive	DRVLINK.C: the per-file callback of the wildcard walk; prints the name and preprocesses the file (BCC: LG0A1, which also assembled/linked)
+CPP_1186D	C45_LONGJUMP	descriptive	C45JUMP.C: longjmp, name as BCC's callers use it
+CPP_118A3	C45_SETJUMP	descriptive	C45JUMP.C: setjmp, name as BCC's callers use it
+RTL_ULTOA10	RTL_LTOA10	BCC source	RLTOA: the same function as in BCC.EXE's reconstruction (its source, matched in CPP.EXE); phase-1 name came from the similarity scan
+-	C0_EMPTY_FAR_HOOK	descriptive	C0.ASM: empty far routine at 01F0 that the far data callback slot points to
+-	LEX_FIRST_LINE	descriptive	new in CPP.EXE at DS:77C6; named from the code that uses it (see the source that declares it)
+-	MESSAGE_TEXT_TABLE	descriptive	new in CPP.EXE at DS:1B44; named from the code that uses it (see the source that declares it)
+-	STR_BORLAND_CPP_VERSION_2_0	descriptive	new in CPP.EXE at DS:0022; named from the code that uses it (see the source that declares it)
+-	STR_DOT_I	descriptive	new in CPP.EXE at DS:1B40; named from the code that uses it (see the source that declares it)
+-	STR_LEX_COLON_SPACE	descriptive	new in CPP.EXE at DS:5487; named from the code that uses it (see the source that declares it)
+-	STR_LEX_CRLF	descriptive	new in CPP.EXE at DS:5484; named from the code that uses it (see the source that declares it)
+-	STR_LEX_SPACE	descriptive	new in CPP.EXE at DS:5455; named from the code that uses it (see the source that declares it)
+-	STR_OUTPUT_EXT_I	descriptive	new in CPP.EXE at DS:0365; named from the code that uses it (see the source that declares it)
+-	STR_SYNTAX_IS_CPP_OPTIONS	descriptive	new in CPP.EXE at DS:0085; named from the code that uses it (see the source that declares it)
+LG0A1	PREPROCESS_ONE_FILE	descriptive	DRVLINK.C: the per-file callback of the wildcard walk; prints the file name and preprocesses the file (BCC: LG0A1, which also assembled and linked); static
+CPP_03155	RH_EMPTY_FAR_STUB	descriptive	HPSTUBIO.C: an empty far function (a bare retf) after the heap stubs, no BCC counterpart; static, nothing calls it
+L3FB1 ... (57 labels)	L25EB ...	CPP offset	OVREXMEM.ASM local labels renamed from BCC.EXE offsets to their CPP.EXE offsets in frame 0054h
+c<frame>_<name> (157 targets)	<source stem>	layout	the phase-1 target names (frame + guess) became the source stems; the full list is map/target-renames.tsv

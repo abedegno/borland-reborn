@@ -7,6 +7,9 @@
 */linktest/*.OBJ
 */linktest/*.LST
 */linktest/*.LOG
+# generated from your own CPP.EXE by cpp20/scripts/prepare.py
+/cpp20/src/data/
+*/work/
 # build output
 */build-source/
 */build/

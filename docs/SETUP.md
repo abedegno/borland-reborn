@@ -123,6 +123,21 @@ cp -R src ../my-src                                   # edit the copy, then:
 It needs the objects that `gate.py check` compiles. [bcc20/docs/MODDING.md](../bcc20/docs/MODDING.md)
 explains how it works, how it is checked and what cannot be changed yet.
 
+## The preprocessor, CPP.EXE
+
+`cpp20/` rebuilds Borland C++ 2.0's standalone preprocessor with the same toolchains:
+
+```sh
+cd ../cpp20
+../.venv/bin/python scripts/prepare.py                # its data modules, from your own CPP.EXE
+../.venv/bin/python ../exhume/tools/gate.py check --all
+sh tools/runcheck.sh                                  # needs emu2 (see above)
+```
+
+The link is byte-identical to CPP.EXE. One link step restores the original order of one
+object's fixups, which no source given to Borland's tools reproduces; it is explained in
+[cpp20/docs/FINDINGS.md](../cpp20/docs/FINDINGS.md).
+
 ## Working on one file
 
 ```sh
