@@ -107,6 +107,22 @@ CHECK PASSED
 The rebuilt executable is `build-source/SOURCELINK/run/BCC.EXE`. To see how two executables
 differ, run `../exhume/tools/exediff.py FILE --original toolchain/BC20/BIN/BCC.EXE`.
 
+## Building with changes
+
+The exact link fixes every address, so it only proves the sources. To change them, use the
+modding build, which lets TLINK lay the program out:
+
+```sh
+sh ../exhume/tools/setup-emu2.sh                      # once: the DOS emulator the comparison uses
+../.venv/bin/python tools/modlink.py                  # build-source/MODLINK/run/BCC.EXE
+../.venv/bin/python tools/modtest.py                  # 478 compiles, compared with Borland's BCC.EXE
+cp -R src ../my-src                                   # edit the copy, then:
+../.venv/bin/python tools/modlink.py --src ../my-src --out build-source/MYBUILD
+```
+
+It needs the objects that `gate.py check` compiles. [bcc20/docs/MODDING.md](../bcc20/docs/MODDING.md)
+explains how it works, how it is checked and what cannot be changed yet.
+
 ## Working on one file
 
 ```sh

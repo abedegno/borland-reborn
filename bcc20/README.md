@@ -10,6 +10,7 @@ rebuilds Borland's `BCC.EXE` byte for byte (502,432 bytes, SHA-256
 | Lines | about 71,000 lines of C, a fifth of them comments |
 | Names | about 3,100 functions, globals and labels; 300 record fields; 40 record layouts |
 | Status | every function matches, every relocation verifies, the linked EXE is byte-identical |
+| Modding | the sources also link into a BCC.EXE whose layout may change; it compiles 478 test cases exactly as Borland's does ([docs/MODDING.md](docs/MODDING.md)) |
 
 ## Layout
 
@@ -24,7 +25,8 @@ rebuilds Borland's `BCC.EXE` byte for byte (502,432 bytes, SHA-256
 | `targets/`, `symbols.tsv` | what each source must reproduce, and the global symbol table |
 | `linkgroups/`, `reconstructed/`, the CSV/JSON tables | the original layout the exact link needs |
 | `scripts/prepare.py` | makes the link inputs that are derived from your own BCC.EXE |
-| `tools/` | the link script and its helpers |
+| `tools/` | the exact link and its helpers; the modding build (`modlink.py`, `modtest.py`) |
+| [`docs/MODDING.md`](docs/MODDING.md) | building with changed sources, and how that build is checked |
 
 ## Build
 

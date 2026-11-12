@@ -56,6 +56,10 @@ The last command compiles all 298 sources in DOS, checks every function against 
 original byte for byte, verifies every relocation and name, and links a new `BCC.EXE` that is
 identical to Borland's.
 
+To change the compiler, use the **modding build**. It links the same sources with a layout
+TLINK chooses, so any function may grow or shrink. It is checked by compiling 478 test cases
+with both compilers and comparing every output. See [bcc20/docs/MODDING.md](bcc20/docs/MODDING.md).
+
 ## How it works
 
 [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md) explains the method: identifying the exact
