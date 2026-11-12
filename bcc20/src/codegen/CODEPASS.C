@@ -251,7 +251,7 @@ int far pascal OP3_REGISTER_HINT(int mode, unsigned char near *value)
 
     if (mode > 1)
         return 11;
-    if (pointer[0x4FBC] != 0)
+    if (pointer[(unsigned)REG_CLASS_IS_WORD] != 0)
         return 9;
     return 1;
 }

@@ -16,15 +16,18 @@
 ;   0284  "Runtime overlay error"
 ;   029B  _abort: report through the status hook, print the message on
 ;         stderr and exit with status 4.
-; The DGROUP offsets 5C96h, 8C4Eh and 8C50h are the BSS start, end and
-; stack bottom in the original link.
+; BSS_START, BSS_CLEAR_END and STACK_BOTTOM (DGROUP 5C96h, 8C4Eh and 8C50h in the
+; original link) are the start and end of the area cleared at start-up and the bottom of
+; the stack; src/data/DGROUP.ASM defines them.
 
 DGROUP		group	_DATA,_BSS
 _DATA		segment word public 'DATA'
+		extrn	HEAP_STATUS:word,HEAP_HOOK_CALLSITE:dword
 _DATA		ends
 _BSS		segment word public 'BSS'
 _BSS		ends
 		extrn	COMPILER_MAIN_ENTRY:far
+		extrn	BSS_START:byte,BSS_CLEAR_END:byte,STACK_BOTTOM:byte
 		.186
 CODE0		segment byte public 'CODE'
 		assume	cs:CODE0
@@ -96,8 +99,8 @@ L007A:
 		mov	es, dx		; 00A4
 		push	ax		; 00A6
 		xor	ax, ax		; 00A7
-		mov	cx, 8C4Eh		; 00A9
-		mov	di, 5C96h		; 00AC
+		mov	cx, offset DGROUP:BSS_CLEAR_END		; 00A9
+		mov	di, offset DGROUP:BSS_START		; 00AC
 		sub	cx, di		; 00AF
 		rep stosb		; 00B1
 		pop	cx		; 00B3
@@ -164,7 +167,7 @@ L010C:
 		push	bx		; 0110
 		cmp	byte ptr ds:[1Ah], 8		; 0111
 		jne	L011D		; 0116
-		mov	ax, 8C50h		; 0118
+		mov	ax, offset DGROUP:STACK_BOTTOM		; 0118
 		jmp	short L0127		; 011B
 L011D:
 		mov	ax, ss		; 011D
@@ -181,7 +184,7 @@ L0127:
 		xor	ax, ax		; 012F
 		mov	es, bx		; 0131
 		mov	cx, sp		; 0133
-		mov	di, 8C50h		; 0135
+		mov	di, offset DGROUP:STACK_BOTTOM		; 0135
 		sub	cx, di		; 0138
 		rep stosb		; 013A
 		xor	bp, bp		; 013C
@@ -235,11 +238,11 @@ OVERLAY_ERROR	db	'Runtime overlay error',13,10	; 0284
 _abort:
 		mov	bx,DGROUP		; 029B
 		mov	ds, bx		; 029E
-		mov	word ptr ds:[6C2h], ax		; 02A0
+		mov	word ptr ds:HEAP_STATUS, ax		; 02A0
 		mov	bx, 2		; 02A3
 		push	bx		; 02A6
 		push	ax		; 02A7
-		call	dword ptr ds:[5EA8h]		; 02A8
+		call	dword ptr ds:HEAP_HOOK_CALLSITE		; 02A8
 		mov	cx, 17h		; 02AC
 		mov	dx, offset OVERLAY_ERROR		; 02AF
 		push	cs		; 02B2

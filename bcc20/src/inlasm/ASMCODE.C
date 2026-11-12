@@ -181,7 +181,7 @@ void far pascal OPEN_OUTPUT_FILE(char far *filename)
     char path[80];
     STRING_COPY(path,(char far *)MK_FP(STRING_POOL_SEG,ASM_OUTPUT_PATH));
     EMIT_DEPENDENCY_HOOK=OBJ_OUTPUT_DEFAULT_HOOKS;
-    if(!(CODE_OUTPUT_FLAGS&1)) STRING_APPEND(path,(char near *)0x54da);
+    if(!(CODE_OUTPUT_FLAGS&1)) STRING_APPEND(path,(char near *)(STR_OBJ_3));
     if(CREATE_OUTPUT_FILE(path)==-1) REPORT_FATAL(MSG_UNABLE_CREATE_OUTPUT,path);
     STRING_COPY((char far *)MK_FP(STRING_POOL_SEG,ASM_OUTPUT_PATH),path);
     OBJ_WRITE_MODULE_HEADER(filename);
@@ -214,7 +214,7 @@ void far pascal EMIT_LOAD_DATA_SEGMENT(unsigned char kind)
         EMIT_CODE_BYTE(0x2e);
         EMIT_CODE_BYTE(0x8b);
         EMIT_CODE_BYTE((kind==10 ? 0x28 : 0)+6);
-        ADD_OFFSET_FIXUP(DECLARE_NAMED_GLOBAL_HOOK((char near *)0x54df,1));
+        ADD_OFFSET_FIXUP(DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_DGROUP_2),1));
     } else {
         EMIT_CODE_BYTE(kind==10 ? 0xbd : 0xb8);
         ADD_FIXUP_KIND(10,0);
@@ -324,6 +324,10 @@ void far pascal ENCODE_ASM_INSTRUCTION(register int instruction)
         } else OUT(instruction==0x6e ? 0xee : 0xef);
         break;
     case 0x20:case 0x21:case 0x22:case 0x29:case 0x2a:case 0x2b:case 0x2c:case 0x2d:case 0x2e:case 0x33:case 0x34:case 0x35:case 0x38:case 0x39:case 0x3a:case 0x3b:case 0x3c:case 0x3d:case 0x52:case 0x5c:case 0x5d:case 0x5e:case 0x5f:case 0x60:case 0x61:case 0x62:case 0x63:case 0x64:case 0x65:case 0x66:case 0x67:case 0x68:case 0x69:case 0x6a:case 0x6b:case 0x6c:case 0x82:case 0x83:case 0x84:case 0x87:case 0x88:case 0x89:case 0x8a:case 0x8b:case 0x8c:case 0x8d:case 0x8e:case 0x8f:case 0x90:case 0x91:case 0xd5:
+        /* match: the COMMENT numbers are the emulator fixup names FIARQQ..FIWRQQ (DS:54E7..
+           551F), but they stay numbers: with names (fixups) BC no longer merges these arms'
+           common tails.  The modding build keeps them right only while the data before
+           5526h keeps its size. */
         switch(segment) {
         case 13:
             COMMENT(0x54e7);OUT(0x9b);COMMENT(0x54ee);OUT(0x3e);break;

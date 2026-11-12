@@ -749,9 +749,9 @@ static int near pascal COMPARE_OP_TO_JUMP(register unsigned int index, int kind)
     case 5:
     case 7:
     case 21:
-        return ((signed char near *)0x5268)[index];
+        return ((signed char near *)((char near *)&OPERATOR_HELPER_NAME_TABLE+51))[index];
     default:
-        return ((signed char near *)0x5262)[index];
+        return ((signed char near *)((char near *)&OPERATOR_HELPER_NAME_TABLE+45))[index];
     }
 }
 
@@ -782,7 +782,7 @@ void far pascal EMIT_STACK_CHECK(void)
     _BX=code_segment;
     _ES=SEGDEF_POOL_SEG;
     if (!COMPARE_NAME((char far *)MK_FP(STRING_POOL_SEG,ES_W(_BX,SEGDEF_NAME)),
-                      (char far *)MK_FP(_DS,0x52C8))) ASM_OUTPUT_FLAGS|=8;
+                      (char far *)MK_FP(_DS,(unsigned)(STR_TEXT)))) ASM_OUTPUT_FLAGS|=8;
     if (OPTION_WINDOWS_MODE) return;
     if (OPTION_STACK_CHECK==0) return;
     if (CODEGEN_CALL_CONV==4) return;
@@ -800,14 +800,14 @@ void far pascal EMIT_STACK_CHECK(void)
     if (OPTION_MEMORY_MODEL!=5) {
         if (OPTION_MEMORY_MODEL==4 || OPTION_MEMORY_MODEL==3 || OPTION_DS_NOT_SS) {
             condition=5;
-            limit_symbol=DECLARE_NAMED_GLOBAL_HOOK((char near *)0x52CE,0);
+            limit_symbol=DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_STKLEN_2),0);
         } else {
             condition=4;
-            limit_symbol=DECLARE_NAMED_GLOBAL_HOOK((char near *)0x52D6,0);
+            limit_symbol=DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_BRKLVL),0);
         }
         _SI=NEW_VARIABLE_NODE(0x10,limit_symbol,0,0);
     } else {
-        limit_symbol=DECLARE_NAMED_GLOBAL_HOOK((char near *)0x52CE,0);
+        limit_symbol=DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_STKLEN_2),0);
         _SI=NEW_VARIABLE_NODE(13,limit_symbol,0,0x10);
         operand_node=NEW_VARIABLE_NODE(12,limit_symbol,0,0x10);
         _SI=NEW_CODE_NODE(0x16,0,_SI,operand_node);
@@ -944,9 +944,9 @@ void far pascal EMIT_HELPER_CALL(char near *text,unsigned int value)
     register unsigned int saved = value;
     register unsigned int name;
     if (OPTION_MEMORY_MODEL == 0 || (ASM_OUTPUT_FLAGS & 8) != 0)
-        STRING_COPY(buffer,(char far *)MK_FP(_DS,0x52F7));
+        STRING_COPY(buffer,(char far *)MK_FP(_DS,(unsigned)(STR_N)));
     else
-        STRING_COPY(buffer,(char far *)MK_FP(_DS,0x52FA));
+        STRING_COPY(buffer,(char far *)MK_FP(_DS,(unsigned)(STR_F)));
     STRING_APPEND(buffer,text);
     name=DECLARE_NAMED_GLOBAL_HOOK(buffer,1);
     NEW_VARIABLE_NODE((ASM_OUTPUT_FLAGS & 8)?0x77:0x78,name,saved,0x10);
@@ -1085,7 +1085,7 @@ static unsigned long near pascal GENERATE_POST_DECREMENT(unsigned int node)
             LOW(result) = NEW_CODE_NODE(0x99,0,LOW(first),0);
             HIGH(result) = NEW_CODE_NODE(0x99,0,HIGH(first),0);
             temp1 = NEW_CONSTANT_NODE(10,0L);
-            temp2 = NEW_VARIABLE_NODE(13,DECLARE_NAMED_GLOBAL_HOOK((char near *)0x52FD,1),0,0x10);
+            temp2 = NEW_VARIABLE_NODE(13,DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_AHSHIFT),1),0,0x10);
             _ES = EXPR_POOL_SEG;
             NEW_CODE_NODE(ES_W(_SI,EXPR_OP)==0x23 ? 0x1D : 0x26,0x12,LOW(first),LOW(second));
             _DI = NEW_CODE_NODE(0x24,0x20,temp1,HIGH(second));
@@ -1159,7 +1159,7 @@ static unsigned long near pascal GENERATE_POST_INCREMENT(unsigned int node)
             LOW(result) = NEW_CODE_NODE(0x99,0,LOW(first),0);
             HIGH(result) = NEW_CODE_NODE(0x99,0,HIGH(first),0);
             temp1 = NEW_CONSTANT_NODE(10,0L);
-            temp2 = NEW_VARIABLE_NODE(13,DECLARE_NAMED_GLOBAL_HOOK((char near *)0x52FD,1),0,0x10);
+            temp2 = NEW_VARIABLE_NODE(13,DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_AHSHIFT),1),0,0x10);
             _ES = EXPR_POOL_SEG;
             NEW_CODE_NODE(ES_W(_SI,EXPR_OP)==0x23 ? 0x1D : 0x26,0x12,LOW(first),LOW(second));
             _DI = NEW_CODE_NODE(0x24,0x20,temp1,HIGH(second));

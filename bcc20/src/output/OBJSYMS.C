@@ -120,7 +120,7 @@ void far pascal EMIT_OBJ_SYMBOLS(unsigned int offset)
        in the floating-point support from the library. */
     if(CODE_OUTPUT_FLAGS&2) {
         if(previous==0xB0) {OBJ_WRITE_RECORD((unsigned char)format);OBJ_RESET_RECORD();}
-        OBJ_PUT_NAME((char near *)0x387C);
+        OBJ_PUT_NAME((char near *)(STR_TURBOFLOAT_2));
         OBJ_PUT_BYTE(0);
         OBJ_WRITE_RECORD(0x8C);
     } else if(previous) OBJ_WRITE_RECORD((unsigned char)previous);
@@ -243,7 +243,7 @@ static void near pascal EMIT_TYPE_DEBUG_INFO(register unsigned int node)
     int kind,bits;
     char far *name;
     if(TYPE_W(node,TYPE_C_DEBUG_INDEX)) return;
-    name=(char near *)0x3888;
+    name=(char near *)(STR_TURBOFLOAT_2+12);
     TYPE_W(node,TYPE_C_DEBUG_INDEX)=DEBUG_TYPE_COUNTER++;
     switch(K(node)) {
     case 21:

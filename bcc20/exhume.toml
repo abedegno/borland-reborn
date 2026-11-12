@@ -45,6 +45,8 @@ _C0_TERMINATE = "C0_TERMINATE"
 # there).  The heap code names offset 0 of its own heap DS ACTIVE_HEAP; both
 # are offset 0, and symbols.tsv keeps one name per DS address.
 ERRNO = "ACTIVE_HEAP"
+# C0 clears the BSS from its first variable, written as BSS_START (the start-up code's name).
+BSS_START = "SAVED_INT23_VECTOR"
 # Turbo C 2.01 names the long helpers without the F_ prefix.
 "LXMUL@" = "F_LXMUL@"
 "LDIV@" = "F_LDIV@"

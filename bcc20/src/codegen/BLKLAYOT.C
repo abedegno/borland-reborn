@@ -271,7 +271,7 @@ static void near pascal WRITE_ASM_LISTING(void)
             EMIT_DECIMAL(FUNCTION_SERIAL);
             OUTPUT_CHAR(0x40);
             EMIT_DECIMAL(node);
-            BCC_OUTPUT_STRING(TEXT(0x540A));
+            BCC_OUTPUT_STRING(TEXT(STR_COLON_CR_NL));
         }
         kind = FRAG_W(node,FRAG_JUMP_KIND);
         remaining = FRAG_W(node,FRAG_TEXT_LENGTH);
@@ -294,9 +294,9 @@ static void near pascal WRITE_ASM_LISTING(void)
                 if (id != LAST_LINE_MARK_ID) {
                     LAST_LINE_MARK_ID = id;
                     if (OPTION_LINE_NUMBERS || OPTION_SOURCE_DEBUG) {
-                        BCC_OUTPUT_STRING(TEXT(0x540E));
+                        BCC_OUTPUT_STRING(TEXT(STR_DEBUG_L));
                         EMIT_DECIMAL(id);
-                        BCC_OUTPUT_STRING(TEXT(0x540B));
+                        BCC_OUTPUT_STRING(TEXT(STR_ASM_STATEMENT_CRLF));
                     }
                 }
             } else {
@@ -306,30 +306,30 @@ static void near pascal WRITE_ASM_LISTING(void)
         extra = 0;
         if (kind & 0xF8FF) {
             OUTPUT_CHAR(9);
-            if (kind == 0x118) BCC_OUTPUT_STRING(TEXT(0x5419));
+            if (kind == 0x118) BCC_OUTPUT_STRING(TEXT(STR_DW));
             else if ((kind&0x100) || kind==1 || (kind&0xF9FF)==1) {
                 BCC_OUTPUT_STRING(JUMP_MNEMONIC_TEXT[kind&0xF8FF]);
                 OUTPUT_CHAR(9);
-                if (kind&0x100) BCC_OUTPUT_STRING(TEXT(0x541D));
-                else if (kind&0x200) BCC_OUTPUT_STRING(TEXT(0x5424));
-                else if (kind&0x400) BCC_OUTPUT_STRING(TEXT(0x542E));
+                if (kind&0x100) BCC_OUTPUT_STRING(TEXT(STR_SHORT));
+                else if (kind&0x200) BCC_OUTPUT_STRING(TEXT(STR_NEAR_PTR));
+                else if (kind&0x400) BCC_OUTPUT_STRING(TEXT(STR_FAR_PTR));
             } else {
                 BCC_OUTPUT_STRING(JUMP_MNEMONIC_TEXT[INVERT_JUMP_KIND(kind)]);
-                BCC_OUTPUT_STRING(TEXT(0x5437));
+                BCC_OUTPUT_STRING(TEXT(STR_TAB_AT_AT));
                 EMIT_DECIMAL(LOCAL_LABEL_SERIAL);
-                BCC_OUTPUT_STRING(TEXT(0x540B));
-                PUT_CODE_STRING(TEXT(0x543B));
+                BCC_OUTPUT_STRING(TEXT(STR_ASM_STATEMENT_CRLF));
+                PUT_CODE_STRING(TEXT(STR_JMP));
                 extra = 1;
             }
-            BCC_OUTPUT_STRING(TEXT(0x5439));
+            BCC_OUTPUT_STRING(TEXT(STR_TAB_AT_AT+2));
             EMIT_DECIMAL(FUNCTION_SERIAL);
             OUTPUT_CHAR(0x40);
             EMIT_DECIMAL(FRAG_W(node,FRAG_JUMP_TARGET));
-            BCC_OUTPUT_STRING(TEXT(0x540B));
+            BCC_OUTPUT_STRING(TEXT(STR_ASM_STATEMENT_CRLF));
             if (extra) {
-                BCC_OUTPUT_STRING(TEXT(0x5438));
+                BCC_OUTPUT_STRING(TEXT(STR_TAB_AT_AT+1));
                 EMIT_DECIMAL(LOCAL_LABEL_SERIAL++);
-                BCC_OUTPUT_STRING(TEXT(0x540A));
+                BCC_OUTPUT_STRING(TEXT(STR_COLON_CR_NL));
             }
         }
     }

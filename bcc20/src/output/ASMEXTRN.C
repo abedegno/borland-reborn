@@ -54,7 +54,7 @@ void far pascal EMIT_HEX_BYTE_LIST(int count)
     _SI = _AX;
     if (*((unsigned char near *)_SI) != 0xE6)
         DEBUG_STATE = 0xFFFF;
-    PUT_CODE_STRING((char far *)MK_FP(_DS, 0x381A));
+    PUT_CODE_STRING((char far *)MK_FP(_DS, (unsigned)STR_DEBUG_C));
     out_count = 0;
 output_loop:
     EMIT_HEX_BYTE(*((signed char near *)_SI));
@@ -65,11 +65,11 @@ output_loop:
         goto done;
     if (out_count < 20)
         goto output_loop;
-    PUT_CODE_STRING((char far *)MK_FP(_DS, 0x3825));
+    PUT_CODE_STRING((char far *)MK_FP(_DS, (unsigned)(STR_DEBUG_C_2)));
     out_count = 0;
     goto output_loop;
 done:
-    PUT_CODE_STRING((char far *)MK_FP(_DS, 0x3833));
+    PUT_CODE_STRING((char far *)MK_FP(_DS, (unsigned)STR_CR_NL));
     DEBUG_STATE = saved;
 }
 
@@ -125,24 +125,24 @@ void far pascal EMIT_ASM_EXTERNALS(void)
                 }
                 EMIT_COMM_DECLARATION(_SI,(CSYM_W(_SI,CSYM_SEGMENT)!=BSS_SEGMENT_ID),SIZE_OF_TYPE_CHECKED_HOOK(_DI),product);
             } else {
-                PUT_CODE_STRING(TEXT(0x3836));
+                PUT_CODE_STRING(TEXT(STR_EXTRN));
                 NAME_HOOK(_SI);
                 PUT_CODE_CHAR(0x3A);
                 number=SYMBOL_ELEMENT_KIND_HOOK(_SI);
                 if (number==18 && CSYM_W(_SI,CSYM_SEGMENT)!=0xFFFF)
-                    PUT_CODE_STRING(TEXT(0x383E));
+                    PUT_CODE_STRING(TEXT(STR_NEAR_3));
                 else PUT_CODE_STRING(ASM_TYPE_NAME_TABLE[number]);
             }
-            PUT_CODE_STRING(TEXT(0x3833));
+            PUT_CODE_STRING(TEXT(STR_CR_NL));
             break;
         case 1:
             _BX=CSYM_W(_SI,CSYM_TYPE);
             _ES=TYPE_POOL;
             if (ES_B(_BX,TYPE_KIND)==18 && (TYPE_B(CSYM_W(_SI,CSYM_TYPE),TYPE_C_FUNC_FLAGS)&0x80))
-                PUT_CODE_STRING(TEXT(0x3843));
-            else PUT_CODE_STRING(TEXT(0x384F));
+                PUT_CODE_STRING(TEXT(STR_PUBLICDLL));
+            else PUT_CODE_STRING(TEXT(STR_PUBLIC_2));
             NAME_HOOK(_SI);
-            PUT_CODE_STRING(TEXT(0x3833));
+            PUT_CODE_STRING(TEXT(STR_CR_NL));
         case 3:
             _ES=CSYM_POOL_SEG;
             if (ES_W(_SI,CSYM_SEGMENT)==0) {
@@ -150,10 +150,10 @@ void far pascal EMIT_ASM_EXTERNALS(void)
                 _ES=TYPE_POOL;
                 if (ES_B(_BX,TYPE_KIND)!=18) {
                     NAME_HOOK(_SI);
-                    PUT_CODE_STRING(TEXT(0x3858));
+                    PUT_CODE_STRING(TEXT(STR_EQU_S));
                     _ES=CSYM_POOL_SEG;
                     EMIT_SIGNED_DECIMAL(ES_W(_SI,CSYM_OFFSET));
-                    PUT_CODE_STRING(TEXT(0x3833));
+                    PUT_CODE_STRING(TEXT(STR_CR_NL));
                 }
             }
             break;
@@ -179,11 +179,11 @@ void far pascal EMIT_ASM_EXTERNALS(void)
         _ES=CSYM_POOL_SEG;
         ES_B(_SI,CSYM_CLASS)=1;
         NAME_HOOK(_SI);
-        PUT_CODE_STRING(TEXT(0x3861));
+        PUT_CODE_STRING(TEXT(STR_EQU));
         _ES=CSYM_POOL_SEG;
         ES_B(_SI,CSYM_CLASS)=3;
         NAME_HOOK(_SI);
-        PUT_CODE_STRING(TEXT(0x3833));
+        PUT_CODE_STRING(TEXT(STR_CR_NL));
 next:
         _ES=CSYM_POOL_SEG;
         _SI=ES_W(_SI,CSYM_NEXT);
@@ -250,13 +250,13 @@ void far pascal EMIT_ASM_SYMBOL_NAME(register unsigned int node)
 {
     char far *p;
     if (CSYM_B(node,CSYM_CLASS)==4) {
-        if (CSYM_W(node,CSYM_SEGMENT)==DATA_SEGMENT_ID) PUT_CODE_STRING(TEXT(0x3875));
-        else PUT_CODE_STRING(TEXT(0x3878));
+        if (CSYM_W(node,CSYM_SEGMENT)==DATA_SEGMENT_ID) PUT_CODE_STRING(TEXT(STR_D));
+        else PUT_CODE_STRING(TEXT(STR_B));
         if (SYMBOL_ELEMENT_KIND_HOOK(node)>2) PUT_CODE_CHAR(0x77);
         PUT_CODE_CHAR(0x2B);
         EMIT_DECIMAL(CSYM_W(node,CSYM_OFFSET));
     } else {
-        p=STRING_COPY(TEXT(0x5F50),(char far *)MK_FP(
+        p=STRING_COPY(TEXT(BCC_DEBUG_NAME),(char far *)MK_FP(
             *((unsigned int near *)NAME_WORD(node,4)),NAME_WORD(node,2)));
         if (CSYM_B(node,CSYM_CLASS)==3)
             PUT_CODE_STRING(p);

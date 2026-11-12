@@ -109,14 +109,14 @@ extern void far pascal EMIT_DECIMAL(unsigned int value);
 void far pascal EMIT_THIS_ADJUST_THUNK_ASM(unsigned int first, unsigned int second,
                          unsigned int third, unsigned int fourth)
 {
-    PUT_CODE_STRING((char near *)0x55D1);
-    PUT_CODE_STRING((char near *)0x55DE);
+    PUT_CODE_STRING((char near *)(STR_MOV_BX_SP));
+    PUT_CODE_STRING((char near *)(STR_ADD_SS_BX));
     EMIT_DECIMAL(fourth + (third ? 4 : 2));
-    PUT_CODE_STRING((char near *)0x55EB);
+    PUT_CODE_STRING((char near *)(STR_RBRACKET_COMMA));
     EMIT_DECIMAL(second);
-    PUT_CODE_STRING(third ? (char near *)0x55EE : (char near *)0x55FE);
+    PUT_CODE_STRING(third ? (char near *)(STR_JMP_FAR_PTR) : (char near *)(STR_JMP_NEAR_PTR));
     NAME_HOOK(first);
-    PUT_CODE_STRING((char near *)0x55C2);
+    PUT_CODE_STRING((char near *)&STR_DB_LINE_CRLF);
 }
 
 /* ---- CREATE_ASM_OUTPUT (listing ovr_1dda_b2c2:2D23) ---- */
@@ -143,21 +143,21 @@ static void far pascal CREATE_ASM_OUTPUT(char far *filename)
     /* Install the original 96-byte default table of output callbacks. */
     EMIT_DEPENDENCY_HOOK=ASM_TEXT_DEFAULT_HOOKS;
     if(!(CODE_OUTPUT_FLAGS&1)) {
-        STRING_APPEND(path,TEXT(0x560F));
+        STRING_APPEND(path,TEXT(STR_ASM_2));
         ASM_OUTPUT_PATH=POOL_ALLOC(&STRING_POOL_SEG,STRING_LENGTH(path)+1);
         STRING_COPY((char far *)MK_FP(STRING_POOL_SEG,ASM_OUTPUT_PATH),path);
     }
     if(CREATE_OUTPUT_FILE(path)==-1) REPORT_FATAL(MSG_UNABLE_CREATE_OUTPUT,path);
     if(OPTION_TARGET_CPU==1) {
-        PUT_CODE_STRING(TEXT(0x5614));
-        if(OPTION_FLOAT_MODE==2) {PUT_CODE_STRING(TEXT(0x561C));_AX=_AX;}
+        PUT_CODE_STRING(TEXT(STR_286));
+        if(OPTION_FLOAT_MODE==2) {PUT_CODE_STRING(TEXT(STR_287));_AX=_AX;}
     } else if(OPTION_TARGET_CPU==2) {
-        PUT_CODE_STRING(TEXT(0x5624));
-        if(OPTION_FLOAT_MODE==2) PUT_CODE_STRING(TEXT(0x561C));
+        PUT_CODE_STRING(TEXT(STR_286P));
+        if(OPTION_FLOAT_MODE==2) PUT_CODE_STRING(TEXT(STR_287));
     }
-    PUT_CODE_STRING(TEXT(0x562D));
+    PUT_CODE_STRING(TEXT(STR_IFNDEF_VERSION_DEBUG_MACRO_E));
     PUT_CODE_STRING(filename);
-    PUT_CODE_STRING(TEXT(0x5730));
+    PUT_CODE_STRING(TEXT(STR_QUOTE_CR_NL));
 }
 #undef TEXT
 
@@ -176,18 +176,18 @@ static void near pascal EMIT_GROUP_DEFINITION(unsigned int value)
     register unsigned int emitted;
     emitted = 0;
     node = SEGMENT_LIST_HEAD;
-    PUT_FAR_STRING(*(unsigned int far *)MK_FP(SEGDEF_POOL_SEG, value + SEGDEF_INDEX), 0x7846);
-    PUT_CODE_STRING((char near *)0x5734);
+    PUT_FAR_STRING(*(unsigned int far *)MK_FP(SEGDEF_POOL_SEG, value + SEGDEF_INDEX), (unsigned)&STRING_POOL_SEG);
+    PUT_CODE_STRING((char near *)(STR_GROUP));
     while (node != 0) {
         if (*(unsigned int far *)MK_FP(SEGDEF_POOL_SEG, node + SEGDEF_GROUP) == value) {
             if (emitted != 0)
                 PUT_CODE_CHAR(0x2C);
-            PUT_FAR_STRING(*(unsigned int far *)MK_FP(SEGDEF_POOL_SEG, node + SEGDEF_NAME), 0x7846);
+            PUT_FAR_STRING(*(unsigned int far *)MK_FP(SEGDEF_POOL_SEG, node + SEGDEF_NAME), (unsigned)&STRING_POOL_SEG);
             emitted = 1;
         }
         node = *(unsigned int far *)MK_FP(SEGDEF_POOL_SEG, node);
     }
-    PUT_CODE_STRING((char near *)0x55C2);
+    PUT_CODE_STRING((char near *)&STR_DB_LINE_CRLF);
 }
 
 /* ---- EMIT_ASM_HEADER (listing ovr_1dda_b2c2:2E90) ---- */
@@ -212,17 +212,17 @@ static void far pascal EMIT_ASM_HEADER(void)
         SEGDEF_W(item,SEGDEF_GROUP)=0;
         EMIT_GROUP_DEFINITION(item);
     }
-    PUT_CODE_STRING((char near *)0x573C);
+    PUT_CODE_STRING((char near *)(STR_ASSUME_CS_2));
     node=FIND_SEGMENT(CODE_SEGMENT_ID);
-    PUT_FAR_STRING(SEGDEF_W(node,SEGDEF_GROUP)!=0 ? SEGDEF_W(SEGDEF_W(node,SEGDEF_GROUP),SEGDEF_INDEX) : SEGDEF_W(node,SEGDEF_NAME),0x7846);
-    PUT_CODE_STRING((char near *)0x5748);
+    PUT_FAR_STRING(SEGDEF_W(node,SEGDEF_GROUP)!=0 ? SEGDEF_W(SEGDEF_W(node,SEGDEF_GROUP),SEGDEF_INDEX) : SEGDEF_W(node,SEGDEF_NAME),(unsigned)&STRING_POOL_SEG);
+    PUT_CODE_STRING((char near *)(STR_DS));
     node=FIND_SEGMENT(DATA_SEGMENT_ID);
-    PUT_FAR_STRING(SEGDEF_W(node,SEGDEF_GROUP)!=0 ? SEGDEF_W(SEGDEF_W(node,SEGDEF_GROUP),SEGDEF_INDEX) : SEGDEF_W(node,SEGDEF_NAME),0x7846);
-    PUT_CODE_STRING((char near *)0x55C2);
+    PUT_FAR_STRING(SEGDEF_W(node,SEGDEF_GROUP)!=0 ? SEGDEF_W(SEGDEF_W(node,SEGDEF_GROUP),SEGDEF_INDEX) : SEGDEF_W(node,SEGDEF_NAME),(unsigned)&STRING_POOL_SEG);
+    PUT_CODE_STRING((char near *)&STR_DB_LINE_CRLF);
     EMIT_PROC_BEGIN(DATA_SEGMENT_ID);
-    PUT_CODE_STRING((char near *)0x574D);
+    PUT_CODE_STRING((char near *)(STR_D_LABEL_BYTE_D_W_LABEL_WORD));
     EMIT_PROC_BEGIN(BSS_SEGMENT_ID);
-    PUT_CODE_STRING((char near *)0x576D);
+    PUT_CODE_STRING((char near *)(STR_B_LABEL_BYTE_B_W_LABEL_WORD));
     LINE_MARK_LAST_FILE=0;
 }
 
@@ -246,16 +246,16 @@ void far pascal EMIT_ASM_TRAILER(void)
     unsigned int current;
     int count;
     register unsigned int offset,index;
-    PUT_CODE_STRING(TEXT(0x578D));
+    PUT_CODE_STRING(TEXT(STR_DEBUG_C_E9));
     for(current=GROUP_LIST_HEAD;current;current=SEGDEF_W(current,SEGDEF_NEXT)) {
         if(SEGDEF_W(current,SEGDEF_GROUP)) EMIT_GROUP_DEFINITION(current);
     }
     EMIT_PROC_BEGIN(DATA_SEGMENT_ID);
-    PUT_CODE_STRING(TEXT(0x579C));
+    PUT_CODE_STRING(TEXT(STR_S_LABEL_BYTE));
     offset=0;
     index=0;
     while(index<DATA_BYTE_POOL_LENGTH) {
-        PUT_CODE_STRING(TEXT(0x57AC));
+        PUT_CODE_STRING(TEXT(&STR_DB));
             /* A printable byte starts a quoted run; it ends at a non-printable byte, a
                quote, the end, or after 60 more characters. Other bytes are written as
                signed decimal numbers. */
@@ -273,16 +273,16 @@ void far pascal EMIT_ASM_TRAILER(void)
         } else {
             EMIT_SIGNED_DECIMAL((int)C(0));
         }
-        PUT_CODE_STRING(TEXT(0x55C2));
+        PUT_CODE_STRING(TEXT(&STR_DB_LINE_CRLF));
         ++offset;
         ++index;
     }
     EMIT_PROC_BEGIN(CODE_SEGMENT_ID);
-    if(ASM_OUTPUT_FLAGS&2) PUT_CODE_STRING(TEXT(0x57B1));
+    if(ASM_OUTPUT_FLAGS&2) PUT_CODE_STRING(TEXT(STR_EXTRN_DGROUP_WORD));
     EMIT_PROC_BEGIN(0);
-    if(CODE_OUTPUT_FLAGS&2) PUT_CODE_STRING(TEXT(0x57C7));
+    if(CODE_OUTPUT_FLAGS&2) PUT_CODE_STRING(TEXT(STR_EXTRN_TURBOFLOAT_WORD));
     ASM_TRAILER_HOOK();
-    PUT_CODE_STRING(TEXT(0x57E2));
+    PUT_CODE_STRING(TEXT(STR_END_CRLF_EOF));
 }
 #undef C
 #undef TEXT
@@ -296,11 +296,11 @@ extern void far pascal EMIT_DECIMAL(unsigned int value);
    segment size grows by 5 (the instruction's length). */
 void far pascal EMIT_SWITCH_JUMP_ASM(unsigned int value)
 {
-    PUT_CODE_STRING((char near *)0x57EA);
+    PUT_CODE_STRING((char near *)(STR_JMP_WORD_PTR_CS));
     EMIT_DECIMAL(FUNCTION_SERIAL);
-    PUT_CODE_STRING((char near *)0x57FD);
+    PUT_CODE_STRING((char near *)(STR_C_6));
     EMIT_DECIMAL(value);
-    PUT_CODE_STRING((char near *)0x5800);
+    PUT_CODE_STRING((char near *)(STR_BX));
     *(unsigned long far *)MK_FP(SEGDEF_POOL_SEG, SELECTED_SEGDEF_ENTRY + SEGDEF_SIZE) += 5;
 }
 
@@ -313,12 +313,12 @@ extern void far pascal EMIT_DECIMAL(unsigned int value);
 /* "\tmov\tbx,offset @<serial>@C<value>": loads the address of a switch table. */
 void far pascal EMIT_SWITCH_TABLE_LOAD_ASM(unsigned int value)
 {
-    PUT_CODE_STRING((char near *)0x5807);
+    PUT_CODE_STRING((char near *)(STR_MOV_BX_OFFSET));
     PUT_CODE_CHAR(0x40);
     EMIT_DECIMAL(FUNCTION_SERIAL);
-    PUT_CODE_STRING((char near *)0x57FD);
+    PUT_CODE_STRING((char near *)(STR_C_6));
     EMIT_DECIMAL(value);
-    PUT_CODE_STRING((char near *)0x55C2);
+    PUT_CODE_STRING((char near *)&STR_DB_LINE_CRLF);
 }
 
 /* ---- EMIT_LOAD_DATA_SEGMENT_ASM (listing ovr_1dda_b2c2:314C) ---- */
@@ -335,20 +335,20 @@ void far pascal EMIT_LOAD_DATA_SEGMENT_ASM(unsigned char value)
 {
     register unsigned int entry;
     if (OPTION_MEMORY_MODEL==0) {
-        PUT_CODE_STRING(TEXT(0x5817));
+        PUT_CODE_STRING(TEXT(STR_MOV));
         PUT_CODE_STRING(REGISTER_NAME(value,6));
-        PUT_CODE_STRING(TEXT(0x581D));
+        PUT_CODE_STRING(TEXT(STR_CS_DGROUP));
         ASM_OUTPUT_FLAGS|=2;
     } else {
-        PUT_CODE_STRING(TEXT(0x5817));
+        PUT_CODE_STRING(TEXT(STR_MOV));
         PUT_CODE_STRING(REGISTER_NAME(value,6));
-        PUT_CODE_STRING(TEXT(0x55EC));
+        PUT_CODE_STRING(TEXT(STR_RBRACKET_COMMA+1));
         entry=FIND_SEGMENT(DATA_SEGMENT_ID);
         if (SEGDEF_W(entry,SEGDEF_GROUP))
-            PUT_FAR_STRING(SEGDEF_W(SEGDEF_W(entry,SEGDEF_GROUP),SEGDEF_INDEX),0x7846);
+            PUT_FAR_STRING(SEGDEF_W(SEGDEF_W(entry,SEGDEF_GROUP),SEGDEF_INDEX),(unsigned)&STRING_POOL_SEG);
         else
-            PUT_FAR_STRING(SEGDEF_W(entry,SEGDEF_NAME),0x7846);
-        PUT_CODE_STRING(TEXT(0x55C2));
+            PUT_FAR_STRING(SEGDEF_W(entry,SEGDEF_NAME),(unsigned)&STRING_POOL_SEG);
+        PUT_CODE_STRING(TEXT(&STR_DB_LINE_CRLF));
     }
 }
 #undef TEXT
@@ -361,9 +361,9 @@ extern void far pascal EMIT_DECIMAL(unsigned int value);
 /* "\tjmp\tword ptr cs:[bx+<value>]", 5 bytes. */
 void far pascal EMIT_CS_JMP_BX_DISP_ASM(unsigned int value)
 {
-    PUT_CODE_STRING((char near *)0x582B);
+    PUT_CODE_STRING((char near *)(STR_JMP_WORD_PTR_CS_BX));
     EMIT_DECIMAL(value);
-    PUT_CODE_STRING((char near *)0x5803);
+    PUT_CODE_STRING((char near *)(STR_BX+3));
     *(unsigned long far *)MK_FP(SEGDEF_POOL_SEG, SELECTED_SEGDEF_ENTRY + SEGDEF_SIZE) += 5;
 }
 
@@ -404,7 +404,7 @@ static void far pascal EMIT_DEPENDENCY_RECORD(char far *text)
     length=STRING_LENGTH(text);
     saved=DEBUG_STATE;
     DEBUG_STATE=-1;
-    PUT_CODE_STRING((char near *)0x5873);
+    PUT_CODE_STRING((char near *)(STR_DEBUG_C_3));
     EMIT_HEX_BYTE(0xE9);
     timestamp=FILE_TIME(text);
     EMIT_HEX_BYTE(((char near *)&timestamp)[0]);
@@ -421,10 +421,10 @@ static void far pascal EMIT_DEPENDENCY_RECORD(char far *text)
             if(*cursor==0) goto done;
             count++;
         } while(count<=20);
-        PUT_CODE_STRING((char near *)0x587E);
+        PUT_CODE_STRING((char near *)(STR_DEBUG_C_4));
     }
 done:
-    PUT_CODE_STRING((char near *)0x55C2);
+    PUT_CODE_STRING((char near *)&STR_DB_LINE_CRLF);
     DEBUG_STATE=saved;
 }
 
@@ -531,11 +531,11 @@ void far pascal EMIT_ASM_INSTRUCTION(int opcode)
             if (GET_SYMBOL_KIND_HOOK(symbol)==2) goto normal;
             if (GET_SYMBOL_SEGMENT_HOOK(symbol)!=FUNCTION_CODE_SEGMENT) goto normal;
         }
-        PUT_CODE_STRING(TEXT(0x588C));
+        PUT_CODE_STRING(TEXT(STR_PUSH_CS_CALL));
         FORMAT(0x12);
         goto newline;
     }
-    if (_SI==0xA1 && !(CODEGEN_FUNCTION_FLAGS&1)) { PUT_CODE_STRING(TEXT(0x589C)); goto done; }
+    if (_SI==0xA1 && !(CODEGEN_FUNCTION_FLAGS&1)) { PUT_CODE_STRING(TEXT(STR_DB_0CBH)); goto done; }
     if ((int)_SI>=0xC8 && (int)_SI<=0xCA) {
         PUT_CODE_STRING(((struct Descriptor near *)_DI)->name);
         PUT_CODE_CHAR(0x20);
@@ -543,13 +543,13 @@ void far pascal EMIT_ASM_INSTRUCTION(int opcode)
     }
     if (((struct Descriptor near *)_DI)->flags&2L) {
         if ((int)_SI>=0x82 && (int)_SI<=0x84 && FIRST_ASM_OPERAND.kind==0) {
-            PUT_CODE_STRING(TEXT(0x58A6)); goto done;
+            PUT_CODE_STRING(TEXT(STR_FCOMPP)); goto done;
         }
         if (SECOND_ASM_OPERAND.kind==1) {
             PUT_CODE_STRING(((struct Descriptor near *)_DI)->name);
-            PUT_CODE_STRING(TEXT(0x58AF));
+            PUT_CODE_STRING(TEXT(STR_P_ST));
             EMIT_DECIMAL((int)FIRST_ASM_OPERAND.reg);
-            PUT_CODE_STRING(TEXT(0x58B5)); goto done;
+            PUT_CODE_STRING(TEXT(STR_ST_0)); goto done;
         }
     }
 normal:
@@ -565,9 +565,9 @@ normal:
         FORMAT(0);
         break;
     case 0x8C: case 0x8D:
-        PUT_CODE_STRING(TEXT(0x58B1));
+        PUT_CODE_STRING(TEXT(STR_P_ST+2));
         EMIT_DECIMAL((int)FIRST_ASM_OPERAND.reg);
-        PUT_CODE_STRING(TEXT(0x58BD));
+        PUT_CODE_STRING(TEXT(STR_ST_0+8));
         goto done;
     case 0x3D: case 0x82: case 0x83: case 0x84:
     case 0x20: case 0x21: case 0x22:
@@ -575,19 +575,19 @@ normal:
     case 0x33: case 0x34: case 0x35:
     case 0x38: case 0x39: case 0x3A: case 0x3B: case 0x3C:
         if (FIRST_ASM_OPERAND.kind!=1) goto fallback;
-        PUT_CODE_STRING(TEXT(0x58C1));
+        PUT_CODE_STRING(TEXT(STR_ST_0_ST));
         EMIT_DECIMAL((int)FIRST_ASM_OPERAND.reg);
-        PUT_CODE_STRING(TEXT(0x58BD));
+        PUT_CODE_STRING(TEXT(STR_ST_0+8));
         goto done;
     case 0x92:
         EMIT_DECIMAL(SECOND_ASM_OPERAND.offset);
-        PUT_CODE_STRING(TEXT(0x58CB));
+        PUT_CODE_STRING(TEXT(STR_0));
         goto done;
     case 0x72:
         EMIT_DECIMAL(FIRST_ASM_OPERAND.offset);
         break;
     case 0x32:
-        if (FIRST_ASM_OPERAND.kind==4) PUT_CODE_STRING(TEXT(0x58D0));
+        if (FIRST_ASM_OPERAND.kind==4) PUT_CODE_STRING(TEXT(STR_AX_AX));
     case 0x31: case 0x36: case 0x37:
     case 0x3F: case 0x41: case 0x42: case 0x43:
         EMIT_ASM_OPERAND(&SECOND_ASM_OPERAND,INSN_OPERAND_FORMAT(_SI));
@@ -612,7 +612,7 @@ fallback:
         break;
     }
 newline:
-    PUT_CODE_STRING(TEXT(0x55C2));
+    PUT_CODE_STRING(TEXT(&STR_DB_LINE_CRLF));
 done:
     ;
 }
@@ -652,9 +652,9 @@ static void near pascal EMIT_ASM_OPERAND(register struct Operand near *operand,i
     switch(operand->kind) {
     case 1:
         if(EXPR_FLAGS[type]&2) {
-            PUT_CODE_STRING(S(0x58B1));
+            PUT_CODE_STRING(S(STR_P_ST+2));
             EMIT_DECIMAL(operand->reg);
-            PUT_CODE_STRING(S(0x58D7));
+            PUT_CODE_STRING(S(STR_RPAREN));
         } else PUT_CODE_STRING(REGISTER_NAME(operand->reg,type<=2 ? 2:6));
         break;
     case 4:
@@ -663,7 +663,7 @@ static void near pascal EMIT_ASM_OPERAND(register struct Operand near *operand,i
         printed=printed;
         break;
     case 2:
-        PUT_CODE_STRING(S(0x580F));
+        PUT_CODE_STRING(S(STR_MOV_BX_OFFSET+8));
         EMIT_GROUP_PREFIX(operand->symbol);
         if(operand->symbol!=0) {
             NAME_HOOK(operand->symbol);
@@ -686,29 +686,29 @@ static void near pascal EMIT_ASM_OPERAND(register struct Operand near *operand,i
             _BX=node; _ES=SEGDEF_POOL_SEG;
             if(ES_W(_BX,SEGDEF_GROUP)!=0) {
                 _BX=ES_W(_BX,SEGDEF_GROUP);
-                PUT_FAR_STRING(ES_W(_BX,SEGGRP_NAME),0x7846);
+                PUT_FAR_STRING(ES_W(_BX,SEGGRP_NAME),(unsigned)&STRING_POOL_SEG);
                 return;
             }
             _BX=node; _ES=SEGDEF_POOL_SEG;
-            PUT_FAR_STRING(ES_W(_BX,SEGDEF_NAME),0x7846);
+            PUT_FAR_STRING(ES_W(_BX,SEGDEF_NAME),(unsigned)&STRING_POOL_SEG);
             return;
         }
-        PUT_CODE_STRING(S(0x58D9));
+        PUT_CODE_STRING(S(STR_SEG));
         if(operand->symbol!=0) NAME_HOOK(operand->symbol);
         break;
     case 5:
         if(type!=0) {
             switch(type) {
-            case 1: case 2:PUT_CODE_STRING(S(0x58DE));break;
-            case 10:PUT_CODE_STRING(S(0x58E3));break;
-            case 9:PUT_CODE_STRING(S(0x58E9));break;
-            case 11:PUT_CODE_STRING(S(0x58EF));break;
-            case 21:PUT_CODE_STRING(S(0x58F5));break;
-            case 18:PUT_CODE_STRING(S(0x58F9));break;
-            case 7:PUT_CODE_STRING(S(0x58E9));break;
-            default:PUT_CODE_STRING(S(0x58E4));break;
+            case 1: case 2:PUT_CODE_STRING(S(STR_BYTE_2));break;
+            case 10:PUT_CODE_STRING(S(STR_QWORD));break;
+            case 9:PUT_CODE_STRING(S(STR_DWORD));break;
+            case 11:PUT_CODE_STRING(S(STR_TBYTE));break;
+            case 21:PUT_CODE_STRING(S(STR_FAR_5));break;
+            case 18:PUT_CODE_STRING(S(STR_NEAR_6));break;
+            case 7:PUT_CODE_STRING(S(STR_DWORD));break;
+            default:PUT_CODE_STRING(S(STR_QWORD+1));break;
             }
-            PUT_CODE_STRING(S(0x55F8));
+            PUT_CODE_STRING(S(STR_JMP_FAR_PTR+10));
         }
         if(operand->index!=-1) {
             PUT_CODE_STRING(REGISTER_NAME(operand->index,6));
@@ -718,7 +718,7 @@ static void near pascal EMIT_ASM_OPERAND(register struct Operand near *operand,i
             NAME_HOOK(operand->symbol);
             printed=1;
         } else if(operand->reg==-1 && operand->scale==-1) {
-            if(operand->index==-1) PUT_CODE_STRING(S(0x5749));
+            if(operand->index==-1) PUT_CODE_STRING(S(STR_DS+1));
             PUT_CODE_CHAR('[');
             EMIT_DECIMAL(operand->offset);
             PUT_CODE_CHAR(']');
@@ -769,7 +769,7 @@ void far pascal EMIT_GROUP_PREFIX(unsigned int value)
             if (((unsigned int far *)MK_FP(SEGDEF_POOL_SEG, entry))[1]) {
                 PUT_FAR_STRING(((unsigned int far *)MK_FP(SEGDEF_POOL_SEG,
                     ((unsigned int far *)MK_FP(SEGDEF_POOL_SEG, entry))[1]))[2],
-                    0x7846);
+                    (unsigned)&STRING_POOL_SEG);
                 PUT_CODE_CHAR(0x3A);
             }
         }
@@ -803,16 +803,16 @@ extern void far pascal EMIT_DECIMAL(unsigned int);
 void far pascal EMIT_COMM_DECLARATION(unsigned int node,unsigned int indirect,unsigned int width,unsigned long count)
 {
     if(count==1L && (width==1 || width==2 || width==4 || width==8 || width==10)) {
-        PUT_CODE_STRING(TEXT(0x58FE));
-        PUT_CODE_STRING(indirect!=0 ? TEXT(0x5905) : TEXT(0x590A));
+        PUT_CODE_STRING(TEXT(STR_COMM));
+        PUT_CODE_STRING(indirect!=0 ? TEXT(STR_FAR_3) : TEXT(STR_NEAR_4));
         NAME_HOOK(node);
         PUT_CODE_CHAR(':');
         PUT_CODE_STRING(ASM_TYPE_NAME_TABLE[SYMBOL_ELEMENT_KIND_HOOK(node)]);
     } else {
-        PUT_CODE_STRING(TEXT(0x5910));
+        PUT_CODE_STRING(TEXT(STR_COMM_2));
         NAME_HOOK(node);
         PUT_CODE_CHAR(',');
-        PUT_CODE_STRING(indirect!=0 ? TEXT(0x5918) : TEXT(0x591D));
+        PUT_CODE_STRING(indirect!=0 ? TEXT(STR_FAR_4) : TEXT(STR_NEAR_5));
         EMIT_DECIMAL(width);
         PUT_CODE_CHAR(',');
         if(count>=0x10000L) {

@@ -153,17 +153,17 @@ unsigned long near pascal GENERATE_CONVERSION(unsigned int input)
         break;
     case 22:
         NEW_CODE_NODE(0xB4,0,operand.words.low,0);
-        EMIT_HELPER_CALL((char near *)0x3F91,0x1055);
+        EMIT_HELPER_CALL((char near *)(STR_FTOL),0x1055);
         result.words.low=NEW_CONSTANT_NODE(0xC2,0UL);
         break;
     case 23:
         NEW_CODE_NODE(0xB4,0,operand.words.low,0);
-        EMIT_HELPER_CALL((char near *)0x3F91,0x1055);
+        EMIT_HELPER_CALL((char near *)(STR_FTOL),0x1055);
         result.words.low=NEW_CONSTANT_NODE(0xC3,0UL);
         break;
     case 24:
         NEW_CODE_NODE(0xB4,0,operand.words.low,0);
-        EMIT_HELPER_CALL((char near *)0x3F91,0x1055);
+        EMIT_HELPER_CALL((char near *)(STR_FTOL),0x1055);
         result.words.low=NEW_CONSTANT_NODE(0xC2,0UL);
         result.words.high=NEW_CONSTANT_NODE(0xC3,0UL);
         break;

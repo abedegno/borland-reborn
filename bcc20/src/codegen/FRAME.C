@@ -68,7 +68,7 @@ static void near pascal EMIT_FRAME_SETUP(void)
         }
         if (OPTION_STACK_CHECK) {
             name=DECLARE_NAMED_GLOBAL_HOOK(OPTION_MEMORY_MODEL==1 || OPTION_MEMORY_MODEL==3 ?
-                          (char near *)0x5342 : (char near *)0x534C,1);
+                          (char near *)(STR_N_CHKSTK) : (char near *)(STR_F_CHKSTK),1);
             EMIT_INSN_REG_IMM(0x9C,0,FRAME_LOCALS_SIZE);
             if (ASM_OUTPUT_FLAGS&8) {
                 label=NEW_VARIABLE_NODE(0x77,name,0,16);

@@ -1337,6 +1337,8 @@ GLOBAL_ALIASES = {
     # errno (DGROUP:0000) of the Turbo C DOS-call modules; symbols.tsv names DS:0000
     # ACTIVE_HEAP (exhume.toml extern_aliases ERRNO = "ACTIVE_HEAP").
     "ERRNO": "ACTIVE_HEAP",
+    # C0 clears the BSS from BSS_START, its first variable (exhume.toml extern_aliases).
+    "BSS_START": "SAVED_INT23_VECTOR",
     # R9UNIT calls R9UNPACK's unpacker (a resident far public in another source).
     "RTL_LDOUBLE_UNPACK": "BCC_FAR_970B",
     # RHAPI shifts unsigned longs right with the runtime helper at CODE_0:03E3 (RLSHR).

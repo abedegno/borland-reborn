@@ -41,8 +41,8 @@ unsigned int far pascal NEW_CODE_NODE(unsigned int kind, unsigned char flags,
     unsigned char near *description;
 
     _DI = left;
-    _SI = POOL_ALLOC((char far *)MK_FP(_DS, 0x8680), 4);
-    POOL_ALLOC((char far *)MK_FP(_DS, 0x8698), 4);
+    _SI = POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OP_POOL_SEG), 4);
+    POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OPERAND_POOL_SEG), 4);
     _ES = CODE_OP_POOL_SEG;
     *((unsigned char far *)MK_FP(_ES, _SI)) = kind;
     *((unsigned char far *)MK_FP(_ES, _SI + COP_FLAGS)) = flags;
@@ -87,8 +87,8 @@ unsigned int far pascal NEW_VARIABLE_NODE(unsigned char kind,
 {
     unsigned int result;
 
-    _SI = POOL_ALLOC((char far *)MK_FP(_DS, 0x8680), 4);
-    POOL_ALLOC((char far *)MK_FP(_DS, 0x8698), 4);
+    _SI = POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OP_POOL_SEG), 4);
+    POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OPERAND_POOL_SEG), 4);
     _ES = CODE_OP_POOL_SEG;
     *((unsigned char far *)MK_FP(_ES, _SI)) = kind;
     *((unsigned char far *)MK_FP(_ES, _SI + COP_FLAGS)) = 0;
@@ -110,8 +110,8 @@ extern unsigned int far pascal POOL_ALLOC(char far *state, unsigned int size);
 unsigned int far pascal NEW_PLAIN_CODE_NODE(unsigned char kind,
                                      unsigned int value1, unsigned int value2)
 {
-    _SI = POOL_ALLOC((char far *)MK_FP(_DS, 0x8680), 4);
-    POOL_ALLOC((char far *)MK_FP(_DS, 0x8698), 4);
+    _SI = POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OP_POOL_SEG), 4);
+    POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OPERAND_POOL_SEG), 4);
     _ES = CODE_OP_POOL_SEG;
     *((unsigned char far *)MK_FP(_ES, _SI)) = kind;
     *((unsigned char far *)MK_FP(_ES, _SI + COP_FLAGS)) = 0;
@@ -135,8 +135,8 @@ extern unsigned int far pascal POOL_ALLOC(char far *state, unsigned int size);
 unsigned int far pascal NEW_CONSTANT_NODE(unsigned char kind,
                                      unsigned int value1, unsigned int value2)
 {
-    _SI = POOL_ALLOC((char far *)MK_FP(_DS, 0x8680), 4);
-    POOL_ALLOC((char far *)MK_FP(_DS, 0x8698), 4);
+    _SI = POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OP_POOL_SEG), 4);
+    POOL_ALLOC((char far *)MK_FP(_DS, (unsigned)&CODE_OPERAND_POOL_SEG), 4);
     _ES = CODE_OP_POOL_SEG;
     *((unsigned char far *)MK_FP(_ES, _SI)) = kind;
     *((unsigned char far *)MK_FP(_ES, _SI + COP_FLAGS)) = 0;

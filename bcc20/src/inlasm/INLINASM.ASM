@@ -2897,7 +2897,7 @@ ASM_DECRM_SET_FIXUP_KIND:
 		mov	bl,byte ptr [si+0Eh]
 		and	bx,0Fh
 		je	short ASM_DECRM_STORE_MODE
-		mov	ah,byte ptr cs:[bx+1164h]
+		mov	ah,byte ptr cs:[bx+ASM_MODRM_RM_SIZE_TABLE-1]
 		or	ah,ah
 		jns	short ASM_DECRM_BASED
 		jmp	ASM_FAIL_INVALID_REGISTER
@@ -2911,7 +2911,7 @@ ASM_DECRM_STORE_MODE:
 		mov	bx,word ptr [si+0Ch]
 		cmp	bx,0Ah
 		ja	short ASM_DECRM_STORE_SIZE
-		mov	cl,byte ptr cs:[bx+1174h]
+		mov	cl,byte ptr cs:[bx+ASM_MODRM_RM_SIZE_TABLE+0Fh]
 ASM_DECRM_STORE_SIZE:
 		mov	byte ptr [bp-2Ch],cl
 		mov	byte ptr [bp-26h],ah

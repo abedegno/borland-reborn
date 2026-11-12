@@ -66,22 +66,22 @@ unsigned int far pascal EMIT_PROC_BEGIN(register unsigned int value)
         entry=SELECTED_SEGDEF_ENTRY;
         outer=SEGDEF_W(entry,SEGDEF_PARENT_ID)&0x7FFF;
         if (outer) entry=FIND_SEGMENT(outer);
-        PUT_FAR_STRING(SEGDEF_W(entry,SEGDEF_NAME),0x7846);
-        PUT_CODE_STRING(TEXT(0x5994));
-        if (SEGDEF_B(entry,SEGDEF_ALIGN)==16) PUT_CODE_STRING(TEXT(0x599E));
-        else if (SEGDEF_SC(entry,SEGDEF_ALIGN)>1) PUT_CODE_STRING(TEXT(0x597F));
-        else PUT_CODE_STRING(TEXT(0x597A));
-        PUT_CODE_STRING(TEXT(0x59A3));
+        PUT_FAR_STRING(SEGDEF_W(entry,SEGDEF_NAME),(unsigned)&STRING_POOL_SEG);
+        PUT_CODE_STRING(TEXT(STR_SEGMENT));
+        if (SEGDEF_B(entry,SEGDEF_ALIGN)==16) PUT_CODE_STRING(TEXT(STR_PARA));
+        else if (SEGDEF_SC(entry,SEGDEF_ALIGN)>1) PUT_CODE_STRING(TEXT(STR_WORD));
+        else PUT_CODE_STRING(TEXT(STR_BYTE+1));
+        PUT_CODE_STRING(TEXT(STR_PUBLIC));
         if (FAR_B(STRING_POOL_SEG,SEGDEF_W(entry,SEGDEF_CLASS_NAME),STRPOOL_CHAR)) {
             PUT_CODE_CHAR('\'');
-            PUT_FAR_STRING(SEGDEF_W(entry,SEGDEF_CLASS_NAME),0x7846);
+            PUT_FAR_STRING(SEGDEF_W(entry,SEGDEF_CLASS_NAME),(unsigned)&STRING_POOL_SEG);
             PUT_CODE_CHAR('\'');
         }
-        PUT_CODE_STRING(TEXT(0x59AC));
+        PUT_CODE_STRING(TEXT(STR_CRLF_3));
         DEBUG_STATE=SEGDEF_W(entry,SEGDEF_INDEX);
         if (outer) {
-            PUT_FAR_STRING(SEGDEF_W(SELECTED_SEGDEF_ENTRY,SEGDEF_NAME),0x7846);
-            PUT_CODE_STRING(TEXT(0x59AF));
+            PUT_FAR_STRING(SEGDEF_W(SELECTED_SEGDEF_ENTRY,SEGDEF_NAME),(unsigned)&STRING_POOL_SEG);
+            PUT_CODE_STRING(TEXT(STR_SEGMENT_VIRTUAL));
         }
     }
     return value;
@@ -103,9 +103,9 @@ static void far pascal RESERVE_DATA_BYTES(unsigned int amount)
     total=SEGDEF_L(record,SEGDEF_SIZE)+amount;
     if(total>0x10000L) REPORT_FATAL(MSG_TOO_MUCH_GLOBAL_DATA,SEGDEF_W(record,SEGDEF_NAME));
     SEGDEF_L(record,SEGDEF_SIZE)=total;
-    PUT_CODE_STRING(TEXT(0x59C2));
+    PUT_CODE_STRING(TEXT(STR_DB_2));
     EMIT_DECIMAL(amount);
-    PUT_CODE_STRING(SEGDEF_W(record,SEGDEF_FIRST_BLOCK)!=0 ? TEXT(0x59C7) : TEXT(0x59D2));
+    PUT_CODE_STRING(SEGDEF_W(record,SEGDEF_FIRST_BLOCK)!=0 ? TEXT(STR_DUP_0) : TEXT(STR_DUP));
 }
 #undef TEXT
 
@@ -134,9 +134,9 @@ void far pascal EMIT_DB_DATA(unsigned char value)
     }
     *((unsigned long far *)MK_FP(SEGDEF_POOL_SEG, node + SEGDEF_SIZE)) += 1;
     *((unsigned int far *)MK_FP(SEGDEF_POOL_SEG, node + SEGDEF_FIRST_BLOCK)) = 1;
-    PUT_CODE_STRING((char near *)0x59C2);
+    PUT_CODE_STRING((char near *)(STR_DB_2));
     EMIT_SIGNED_DECIMAL((unsigned int)value);
-    PUT_CODE_STRING((char near *)0x59AC);
+    PUT_CODE_STRING((char near *)(STR_CRLF_3));
 }
 
 /* ---- EMIT_PROC_OR_LABEL (listing ovr_1de3_b3c8:3ECA) ---- */
@@ -163,7 +163,7 @@ void far pascal EMIT_PROC_OR_LABEL(unsigned int value)
     SET_SYMBOL_AT_CURRENT_POS(_DI);
     if (GET_SYMBOL_KIND_HOOK(_DI)==1 || GET_SYMBOL_KIND_HOOK(_DI)==3) {
         if (SYMBOL_ELEMENT_KIND_HOOK(_DI)==18) {
-            PUT_CODE_STRING(TEXT(0x59DD));
+            PUT_CODE_STRING(TEXT(STR_ASSUME_CS));
             _SI=FIND_SEGMENT(CODE_SEGMENT_ID);
             _ES=SEGDEF_POOL_SEG;
             if ((int)ES_W(_SI,SEGDEF_PARENT_ID)>0) _SI=FIND_SEGMENT(ES_W(_SI,SEGDEF_PARENT_ID));
@@ -175,18 +175,18 @@ void far pascal EMIT_PROC_OR_LABEL(unsigned int value)
                 _ES=SEGDEF_POOL_SEG;
                 _AX=ES_W(_SI,SEGDEF_NAME);
             }
-            PUT_FAR_STRING(_AX,0x7846);
-            PUT_CODE_STRING(TEXT(0x59AC));
+            PUT_FAR_STRING(_AX,(unsigned)&STRING_POOL_SEG);
+            PUT_CODE_STRING(TEXT(STR_CRLF_3));
             NAME_HOOK(_DI);
-            PUT_CODE_STRING(TEXT(0x59E9));
-            if (FLAG_HOOK(TYPE_HOOK(_DI))&1) PUT_CODE_STRING(TEXT(0x5990));
-            else { PUT_CODE_STRING(TEXT(0x59F0)); _SI=_SI; }
+            PUT_CODE_STRING(TEXT(STR_PROC));
+            if (FLAG_HOOK(TYPE_HOOK(_DI))&1) PUT_CODE_STRING(TEXT(STR_FAR_2));
+            else { PUT_CODE_STRING(TEXT(STR_NEAR_2)); _SI=_SI; }
         } else {
             NAME_HOOK(_DI);
-            PUT_CODE_STRING(TEXT(0x59F5));
+            PUT_CODE_STRING(TEXT(STR_LABEL));
             PUT_CODE_STRING(ASM_TYPE_NAME_TABLE[SYMBOL_ELEMENT_KIND_HOOK(_DI)]);
         }
-        PUT_CODE_STRING(TEXT(0x59AC));
+        PUT_CODE_STRING(TEXT(STR_CRLF_3));
     }
 }
 #undef TEXT
@@ -214,14 +214,14 @@ static void far pascal EMIT_DW_ADDRESS(register unsigned int name,register unsig
     if(SEGDEF_L(SELECTED_SEGDEF_ENTRY,SEGDEF_SIZE)>0x10000L)
         REPORT_FATAL(MSG_TOO_MUCH_GLOBAL_DATA,SEGDEF_W(SELECTED_SEGDEF_ENTRY,SEGDEF_NAME));
     SEGDEF_W(SELECTED_SEGDEF_ENTRY,SEGDEF_FIRST_BLOCK)=1;
-    PUT_CODE_STRING((char near *)0x5A05);
+    PUT_CODE_STRING((char near *)(STR_DW_2));
     EMIT_GROUP_PREFIX(name);
     NAME_HOOK(name);
     if(value) {
         PUT_CODE_CHAR('+');
         EMIT_DECIMAL(value);
     }
-    PUT_CODE_STRING((char near *)0x59AC);
+    PUT_CODE_STRING((char near *)(STR_CRLF_3));
 }
 
 /* ---- EMIT_DD_ADDRESS (listing ovr_1de3_b3c8:4063) ---- */
@@ -237,14 +237,14 @@ static void far pascal EMIT_DD_ADDRESS(register unsigned int name,register unsig
     if(SEGDEF_L(SELECTED_SEGDEF_ENTRY,SEGDEF_SIZE)>0x10000L)
         REPORT_FATAL(MSG_TOO_MUCH_GLOBAL_DATA,SEGDEF_W(SELECTED_SEGDEF_ENTRY,SEGDEF_NAME));
     SEGDEF_W(SELECTED_SEGDEF_ENTRY,SEGDEF_FIRST_BLOCK)=1;
-    PUT_CODE_STRING((char near *)0x5A0A);
+    PUT_CODE_STRING((char near *)(STR_DD));
     EMIT_GROUP_PREFIX(name);
     NAME_HOOK(name);
     if(value) {
         PUT_CODE_CHAR('+');
         EMIT_DECIMAL(value);
     }
-    PUT_CODE_STRING((char near *)0x59AC);
+    PUT_CODE_STRING((char near *)(STR_CRLF_3));
 }
 
 /* ---- EMIT_LOCAL_LABEL (listing ovr_1de3_b3c8:40EE) ---- */
@@ -256,9 +256,9 @@ void far pascal EMIT_LOCAL_LABEL(unsigned int value)
 {
     PUT_CODE_CHAR(0x40);
     EMIT_DECIMAL(FUNCTION_SERIAL);
-    PUT_CODE_STRING((char near *)0x5A0F);
+    PUT_CODE_STRING((char near *)(STR_C_5));
     EMIT_DECIMAL(value);
-    PUT_CODE_STRING((char near *)0x5A12);
+    PUT_CODE_STRING((char near *)(STR_LABEL_WORD));
 }
 
 /* ---- ADD_JUMP_18_NEXT_FRAGMENT (listing ovr_1de3_b3c8:4123) ---- */
@@ -320,11 +320,11 @@ static void near pascal EMIT_SEGMENT_END(void)
 {
     register unsigned int selected;
     if (SELECTED_SEGDEF_ENTRY != 0) {
-        PUT_FAR_STRING(SEGDEF_W(SELECTED_SEGDEF_ENTRY, SEGDEF_NAME), 0x7846);
+        PUT_FAR_STRING(SEGDEF_W(SELECTED_SEGDEF_ENTRY, SEGDEF_NAME), (unsigned)&STRING_POOL_SEG);
         PUT_CODE_STRING((char far *)STR_ENDS);
         if (SEGDEF_W(SELECTED_SEGDEF_ENTRY, SEGDEF_PARENT_ID) != 0) {
             selected = FIND_SEGMENT(SEGDEF_W(SELECTED_SEGDEF_ENTRY, SEGDEF_PARENT_ID) & 0x7FFF);
-            PUT_FAR_STRING(SEGDEF_W(selected, SEGDEF_NAME), 0x7846);
+            PUT_FAR_STRING(SEGDEF_W(selected, SEGDEF_NAME), (unsigned)&STRING_POOL_SEG);
             PUT_CODE_STRING((char far *)STR_ENDS);
         }
         SELECTED_SEGDEF_ENTRY = 0;

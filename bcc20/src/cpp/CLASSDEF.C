@@ -1382,7 +1382,7 @@ static unsigned int far pascal TYPE_CLASSIFY(void)
         return 4;
     if (*(unsigned int far *)MK_FP(TYPE_POOL, TYPE_EXPR) != 0x15) {
         _AX = *(unsigned char near *)(*(unsigned int far *)MK_FP(TYPE_POOL, TYPE_EXPR) +
-            0x9CA);
+            (unsigned)EXPR_FLAGS);
         if ((_AX & 0x40) == 0 ||
             *(unsigned int far *)MK_FP(SYMBOL_POOL_SEG,
                 *(unsigned int far *)MK_FP(TAG_BODY_POOL_SEG,
@@ -1431,7 +1431,7 @@ return_two:
         *(unsigned int far *)MK_FP(TYPE_POOL, TYPE_EXPR) != 0x12) {
         if (!MEMBER_DECL_FRIEND) {
             if ((*(unsigned char near *)(*(unsigned int far *)MK_FP(TYPE_POOL,
-                    TYPE_EXPR) + 0x9CA) & 0x14) == 0 ||
+                    TYPE_EXPR) + (unsigned)EXPR_FLAGS) & 0x14) == 0 ||
                 *(unsigned int far *)MK_FP(TYPE_POOL,
                     *(unsigned int far *)MK_FP(TYPE_POOL, TYPE_EXPR + TYPE_TARGET)) != 0x12) {
                 if (STORAGE_CLASS_TOKEN == 0x82)

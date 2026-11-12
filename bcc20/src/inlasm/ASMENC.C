@@ -93,7 +93,7 @@ void far pascal ENCODE_ASM_SYMBOL(void)
             case 1:
                 if (TYPE_B(CSYM_W(record,CSYM_TYPE),TYPE_KIND)!=18 && DATA_GROUP_NAME) {
                     STRING_COPY(TOKEN_TEXT_BUFFER,(char far *)MK_FP(STRING_POOL_SEG,DATA_GROUP_NAME));
-                    STRING_APPEND(TOKEN_TEXT_BUFFER,(char near *)0x38F8);
+                    STRING_APPEND(TOKEN_TEXT_BUFFER,(char near *)(STR_COLON_2));
                 }
             case 2:
                 dest=TOKEN_TEXT_BUFFER+STRING_LENGTH(TOKEN_TEXT_BUFFER);

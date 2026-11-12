@@ -164,13 +164,13 @@ unsigned long far pascal GENERATE_OPERATOR(unsigned int input)
             if(EXPR_W(node,EXPR_OP)==EOP_ADD) {
                 result.words.low=NEW_CODE_NODE(0x1D,0x10,integer_operand.words.low,pointer_operand.words.low);
                 item=NEW_CODE_NODE(0x24,0x20,integer_operand.words.high,first);
-                second=NEW_VARIABLE_NODE(0x0D,DECLARE_NAMED_GLOBAL_HOOK((char near *)0x3F5C,1),0,0x10);
+                second=NEW_VARIABLE_NODE(0x0D,DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_AHSHIFT_2),1),0,0x10);
                 item=NEW_CODE_NODE(0x45,0,item,second);
                 result.words.high=NEW_CODE_NODE(0x1F,0,item,pointer_operand.words.high);
             } else {
                 result.words.low=NEW_CODE_NODE(0x26,0x10,pointer_operand.words.low,integer_operand.words.low);
                 item=NEW_CODE_NODE(0x24,0x20,integer_operand.words.high,first);
-                second=NEW_VARIABLE_NODE(0x0D,DECLARE_NAMED_GLOBAL_HOOK((char near *)0x3F5C,1),0,0x10);
+                second=NEW_VARIABLE_NODE(0x0D,DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_AHSHIFT_2),1),0,0x10);
                 item=NEW_CODE_NODE(0x45,0,item,second);
                 result.words.high=NEW_CODE_NODE(0x28,0,pointer_operand.words.high,item);
             }
@@ -277,7 +277,7 @@ unsigned long far pascal GENERATE_OPERATOR(unsigned int input)
                 result.words.low=NEW_CODE_NODE(0x26,0x12,left.words.low,right.words.low);
                 item=NEW_CODE_NODE(0x30,0x20,first,right.words.high);
             }
-            second=NEW_VARIABLE_NODE(0x0D,DECLARE_NAMED_GLOBAL_HOOK((char near *)0x3F5C,1),0,0x10);
+            second=NEW_VARIABLE_NODE(0x0D,DECLARE_NAMED_GLOBAL_HOOK((char near *)(STR_AHSHIFT_2),1),0,0x10);
             item=NEW_CODE_NODE(0x45,0,item,second);
             result.words.high=NEW_CODE_NODE(0x1F,2,left.words.high,item);
         } else {
@@ -428,7 +428,7 @@ unsigned long far pascal GENERATE_OPERATOR(unsigned int input)
         NEW_CODE_NODE(0x94,0,right.words.low,0);
         first=NEW_CONSTANT_NODE(0x0A,EXPR_UL(EXPR_W(node,EXPR_RIGHT),EXPR_VALUE));
         NEW_CODE_NODE(0xB6,0,0,first);
-        EMIT_HELPER_CALL((char near *)0x3F8A,0x1040);
+        EMIT_HELPER_CALL((char near *)(STR_SCOPY_2),0x1040);
         NEW_CONSTANT_NODE(0xAE,8UL);
         break;
     case 51:

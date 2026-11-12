@@ -43,7 +43,7 @@
 static int near pascal OPERAND_KIND_OPCODE_DELTA(unsigned int value)
 {
     register int size;
-    size = ((unsigned char near *)0x3F9F)[
+    size = ((unsigned char near *)((char near *)&CODE_OP_INFO_TABLE+4))[
         *(unsigned char far *)MK_FP(CODE_OP_POOL_SEG, value << 2) * 19];
     if (size < 4)
         return 0;

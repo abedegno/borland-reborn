@@ -117,7 +117,7 @@ unsigned int far pascal INIT_FUNCTION_STATE(
     unsigned int fourth, unsigned int third, unsigned int second,
     unsigned int first)
 {
-    RTL_MEMSET((char far *)MK_FP(_DS, 0x86D4), 0, 0x21);
+    RTL_MEMSET((char far *)MK_FP(_DS, (unsigned)&CODEGEN_FUNCTION_SYMBOL), 0, 0x21);
     FUNCTION_SERIAL++;
     CODEGEN_FUNCTION_SYMBOL = tenth;
     CODEGEN_RETURN_TYPE = ninth;
@@ -768,8 +768,8 @@ extern unsigned int EXPR_POOL_SEG;
    times 21 plus the value kind. */
 static int near pascal EXPR_REGISTER_NEED(register unsigned int node)
 {
-    return ((signed char near *)0x51DF)[
-        *((signed char near *)(*(unsigned int far *)MK_FP(EXPR_POOL_SEG, node) + 0x5234)) * 21 +
+    return ((signed char near *)REGISTER_NEED_TABLE)[
+        *((signed char near *)(*(unsigned int far *)MK_FP(EXPR_POOL_SEG, node) + (unsigned)((char near *)OPERATOR_HELPER_NAME_TABLE - 1))) * 21 +
         ((unsigned int far *)MK_FP(EXPR_POOL_SEG, node))[1]];
 }
 

@@ -1,0 +1,15 @@
+# Numbers in compiled code that are DGROUP addresses but cannot be names: with a name (a
+# fixup) BC compiles the code around them differently.  tools/gendata.py labels each target
+# DATA_xxxx; tools/modlink.py writes the target's offset in the new layout into the word.
+# module	offset	target	note
+ASMCODE	0538	54E7	"FIARQQ", COMMENT() in ENCODE_ASM_INSTRUCTION's segment-prefix switch
+ASMCODE	0547	54EE	"FJARQQ"
+ASMCODE	0553	54F5	"FIERQQ"
+ASMCODE	0566	54FC	"FISRQQ"
+ASMCODE	0575	5503	"FJSRQQ"
+ASMCODE	0581	550A	"FICRQQ"
+ASMCODE	0590	5511	"FJCRQQ"
+ASMCODE	059C	5518	"FIDRQQ"
+ASMCODE	0612	551F	"FIWRQQ"
+EXTDECL	1331	0702	"friend", in a ?: in PARSE_EXTERNAL_DECLARATIONS
+EXTDECL	133E	0709	"virtual"

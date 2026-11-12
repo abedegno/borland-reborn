@@ -36,7 +36,7 @@ static void near pascal CLEAR_REGISTER_SLOTS(void);
 static void near pascal CLEAR_REGISTER_SLOTS(void)
 {
     register unsigned int near *cursor;
-    for(cursor=(unsigned int near *)0x8762;cursor<=(unsigned int near *)0x879E;cursor+=2)
+    for(cursor=(unsigned int near *)((char near *)&PEEPHOLE_STORE_STAMP+2);cursor<=(unsigned int near *)((char near *)&PEEPHOLE_STORE_STAMP+62);cursor+=2)
         *cursor=0;
     PEEPHOLE_MEMORY_STORE_STAMP=0;
 }
@@ -48,7 +48,7 @@ static void near pascal CLEAR_SLOTS_BY_MASK(unsigned int mask)
     register unsigned int near *cursor;
     register unsigned int bits;
     bits=mask;
-    cursor=(unsigned int near *)0x8762;
+    cursor=(unsigned int near *)((char near *)&PEEPHOLE_STORE_STAMP+2);
     while(bits) {
         if(bits&1) *cursor=0;
         cursor+=2;
@@ -151,7 +151,7 @@ static void far pascal MARK_REDUNDANT_OPERAND(unsigned int second, unsigned int 
     register unsigned int entry;
 
     mask = REG_CLASS_MASK_TABLE[first];
-    cursor = (unsigned int near *)0x8762;
+    cursor = (unsigned int near *)((char near *)&PEEPHOLE_STORE_STAMP+2);
     index = 0;
     while (mask) {
         if ((mask & 1) && cursor[0] &&
@@ -174,7 +174,7 @@ extern unsigned int FLOW_BLOCK_POOL_SEG; extern unsigned int VARIABLE_TABLE_SEG;
 struct Slot { unsigned int value,stamp; };
 extern struct Descriptor OPCODE_DESCRIPTOR_TABLE[];
 extern signed char far pascal GET_ASSIGNED_REGISTER(unsigned int);
-#define SLOT(n) (((struct Slot near *)0x8762)+(n))
+#define SLOT(n) (((struct Slot near *)((char near *)&PEEPHOLE_STORE_STAMP+2))+(n))
 /* ELIMINATE_REDUNDANT_LOADS: the pass described in the overview, over the current
    function. Stamps start at 0 for every variable. */
 void far pascal ELIMINATE_REDUNDANT_LOADS(void)

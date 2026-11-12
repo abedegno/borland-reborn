@@ -163,9 +163,11 @@ def _fixups(body):
         if not b & 0x80:          # THREAD subrecord
             method = (b >> 2) & 7
             j += 1
-            if not (b & 0x40 and method >= 4):
-                if (b & 0x40) or method < 3:
+            if b & 0x40:                  # frame thread: F0-F2 carry an index
+                if method < 3:
                     _, j = index(body, j)
+            else:                         # target thread: always an index
+                _, j = index(body, j)
             continue
         locat = (b << 8) | body[j + 1]
         j += 2
@@ -205,3 +207,51 @@ def retarget_offsets(records, extern_name, new_name):
         if i == last_ext:
             out.append((0x8C, bytes([len(new_name)]) + new_name.encode("latin1") + b"\x00"))
     return out, count
+
+
+def code_image(records, segment_index):
+    """(bytes, fixed) for one segment: its LEDATA contents and the set of byte offsets that
+    fixups fill in.  Raises on LIDATA, which compiled code never uses."""
+    size = segments(records)[segment_index - 1][2]
+    image = bytearray(size)
+    fixed = set()
+    last = None
+    for kind, body in records:
+        if kind == 0xA0:
+            seg, j = index(body, 0)
+            offset = body[j] | body[j + 1] << 8
+            data = body[j + 2:]
+            last = (seg, offset)
+            if seg == segment_index:
+                image[offset:offset + len(data)] = data
+        elif kind == 0xA2:
+            seg, _ = index(body, 0)
+            if seg == segment_index:
+                raise ValueError("LIDATA in a code segment")
+            last = None
+        elif kind == 0x9C and last and last[0] == segment_index:
+            for start, end, locat, method, span in _fixups(body):
+                where = last[1] + (locat & 0x3FF)
+                location = (locat >> 10) & 0x0F
+                width = {0: 1, 4: 1, 1: 2, 2: 2, 5: 2, 3: 4}.get(location, 2)
+                fixed.update(range(where, where + width))
+    return bytes(image), fixed
+
+
+def patch_word(records, segment_index, offset, value):
+    """Write a 16-bit value at offset of a segment, in whichever LEDATA holds it."""
+    out, done = [], False
+    for kind, body in records:
+        if kind == 0xA0 and not done:
+            seg, j = index(body, 0)
+            start = body[j] | body[j + 1] << 8
+            data_at = j + 2
+            if seg == segment_index and start <= offset and offset + 2 <= start + len(body) - data_at:
+                body = bytearray(body)
+                body[data_at + offset - start:data_at + offset - start + 2] = value.to_bytes(2, "little")
+                body = bytes(body)
+                done = True
+        out.append((kind, body))
+    if not done:
+        raise ValueError(f"no LEDATA holds offset {offset:04X}")
+    return out

@@ -26,6 +26,7 @@ directory each file was given.
 | `overlay/` | 3 | overlay manager |
 | `rtl/` | 57 | run-time library |
 | `float/` | 17 | 80-bit real arithmetic |
+| `data/` | 1 | the data segment as source (DGROUP.ASM), used by the modding build ([docs/MODDING.md](../docs/MODDING.md)); the exact link takes the data from `linkgroups/` |
 | `include/` | | shared headers: data (DATA.H), prototypes, record fields (FIELDS.H, POOL.H), named constants (MSG.H, TOKEN.H, KIND.H, EXPROP.H) |
 
 Every source starts with its build lines: `/* target: SEGMENT */` names the piece of

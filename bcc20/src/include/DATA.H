@@ -997,4 +997,129 @@ extern unsigned int SAVE_SS;                        /* DS:8B4A */
 extern unsigned int SAVE_SP;                        /* DS:8B4C */
 extern char near ENV_BUFFER[];                      /* DS:8B4E */
 extern char near SEARCH_BUFFER[];                   /* DS:8BCE */
+
+/* Strings the code reaches by address (names made from their text by
+   tools/namestrings.py; the original passes their DS offsets). */
+extern char STR_C_7[];                              /* DS:0711 "C++" */
+extern char STR_C_8[];                              /* DS:0715 "C" */
+extern char STR_ARRAY_BOUNDS_2[];                   /* DS:35CF "Array bounds" */
+extern char STR_DEBUG_C_2[];                        /* DS:3825 "+\r\n\t?debug\tC " */
+extern char STR_EXTRN[];                            /* DS:3836 "\textrn\t" */
+extern char STR_NEAR_3[];                           /* DS:383E "near" */
+extern char STR_PUBLICDLL[];                        /* DS:3843 "\tpublicdll\t" */
+extern char STR_PUBLIC_2[];                         /* DS:384F "\tpublic\t" */
+extern char STR_EQU_S[];                            /* DS:3858 "\tequ\ts@+" */
+extern char STR_EQU[];                              /* DS:3861 "\tequ\t" */
+extern char STR_D[];                                /* DS:3875 "d@" */
+extern char STR_B[];                                /* DS:3878 "b@" */
+extern char STR_TURBOFLOAT_2[];                     /* DS:387C "__turboFloat" */
+extern char STR_COLON_2[];                          /* DS:38F8 ":" */
+extern char STR_AHSHIFT_2[];                        /* DS:3F5C "__AHSHIFT" */
+extern char STR_SCOPY_2[];                          /* DS:3F8A "scopy@" */
+extern char STR_FTOL[];                             /* DS:3F91 "ftol@" */
+extern char STR_TEXT[];                             /* DS:52C8 "_TEXT" */
+extern char STR_STKLEN_2[];                         /* DS:52CE "_stklen" */
+extern char STR_BRKLVL[];                           /* DS:52D6 "__brklvl" */
+extern char STR_N[];                                /* DS:52F7 "N_" */
+extern char STR_F[];                                /* DS:52FA "F_" */
+extern char STR_AHSHIFT[];                          /* DS:52FD "__AHSHIFT" */
+extern char STR_SLXMUL[];                           /* DS:5338 ":Slxmul@" */
+extern char STR_N_CHKSTK[];                         /* DS:5342 "N_CHKSTK@" */
+extern char STR_F_CHKSTK[];                         /* DS:534C "F_CHKSTK@" */
+extern char STR_COLON_CR_NL[];                      /* DS:540A ":\r\n" */
+extern char STR_DEBUG_L[];                          /* DS:540E "\t?debug\tL " */
+extern char STR_DW[];                               /* DS:5419 "dw\t" */
+extern char STR_SHORT[];                            /* DS:541D "short " */
+extern char STR_NEAR_PTR[];                         /* DS:5424 "near ptr " */
+extern char STR_FAR_PTR[];                          /* DS:542E "far ptr " */
+extern char STR_TAB_AT_AT[];                        /* DS:5437 "\t@@" */
+extern char STR_JMP[];                              /* DS:543B "\tjmp\t" */
+extern char STR_OBJ_3[];                            /* DS:54DA ".obj" */
+extern char STR_DGROUP_2[];                         /* DS:54DF "DGROUP@" */
+extern char STR_TC86_BORLAND_TURBO_C_2_0[];         /* DS:5537 "TC86 Borland Turbo C++ 2.0" */
+extern char STR_MOV_BX_SP[];                        /* DS:55D1 "\tmov\tbx,sp\r\n" */
+extern char STR_ADD_SS_BX[];                        /* DS:55DE "\tadd\tss:[bx+" */
+extern char STR_RBRACKET_COMMA[];                   /* DS:55EB "]," */
+extern char STR_JMP_FAR_PTR[];                      /* DS:55EE "\r\n\tjmp\tfar ptr " */
+extern char STR_JMP_NEAR_PTR[];                     /* DS:55FE "\r\n\tjmp\tnear ptr " */
+extern char STR_ASM_2[];                            /* DS:560F ".asm" */
+extern char STR_286[];                              /* DS:5614 "\t.286\r\n" */
+extern char STR_287[];                              /* DS:561C "\t.287\r\n" */
+extern char STR_286P[];                             /* DS:5624 "\t.286p\r\n" */
+extern char STR_IFNDEF_VERSION_DEBUG_MACRO_E[];     /* DS:562D "\tifndef\t??version\r\n?debug\tmacro\r\n" */
+extern char STR_QUOTE_CR_NL[];                      /* DS:5730 ""\r\n" */
+extern char STR_GROUP[];                            /* DS:5734 "\tgroup\t" */
+extern char STR_ASSUME_CS_2[];                      /* DS:573C "\tassume\tcs:" */
+extern char STR_DS[];                               /* DS:5748 ",ds:" */
+extern char STR_D_LABEL_BYTE_D_W_LABEL_WORD[];      /* DS:574D "d@\tlabel\tbyte\r\nd@w\tlabel\tword\r\n" */
+extern char STR_B_LABEL_BYTE_B_W_LABEL_WORD[];      /* DS:576D "b@\tlabel\tbyte\r\nb@w\tlabel\tword\r\n" */
+extern char STR_DEBUG_C_E9[];                       /* DS:578D "\t?debug\tC E9\r\n" */
+extern char STR_S_LABEL_BYTE[];                     /* DS:579C "s@\tlabel\tbyte\r\n" */
+extern char STR_EXTRN_DGROUP_WORD[];                /* DS:57B1 "\textrn\tDGROUP@:word\r\n" */
+extern char STR_EXTRN_TURBOFLOAT_WORD[];            /* DS:57C7 "\textrn\t__turboFloat:word\r\n" */
+extern char STR_JMP_WORD_PTR_CS[];                  /* DS:57EA "\tjmp\tword ptr cs:@" */
+extern char STR_C_6[];                              /* DS:57FD "@C" */
+extern char STR_BX[];                               /* DS:5800 "[bx]\r\n" */
+extern char STR_MOV_BX_OFFSET[];                    /* DS:5807 "\tmov\tbx,offset " */
+extern char STR_MOV[];                              /* DS:5817 "\tmov\t" */
+extern char STR_CS_DGROUP[];                        /* DS:581D ",cs:DGROUP@\r\n" */
+extern char STR_JMP_WORD_PTR_CS_BX[];               /* DS:582B "\tjmp\tword ptr cs:[bx+" */
+extern char STR_DEBUG_C_3[];                        /* DS:5873 "\t?debug\tC " */
+extern char STR_DEBUG_C_4[];                        /* DS:587E "+\r\n\t?debug\tC " */
+extern char STR_PUSH_CS_CALL[];                     /* DS:588C "push\tcs\r\n\tcall\t" */
+extern char STR_DB_0CBH[];                          /* DS:589C "db\t0cbh\r\n" */
+extern char STR_FCOMPP[];                           /* DS:58A6 "FCOMPP\r\n" */
+extern char STR_P_ST[];                             /* DS:58AF "P\tst(" */
+extern char STR_ST_0[];                             /* DS:58B5 "),st( 0 )\r\n" */
+extern char STR_ST_0_ST[];                          /* DS:58C1 "st(0),st(" */
+extern char STR_0[];                                /* DS:58CB ",0\r\n" */
+extern char STR_AX_AX[];                            /* DS:58D0 "ax,ax," */
+extern char STR_COMM[];                             /* DS:58FE "\tcomm\t" */
+extern char STR_FAR_3[];                            /* DS:5905 "far " */
+extern char STR_NEAR_4[];                           /* DS:590A "near " */
+extern char STR_COMM_2[];                           /* DS:5910 "\t$comm\t" */
+extern char STR_FAR_4[];                            /* DS:5918 "far," */
+extern char STR_NEAR_5[];                           /* DS:591D "near," */
+extern char STR_BYTE[];                             /* DS:5979 "\rbyte" */
+extern char STR_WORD[];                             /* DS:597F "word" */
+extern char STR_FAR_2[];                            /* DS:5990 "far" */
+extern char STR_SEGMENT[];                          /* DS:5994 "\tsegment " */
+extern char STR_PARA[];                             /* DS:599E "para" */
+extern char STR_PUBLIC[];                           /* DS:59A3 " public " */
+extern char STR_CRLF_3[];                           /* DS:59AC "\r\n" */
+extern char STR_SEGMENT_VIRTUAL[];                  /* DS:59AF "\tsegment\tvirtual\r\n" */
+extern char STR_DB_2[];                             /* DS:59C2 "\tdb\t" */
+extern char STR_DUP_0[];                            /* DS:59C7 " dup (0)\r\n" */
+extern char STR_DUP[];                              /* DS:59D2 " dup (?)\r\n" */
+extern char STR_ASSUME_CS[];                        /* DS:59DD "\tassume\tcs:" */
+extern char STR_PROC[];                             /* DS:59E9 "\tproc\t" */
+extern char STR_NEAR_2[];                           /* DS:59F0 "near" */
+extern char STR_LABEL[];                            /* DS:59F5 "\tlabel\t" */
+extern char STR_DW_2[];                             /* DS:5A05 "\tdw\t" */
+extern char STR_DD[];                               /* DS:5A0A "\tdd\t" */
+extern char STR_C_5[];                              /* DS:5A0F "@C" */
+extern char STR_LABEL_WORD[];                       /* DS:5A12 "\tlabel\tword\r\n" */
+extern char STR_FIARQQ[];                           /* DS:5AC4 "FIARQQ" */
+extern char STR_FJARQQ[];                           /* DS:5ACB "FJARQQ" */
+extern char STR_FIERQQ[];                           /* DS:5AD2 "FIERQQ" */
+extern char STR_FISRQQ[];                           /* DS:5AD9 "FISRQQ" */
+extern char STR_FJSRQQ[];                           /* DS:5AE0 "FJSRQQ" */
+extern char STR_FICRQQ[];                           /* DS:5AE7 "FICRQQ" */
+extern char STR_FJCRQQ[];                           /* DS:5AEE "FJCRQQ" */
+extern char STR_FIDRQQ[];                           /* DS:5AF5 "FIDRQQ" */
+
+/* Strings the code reaches by address (names made from their text by
+   tools/namestrings.py; the original passes their DS offsets). */
+extern char STR_RPAREN[];                           /* DS:58D7 ")" */
+extern char STR_SEG[];                              /* DS:58D9 "seg " */
+extern char STR_BYTE_2[];                           /* DS:58DE "byte" */
+extern char STR_QWORD[];                            /* DS:58E3 "qword" */
+extern char STR_DWORD[];                            /* DS:58E9 "dword" */
+extern char STR_TBYTE[];                            /* DS:58EF "tbyte" */
+extern char STR_FAR_5[];                            /* DS:58F5 "far" */
+extern char STR_NEAR_6[];                           /* DS:58F9 "near" */
+
+extern signed char REGISTER_NEED_TABLE[];           /* DS:51DF: register need by operator class (x21) and value kind */
+extern char STR_END_CRLF_EOF[];                     /* DS:57E2 "\tend\r\n\x1a" */
+
 #endif

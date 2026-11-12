@@ -1,0 +1,1041 @@
+# offset	target	kind	evidence  (tools/findptrs.py)
+0BA9	DATA_0C1F	data	next to a pointer field of C33_TYPE_NAMES, in its range
+0BAB	DATA_0C29	data	field of a 2-byte record in C33_TYPE_NAMES
+0BAD	DATA_0C2E	data	field of a 2-byte record in C33_TYPE_NAMES
+0BAF	DATA_0C3C	data	field of a 2-byte record in C33_TYPE_NAMES
+0BB1	DATA_0C42	data	field of a 2-byte record in C33_TYPE_NAMES
+0BB3	DATA_0C51	data	field of a 2-byte record in C33_TYPE_NAMES
+0BB5	DATA_0C55	data	field of a 2-byte record in C33_TYPE_NAMES
+0BB7	DATA_0C62	data	field of a 2-byte record in C33_TYPE_NAMES
+0BB9	DATA_0C67	data	field of a 2-byte record in C33_TYPE_NAMES
+0BBB	DATA_0C75	data	field of a 2-byte record in C33_TYPE_NAMES
+0BBD	DATA_0C7B	data	field of a 2-byte record in C33_TYPE_NAMES
+0BBF	DATA_0C82	data	field of a 2-byte record in C33_TYPE_NAMES
+0BC1	DATA_0C8E	data	field of a 2-byte record in C33_TYPE_NAMES
+0BC3	DATA_0C93	data	field of a 2-byte record in C33_TYPE_NAMES
+0BC5	DATA_0C98	data	field of a 2-byte record in C33_TYPE_NAMES
+0BC7	DATA_0C9D	data	field of a 2-byte record in C33_TYPE_NAMES
+0BC9	DATA_0CA1	data	field of a 2-byte record in C33_TYPE_NAMES
+0BCB	DATA_0CA6	data	field of a 2-byte record in C33_TYPE_NAMES
+0BCD	DATA_0CAE	data	field of a 2-byte record in C33_TYPE_NAMES
+0BCF	DATA_0CC2	data	field of a 2-byte record in C33_TYPE_NAMES
+0BD1	DATA_0CCA	data	field of a 2-byte record in C33_TYPE_NAMES
+0BD3	DATA_0CD1	data	field of a 2-byte record in C33_TYPE_NAMES
+1500	DATA_1CFE	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+1504	DATA_1CFF	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+1508	DATA_1D01	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+150C	DATA_1D02	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+1510	DATA_1D04	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1514	DATA_1D06	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1518	DATA_1D08	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+151C	DATA_1D0A	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1520	DATA_1D0C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1524	DATA_1D10	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1528	DATA_1D12	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+152C	DATA_1D15	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1530	DATA_1D18	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1534	DATA_1D1B	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1538	DATA_1D1E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+153C	DATA_1D21	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1540	DATA_1D24	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1544	DATA_1D27	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1548	DATA_1D2A	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+154C	DATA_1D2E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1550	DATA_1D32	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1554	DATA_1D34	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1558	DATA_1D36	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+155C	DATA_1D38	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1560	DATA_1D3A	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1564	DATA_1D3C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1568	DATA_1D3E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+156C	DATA_1D40	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1570	DATA_1D42	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1574	DATA_1D45	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1578	DATA_1D48	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+157C	DATA_1D4A	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1580	DATA_1D4C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1584	DATA_1D4F	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1588	DATA_1D52	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+158C	DATA_1D55	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1590	DATA_1D43	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+1594	DATA_1D46	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+1598	DATA_1D2B	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+159C	DATA_1D2F	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+15A0	DATA_1D58	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15A4	DATA_1D5A	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15A8	DATA_1D5C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15AC	DATA_1D5F	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15B0	DATA_1D0E	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+15B4	DATA_1D62	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+15B8	DATA_1D65	data	next to a pointer field of DEFAULT_SOURCE_EXT, in its range
+15BC	DATA_1D68	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15C0	DATA_1D6C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15C4	DATA_1D6F	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15C8	DATA_1D75	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15CC	DATA_1D7C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15D0	DATA_1D83	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15D4	DATA_1D8A	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15D8	DATA_1D8E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15DC	DATA_1D97	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15E0	DATA_1DA0	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15E4	DATA_1DA8	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15E8	DATA_1DB2	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15EC	DATA_1DB9	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15F0	DATA_1DBE	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15F4	DATA_1DC6	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15F8	DATA_1DCA	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+15FC	DATA_1DCE	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1600	DATA_1DD2	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1604	DATA_1DD7	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1608	DATA_1DDB	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+160C	DATA_1DDF	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1610	DATA_1DE4	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1614	DATA_1DEA	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1618	DATA_1DF1	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+161C	DATA_1DF9	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1620	DATA_1DFD	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1624	DATA_1E02	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1628	DATA_1E07	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+162C	DATA_1E0D	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1630	DATA_1E17	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1634	DATA_1E22	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1638	DATA_1E2A	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+163C	DATA_1E2F	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1640	DATA_1E35	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1644	DATA_1E3C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1648	DATA_1E44	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+164C	DATA_1E4E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1650	DATA_1E54	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1654	DATA_1E5B	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1658	DATA_1E64	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+165C	DATA_1E69	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1660	DATA_1E6E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1664	DATA_1E73	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1668	DATA_1E79	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+166C	DATA_1E7E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1670	DATA_1E83	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1674	DATA_1E8C	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1678	DATA_1E94	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+167C	DATA_1E97	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1680	DATA_1E9E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1684	DATA_1EA3	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1688	DATA_1EAA	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+168C	DATA_1EB0	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1690	DATA_1EB4	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1694	DATA_1EB9	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1698	DATA_1EBC	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+169C	DATA_1EC0	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16A0	DATA_1EC5	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16A4	DATA_1ECE	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16A8	DATA_1ED5	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16AC	DATA_1EDB	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16B0	DATA_1EE2	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16B4	DATA_1EE9	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16B8	DATA_1EF0	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16BC	DATA_1EF7	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16C0	DATA_1EFF	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16C4	DATA_1F05	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+16C8	DATA_1F0E	data	field of a 4-byte record in DEFAULT_SOURCE_EXT
+1780	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1782	DATA_1A76	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1788	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+178A	DATA_1AB6	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1790	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1792	DATA_1B2E	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1798	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+179A	DATA_1B96	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+17A0	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17A2	DATA_1BC6	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+17A8	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17AA	OPTION_TARGET_CPU	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17B0	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17B2	OPTION_TARGET_CPU	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17B8	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17BA	COMMENT_NESTED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17C0	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17C2	OPTION_OPTIMIZE_SPEED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17C8	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17CA	UNSIGNED_CHAR	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17D0	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17D2	OPTION_STACK_CHECK	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17D8	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17DA	DATA_1AF6	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+17E0	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17E2	OPTION_SUPPRESS_RELOADS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17E8	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17EA	BCC_PACK_FLAG	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17F0	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17F2	OPTION_ENUMS_AS_INT	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+17F8	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+17FA	OPTION_MERGE_STRINGS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1800	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1802	OPTION_STANDARD_FRAME	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1808	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+180A	DATA_1A2E	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1810	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1812	OPTION_UNDERSCORES	data	field of a 16-byte record in COMMAND_OPTION_TABLE
+1818	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+181A	DATA_1C5E	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1820	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1822	OPTION_LINE_NUMBERS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1828	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+182A	OPTION_OUTPUT_DIR	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1830	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1832	OPTION_OBJECT_NAME	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1838	SET_BYTE_NUMBER_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+183A	OPTION_WARNING_LIMIT	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1840	SET_BYTE_NUMBER_OPTION	code	field of a 8-byte record in COMMAND_OPTION_TABLE
+1842	NAME_LIMIT	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1848	SET_BYTE_NUMBER_OPTION	code	field of a 8-byte record in COMMAND_OPTION_TABLE
+184A	OPTION_ERROR_LIMIT	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1850	HANDLE_WARNING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1858	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+185A	DATA_82D4	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1860	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1862	OPTION_WINDOWS_MODE	data	field of a 16-byte record in COMMAND_OPTION_TABLE
+1868	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+186A	DATA_1A46	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1870	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1872	OPTION_COMPILE_VIA_ASM	data	field of a 16-byte record in COMMAND_OPTION_TABLE
+1878	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+187A	COMPILER_MODE	data	field of a 24-byte record in COMMAND_OPTION_TABLE
+1880	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1882	DATA_24CF	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1888	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+188A	TASM_PROGRAM_NAME	data	field of a 32-byte record in COMMAND_OPTION_TABLE
+1890	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1892	DATA_16FD	data	next to a pointer field of COMMAND_OPTION_TABLE, in its range
+1898	HANDLE_FLAG_OPTION	code	field of a 8-byte record in COMMAND_OPTION_TABLE
+189A	DATA_24D0	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+18A2	DATA_24DB	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+18A8	HANDLE_FLAG_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18AA	C51_SKIP_LINK	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+18B0	SET_STRING_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18B2	LINK_OUTPUT_NAME	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+18C0	BCC_SET_OPTION_INCLUDE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18C8	BCC_SET_OPTION_LIBRARY_PATH	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18D0	UNDEFINE_MACRO_OPTION	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+18D8	BCC_SET_OPTION_LIBRARY	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18E0	ADD_NAME_LIST_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18E8	HANDLE_FLAG_OPTION	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+18EA	HUGE_PTR_AHSHIFT_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+18F0	HANDLE_CPP_EXT_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18F8	HANDLE_FLAG_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+18FA	OPTION_NO_AUTODEPEND	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1900	HANDLE_SUBTABLE_OPTION	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1902	DATA_1C2E	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1908	HANDLE_SUBTABLE_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+190A	DATA_1CAE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1910	HANDLE_SUBTABLE_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1912	DATA_1CDE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1918	SET_OPTION_VALUE	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+191A	OPTION_OVERLAY_CODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1920	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1922	DATA_82D4	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1928	HANDLE_SUBTABLE_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+192A	DATA_19F6	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1930	HANDLE_SUBTABLE_OPTION	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1932	DATA_1996	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1940	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1942	OPTION_AUTO_FAR_DATA	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1948	SET_OPTION_VALUE	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+194A	OPTION_AUTO_FAR_DATA	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1950	SET_INT_NUMBER_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1952	FAR_DATA_THRESHOLD	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1960	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1962	OPTION_COMDEFS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1968	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+196A	OPTION_SS_EQUALS_DS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1970	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1972	OPTION_AUTO_FAR_DATA	data	field of a 4-byte record in COMMAND_OPTION_TABLE
+1978	SET_OPTION_VALUE	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+197A	OPTION_COMDEFS	data	field of a 4-byte record in COMMAND_OPTION_TABLE
+1980	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1982	OPTION_SS_EQUALS_DS	data	field of a 4-byte record in COMMAND_OPTION_TABLE
+1988	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+198A	OPTION_AUTO_FAR_DATA	data	field of a 4-byte record in COMMAND_OPTION_TABLE
+1998	HANDLE_FLAG_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+199A	OPTION_COMDEFS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19A0	HANDLE_FLAG_OPTION	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+19A2	OPTION_SS_EQUALS_DS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19A8	SET_OPTION_VALUE	code	field of a 32-byte record in COMMAND_OPTION_TABLE
+19AA	OPTION_AUTO_FAR_DATA	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19B0	HANDLE_SUBTABLE_OPTION	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+19B2	DATA_193E	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19B8	HANDLE_SUBTABLE_OPTION	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+19BA	DATA_195E	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19C8	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+19CA	OPTION_WINDOWS_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19D0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+19D2	OPTION_WINDOWS_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19E0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+19E2	OPTION_WINDOWS_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19E8	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+19EA	OPTION_WINDOWS_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+19F8	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+19FA	OPTION_WINDOWS_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A00	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A02	OPTION_WINDOWS_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A08	SET_OPTION_VALUE	code	field of a 32-byte record in COMMAND_OPTION_TABLE
+1A0A	DATA_82D4	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1A10	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A12	OPTION_WINDOWS_MODE	data	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A18	HANDLE_SUBTABLE_OPTION	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+1A1A	DATA_19C6	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1A20	HANDLE_SUBTABLE_OPTION	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A22	DATA_19DE	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1A30	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A32	OPTION_CALLING_CONVENTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A3A	OPTION_CALLING_CONVENTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A48	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1A4A	OPTION_OVERLAY_CODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A50	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A52	OPTION_OVERLAY_CODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A58	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1A5A	OPTION_OVERLAY_CODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A60	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A62	OPTION_OVERLAY_CODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A68	HANDLE_FLAG_OPTION	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+1A6A	OPTION_LINK_OVERLAY	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A78	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1A7A	LANGUAGE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A80	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A82	LANGUAGE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A88	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1A8A	LANGUAGE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A90	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1A92	LANGUAGE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1A9A	LANGUAGE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AA0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1AA2	LANGUAGE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AA8	RESTORE_OPTION_DEFAULT	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1AAA	LANGUAGE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AB8	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1ABA	OPTION_FLOAT_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AC0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1AC2	OPTION_FLOAT_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AC8	SET_OPTION_VALUE	code	field of a 32-byte record in COMMAND_OPTION_TABLE
+1ACA	OPTION_FLOAT_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AD0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1AD2	OPTION_FLOAT_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AD8	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1ADA	OPTION_FLOAT_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AE0	RESTORE_OPTION_DEFAULT	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1AE2	OPTION_FLOAT_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AE8	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1AEA	OPTION_FAST_FLOAT	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1AF8	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1AFA	OPTIMIZE_ENABLED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B00	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1B02	OPTIMIZE_ENABLED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B08	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1B0A	OPTIMIZE_ENABLED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B10	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1B12	OPTIMIZE_ENABLED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B18	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1B1A	OPTIMIZE_ENABLED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B20	RESTORE_OPTION_DEFAULT	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1B22	OPTIMIZE_ENABLED	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B30	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1B32	OPTION_MEMORY_MODEL	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B38	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1B3A	OPTION_MEMORY_MODEL	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B40	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1B42	OPTION_MEMORY_MODEL	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B48	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1B4A	OPTION_MEMORY_MODEL	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B50	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1B52	OPTION_MEMORY_MODEL	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B58	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1B5A	OPTION_MEMORY_MODEL	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B60	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1B62	DATA_1B7E	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1B68	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1B6A	DATA_1B7E	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1B70	HANDLE_SUBTABLE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1B72	DATA_1B7E	data	next to a pointer field of COMMAND_OPTION_TABLE, in its range
+1B80	IGNORE_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1B88	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1B8A	OPTION_DS_NOT_SS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1B98	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1B9A	OPTION_REGISTER_VARS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BA0	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1BA2	OPTION_REGISTER_VARS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BA8	SET_OPTION_VALUE	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+1BAA	OPTION_REGISTER_VARS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BB0	SET_OPTION_VALUE	code	field of a 12-byte record in COMMAND_OPTION_TABLE
+1BB2	OPTION_REGISTER_VARS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BB8	RESTORE_OPTION_DEFAULT	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BBA	OPTION_REGISTER_VARS	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BC8	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BCA	C52_BSS_NAME_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BD0	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BD2	C52_BSS_GROUP_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BD8	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BDA	C52_BSS_CLASS_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BE0	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BE2	C52_CODE_NAME_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BE8	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BEA	C52_CODE_GROUP_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BF0	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BF2	C52_CODE_CLASS_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1BF8	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1BFA	C52_DATA_NAME_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C00	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C02	C52_DATA_GROUP_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C08	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C0A	C52_DATA_CLASS_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C10	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C12	C52_FAR_NAME_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C18	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C1A	C52_FAR_GROUP_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C20	SET_STRING_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C22	C52_FAR_CLASS_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C30	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C32	VTABLE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C38	SET_OPTION_VALUE	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+1C3A	VTABLE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C40	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1C42	VTABLE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C4A	VTABLE_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C50	HANDLE_FLAG_OPTION	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1C52	OPTION_FLAG	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C60	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1C62	OPTION_SOURCE_DEBUG	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C68	SET_OPTION_VALUE	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+1C6A	OPTION_SOURCE_DEBUG	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C70	RESTORE_OPTION_DEFAULT	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1C72	OPTION_SOURCE_DEBUG	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C78	SET_OPTION_VALUE	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+1C7A	OPTION_EXPAND_INLINES	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C80	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1C82	OPTION_EXPAND_INLINES	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C88	RESTORE_OPTION_DEFAULT	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C8A	OPTION_EXPAND_INLINES	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C90	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C92	OPTION_EXPAND_INLINES	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1C98	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1C9A	DATA_24D9	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1CA0	SET_OPTION_VALUE	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1CA2	DATA_24D9	data	in a pointer field of COMMAND_OPTION_TABLE (8-byte records)
+1CB0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1CB2	PCH_OPTION_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1CB8	SET_OPTION_VALUE	code	field of a 24-byte record in COMMAND_OPTION_TABLE
+1CBA	PCH_OPTION_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1CC0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1CC2	PCH_OPTION_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1CC8	SET_STRING_OPTION	code	field of a 20-byte record in COMMAND_OPTION_TABLE
+1CCA	PCH_FILE_NAME	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1CD0	SET_OPTION_VALUE	code	field of a 16-byte record in COMMAND_OPTION_TABLE
+1CD2	PCH_OPTION_MODE	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1CE0	HANDLE_EMS_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1CE8	HANDLE_EXT_MEMORY_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1CF0	HANDLE_FLAG_OPTION	code	field of a 4-byte record in COMMAND_OPTION_TABLE
+1CF2	C31_MEMORY_OPTION	data	field of a 8-byte record in COMMAND_OPTION_TABLE
+1F20	STR_PRAGMA	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F23	PARSE_PRAGMA	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F25	DATA_1F8B	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F28	PARSE_ERROR_DIRECTIVE	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F2A	DATA_1F91	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F2D	DIRECTIVE_INCLUDE	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F2F	STR_DEFINE	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F32	BCC_PARSE_MACRO	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F34	DATA_1FA0	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F37	PARSE_UNDEF	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F39	DATA_1FA6	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F3C	PARSE_CONDITIONAL	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F3E	DATA_1FA9	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F41	PARSE_IFDEF_DIRECTIVE	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F43	DATA_1FAF	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F46	PARSE_IFNDEF_DIRECTIVE	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F48	DATA_1FB6	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F4B	PARSE_ELSE	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F4D	DATA_1FBB	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F50	PARSE_ELIF	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F52	DATA_1FC0	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F55	PARSE_ENDIF	code	field of a 5-byte record in DIRECTIVE_TABLE
+1F57	STR_LINE	data	field of a 5-byte record in DIRECTIVE_TABLE
+1F5C	PRAGMA_WARN	code	field of a 4-byte record in PRAGMA_TABLE
+1F5E	DATA_1FF8	data	field of a 4-byte record in PRAGMA_TABLE
+1F60	CHECK_NAME_CONTEXT	code	field of a 4-byte record in PRAGMA_TABLE
+1F62	DATA_1FFD	data	field of a 4-byte record in PRAGMA_TABLE
+1F64	PRAGMA_SAVEREGS	code	field of a 4-byte record in PRAGMA_TABLE
+1F66	DATA_2004	data	field of a 4-byte record in PRAGMA_TABLE
+1F68	PRAGMA_OPTION	code	field of a 4-byte record in PRAGMA_TABLE
+1F6A	DATA_200D	data	field of a 4-byte record in PRAGMA_TABLE
+1F6C	PRAGMA_STARTUP	code	field of a 4-byte record in PRAGMA_TABLE
+1F6E	DATA_2014	data	field of a 4-byte record in PRAGMA_TABLE
+1F70	PRAGMA_EXIT	code	field of a 4-byte record in PRAGMA_TABLE
+1F72	DATA_201C	data	field of a 4-byte record in PRAGMA_TABLE
+1F74	PRAGMA_ARGSUSED	code	field of a 4-byte record in PRAGMA_TABLE
+1F76	DATA_2021	data	field of a 4-byte record in PRAGMA_TABLE
+1F78	PRAGMA_NORETVAL	code	field of a 4-byte record in PRAGMA_TABLE
+1F7A	DATA_202A	data	field of a 4-byte record in PRAGMA_TABLE
+1F7C	PRAGMA_CODESEG	code	field of a 4-byte record in PRAGMA_TABLE
+1F7E	DATA_2033	data	field of a 4-byte record in PRAGMA_TABLE
+245C	DATA_2516	data	next to a pointer field of C51_DOS_LIBRARIES, in its range
+245E	DATA_251E	data	next to a pointer field of C51_DOS_LIBRARIES, in its range
+2460	DATA_2525	data	next to a pointer field of C51_DOS_LIBRARIES, in its range
+2462	DATA_252F	data	next to a pointer field of C51_DOS_LIBRARIES, in its range
+2464	DATA_251E	data	next to a pointer field of C51_DOS_LIBRARIES, in its range
+2466	DATA_2525	data	next to a pointer field of C51_DOS_LIBRARIES, in its range
+2468	DATA_2537	data	field of a 2-byte record in C51_DOS_LIBRARIES
+246A	DATA_253F	data	field of a 2-byte record in C51_DOS_LIBRARIES
+246C	DATA_2546	data	field of a 2-byte record in C51_DOS_LIBRARIES
+246E	DATA_2550	data	field of a 2-byte record in C51_DOS_LIBRARIES
+2470	DATA_2558	data	field of a 2-byte record in C51_DOS_LIBRARIES
+2472	DATA_255F	data	field of a 2-byte record in C51_DOS_LIBRARIES
+2474	DATA_2569	data	field of a 2-byte record in C51_DOS_LIBRARIES
+2476	DATA_2571	data	field of a 2-byte record in C51_DOS_LIBRARIES
+2478	DATA_2578	data	field of a 2-byte record in C51_DOS_LIBRARIES
+247A	DATA_2582	data	field of a 2-byte record in C51_DOS_LIBRARIES
+247C	DATA_258A	data	field of a 2-byte record in C51_DOS_LIBRARIES
+247E	DATA_2591	data	field of a 2-byte record in C51_DOS_LIBRARIES
+2480	DATA_259B	data	field of a 2-byte record in STARTUP_SS_DS_NAMES
+2482	DATA_25A4	data	field of a 2-byte record in STARTUP_SS_DS_NAMES
+2484	DATA_25AD	data	field of a 2-byte record in STARTUP_SS_DS_NAMES
+2486	DATA_25B6	data	field of a 2-byte record in STARTUP_SS_DS_NAMES
+2488	DATA_25BF	data	field of a 2-byte record in STARTUP_SS_DS_NAMES
+248A	DATA_25C8	data	field of a 2-byte record in STARTUP_SS_DS_NAMES
+248C	DATA_25D1	data	field of a 6-byte record in C51_WINDOWS_LIBRARIES
+248E	DATA_251E	data	field of a 6-byte record in C51_WINDOWS_LIBRARIES
+2490	DATA_2525	data	next to a pointer field of C51_WINDOWS_LIBRARIES, in its range
+2492	DATA_25DA	data	field of a 6-byte record in C51_WINDOWS_LIBRARIES
+2494	DATA_251E	data	next to a pointer field of C51_WINDOWS_LIBRARIES, in its range
+2496	DATA_2525	data	next to a pointer field of C51_WINDOWS_LIBRARIES, in its range
+2498	DATA_25E3	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+249A	DATA_253F	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+249C	DATA_2546	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+249E	DATA_25EC	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24A0	DATA_2558	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24A2	DATA_255F	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24A4	DATA_25F5	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24A6	DATA_2571	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24A8	DATA_2578	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24AA	DATA_25FE	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24AC	DATA_258A	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24AE	DATA_2591	data	field of a 2-byte record in C51_WINDOWS_LIBRARIES
+24B0	DATA_2607	data	field of a 2-byte record in C51_WINDOWS_RUNTIME
+24B2	DATA_2607	data	field of a 2-byte record in C51_WINDOWS_RUNTIME
+24B4	DATA_2611	data	field of a 2-byte record in C51_WINDOWS_RUNTIME
+24B6	DATA_261B	data	field of a 2-byte record in C51_WINDOWS_RUNTIME
+24B8	DATA_2625	data	field of a 2-byte record in C51_WINDOWS_RUNTIME
+24BA	DATA_262F	data	field of a 2-byte record in C51_WINDOWS_RUNTIME
+27B8	DATA_288F	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27BF	DATA_2893	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27C6	DATA_2897	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27CD	DATA_289B	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27D4	DATA_289F	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27DB	DATA_28A3	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27E2	DATA_28A7	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27E9	DATA_28AB	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27F0	DATA_28AF	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27F7	DATA_28B3	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+27FE	DATA_28B7	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+2805	DATA_28BB	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+280C	DATA_28BF	data	next to a pointer field of PSEUDO_REGISTER_TABLE, in its range
+2813	DATA_28C3	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+281A	DATA_28C7	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+2821	DATA_28CB	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+2828	DATA_28CF	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+282F	DATA_28D3	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+2836	DATA_28D7	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+283D	DATA_28DB	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+2844	DATA_28DF	data	field of a 7-byte record in PSEUDO_REGISTER_TABLE
+2AAE	DATA_2E86	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2AB2	DATA_2E88	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AB6	DATA_2E8C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2ABA	DATA_2E90	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2ABE	DATA_2E94	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AC2	DATA_2E98	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AC6	DATA_2E9C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2ACA	DATA_2EA0	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2ACE	DATA_2EA3	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AD2	DATA_2EA6	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AD6	DATA_2EAA	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2ADA	DATA_2EAF	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2ADE	DATA_2EB2	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AE2	DATA_2EB5	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AE6	DATA_2EB8	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AEA	DATA_2EBE	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AEE	DATA_2EC1	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AF2	DATA_2EC4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AF6	DATA_2EC9	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AFA	DATA_2ECD	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2AFE	DATA_2ED0	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B02	DATA_2ED3	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B06	DATA_2ED7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B0A	DATA_2EDB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B0E	DATA_2EDF	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B12	DATA_2EE3	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B16	DATA_2EE7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B1A	DATA_2EEC	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B1E	DATA_2EF2	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B22	DATA_2EF8	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B26	DATA_2EFB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B2A	DATA_2EFF	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B2E	DATA_2F02	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B32	DATA_2F06	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B3A	DATA_2E9D	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2B42	DATA_2F11	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B46	DATA_2F14	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B4A	DATA_2F17	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B4E	DATA_2F1B	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2B52	DATA_2F1E	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BA2	DATA_2F86	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BA6	DATA_2F8C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BAA	DATA_2F91	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BAE	DATA_2F97	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BB2	DATA_2F9D	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BB6	DATA_2FA4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BBA	DATA_2FA9	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BBE	DATA_2FAF	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BC2	DATA_2FB5	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BC6	DATA_2FBB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BCA	DATA_2FC2	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BCE	DATA_2FC8	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BD2	DATA_2FCF	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BD6	DATA_2FD4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BDA	DATA_2FDA	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BDE	DATA_2FE2	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BE2	DATA_2FE8	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BE6	DATA_2FED	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BEA	DATA_2FF3	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BEE	DATA_2FF9	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BF2	DATA_3000	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BF6	DATA_3004	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2BFE	DATA_300F	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C02	DATA_3016	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C06	DATA_301D	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C46	DATA_3085	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C4A	DATA_308C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C4E	DATA_3092	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C52	DATA_3098	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C56	DATA_30A0	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C5A	DATA_30A7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C5E	DATA_30AD	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C62	DATA_30B4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C66	DATA_30BA	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C6A	DATA_30BE	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C6E	DATA_30C4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C72	DATA_30CB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C76	DATA_30D0	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C7A	DATA_30D6	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C7E	DATA_30DB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C82	DATA_30E1	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C86	DATA_30E7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C8A	DATA_30EE	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C8E	DATA_30F3	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C92	DATA_30F9	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C96	DATA_30FE	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C9A	DATA_3103	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2C9E	DATA_310B	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CA2	DATA_3111	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CA6	DATA_3119	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CAA	DATA_2FC3	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CAE	DATA_2FD5	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CB2	DATA_311D	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2CC6	DATA_309C	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CD2	DATA_313C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CD4	DATA_0578	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CD6	DATA_313F	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CD8	DATA_0978	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CDA	DATA_3143	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CDC	DATA_0478	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CDE	DATA_3146	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CE0	DATA_0878	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CE2	DATA_314A	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CE4	DATA_0C78	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CE6	DATA_314D	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CE8	DATA_1678	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CEA	DATA_3152	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CEC	DATA_0A78	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CEE	DATA_3155	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CF0	DATA_0378	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CF2	DATA_3158	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CF4	DATA_0778	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CF6	DATA_315C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CF8	DATA_0278	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CFA	DATA_315F	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2CFC	DATA_0678	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2CFE	DATA_3163	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D00	DATA_0178	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D02	DATA_3167	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D04	DATA_0878	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D06	DATA_316B	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D08	DATA_0478	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D0A	DATA_3170	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D0C	DATA_0978	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D0E	DATA_3174	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D10	DATA_0578	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D12	DATA_3179	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D14	DATA_0D78	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D16	DATA_317D	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D18	DATA_0B78	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D1A	DATA_3181	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D1C	DATA_0678	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D1E	DATA_3185	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D20	DATA_0278	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D22	DATA_318A	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D24	DATA_0778	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D26	DATA_318E	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D28	DATA_0378	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D2A	DATA_3193	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D2C	DATA_0F78	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D2E	DATA_3197	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D30	DATA_1378	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D32	DATA_319B	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D34	DATA_1178	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D36	DATA_319F	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D38	DATA_0B78	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D3A	DATA_31A3	data	field of a 2-byte record in ASM_KEYWORD_TABLE
+2D3C	STR_SUB	data	field of a 2-byte record in ASM_KEYWORD_TABLE
+2D3E	DATA_31A6	data	field of a 2-byte record in ASM_KEYWORD_TABLE
+2D40	DATA_1278	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D42	DATA_31A9	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D44	DATA_1278	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D46	DATA_31AD	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D48	DATA_1378	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D4A	DATA_31B1	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D4C	DATA_1078	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D4E	DATA_31B4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D50	DATA_0A78	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D52	DATA_31B7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D56	DATA_31BC	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D5A	DATA_31C0	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D5E	DATA_31C4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D62	DATA_31C8	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D66	DATA_31CE	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D6A	DATA_31D2	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D6E	DATA_31D7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D72	DATA_31DC	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D76	DATA_31E2	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D7A	DATA_31E8	data	field of a 2-byte record in ASM_KEYWORD_TABLE
+2D7C	OPTION_FLAG	data	field of a 2-byte record in ASM_KEYWORD_TABLE
+2D7E	DATA_31ED	data	field of a 2-byte record in ASM_KEYWORD_TABLE
+2D80	DATA_1478	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D82	DATA_31F3	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D84	DATA_1578	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D86	DATA_31FA	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D88	DATA_1578	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D8A	DATA_3201	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D8C	DATA_1478	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2D8E	DATA_3207	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D92	DATA_320B	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D96	DATA_320F	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D9A	DATA_3214	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2D9E	DATA_321A	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2DA2	DATA_2FD6	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2DA6	DATA_3220	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2DB6	DATA_30A4	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2DD6	DATA_3250	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2DFE	DATA_3282	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2E06	DATA_3287	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E0A	DATA_328B	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E0E	DATA_328F	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E12	DATA_3294	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E16	DATA_3298	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E1A	DATA_329C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E1E	DATA_32A0	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E22	DATA_32A5	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E26	DATA_32AB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E2A	DATA_32B1	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E2E	DATA_32B5	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E32	DATA_32BB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E36	DATA_2F89	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2E3A	DATA_32BF	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E3E	DATA_32C4	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E42	DATA_32C7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E46	DATA_32CA	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E4A	DATA_32CE	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E4E	DATA_32D2	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E52	DATA_32D6	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E56	DATA_32DB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E5A	DATA_32E1	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E5E	DATA_2FF5	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2E62	DATA_32E7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E66	DATA_32EC	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E6A	DATA_32F1	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E6E	DATA_30F4	data	in a pointer field of ASM_KEYWORD_TABLE (2-byte records)
+2E76	DATA_32F6	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E7A	DATA_32FB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+2E7E	DATA_3300	data	field of a 4-byte record in ASM_KEYWORD_TABLE
+3386	NAME_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+3388	HASH_CHAIN_LINK_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+338A	SYMBOL_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+338C	STORAGE_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+338E	CSYM_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+3390	POOL_E	data	field of a 2-byte record in POOL_BANK_TABLE
+3392	POOL_F	data	field of a 2-byte record in POOL_BANK_TABLE
+3394	TYPE_POOL	data	field of a 2-byte record in POOL_BANK_TABLE
+3396	TAG_BODY_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+3398	MEMBER_SEGMENT	data	field of a 2-byte record in POOL_BANK_TABLE
+339A	LIST_CELL_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+339C	SCOPE_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+339E	POOL_HASH	data	field of a 2-byte record in POOL_BANK_TABLE
+33A0	BASE_LIST_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33A2	CONS_CELL_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33A4	LABEL_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33A6	FORMAL_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33A8	C_PARAM_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33AA	PACKED_EXPR_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33AC	TOKEN_STREAM_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33AE	BASE_PATH_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33B0	TEMP_ENTRY_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33B2	CACHE_POOL	data	field of a 2-byte record in POOL_BANK_TABLE
+33B4	LINKAGE_STACK_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33B6	INIT_RECORD_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33B8	DATA_BYTE_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33BA	SRCFILE_POOL_SEG	data	field of a 2-byte record in POOL_BANK_TABLE
+33BC	TOKEN_POOL	data	field of a 2-byte record in POOL_BANK_TABLE
+33BE	C31_BANKS	data	field of a 2-byte record in POOL_BANK_TABLE
+33C0	DATA_7856	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33C2	DATA_785E	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33C4	DATA_7866	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33C6	DATA_786E	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33C8	DATA_7876	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33CA	DATA_787E	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33CC	DATA_7886	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33CE	SAVED_OPTION_POOL_SEG	data	next to a pointer field of POOL_BANK_TABLE, in its range
+33D0	OPTION_MEMORY_MODEL	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33D2	OPTION_DS_NOT_SS	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33D4	OPTION_UNDERSCORES	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33D6	NAME_LIMIT	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33D8	OPTION_WINDOWS_MODE	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33DA	BCC_PACK_FLAG	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33DC	OPTION_CALLING_CONVENTION	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33DE	OPTION_ENUMS_AS_INT	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33E0	UNSIGNED_CHAR	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33E2	VTABLE_MODE	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33E4	CPP_MODE	data	field of a 2-byte record in PCH_OPTION_FLAG_PTRS
+33E6	DATA_3460	data	field of a 2-byte record in PREAMBLE_DIRECTIVE_TABLE
+33E8	DATA_0E4F	data	field of a 2-byte record in PREAMBLE_DIRECTIVE_TABLE
+33EA	DATA_3467	data	field of a 2-byte record in PREAMBLE_DIRECTIVE_TABLE
+33EC	PCH_DIRECTIVE_INCLUDE	code	field of a 8-byte record in PREAMBLE_DIRECTIVE_TABLE
+33EE	DATA_346F	data	field of a 4-byte record in PREAMBLE_DIRECTIVE_TABLE
+33F0	PCH_DIRECTIVE_DEFINE	code	field of a 12-byte record in PREAMBLE_DIRECTIVE_TABLE
+33F2	DATA_3476	data	field of a 4-byte record in PREAMBLE_DIRECTIVE_TABLE
+33F4	PCH_DIRECTIVE_IF	code	field of a 8-byte record in PREAMBLE_DIRECTIVE_TABLE
+33F6	DATA_3479	data	field of a 4-byte record in PREAMBLE_DIRECTIVE_TABLE
+33F8	PCH_DIRECTIVE_IFDEF	code	field of a 12-byte record in PREAMBLE_DIRECTIVE_TABLE
+33FA	DATA_347F	data	field of a 4-byte record in PREAMBLE_DIRECTIVE_TABLE
+33FC	PCH_DIRECTIVE_IFNDEF	code	field of a 8-byte record in PREAMBLE_DIRECTIVE_TABLE
+33FE	DATA_3486	data	field of a 4-byte record in PREAMBLE_DIRECTIVE_TABLE
+3400	DATA_116D	data	in a pointer field of PREAMBLE_DIRECTIVE_TABLE (2-byte records)
+3402	DATA_348B	data	field of a 4-byte record in PREAMBLE_DIRECTIVE_TABLE
+3404	PCH_DIRECTIVE_ELSE	code	field of a 8-byte record in PREAMBLE_DIRECTIVE_TABLE
+3406	DATA_3490	data	field of a 4-byte record in PREAMBLE_DIRECTIVE_TABLE
+3408	PCH_DIRECTIVE_ENDIF	code	field of a 12-byte record in PREAMBLE_DIRECTIVE_TABLE
+37DE	DATA_37F6	data	next to a pointer field of STORAGE_CLASS_NAMES, in its range
+37E0	DATA_37FD	data	field of a 2-byte record in STORAGE_CLASS_NAMES
+37E2	DATA_37FD	data	field of a 2-byte record in STORAGE_CLASS_NAMES
+37E4	DATA_3804	data	field of a 2-byte record in STORAGE_CLASS_NAMES
+37EA	DATA_3809	data	field of a 2-byte record in STORAGE_CLASS_NAMES
+41AC	DATA_5050	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+41BF	DATA_5050	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+41D2	DATA_5050	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+41E5	DATA_5050	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+41F8	DATA_5054	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+420B	DATA_5054	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+421E	DATA_5054	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4231	DATA_5059	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4244	DATA_5059	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4257	DATA_505D	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+426A	DATA_505D	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+427D	DATA_505D	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4290	DATA_505D	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+42A3	DATA_5061	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+42B6	DATA_5061	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+42C9	DATA_5061	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+42DC	DATA_5066	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+42EF	DATA_5066	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4302	DATA_5066	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4315	DATA_506C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4328	DATA_506C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+433B	DATA_5070	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+434E	DATA_5070	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4361	DATA_5075	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4374	DATA_5075	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4387	DATA_5075	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+439A	DATA_507A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+43AD	DATA_507A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+43C0	DATA_507F	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+43D3	DATA_507F	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+43E6	DATA_507F	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+43F9	DATA_5084	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+440C	DATA_5084	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+441F	DATA_5084	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4432	DATA_507B	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+4445	DATA_507B	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+4458	DATA_507B	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+446B	DATA_507B	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+447E	DATA_507A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4491	DATA_507A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+44A4	DATA_508A	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
+44B7	DATA_508A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+44CA	DATA_508E	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+44DD	DATA_508E	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+44F0	DATA_5092	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4503	DATA_5092	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4516	DATA_5096	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4529	DATA_5096	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+453C	DATA_509A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+454F	DATA_509A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4562	DATA_509D	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4575	DATA_509D	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4588	DATA_50A1	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+459B	DATA_50A1	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+45AE	DATA_50A5	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+45C1	DATA_50AA	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+45D4	DATA_50AA	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+45E7	DATA_50AE	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+45FA	DATA_50B2	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+460D	DATA_50B6	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4620	DATA_50BC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4633	DATA_50BC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4646	DATA_50C0	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4659	DATA_50C0	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+466C	DATA_50C4	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+467F	DATA_50C4	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4692	DATA_50C4	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+46A5	DATA_50C9	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+46B8	DATA_50C9	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+46CB	DATA_50C9	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+46DE	DATA_50CF	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+46F1	DATA_50CF	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4704	DATA_50CF	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4717	DATA_50D4	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+472A	DATA_50D4	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+473D	DATA_50D4	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4750	DATA_50D8	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4763	DATA_50D8	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4776	DATA_50DC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4789	DATA_50DC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+479C	DATA_50DC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+47C2	DATA_50E1	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+47D5	DATA_50E1	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+47E8	DATA_50E5	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+47FB	DATA_50E5	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+480E	DATA_50E8	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4821	DATA_50EC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4834	DATA_50F2	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4847	DATA_50F7	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+485A	DATA_50F7	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+486D	DATA_50F7	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4880	DATA_50F7	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4893	DATA_50FC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+48A6	DATA_50FF	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+48B9	DATA_50FC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+48CC	DATA_50FC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+48F2	DATA_5102	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4905	DATA_5108	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4918	DATA_510C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+492B	DATA_510C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+493E	DATA_5110	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4951	DATA_5110	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4964	DATA_5110	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4977	DATA_5116	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+498A	DATA_5116	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+499D	DATA_511B	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+49B0	DATA_511B	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+49C3	DATA_511B	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+49D6	DATA_5120	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+49E9	DATA_5125	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+49FC	DATA_50D4	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A0F	DATA_512A	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A22	DATA_5130	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A35	DATA_5137	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A48	DATA_513D	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A5B	DATA_514B	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A6E	DATA_5159	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A81	DATA_515F	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4A94	DATA_515F	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4AA7	DATA_5164	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4ABA	DATA_5168	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4ACD	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4AE0	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4AF3	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B06	DATA_5170	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B19	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B2C	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B3F	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B52	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B65	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B78	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B8B	DATA_5175	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4B9E	DATA_5175	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4BB1	DATA_5179	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4BC4	DATA_50FC	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4BEA	DATA_517E	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4BFD	DATA_5182	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4C10	DATA_5186	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4C23	DATA_518B	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4C36	DATA_516C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4C49	DATA_5190	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4C5C	DATA_5194	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4E70	DATA_5198	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4E83	DATA_519C	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4E96	DATA_51A1	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4EA9	DATA_51A7	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4EBC	DATA_51AD	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4ECF	DATA_51B3	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4EE2	DATA_51B9	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4EF5	DATA_51BF	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4F08	DATA_51C5	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4F1B	DATA_51CB	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4F2E	DATA_51CF	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4F41	DATA_51D3	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4F54	DATA_51D7	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+4F67	DATA_51DB	data	field of a 19-byte record in OPCODE_DESC_BYTE8
+523B	DATA_0100	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+523D	DATA_0201	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+524D	DATA_0102	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+5259	DATA_0100	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+525F	DATA_0100	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+5269	DATA_0301	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+526B	DATA_528B	data	next to a pointer field of OPERATOR_HELPER_NAME_TABLE, in its range
+526D	DATA_528B	data	next to a pointer field of OPERATOR_HELPER_NAME_TABLE, in its range
+526F	DATA_5292	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+5271	DATA_5298	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+5273	DATA_529F	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+5275	DATA_52A5	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+5277	DATA_52AC	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+5279	DATA_52AC	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+527B	DATA_52B3	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+527D	DATA_52BA	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+527F	DATA_0B0A	data	field of a 2-byte record in OPERATOR_HELPER_NAME_TABLE
+5281	DATA_0405	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+5283	DATA_0809	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+5285	DATA_0B0A	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+5287	DATA_0203	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+5289	DATA_0607	data	in a pointer field of OPERATOR_HELPER_NAME_TABLE (2-byte records)
+536A	DATA_53B0	data	next to a pointer field of JUMP_MNEMONIC_TEXT, in its range
+536C	DATA_53B4	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+536E	DATA_53B7	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5370	DATA_53BA	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5372	DATA_53BD	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5374	DATA_53C0	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5376	DATA_53C4	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5378	DATA_53C8	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+537A	DATA_53CC	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+537C	DATA_53D0	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+537E	DATA_53D3	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5380	DATA_53D7	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5382	DATA_53DA	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5384	DATA_53DE	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5386	DATA_53E1	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5388	DATA_53E5	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+538A	DATA_53E8	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+538C	DATA_53EC	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+538E	DATA_53EF	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5390	DATA_53F3	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5392	DATA_53F9	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5394	DATA_5400	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5396	DATA_5405	data	field of a 2-byte record in JUMP_MNEMONIC_TEXT
+5A28	DATA_5A78	data	field of a 10-byte record in INTRINSIC_TABLE
+5A32	DATA_5A80	data	field of a 10-byte record in INTRINSIC_TABLE
+5A3C	DATA_5A88	data	field of a 10-byte record in INTRINSIC_TABLE
+5A46	DATA_5A95	data	field of a 10-byte record in INTRINSIC_TABLE
+5A50	DATA_5AA1	data	field of a 10-byte record in INTRINSIC_TABLE
+5A5A	DATA_5AAE	data	field of a 10-byte record in INTRINSIC_TABLE
+5A64	STR_EMIT	data	field of a 10-byte record in INTRINSIC_TABLE

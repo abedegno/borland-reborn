@@ -151,24 +151,24 @@ int far pascal EMIT_SEGMENT_PREFIX(unsigned char character,signed char prefix,un
     switch((int)prefix) {
     case 0x3E:
         if(annotated!=0) {
-            ADD_NAMED_FIXUP(TEXT(0x5AC4));EMIT_CODE_BYTE(0x9B);ADD_NAMED_FIXUP(TEXT(0x5ACB));
+            ADD_NAMED_FIXUP(TEXT(STR_FIARQQ));EMIT_CODE_BYTE(0x9B);ADD_NAMED_FIXUP(TEXT(STR_FJARQQ));
         }
         EMIT_CODE_BYTE(0x3E);break;
     case 0x26:
-        if(annotated!=0) {ADD_NAMED_FIXUP(TEXT(0x5AD2));EMIT_CODE_BYTE(0x9B);}
+        if(annotated!=0) {ADD_NAMED_FIXUP(TEXT(STR_FIERQQ));EMIT_CODE_BYTE(0x9B);}
         EMIT_CODE_BYTE(0x26);break;
     case 0x36:
         if(annotated!=0) {
-            ADD_NAMED_FIXUP(TEXT(0x5AD9));EMIT_CODE_BYTE(0x9B);ADD_NAMED_FIXUP(TEXT(0x5AE0));
+            ADD_NAMED_FIXUP(TEXT(STR_FISRQQ));EMIT_CODE_BYTE(0x9B);ADD_NAMED_FIXUP(TEXT(STR_FJSRQQ));
         }
         EMIT_CODE_BYTE(0x36);break;
     case 0x2E:
         if(annotated!=0) {
-            ADD_NAMED_FIXUP(TEXT(0x5AE7));EMIT_CODE_BYTE(0x9B);ADD_NAMED_FIXUP(TEXT(0x5AEE));
+            ADD_NAMED_FIXUP(TEXT(STR_FICRQQ));EMIT_CODE_BYTE(0x9B);ADD_NAMED_FIXUP(TEXT(STR_FJCRQQ));
         }
         EMIT_CODE_BYTE(0x2E);break;
     default:
-        if(annotated!=0) {ADD_NAMED_FIXUP(TEXT(0x5AF5));EMIT_CODE_BYTE(0x9B);}
+        if(annotated!=0) {ADD_NAMED_FIXUP(TEXT(STR_FIDRQQ));EMIT_CODE_BYTE(0x9B);}
     }
     EMIT_CODE_BYTE(character);
     return 0;

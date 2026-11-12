@@ -264,7 +264,7 @@ void far pascal OBJ_WRITE_MODULE_HEADER(char far *text)
     OBJ_RECORD_CURSOR=TOKEN_TEXT_BUFFER;
     *(unsigned int near *)OBJ_RECORD_CURSOR=0;
     OBJ_RECORD_CURSOR+=2;
-    OBJ_PUT_NAME((char near *)0x5537);
+    OBJ_PUT_NAME((char near *)(STR_TC86_BORLAND_TURBO_C_2_0));
     OBJ_WRITE_RECORD(0x88);
     if(OPTION_OVERLAY_CODE) {
         OBJ_RECORD_CURSOR=TOKEN_TEXT_BUFFER;

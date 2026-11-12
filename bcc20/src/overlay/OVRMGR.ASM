@@ -34,6 +34,7 @@
 ; which TASM never emits for a small constant (no fixup in the baseline).
 DGROUP		group	_DATA,_BSS
 _DATA		segment word public 'DATA'
+		extrn	OVERLAY_DATA_SIZE:word	; DS:06FE: the overlay data size, from the FBOV header (inferred)
 _DATA		ends
 _BSS		segment word public 'BSS'
 _BSS		ends
@@ -166,9 +167,9 @@ L4761:
 		mov	word ptr ds:[126h], dx		; 4764
 		mov	es, word ptr cs:HEAP_PROGRAM_DS		; 4768
 		mov	ax, word ptr [bp-10h]		; 476D
-		mov	word ptr es:[6FEh], ax		; 4770
+		mov	word ptr es:OVERLAY_DATA_SIZE, ax		; 4770
 		mov	ax, word ptr [bp-0Eh]		; 4774
-		mov	word ptr es:[700h], ax		; 4777
+		mov	word ptr es:OVERLAY_DATA_SIZE+2, ax		; 4777
 		push	word ptr ds:[138h]		; 477B
 		call	RH_DOS_CLOSE		; 477F
 		mov	word ptr ds:[138h], 0		; 4782

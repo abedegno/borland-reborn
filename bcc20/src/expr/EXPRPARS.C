@@ -470,7 +470,7 @@ unsigned int far pascal PARSE_CONSTANT_EXPR(unsigned int mode)
     case 1:
         node=STEVALN(0,0,0,0,2);
         if(TOKEN_TYPE!=4) {
-            REPORT_AND_SKIP(MSG_MISSING,(char far *)MK_FP(_DS,0x35CF));
+            REPORT_AND_SKIP(MSG_MISSING,(char far *)MK_FP(_DS,(unsigned)(STR_ARRAY_BOUNDS_2)));
             return 0;
         }
         _AX=TOKEN_PUSHED_BACK ? (TOKEN_PUSHED_BACK=0,TOKEN_TYPE) : LEX_NEXT_TOKEN();
@@ -1545,7 +1545,7 @@ unsigned int far pascal APPLY_BASED_POINTER_C(unsigned int node)
     struct Token saved;
     _SI=node;
     saved=*(struct Token near *)&TOKEN_TYPE;
-    BCC_INPUT_STRING_PTR(0x789C,(_ES=EXPR_POOL_SEG,_BX=ES_W(_SI,EXPR_TYPE),_ES=TYPE_POOL,ES_W(_BX,TYPE_C_PTR_BASE)));
+    BCC_INPUT_STRING_PTR((unsigned)&POOL_HASH,(_ES=EXPR_POOL_SEG,_BX=ES_W(_SI,EXPR_TYPE),_ES=TYPE_POOL,ES_W(_BX,TYPE_C_PTR_BASE)));
     _AX=TOKEN_PUSHED_BACK ? (TOKEN_PUSHED_BACK=0,TOKEN_WORD) : LEX_NEXT_TOKEN();
     _DI=PARSE_EXPRESSION(0,0);
     if (_DI==0) return _SI;

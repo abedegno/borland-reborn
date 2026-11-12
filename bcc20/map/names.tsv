@@ -3179,3 +3179,125 @@ ANON_NAME_COUNTER	OBJ_EXTERN_INDEX	descriptive	OMF external-index counter (virtu
 C56_BASE_MARK	STR_BSS_BASE_LABEL	descriptive	"b@", the BSS base label
 TAG_WORD_1A	TAG_DDVT_COUNT	descriptive	number of DDVT functions of the class
 BCC_RESIDENT_UNLINK_NODE_NEAR	UNLINK_HEAP_NODE	descriptive	RRETNDES at 0094:0266: unlinks a node from the address chain and returns its descriptor
+DS:8C4E	BSS_CLEAR_END	descriptive	C0: end of the area cleared at start-up
+DS:06FE	OVERLAY_DATA_SIZE	inferred	OVRMGR: the overlay data size read from the FBOV header (inferred)
+DS:5B1C	POW10_LARGE	descriptive	RPOW10: table of 10^8, 10^16, ... as long doubles
+DS:5AFC	POW10_SMALL	descriptive	RPOW10: table of 10^0..10^7 as unsigned longs
+DS:51DF	REGISTER_NEED_TABLE	descriptive	FLOWBLK: register need by operator class (x21) and value kind
+DS:8C50	STACK_BOTTOM	descriptive	C0: bottom of the stack, end of the cleared area
+DS:58CB	STR_0	descriptive	DS:58CB: the string ",0\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5614	STR_286	descriptive	DS:5614: the string "\t.286\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5624	STR_286P	descriptive	DS:5624: the string "\t.286p\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:561C	STR_287	descriptive	DS:561C: the string "\t.287\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:55DE	STR_ADD_SS_BX	descriptive	DS:55DE: the string "\tadd\tss:[bx+" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:52FD	STR_AHSHIFT	descriptive	DS:52FD: the string "__AHSHIFT" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3F5C	STR_AHSHIFT_2	descriptive	DS:3F5C: the string "__AHSHIFT" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:35CF	STR_ARRAY_BOUNDS_2	descriptive	DS:35CF: the string "Array bounds" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:560F	STR_ASM_2	descriptive	DS:560F: the string ".asm" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59DD	STR_ASSUME_CS	descriptive	DS:59DD: the string "\tassume\tcs:" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:573C	STR_ASSUME_CS_2	descriptive	DS:573C: the string "\tassume\tcs:" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58D0	STR_AX_AX	descriptive	DS:58D0: the string "ax,ax," the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3878	STR_B	descriptive	DS:3878: the string "b@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:576D	STR_B_LABEL_BYTE_B_W_LABEL_WORD	descriptive	DS:576D: the string "b@\tlabel\tbyte\r\nb@w\tlabel\tword\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:52D6	STR_BRKLVL	descriptive	DS:52D6: the string "__brklvl" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5800	STR_BX	descriptive	DS:5800: the string "[bx]\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5979	STR_BYTE	descriptive	DS:5979: the string "\rbyte" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58DE	STR_BYTE_2	descriptive	DS:58DE: the string "byte" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5A0F	STR_C_5	descriptive	DS:5A0F: the string "@C" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:57FD	STR_C_6	descriptive	DS:57FD: the string "@C" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:0711	STR_C_7	descriptive	DS:0711: the string "C++" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:0715	STR_C_8	descriptive	DS:0715: the string "C" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:38F8	STR_COLON_2	descriptive	DS:38F8: the string ":" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:540A	STR_COLON_CR_NL	descriptive	DS:540A: the string ":\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58FE	STR_COMM	descriptive	DS:58FE: the string "\tcomm\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5910	STR_COMM_2	descriptive	DS:5910: the string "\t$comm\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59AC	STR_CRLF_3	descriptive	DS:59AC: the string "\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:581D	STR_CS_DGROUP	descriptive	DS:581D: the string ",cs:DGROUP@\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3875	STR_D	descriptive	DS:3875: the string "d@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:574D	STR_D_LABEL_BYTE_D_W_LABEL_WORD	descriptive	DS:574D: the string "d@\tlabel\tbyte\r\nd@w\tlabel\tword\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:589C	STR_DB_0CBH	descriptive	DS:589C: the string "db\t0cbh\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59C2	STR_DB_2	descriptive	DS:59C2: the string "\tdb\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5A0A	STR_DD	descriptive	DS:5A0A: the string "\tdd\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3825	STR_DEBUG_C_2	descriptive	DS:3825: the string "+\r\n\t?debug\tC " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5873	STR_DEBUG_C_3	descriptive	DS:5873: the string "\t?debug\tC " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:587E	STR_DEBUG_C_4	descriptive	DS:587E: the string "+\r\n\t?debug\tC " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:578D	STR_DEBUG_C_E9	descriptive	DS:578D: the string "\t?debug\tC E9\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:540E	STR_DEBUG_L	descriptive	DS:540E: the string "\t?debug\tL " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:54DF	STR_DGROUP_2	descriptive	DS:54DF: the string "DGROUP@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5748	STR_DS	descriptive	DS:5748: the string ",ds:" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59D2	STR_DUP	descriptive	DS:59D2: the string " dup (?)\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59C7	STR_DUP_0	descriptive	DS:59C7: the string " dup (0)\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5419	STR_DW	descriptive	DS:5419: the string "dw\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5A05	STR_DW_2	descriptive	DS:5A05: the string "\tdw\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58E9	STR_DWORD	descriptive	DS:58E9: the string "dword" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:57E2	STR_END_CRLF_EOF	descriptive	DS:57E2: the string "\tend\r\n\x1a" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3861	STR_EQU	descriptive	DS:3861: the string "\tequ\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3858	STR_EQU_S	descriptive	DS:3858: the string "\tequ\ts@+" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3836	STR_EXTRN	descriptive	DS:3836: the string "\textrn\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:57B1	STR_EXTRN_DGROUP_WORD	descriptive	DS:57B1: the string "\textrn\tDGROUP@:word\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:57C7	STR_EXTRN_TURBOFLOAT_WORD	descriptive	DS:57C7: the string "\textrn\t__turboFloat:word\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:52FA	STR_F	descriptive	DS:52FA: the string "F_" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:534C	STR_F_CHKSTK	descriptive	DS:534C: the string "F_CHKSTK@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5990	STR_FAR_2	descriptive	DS:5990: the string "far" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5905	STR_FAR_3	descriptive	DS:5905: the string "far " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5918	STR_FAR_4	descriptive	DS:5918: the string "far," the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58F5	STR_FAR_5	descriptive	DS:58F5: the string "far" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:542E	STR_FAR_PTR	descriptive	DS:542E: the string "far ptr " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58A6	STR_FCOMPP	descriptive	DS:58A6: the string "FCOMPP\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5AC4	STR_FIARQQ	descriptive	DS:5AC4: the string "FIARQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5AE7	STR_FICRQQ	descriptive	DS:5AE7: the string "FICRQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5AF5	STR_FIDRQQ	descriptive	DS:5AF5: the string "FIDRQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5AD2	STR_FIERQQ	descriptive	DS:5AD2: the string "FIERQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5AD9	STR_FISRQQ	descriptive	DS:5AD9: the string "FISRQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5ACB	STR_FJARQQ	descriptive	DS:5ACB: the string "FJARQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5AEE	STR_FJCRQQ	descriptive	DS:5AEE: the string "FJCRQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5AE0	STR_FJSRQQ	descriptive	DS:5AE0: the string "FJSRQQ" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3F91	STR_FTOL	descriptive	DS:3F91: the string "ftol@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5734	STR_GROUP	descriptive	DS:5734: the string "\tgroup\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:562D	STR_IFNDEF_VERSION_DEBUG_MACRO_E	descriptive	DS:562D: the string "\tifndef\t??version\r\n?debug\tmacro\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:543B	STR_JMP	descriptive	DS:543B: the string "\tjmp\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:55EE	STR_JMP_FAR_PTR	descriptive	DS:55EE: the string "\r\n\tjmp\tfar ptr " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:55FE	STR_JMP_NEAR_PTR	descriptive	DS:55FE: the string "\r\n\tjmp\tnear ptr " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:57EA	STR_JMP_WORD_PTR_CS	descriptive	DS:57EA: the string "\tjmp\tword ptr cs:@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:582B	STR_JMP_WORD_PTR_CS_BX	descriptive	DS:582B: the string "\tjmp\tword ptr cs:[bx+" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59F5	STR_LABEL	descriptive	DS:59F5: the string "\tlabel\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5A12	STR_LABEL_WORD	descriptive	DS:5A12: the string "\tlabel\tword\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5817	STR_MOV	descriptive	DS:5817: the string "\tmov\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5807	STR_MOV_BX_OFFSET	descriptive	DS:5807: the string "\tmov\tbx,offset " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:55D1	STR_MOV_BX_SP	descriptive	DS:55D1: the string "\tmov\tbx,sp\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:52F7	STR_N	descriptive	DS:52F7: the string "N_" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5342	STR_N_CHKSTK	descriptive	DS:5342: the string "N_CHKSTK@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59F0	STR_NEAR_2	descriptive	DS:59F0: the string "near" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:383E	STR_NEAR_3	descriptive	DS:383E: the string "near" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:590A	STR_NEAR_4	descriptive	DS:590A: the string "near " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:591D	STR_NEAR_5	descriptive	DS:591D: the string "near," the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58F9	STR_NEAR_6	descriptive	DS:58F9: the string "near" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5424	STR_NEAR_PTR	descriptive	DS:5424: the string "near ptr " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:54DA	STR_OBJ_3	descriptive	DS:54DA: the string ".obj" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58AF	STR_P_ST	descriptive	DS:58AF: the string "P\tst(" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:599E	STR_PARA	descriptive	DS:599E: the string "para" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59E9	STR_PROC	descriptive	DS:59E9: the string "\tproc\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59A3	STR_PUBLIC	descriptive	DS:59A3: the string " public " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:384F	STR_PUBLIC_2	descriptive	DS:384F: the string "\tpublic\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3843	STR_PUBLICDLL	descriptive	DS:3843: the string "\tpublicdll\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:588C	STR_PUSH_CS_CALL	descriptive	DS:588C: the string "push\tcs\r\n\tcall\t" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5730	STR_QUOTE_CR_NL	descriptive	DS:5730: the string ""\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58E3	STR_QWORD	descriptive	DS:58E3: the string "qword" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:55EB	STR_RBRACKET_COMMA	descriptive	DS:55EB: the string "]," the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58D7	STR_RPAREN	descriptive	DS:58D7: the string ")" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:579C	STR_S_LABEL_BYTE	descriptive	DS:579C: the string "s@\tlabel\tbyte\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:3F8A	STR_SCOPY_2	descriptive	DS:3F8A: the string "scopy@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58D9	STR_SEG	descriptive	DS:58D9: the string "seg " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5994	STR_SEGMENT	descriptive	DS:5994: the string "\tsegment " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:59AF	STR_SEGMENT_VIRTUAL	descriptive	DS:59AF: the string "\tsegment\tvirtual\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:541D	STR_SHORT	descriptive	DS:541D: the string "short " the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5338	STR_SLXMUL	descriptive	DS:5338: the string ":Slxmul@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58B5	STR_ST_0	descriptive	DS:58B5: the string "),st( 0 )\r\n" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58C1	STR_ST_0_ST	descriptive	DS:58C1: the string "st(0),st(" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:52CE	STR_STKLEN_2	descriptive	DS:52CE: the string "_stklen" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5437	STR_TAB_AT_AT	descriptive	DS:5437: the string "\t@@" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:58EF	STR_TBYTE	descriptive	DS:58EF: the string "tbyte" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:5537	STR_TC86_BORLAND_TURBO_C_2_0	descriptive	DS:5537: the string "TC86 Borland Turbo C++ 2.0" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:52C8	STR_TEXT	descriptive	DS:52C8: the string "_TEXT" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:387C	STR_TURBOFLOAT_2	descriptive	DS:387C: the string "__turboFloat" the code passed by its DS offset; named from its text by tools/namestrings.py
+DS:597F	STR_WORD	descriptive	DS:597F: the string "word" the code passed by its DS offset; named from its text by tools/namestrings.py

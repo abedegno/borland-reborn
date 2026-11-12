@@ -586,6 +586,9 @@ static void near pascal C0DECL(void)
         if(CURRENT_TOKEN!=TOK_IDENT || (PEEK_TOKEN(),TOKEN_TYPE)!=0x67) {
             PARSE_DECL_SPECIFIERS(0,&token,&friend_flag,&virtual_flag,&type,&attributes,&specified);
             if(friend_flag || virtual_flag || token==0x39 || token==0x38)
+                /* match: DS:0702 and DS:0709 are the strings "friend" and "virtual", but they stay numbers:
+                   with a name (a fixup) BC compiles this ?: differently.  The modding build
+                   keeps these two words right only while the data before 0709h keeps its size. */
                 REPORT_DIAGNOSTIC(MSG_STORAGE_CLASS_NOT_258,friend_flag ? (char far *)MK_FP(_DS,0x702) :
                     virtual_flag ? (char far *)MK_FP(_DS,0x709) : NAME_TEXT_COPY(TOKEN_NAMES[token]),0L);
         }
@@ -690,8 +693,8 @@ static void near pascal C0LINKAGE(void)
     while((c=NEXT_LITERAL_CHAR(index++))!=-1)
         if(p<text+9) *p++=c;
     *p=0;
-    if(!COMPARE_NAME(text,TEXT(0x711))) CURRENT_LINKAGE=1;
-    else if(!COMPARE_NAME(text,TEXT(0x715))) CURRENT_LINKAGE=2;
+    if(!COMPARE_NAME(text,TEXT(STR_C_7))) CURRENT_LINKAGE=1;
+    else if(!COMPARE_NAME(text,TEXT(STR_C_8))) CURRENT_LINKAGE=2;
     else {
         CURRENT_LINKAGE=0;
         REPORT_CURRENT_TOKEN(MSG_UNKNOWN_LANGUAGE_MUST);

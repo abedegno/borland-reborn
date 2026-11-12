@@ -26,8 +26,9 @@ CODE_13		segment byte public 'CODE'
 		assume	cs:CODE_13
 		public	RTL_LDOUBLE_SCALE_POW10
 
-POW10_SMALL	equ	5AFCh			; DS:5AFC, 10^0..10^7 as unsigned longs
-POW10_LARGE	equ	5B1Ch			; DS:5B1C, 10^8, 10^16, ... as long doubles
+; POW10_SMALL (DS:5AFC in the original): 10^0..10^7 as unsigned longs
+; POW10_LARGE (DS:5B1C): 10^8, 10^16, ... as long doubles
+		extrn	POW10_SMALL:byte,POW10_LARGE:byte
 
 RTL_LDOUBLE_SCALE_POW10	proc	far
 		push	bp
@@ -41,15 +42,15 @@ RTL_LDOUBLE_SCALE_POW10	proc	far
 		jns	M_ABS
 		neg	si
 M_ABS:
-		cmp	si,1387h
+		cmp	si,4999			; the largest power handled
 		jbe	M_LIMITED
-		mov	si,1387h
+		mov	si,4999
 M_LIMITED:
 		mov	bx,7
 		and	bx,si
 		shl	bx,1
 		shl	bx,1
-		add	bx,POW10_SMALL
+		add	bx,offset DGROUP:POW10_SMALL
 		push	word ptr [bx+2]
 		push	word ptr [bx]
 		lea	ax,[bp-0Ah]
@@ -58,7 +59,7 @@ M_LIMITED:
 		call	far ptr RTL_ULONG_TO_LDOUBLE
 		mov	cl,3
 		shr	si,cl
-		mov	di,POW10_LARGE
+		mov	di,offset DGROUP:POW10_LARGE
 M_POWLOOP:
 		or	si,si
 		je	M_APPLY

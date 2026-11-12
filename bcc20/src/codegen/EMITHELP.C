@@ -36,7 +36,7 @@ static void near pascal EMIT_HELPER_CALL_FOR_NODE(register unsigned int node,
     COP_B(node,COP_OPCODE)=16;
     /* Clear the register so EMIT_INSN_NODE emits a memory/symbol operand, not a register. */
     COP_B(node,COP_REGISTER)=0xFF;
-    OPND_W(node,OPND_LEFT)=FIND_OR_ADD_VARIABLE(DECLARE_NAMED_GLOBAL_HOOK(((char near * near *)0x5338)[descriptor->index],1),0,16);
+    OPND_W(node,OPND_LEFT)=FIND_OR_ADD_VARIABLE(DECLARE_NAMED_GLOBAL_HOOK(((char near * near *)(STR_SLXMUL))[descriptor->index],1),0,16);
     OPND_W(node,OPND_RIGHT)=0;
     /* Tiny model: push CS and make a near call, so a helper that returns far still works
        inside the single segment. Otherwise a near or far call as NEAR_HELPER_CALLS says. */

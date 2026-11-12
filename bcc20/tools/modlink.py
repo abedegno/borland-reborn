@@ -63,10 +63,12 @@ class Module:
         self.segment = m.group(1)
         self.base, self.size, self.org = (int(m.group(i), 16) for i in (2, 3, 4))
         self.functions = []
+        self.sizes = {}   # function start -> size, from the target table
         for line in body:
             if line and not line.startswith("#"):
                 parts = line.split("\t")
                 self.functions.append((parts[0], int(parts[2], 16)))
+                self.sizes[int(parts[2], 16)] = int(parts[3], 16)
         self.overlay = target.startswith("ovr")
         self.block = None if self.overlay else re.match(r"(CODE_\d+)", self.segment).group(1)
 
@@ -77,8 +79,9 @@ def load_modules():
         if path.suffix.upper() not in (".C", ".ASM") or "include" in path.parts:
             continue
         head = path.read_bytes()[:4000].decode("latin1")
-        target = re.search(r"target:\s*(\S+)", head).group(1)
-        out.append(Module(path.stem.upper(), target))
+        found = re.search(r"/\*\s*target:\s*(\S+)", head)
+        if found:   # src/data/DGROUP.ASM has none: the link takes it separately
+            out.append(Module(path.stem.upper(), found.group(1)))
     return out
 
 
@@ -219,8 +222,9 @@ class Region:
     """A run of original bytes written as assembly: labels, far pointers by name,
     segment words, and near words given as names."""
 
-    def __init__(self, original, layout, invented, base, size):
-        self.base, self.size = base, size
+    def __init__(self, original, layout, invented, base, size, origin=None):
+        """origin: when given, each label is preceded by "; @XXXX", its offset from origin."""
+        self.base, self.size, self.origin = base, size, origin
         self.image = original.image[base:base + size]
         self.labels = defaultdict(list)
         self.items = {}   # offset -> (length, text)
@@ -253,18 +257,26 @@ class Region:
     def lines(self, start=0, stop=None):
         stop = self.size if stop is None else stop
         out, cursor = [], start
-        marks = sorted(set(o for o in self.labels if start <= o < stop) | set(o for o in self.items if start <= o < stop))
+        inside = {o for m, (n, _) in self.items.items() for o in range(m + 1, m + n)}
+        marks = sorted(set(o for o in self.labels if start <= o < stop and o not in inside)
+                       | set(o for o in self.items if start <= o < stop))
         for mark in marks + [stop]:
             if mark > cursor:
                 out.extend(db_lines(self.image[cursor:mark]))
                 cursor = mark
             if mark >= stop:
                 break
+            if self.labels.get(mark):
+                out.append(f"; @{self.base + mark - self.origin:04X}") if self.origin is not None else None
             out += [f"{n}\tlabel\tbyte" for n in self.labels.get(mark, ())]
             if mark in self.items:
                 length, text = self.items[mark]
                 out.append("\t\t" + text)
                 cursor = mark + length
+                # a name that falls inside the item (one of its bytes): placed after it
+                for inner in range(mark + 1, mark + length):
+                    for n in self.labels.get(inner, ()):
+                        out.append(f"{n}\tequ\t$-{mark + length - inner}")
         return out
 
 
@@ -482,6 +494,59 @@ def compile_changed(src_dir):
 
 
 CHANGED = {}
+_IMAGES = {}
+# test aid: limit --pad-code to these blocks (CODE_n, OVR_xxxx), from MODLINK_PAD_ONLY
+PAD_ONLY = set(__import__("os").environ.get("MODLINK_PAD_ONLY", "").split())
+
+
+def _image(path):
+    if path not in _IMAGES:
+        records = omfedit.read(path)
+        index = next(i for i, s in enumerate(omfedit.segments(records), 1) if s[1] == "CODE")
+        _IMAGES[path] = omfedit.code_image(records, index)
+    return _IMAGES[path]
+
+
+def _matches(module, start, limit=None):
+    """Offsets in the changed object where the original function at start occurs."""
+    size = module.sizes[start]
+    old, old_fixed = _image(ROOT / "build-source" / module.stem / f"{module.stem}.OBJ")
+    new, new_fixed = _image(CHANGED[module.stem])
+    body = old[start:start + size]
+    masked = {i - start for i in old_fixed if start <= i < start + size}
+    found = []
+    for at in range(0, len(new) - size + 1):
+        if all(i in masked or (at + i) in new_fixed or new[at + i] == body[i] for i in range(size)):
+            found.append(at)
+            if limit and len(found) >= limit:
+                break
+    return found
+
+
+def relocate(module, offset, name):
+    """Where an original offset of a changed module is now.  A label other modules use sits
+    at a fixed distance into its function: find that function in the new object by its
+    bytes (fixup positions masked) and keep the distance.  A function whose bytes occur
+    more than once is taken at the shift of the nearest earlier function found once.
+    Refuses when the function itself was edited, since its labels then have no safe place."""
+    starts = sorted(s for s in module.sizes if s <= offset)
+    if not starts:
+        raise SystemExit(f"{name}: offset {offset:04X} of {module.stem} is in no function")
+    start = starts[-1]
+    found = _matches(module, start)
+    if len(found) > 1:
+        for earlier in reversed(starts[:-1]):
+            unique = _matches(module, earlier, limit=2)
+            if len(unique) == 1:
+                shift = unique[0] - earlier
+                found = [f for f in found if f == start + shift]
+                break
+    if len(found) != 1:
+        raise SystemExit(f"{name} is used by another module inside {module.stem}, in the function at "
+                         f"{start:04X}, which {'was changed' if not found else 'cannot be told apart'}: "
+                         "it has no safe place in the changed module")
+    return found[0] + offset - start
+
 
 # References whose offset half must be 0 although the symbol is in an overlay: TLINK sends
 # both halves of a far reference to an overlaid name to its stub entry (offset 20h and up),
@@ -511,11 +576,14 @@ def prepare_objects(modules, layout, defines, aligned):
         omfedit.write(records, OUT / "obj" / f"{m.stem}.OBJ")
 
 
-def write_order(blocks):
+def write_order(blocks, pad=0):
     lines = ["; MODORDER.ASM: segment order for the modding link (generated by tools/modlink.py)",
              "\t\tDOSSEG"]
     for b in blocks:
-        lines += [f"{b}\t\tsegment byte public 'CODE'", f"{b}\t\tends"]
+        lines.append(f"{b}\t\tsegment byte public 'CODE'")
+        if pad and (not PAD_ONLY or b in PAD_ONLY):
+            lines.append(f"\t\tdb\t{pad} dup (90h)\t; --pad-code test padding")
+        lines.append(f"{b}\t\tends")
     lines.append("\t\tend")
     write_asm("MODORDER", lines)
 
@@ -532,6 +600,13 @@ def main():
     parser = argparse.ArgumentParser(description="Link BCC.EXE from the sources, laid out by TLINK.")
     parser.add_argument("--src", help="a copy of src/ with changes: changed files are recompiled")
     parser.add_argument("--out", help="output directory (default build-source/MODLINK)")
+    parser.add_argument("--pad-data", type=int, default=0, metavar="N",
+                        help="test: insert N bytes early in _DATA, moving every data item after it")
+    parser.add_argument("--pad-code", type=int, default=0, metavar="N",
+                        help="test: insert N bytes at the start of every code block and overlay")
+    parser.add_argument("--pad-at", metavar="XXXX",
+                        help="with --pad-data: insert the padding before the data item at DS:XXXX, "
+                             "or at the end of _DATA (END)")
     args = parser.parse_args()
     global OUT
     if args.out:
@@ -570,37 +645,41 @@ def main():
         needed.update(omfedit.externs(records))
     where = {}  # function name -> (stem, offset), from the target tables
     for m in modules:
-        if m.stem in CHANGED:
-            # a changed module's own publics give its layout; its target table is the original's
-            for name, _, off in omfedit.publics(omfedit.read(object_path(m))):
-                where[name] = (m.stem, off)
-            continue
         for name, off in m.functions:
             where.setdefault(name, (m.stem, off))
 
     invented = {}
     defines = defaultdict(list)
-    # an alias of a changed module's public is safe: the public's own offset is used
-    public_at = {where[n] for n in where if where[n][0] in CHANGED}
 
     def define(name, stem, offset):
-        if stem in CHANGED and name not in publics and (stem, offset) not in public_at:
-            raise SystemExit(f"{name} is used by another module inside changed {stem}: make it public in the source")
+        """offset is in the original module; a changed module's is found by relocate()."""
+        if name not in publics and stem in CHANGED:
+            offset = relocate(by_stem[stem], offset, name)
         if name not in publics:
             defines[stem].append((name, offset))
             publics[name] = stem
 
-    write_data_module(original, layout, data_names, invented)
+    data_source = Path(args.src or ROOT / "src") / "data" / "DGROUP.ASM"
+    text = data_source.read_bytes().decode("latin1")
+    if args.pad_data:
+        mark = ("; END-OF-DATA" if args.pad_at and args.pad_at.upper() == "END"
+                else f"; @{args.pad_at.upper()}\r\n" if args.pad_at else "; PAD-POINT")
+        if text.count(mark) != 1:
+            raise SystemExit(f"DGROUP.ASM has no single {mark.strip()} line for --pad-data")
+        text = text.replace(mark, f"\t\tdb\t{args.pad_data} dup (0)\t; --pad-data test padding\r\n" + mark)
+    (OUT / "src" / "MODDATA.ASM").write_bytes(text.encode("latin1"))
     ovrmgr = by_stem["OVRMGR"]
     overlay_names = {n: int(a.split(":")[1], 16) for n, a in syms.items()
                      if a.startswith(f"{OVERLAY_PARA:04X}:")}
     write_glue_module(original, layout, invented, ovrmgr, overlay_names)
     marks = write_marks(layout, objects) + write_empty_overlays(layout, objects)
-    write_order(sorted({m.block for m in modules if not m.overlay}, key=lambda b: original.block_para[b]))
+    write_order(sorted({m.block for m in modules if not m.overlay}, key=lambda b: original.block_para[b]),
+                args.pad_code)
     generated = ["MODORDER", "MODDATA", "MODGLUE"] + [stem for (_, stem), _ in marks]
     for stem in generated:
-        text = (OUT / "src" / f"{stem}.ASM").read_text()
+        text = (OUT / "src" / f"{stem}.ASM").read_text(errors="replace")
         needed.update(re.findall(r"extrn\t(\S+):far", text))
+        needed.update(re.findall(r"\t; @code (\S+)", text))
         for name in re.findall(r"public\t(\S+)", text):
             publics.setdefault(name, stem)
     for (stem, offset), label in invented.items():
@@ -634,6 +713,25 @@ def main():
     stub_index = {p: int(original.segments[p]["index"]) for p in layout.stub_by_index.values()}
     overlaid = sorted([((stub_index[layout.overlay_of[m.stem]], m.base), m.stem) for m in modules if m.overlay]
                       + [((stub_index[para], base), stem) for (base, stem), para in marks])
+    if args.pad_code:
+        # test: N bytes at the start of every overlay that holds recovered code
+        padded, seen = [], set()
+        for key, stem in overlaid:
+            para = layout.overlay_of.get(stem)
+            if para == layout.overlay_of["MESSAGES"]:
+                para = None   # the message image is read from offset 0 of its overlay
+            if para is not None and PAD_ONLY and f"OVR_{para:04X}" not in PAD_ONLY:
+                para = None
+            if para is not None and para not in seen:
+                seen.add(para)
+                pad_stem = f"PAD{para:04X}"
+                write_asm(pad_stem, [f"OVR_{para:04X}\tsegment byte public 'CODE'",
+                                     f"\t\tdb\t{args.pad_code} dup (90h)\t; --pad-code test padding",
+                                     f"OVR_{para:04X}\tends", "\t\tend"])
+                generated.append(pad_stem)
+                padded.append((key, pad_stem))
+            padded.append((key, stem))
+        overlaid = padded
     lines = ["/m /s /c O\\MODORDER"] + [f"O\\{m.stem}" for m in resident] + ["O\\MODGLUE", "O\\MODDATA"]
     lines += ["/o O\\" + overlaid[0][1]] + [f"O\\{stem}" for _, stem in overlaid[1:]]
     response = " +\r\n".join(lines) + "\r\nBCC.EXE\r\nBCC.MAP\r\n\r\n"
@@ -644,20 +742,114 @@ def main():
         print("  unresolved", *item)
 
     bin_dir = str(ROOT / "toolchain" / "BC20" / "BIN")
+    assemble(bin_dir, generated)
+    link(bin_dir)
+    # Second pass: the near pointers into code that DGROUP.ASM tags "; @code NAME" take the
+    # function's offset from the first link's map (the data's size does not change, so
+    # neither does the layout).
+    offsets = map_offsets(OUT / "run" / "BCC.MAP")
+    text = (OUT / "src" / "MODDATA.ASM").read_bytes().decode("latin1")
+
+    def code_word(m):
+        name = m.group(2)
+        if name not in offsets:
+            raise SystemExit(f"@code {name}: not in the map")
+        return f"dw\t0{offsets[name]:04X}h\t; @code {name}"
+
+    new_text = re.sub(r"dw\t(0[0-9A-F]+h)\t; @code (\S+)", code_word, text)
+    relink = False
+    if new_text != text:
+        (OUT / "src" / "MODDATA.ASM").write_bytes(new_text.encode("latin1"))
+        assemble(bin_dir, ["MODDATA"])
+        relink = True
+    # The numbers of map/code-numbers.tsv: DGROUP addresses in compiled code that cannot be
+    # names; each takes its target's offset in the new layout (its DATA_xxxx label).
+    by_stem = {m.stem: m for m in modules}
+    for stem, offset, target, *_ in code_numbers():
+        value = offsets.get(f"DATA_{target:04X}")
+        if value is None:
+            raise SystemExit(f"code-numbers: DATA_{target:04X} is not in the map")
+        if value != target:
+            if stem in CHANGED:
+                offset = relocate(by_stem[stem], offset, f"the number at {stem}+{offset:04X}")
+            path = OUT / "obj" / f"{stem}.OBJ"
+            records = omfedit.read(path)
+            index = next(i for i, s in enumerate(omfedit.segments(records), 1) if s[1] == "CODE")
+            omfedit.write(omfedit.patch_word(records, index, offset, value), path)
+            relink = True
+    if relink:
+        link(bin_dir)
+        print("second pass: near code pointers and code numbers updated for the new layout")
+    print((OUT / "run" / "LINK.TXT").read_text()[-3000:])
+    if not args.pad_data:
+        data_check(original, offsets)
+
+
+def data_check(original, offsets):
+    """Compare the linked _DATA with the original's.  Far pointers (relocated words and the
+    offsets before them) and near code pointers may differ with the layout; any other
+    difference comes from an edit of src/data/DGROUP.ASM, and is listed."""
+    data = (OUT / "run" / "BCC.EXE").read_bytes()
+    header = struct.unpack_from("<H", data, 8)[0] * 16
+    text = (OUT / "run" / "BCC.MAP").read_text()
+    m = re.search(r"^ ([0-9A-F]{5})H \S+ \S+ _DATA ", text, re.M)
+    new = data[header + int(m.group(1), 16):]
+    old = original.image[original.dgroup:]
+    loose = set()
+    for r in original.relocations:
+        if original.dgroup <= r < original.dgroup + DATA_END:
+            loose.update(range(r - original.dgroup - 2, r - original.dgroup + 2))
+    source = (OUT / "src" / "MODDATA.ASM").read_bytes().decode("latin1")
+    for line in (ROOT / "map" / "data-pointers.tsv").read_text().splitlines():
+        if line and not line.startswith("#") and line.split("\t")[2] == "code":
+            off = int(line.split("\t")[0], 16)
+            loose.update((off, off + 1))
+    differ = [i for i in range(DATA_END) if i not in loose and old[i] != new[i]]
+    if differ:
+        print(f"data check: _DATA differs from the original at {len(differ)} bytes, from DS:{differ[0]:04X} "
+              "(expected only where src/data/DGROUP.ASM was edited)")
+    else:
+        print("data check: _DATA equals the original's, but for far pointers and code pointers")
+
+
+def code_numbers():
+    """(module, offset, DGROUP target) from map/code-numbers.tsv."""
+    out = []
+    for line in (ROOT / "map" / "code-numbers.tsv").read_text().splitlines():
+        if line and not line.startswith("#"):
+            stem, offset, target, *_ = line.split("\t")
+            out.append((stem, int(offset, 16), int(target, 16)))
+    return out
+
+
+def assemble(bin_dir, stems):
     args = ["--stage", bin_dir]
-    for stem in generated:
+    for stem in stems:
         args += ["-f", str(OUT / "src" / f"{stem}.ASM"), "-c", f"TASM /ml {stem}.ASM > {stem}.TXT",
                  "-o", f"{stem}.TXT", "-O", f"{stem}.OBJ"]
     dos(OUT, args)
-    for stem in generated:
+    for stem in stems:
         made = OUT / f"{stem}.OBJ"
         if not made.exists():
             raise SystemExit((OUT / f"{stem}.TXT").read_text())
         shutil.move(made, OUT / "obj" / f"{stem}.OBJ")
+
+
+def link(bin_dir):
+    for stale in ("BCC.EXE", "BCC.MAP"):
+        (OUT / "run" / stale).unlink(missing_ok=True)
     dos(OUT / "run", ["--stage", bin_dir, "-f", f"{OUT / 'obj'}=O", "-f", str(OUT / "run" / "MOD.RSP"),
                       "-c", "TLINK @MOD.RSP > LINK.TXT", "-o", "LINK.TXT", "-O", "BCC.EXE", "-O", "BCC.MAP"])
-    print((OUT / "run" / "LINK.TXT").read_text()[-3000:])
+    if not (OUT / "run" / "BCC.EXE").exists():
+        raise SystemExit((OUT / "run" / "LINK.TXT").read_text())
 
+
+def map_offsets(path):
+    """{public name: offset} from a TLINK map (the offset in the segment the code runs in)."""
+    out = {}
+    for seg, off, name in re.findall(r"^ ([0-9A-F]{4}):([0-9A-F]{4})\s+(?:idle\s+|Abs\s+)?(\S+)\s*$", Path(path).read_text(), re.M):
+        out.setdefault(name, int(off, 16))
+    return out
 
 if __name__ == "__main__":
     main()
