@@ -1,4 +1,4 @@
 [submodule "exhume"]
 	path = exhume
 	url = https://github.com/abedegno/Exhume
-	branch = borland-reborn-rebased
+	branch = master
