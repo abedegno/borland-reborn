@@ -1,0 +1,26 @@
+name: Setup or rebuild problem
+description: The setup script, prepare step or gate fails on your machine.
+labels: [build]
+body:
+  - type: input
+    id: system
+    attributes:
+      label: System
+      description: Operating system, Python, Node.js and DOSBox-X versions.
+    validations:
+      required: true
+  - type: input
+    id: step
+    attributes:
+      label: Step that failed
+      description: setup-toolchains.py, prepare.py or gate.py, and the command you ran.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: The last lines the command printed.
+      render: text
+    validations:
+      required: true

@@ -1,0 +1,24 @@
+name: Name, comment or finding
+description: A name that is vague or wrong, a comment that misleads, or a new finding.
+labels: [correction]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: Version directory and file, with the function or line (for example bcc20/src/codegen/SWITCH.C, SWITCH_LOWER).
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong, and what it should say
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: What in the code (or in BCC's behaviour) shows it. Say how sure you are.
+    validations:
+      required: true

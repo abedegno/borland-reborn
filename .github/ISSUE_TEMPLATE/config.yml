@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Rights holders
+    url: https://github.com/abedegno/borland-reborn/blob/main/NOTICE.md
+    about: If you hold rights in this material, please read the notice and open an issue titled "Rights holder"; it will be answered promptly.
