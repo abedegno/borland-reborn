@@ -1,0 +1,2 @@
+# segment CODE_2_RH180E base 0x314E size 0x85 org 0x180E
+EXTEND_HEAP	EXTEND_HEAP	0x0	0x85

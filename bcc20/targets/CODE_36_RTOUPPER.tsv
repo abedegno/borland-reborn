@@ -1,0 +1,2 @@
+# segment CODE_36_RTOUPPER base 0xBB51 size 0x24 org 0x31
+RTL_TOUPPER	RTOUPPER	0x0	0x24

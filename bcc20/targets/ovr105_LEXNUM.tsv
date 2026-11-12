@@ -1,0 +1,2 @@
+# segment ovr105_LEXNUM base 0x45015 size 0xF8 org 0x245
+PARSE_STARTUP_EXIT	LEXNUM	0x0	0xF8

@@ -1,0 +1,24 @@
+# Hosted CI runs only what needs neither Borland's toolchain nor BCC.EXE, which must never be
+# on GitHub: Exhume's repocheck (every script compiles, every Markdown link resolves, and no
+# executable, object, library or disk image is committed). The real proof, the byte-identical
+# rebuild, is `gate.py check --all`, run locally (see docs/SETUP.md).
+name: repocheck
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  repocheck:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: python3 exhume/tools/repocheck.py --root . --allow '^exhume/'

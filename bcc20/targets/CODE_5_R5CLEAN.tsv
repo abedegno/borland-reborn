@@ -1,0 +1,2 @@
+# segment CODE_5_R5CLEAN base 0x6CD9 size 0x3E org 0x89
+INIT_EMS_EXT_BANKS	R5CLEAN	0x0	0x3E

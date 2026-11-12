@@ -1,0 +1,2 @@
+# segment CODE_38_RWRITE base 0xBB9B size 0x20 org 0xB
+RTL_WRITE	RTL_WRITE	0x0	0x20

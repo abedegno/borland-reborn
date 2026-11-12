@@ -1,0 +1,102 @@
+Turbo Assembler	 Version 2.51	     10/30/26 01:31:28	    Page 1
+G:\NRAW1.ASM
+
+
+
+      1				     ; Direct-segment relocation references
+      2						     extrn   BCC_COPY_WORDS:far
+      3						     extrn   BCC_DIAGNOSTIC:far
+      4						     extrn   BCC_FAR_245C:far
+      5						     extrn   BCC_FAR_5E22:far
+      6						     extrn   BCC_FAR_AB12:far
+      7						     extrn   BCC_FAR_AB51:far
+      8						     extrn   BCC_FAR_AB9B:far
+      9						     extrn   BCC_FAR_ABBB:far
+     10						     extrn   BCC_FAR_AF23:far
+     11						     extrn   BCC_RF_15C5_010D:far
+     12						     extrn   BCC_SEG_15:far
+     13						     extrn   BCC_SEG_180:far
+     14						     extrn   BCC_SEG_24:far
+     15						     extrn   BCC_SEG_26:far
+     16						     extrn   BCC_SEG_28:far
+     17						     extrn   BCC_SEG_42:far
+     18						     extrn   X02E_00:far
+     19						     extrn   X034_01:far
+     20						     extrn   X036_00:far
+     21				     DGROUP  group   _DATA,_BSS
+     22	0000			     _DATA   segment para public 'DATA'
+     23	0000			     _DATA   ends
+     24	0000			     _BSS    segment word public 'DATA'
+     25	0000			     _BSS    ends
+     26	0000			     CODE_1 segment byte public	'CODE'
+     27					     assume cs:CODE_1
+     28
+     29	0000  55			     db	055h
+     30	0001  8B			     db	08Bh
+     31	0002  EC			     db	0ECh
+     32	0003  1E			     db	01Eh
+     33	0004  B8			     db	0B8h
+     34	0005  7E			     db	07Eh
+     35	0006  00			     db	000h
+     36	0007  50			     db	050h
+     37	0008  0E			     db	00Eh
+     38	0009  E8			     db	0E8h
+     39	000A  D2			     db	0D2h
+     40	000B  FF			     db	0FFh
+     41	000C  33			     db	033h
+     42	000D  C0			     db	0C0h
+     43	000E  50			     db	050h
+     44	000F  9A			     db	09Ah
+     45	0010  46			     db	046h
+     46	0011  01			     db	001h
+     47	0012  0000s				     dw	     seg BCC_COPY_WORDS
+     48	0014  59			     db	059h
+     49	0015  5D			     db	05Dh
+     50	0016  CB			     db	0CBh
+     51	0017			     CODE_1 ends
+     52
+     53				     end
+Turbo Assembler	 Version 2.51	     10/30/26 01:31:28	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "10/30/26"
+??FILENAME			  Text	 "NRAW1	  "
+??TIME				  Text	 "01:31:28"
+??VERSION			  Number 0205
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE_1
+@FILENAME			  Text	 NRAW1
+@WORDSIZE			  Text	 2
+BCC_COPY_WORDS (BCC_COPY_WORDS)	  Far	 ----:---- Extern
+BCC_DIAGNOSTIC (BCC_DIAGNOSTIC)	  Far	 ----:---- Extern
+BCC_FAR_245C (BCC_FAR_245C)	  Far	 ----:---- Extern
+BCC_FAR_5E22 (BCC_FAR_5E22)	  Far	 ----:---- Extern
+BCC_FAR_AB12 (BCC_FAR_AB12)	  Far	 ----:---- Extern
+BCC_FAR_AB51 (BCC_FAR_AB51)	  Far	 ----:---- Extern
+BCC_FAR_AB9B (BCC_FAR_AB9B)	  Far	 ----:---- Extern
+BCC_FAR_ABBB (BCC_FAR_ABBB)	  Far	 ----:---- Extern
+BCC_FAR_AF23 (BCC_FAR_AF23)	  Far	 ----:---- Extern
+BCC_RF_15C5_010D	       +  Far	 ----:---- Extern
+(BCC_RF_15C5_010D)
+BCC_SEG_15 (BCC_SEG_15)		  Far	 ----:---- Extern
+BCC_SEG_180 (BCC_SEG_180)	  Far	 ----:---- Extern
+BCC_SEG_24 (BCC_SEG_24)		  Far	 ----:---- Extern
+BCC_SEG_26 (BCC_SEG_26)		  Far	 ----:---- Extern
+BCC_SEG_28 (BCC_SEG_28)		  Far	 ----:---- Extern
+BCC_SEG_42 (BCC_SEG_42)		  Far	 ----:---- Extern
+X02E_00	(X02E_00)		  Far	 ----:---- Extern
+X034_01	(X034_01)		  Far	 ----:---- Extern
+X036_00	(X036_00)		  Far	 ----:---- Extern
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE_1				  16  0017 Byte	  Public  CODE
+DGROUP				  Group
+  _BSS				  16  0000 Word	  Public  DATA
+  _DATA				  16  0000 Para	  Public  DATA
+

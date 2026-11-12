@@ -1,0 +1,346 @@
+/* MSG.H: diagnostic message numbers.  Every error, warning and fatal error is
+   reported by its index in the message table (src/MESSAGES.C); each name is made from
+   the message's own text, which follows on its line.  Only the messages the sources
+   pass as literals are named.  Generated during the readability pass. */
+#ifndef MSG_H
+#define MSG_H
+#define MSG_IRREDUCIBLE_EXPRESSION 1        /* Irreducible expression tree */
+#define MSG_REGISTER_ALLOCATION 2           /* Register allocation failure */
+#define MSG_BAD_CALL_INTRINSIC 3            /* Bad call of intrinsic function */
+#define MSG_UNABLE_OPEN_INPUT_FILE 4        /* Unable to open input file '%s' */
+#define MSG_UNABLE_CREATE_OUTPUT 5          /* Unable to create output file '%s' */
+#define MSG_OUT_MEMORY 6                    /* Out of memory */
+#define MSG_ERROR_WRITING_OUTPUT 7          /* Error writing output file */
+#define MSG_ERROR_DIRECTIVE 8               /* Error directive: %s */
+#define MSG_COMPILER_TABLE_LIMIT 9          /* Compiler table limit exceeded */
+#define MSG_DECLARATION_SYNTAX 10           /* Declaration syntax error */
+#define MSG_WRONG_NUMBER_ARGUMENTS 11       /* Wrong number of arguments in call of '%s' */
+#define MSG_ARRAY_SIZE_TOO_LARGE 12         /* Array size too large */
+#define MSG_INVALID_MACRO_ARGUMENT 13       /* Invalid macro argument separator */
+#define MSG_ASSEMBLER_STATEMENT 14          /* Assembler statement too long */
+#define MSG_MACRO_ARGUMENT_SYNTAX 15        /* Macro argument syntax error */
+#define MSG_IMPROPER_USE_TYPEDEF 16         /* Improper use of a typedef symbol */
+#define MSG_BAD_FILE_NAME_FORMAT 17         /* Bad file name format in include directive */
+#define MSG_INVALID_INDIRECTION 18          /* Invalid indirection */
+#define MSG_ILLEGAL_USE_POINTER 19          /* Illegal use of pointer */
+#define MSG_NOT_ALLOWED_TYPE 20             /* Not an allowed type */
+#define MSG_INCOMPATIBLE_TYPE 21            /* Incompatible type conversion */
+#define MSG_MISPLACED_DECIMAL 22            /* Misplaced decimal point */
+#define MSG_INCORRECT_USE_DEFAULT 23        /* Incorrect use of default */
+#define MSG_INVALID_USE_DOT 24              /* Invalid use of dot */
+#define MSG_ILLEGAL_PARAMETER_EMIT 25       /* Illegal parameter to __emit__ */
+#define MSG_FUNCTION_CALL_MISSING 26        /* Function call missing ) */
+#define MSG_CASE_STATEMENT_MISSING 27       /* Case statement missing : */
+#define MSG_CHARACTER_CONSTANT_TOO 28       /* Character constant too long */
+#define MSG_COMPOUND_STATEMENT 29           /* Compound statement missing } */
+#define MSG_CANNOT_MODIFY_CONST 30          /* Cannot modify a const object */
+#define MSG_DECLARATION_MISSING 31          /* Declaration missing ; */
+#define MSG_DEFINE_DIRECTIVE_NEEDS 32       /* Define directive needs an identifier */
+#define MSG_TOO_MUCH_GLOBAL_DATA 33         /* Too much global data defined in file */
+#define MSG_TWO_CONSECUTIVE_DOTS 34         /* Two consecutive dots */
+#define MSG_TOO_MANY_STORAGE 35             /* Too many storage classes in declaration */
+#define MSG_TOO_MANY_TYPES 36               /* Too many types in declaration */
+#define MSG_MISPLACED_ELIF 37               /* Misplaced elif directive */
+#define MSG_MISPLACED_ELSE 38               /* Misplaced else directive */
+#define MSG_MISPLACED_ENDIF 39              /* Misplaced endif directive */
+#define MSG_ENUM_SYNTAX_ERROR 40            /* Enum syntax error */
+#define MSG_UNEXPECTED_END_FILE_42 42       /* Unexpected end of file in conditional started on line %d */
+#define MSG_EXPRESSION_SYNTAX 43            /* Expression syntax */
+#define MSG_UNABLE_EXECUTE_COMMAND 44       /* Unable to execute command '%s' */
+#define MSG_TOO_FEW_PARAMETERS 45           /* Too few parameters in call */
+#define MSG_TOO_FEW_PARAMETERS_46 46        /* Too few parameters in call to '%s' */
+#define MSG_ILLEGAL_USE_FLOATING 47         /* Illegal use of floating point */
+#define MSG_FILE_NAME_TOO_LONG 48           /* File name too long */
+#define MSG_CONFLICTING_TYPE 49             /* Conflicting type modifiers */
+#define MSG_GOTO_STATEMENT_MISSING 51       /* Goto statement missing label */
+#define MSG_GROUP_OVERFLOWED 52             /* Group overflowed maximum size: %s */
+#define MSG_BAD_IFDEF_DIRECTIVE 53          /* Bad ifdef directive syntax */
+#define MSG_BAD_IFNDEF_DIRECTIVE 54         /* Bad ifndef directive syntax */
+#define MSG_ILLEGAL_CHARACTER_0X 55         /* Illegal character '%c' (0x%x) */
+#define MSG_ILLEGAL_INITIALIZATION 56       /* Illegal initialization */
+#define MSG_UNABLE_OPEN_INCLUDE 57          /* Unable to open include file '%s' */
+#define MSG_NO_FILE_NAME_ENDING 58          /* No file name ending */
+#define MSG_UNABLE_CREATE_TURBOC 59         /* Unable to create turboc.$ln */
+#define MSG_LVALUE_REQUIRED 60              /* Lvalue required */
+#define MSG_STATEMENT_MISSING 62            /* %s statement missing ( */
+#define MSG_STATEMENT_MISSING_63 63         /* %s statement missing ) */
+#define MSG_STATEMENT_MISSING_64 64         /* %s statement missing ; */
+#define MSG_TYPE_MISMATCH 65                /* Type mismatch in redeclaration of '%s' */
+#define MSG_DEFAULT_OUTSIDE_SWITCH 66       /* Default outside of switch */
+#define MSG_MACRO_EXPANSION_TOO 67          /* Macro expansion too long */
+#define MSG_TOO_MANY_DECIMAL 68             /* Too many decimal points */
+#define MSG_TOO_MANY_EXPONENTS 69           /* Too many exponents */
+#define MSG_TOO_MANY_INITIALIZERS 70        /* Too many initializers */
+#define MSG_INLINE_ASSEMBLY_NOT 71          /* Inline assembly not allowed */
+#define MSG_NO_FILE_NAMES_GIVEN 73          /* No file names given */
+#define MSG_INCORRECT_NUMBER 74             /* Incorrect number format */
+#define MSG_NUMERIC_CONSTANT_TOO 75         /* Numeric constant too large */
+#define MSG_ILLEGAL_OCTAL_DIGIT 76          /* Illegal octal digit */
+#define MSG_TYPE_MISMATCH_77 77             /* Type mismatch in parameter %ld in call to '%s' */
+#define MSG_TYPE_MISMATCH_78 78             /* Type mismatch in parameter '%s' in call to '%s' */
+#define MSG_TYPE_MISMATCH_79 79             /* Type mismatch in parameter %ld */
+#define MSG_TYPE_MISMATCH_80 80             /* Type mismatch in parameter '%s' */
+#define MSG_POINTER_REQUIRED_LEFT 81        /* Pointer required on left side of -> */
+#define MSG_INVALID_POINTER 82              /* Invalid pointer addition */
+#define MSG_ILLEGAL_POINTER 83              /* Illegal pointer subtraction */
+#define MSG_ILLEGAL_STRUCTURE 84            /* Illegal structure operation */
+#define MSG_OPERATOR_NOT_FOLLOWED 85        /* # operator not followed by macro argument name */
+#define MSG_UNTERMINATED_STRING 86          /* Unterminated string or character constant */
+#define MSG_STRUCTURE_SIZE_TOO 87           /* Structure size too large */
+#define MSG_BAD_UNDEF_DIRECTIVE 88          /* Bad undef directive syntax */
+#define MSG_UNKNOWN_PREPROCESSOR 89         /* Unknown preprocessor directive: '%s' */
+#define MSG_UNDEFINED_SYMBOL 90             /* Undefined symbol '%s' */
+#define MSG_INCORRECT_OPTION 91             /* Incorrect %s option: %s */
+#define MSG_COULD_NOT_FIND_FILE 92          /* Could not find file '%s' */
+#define MSG_NONPORTABLE_POINTER 94          /* Nonportable pointer conversion */
+#define MSG_EXTRA_PARAMETER_CALL 96         /* Extra parameter in call */
+#define MSG_EXTRA_PARAMETER_CALL_97 97      /* Extra parameter in call to %s */
+#define MSG_MULTIPLE_BASE_CLASSES 100       /* Multiple base classes require explicit class names */
+#define MSG_FIELD_AMBIGUOUS 101             /* Field '%s' is ambiguous in '%s' */
+#define MSG_CANNOT_DISTINGUISHED 102        /* '%s' cannot be distinguished from '%s' */
+#define MSG_INACCESSIBLE_BECAUSE 103        /* '%s' is inaccessible because also in '%s' */
+#define MSG_EXPRESSION_ARITHMETIC 104       /* Expression of arithmetic type expected */
+#define MSG_ACCESS_DECLARATIONS 105         /* Access declarations cannot grant or reduce access */
+#define MSG_ARRAY_MUST_HAVE_LEAST 107       /* Array must have at least one element */
+#define MSG_OPERATOR_MUST_RETURN 108        /* operator-> must return a pointer or a class */
+#define MSG_CANNOT_ASSIGN 109               /* Cannot assign '%s' to '%s' */
+#define MSG_MUST_PREVIOUSLY 110             /* '%s' must be a previously defined class or struct */
+#define MSG_BASE_CLASS_CANNOT 111           /* Base class cannot be declared protected */
+#define MSG_BIT_FIELDS_MUST_SIGNED 112      /* Bit fields must be signed or unsigned int */
+#define MSG_MISPLACED_BREAK 113             /* Misplaced break */
+#define MSG_SWITCH_SELECTION 114            /* Switch selection expression must be of integral type */
+#define MSG_CANNOT_CAST_FROM 115            /* Cannot cast from '%s' to '%s' */
+#define MSG_UNEXPECTED_FOUND 116            /* Unexpected : found */
+#define MSG_REQUIRES_PRECEEDING 117         /* :: requires a preceeding identifier in this context */
+#define MSG_CONSTRUCTOR_CANNOT 118          /* constructor cannot have a return type specification */
+#define MSG_MISPLACED_CONTINUE 119          /* Misplaced continue */
+#define MSG_DECLARATION_TERMINATED 120      /* Declaration terminated incorrectly */
+#define MSG_NEED_IDENTIFIER 121             /* Need an identifier to declare */
+#define MSG_DEFAULT_VALUE_MISSING 122       /* Default value missing */
+#define MSG_DECLARE_OPERATOR 123            /* Declare operator delete (void*) or (void*, size_t) */
+#define MSG_OPERATOR_DELETE_MUST 124        /* operator delete must return void */
+#define MSG_DESTRUCTOR_NAME_MUST 125        /* Destructor name must match the class name */
+#define MSG_DESTRUCTOR_CANNOT_HAVE 126      /* Destructor cannot have a return type specification */
+#define MSG_MISPLACED_ELSE_127 127          /* Misplaced else */
+#define MSG_UNKNOWN_LANGUAGE_MUST 128       /* Unknown language, must be C or C++ */
+#define MSG_WAS_PREVIOUSLY 129              /* '%s' was previously declared with the language '%s' */
+#define MSG_STORAGE_CLASS_NOT 130           /* Storage class '%s' not allowed for a field */
+#define MSG_STORAGE_CLASS_NOT_131 131       /* Storage class '%s' not allowed for a function */
+#define MSG_FUNCTIONS_CANNOT 132            /* Functions cannot return arrays or functions */
+#define MSG_GOTO_BYPASSES 133               /* Goto bypasses initialization of a local variable */
+#define MSG_PARAMETER_NAMES_ARE 134         /* Parameter names are used only with a function body */
+#define MSG_EXTERN_VARIABLE_CANNOT 135      /* extern variable cannot be initialized */
+#define MSG_CANNOT_INITIALIZE 136           /* Cannot initialize '%s' with '%s' */
+#define MSG_CLASSES_CANNOT 137              /* Classes cannot be initialized with {} */
+#define MSG_WAS_PREVIOUSLY_138 138          /* '%s' was previously declared without static */
+#define MSG_MAIN_MUST_HAVE_RETURN 139       /* main must have a return type of int */
+#define MSG_OPERANDS_DO_NOT_MATCH 140       /* .* operands do not match */
+#define MSG_MEMBER_FUNCTIONS_CAN 141        /* Member functions can only have static storage class */
+#define MSG_OPERATOR_NEW_MUST_HAVE 142      /* operator new must have an initial parameter of type size_t */
+#define MSG_OPERATOR_NEW_MUST 143           /* operator new must return an object of type void * */
+#define MSG_MUST_DECLARED_ONE 145           /* '%s' must be declared with one argument */
+#define MSG_MUST_MEMBER_FUNCTION 147        /* '%s' must be a member function or have an argument of class type */
+#define MSG_ONLY_ONE_SET 148                /* Only one of a set of overloaded functions can be \"C\" */
+#define MSG_NOT_PARAMETER 149               /* '%s' is not a parameter */
+#define MSG_TYPE_QUALIFIER_MUST 150         /* Type qualifier '%s' must be a struct or class name */
+#define MSG_TWO_OPERANDS_MUST 151           /* Two operands must evaluate to the same type */
+#define MSG_EXPRESSION_TYPE_DOES 152        /* Expression type does not match the return type */
+#define MSG_UNEXPECTED_CHECK 153            /* Unexpected ) -- check for matching parenthesis */
+#define MSG_THIS_CAN_ONLY_USED 154          /* 'this' can only be used within a member function */
+#define MSG_NOT_LEGAL_HERE 155              /* '%s' is not legal here */
+#define MSG_VIRTUAL_FUNCTION 156            /* Virtual function '%s' conflicts with '%s' */
+#define MSG_BIT_FIELD_TOO_LARGE 157         /* Bit field too large */
+#define MSG_BIT_FIELDS_MUST 158             /* Bit fields must contain at least one bit */
+#define MSG_OVERLOADABLE_OPERATOR 159       /* Overloadable operator expected */
+#define MSG_CONSTRUCTOR_NOT 160             /* The constructor '%s' is not allowed */
+#define MSG_DECLARATION_NOT 162             /* Declaration is not allowed here */
+#define MSG_VECTORS_CLASSES_MUST 163        /* Vectors of classes must use the default constructor */
+#define MSG_DESTRUCTOR_NOT 166              /* Destructor for '%s' is not accessible */
+#define MSG_DIVISION_ZERO 167               /* Division by zero */
+#define MSG_TOO_MANY_DEFAULT_CASES 168      /* Too many default cases */
+#define MSG_SPECIFIES_MULTIPLE 169          /* '%s' specifies multiple or duplicate access */
+#define MSG_BASE_CLASS_INCLUDED 170         /* Base class '%s' is included more than once */
+#define MSG_DUPLICATE_CASE 171              /* Duplicate case */
+#define MSG_MEMBER_INITIALIZED 172          /* Member '%s' is initialized more than once */
+#define MSG_MULTIPLE_DECLARATION 173        /* Multiple declaration for '%s' */
+#define MSG_BASE_CLASS_INITIALIZED 174      /* Base class '%s' is initialized more than once */
+#define MSG_HAS_ALREADY_BEEN 175            /* '%s' has already been included */
+#define MSG_BODY_HAS_ALREADY_BEEN 176       /* Body has already been defined for this function */
+#define MSG_VIRTUAL_SPECIFIED_MORE 177      /* virtual specified more than once */
+#define MSG_FILE_MUST_CONTAIN 178           /* File must contain at least one external declaration */
+#define MSG_DECLARATION_DOES_NOT 179        /* Declaration does not specify a tag or an identifier */
+#define MSG_EXPRESSION_TOO 180              /* Expression is too complicated */
+#define MSG_UNEXPECTED 181                  /* Unexpected } */
+#define MSG_UNION_MEMBERS_CANNOT 184        /* Union members cannot require initialization */
+#define MSG_EXPRESSION_INTEGRAL 185         /* Expression of integral type expected */
+#define MSG_FUNCTION_DEFINED 186            /* Function defined inline after use as extern */
+#define MSG_UNDEFINED_LABEL 187             /* Undefined label '%s' */
+#define MSG_AMBIGUITY_BETWEEN 188           /* Ambiguity between '%s' and '%s' */
+#define MSG_CLASS_MEMBER_DECLARED 189       /* Class member '%s' declared outside its class */
+#define MSG_MULTIPLE_SCOPE 190              /* Multiple scope qualifiers */
+#define MSG_NOT_BASE_CLASS 191              /* '%s' is not a base class of '%s' */
+#define MSG_MUST_MEMBER_FUNCTION_192 192    /* '%s' must be a member function */
+#define MSG_CANNOT_HAVE_NEAR 193            /* Cannot have a near member in a far class */
+#define MSG_PARAMETER_D_MISSING 194         /* Parameter %ld missing name */
+#define MSG_CANNOT_SPECIFY_BASE 195         /* Cannot specify base classes except when defining the class */
+#define MSG_NO_BASE_CLASS 196               /* No base class to initialize */
+#define MSG_ILLEGAL_TAKE_ADDRESS 198        /* Illegal to take address of bit field */
+#define MSG_CANNOT_INITIALIZE_199 199       /* Cannot initialize a field */
+#define MSG_EXPECTED_AFTER 200              /* : expected after %s */
+#define MSG_NO_FOLLOWING 201                /* No : following the ? */
+#define MSG_EXPECTED_202 202                /* , expected */
+#define MSG_NO_CONSTRUCTOR 203              /* No constructor parameters allowed for array of class */
+#define MSG_CANNOT_FIND_COPY 204            /* Cannot find '%s' to copy a vector */
+#define MSG_DECLARATION_WAS 205             /* Declaration was expected */
+#define MSG_MUST_PREVIOUSLY_206 206         /* '%s' must be a previously defined enumeration tag */
+#define MSG_EXPRESSION_EXPECTED 207         /* Expression expected */
+#define MSG_FIELD_IDENTIFIER 208            /* Field identifier expected */
+#define MSG_NOT_MEMBER 209                  /* '%s' is not a member of '%s' */
+#define MSG_FRIENDS_MUST_FUNCTIONS 210      /* Friends must be functions or classes, not fields */
+#define MSG_FUNCTIONS_MAY_NOT_PART 211      /* Functions may not be part of a struct or union */
+#define MSG_IDENTIFIER_EXPECTED 212         /* Identifier expected */
+#define MSG_OBJECT_MUST 213                 /* Object must be initialized */
+#define MSG_INLINE_ASSEMBLY_NOT_214 214     /* Inline assembly not allowed in an inline function */
+#define MSG_NO_BODY_DEFINED_THIS 215        /* No body defined for this inline function */
+#define MSG_EXPECTED_216 216                /* { expected */
+#define MSG_ATTEMPTING_RETURN 217           /* Attempting to return a reference to local name %s */
+#define MSG_REFERENCE_MEMBER_NOT 219        /* Reference member '%s' is not initialized */
+#define MSG_COULD_NOT_FIND_MATCH 220        /* Could not find a match for '%s' */
+#define MSG_NO_MATCHING 221                 /* No matching ) */
+#define MSG_USE_TAKE_ADDRESS 222            /* Use :: to take the address of a member function */
+#define MSG_CANNOT_FIND_INITIALIZE 223      /* Cannot find '%s' to initialize base class */
+#define MSG_CANNOT_FIND_INITIALIZE_224 224  /* Cannot find '%s' to initialize field '%s' */
+#define MSG_CANNOT_FIND_INITIALIZE_225 225  /* Cannot find '%s' to initialize a vector */
+#define MSG_CANNOT_RETURN_VALUE 226         /* '%s' cannot return a value */
+#define MSG_USE_CALL 227                    /* Use . or -> to call %s */
+#define MSG_OPERAND_EXPECTED 228            /* Operand expected */
+#define MSG_MISSING 229                     /* %s missing ] */
+#define MSG_EXPECTED_230 230                /* } expected */
+#define MSG_MUST_TAKE_ADDRESS 231           /* Must take address of a memory location */
+#define MSG_FUNCTION_SHOULD_RETURN 232      /* Function should return a value */
+#define MSG_EXPECTED_233 233                /* ) expected */
+#define MSG_STATEMENT_MISSING_234 234       /* Statement missing ; */
+#define MSG_USE_TERMINATE 235               /* Use ; to terminate declarations */
+#define MSG_STATEMENT_REQUIRED 236          /* Statement is required here */
+#define MSG_BIT_FIELD_CANNOT 237            /* Bit field cannot be static */
+#define MSG_GLOBAL_ANONYMOUS_UNION 238      /* Global anonymous union not static */
+#define MSG_LEFT_SIDE_MUST 239              /* Left side must be a structure */
+#define MSG_MUST_PREVIOUSLY_240 240         /* '%s' must be a previously defined structure tag */
+#define MSG_CONSTANT_EXPRESSION 241         /* Constant expression required */
+#define MSG_ONLY_ALLOWED_C 242              /* %s is only allowed in C++ */
+#define MSG_FUNCTION_DEFINITION 243         /* Function definition cannot be a typedef'ed declaration */
+#define MSG_CALL_NONFUNCTION 244            /* Call of nonfunction */
+#define MSG_CASE_OUTSIDE_SWITCH 245         /* Case outside of switch */
+#define MSG_RIGHT_SIDE_NOT_MEMBER 246       /* Right side of .* is not a member pointer */
+#define MSG_TYPE_NAME_EXPECTED 247          /* Type name expected */
+#define MSG_UNION_CANNOT_HAVE_BASE 248      /* union cannot have a base type */
+#define MSG_CANNOT_USED_STATIC 249          /* '%s' cannot be used in a static member function */
+#define MSG_VALUE_TYPE_VOID_NOT 250         /* Value of type void is not allowed */
+#define MSG_DO_STATEMENT_MUST_HAVE 251      /* Do statement must have while */
+#define MSG_OTHER_OBJECTS_CANNOT 252        /* Other objects cannot be declared in a function definition */
+#define MSG_IDENTIFIER_CANNOT_HAVE 253      /* Identifier '%s' cannot have a type qualifier */
+#define MSG_REGISTER_ONLY_STORAGE 254       /* register is the only storage class allowed */
+#define MSG_EXPRESSION_SCALAR_TYPE 255      /* Expression of scalar type expected */
+#define MSG_SIZEOF_MAY_NOT_APPLIED 256      /* sizeof may not be applied to a bit field */
+#define MSG_SIZEOF_MAY_NOT_APPLIED_257 257  /* sizeof may not be applied to a function */
+#define MSG_STORAGE_CLASS_NOT_258 258       /* Storage class '%s' is not allowed here */
+#define MSG_CASE_BYPASSES 259               /* Case bypasses initialization of a local variable */
+#define MSG_VARIABLE_INITIALIZED 261        /* Variable '%s' is initialized twice */
+#define MSG_IMPROPER_USE_TYPEDEF_262 262    /* Improper use of typedef '%s' */
+#define MSG_OPERANDS_ARE_DIFFERING 263      /* Operands are of differing or incompatible type */
+#define MSG_SIZE_THIS_EXPRESSION 264        /* Size of this expression is unknown or zero */
+#define MSG_SIZE_UNKNOWN_ZERO 265           /* Size of '%s' is unknown or zero */
+#define MSG_SIZE_TYPE_UNKNOWN_ZERO 266      /* Size of the type is unknown or zero */
+#define MSG_UNDEFINED_STRUCTURE 267         /* Undefined structure '%s' */
+#define MSG_FOUND_INSTEAD 268               /* Found : instead of :: */
+#define MSG_VARIABLE_NAME_EXPECTED 269      /* Variable name expected */
+#define MSG_BAD_RETURN_TYPE_TYPE 270        /* Bad return type for a type conversion operator */
+#define MSG_LINKAGE_SPECIFICATION 271       /* Linkage specification not allowed */
+#define MSG_REFERENCE_MEMBER_NEEDS 272      /* Reference member '%s' needs a temporary for initialization */
+#define MSG_ACCESS_SPECIFIER_FOUND 273      /* Access specifier '%s' found in a union */
+#define MSG_CANNOT_DECLARED 274             /* '%s' cannot be declared in an anonymous union */
+#define MSG_FUNCTION_CANNOT_STATIC 277      /* Function '%s' cannot be static */
+#define MSG_CANNOT_CALL_MAIN_FROM 278       /* Cannot call 'main' from within the program */
+#define MSG_CANNOT_OVERLOAD_MAIN 279        /* Cannot overload 'main' */
+#define MSG_NON_VIRTUAL_FUNCTION 280        /* Non-virtual function '%s' declared pure */
+#define MSG_BAD_SYNTAX_PURE 281             /* Bad syntax for pure function definition */
+#define MSG_CANNOT_CREATE_VARIABLE 282      /* Cannot create a variable for abstract class '%s' */
+#define MSG_PURE_FUNCTION_NOT 283           /* Pure function '%s' not overridden in '%s' */
+#define MSG_FUNCTION_SHOULD_HAVE 290        /* Function '%s' should have a prototype */
+#define MSG_OVERLAYS_ONLY 291               /* Overlays only supported in medium, large, and huge memory models */
+#define MSG_CANNOT_DEFINE_POINTER 292       /* Cannot define a pointer or reference to a reference */
+#define MSG_ARRAY_REFERENCES_NOT 293        /* Array of references is not allowed */
+#define MSG_VOID_NOT_VALID_TYPE 294         /* void & is not a valid type */
+#define MSG_ITEMS_TYPE_NEED 295             /* Items of type %s need constructors and can't be passed with ... */
+#define MSG_NOT_DATA_MEMBER_CAN_T 296       /* '%s' is not a data member and can't be initialized here */
+#define MSG_DESTRUCTOR_REQUIRED 297         /* Destructor for %s required in conditional expression */
+#define MSG_VALUE_NOT_WITHIN_RANGE 298      /* The value for %s is not within the range of an int */
+#define MSG_CASE_CONSTANT_OUT 299           /* Case constant is out of range of the selector */
+#define MSG_FIELD_CANNOT_USED 300           /* Field %s cannot be used without an object */
+#define MSG_ATTEMPTING_RETURN_301 301       /* Attempting to return a reference to a temporary object */
+#define MSG_STACK_OVERFLOW 302              /* Stack overflow */
+#define MSG_MEMORY_REFERENCE 303            /* Memory reference expected */
+#define MSG_CANNOT_ADD_SUBTRACT 304         /* Cannot add or subtract relocatable symbols */
+#define MSG_INVALID_REGISTER 305            /* Invalid register combination (e.g. [BP+BX]) */
+#define MSG_INVALID_COMBINATION 306         /* Invalid combination of opcode and operands */
+#define MSG_286_287_INSTRUCTIONS 307        /* 286/287 instructions not enabled */
+#define MSG_CANNOT_HAVE_NEAR_312 312        /* Cannot have a near member in a huge class */
+#define MSG_CANNOT_USE_TINY_HUGE 313        /* Cannot use tiny or huge memory model with Windows */
+#define MSG_CANNOT_HAVE_LOCAL 314           /* Cannot have a %s in a local class */
+#define MSG_REFERENCE_MEMBER 315            /* Reference member '%s' initialized with a non-reference parameter */
+#define MSG_CANNOT_CALL 316                 /* Cannot call dynamically dispatched function '%s' */
+#define MSG_CANNOT_USE_MULTIPLE 317         /* Cannot use multiple inheritance with DDVT's. */
+#define MSG_MATCHING_BASE_CLASS 318         /* Matching base class function for '%s' has different dispatch number. */
+#define MSG_MATCHING_BASE_CLASS_319 319     /* Matching base class function for '%s' is not dynamic. */
+#define MSG_ASSIGNMENT_THIS 333             /* Assignment to 'this' is obsolete, use X::operator new instead */
+#define MSG_BIT_FIELDS_MUST_SIGNED_334 334  /* Bit fields must be signed or unsigned int */
+#define MSG_INITIALIZING 336                /* Initializing %s with %s */
+#define MSG_BOTH_STRUCTURE_TAG 337          /* '%s' is both a structure tag and a name, now obsolete */
+#define MSG_TEMPORARY_USED 338              /* Temporary used to initialize '%s' */
+#define MSG_BOTH_RETURN_RETURN 343          /* Both return and return with a value used */
+#define MSG_CONSTANT_MEMBER_NOT 344         /* Constant member '%s' is not initialized */
+#define MSG_FUNCTIONS_CONTAINING 345        /* Functions containing %s are not expanded inline */
+#define MSG_BASE_INITIALIZATION 346         /* Base initialization without a class name is now obsolete */
+#define MSG_STYLE_FUNCTION 347              /* Style of function definition is now obsolete */
+#define MSG_OVERLOAD_NOW 348                /* overload is now unnecessary and obsolete */
+#define MSG_INITIALIZATION_ONLY 349         /* Initialization is only partially bracketed */
+#define MSG_OBSOLETE_SYNTAX_USE 350         /* Obsolete syntax; use :: instead */
+#define MSG_DECLARATION_DOES_NOT_352 352    /* Declaration does not specify a tag or an identifier */
+#define MSG_AMBIGUOUS_OPERATORS 353         /* Ambiguous operators need parentheses */
+#define MSG_SUPERFLUOUS_FUNCTION 354        /* Superfluous & with function */
+#define MSG_PARAMETER_NEVER_USED 355        /* Parameter '%s' is never used */
+#define MSG_UNKNOWN_ASSEMBLER 357           /* Unknown assembler instruction */
+#define MSG_GOTO_BYPASSES_358 358           /* Goto bypasses initialization of a local variable */
+#define MSG_CALL_FUNCTION_NO 359            /* Call to function '%s' with no prototype */
+#define MSG_CALL_FUNCTION_NO_360 360        /* Call to function with no prototype */
+#define MSG_CONSTANT_LONG 361               /* Constant is long */
+#define MSG_NONPORTABLE_POINTER_362 362     /* Nonportable pointer comparison */
+#define MSG_POSSIBLE_USE_BEFORE 363         /* Possible use of '%s' before definition */
+#define MSG_CONSTANT_OUT_RANGE 364          /* Constant out of range in comparison */
+#define MSG_REDEFINITION_NOT 365            /* Redefinition of '%s' is not identical */
+#define MSG_POSSIBLY_INCORRECT 366          /* Possibly incorrect assignment */
+#define MSG_FUNCTION_SHOULD_RETURN_367 367  /* Function should return a value */
+#define MSG_CONVERSION_MAY_LOSE 368         /* Conversion may lose significant digits */
+#define MSG_NO_DECLARATION 369              /* No declaration for function '%s' */
+#define MSG_CODE_HAS_NO_EFFECT 370          /* Code has no effect */
+#define MSG_ASSIGNED_VALUE_THAT 371         /* '%s' is assigned a value that is never used */
+#define MSG_ILL_FORMED_PRAGMA 372           /* Ill-formed pragma */
+#define MSG_SUSPICIOUS_POINTER 373          /* Suspicious pointer conversion */
+#define MSG_UNREACHABLE_CODE 374            /* Unreachable code */
+#define MSG_NONPORTABLE_POINTER_375 375     /* Nonportable pointer conversion */
+#define MSG_STRUCTURE_PASSED_VALUE 376      /* Structure passed by value */
+#define MSG_VOID_FUNCTIONS_MAY_NOT 377      /* Void functions may not return a value */
+#define MSG_HEXADECIMAL_VALUE 378           /* Hexadecimal value contains more than 3 digits */
+#define MSG_MIXING_POINTERS_SIGNED 379      /* Mixing pointers to signed and unsigned char */
+#define MSG_DECLARED_BUT_NEVER 380          /* '%s' is declared but never used */
+#define MSG_DIVISION_ZERO_381 381           /* Division by zero */
+#define MSG_CASE_BYPASSES_382 382           /* Case bypasses initialization of a local variable */
+#define MSG_UNDEFINED_STRUCTURE_383 383     /* Undefined structure '%s' */
+#define MSG_DECLARED_BOTH_EXTERNAL 384      /* '%s' is declared as both external and static */
+#define MSG_DECLARE_PRIOR_USE 386           /* Declare '%s' prior to use in prototype */
+#define MSG_FUNCTION_DEFINITION_387 387     /* Function definition cannot be a typedef'ed declaration */
+#define MSG_ASSIGNING 388                   /* Assigning %s to %s */
+#define MSG_NON_CONST_FUNCTION 390          /* Non-const function %s called for const object */
+#define MSG_NON_VOLATILE_FUNCTION 391       /* Non-volatile function %s called for volatile object */
+#define MSG_ARRAY_VARIABLE_NEAR 392         /* Array variable '%s' is near */
+#endif

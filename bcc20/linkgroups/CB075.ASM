@@ -1,0 +1,60 @@
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group CODE_117
+; BEGIN LR117 (root CODE_117:0000)
+CODE_117	segment byte public 'CODE'
+		assume	cs:CODE_117
+
+		public	BCC_RF_1CD1_0020
+		public	BCC_RF_1CD1_0025
+		public	BCC_RF_1CD1_002A
+		public	BCC_RF_1CD1_002F
+		public	BCC_RF_1CD1_0034
+		public	BCC_RF_1CD1_0039
+		public	BCC_RF_1CD1_003E
+		public	BCC_RF_1CD1_0043
+		public	BCC_RF_1CD1_0052
+		public	BCC_RF_1CD1_005C
+		public	BCC_RF_1CD1_006B
+		public	BCC_RF_1CD1_0070
+		public	BCC_RF_1CD1_007A
+
+		db	0CDh,03Fh,000h,000h,070h,061h,003h,000h,0F8h,021h,0C4h,001h,014h,000h	; CODE_117:0000
+		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; CODE_117:000E
+		db	000h,000h,000h,000h	; CODE_117:001C
+BCC_RF_1CD1_0020	label	far
+		db	0EAh,0E4h,01Bh,03Bh,088h	; CODE_117:0020
+BCC_RF_1CD1_0025	label	far
+		db	0EAh,0A3h,021h,03Bh,088h	; CODE_117:0025
+BCC_RF_1CD1_002A	label	far
+		db	0EAh,05Ch,01Ah,03Bh,088h	; CODE_117:002A
+BCC_RF_1CD1_002F	label	far
+		db	0EAh,06Fh,00Bh,03Bh,088h	; CODE_117:002F
+BCC_RF_1CD1_0034	label	far
+		db	0EAh,0A1h,018h,03Bh,088h	; CODE_117:0034
+BCC_RF_1CD1_0039	label	far
+		db	0EAh,0BDh,01Ch,03Bh,088h	; CODE_117:0039
+BCC_RF_1CD1_003E	label	far
+		db	0EAh,002h,01Ah,03Bh,088h	; CODE_117:003E
+BCC_RF_1CD1_0043	label	far
+		db	0EAh,015h,01Ch,03Bh,088h,0EAh,0D2h,000h,03Bh,088h,0EAh,000h,000h,03Bh	; CODE_117:0043
+		db	088h	; CODE_117:0051
+BCC_RF_1CD1_0052	label	far
+		db	0EAh,007h,020h,03Bh,088h,0EAh,0E7h,002h,03Bh,088h	; CODE_117:0052
+BCC_RF_1CD1_005C	label	far
+		db	0EAh,09Fh,017h,03Bh,088h,0EAh,03Eh,000h,03Bh,088h,0EAh,0F9h,011h,03Bh	; CODE_117:005C
+		db	088h	; CODE_117:006A
+BCC_RF_1CD1_006B	label	far
+		db	0EAh,01Dh,01Bh,03Bh,088h	; CODE_117:006B
+BCC_RF_1CD1_0070	label	far
+		db	0EAh,013h,00Eh,03Bh,088h,0EAh,089h,019h,03Bh,088h	; CODE_117:0070
+BCC_RF_1CD1_007A	label	far
+		db	0EAh,042h,01Eh,03Bh,088h,0EAh,08Bh,014h,03Bh,088h,000h,000h,000h,000h	; CODE_117:007A
+		db	000h,000h,000h,000h,000h,000h,000h,000h	; CODE_117:0088
+
+CODE_117	ends
+; END LR117
+		end

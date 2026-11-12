@@ -1,0 +1,2 @@
+# segment ovr140_STOVR141 base 0x62F80 size 0x1FB org 0x0
+INIT_CODEGEN_POOLS	STOVR141	0x0	0x1FB

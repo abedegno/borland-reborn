@@ -1,0 +1,2 @@
+# segment CODE_1_RPUTS base 0x18E6 size 0x22 org 0x4D6
+WRITE_STDOUT_STRING	RPUTS	0x0	0x22

@@ -1,0 +1,70 @@
+[project]
+name = "Borland C++ 2.0 BCC.EXE (borland-reborn)"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build-source"
+queue = "queue"
+
+[binary]
+exe = "toolchain/BC20/BIN/BCC.EXE"
+# Resident DGROUP is segment-table entry 183, load paragraph 0x0DEF.
+dgroup_para = 0x0DEF
+overlay_segment = "ovr(\\d{3})(?:_[A-Z0-9]+)?"
+
+[toolchain]
+profile = "borland-bc20"
+home = "toolchain/BC20"
+stage = ["toolchain/BC20/BIN", "toolchain/BC20/INCLUDE"]
+c_opts = "-mm -G -O -Z -p -Y"
+asm_opts = "/ml"
+dos = "dosbox-x"
+sessions = 4
+
+# Turbo C 2.01 built the run-time library modules BCC.EXE links (es:bx far-pointer copies,
+# dx:ax built before a push); sources select it with /* compiler: TC201 */.
+[toolchain.compilers.TC201]
+stage = ["toolchain/TC201/BIN", "toolchain/TC201/INCLUDE", "toolchain/BC20/BIN/TASM.EXE"]
+c_command = "TCC -c {opts} -IC:\\ {file}"
+
+[gate]
+link = "{python} {root}/tools/integrate_sources.py"
+exact_exe = "SOURCELINK/run/BCC.EXE"
+
+# Compiler-generated structure copy/argument helpers; addresses remain fully verified.
+[names.extern_aliases]
+# Same resident PUBLIC/body0041:009F, original context edges separately verified.
+EXIT_BODY = "EXIT"
+# Genuine RPUTS context alias and compiler CDECL spelling; no address exemption.
+RPUTS_BODY = "WRITE_STDOUT_STRING"
+_C0_TERMINATE = "C0_TERMINATE"
+# errno is DGROUP:0000 (the run-time DOS-call functions store DOS error codes
+# there).  The heap code names offset 0 of its own heap DS ACTIVE_HEAP; both
+# are offset 0, and symbols.tsv keeps one name per DS address.
+ERRNO = "ACTIVE_HEAP"
+# Turbo C 2.01 names the long helpers without the F_ prefix.
+"LXMUL@" = "F_LXMUL@"
+"LDIV@" = "F_LDIV@"
+"LMOD@" = "F_LMOD@"
+"LXURSH@" = "F_LXURSH@"
+"F_SCOPY@" = "BCC_RUNTIME_COPY"
+"F_SPUSH@" = "BCC_RUNTIME_BUILD"
+
+# Provisional canonical error-function name predates its recovered cdecl type.
+"_REPORT_WARNING" = "REPORT_WARNING"
+
+# Accepted static near callbacks: validate identity, original offset, and caller CS.
+[names.near_entries]
+GENERATE_STRUCT_ASSIGN_BODY = { target = "ovr148_STAOV057", entry = "GENERATE_STRUCT_ASSIGN" }
+EMIT_OPERATOR_HELPER_BODY = { target = "ovr148_STAOV060", entry = "EMIT_OPERATOR_HELPER" }
+BCC_NEAR_74A3 = { target = "ovr131_STOVR17", entry = "LOOKUP_SYMBOL" }
+FILE_APPEND_CALLBACK = "ovr109_LG0A3"
+LG0A1 = "ovr109_LG0A1"
+
+# Scoped original-row proof; no address or symbol seeds.
+[proofs]
+resident_cs_prefix_modules = ["POOLINIT"]
+resident_cs_code_frame_modules = ["HPALLOCH"]

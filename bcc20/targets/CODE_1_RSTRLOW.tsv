@@ -1,0 +1,2 @@
+# segment CODE_1_RSTRLOW base 0x191F size 0x30 org 0x50F
+RTL_STRUPR	RSTRLOW	0x0	0x30

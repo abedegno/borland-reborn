@@ -1,0 +1,2 @@
+# segment CODE_4_MSGGET base 0x6A7E size 0x2F org 0xE
+BCC_MESSAGE_TEXT	MSGGET	0x0	0x2F

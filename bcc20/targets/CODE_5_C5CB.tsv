@@ -1,0 +1,2 @@
+# segment CODE_5_C5CB base 0x6D7C size 0x44 org 0x12C
+OUT_OF_MEMORY_HANDLER	C5CB	0x0	0x44

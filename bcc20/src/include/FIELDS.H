@@ -1,0 +1,601 @@
+/* FIELDS.H: field offsets of BCC's pool records, for the accessors of POOL.H
+   (EXPR_W(node, EXPR_LEFT) is a node's left operand).  The evidence for each name
+   is in the comment after each name, read from the code that uses the field; offsets without a name are
+   still literals (only accesses through ES remain so).  Generated during
+   the readability pass. */
+#ifndef FIELDS_H
+#define FIELDS_H
+#include "EXPROP.H"
+#include "KIND.H"
+/* expression node (EXPR_x) */
+#define EXPR_OP         0x00   /* operator */
+#define EXPR_KIND       0x02   /* kind of the node's value (a type kind) */
+#define EXPR_NODE_FLAGS 0x06   /* flag byte */
+#define EXPR_TYPE       0x08   /* type (a TYPE_POOL record) */
+#define EXPR_LEFT       0x0A   /* left operand (a node) */
+#define EXPR_VALUE      0x0A   /* a constant node's long value, at the same offset */
+#define EXPR_RIGHT      0x0C   /* right operand (a node) */
+/* type (TYPE_x) */
+#define TYPE_KIND       0x00   /* kind */
+#define TYPE_TARGET     0x07   /* pointed-to or element type (a TYPE_POOL record) */
+/* EXPR_x records: (EXPR_POOL_SEG): expression node, 0x1A bytes (EXPRPOOL.C
+   ALLOC_EXPR_NODE). Prefix EXPR_. */
+#define EXPR_QUAL_FLAGS              0x04   /* operand qualifier/storage flags (1 const, 2 volatile, 4, 0x10) */
+#define EXPR_NODE_FLAGS2             0x07   /* second flag byte (only ever cleared) */
+#define EXPR_BIT_WIDTH               0x0C   /* bit-field width (signed char) */
+#define EXPR_MEMB_BIT_SHIFT          0x0C   /* member node's bit-field shift */
+#define EXPR_BIT_SHIFT               0x0D   /* bit-field node (op 0x33): shift (bit offset) */
+#define EXPR_MEMB_BIT_WIDTH          0x0D   /* member node's bit-field width */
+#define EXPR_MEMBER_NAME             0x0E   /* member name of a field-reference node */
+#define EXPR_SCOPE_CLASS             0x0E   /* symbol or member node: the class that qualifies it */
+#define EXPR_NAME_KIND               0x10   /* member-name node (op 0x38): kind of name (2 conversion operator) */
+#define EXPR_SRC_FILE                0x14   /* source file of the node */
+#define EXPR_SRC_LINE                0x16   /* source line of the node */
+#define EXPR_SRC_WORD3               0x18   /* third source-location word */
+/* TYPE_x records: (TYPE_POOL): type record. Two layouts share the pool. The C++ front end
+   (cpp/, codegen/, driver/INITTYPE.C, types/TYPESIZE.C, most of expr/) uses CPPSCOPE.C
+   ALLOC_TYPE_RECORD (size TYPE_RECORD_SIZE[kind]): 0 kind, 2 attribute byte, 3 member
+   class, 5 tag body or debug id, 7 target, 9 params or count or base name, 0x0B call
+   convention, 0x0C function flags, 0x0D pointer mode. The C front end (types/TYPEREC.C
+   builders NEW_ARRAY/FUNCTION/POINTER/STRUCT_TYPE, 10-byte records; read in EXPRPARS.C,
+   CONSTFLD.C, EXPRMAKE.C, CSYMTAB.C, STMTC.C, CDECLR.C, OBJSYMS.C, PTRMOD.C) puts the same
+   items 4 bytes lower: 3 target, return type or size, 5 params or based-pointer name, 7
+   qualifier or call convention, 8 flags, 9 array flag. Names for the C layout start
+   TYPE_C_. Prefix TYPE_. */
+#define TYPE_ATTRS                   0x02   /* attribute byte: 1 const, 2 volatile, 4/8/0x10 class has ctor/dtor/assign, 0x20 reference, 0x40 far array */
+#define TYPE_C_SIZE                  0x03   /* size or array extent (C layout) */
+#define TYPE_C_TARGET                0x03   /* pointee or return type (C layout) */
+#define TYPE_FREE_NEXT               0x03   /* next record on the free list of duplicate pointer types */
+#define TYPE_MEMBER_CLASS            0x03   /* class a member function, or a member pointer's target, belongs to */
+#define TYPE_C_PARAMS                0x05   /* C layout: function parameter list (C_PARAM_POOL_SEG) */
+#define TYPE_C_PTR_BASE              0x05   /* based pointer's base name (C layout, a POOL_HASH string) */
+#define TYPE_DEBUG_ID                0x05   /* debug type id of a pointer, array or function type */
+#define TYPE_TAG_BODY                0x05   /* struct/union/enum: its body record (LINK pool) */
+#define TYPE_C_CALL_CONV             0x07   /* calling convention byte of a function (C layout) */
+#define TYPE_C_PTR_QUALS             0x07   /* C layout: pointer cv-qualifier byte (1 const, 2 volatile) */
+#define TYPE_C_FUNC_FLAGS            0x08   /* C layout: function flags (1 far, 4, 8 no prototype); near pointer segment mode */
+#define TYPE_ARRAY_COUNT             0x09   /* array element count (long) */
+#define TYPE_C_BYTE9                 0x09   /* C layout byte 9: array huge flag; struct/union byte */
+#define TYPE_PARAMS                  0x09   /* function parameter list (FORMAL/SYM2 records) */
+#define TYPE_PTR_BASE                0x09   /* based pointer's base name */
+#define TYPE_CALL_CONV               0x0B   /* function calling-convention byte */
+#define TYPE_FUNC_FLAGS              0x0C   /* function flags: 1 far, 4 ellipsis, 8 no prototype, 0x40 near */
+#define TYPE_DIM_EXPR                0x0D   /* array: dimension expression when the size is not constant */
+#define TYPE_PTR_MODE                0x0D   /* pointer mode: 2 code, 4 data, 3, 0x0B member pointer */
+#define TYPE_PTR_WORD_B              0x0B   /* pointer: word at 0x0B, compared when interning (INTERN_QUALIFIED_TYPE); purpose not shown */
+/* SYM_x records: (SYMBOL_POOL_SEG): C++ symbol record (CPPSCOPE.C ALLOC_SYMBOL_ENTRY,
+   DECLARE_GLOBAL_SYMBOL, DECLARE_MEMBER_ALIAS; EXTDECL.C SET_FUNCTION_SYMBOL_TYPE): name-
+   chain link, name, type, flags, storage class, storage or value, function data. Prefix
+   SYM_ . */
+#define SYM_NEXT                     0x00   /* next symbol with the same name (chain headed in the name record) */
+#define SYM_OWNER_CLASS              0x00   /* member symbol: the class (tag) symbol it belongs to */
+#define SYM_NAME                     0x02   /* name (NAME_POOL record) */
+#define SYM_TYPE                     0x04   /* type (TYPE_POOL record) */
+#define SYM_FLAGS                    0x06   /* symbol flag byte (1 initialised, 4 used, 0x10 member, 0x40, 0x80 far) */
+#define SYM_STORAGE_CLASS            0x07   /* storage class in bits 3-7, name-space kind in bits 0-2 */
+#define SYM_ALIAS_MEMBER             0x08   /* member record of a member alias */
+#define SYM_CONST_VALUE              0x08   /* enumerator / constant value (int or long) */
+#define SYM_STORAGE                  0x08   /* prepared storage record (cached), or value */
+#define SYM_ALIAS_OBJECT             0x0A   /* member alias (class 14): the object symbol it is a member of */
+#define SYM_FUNC_FLAGS               0x0A   /* function symbol flag word: SYMF_* bits below */
+/* SYM_FUNC_FLAGS bits */
+#define SYMF_INLINE_ACTIVE           0x0004 /* being expanded inline */
+#define SYMF_ADDRESS_TAKEN           0x0008 /* address taken */
+#define SYMF_CTOR_ASSIGNS_THIS       0x0010 /* constructor that may assign to this */
+#define SYMF_PURE_VIRTUAL            0x0020 /* pure virtual */
+#define SYMF_STATIC_MEMBER           0x0040 /* static member function */
+#define SYMF_DDVT                    0x0100 /* dynamically dispatched virtual (DDVT) function */
+#define SYM_GLOBAL_FLAGS             0x0A   /* flag word stored by DECLARE_GLOBAL_SYMBOL */
+#define SYM_INLINE_ACCESS            0x0C   /* bits 0-1 inline kind (1 inline keyword, 2 implicit inline, 3 intrinsic), bits 2-4 access */
+#define SYM_INLINE_POS               0x0D   /* inline function: token-stream position of its body */
+#define SYM_INTRINSIC_NUM            0x0D   /* intrinsic function number */
+#define SYM_SPECIAL_KIND             0x0D   /* implicit special member: which (0 assign, 1 copy ctor, 2 default ctor, 3 dtor) */
+#define SYM_FUNC_KIND                0x0F   /* function kind: 0 ordinary, 1 operator function, 2 conversion operator, 3 constructor, 4 destructor (MANGLE_FUNCTION_PREFIX, TYPESPEL.C) */
+#define SYM_LINKAGE                  0x11   /* linkage (1 default, 2 for main and runtime helpers) */
+#define SYM_NEXT_OVERLOAD            0x13   /* next overloaded function of the same name */
+#define SYM_VIRTUAL_INDEX            0x15   /* virtual function slot (0 = not virtual) */
+/* CSYM_x records: (CSYM_POOL_SEG): In C mode a 16-byte C symbol record
+   (CSYMTAB.C DECLARE_SYMBOL allocates 0x10: next, name, namespace, class, flags, type, var
+   entry, segment, offset). In C++ mode the same pool holds 10-byte prepared storage
+   records (CPPSCOPE.C PREPARE_SYMBOL, struct X02CTypeRecord
+   {head,value,extra,type(symbol),flags}); only the flags word at 0x08 is read through
+   CSYM_W in C++ files (variant CSYM_PREP_FLAGS). Prefix CSYM_. */
+#define CSYM_NEXT                    0x00   /* next symbol in the scope/name chain */
+#define CSYM_NAME                    0x02   /* name (NAME_POOL record) */
+#define CSYM_NAMESPACE               0x04   /* name space: 0 ordinary, 1 label, 2 tag */
+#define CSYM_CLASS                   0x05   /* symbol class (2 extern/global, 3 label, 4 auto, 6 param, 9 enum const, 11 tag ...) */
+#define CSYM_FLAGS                   0x06   /* flag word (0x40 assigned, 0x80 used, 0x200 defined, 0x1000 register ...) */
+#define CSYM_PREP_FLAGS              0x08   /* C++ prepared storage record: flag word */
+#define CSYM_PREP_SYMBOL             0x06   /* C++ prepared storage record: its symbol */
+#define CSYM_TYPE                    0x08   /* type (TYPE_POOL record) */
+#define CSYM_VAR_ENTRY               0x0A   /* variable table entry (FIND_OR_ADD_VARIABLE) */
+#define CSYM_SEGMENT                 0x0C   /* segment id (or register number byte when flag 0x1000) */
+#define CSYM_LABEL                   0x0E   /* label number of a goto label symbol */
+#define CSYM_OFFSET                  0x0E   /* offset of a C symbol */
+/* TAG_x records: (TAG_BODY_POOL_SEG): struct/union/enum body, reached as TYPE_W(type,5)
+   (CPPSCOPE.C ALLOC_STRUCT_LINK/ALLOC_ENUM_LINK): debug id, member list, size, tag symbol,
+   base list, vtable data, class flags. Prefix TAG_. */
+#define TAG_DEBUG_ID                 0x00   /* debug type id of the struct/union/enum */
+#define TAG_MEMBERS                  0x02   /* first member (MEMBER list) */
+#define TAG_ENUM_BASE                0x04   /* enum: its underlying integer type */
+#define TAG_SIZE                     0x04   /* struct/union size in bytes */
+#define TAG_SYMBOL                   0x06   /* the tag's symbol (TSEG) */
+#define TAG_BASES                    0x0C   /* first base class (PARAM/BASE list) */
+#define TAG_VTABLE_SIZE              0x10   /* virtual table size (>0 when the class has virtual functions) */
+#define TAG_VTABLE_SYMBOL            0x12   /* the class's virtual table symbol */
+#define TAG_THIS_TYPE                0x14   /* pointer-to-class type used for `this` parameters */
+#define TAG_OWN_SIZE                 0x16   /* size without virtual bases */
+#define TAG_CLASS_FLAGS              0x18   /* class flag word: TAGF_* bits below */
+#define TAG_DDVT_COUNT                  0x1A   /* number of DDVT functions of the class */
+/* TAG_CLASS_FLAGS bits */
+#define TAGF_SIMPLE_BASES            0x0002 /* no bases or one non-virtual chain: constructors may assign to this */
+#define TAGF_VIRTUAL_BASES           0x0004 /* has virtual bases */
+#define TAGF_FAR_CLASS               0x0008 /* far class */
+#define TAGF_NEAR_CLASS              0x0010 /* near class */
+#define TAGF_ABSTRACT                0x0080 /* abstract class */
+#define TAGF_HUGE_CLASS              0x0100 /* huge class */
+#define TAGF_DDVT_CLASS              0x0800 /* class with DDVT functions */
+/* MEMBER_x records: (MEMBER_SEGMENT): class member record (C++: CPPSCOPE.C DECLARE_MEMBER;
+   next, name, kind byte, bit-field byte, value, type, owning class). The C front end
+   reuses the pool for an 11-byte field record (CSYMTAB.C ADD_STRUCT_MEMBER: next, name,
+   offset, bit offset, bit width, symbol flags, type); names for that layout start MEMB_C_.
+   Prefix MEMB_. */
+#define MEMB_NEXT                    0x00   /* next member */
+#define MEMB_NAME                    0x02   /* member name */
+#define MEMB_C_OFFSET                0x04   /* C layout: field offset, or enumerator value */
+#define MEMB_FLAGS                   0x04   /* bits 0-1 kind (0 field, 1 enumerator, 2 static, 3 function), bits 2-4 access, 0x40 bit field, 0x80 */
+#define MEMB_BITFIELD                0x05   /* bit field: shift in bits 0-2, width in bits 3-7 */
+#define MEMB_C_BIT_OFFSET            0x06   /* C layout: bit offset of a bit field */
+#define MEMB_VALUE                   0x06   /* field offset, enumerator value, or the function/static symbol */
+#define MEMB_C_BIT_WIDTH             0x07   /* C layout: bit-field width */
+#define MEMB_C_FLAGS                 0x08   /* C layout: symbol flags byte */
+#define MEMB_TYPE                    0x08   /* member type */
+#define MEMB_C_TYPE                  0x09   /* C layout: field type */
+#define MEMB_CLASS                   0x0A   /* class type that declares the member */
+/* BASE_x records: (BASE_LIST_SEG): base-class list entry, 9 bytes (CPPCTOR.C struct
+   ParameterItem {next,type,offset,scope,qualifier,used}; filled by CLASSDEF.C from the
+   base-specifier list; list head TAG_BASES = LINK 0x0C). Not a parameter record, despite
+   the struct name ParameterItem in CPPCTOR.C. Prefix BASE_. */
+#define BASE_NEXT                    0x00   /* next base class */
+#define BASE_TYPE                    0x02   /* base class type */
+#define BASE_OFFSET                  0x04   /* offset of the base subobject */
+#define BASE_PUBLIC                  0x06   /* base is public */
+#define BASE_VIRTUAL                 0x07   /* base is virtual */
+#define BASE_USED                    0x08   /* used flag (ParameterItem.used) */
+/* NAME_x records: (NAME_POOL_SEG): interned identifier record, 6 bytes (NAMEPOOL.C
+   BCC_SYMBOL_CREATE): symbol chain head and far pointer to the text. Prefix NAME_ (all
+   names checked unused). */
+#define NAME_SYMBOLS                 0x00   /* head of the symbol chain for this name */
+#define NAME_TEXT_OFFSET             0x02   /* offset of the name text */
+#define NAME_TEXT_BANK               0x04   /* near pointer to the text bank's segment word */
+/* FORMAL_x records: (FORMAL_POOL_SEG): C++ formal parameter record, 10 bytes (CPPSCOPE.C
+   ALLOC_FORMAL_RECORD); a function type's list starts at TYPE_W(func,9). Prefix FORMAL_
+   (CALLCHK.C calls it `formal`; PARM_ left to the PARAM pool). */
+#define FORMAL_NEXT                  0x00   /* next parameter */
+#define FORMAL_TYPE                  0x02   /* parameter type (TYPE_POOL record) */
+#define FORMAL_NAME                  0x04   /* parameter name (NAME_POOL record) */
+#define FORMAL_IS_REGISTER           0x06   /* 1 if declared register */
+#define FORMAL_IMPLICIT              0x07   /* 1 for a compiler-added parameter (this, hidden) */
+#define FORMAL_DEFAULT_ARG           0x08   /* default argument (packed expression tree) */
+/* MINIT_x records: (INIT_RECORD_POOL_SEG): constructor mem-initializer entry, 6 bytes
+   (CPPCTOR.C ALLOC_INIT_ENTRY, FIND_INIT_BY_MEMBER/BASE, CTORBODY.C C11MEMBER). Prefix
+   MINIT_. */
+#define MINIT_NEXT                   0x00   /* next initializer entry */
+#define MINIT_TARGET                 0x02   /* member or base class being initialized */
+#define MINIT_EXPR                   0x04   /* initialization expression */
+/* TDTOR_x records: (TEMP_ENTRY_POOL_SEG): temporary/local destructor entry, 6 bytes
+   (CPPCTOR.C REGISTER_TEMP_DESTRUCTOR), a list headed at SCOPE_TEMPS (scope 0x10). Prefix
+   TDTOR_. */
+#define TDTOR_NEXT                   0x00   /* next (older) entry */
+#define TDTOR_SERIAL                 0x02   /* DESTRUCTOR_ENTRY_SERIAL at registration */
+#define TDTOR_EXPR                   0x04   /* destructor call (packed expression tree) */
+/* SCOPE_x records: (SCOPE_POOL_SEG): C++ scope record, 0x15 bytes (CPPSCOPE.C
+   ALLOC_SCOPE/PUSH_SCOPE/POP_SCOPE). C mode reuses the pool for an 8-byte scope cell
+   (CSYMTAB.C CREATE_SCOPE struct ListCell: first child, next sibling, parent, symbol
+   list), read through FAR_W; variant names SCOPE_C_* for those files. Prefix SCOPE_. */
+#define SCOPE_C_CHILD                0x00   /* C scope cell: first child scope */
+#define SCOPE_PARENT                 0x00   /* enclosing scope */
+#define SCOPE_C_SIBLING              0x02   /* C scope cell: next sibling scope */
+#define SCOPE_NEST_LEVEL             0x02   /* BLOCK_NEST_LEVEL when the scope was opened */
+#define SCOPE_C_PARENT               0x04   /* C scope cell: parent scope */
+#define SCOPE_NAMES                  0x04   /* list of ordinary-name symbols (TSEG) declared here */
+#define SCOPE_C_SYMBOLS              0x06   /* C scope cell: symbol list (STMT pool records) */
+#define SCOPE_TAGS                   0x06   /* list of tag symbols (struct/union/enum names) */
+#define SCOPE_ENTER_BLOCK            0x08   /* scope-enter code block */
+#define SCOPE_SAVED_LINK10_MARK      0x0A   /* saved SCOPE_LINK10_MARK */
+#define SCOPE_SAVED_TYPE_LENGTH      0x0C   /* saved TYPE_POOL_LENGTH */
+#define SCOPE_STMT_LEVEL             0x0E   /* nest level of the last statement parsed */
+#define SCOPE_TEMPS                  0x10   /* head of temp destructor list (TEMPENT) */
+#define SCOPE_SAVED_INIT_SERIAL      0x12   /* DECL_INIT_SERIAL when opened */
+#define SCOPE_IS_FUNCTION            0x14   /* 1 for a function-body scope, 0 for a block */
+/* CASE_ENTRY_POOL_SEG records (reached through ES): switch case entry, 8 bytes (list
+   headed at CNODE 0x12 of a switch block, sorted by value): next, long case value, target
+   block. Prefix SWCASE_. */
+#define SWCASE_NEXT                  0x00   /* next case entry (sorted by value) */
+#define SWCASE_VALUE                 0x02   /* case value (long; word 4 is the high word) */
+#define SWCASE_TARGET                0x06   /* block the case jumps to */
+/* CODE_FRAGMENT_POOL_SEG records (reached through ES): code fragment of the function being
+   emitted, 0x18 bytes (BLKLAYOT.C NEW_CODE_FRAGMENT: 0 next, 2 output buffer position, 4
+   length or mark, 6 segment offset at start, 8, 0x0C, 0x0E fixup count or 0xFFFF mark,
+   0x10 first line record, 0x12 line record count); the same pool also holds 6-byte fixup
+   records (ADD_FIXUP). Prefix FRAG_. */
+#define FRAG_START_OFFSET            0x06   /* segment offset where the fragment starts */
+#define FRAG_FIRST_LINE              0x10   /* first line-number record (LINE_NUMBER_POOL_SEG) of the fragment */
+#define FRAG_LINE_COUNT              0x12   /* number of line-number records in the fragment */
+/* FLOW_BLOCK_POOL_SEG records (reached through ES): a flow-graph block,
+   0x2E bytes (FLOWBLK.C NEW_BLOCK; kinds set by NEW_LABEL 3, NEW_SCOPE_ENTER_BLOCK 1,
+   NEW_SCOPE_EXIT_BLOCK 2, NEW_SWITCH_BLOCK 4 (see also
+   SET_SWITCH_BLOCK_INFO, LOWER_SWITCH), NEW_ASM_STATEMENT_BLOCK 5, plain 0): kind, jump
+   reference count, run of code ops (first, count), end jump kind and target, register-
+   history start, block list links, scope or switch data, flags, cross-jump lists, loop
+   weight. Scope entry blocks reuse 0x04 (register mask), 0x10 (enclosing scope), 0x12
+   (scope record), 0x14, 0x16 (first child scope), 0x18 (next sibling); switch blocks use
+   0x12 (case list), 0x16/0x18 (selector op low/high). Prefix CNODE_. */
+#define CNODE_KIND                   0x00   /* block kind: 0 code, 1 scope entry, 2 scope exit, 3 label, 4 switch, 5 asm label */
+#define CNODE_JUMP_REFS              0x02   /* number of jumps and case entries targeting the block */
+#define CNODE_FIRST_OP               0x04   /* number of the block's first code op */
+#define CNODE_SCOPE_REG_MASK         0x04   /* scope entry block: registers taken by register variables in it or nested scopes */
+#define CNODE_OP_COUNT               0x06   /* number of code ops in the block */
+#define CNODE_JUMP_KIND              0x08   /* jump at the block end: 0 none, 1 unconditional, others conditional (bits 0x0700 extra) */
+#define CNODE_HISTORY                0x0A   /* first REG_HISTORY_POOL_SEG entry of the block */
+#define CNODE_NEXT                   0x0C   /* next block in the function's block list */
+#define CNODE_PREV                   0x0E   /* previous block in the block list */
+#define CNODE_SCOPE_ENTRY            0x10   /* scope exit block: its scope entry block */
+#define CNODE_SCOPE_PARENT           0x10   /* scope entry block: enclosing scope entry block */
+#define CNODE_TARGET                 0x10   /* jump target block (switch: default target) */
+#define CNODE_CASE_LIST              0x12   /* switch block: first case entry (CASE_ENTRY_POOL_SEG) */
+#define CNODE_SCOPE_INFO             0x12   /* scope entry block: the scope's value passed to the debug hook */
+#define CNODE_SCOPE_OWN_REGS         0x14   /* scope entry block: registers given to its own register variables */
+#define CNODE_ASM_TEXT               0x12   /* inline-asm statement block: the statement text record */
+#define CNODE_SWITCH_TABLE           0x14   /* jump-table switch block: its table record (a block made by LOWER_SWITCH_JUMP_TABLE) */
+#define CNODE_CASE_COUNT             0x14   /* jump-table record block: number of cases */
+#define CNODE_SCOPE_CHILD            0x16   /* scope entry block: first nested scope */
+#define CNODE_SWITCH_LOW_OP          0x16   /* switch block: op of the selector (low word) */
+#define CNODE_SCOPE_SIBLING          0x18   /* scope entry block: next scope with the same parent */
+#define CNODE_SWITCH_HIGH_OP         0x18   /* switch block: op of the selector high word (0 for an int switch) */
+#define CNODE_FLAGS                  0x1C   /* block flag word (1, 2, 4 long switch, 8 pending, 0x10 registers unknown, 0x100 jump fixed, 0x200 unsigned switch) */
+#define CNODE_PRED_LIST              0x20   /* cross-jump pass: first block that ends by reaching this one */
+#define CNODE_PRED_NEXT              0x22   /* cross-jump pass: next block in the same CNODE_PRED_LIST */
+#define CNODE_LOOP_WEIGHT            0x24   /* loop weight added to the use counts of the block's variables */
+/* CODE_OPERAND_POOL_SEG records (reached through ES): operands of a code operation, 4
+   bytes at the same offset as its CODE_OP_POOL_SEG record: left and right operand words
+   (op numbers, or for leaf ops a variable-table entry, a register number, a long constant,
+   or source file/line). Prefix OPND_. */
+#define OPND_CONST_VALUE             0x00   /* constant op (9, 10): its long value */
+#define OPND_LEFT                    0x00   /* left (first) operand: an op number */
+#define OPND_REGISTER                0x00   /* register op (8): register number */
+#define OPND_VARIABLE                0x00   /* leaf op (12, 13, 16): its variable-table entry */
+#define OPND_RIGHT                   0x02   /* right (second) operand: an op number (0 none) */
+#define OPND_SOURCE_LINE             0x02   /* line-mark op (1): source line */
+/* CODE_OP_POOL_SEG records (reached through ES): code operation (one tuple of the code
+   generator's intermediate code), 4 bytes, indexed by op number*4 (CODENODE.C
+   NEW_CODE_NODE/NEW_VARIABLE_NODE/NEW_PLAIN_CODE_NODE/NEW_CONSTANT_NODE allocate one
+   record here and one in CODE_OPERAND_POOL_SEG for each op): opcode, flag byte, assigned
+   register, register class. Its two operands are in CODE_OPERAND_POOL_SEG at the same
+   offset. Prefix COP_. */
+#define COP_OPCODE                   0x00   /* operation number (index into CODE_OP_INFO_TABLE, 19-byte entries) */
+#define COP_FLAGS                    0x01   /* flag byte (2 operand, 4, 8 result used, 0x40 dead/no code) */
+#define COP_REGISTER                 0x02   /* register holding the result (0xFF none) */
+#define COP_REG_CLASS                0x03   /* register class wanted (low 6 bits index REG_CLASS_MASK_TABLE; 0x80 flag) */
+/* C_PARAM_POOL_SEG records (reached through ES): C front end parameter-list item, 8 bytes
+   (CDECL.C BCC_STMT_ADD_FIELD, BCC_STMT_BIND_FIELD, STBEGIN; list head TYPE_C_PARAMS):
+   register mark, byte 1, type, name, next. Prefix CPARM_. */
+#define CPARM_REG_MARK               0x00   /* 0xFE register parameter, 0xFF otherwise */
+#define CPARM_BYTE1                  0x01   /* byte always set to 0xFF */
+#define CPARM_TYPE                   0x02   /* parameter type (0 = not yet declared) */
+#define CPARM_NAME                   0x04   /* parameter name */
+#define CPARM_NEXT                   0x06   /* next parameter */
+/* LINE_NUMBER_POOL_SEG records (reached through ES): 4-byte line-number entry (OBJSEGS.C
+   ADD_LINENUM_ENTRY; OMFWRITE.C writes both words into LINNUM 0x94 records): line, code
+   offset. Prefix LINENUM_. */
+#define LINENUM_LINE                 0x00   /* source line number */
+#define LINENUM_OFFSET               0x02   /* code offset of the line */
+/* LIVE_VALUE_POOL_SEG records (reached through ES): live value slot of the register
+   allocator, 4 bytes (REGALLOC.C:930-932: value op, use count). Prefix LVAL_. */
+#define LVAL_OP                      0x00   /* the live value (an op number) */
+/* PCH_INDEX_POOL_SEG records (reached through ES): the pool holds the preamble trie nodes
+   (PCH.C NEW_PREAMBLE_TRIE_NODE) and also 10-byte free-space blocks of the .SYM file
+   (PCH.C FREE_PCH_FILE_SPACE / ALLOC_PCH_FILE_SPACE, list head at pool offset 0). All ES
+   sites are free blocks: next, file position (long), size (long, 0 = slot free). Prefix
+   PCHFREE_. */
+#define PCHFREE_NEXT                 0x00   /* free block: next free block */
+#define PCHFREE_FILE_POS             0x02   /* free block: file position (long) */
+#define PCHFREE_SIZE                 0x06   /* free block: size in bytes (long, 0 unused) */
+/* REG_HISTORY_POOL_SEG records (reached through ES): register history entry, 9 bytes
+   (REGALLOC.C RECORD_REGISTER_MOVE; SAVEREGS.C SPILL_EVAL_STACK_TO_TEMPS,
+   RELOAD_SPILLED_EVAL_ENTRY): an action to replay before an instruction (EMITHIST.C
+   EMIT_REGISTER_HISTORY: 1 push, 2 pop, 3 move to another register, 4 spill to a temp, 5
+   reload from a temp, 6 exchange). Prefix RHIST_. */
+#define RHIST_ACTION                 0x00   /* action: 1 push, 2 pop, 3 move, 4 spill to temp, 5 reload, 6 exchange */
+#define RHIST_IS_WORD                0x01   /* 1 when the moved value is a word (else byte) */
+#define RHIST_REGISTER               0x02   /* register the value goes to (0xFF none); reload: swap flag */
+#define RHIST_INSN_INDEX             0x03   /* number of the code op before which the action happens */
+#define RHIST_VALUE_OP               0x05   /* the op whose value is moved */
+#define RHIST_PARTNER                0x07   /* second word: exchange partner op, or the temp of a spill/reload */
+/* RELOCATION_POOL_SEG records (reached through ES): 8-byte relocation (OBJSEGS.C
+   ADD_RELOCATION; OMFWRITE.C reads it for fixups): next, offset in the block, target
+   symbol, kind. Prefix RELOC_. */
+#define RELOC_NEXT                   0x00   /* next relocation of the block */
+#define RELOC_OFFSET                 0x02   /* offset of the fixup in the data block */
+#define RELOC_SYMBOL                 0x04   /* target symbol or value of the fixup */
+#define RELOC_KIND                   0x06   /* fixup kind (1, 7 ...) */
+/* SEGDEF_POOL_SEG records (reached through ES): object-output segment and group records
+   (OBJSEGS.C DEFINE_SEGMENT). Segment record, 0x1B bytes, list SEGMENT_LIST_HEAD: next,
+   group record, segment index, first/last data block, class name, size (long), flag byte
+   0x10, name, parent code segment id. Group record, 6 bytes, list GROUP_LIST_HEAD: next,
+   group index, name; group sites get the SEGGRP_ variant names by line. Prefix SEGDEF_
+   (segment), SEGGRP_ (group). */
+#define SEGDEF_NEXT                  0x00   /* next segment record (SEGMENT_LIST_HEAD list) */
+#define SEGGRP_NEXT                  0x00   /* group record: next group (GROUP_LIST_HEAD list) */
+#define SEGDEF_GROUP                 0x02   /* group record of the segment, 0 none */
+#define SEGGRP_INDEX                 0x02   /* group record: group index */
+#define SEGDEF_INDEX                 0x04   /* segment index (id) */
+#define SEGGRP_NAME                  0x04   /* group record: group name (STRING_POOL_SEG) */
+#define SEGDEF_FIRST_BLOCK           0x06   /* first data block (SEG_DATA_BLOCK_POOL_SEG) */
+#define SEGDEF_LAST_BLOCK            0x08   /* current (last) data block */
+#define SEGDEF_CLASS_NAME            0x0A   /* class name (STRING_POOL_SEG) */
+#define SEGDEF_SIZE                  0x0C   /* current segment size / location counter (long) */
+#define SEGDEF_NAME                  0x11   /* segment name (STRING_POOL_SEG) */
+#define SEGDEF_PARENT_ID             0x19   /* code segment id a virtual segment belongs to (bit 15 flag) */
+/* SRCFILE_POOL_SEG records (reached through ES): a source-file line-
+   number record, 14 bytes (SRCSEGS.C NEW_SERIAL_NODE / CLONE_NODE_*; OBJSEGS.C
+   ADD_LINENUM_ENTRY; OMFWRITE.C OBJ_WRITE_FILE_ENTRY and OBJ_WRITE_LINE_NUMBERS): file
+   name, line count, serial, debug file index, code segment id, first node of the same
+   file, first line entry. Prefix SRCFILE_. */
+#define SRCFILE_NAME                 0x00   /* source file name (STRING_POOL_SEG) */
+#define SRCFILE_LINE_COUNT           0x02   /* number of line entries */
+#define SRCFILE_SERIAL               0x04   /* serial number of the node */
+#define SRCFILE_DEBUG_INDEX          0x06   /* index of the file entry in the object debug records */
+#define SRCFILE_SEGMENT              0x08   /* code segment id of the lines */
+#define SRCFILE_FIRST_NODE           0x0A   /* first node of the same file (0 in the first) */
+#define SRCFILE_FIRST_LINE           0x0C   /* first line entry (LINE_NUMBER_POOL_SEG offset) */
+/* SEG_DATA_BLOCK_POOL_SEG records (reached through ES): 10-byte segment data block
+   (OBJSEGS.C ALLOCATE_DATA_BLOCK; OMFWRITE.C): 0 start offset in the segment, 2 bytes
+   filled (at most 0x400), 4 relocation list, 8 next block. Prefix SEGBLK_. */
+#define SEGBLK_LENGTH                0x02   /* bytes filled in the block (max 0x400) */
+#define SEGBLK_RELOCS                0x04   /* relocation list of the block (RELOCATION_POOL_SEG) */
+/* STRING_POOL_SEG records (reached through ES): not a record: the ES sites (BLKLAYOT.C)
+   read the character at a text cursor in the string pool. Prefix STRPOOL_. */
+#define STRPOOL_CHAR                 0x00   /* character at a text cursor (not a record) */
+/* TYPE_x records, C layout: two more fields (struct records: members list, tag symbol) */
+#define TYPE_C_MEMBERS               0x05   /* struct/union first member (MEMBER_SEGMENT list) */
+#define TYPE_C_TAG_SYMBOL            0x07   /* struct/union tag symbol (CSYM_POOL_SEG record) */
+/* VARIABLE_TABLE_SEG records (reached through ES): code generator variable table, one
+   29-byte (0x1D) record per local, parameter, global or temporary used by the function
+   (REGVARS.C FIND_OR_ADD_VARIABLE allocates and fills it; FRAME.C, REGVARS.C, PEEPHOLE.C
+   walk it from 2 to VARIABLE_TABLE_END in steps of 29). Prefix VAR_. Offsets 0x04 and 0x0C
+   have no real VARIABLE_TABLE_SEG site: CGCALL.C:181 and INTRINS.C:204 read EXPR_POOL_SEG,
+   PEEPHOLE.C:158 reads FLOW_BLOCK_POOL_SEG (see es-wrong-1.tsv). Words 0x13, 0x15, 0x17 and
+   0x1B are read only through REGVARS.C's WORD() macro (register-class use weights and a
+   register mask), not through ES_x. */
+#define VAR_SYMBOL                   0x00   /* front-end symbol of the variable (0 for a temporary) */
+#define VAR_SCOPE_BLOCK              0x02   /* code block (scope) that owns the variable */
+#define VAR_TYPE_KIND                0x06   /* type kind byte of the variable */
+#define VAR_REGISTER                 0x07   /* register assigned to a register variable */
+#define VAR_PREFERRED_REG            0x08   /* preferred register, 0xFF none */
+#define VAR_SEGMENT                  0x09   /* segment id of a static/global variable */
+#define VAR_TYPE                     0x0B   /* type of the variable */
+#define VAR_SYMBOL_KIND              0x0D   /* symbol kind: 3/4 global, 5 auto or temp, 6 parameter */
+#define VAR_FLAGS                    0x0E   /* flags byte (2 in register, 4 in memory, 0x80 ...) */
+#define VAR_FRAME_OFFSET             0x0F   /* BP-relative frame offset */
+#define VAR_USE_COUNT                0x11   /* use count / weight of the variable */
+#define VAR_STORE_STAMP              0x19   /* peephole stamp of the last store */
+
+
+
+/* FLOW_BLOCK_POOL_SEG records: flow-graph block (existing prefix CNODE_): 0x1E code
+   fragment of the block. for-loop steps whose body ends with
+   _BX=node;_ES=FLOW_BLOCK_POOL_SEG, and EMITFUNC.C's EMIT() macro (used only after
+   _ES=FLOW_BLOCK_POOL_SEG with _SI the block). */
+#define CNODE_FRAGMENT               0x1E   /* code fragment of the block (CODE_FRAGMENT_POOL_SEG) */
+/* CONS_CELL_POOL_SEG records: 4-byte list cell made by CPPSCOPE.C LIST_CONS(next,value)
+   (friend lists, LIST_FIND): next, value. Prefix CONS_. */
+#define CONS_NEXT                    0x00   /* next cell */
+#define CONS_VALUE                   0x02   /* the cell's value */
+/* HASH_CHAIN_LINK_SEG records: per-name companion record, 6 bytes, same offset as the
+   NAME_POOL_SEG record (NAMEPOOL.C BCC_SYMBOL_CREATE allocates both in lockstep): 0 hash-
+   chain link, 2 macro definition (POOL_E/POOL_F offset, 0 none), 4 token/keyword value.
+   Prefix HLINK_. */
+#define HLINK_NEXT                   0x00   /* next name in the hash bucket chain */
+#define HLINK_MACRO                  0x02   /* macro definition of the name (POOL_E/POOL_F offset, 0 none) */
+/* LINK records: struct/union body (existing prefix TAG_): 0x08 debug class index, 0x0E
+   access-declaration list. */
+#define TAG_DEBUG_CLASS_INDEX        0x08   /* debug class index (bit 15 flag) */
+#define TAG_ACCESS_DECLS             0x0E   /* list of access-declared members (LIST_CELL_POOL_SEG) */
+/* LIST_CELL_POOL_SEG records: 4-byte list cell made by CPPSCOPE.C
+   LIST_CONS_ALT(next,value): next, value. Prefix LCELL_. */
+#define LCELL_NEXT                   0x00   /* next cell */
+#define LCELL_NULL_VALUE             0x00   /* with record 2: the value word of the null cell 0 (search sentinel) */
+#define LCELL_VALUE                  0x02   /* the cell's value */
+/* LIVE_VALUE_POOL_SEG records: live value slot (existing prefix LVAL_): 2 use count. */
+#define LVAL_USE_COUNT               0x02   /* use count of the live value */
+/* MACRO_SNAPSHOT_POOL_SEG records: macro snapshot for the precompiled header (PCH.C
+   SAVE_MACRO_SNAPSHOT): name text, then a definition entry whose byte 0 is the macro's
+   parameter count, then the replacement text. Prefix MSNAP_. */
+#define MSNAP_PARAM_COUNT            0x00   /* snapshot definition: macro parameter count byte */
+/* PCH_INDEX_POOL_SEG records: besides the 10-byte free blocks (PCHFREE_), the pool holds
+   the preamble trie nodes (PCH.C NEW_PREAMBLE_TRIE_NODE, 14 bytes + text): 0 next sibling,
+   2 first child, 4 file position of the saved state (long), 8 space reserved for it
+   (long), 0x0C directive kind, 0x0E directive text. Prefix PCHTRIE_. Note: PCH.C:55-57,
+   86-92, 127-133 already use PCHFREE_NEXT/FILE_POS/SIZE on trie nodes (really sibling,
+   child, high word of the file position). */
+#define PCHTRIE_NEXT                 0x00   /* trie node: next sibling */
+#define PCHTRIE_CHILD                0x02   /* trie node: first child */
+#define PCHTRIE_FILE_POS_HI          0x06   /* trie node: high word of PCHTRIE_FILE_POS */
+#define PCHTRIE_FILE_POS             0x04   /* trie node: .SYM file position of the saved state (long) */
+#define PCHTRIE_ALLOC_SIZE           0x08   /* trie node: file space reserved for the saved state (long, low word) */
+#define PCHTRIE_ALLOC_SIZE_HI        0x0A   /* trie node: high word of PCHTRIE_ALLOC_SIZE */
+#define PCHTRIE_KIND                 0x0C   /* trie node: directive kind (copy of PDIR_KIND) */
+/* POOL_A records: macro-call argument entry (LEXER.C:493-496: word, then the argument
+   text; INPUT.C FIND_ARGUMENT walks them): 0 offset of the argument's source text. Prefix
+   MARG_. */
+#define MARG_TEXT_OFFSET             0x00   /* macro argument: offset of its source text */
+/* POOL_E records: macro definition record (MACROS.C MACRO_DEFINE: byte 0 parameter count
+   flag, then replacement text, then the packed parameter list). Prefix MACDEF_. */
+#define MACDEF_PARAM_COUNT           0x00   /* macro definition: parameter count flag (signed byte) */
+/* PREAMBLE_POOL_SEG records: preamble directive entry (PCH.C ADD_PREAMBLE_ENTRY, 8 bytes +
+   text): 0 next, 2 previous, 4 logical line, 6 directive kind, 8 text. Prefix PDIR_. */
+#define PDIR_NEXT                    0x00   /* next directive entry */
+#define PDIR_KIND                    0x06   /* directive kind (0 include <>, 1 include "", 3-5 if, 6 endif, 7/8 ...) */
+/* QUEUED_WORD_POOL_SEG records: not a record: an array of words queued by OMFWRITE.C:86-87
+   and written into a COMENT 0xEE record. Prefix QWORD_. */
+#define QWORD_VALUE                  0x00   /* a queued word (not a record) */
+/* SEGDEF_POOL_SEG records: segment record (existing prefix SEGDEF_): alignment byte and
+   the segment offset where the in-memory data buffer (handle at 0x13) starts. */
+#define SEGDEF_ALIGN                 0x10   /* alignment byte (1 byte, 2 word, 16 paragraph) */
+#define SEGDEF_BUFFER_BASE           0x17   /* segment offset where the in-memory data buffer starts */
+/* SEG_DATA_BLOCK_POOL_SEG records: segment data block (existing prefix SEGBLK_): 0 start
+   offset in the segment, 8 next block. */
+#define SEGBLK_START                 0x00   /* offset of the block's first byte in the segment */
+#define SEGBLK_NEXT                  0x08   /* next data block of the segment */
+/* STORAGE_POOL_SEG records: C++ prepared storage record, reached as record|1 (CPPSCOPE.C
+   GET/SET/CLEAR_PREPARED_FLAGS, GET_PREPARED_SYMBOL; same layout as STMT's
+   {head,value,extra,symbol,flags}): 6 symbol, 8 flags. Prefix PSTOR_. */
+#define PSTOR_SYMBOL                 0x06   /* prepared record: its symbol */
+#define PSTOR_FLAGS                  0x08   /* prepared record: flag word */
+/* TYPE records: C layout word at 1: debug type index (existing prefix TYPE_C_ for the C
+   layout). cpp/FUNCDECL.C and cpp/SPECMEMB.C read the kind word of a type with ES just
+   loaded with TYPE_POOL. */
+#define TYPE_C_DEBUG_INDEX           0x01   /* C layout: debug type index (0 none yet) */
+/* VARIABLE_TABLE_SEG records: code generator variable table (existing prefix VAR_):
+   register-class use weights tallied by VARUSES.C TALLY_WEIGHTED_USES and read by
+   REGVARS.C REGISTER_VARIABLE_SCORE (WORD(symbol,19/21/23/27)). */
+#define VAR_ES_CLASS_WEIGHT          0x13   /* loop-weighted uses favouring REG_MASK_ES registers */
+#define VAR_INDEX_WEIGHT             0x15   /* loop-weighted uses favouring BX/SI/DI */
+#define VAR_SHIFT_COUNT_USES         0x17   /* uses as a count of ops 0x44-0x49 (favours CX) */
+#define VAR_EXCLUDED_REGS            0x1B   /* registers the variable may not be given */
+/* CACHE_POOL records: function cache entry (cpp/CLASSDEF.C CACHE_ADD, 6 bytes, CACHE_HEAD
+   list; looked up by FUNCDEF.C and INLINEXP.C): 0 next, 2 function symbol (key), 4 list of
+   ACTIVE_LIST values consed by CACHE_ADD, loaded into RETURN_FORM_SEEN at function-body
+   start. Prefix FNCACHE_. */
+#define FNCACHE_NEXT                 0x00   /* next cache entry (CACHE_HEAD list) */
+#define FNCACHE_FUNCTION             0x02   /* key: function symbol */
+#define FNCACHE_LIST                 0x04   /* list of ACTIVE_LIST values consed for the function */
+/* CASE_ENTRY_POOL_SEG records: switch case entry (existing prefix SWCASE_): 4 high word of
+   SWCASE_VALUE. */
+#define SWCASE_VALUE_HIGH            0x04   /* high word of SWCASE_VALUE */
+/* CODE_FRAGMENT_POOL_SEG records: code fragment record of block layout (backend/BLKLAYOT.C
+   NEW_CODE_FRAGMENT, 0x18 bytes, list from 2): 0 next, 2 start of its bytes in
+   CODE_BYTE_POOL_SEG, 4 size, 6 start offset, 8 jump kind, 0x0A jump target, 0x0C first
+   fixup, 0x0E fixup count (or text length in asm mode, 0xFFFF for a mark fragment),
+   0x10/0x12 line records, 0x16 flags. ADD_FIXUP puts 6-byte fixup records in the same
+   pool, contiguous after the fragment: 0 offset in the fragment, 2 target, 4 relocation
+   kind (FRAGFIX_ variant names by line in WRITE_OBJECT_CODE). Prefix FRAG_ (existing),
+   FRAGFIX_ (fixup). */
+#define FRAGFIX_OFFSET               0x00   /* fixup record: offset of the fixup in the fragment */
+#define FRAG_NEXT                    0x00   /* next fragment */
+#define FRAGFIX_TARGET               0x02   /* fixup record: fixup target (code block for kind 5, replaced by its fragment start) */
+#define FRAG_CODE_START              0x02   /* start of the fragment bytes in CODE_BYTE_POOL_SEG */
+#define FRAGFIX_KIND                 0x04   /* fixup record: relocation kind */
+#define FRAG_MARK_VALUE              0x04   /* mark fragment: 0xFFFF offset mark or the marked node */
+#define FRAG_SIZE                    0x04   /* size of the fragment in the segment */
+#define FRAG_JUMP_KIND               0x08   /* jump at the fragment end (0x100 none, 0x118, short/near flags) */
+#define FRAG_JUMP_TARGET             0x0A   /* jump target fragment (until the label is placed: next fragment waiting on it) */
+#define FRAG_FIXUPS                  0x0C   /* first fixup record (allocated contiguously after the fragment) */
+#define FRAG_FIXUP_COUNT             0x0E   /* number of fixups; 0xFFFF marks a mark fragment */
+#define FRAG_TEXT_LENGTH             0x0E   /* asm output: number of text bytes of the fragment */
+#define FRAG_FLAGS                   0x16   /* fragment flag word (bit 1: print an @serial@fragment label) */
+/* FLOW_BLOCK_POOL_SEG records: code block record (existing prefix CNODE_): 0x1A head of the
+   fragments whose jumps wait for the block's label. */
+#define CNODE_PENDING_JUMPS          0x1A   /* first fragment whose jump waits for the block label (chain through FRAG_JUMP_TARGET) */
+/* CONTEXT_SEG records: input context record of the lexer input stack (lexer/INPUT.C;
+   CONTEXT_PTR is the top, CURRENT_FILE_CONTEXT the current file). Three kinds by word 0: a
+   file (word 0 = DOS handle; OPEN_SOURCE_FILE, 0x1016 bytes with a 4096-byte buffer from
+   offset 22), a string (201; BCC_INPUT_STRING/_PTR, 12 bytes), a macro expansion or
+   argument text (202; PUSH_MACRO_EXPANSION, PUSH_ARGUMENT_TEXT/TOKENS, 18 bytes, reused
+   through FREE_MACRO_CONTEXT_LIST). Common: 2 length, 4 saved read position, 6 near
+   address of the buffer's segment variable, 8 buffer offset, 0x0A outer context. Words
+   0x0C-0x10 hold the outer file's name/line/serial node for a file and the arguments/hash
+   link/definition for a macro (file variants by line). Prefix CTX_. */
+#define CTX_FILE_HANDLE              0x00   /* file context: DOS file handle */
+#define CTX_KIND                     0x00   /* context kind: 201 string, 202 macro, else a file (the DOS handle) */
+#define CTX_LENGTH                   0x02   /* number of bytes in the buffer */
+#define CTX_READ_POS                 0x04   /* saved read position relative to the buffer base */
+#define CTX_PREV_WORD_INDEX          0x05   /* word index of CTX_PREV (word 5 = byte 0x0A) */
+#define CTX_BUFFER_SEG_VAR           0x06   /* near address of the variable holding the buffer segment */
+#define CTX_BUFFER_BASE              0x08   /* offset of the buffer in that segment */
+#define CTX_PREV                     0x0A   /* outer context (input stack link); free-list link of reusable macro contexts */
+#define CTX_MACRO_ARGS               0x0C   /* macro context: argument list (POOL_A) */
+#define CTX_SAVED_FILE_NAME          0x0C   /* file context: CURRENT_FILE_NAME of the including file */
+#define CTX_MACRO_HLINK              0x0E   /* macro context: name record (HASH_CHAIN_LINK_SEG) whose macro is disabled during expansion */
+#define CTX_SAVED_LINE               0x0E   /* file context: CURRENT_LINE of the including file */
+#define CTX_MACRO_DEF                0x10   /* macro context: macro definition text (POOL_E/POOL_F offset) */
+#define CTX_SAVED_SERIAL_NODE        0x10   /* file context: LEX_FILE_SERIAL_NODE of the including file */
+#define CTX_FILE_POS                 0x12   /* file context: file position of the buffer start */
+#define CTX_SAVED_LINE_RECORD        0x14   /* file context: LINE_RECORD at open */
+/* DECLARATOR_NODE_POOL_SEG records: declarator node of the C front end (parser/CDECLR.C
+   NEW_DECLARATOR_NODE, 13 bytes; built by PARSE_DECLARATOR_TREE, consumed and freed by
+   BCC_STMT_BIND_TYPE): 0 kind (0 name, 0x0D pointer, 0x11 array, 0x12 function), 1 flags,
+   2 array dimension (long), 6/7/8 the three modifier bytes (struct Flags: call convention,
+   distance, extra), 9 parameter list or based-pointer name, 0x0B inner declarator. Prefix
+   DCLR_ (DECL_ avoided: DECL_INIT_SERIAL is a global). */
+#define DCLR_KIND                    0x00   /* declarator kind (0 name, 0x0D pointer, 0x11 array, 0x12 function) */
+#define DCLR_FLAGS                   0x01   /* flags: pointer cv qualifiers, array huge flag, parameter-list flags */
+#define DCLR_ARRAY_SIZE              0x02   /* array declarator: dimension (long, 0 unknown) */
+#define DCLR_CALL_CONV               0x06   /* modifier byte 1: calling convention */
+#define DCLR_DISTANCE                0x07   /* modifier byte 2: distance (8 near, 9 far, 10 huge) */
+#define DCLR_EXTRA_MODS              0x08   /* modifier byte 3 (ORed into the function flags) */
+#define DCLR_PARAMS                  0x09   /* function declarator: parameter list */
+#define DCLR_PTR_BASE                0x09   /* pointer declarator: based-pointer name (POOL_HASH string) */
+#define DCLR_CHILD                   0x0B   /* inner declarator node */
+/* HASH_CHAIN_LINK_SEG records: per-name companion record (existing prefix HLINK_): 4
+   keyword token value. */
+#define HLINK_TOKEN                  0x04   /* keyword token value of the name (0 plain identifier) */
+/* LABEL_POOL_SEG records: goto label records. Two records share the pool: the label record
+   (CPPSCOPE.C ALLOC_LABEL_RECORD, 13 bytes, LABEL_LIST_HEAD list; STMTCPP.C
+   PARSE_LABEL/PARSE_GOTO/CHECK_UNDEFINED_LABELS, ASMENC2.C PARSE_ASM_JUMP_LABEL,
+   CPPSCOPE.C POP_SCOPE): 0 next, 2 name, 4 code label block, 6/8 range of declaration-init
+   serials a goto may come from without bypassing an initialization, 0x0A defined byte,
+   0x0B temporaries live at the label. The pending-goto record (CPPSCOPE.C
+   ALLOC_JUMP_RECORD, 10 bytes, PENDING_GOTO_LIST; STMTCPP.C RESOLVE_PENDING_GOTOS,
+   PARSE_GOTO, CHECK_UNDEFINED_LABELS): 0 next, 2 init serial at the goto, 4 label block, 6
+   block jumped to, 8 temporaries live at the goto; its sites get the GOTO_ variant names
+   by line. Prefix LABEL_ (label record), GOTO_ (pending goto). */
+#define GOTO_NEXT                    0x00   /* pending goto: next record (PENDING_GOTO_LIST) */
+#define LABEL_NEXT                   0x00   /* label record: next label (LABEL_LIST_HEAD list) */
+#define GOTO_INIT_SERIAL             0x02   /* pending goto: DECL_INIT_SERIAL at the goto */
+#define LABEL_NAME                   0x02   /* label record: label name */
+#define LABEL_BLOCK                  0x04   /* code label block of the label (both records) */
+#define GOTO_TARGET                  0x06   /* pending goto: block jumped to (cleanup label when temporaries need destroying) */
+#define LABEL_SERIAL_LOW             0x06   /* label record: DECL_INIT_SERIAL at the label definition (lowest serial a goto may come from) */
+#define GOTO_TEMPS                   0x08   /* pending goto: temporaries live at the goto (TEMPENT list) */
+#define LABEL_SERIAL_HIGH            0x08   /* label record: highest DECL_INIT_SERIAL a goto may come from (0x7FFF open) */
+#define LABEL_DEFINED                0x0A   /* label record: label defined byte */
+#define LABEL_TEMPS                  0x0B   /* label record: temporaries live at the label (TEMPENT list) */
+/* LINKAGE_STACK_POOL_SEG records: extern "C" linkage stack entry (preproc/PCH.C
+   PUSH/POP_LANGUAGE_LINKAGE, 4 bytes): 0 saved CURRENT_LINKAGE, 2 next entry
+   (LINKAGE_STACK). Prefix LINKSTK_. */
+#define LINKSTK_SAVED_LINKAGE        0x00   /* saved CURRENT_LINKAGE */
+#define LINKSTK_NEXT                 0x02   /* next (outer) stack entry */
+/* PACKED_EXPR_POOL_SEG records: packed expression node (expr/EXPRPACK.C
+   PACK/UNPACK_EXPR_TREE): header (kind, flags, type, location) then operand words from
+   offset 10. Prefix PEXPR_. */
+#define PEXPR_OPERANDS               0x0A   /* packed node: first operand word (copy of EXPR_LEFT on) */
+/* PCH_DEPENDENCY_POOL_SEG records: PCH dependency entry, one per source file read
+   (preproc/PCH.C ADD_PCH_DEPENDENCY, 7 bytes + name; list from 2,
+   PCH_DEPENDENCY_HEAD/TAIL): 0 next, 2 file time (long), 6 file name. Prefix PDEP_. */
+#define PDEP_NEXT                    0x00   /* next dependency entry */
+#define PDEP_FILE_TIME               0x02   /* file time stamp (long) */
+#define PDEP_FILE_NAME               0x06   /* file name text */
+/* PCH_INDEX_POOL_SEG records: preamble trie node (existing prefix PCHTRIE_): 0x0E
+   directive text. */
+#define PCHTRIE_TEXT                 0x0E   /* trie node: directive text */
+/* POOL_F records: macro definition text (existing prefix MACDEF_): byte 0 parameter-count
+   flag, replacement text from 1. */
+#define MACDEF_TEXT                  0x01   /* macro definition: replacement text */
+/* PREAMBLE_POOL_SEG records: preprocessor directive entry of the PCH preamble (existing
+   prefix PDIR_; PCH.C ADD_PREAMBLE_ENTRY, 9 bytes + text): 2 previous entry, 4 logical
+   line, 8 directive text. */
+#define PDIR_PREV                    0x02   /* previous directive entry */
+#define PDIR_LINE                    0x04   /* logical line of the directive */
+#define PDIR_TEXT                    0x08   /* directive text (file name, macro text ...) */
+/* SEGDEF_POOL_SEG records: segment record (existing prefix SEGDEF_): 0x13 far pointer to
+   the heap handle of the in-memory data buffer. */
+#define SEGDEF_BUFFER_HANDLE         0x13   /* far pointer to the heap handle of the in-memory data buffer */
+/* STRING_POOL_SEG records: besides plain strings, OPTIONS.C keeps the SOURCE_FILE_LIST
+   nodes here: 0 next (STRPOOL_CHAR site), 2 file name text. Prefix STRPOOL_. */
+#define STRPOOL_SRCLIST_NAME         0x02   /* SOURCE_FILE_LIST node: file name text */
+/* TOKEN_POOL records: macro argument token text; offset+1 is the byte after a text cursor
+   (not a record). Prefix TOKPOOL_. */
+#define TOKPOOL_NEXT_CHAR            0x01   /* byte after a text cursor (not a record) */
+#endif

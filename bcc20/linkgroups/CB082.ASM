@@ -1,0 +1,40 @@
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group CODE_130
+; BEGIN RC130 (listing CODE_130:0000)
+CODE_130	segment byte public 'CODE'
+		assume	cs:CODE_130
+
+		public	BCC_FAR_D130
+		public	BCC_FAR_D135
+		public	BCC_FAR_D144
+		public	BCC_FAR_D14E
+		public	BCC_FAR_D153
+		public	BCC_FAR_D171
+
+		db	0CDh,03Fh,000h,000h,080h,062h,004h,000h,089h,00Fh,034h,000h,00Fh,000h	; CODE_130:0000
+		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; CODE_130:000E
+		db	000h,000h,000h,000h	; CODE_130:001C
+BCC_FAR_D130	label	far
+		db	0EAh,0E3h,001h,0B3h,099h	; CODE_130:0020
+BCC_FAR_D135	label	far
+		db	0EAh,094h,000h,0B3h,099h,0EAh,024h,000h,0B3h,099h,0EAh,030h,00Bh,0B3h	; CODE_130:0025
+		db	099h	; CODE_130:0033
+BCC_FAR_D144	label	far
+		db	0EAh,0A4h,00Ah,0B3h,099h,0EAh,0FEh,00Eh,0B3h,099h	; CODE_130:0034
+BCC_FAR_D14E	label	far
+		db	0EAh,0FBh,00Ah,0B3h,099h	; CODE_130:003E
+BCC_FAR_D153	label	far
+		db	0EAh,000h,000h,0B3h,099h,0EAh,013h,000h,0B3h,099h,0EAh,075h,001h,0B3h	; CODE_130:0043
+		db	099h,0EAh,048h,002h,0B3h,099h,0EAh,003h,001h,0B3h,099h,0EAh,03Dh,00Eh	; CODE_130:0051
+		db	0B3h,099h	; CODE_130:005F
+BCC_FAR_D171	label	far
+		db	0EAh,0A9h,002h,0B3h,099h,0EAh,088h,00Bh,0B3h,099h,000h,000h,000h,000h	; CODE_130:0061
+		db	000h	; CODE_130:006F
+
+CODE_130	ends
+; END RC130
+		end

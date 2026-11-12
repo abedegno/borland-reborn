@@ -1,0 +1,263 @@
+old file	new file	kind	evidence
+C100UNIT.C	OBJSYMS.C	inferred	object output: OMF symbols and Turbo Debugger records
+C101UNIT.C	PEEPHOLE.C	descriptive	ELIMINATE_REDUNDANT_LOADS, register-slot tracking
+C102UNIT.C	ASMDATA.C	descriptive	assembly text output: data, procs, externs (EMIT_DB_DATA, EMIT_PROC_BEGIN)
+C104UNIT.C	EMITINSN.C	descriptive	EMIT_INSN_* instruction emitters
+C105UNIT.C	JUMPOPT.C	descriptive	OPTIMIZE_JUMPS, RESOLVE_JUMP_TARGETS, MERGE_JUMP_OVER_JUMP
+C106UNIT.C	CROSSJMP.C	descriptive	CROSS_JUMP_PASS, SPLIT_COMMON_TAIL
+C107UNIT.C	ASMTEXT.C	descriptive	assembly text output: header, trailer, instructions (CREATE_ASM_OUTPUT)
+C108UNIT.C	OBJSEGS.C	inferred	object output: segment, group and data-buffer manager
+C109UNIT.C	SAVEREGS.C	inferred	saved registers and temporaries around calls
+C10TYPE.C	TYPESIZE.C	descriptive	type sizes and compatibility (TYPE_SIZE)
+C113UNIT.C	FLOWBLK.C	descriptive	flow-graph blocks (NEW_BRANCH_BLOCK, NEW_RETURN_JUMP_BLOCK)
+C114UNIT.C	BLKLAYOT.C	descriptive	block layout, jump shortening, code output
+C117UNIT.C	OMFWRITE.C	descriptive	OMF object writer (OBJ_WRITE_RECORD ...)
+C120UNIT.C	EXPRCHK.C	descriptive	expression semantic checks (CHECK_SUBSCRIPT, CHECK_INTEGRAL_OP)
+C121UNIT.C	STMTCPP.C	descriptive	statement parser, C++ mode (PARSE_IF_STATEMENT ...)
+C122UNIT.C	STMTC.C	descriptive	statement parser, C mode
+C123UNIT.C	CONSTFLD.C	descriptive	constant folding (FOLD_EXPRESSION)
+C127UNIT.C	DEBUGREC.C	descriptive	debug information records (EMIT_DEBUG_*)
+C128UNIT.C	PCH.C	descriptive	precompiled headers (PCH_*), file magic 0xEDFE
+C130UNIT.C	PREPROC.C	descriptive	preprocessor directives and #pragma handlers
+C132UNIT.C	SPECMEMB.C	inferred	C++ compiler-generated special members
+C203UNIT.C	CGEXPR.C	descriptive	x86 expression code generator (GENERATE_EXPRESSION)
+C204UNIT.C	REGALLOC.C	inferred	register allocator (MSG_REGISTER_ALLOCATION on failure)
+C205UNIT.C	CODEPASS.C	inferred	code-node passes and register masks
+C207UNIT.C	FRAME.C	inferred	prologue, epilogue and frame offsets
+C208UNIT.C	CGCALL.C	inferred	calls and argument passing
+C209UNIT.C	SWITCH.C	descriptive	switch lowering (EMIT_SWITCH_JUMP_TABLE ...)
+C212UNIT.C	REGVARS.C	inferred	register variable allocation
+C214UNIT.C	INTRINS.C	inferred	intrinsic calls and __emit__
+C215UNIT.C	BITFIELD.C	inferred	bitfield load, store and increment
+C216UNIT.C	CODENODE.C	descriptive	code-node pool allocators
+C220UNIT.C	CGDRIVER.C	descriptive	per-function back-end driver (GENERATE_FUNCTION_CODE)
+C222UNIT.C	ASMENC.C	inferred	inline assembly encoder
+C227UNIT.C	ASMENC2.C	inferred	inline assembly encoder, second copy on other pools
+C226UNIT.C	LEXER.C	descriptive	lexer
+C228UNIT.C	CPPEXPR.C	descriptive	C++ expressions: new, member selection, qualified names
+C22UNIT.C	SYMSCAN.C	descriptive	end-of-file symbol scan (SCAN_FILE_SYMBOLS)
+C240UNIT.C	SYMSCANC.C	descriptive	end-of-file symbol scan, C mode (SCAN_FILE_SYMBOLS_C)
+C232UNIT.C	OPPREC.C	descriptive	operator-precedence expression parser (PUSH_OPERATOR, REDUCE_OPERATOR)
+C233UNIT.C	INLINEXP.C	descriptive	inline function expansion
+C235UNIT.C	CPPSCOPE.C	inferred	C++ type and scope tables
+C236UNIT.C	CPPCTOR.C	inferred	C++ constructors, destructors, virtual bases
+C238UNIT.C	OPTIONS.C	descriptive	command-line option handlers
+C239UNIT.C	SIMPLIFY.C	descriptive	tree simplifier and constant arithmetic (SIMPLIFY_*)
+C25UNIT.C	DIAG.C	descriptive	diagnostic helpers (REPORT_DIAGNOSTIC_*, SKIP_TO_SYNC_TOKEN)
+C28UNIT.C	TOKSTRM.C	descriptive	token record and playback stream
+C31UNIT.C	INITPOOL.C	descriptive	compiler initialisation: pools and keywords
+C6BUILD.C	UNARYOP.C	descriptive	unary-operator expression builders
+C78UNIT.C	EXPRDISP.C	inferred	expression builder dispatch
+C84UNIT.C	ASMCODE.C	descriptive	code bytes and inline-asm instruction encoding (EMIT_CODE_BYTE)
+C71MSG.C	MESSAGES.C	descriptive	diagnostic message table
+C9INIT.C	INITTYPE.C	descriptive	basic types and token tables initialisation
+include/C10TYPE.H	include/TYPESIZE.H	descriptive	header of the renamed unit TYPESIZE
+include/C22UNIT.H	include/SYMSCAN.H	descriptive	header of the renamed unit SYMSCAN
+include/C25UNIT.H	include/DIAG.H	descriptive	header of the renamed unit DIAG
+include/C28UNIT.H	include/TOKSTRM.H	descriptive	header of the renamed unit TOKSTRM
+include/C31UNIT.H	include/INITPOOL.H	descriptive	header of the renamed unit INITPOOL
+include/C78UNIT.H	include/EXPRDISP.H	descriptive	header of the renamed unit EXPRDISP
+include/C9INIT.H	include/INITTYPE.H	descriptive	header of the renamed unit INITTYPE
+C103UNIT.C	FUNCDECL.C	descriptive	C++ declarations: checks function and member declarations: storage classes, overloading and extern "C", main, operator n
+C112UNIT.C	ACCESS.C	descriptive	C++ classes: member lookup through base classes (ambiguity report), friend tests and access checks for members and symbo
+C116UNIT.C	BASECONV.C	descriptive	C++ expressions: reference binding and dereference, derived-to-base and base-to-derived pointer conversion, virtual base
+C11FIND.C	CTORBODY.C	descriptive	C++ classes: parses constructor member-initializer lists and compiles constructor and destructor bodies with base, virtu
+C125UNIT.C	CDECLR.C	descriptive	parser (C mode): declarators: parameter and abstract declarators, declarator trees, parameter lists, binding a declarato
+C124UNIT.C	CSYMTAB.C	descriptive	types and symbols (C mode): scopes and symbol table: lookup, declaring locals and globals, member lookup, unused/never-u
+C129UNIT.C	ASMSTMT.C	descriptive	parser: inline assembly statements (asm keyword): scans asm tokens, mnemonics and operands and hands each statement to t
+C12CHECK.C	IMPLMEMB.C	descriptive	C++ classes: declares the implicit special members (default and copy constructor, assignment, destructor) at class end; 
+C133UNIT.C	INPUT.C	descriptive	lexer and input: the input stack: opening source files, macro-expansion and argument contexts, buffer refill, string lit
+C131UNIT.C	CLSMEMB.C	descriptive	C++ classes: struct/class body members: data members and bitfields, layout and size checks, closing a class type, enum b
+C137UNIT.C	DIRTAIL.C	descriptive	preprocessor: checks the rest of a directive line, skipping blanks, comments and line splices and reporting extra charac
+C138UNIT.C	COMMENT.C	descriptive	lexer: comment skipping (block and line comments) in the input buffer, written as inline assembly
+C13UNIT.C	CPPFINAL.C	descriptive	C++ classes: end-of-file processing: static initializer and destructor functions, virtual tables (with this-adjust thunk
+C139UNIT.C	SKIPLINE.C	descriptive	precompiled headers: skips to end of line past comments, splices and quoted strings (used by PCH.C when scanning directi
+C140UNIT.C	NAMEPOOL.C	descriptive	types and symbols: the symbol-name pool: hashes and interns names, copying new name text into pool banks
+C14UNIT.C	MANGLE.C	descriptive	C++ names: name mangling for symbols, member functions, operators, conversions and argument types; decimal output used b
+C17UNIT.C	HUGEDATA.C	descriptive	data output: huge and far arrays: defines the data segments a huge object needs and emits array data bank by bank
+C16UNIT.C	DECLSPEC.C	descriptive	parser (C++ mode): declarations: declaration specifiers, pointer/array/function declarators, type modifiers, struct/unio
+C18UNIT.C	CPPCALL.C	descriptive	C++ expressions: function calls: overloaded call resolution, virtual calls through the vtable, operator function calls, 
+C201UNIT.C	CLASSDEF.C	descriptive	C++ classes: parses class definitions: base-class lists, access specifiers, member, friend and virtual function declarat
+C213UNIT.C	ASMOPND.C	descriptive	inline assembly: operand helpers for the encoder in R8UNIT.ASM: decodes symbol operands, emits bytes, fixup operands and
+C202UNIT.C	CDECL.C	descriptive	parser (C mode): external and local declarations: storage classes, struct fields and bitfields, initializers and their d
+C218UNIT.C	ASMEXTRN.C	descriptive	assembly text output (-S): externals and COMM declarations, function debug information, hex byte lists, symbol names
+C219UNIT.C	BACKINIT.C	descriptive	back end: initialisation and shutdown: owner tags and the code-generation pools (code nodes, operands, data bytes, line 
+C223UNIT.C	CODEOP.C	descriptive	code generation: maps an expression node to its code operation number through operand-kind tables; probably refines regi
+C221UNIT.C	BYTEPOOL.C	descriptive	code generation: the data byte pool: appends bytes and merges a byte string with an earlier identical copy (probably str
+C224UNIT.C	CPRAGFN.C	descriptive	preprocessor (C mode): #if expression parsing hook, and looking up the function named in #pragma startup/exit
+C229UNIT.C	CPPCAST.C	descriptive	C++ expressions: resolves symbol references (overloaded names), casts, and class-to-integral or class-to-scalar conversi
+C231UNIT.C	OBJPUBS.C	descriptive	object output: EXTDEF and PUBDEF records with mangled names, and function debug records
+C230UNIT.C	CPPEXPCK.C	descriptive	C++ expressions: class assignment, initialization and return checks, member selection and .*, member-pointer comparison,
+C234UNIT.C	EXPRPOOL.C	descriptive	expressions: expression node pool: allocate/free nodes and trees, constants, temporaries, null pointer constants, copyin
+C237UNIT.C	POOLS.C	descriptive	memory: growable near pools (segment, capacity, used, free list): allocate, reuse, free, trim; reports compiler table li
+C24UNIT.C	CPPIFEXP.C	descriptive	preprocessor (C++ mode): evaluates a #if constant condition, and looks up the function named in #pragma startup/exit
+C23UNIT.C	MEMBPTR.C	descriptive	C++ expressions: builds pointer-to-member values (&X::m) and initialized temporary objects
+C26UNIT.C	INLINEBD.C	descriptive	C++ inline functions: records the tokens of an inline body for later and compiles the recorded body; rejects asm in inli
+C27UNIT.C	FUNCDEF.C	descriptive	parser (C++ mode): function definitions: old-style parameters, parameter declaration, hidden return parameter, function 
+C30UNIT.C	LOOKAHD.C	descriptive	parser (C++ mode): lookahead that decides whether tokens form a type or declaration, skipping balanced token groups
+C29UNIT.C	CPPINIT.C	descriptive	C++ initialization: references, class objects through constructors, constant initializers, array element construction, q
+C33UNIT.C	TYPESPEL.C	descriptive	diagnostics: spells types, symbols, members, operators and call signatures as text for messages
+C36UNIT.C	INITLIST.C	descriptive	parser: initializers: brace lists, sized and unsized arrays, struct members and packed bitfields, scalar initializers an
+C39UNIT.C	OVERLOAD.C	descriptive	C++ expressions: overload resolution: ranks argument conversions, picks the best candidate, finds and applies user conve
+C38UNIT.C	FLDPLACE.C	descriptive	types: places struct members and bitfields at offsets (honouring word alignment); builds the hidden return slot address
+C40UNIT.C	LOWEREXP.C	descriptive	expressions: lowers expression trees before code generation, probably turning member-pointer constants into initialized 
+C42UNIT.C	EXPRPACK.C	descriptive	expressions: packs expression trees into compact records in a separate pool and rebuilds them; used for inline bodies an
+C49UNIT.C	MACROS.C	descriptive	preprocessor: macro table; define (warns on incompatible redefinition), undefine, test if defined, and find a name in a 
+C44UNIT.C	TOKADV.C	descriptive	lexer: token advance; reads the next token from nested playback streams or the lexer, records tokens, and drains unread 
+C4FLAT.C	COMMAEXP.C	descriptive	expressions: analyses chains of comma expressions iteratively (no recursion), setting each comma node's type from its ri
+C51UNIT.C	DRVLINK.C	descriptive	driver: handles each command-line file (compile .C/.CPP, assemble .ASM through TASM), builds the TASM command and TLINK 
+C53UNIT.C	CONFIG.C	descriptive	options and initialisation: reads TURBOC.CFG (from the current or BCC.EXE directory) and command-line options, locates t
+C52UNIT.C	SEGNAMES.C	descriptive	options and initialisation: per-module setup of segment, group and class names from memory model and -z options, predefi
+C56UNIT.C	ASMSYMS.C	descriptive	assembly text output (-S): end-of-module symbol declarations (EXTRN, PUBLIC, COMM, EQU), ?debug hex records and symbol n
+C5INIT.C	MEMINIT.C	descriptive	far-memory heap: start-up memory initialisation; sets up the main heap with the out-of-memory handler, probably adopts t
+C58UNIT.C	EXPRNOD2.C	descriptive	expressions: second set of expression-node constructors and rewriting of compound assignment and post-increment trees wi
+C5CB.C	OOMHAND.C	descriptive	far-memory heap: out-of-memory callback; frees the name and hash pools, then reports "Out of memory" and exits or report
+C5UNIT.C	CALLCHK.C	descriptive	expressions: function call analysis; checks call arguments against the prototype (count, types, void values, structures 
+C70S42.C	INITMARK.C	descriptive	far-memory heap: one-byte marker at the start of a memory region that INIT_MEMORY_MANAGER passes to the heap; no code
+C77UNIT.C	STMTBLK.C	descriptive	code generation: parser-to-back-end interface; appends function, scope, jump, return and expression blocks to the flow g
+C76UNIT.C	STORAGE.C	descriptive	code generation: queries and setters for symbol storage records and type classes, runtime helper symbol declaration, par
+C7UNIT.C	CONVERT.C	descriptive	expressions: conversions; dereference, address-of, array/function decay, rvalue, casts, enum to int, usual arithmetic co
+C83UNIT.C	EXTDECL.C	descriptive	parser: external (file-level) declarations; declares functions, typedefs and variables, merges redeclarations, parses de
+C82UNIT.C	SRCSEGS.C	descriptive	object output: numbered records tying source files to code segments (new, clone on segment change, find by serial); prob
+C85UNIT.C	EXPRMAKE.C	descriptive	expressions: expression-node constructors (binary, leaf, constant, real, bitfield), retyping and narrowing, compound ass
+CODEMASK.C	TRUNCVAL.C	descriptive	expressions: truncates a long constant to a given width, with or without sign extension, using the int, char and long ma
+EARGS.C	STRLIT.C	descriptive	lexer: joins adjacent string-literal tokens into one byte string in the data pool, counting characters and merging dupli
+STAOV0F3.C	EMITFUNC.C	descriptive	code generation: emits a function body block by block (instruction blocks, inline asm, scope debug hooks, jumps and retu
+STAOV087.C	VARUSES.C	descriptive	registers: tallies loop-weighted uses of each variable over the code-node list, probably to score register-variable cand
+STAOV0F7.C	EMITFPU.C	descriptive	code generation: emits an instruction whose operand is on the 8087 stack, with fast-float and stored-symbol variants (pr
+STAOV0F5.C	EMITHELP.C	descriptive	code generation: replaces a code node with a call to a named run-time helper and emits the near or far call
+STAOV0F6.C	EMITBIN.C	descriptive	code generation: emits a binary operation using the registers assigned to its operands, adding register moves as needed
+STAG001.C	REGMOVOP.C	descriptive	code generation: picks one of two register-to-register opcodes for a code op from the opcode descriptor table
+STAOV15F.C	INITDATA.C	descriptive	code generation: emits the bytes of a constant initialiser (integers, float/double from long double, addresses through h
+STOVR95.C	PTRMOD.C	descriptive	types: builds the pointer type for a near, far, huge or _seg modifier, defaulting by memory model and function type
+STPAIR.C	POOLMARK.C	descriptive	far-memory heap: saves and restores the length mark of the malloc pool (mark and release)
+STAOV0F4.C	EMITBLK.C	descriptive	code generation: emits the x86 instructions for one block's code nodes, dispatching on code op and replaying register hi
+STAOV0F8.C	EMITHIST.C	descriptive	code generation: replays the register history entries for an instruction (register moves, pushes, pops, spills) before e
+STOVR141.C	OUTINIT.C	descriptive	code generation: initialises the code-output pools and opens the object file or the assembly output file
+TINT.C	TYPSTART.C	descriptive	parser: tests whether a token starts a type (a type keyword or an identifier naming a type)
+TVALUE.C	CONSTVAL.C	descriptive	expressions: parses a constant expression and returns its long value, else reports "Constant expression required"
+include/C11FIND.H	include/CTORBODY.H	descriptive	header of CTORBODY.C
+include/C12CHECK.H	include/IMPLMEMB.H	descriptive	header of IMPLMEMB.C
+include/C13UNIT.H	include/CPPFINAL.H	descriptive	header of CPPFINAL.C
+include/C14UNIT.H	include/MANGLE.H	descriptive	header of MANGLE.C
+include/C17UNIT.H	include/HUGEDATA.H	descriptive	header of HUGEDATA.C
+include/C16UNIT.H	include/DECLSPEC.H	descriptive	header of DECLSPEC.C
+include/C18UNIT.H	include/CPPCALL.H	descriptive	header of CPPCALL.C
+include/C24UNIT.H	include/CPPIFEXP.H	descriptive	header of CPPIFEXP.C
+include/C23UNIT.H	include/MEMBPTR.H	descriptive	header of MEMBPTR.C
+include/C26UNIT.H	include/INLINEBD.H	descriptive	header of INLINEBD.C
+include/C27UNIT.H	include/FUNCDEF.H	descriptive	header of FUNCDEF.C
+include/C30UNIT.H	include/LOOKAHD.H	descriptive	header of LOOKAHD.C
+include/C29UNIT.H	include/CPPINIT.H	descriptive	header of CPPINIT.C
+include/C33UNIT.H	include/TYPESPEL.H	descriptive	header of TYPESPEL.C
+include/C36UNIT.H	include/INITLIST.H	descriptive	header of INITLIST.C
+include/C39UNIT.H	include/OVERLOAD.H	descriptive	header of OVERLOAD.C
+include/C38UNIT.H	include/FLDPLACE.H	descriptive	header of FLDPLACE.C
+include/C40UNIT.H	include/LOWEREXP.H	descriptive	header of LOWEREXP.C
+include/C42UNIT.H	include/EXPRPACK.H	descriptive	header of EXPRPACK.C
+include/C49UNIT.H	include/MACROS.H	descriptive	header of MACROS.C
+include/C44UNIT.H	include/TOKADV.H	descriptive	header of TOKADV.C
+include/C51UNIT.H	include/DRVLINK.H	descriptive	header of DRVLINK.C
+include/C53UNIT.H	include/CONFIG.H	descriptive	header of CONFIG.C
+include/C52UNIT.H	include/SEGNAMES.H	descriptive	header of SEGNAMES.C
+include/C56UNIT.H	include/ASMSYMS.H	descriptive	header of ASMSYMS.C
+include/C58UNIT.H	include/EXPRNOD2.H	descriptive	header of EXPRNOD2.C
+include/C77UNIT.H	include/STMTBLK.H	descriptive	header of STMTBLK.C
+include/C76UNIT.H	include/STORAGE.H	descriptive	header of STORAGE.C
+include/C83UNIT.H	include/EXTDECL.H	descriptive	header of EXTDECL.C
+RH0DCB.C	HPRCLNOD.C	descriptive	far-memory heap: RH_RECLAIM_NODE decides whether a node can be given up to make room, moving it to another bank (flag 20
+RABBB.C	DPRINTF.C	descriptive	run-time library: dprintf (Turbo C 2.01), builds the argument list by hand and passes it to the small console printf RTL
+RH38FB.C	HPSTUBSW.C	descriptive	far-memory heap: RH_SELF_CALL_AFTER_SWAP_BANK, an uncalled stub that only calls itself, probably a placeholder kept from
+C119UNIT.C	EXPRPARS.C	descriptive	expressions: precedence parser (PARSE_EXPRESSION), unary operators, identifiers, subscripts, calls and arguments, assign
+RH2C7B.C	HPINBNK5.C	descriptive	far-memory heap: HANDLE_IN_BANK_5 tells whether a handle's node currently lives in bank 5
+RG2BMID.C	EXTBANK.C	descriptive	far-memory heap: the extended-memory bank; read, write and move nodes and find free space there, and INIT_EXT_BANK sets 
+RH45DE.C	HPSTUBIO.C	descriptive	far-memory heap: RH_SELF_CALL_BEFORE_DOS_IO, an uncalled stub that only calls itself, probably a placeholder kept from B
+R5PAIR.C	EXECMEM.C	descriptive	run-time library: shrinks BCC's memory (heap fully, then program top) before running TASM or TLINK, and grows it back af
+RG2BEND.C	EMSBANK.C	descriptive	far-memory heap: the EMS bank; read, write and move nodes and find free space in EMS pages, INIT_EMS_BANK, and the empty
+RH12D3.C	HPFIXHI.C	descriptive	far-memory heap: ALLOC_FIXED_HIGH allocates a node fixed at the high end of the heap, reclaiming and gathering free spac
+RG2A4.C	HPCOPYD.C	descriptive	far-memory heap: RH_COPY_DESCRIPTOR copies a node descriptor's data bytes from one bank's descriptor table to another's
+R1A1A.C	HPSHRNKH.C	descriptive	far-memory heap: SHRINK_HEAP_FULLY shrinks the heap as far as it will go and returns the new top
+R3504.C	HPDEFTAG.C	descriptive	far-memory heap: returns the default owner tag for new heap nodes; the function name GET_OPTION misleads
+RH0826.C	HPRELFIX.C	descriptive	far-memory heap: RH_RELEASE_SPECIAL releases a fixed node through UNFIX_LOW_NODE or UNFIX_HIGH_NODE
+RG2BTAIL.C	HEAPMAIN.C	descriptive	far-memory heap: main heap set-up (INIT_MAIN_HEAP), conventional bank, swap-file bank, handle pointers, segment pinning 
+RH19BD.C	HPNEWB5.C	descriptive	far-memory heap: NEW_BANK5_NODE allocates a node in bank 5
+RH0F0A.C	HPGATHHI.C	descriptive	far-memory heap: GATHER_FREE_AT_HIGH_END moves nodes to collect a free block of the needed size at the high end of the h
+RH3F7E.C	HPEXTREL.C	descriptive	far-memory heap: RH_CALL_EXT_RELEASE releases the extended-memory bank through the overlay manager's OVR_RELEASE_EXT_MEM
+R3513.C	HPOWNTAG.C	descriptive	far-memory heap: allocates and frees the owner tags that group heap nodes for release together
+R36F7.C	HPSPACE.C	descriptive	far-memory heap: HEAP_SPACE_BELOW_LIMIT returns the heap space still available below the limit
+R5B8B.C	ERRREPT.C	descriptive	diagnostics: REPORT_ERROR prints an error message, counts it, and stops the compile through a long jump when the error l
+RH1441.C	HPRESIZH.C	descriptive	far-memory heap: RESIZE_HANDLE_BLOCK changes the size of the block behind a handle
+RH45D6.C	HPSTUBOV.C	descriptive	far-memory heap: RH_SELF_CALL_AFTER_OVR_CODE, an uncalled stub that only calls itself, probably a placeholder kept from 
+RG4A.C	DIAGFMT.C	descriptive	diagnostics: BCC_FORMAT_DIAGNOSTIC prints one message line: kind, file name, line number, message text with arguments, a
+RG2A9.C	HPRESIZE.C	descriptive	far-memory heap: RESIZE_NODE grows or shrinks a node in place or by moving it, with SWAP_WITH_FREE_NODE exchanging a nod
+RH07D4.C	HPUNFXHI.C	descriptive	far-memory heap: UNFIX_HIGH_NODE releases a node that was fixed at the high end of the heap
+R5CLEAN.C	BANKINIT.C	descriptive	far-memory heap: INIT_EMS_EXT_BANKS sets up the EMS and extended-memory banks when their limits allow; the name R5CLEAN 
+RG2A7.C	HPRCLSPC.C	descriptive	far-memory heap: RECLAIM_FOR_SPACE walks the nodes, giving up reclaimable ones until the needed space is free
+RH100A.C	HPGATHLO.C	descriptive	far-memory heap: GATHER_FREE_AT_LOW_END moves nodes to collect a free block of the needed size at the low end of the hea
+RH1399.C	HPSHRNKN.C	descriptive	far-memory heap: SHRINK_NODE shrinks a node and returns the freed tail to the free list
+RH1AE0.C	HPGROW.C	descriptive	far-memory heap: GROW_HEAP_TO grows the heap up to a requested top, used after TASM or TLINK has run
+RH110A.C	HPALLOC.C	descriptive	far-memory heap: BCC_NEAR_1A4A allocates a node: rounds the request, reclaims or extends space, first fit on the free li
+RHFADD.C	HPADDFRE.C	descriptive	far-memory heap: ADD_FREE_NODE links a node into the free list
+R5BED.C	WARNREPT.C	descriptive	diagnostics: REPORT_WARNING prints a warning when that warning is enabled, counts it, and stops the compile when the war
+RH0C86.C	HPUNTAG.C	descriptive	far-memory heap: UNTAG_NODE clears a node's tagged flag and tells its bank
+R25FF.C	HPFREETG.C	descriptive	far-memory heap: FREE_TAG_NODES releases every heap node owned by a given tag
+R5SETBLK.C	SETTOP.C	descriptive	run-time library: SET_PROGRAM_TOP resizes BCC's memory block (DOS 4Ah, or the DOS extender's call) so the program ends a
+RH0C40.C	HPTAG.C	descriptive	far-memory heap: TAG_NODE marks a node as tagged, adds its size to the tagged total and tells its bank
+RH180E.C	HPEXTEND.C	descriptive	far-memory heap: EXTEND_HEAP grows the heap by an amount and returns the new free node
+RG2A2.C	HPNEWPG.C	descriptive	far-memory heap: RH_NEWPAGE allocates a heap node of the active heap's page size
+RH1893.C	HPINITBK.C	descriptive	far-memory heap: INIT_BANK builds the descriptor table and free list of a newly set-up bank
+RG2A8.C	HPRING.C	descriptive	far-memory heap: the 256-slot handle ring; RING_PUSH_NODE records a node as newest and tags or untags older ones, RING_A
+R19EC.C	HPRELCB.C	descriptive	far-memory heap: BCC_RESIDENT_RELEASE_CALLBACK, a release callback that unlinks a pool node and returns 0
+R7MAIN.C	CGOPER.C	descriptive	code generation: GENERATE_OPERATOR generates code for one operator node through the OPERATOR_RULES table, sending conver
+RH0845.C	HPRELND.C	descriptive	far-memory heap: RH_RELEASE_DESCRIPTOR frees a node: drops its bank copy and ring entry, unfixes it, and returns it to t
+RG2A6.C	HPEVICT.C	descriptive	far-memory heap: moves a node's contents out to another bank (RH_TRY_FLAG20) or to bank 5 (RH_TRY_FLAG40) and frees its 
+R7HELP.C	CGCONV.C	descriptive	code generation: GENERATE_CONVERSION generates code for a type conversion node through the CONVERSION_RULES table; heade
+RH3CDD.C	HPEMSREL.C	descriptive	far-memory heap: RELEASE_EMS_BANK frees the EMS bank's handle
+RH38C7.C	HPSWPDIS.C	descriptive	far-memory heap: DISCARD_SWAP_BANK closes and deletes a swap-file bank
+RH19FB.C	HPGATHER.C	descriptive	far-memory heap: GATHER_ALL_FREE_SPACE moves nodes so all free space forms one block at the high end
+C111UNIT.C	TYPEREC.C	descriptive	types: builds array, function, pointer and struct type records, type sizes, alignment, flags and compatibility, and rese
+RH077F.C	HPUNFXLO.C	descriptive	far-memory heap: UNFIX_LOW_NODE releases a node that was fixed at the low end of the heap
+RH1222.C	HPFIXLO.C	descriptive	far-memory heap: ALLOC_FIXED_LOW allocates a node fixed at the low end of the heap, reclaiming and gathering free space 
+RH2CA7.C	HPSTUBIN.C	descriptive	far-memory heap: RH_SELF_CALL_BEFORE_INIT, an uncalled stub that only calls itself, probably a placeholder kept from Bor
+RH4664.C	HPDOSDEL.C	descriptive	far-memory heap: RH_DOS_DELETE deletes a file (DOS 41h), used for the swap file
+R9SPEC.C	LDISNAN.C	descriptive	run-time library: BCC_EXTENDED_HAS_PAYLOAD tests whether an 80-bit real is a NaN (exponent 7FFFh with a mantissa other t
+RH2C48.C	HPHSIZE.C	descriptive	far-memory heap: HANDLE_BLOCK_SIZE returns the size of the block behind a handle
+RH0D8E.C	HPAVAIL.C	descriptive	far-memory heap: RH_AVAILABLE_SPACE returns the free space in the active heap, probably less a reserve kept for overlay 
+RH4674.C	HPDOSCLS.C	descriptive	far-memory heap: RH_DOS_CLOSE closes a file handle (DOS 3Eh), used for the swap file
+RG2A1.C	HPSLICE.C	descriptive	far-memory heap: RHSLICE splits a free node to a requested size; RH_COALESCE_FREE and RH_MARK_FREE_AND_MERGE merge free 
+RG2B.C	HPDISP.C	descriptive	far-memory heap: RH_HEAP_DISPATCH calls a bank's operation, RH_UPDATE_NODE_ADDRESS reports a node's address, BCC_POOL_RE
+RH2D67.C	HPSHUTDN.C	descriptive	far-memory heap: at exit releases the swap, EMS and extended-memory banks and shuts the overlay manager down; the functi
+RH3CE7.C	HPSTUBEM.C	descriptive	far-memory heap: RH_SELF_CALL_AFTER_EMS_BANK, an uncalled stub that only calls itself, probably a placeholder kept from 
+R8UNIT.ASM	INLINASM.ASM	descriptive	inline assembler: BCC's built-in assembler for asm statements; parses prefixes, labels, data directives, mnemonics and o
+R12I16.ASM	LD2LONG.ASM	descriptive	run-time library: converts an 80-bit real to a long, out of range gives 80000000h; the name I16 misleads
+R9UNIT.ASM	LDARITH.ASM	descriptive	run-time library: software add, subtract, multiply and divide of 80-bit reals, used by constant folding
+R9UNPACK.ASM	LDUNPACK.ASM	descriptive	run-time library: unpacks an 80-bit real into the 12-byte work format used by the 80-bit arithmetic
+RG2CREST.ASM	HPDOSIO.ASM	descriptive	far-memory heap: DOS file wrappers (open, create, read, write, seek) used by the swap file and overlay code
+RG39A.ASM	DVPRINTF.ASM	descriptive	run-time library: small console printf (dvprintf), %d %x %c %s with l modifier, one character at a time through DOS
+R3OVR.ASM	OVRLOAD.ASM	descriptive	overlay manager: OVR_ENSURE_IMAGE_LOADED makes sure an overlay's code image is in memory before a call into it
+R12TRUNC.ASM	LD2I64.ASM	descriptive	run-time library: converts an 80-bit real to a 64-bit integer, truncating toward zero
+R11P32.ASM	LD2FLOAT.ASM	descriptive	run-time library: converts an 80-bit real to a float
+R12FROMU.ASM	ULONG2LD.ASM	descriptive	run-time library: converts an unsigned long to an 80-bit real
+RG2BREST.ASM	OVREXMEM.ASM	descriptive	overlay manager: EMS and extended-memory support (detect, allocate, free, move), node dispatch, far callback registratio
+R11NORM.ASM	LDRNDFLT.ASM	descriptive	run-time library: rounds an 80-bit real to float precision in place (nearest even); overflow gives infinity
+RAE41.ASM	ULDIV10.ASM	descriptive	run-time library: RTL_ULDIV10 divides an unsigned long in DX:AX by 10, remainder in SI
+R12EXT.ASM	I642LD.ASM	descriptive	run-time library: converts a 64-bit integer to an 80-bit real
+R11ROUND.ASM	LDRNDDBL.ASM	descriptive	run-time library: rounds an 80-bit real to double precision in place (nearest even)
+R10CMP.ASM	LDCMP.ASM	descriptive	run-time library: compares two 80-bit reals, returning -1, 0 or 1 with the flags set
+R12FROMI.ASM	LONG2LD.ASM	descriptive	run-time library: converts a long to an 80-bit real
+C141UNIT.ASM	LMULOVF.ASM	descriptive	expressions: LMUL_WITH_OVERFLOW, signed 32-bit multiply that reports overflow in OF, used by constant folding
+R11P64.ASM	LD2DBL.ASM	descriptive	run-time library: converts an 80-bit real to a double
+R12I32.ASM	LD2ULONG.ASM	descriptive	run-time library: converts an 80-bit real to an unsigned long; values that do not fit give FFFFFFFFh
+R4F8.C	USAGE.C	descriptive	prints the usage text and exits (PRINT_USAGE_AND_EXIT)
+RH0349.C	HPGETITM.C	descriptive	takes a free handle item from a heap page (HEAP_ALLOC_ITEM)
+RH03B6.C	HPPUTITM.C	descriptive	returns a handle item to its page (HEAP_FREE_ITEM)
+RH1C4F.C	HPFREEHB.C	descriptive	frees a handle's block (FREE_HANDLE_BLOCK)
+R34F0.C	SETOPT.C	descriptive	SET_OPTION: sets one option byte by code
+R5B44.C	FATAL.C	descriptive	REPORT_FATAL
+RG2A.C	HPDESC.C	descriptive	heap descriptor table: grow, release flagged, prepare
+RH1A2F.C	HPSHRINK.C	descriptive	SHRINK_HEAP_TO
+RG2CEND.ASM	OVRMGR.ASM	descriptive	the overlay manager (VROOMM)
+RH1B9A.C	HPALLOCH.C	descriptive	far heap allocation entry HEAP_ALLOC_HANDLE
+RH1B1C.C	POOLINIT.C	descriptive	POOL_INIT: sets up a far pool record
+RACCESS.C	RUNLINK.C	descriptive	holds DELETE_FILE, the C library unlink (DOS 41h)
+SETOPT.C	OWNERTAG.C	descriptive	SET_DEFAULT_OWNER_TAG: the heap default owner tag

@@ -1,0 +1,34 @@
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group CODE_139
+; BEGIN RC139 (listing CODE_139:0000)
+CODE_139	segment byte public 'CODE'
+		assume	cs:CODE_139
+
+		public	BCC_FAR_D3A0
+		public	BCC_FAR_D3A5
+		public	BCC_FAR_D3C8
+		public	BCC_FAR_D3DC
+
+		db	0CDh,03Fh,000h,000h,0C0h,0A4h,004h,000h,0C4h,010h,044h,000h,00Dh,000h	; CODE_139:0000
+		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; CODE_139:000E
+		db	000h,000h,000h,000h	; CODE_139:001C
+BCC_FAR_D3A0	label	far
+		db	0EAh,000h,000h,0A7h,09Dh	; CODE_139:0020
+BCC_FAR_D3A5	label	far
+		db	0EAh,018h,002h,0A7h,09Dh,0EAh,09Ch,002h,0A7h,09Dh,0EAh,0B5h,000h,0A7h	; CODE_139:0025
+		db	09Dh,0EAh,0C4h,000h,0A7h,09Dh,0EAh,0C8h,002h,0A7h,09Dh,0EAh,048h,003h	; CODE_139:0033
+		db	0A7h,09Dh,0EAh,037h,001h,0A7h,09Dh	; CODE_139:0041
+BCC_FAR_D3C8	label	far
+		db	0EAh,0CDh,003h,0A7h,09Dh,0EAh,092h,003h,0A7h,09Dh,0EAh,0E6h,002h,0A7h	; CODE_139:0048
+		db	09Dh,0EAh,0E6h,003h,0A7h,09Dh	; CODE_139:0056
+BCC_FAR_D3DC	label	far
+		db	0EAh,050h,000h,0A7h,09Dh,000h,000h,000h,000h,000h,000h,000h,000h,000h	; CODE_139:005C
+		db	000h,000h,000h,000h,000h,000h	; CODE_139:006A
+
+CODE_139	ends
+; END RC139
+		end

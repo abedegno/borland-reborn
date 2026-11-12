@@ -1,0 +1,2 @@
+# segment CODE_1_RDRV388 base 0x1798 size 0x14E org 0x388
+RUN_PROGRAM	RDRV388	0x0	0x14E

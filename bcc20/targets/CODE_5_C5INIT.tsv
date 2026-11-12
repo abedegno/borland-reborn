@@ -1,0 +1,2 @@
+# segment CODE_5_C5INIT base 0x6C5D size 0x7C org 0xD
+INIT_MEMORY_MANAGER	C5INIT	0x0	0x7C

@@ -1,0 +1,2 @@
+# segment CODE_41_RMSET base 0xBF23 size 0x2E org 0x3
+RTL_MEMSET	RTL_MEMSET	0x0	0x2E

@@ -1,0 +1,494 @@
+; Recovered FBOV far-pointer references
+CO003_TEXT	segment byte public 'CODE'
+CO003_TEXT	ends
+CO00A_TEXT	segment byte public 'CODE'
+CO00A_TEXT	ends
+CO00F_TEXT	segment byte public 'CODE'
+CO00F_TEXT	ends
+CO021_TEXT	segment byte public 'CODE'
+CO021_TEXT	ends
+CO023_TEXT	segment byte public 'CODE'
+CO023_TEXT	ends
+CO02B_TEXT	segment byte public 'CODE'
+CO02B_TEXT	ends
+CO043_TEXT	segment byte public 'CODE'
+CO043_TEXT	ends
+CO06A_TEXT	segment byte public 'CODE'
+CO06A_TEXT	ends
+CO06C_TEXT	segment byte public 'CODE'
+CO06C_TEXT	ends
+		public	X017_01
+		public	X017_00
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group ovr_1c12_68e3
+; BEGIN C23UNIT (listing ovr_1c12_68e3:8E30)
+CO017_TEXT	segment byte public 'CODE'
+		assume	cs:CO017_TEXT
+; Original-image layout stub: not recovered source
+
+
+X017_01	label	far
+		db	055h
+		db	08Bh
+		db	0ECh
+		db	083h
+		db	0ECh
+		db	006h
+		db	056h
+		db	057h
+		db	0A0h
+		db	0A0h
+		db	062h
+		db	0B4h
+		db	000h
+		db	00Bh
+		db	0C0h
+		db	075h
+		db	006h
+		db	08Bh
+		db	046h
+		db	008h
+		db	0E9h
+		db	041h
+		db	001h
+		db	08Bh
+		db	05Eh
+		db	008h
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	08Bh
+		db	07Fh
+		db	00Ah
+		db	026h
+		db	08Bh
+		db	045h
+		db	00Ah
+		db	089h
+		db	046h
+		db	0FCh
+		db	080h
+		db	03Eh
+		db	0A0h
+		db	062h
+		db	000h
+		db	074h
+		db	008h
+		db	0FFh
+		db	076h
+		db	0FCh
+		db	09Ah
+		dw	052h
+		dw	seg CO00F_TEXT
+		db	080h
+		db	07Eh
+		db	006h
+		db	000h
+		db	075h
+		db	013h
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	08Bh
+		db	05Dh
+		db	008h
+		db	08Eh
+		db	006h
+		db	09Ah
+		db	063h
+		db	026h
+		db	083h
+		db	07Fh
+		db	003h
+		db	000h
+		db	075h
+		db	002h
+		db	0EBh
+		db	0BEh
+		db	0FFh
+		db	076h
+		db	0FCh
+		db	0FFh
+		db	036h
+		db	038h
+		db	064h
+		db	09Ah
+		dw	02Fh
+		dw	seg CO06C_TEXT
+		db	0B4h
+		db	000h
+		db	00Bh
+		db	0C0h
+		db	075h
+		db	01Fh
+		db	0B8h
+		db	0B6h
+		db	000h
+		db	050h
+		db	0FFh
+		db	076h
+		db	0FCh
+		db	09Ah
+		dw	039h
+		dw	seg CO021_TEXT
+		db	052h
+		db	050h
+		db	033h
+		db	0C0h
+		db	033h
+		db	0D2h
+		db	050h
+		db	052h
+		db	0FFh
+		db	076h
+		db	008h
+		db	09Ah
+		dw	03Eh
+		dw	seg CO023_TEXT
+		db	0E9h
+		db	0D4h
+		db	000h
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	083h
+		db	07Dh
+		db	00Eh
+		db	000h
+		db	075h
+		db	00Fh
+		db	0B8h
+		db	0DEh
+		db	000h
+		db	050h
+		db	0FFh
+		db	076h
+		db	008h
+		db	09Ah
+		dw	0CFh
+		dw	seg CO023_TEXT
+		db	0E9h
+		db	0BAh
+		db	000h
+		db	09Ah
+		dw	0A2h
+		dw	seg CO023_TEXT
+		db	08Bh
+		db	0F0h
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	0C7h
+		db	004h
+		db	048h
+		db	000h
+		db	026h
+		db	0FFh
+		db	075h
+		db	008h
+		db	0B8h
+		db	00Dh
+		db	000h
+		db	050h
+		db	0B0h
+		db	000h
+		db	050h
+		db	09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	089h
+		db	044h
+		db	008h
+		db	026h
+		db	08Bh
+		db	05Ch
+		db	008h
+		db	08Eh
+		db	006h
+		db	09Ah
+		db	063h
+		db	026h
+		db	0C6h
+		db	047h
+		db	00Dh
+		db	00Bh
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	08Bh
+		db	046h
+		db	0FCh
+		db	026h
+		db	089h
+		db	044h
+		db	00Eh
+		db	08Eh
+		db	006h
+		db	010h
+		db	064h
+		db	08Bh
+		db	05Eh
+		db	0FCh
+		db	026h
+		db	08Bh
+		db	01Fh
+		db	026h
+		db	08Bh
+		db	047h
+		db	004h
+		db	089h
+		db	046h
+		db	0FAh
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	0FFh
+		db	075h
+		db	00Eh
+		db	0FFh
+		db	076h
+		db	0FAh
+		db	09Ah
+		dw	02Ah
+		dw	seg CO06A_TEXT
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	089h
+		db	044h
+		db	00Ah
+		db	08Bh
+		db	05Eh
+		db	0FCh
+		db	08Eh
+		db	006h
+		db	010h
+		db	064h
+		db	026h
+		db	083h
+		db	07Fh
+		db	015h
+		db	000h
+		db	074h
+		db	020h
+		db	0FFh
+		db	076h
+		db	0FAh
+		db	09Ah
+		dw	020h
+		dw	seg CO00F_TEXT
+		db	089h
+		db	046h
+		db	0FEh
+		db	08Bh
+		db	05Eh
+		db	0FEh
+		db	08Eh
+		db	006h
+		db	0A4h
+		db	078h
+		db	026h
+		db	08Bh
+		db	047h
+		db	006h
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	089h
+		db	044h
+		db	00Ch
+		db	0EBh
+		db	00Ah
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	0C7h
+		db	044h
+		db	00Ch
+		db	000h
+		db	000h
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	080h
+		db	04Ch
+		db	006h
+		db	001h
+		db	0FFh
+		db	076h
+		db	008h
+		db	09Ah
+		dw	06Bh
+		dw	seg CO023_TEXT
+		db	057h
+		db	09Ah
+		dw	06Bh
+		dw	seg CO023_TEXT
+		db	08Bh
+		db	0C6h
+		db	05Fh
+		db	05Eh
+		db	08Bh
+		db	0E5h
+		db	05Dh
+		db	0CAh
+		db	004h
+		db	000h
+X017_00	label	far
+		db	055h
+		db	08Bh
+		db	0ECh
+		db	04Ch
+		db	04Ch
+		db	056h
+		db	057h
+		db	08Bh
+		db	076h
+		db	006h
+		db	08Eh
+		db	006h
+		db	086h
+		db	081h
+		db	026h
+		db	0FFh
+		db	074h
+		db	008h
+		db	0B0h
+		db	001h
+		db	050h
+		db	09Ah
+		dw	034h
+		dw	seg CO023_TEXT
+		db	089h
+		db	046h
+		db	0FEh
+		db	080h
+		db	03Eh
+		db	0AEh
+		db	063h
+		db	000h
+		db	075h
+		db	009h
+		db	0A1h
+		db	098h
+		db	063h
+		db	03Bh
+		db	006h
+		db	0C0h
+		db	063h
+		db	075h
+		db	03Eh
+		db	01Eh
+		db	0B8h
+		db	046h
+		db	05Fh
+		db	050h
+		db	0B8h
+		db	006h
+		db	000h
+		db	050h
+		db	09Ah
+		dw	025h
+		dw	seg CO043_TEXT
+		db	08Bh
+		db	0F8h
+		db	08Eh
+		db	006h
+		db	046h
+		db	05Fh
+		db	0A1h
+		db	058h
+		db	061h
+		db	026h
+		db	089h
+		db	005h
+		db	089h
+		db	03Eh
+		db	058h
+		db	061h
+		db	08Bh
+		db	046h
+		db	0FEh
+		db	026h
+		db	089h
+		db	045h
+		db	002h
+		db	056h
+		db	033h
+		db	0C0h
+		db	050h
+		db	09Ah
+		dw	0B6h
+		dw	seg CO023_TEXT
+		db	08Bh
+		db	0F0h
+		db	056h
+		db	09Ah
+		dw	02Fh
+		dw	seg CO02B_TEXT
+		db	08Eh
+		db	006h
+		db	046h
+		db	05Fh
+		db	026h
+		db	089h
+		db	045h
+		db	004h
+		db	056h
+		db	09Ah
+		dw	043h
+		dw	seg CO023_TEXT
+		db	0FFh
+		db	076h
+		db	0FEh
+		db	09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h
+		db	033h
+		db	0C0h
+		db	050h
+		db	050h
+		db	09Ah
+		dw	02Ah
+		dw	seg CO003_TEXT
+		db	05Fh
+		db	05Eh
+		db	08Bh
+		db	0E5h
+		db	05Dh
+		db	0CAh
+		db	002h
+		db	000h
+
+CO017_TEXT	ends
+; END C23UNIT
+		end

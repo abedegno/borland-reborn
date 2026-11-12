@@ -1,0 +1,23 @@
+# CO06F: the public (90h) and relocation (9Ch) records of groupobj/CO06F.OBJ, in record order.
+# Lines "-- KK" stand for the next record of kind KK of the fresh assembly (code, data, names,
+# segments, externals). Written by the project from its earlier object; applied by scripts/prepare.py.
+-- 96
+-- 96
+-- 98
+-- 96
+-- 98
+-- 96
+-- 98
+-- 96
+-- 9A
+-- 8C
+90 000307583036465F3034230100
+90 000307583036465F3030000000
+90 000307583036465F3031600700
+90 000307583036465F3032590400
+90 000307583036465F3033980700
+-- A0
+9C D5065601C9085601D5395602C93B5602
+-- A0
+-- A0
+-- 8A

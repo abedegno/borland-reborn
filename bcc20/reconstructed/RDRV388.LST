@@ -1,0 +1,158 @@
+Turbo Assembler	 Version 2.51	     10/30/26 17:30:03	    Page 1
+G:\RDRV388.ASM
+
+
+
+      1				     ; Direct-segment relocation references
+      2						     extrn   BCC_COPY_WORDS:far
+      3						     extrn   BCC_DIAGNOSTIC:far
+      4						     extrn   BCC_FAR_245C:far
+      5						     extrn   BCC_FAR_5E22:far
+      6						     extrn   BCC_FAR_AB12:far
+      7						     extrn   BCC_FAR_AB51:far
+      8						     extrn   BCC_FAR_AB9B:far
+      9						     extrn   BCC_FAR_ABBB:far
+     10						     extrn   BCC_FAR_AF23:far
+     11						     extrn   BCC_RF_15C5_010D:far
+     12						     extrn   BCC_SEG_15:far
+     13						     extrn   BCC_SEG_180:far
+     14						     extrn   BCC_SEG_24:far
+     15						     extrn   BCC_SEG_26:far
+     16						     extrn   BCC_SEG_28:far
+     17						     extrn   BCC_SEG_42:far
+     18						     extrn   X02E_00:far
+     19						     extrn   X034_01:far
+     20						     extrn   X036_00:far
+     21				     DGROUP  group   _DATA,_BSS
+     22	0000			     _DATA   segment para public 'DATA'
+     23	0000			     _DATA   ends
+     24	0000			     _BSS    segment word public 'DATA'
+     25	0000			     _BSS    ends
+     26					     extrn BCC_FAR_04CF:far
+     27	0000			     CODE_1 segment byte public	'CODE'
+     28					     assume cs:CODE_1
+     29	0000  55 8B EC 83		     db	055h,08Bh,0ECh,083h
+     30	0004  EC 12 56 8B 46 06	40+	     db	0ECh,012h,056h,08Bh,046h,006h,040h,0FFh,076h,008h,050h,09Ah,002h,000h
+     31	      FF 76 08 50 9A 02	00
+     32	0012  0000s				     dw	     seg BCC_FAR_AB12
+     33	0014  C4 5E 06 26 88 07	16+	     db	0C4h,05Eh,006h,026h,088h,007h,016h,08Dh,046h,0EEh,050h,033h
+     34	      8D 46 EE 50 33
+     35	0020  C0 50 B8 0E 00 50	9A+	     db	0C0h,050h,0B8h,00Eh,000h,050h,09Ah,003h,000h
+     36	      03 00
+     37	0029  0000s				     dw	     seg BCC_FAR_AF23
+     38	002B  A1 14 00			     db	0A1h,014h,000h
+     39	002E  89 46 EE 8B 46 08	8B+	     db	089h,046h,0EEh,08Bh,046h,008h,08Bh,056h,006h,089h,046h,0F2h,089h,056h
+     40	      56 06 89 46 F2 89	56
+     41	003C  F0 FF 76 0C FF 76	0A+	     db	0F0h,0FFh,076h,00Ch,0FFh,076h,00Ah,09Ah,001h,000h
+     42	      9A 01 00
+     43	0046  0000s				     dw	     seg BCC_SEG_42
+     44	0048  89 56			     db	089h,056h
+     45	004A  FE 89 46 FC 0B 46	FE+	     db	0FEh,089h,046h,0FCh,00Bh,046h,0FEh,075h,027h,0B0h,000h,0A2h,0F9h,016h
+     46	      75 27 B0 00 A2 F9	16
+     47	0058  A2 FA 16 FF 76 0C	FF+	     db	0A2h,0FAh,016h,0FFh,076h,00Ch,0FFh,076h,00Ah,0B8h,02Ch,000h,050h,09Ah
+     48	      76 0A B8 2C 00 50	9A
+     49	0066  1B 01			     db	01Bh,001h
+     50	0068  0000s				     dw	     seg BCC_DIAGNOSTIC
+     51	006A  83 C4 06 9A 67 2D		     db	083h,0C4h,006h,09Ah,067h,02Dh
+     52	0070  0000s				     dw	     seg BCC_FAR_245C
+     53	0072  B8 01			     db	0B8h,001h
+     54	0074  00 50 0E E8 9D FC	9A+	     db	000h,050h,00Eh,0E8h,09Dh,0FCh,09Ah,0C7h,000h
+     55	      C7 00
+     56	007D  0000s				     dw	     seg BCC_RF_15C5_010D
+     57	007F  B8 1B 00			     db	0B8h,01Bh,000h
+Turbo Assembler	 Version 2.51	     10/30/26 17:30:03	    Page 2
+G:\RDRV388.ASM
+
+
+
+     58	0082  50 FF 36 A0 5C FF	36+	     db	050h,0FFh,036h,0A0h,05Ch,0FFh,036h,09Eh,05Ch,00Eh,0E8h,0F1h,0FBh,0B8h
+     59	      9E 5C 0E E8 F1 FB	B8
+     60	0090  23 00 50 FF 36 98	5C+	     db	023h,000h,050h,0FFh,036h,098h,05Ch,0FFh,036h,096h,05Ch,00Eh,0E8h,0E1h
+     61	      FF 36 96 5C 0E E8	E1
+     62	009E  FB B8 18 00 50 FF	36+	     db	0FBh,0B8h,018h,000h,050h,0FFh,036h,09Ch,05Ch,0FFh,036h,09Ah,05Ch,00Eh
+     63	      9C 5C FF 36 9A 5C	0E
+     64	00AC  E8 D1 FB FF 76 FE	FF+	     db	0E8h,0D1h,0FBh,0FFh,076h,0FEh,0FFh,076h,0FCh,033h,0C0h,050h,016h,08Dh
+     65	      76 FC 33 C0 50 16	8D
+     66	00BA  46 EE 50 9A 01 00		     db	046h,0EEh,050h,09Ah,001h,000h
+     67	00C0  0000s				     dw	     seg BCC_SEG_24
+     68	00C2  8B F0 B8 18 00 50		     db	08Bh,0F0h,0B8h,018h,000h,050h
+     69	00C8  B8			     db	0B8h
+     70	00C9  0000s				     dw	     seg BCC_COPY_WORDS
+     71	00CB  50 B8 4F 01 50 0E	E8+	     db	050h,0B8h,04Fh,001h,050h,00Eh,0E8h,0ACh,0FBh,0B8h,023h
+     72	      AC FB B8 23
+     73	00D6  00 50 B8			     db	000h,050h,0B8h
+     74	00D9  0000s				     dw	     seg BCC_FAR_04CF
+     75	00DB  50 B8 68 00 50 0E	E8+	     db	050h,0B8h,068h,000h,050h,00Eh,0E8h,09Ch,0FBh
+     76	      9C FB
+     77	00E4  B8 1B 00 50 B8		     db	0B8h,01Bh,000h,050h,0B8h
+     78	00E9  0000s				     dw	     seg BCC_FAR_04CF
+     79	00EB  50 B8 D0 00 50 0E	E8	     db	050h,0B8h,0D0h,000h,050h,00Eh,0E8h
+     80	00F2  8C FB 9A D5 00		     db	08Ch,0FBh,09Ah,0D5h,000h
+     81	00F7  0000s				     dw	     seg BCC_RF_15C5_010D
+     82	00F9  8B C6 25 00 FF 3D	00	     db	08Bh,0C6h,025h,000h,0FFh,03Dh,000h
+     83	0100  01 74 0A 8B C6 25	00+	     db	001h,074h,00Ah,08Bh,0C6h,025h,000h,0FFh,03Dh,000h,002h,075h,00Dh,09Ah
+     84	      FF 3D 00 02 75 0D	9A
+     85	010E  67 2D			     db	067h,02Dh
+     86	0110  0000s				     dw	     seg BCC_FAR_245C
+     87	0112  B8 01 00 50 0E E8	FD+	     db	0B8h,001h,000h,050h,00Eh,0E8h,0FDh,0FBh,00Bh,0F6h
+     88	      FB 0B F6
+     89	011C  7D 27 B0 00 A2 F9	16+	     db	07Dh,027h,0B0h,000h,0A2h,0F9h,016h,0A2h,0FAh,016h,0FFh,076h,00Ch,0FFh
+     90	      A2 FA 16 FF 76 0C	FF
+     91	012A  76 0A B8 2C 00 50	9A+	     db	076h,00Ah,0B8h,02Ch,000h,050h,09Ah,01Bh,001h
+     92	      1B 01
+     93	0133  0000s				     dw	     seg BCC_DIAGNOSTIC
+     94	0135  83 C4 06			     db	083h,0C4h,006h
+     95	0138  9A 67 2D			     db	09Ah,067h,02Dh
+     96	013B  0000s				     dw	     seg BCC_FAR_245C
+     97	013D  B8 01 00 50 0E E8	D2+	     db	0B8h,001h,000h,050h,00Eh,0E8h,0D2h,0FBh,08Bh
+     98	      FB 8B
+     99	0146  C6 5E 8B E5 5D CA	08+	     db	0C6h,05Eh,08Bh,0E5h,05Dh,0CAh,008h,000h
+    100	      00
+    101	014E			     CODE_1 ends
+    102
+    103				     end
+Turbo Assembler	 Version 2.51	     10/30/26 17:30:03	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "10/30/26"
+??FILENAME			  Text	 "RDRV388 "
+??TIME				  Text	 "17:30:03"
+??VERSION			  Number 0205
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE_1
+@FILENAME			  Text	 RDRV388
+@WORDSIZE			  Text	 2
+BCC_COPY_WORDS (BCC_COPY_WORDS)	  Far	 ----:---- Extern
+BCC_DIAGNOSTIC (BCC_DIAGNOSTIC)	  Far	 ----:---- Extern
+BCC_FAR_04CF (BCC_FAR_04CF)	  Far	 ----:---- Extern
+BCC_FAR_245C (BCC_FAR_245C)	  Far	 ----:---- Extern
+BCC_FAR_5E22 (BCC_FAR_5E22)	  Far	 ----:---- Extern
+BCC_FAR_AB12 (BCC_FAR_AB12)	  Far	 ----:---- Extern
+BCC_FAR_AB51 (BCC_FAR_AB51)	  Far	 ----:---- Extern
+BCC_FAR_AB9B (BCC_FAR_AB9B)	  Far	 ----:---- Extern
+BCC_FAR_ABBB (BCC_FAR_ABBB)	  Far	 ----:---- Extern
+BCC_FAR_AF23 (BCC_FAR_AF23)	  Far	 ----:---- Extern
+BCC_RF_15C5_010D	       +  Far	 ----:---- Extern
+(BCC_RF_15C5_010D)
+BCC_SEG_15 (BCC_SEG_15)		  Far	 ----:---- Extern
+BCC_SEG_180 (BCC_SEG_180)	  Far	 ----:---- Extern
+BCC_SEG_24 (BCC_SEG_24)		  Far	 ----:---- Extern
+BCC_SEG_26 (BCC_SEG_26)		  Far	 ----:---- Extern
+BCC_SEG_28 (BCC_SEG_28)		  Far	 ----:---- Extern
+BCC_SEG_42 (BCC_SEG_42)		  Far	 ----:---- Extern
+X02E_00	(X02E_00)		  Far	 ----:---- Extern
+X034_01	(X034_01)		  Far	 ----:---- Extern
+X036_00	(X036_00)		  Far	 ----:---- Extern
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE_1				  16  014E Byte	  Public  CODE
+DGROUP				  Group
+  _BSS				  16  0000 Word	  Public  DATA
+  _DATA				  16  0000 Para	  Public  DATA
+

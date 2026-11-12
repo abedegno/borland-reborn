@@ -1,0 +1,2 @@
+# segment CODE_27_RGETENV base 0xB8E6 size 0x93 org 0x6
+RTL_GETENV	RTL_GETENV	0x0	0x93

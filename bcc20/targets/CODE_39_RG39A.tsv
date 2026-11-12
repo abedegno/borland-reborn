@@ -1,0 +1,2 @@
+# segment CODE_39_RG39A base 0xBBE1 size 0x260 org 0x31
+RTL_DVPRINTF	RTL_DVPRINTF	0x0	0x260

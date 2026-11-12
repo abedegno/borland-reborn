@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "modules": {
+    "RSTRLOW": {
+      "source_record": 1,
+      "source_base": 6431,
+      "source_org": 1295,
+      "source_size": 48,
+      "parts": [
+        {
+          "stem": "RSTRLOW",
+          "group": "CB001",
+          "block": "CODE_1",
+          "source_start": 0,
+          "source_end": 33,
+          "native_offset": 1287,
+          "memory_offset": 1295,
+          "native_file_base": 5144
+        },
+        {
+          "stem": "RSTRLO2",
+          "group": "CB002",
+          "block": "CODE_2",
+          "source_start": 33,
+          "source_end": 48,
+          "native_offset": 0,
+          "memory_offset": 0,
+          "native_file_base": 6464
+        }
+      ]
+    }
+  }
+}

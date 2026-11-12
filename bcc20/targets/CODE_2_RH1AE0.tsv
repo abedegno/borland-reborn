@@ -1,0 +1,2 @@
+# segment CODE_2_RH1AE0 base 0x3420 size 0x3C org 0x1AE0
+GROW_HEAP_TO	RH1AE0	0x0	0x3C

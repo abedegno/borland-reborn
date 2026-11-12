@@ -1,0 +1,48 @@
+		public	BCC_SEG_14
+; Direct-segment relocation references
+		extrn	BCC_FAR_A17D:far
+		extrn	BCC_SEG_13:far
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group CODE_14
+; BEGIN RSTRTOD (CODE_14:0008)
+CODE_14	segment byte public 'CODE'
+BCC_SEG_14	label far
+		assume	cs:CODE_14
+; Original-image layout stub: not recovered source
+
+
+		db	055h,08Bh,0ECh,083h,0ECh,00Ch
+		db	056h,057h,01Eh,0C5h,076h,00Ah,0FCh,033h,0FFh,08Bh,0D7h,08Bh,0CFh,08Bh	; CODE_14:000E
+		db	0DFh,089h,07Eh,0F4h,089h,07Eh,0F6h,0ACh,03Ch,030h,072h,067h,03Ch,039h	; CODE_14:001C
+		db	077h,063h,02Ch,030h,098h,00Bh,0DBh,075h,021h,00Bh,0C9h,075h,023h,00Bh	; CODE_14:002A
+		db	0D2h,075h,01Fh,097h,0BAh,00Ah,000h,0F7h,0E2h,003h,0F8h,083h,0D2h,000h	; CODE_14:0038
+		db	083h,0D1h,000h,083h,0D3h,000h,08Bh,046h,0F6h,001h,046h,0F4h,0EBh,0CFh	; CODE_14:0046
+		db	081h,0FBh,0CCh,00Ch,073h,02Ch,050h,0D1h,0E7h,0D1h,0D2h,0D1h,0D1h,0D1h	; CODE_14:0054
+		db	0D3h,053h,051h,052h,057h,0D1h,0E7h,0D1h,0D2h,0D1h,0D1h,0D1h,0D3h,0D1h	; CODE_14:0062
+		db	0E7h,0D1h,0D2h,0D1h,0D1h,0D1h,0D3h,058h,003h,0F8h,058h,013h,0D0h,058h	; CODE_14:0070
+		db	013h,0C8h,058h,013h,0D8h,058h,0EBh,0BBh,08Bh,046h,0F6h,040h,001h,046h	; CODE_14:007E
+		db	0F4h,0EBh,094h,03Ch,02Eh,075h,00Bh,083h,07Eh,0F6h,000h,075h,005h,0FFh	; CODE_14:008C
+		db	04Eh,0F6h,0EBh,085h,089h,07Eh,0F8h,089h,056h,0FAh,089h,04Eh,0FCh,089h	; CODE_14:009A
+		db	05Eh,0FEh,08Bh,07Eh,0F4h,03Ch,045h,074h,004h,03Ch,065h,075h,036h,033h	; CODE_14:00A8
+		db	0DBh,0ACh,08Ah,0C8h,03Ch,02Dh,074h,021h,03Ch,02Bh,074h,01Dh,03Ch,030h	; CODE_14:00B6
+		db	072h,01Ch,03Ch,039h,077h,018h,081h,0FBh,0E8h,003h,073h,012h,02Ch,030h	; CODE_14:00C4
+		db	098h,0D1h,0E3h,08Bh,0D3h,0D1h,0E3h,0D1h,0E3h,003h,0DAh,003h,0D8h,0ACh	; CODE_14:00D2
+		db	0EBh,0E0h,080h,0F9h,02Dh,075h,002h,0F7h,0DBh,003h,0FBh,01Fh,08Dh,046h	; CODE_14:00E0
+		db	0F8h,016h,050h,0C4h,046h,006h,006h,050h,09Ah,006h,000h
+		dw	seg BCC_FAR_A17D
+		db	0B8h; CODE_14:00EE
+		db	000h,0F0h,03Bh,0F8h,07Dh,00Dh,02Bh,0F8h,050h,0C4h,046h,006h,006h,050h	; CODE_14:00FC
+		db	09Ah,00Ch,000h
+		dw	seg BCC_SEG_13
+		db	057h,0C4h,046h,006h,006h,050h,09Ah,00Ch,000h; CODE_14:010A
+		dw	seg BCC_SEG_13
+		db	096h,048h,02Bh,046h,00Ah,0EBh; CODE_14:0118
+
+		db	000h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,008h,000h	; moved from CODE_15:0000 (segment span per FBOV table)
+CODE_14	ends
+; END RSTRTOD
+		end

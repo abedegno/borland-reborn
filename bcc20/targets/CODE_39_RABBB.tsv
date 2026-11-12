@@ -1,0 +1,2 @@
+# segment CODE_39_RABBB base 0xBBBB size 0x26 org 0xB
+_RTL_DPRINTF	_RTL_DPRINTF	0x0	0x26

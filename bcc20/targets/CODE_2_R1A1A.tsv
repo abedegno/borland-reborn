@@ -1,0 +1,2 @@
+# segment CODE_2_R1A1A base 0x335A size 0x15 org 0x1A1A
+SHRINK_HEAP_FULLY	R1A1A	0x0	0x15

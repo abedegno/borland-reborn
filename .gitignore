@@ -1,0 +1,18 @@
+# Borland toolchains: installed locally by scripts/setup-toolchains.py, never committed
+/toolchains/
+*/toolchain
+# generated from your own BCC.EXE and toolchain by */scripts/prepare.py
+*/groupobj/
+*/memory_blocks/*.bin
+*/linktest/*.OBJ
+*/linktest/*.LST
+*/linktest/*.LOG
+# build output
+*/build-source/
+*/build/
+# Python and editor clutter
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+._*

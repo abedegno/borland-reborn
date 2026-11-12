@@ -1,0 +1,93 @@
+Turbo Assembler	 Version 2.51	     10/30/26 17:16:45	    Page 1
+G:\RCTRL23.ASM
+
+
+
+      1				     ; Direct-segment relocation references
+      2						     extrn   BCC_COPY_WORDS:far
+      3						     extrn   BCC_DIAGNOSTIC:far
+      4						     extrn   BCC_FAR_245C:far
+      5						     extrn   BCC_FAR_5E22:far
+      6						     extrn   BCC_FAR_AB12:far
+      7						     extrn   BCC_FAR_AB51:far
+      8						     extrn   BCC_FAR_AB9B:far
+      9						     extrn   BCC_FAR_ABBB:far
+     10						     extrn   BCC_FAR_AF23:far
+     11						     extrn   BCC_RF_15C5_010D:far
+     12						     extrn   BCC_SEG_15:far
+     13						     extrn   BCC_SEG_180:far
+     14						     extrn   BCC_SEG_24:far
+     15						     extrn   BCC_SEG_26:far
+     16						     extrn   BCC_SEG_28:far
+     17						     extrn   BCC_SEG_42:far
+     18						     extrn   X02E_00:far
+     19						     extrn   X034_01:far
+     20						     extrn   X036_00:far
+     21				     DGROUP  group   _DATA,_BSS
+     22	0000			     _DATA   segment para public 'DATA'
+     23	0000			     _DATA   ends
+     24	0000			     _BSS    segment word public 'DATA'
+     25	0000			     _BSS    ends
+     26	0000			     CODE_1 segment byte public	'CODE'
+     27				      assume cs:CODE_1
+     28	0000			     BCC_NEAR_0478   label   near
+     29	0000  55 8B EC 1E B8			     db	055h,08Bh,0ECh,01Eh,0B8h
+     30	0005  0000s				     dw	seg BCC_SEG_180
+     31	0007  8E D8 B8 18 00 50	FF		     db	08Eh,0D8h,0B8h,018h,000h,050h,0FFh
+     32	000E  36 9C 5C FF 36 9A	5C+		     db	036h,09Ch,05Ch,0FFh,036h,09Ah,05Ch,00Eh,0E8h,087h,0FFh,0B8h,01Bh,000h
+     33	      0E E8 87 FF B8 1B	00
+     34	001C  50 FF 36 A0 5C FF	36+		     db	050h,0FFh,036h,0A0h,05Ch,0FFh,036h,09Eh,05Ch,00Eh,0E8h,077h,0FFh,09Ah
+     35	      9E 5C 0E E8 77 FF	9A
+     36	002A  27 01				     db	027h,001h
+     37	002C  0000s				     dw	seg BCC_FAR_5E22
+     38	002E  9A 67 2D				     db	09Ah,067h,02Dh
+     39	0031  0000s				     dw	seg BCC_FAR_245C
+     40	0033  F9 1F 5D CB			     db	0F9h,01Fh,05Dh,0CBh
+     41	0037			     CODE_1 ends
+     42
+     43				     end
+Turbo Assembler	 Version 2.51	     10/30/26 17:16:45	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "10/30/26"
+??FILENAME			  Text	 "RCTRL23 "
+??TIME				  Text	 "17:16:45"
+??VERSION			  Number 0205
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE_1
+@FILENAME			  Text	 RCTRL23
+@WORDSIZE			  Text	 2
+BCC_COPY_WORDS (BCC_COPY_WORDS)	  Far	 ----:---- Extern
+BCC_DIAGNOSTIC (BCC_DIAGNOSTIC)	  Far	 ----:---- Extern
+BCC_FAR_245C (BCC_FAR_245C)	  Far	 ----:---- Extern
+BCC_FAR_5E22 (BCC_FAR_5E22)	  Far	 ----:---- Extern
+BCC_FAR_AB12 (BCC_FAR_AB12)	  Far	 ----:---- Extern
+BCC_FAR_AB51 (BCC_FAR_AB51)	  Far	 ----:---- Extern
+BCC_FAR_AB9B (BCC_FAR_AB9B)	  Far	 ----:---- Extern
+BCC_FAR_ABBB (BCC_FAR_ABBB)	  Far	 ----:---- Extern
+BCC_FAR_AF23 (BCC_FAR_AF23)	  Far	 ----:---- Extern
+BCC_NEAR_0478			  Near	 CODE_1:0000
+BCC_RF_15C5_010D	       +  Far	 ----:---- Extern
+(BCC_RF_15C5_010D)
+BCC_SEG_15 (BCC_SEG_15)		  Far	 ----:---- Extern
+BCC_SEG_180 (BCC_SEG_180)	  Far	 ----:---- Extern
+BCC_SEG_24 (BCC_SEG_24)		  Far	 ----:---- Extern
+BCC_SEG_26 (BCC_SEG_26)		  Far	 ----:---- Extern
+BCC_SEG_28 (BCC_SEG_28)		  Far	 ----:---- Extern
+BCC_SEG_42 (BCC_SEG_42)		  Far	 ----:---- Extern
+X02E_00	(X02E_00)		  Far	 ----:---- Extern
+X034_01	(X034_01)		  Far	 ----:---- Extern
+X036_00	(X036_00)		  Far	 ----:---- Extern
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE_1				  16  0037 Byte	  Public  CODE
+DGROUP				  Group
+  _BSS				  16  0000 Word	  Public  DATA
+  _DATA				  16  0000 Para	  Public  DATA
+

@@ -1,0 +1,28 @@
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group CODE_54
+; BEGIN LG028 (gap CODE_54:0000)
+CODE_54	segment byte public 'CODE'
+		assume	cs:CODE_54
+; Original-image layout stub: not recovered source
+
+
+		db	0CDh,03Fh,000h,000h,050h,04Eh,000h,000h,033h,005h,020h,000h,019h,000h	; CODE_54:0000
+		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; CODE_54:000E
+		db	000h,000h,000h,000h,0EAh,071h,002h,08Bh,051h,0EAh,0B9h,003h,08Bh,051h	; CODE_54:001C
+		db	0EAh,000h,000h,08Bh,051h,0EAh,003h,002h,08Bh,051h,0EAh,02Ah,000h,08Bh	; CODE_54:002A
+		db	051h,0EAh,0D7h,000h,08Bh,051h,0EAh,01Bh,003h,08Bh,051h,0EAh,0EBh,002h	; CODE_54:0038
+		db	08Bh,051h,0EAh,014h,005h,08Bh,051h,0EAh,029h,005h,08Bh,051h,0EAh,077h	; CODE_54:0046
+		db	001h,08Bh,051h,0EAh,075h,000h,08Bh,051h,0EAh,04Fh,001h,08Bh,051h,0EAh	; CODE_54:0054
+		db	0C8h,002h,08Bh,051h,0EAh,0A5h,001h,08Bh,051h,0EAh,095h,002h,08Bh,051h	; CODE_54:0062
+		db	0EAh,0B4h,002h,08Bh,051h,0EAh,0C7h,003h,08Bh,051h,0EAh,09Dh,003h,08Bh	; CODE_54:0070
+		db	051h,0EAh,0D4h,001h,08Bh,051h,0EAh,044h,002h,08Bh,051h,0EAh,054h,000h	; CODE_54:007E
+		db	08Bh,051h,0EAh,002h,003h,08Bh,051h,0EAh,0DCh,002h,08Bh,051h,0EAh,05Fh	; CODE_54:008C
+		db	004h,08Bh,051h,000h,000h,000h	; CODE_54:009A
+
+CODE_54	ends
+; END LG028
+		end

@@ -1,0 +1,19 @@
+# CO072: the public (90h) and relocation (9Ch) records of groupobj/CO072.OBJ, in record order.
+# Lines "-- KK" stand for the next record of kind KK of the fresh assembly (code, data, names,
+# segments, externals). Written by the project from its earlier object; applied by scripts/prepare.py.
+-- 96
+-- 96
+-- 98
+-- 96
+-- 98
+-- 96
+-- 98
+-- 96
+-- 98
+-- 96
+-- 9A
+-- 8C
+90 000407583037325F3030000000
+-- A0
+9C C8145401D4755601C8775601D49B5601C89D5601D4BF5601C8C15601D5015606C9035606D5105604C9125604D53C5606C93E5606D54B5605C94D5605D5D85602C9DA5602D60D5603CA0F5603
+-- 8A

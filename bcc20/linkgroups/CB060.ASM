@@ -1,0 +1,27 @@
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group CODE_96
+; BEGIN LR96 (root CODE_96:0000)
+CODE_96	segment byte public 'CODE'
+		assume	cs:CODE_96
+
+		public	BCC_RF_1C67_0061
+
+		db	0CDh,03Fh,000h,000h,010h,066h,002h,000h,0D4h,02Eh,018h,001h,012h,000h	; CODE_96:0000
+		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; CODE_96:000E
+		db	000h,000h,000h,000h,0EAh,013h,000h,038h,077h,0EAh,01Dh,001h,038h,077h	; CODE_96:001C
+		db	0EAh,000h,000h,038h,077h,0EAh,00Ah,001h,038h,077h,0EAh,030h,001h,038h	; CODE_96:002A
+		db	077h,0EAh,0A4h,000h,038h,077h,0EAh,039h,000h,038h,077h,0EAh,064h,000h	; CODE_96:0038
+		db	038h,077h,0EAh,0E4h,000h,038h,077h,0EAh,078h,001h,038h,077h,0EAh,017h	; CODE_96:0046
+		db	002h,038h,077h,0EAh,043h,001h,038h,077h,0EAh,07Ch,000h,038h,077h	; CODE_96:0054
+BCC_RF_1C67_0061	label	far
+		db	0EAh,0A4h,02Eh,038h,077h,0EAh,026h,000h,038h,077h,0EAh,04Ch,000h,038h	; CODE_96:0061
+		db	077h,0EAh,0CCh,000h,038h,077h,0EAh,076h,002h,038h,077h,000h,000h,000h	; CODE_96:006F
+		db	000h,000h,000h	; CODE_96:007D
+
+CODE_96	ends
+; END LR96
+		end

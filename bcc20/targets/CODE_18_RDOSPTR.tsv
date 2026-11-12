@@ -1,0 +1,2 @@
+# segment CODE_18_RDOSPTR base 0xB45B size 0x1A org 0xB
+RTL_DOS_CALL_PTR	RTL_DOS_CALL_PTR	0x0	0x1A

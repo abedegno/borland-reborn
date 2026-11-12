@@ -1,0 +1,299 @@
+file	directory	subsystem
+ACCESS.C	src/cpp	C++ classes, members, overloading, names
+ASMCODE.C	src/inlasm	inline assembler and instruction encoders
+ASMDATA.C	src/output	object, debug and assembly-text output
+ASMENC.C	src/inlasm	inline assembler and instruction encoders
+ASMENC2.C	src/inlasm	inline assembler and instruction encoders
+ASMEXTRN.C	src/output	object, debug and assembly-text output
+ASMOPND.C	src/inlasm	inline assembler and instruction encoders
+ASMSTMT.C	src/parser	statement and declaration parsers
+ASMSYMS.C	src/output	object, debug and assembly-text output
+ASMTEXT.C	src/output	object, debug and assembly-text output
+BACKINIT.C	src/driver	start-up, main, compile driver, options and initialisation
+BANKINIT.C	src/heap	far-memory heap and pools
+BASECONV.C	src/cpp	C++ classes, members, overloading, names
+BITFIELD.C	src/codegen	code generator and optimiser passes
+BLKLAYOT.C	src/codegen	code generator and optimiser passes
+BYTEPOOL.C	src/codegen	code generator and optimiser passes
+C0.ASM	src/driver	start-up, main, compile driver, options and initialisation
+CALLCHK.C	src/expr	expression trees, checks and folding
+CDECL.C	src/parser	statement and declaration parsers
+CDECLR.C	src/parser	statement and declaration parsers
+CGCALL.C	src/codegen	code generator and optimiser passes
+CGCONV.C	src/codegen	code generator and optimiser passes
+CGDRIVER.C	src/codegen	code generator and optimiser passes
+CGEXPR.C	src/codegen	code generator and optimiser passes
+CGOPER.C	src/codegen	code generator and optimiser passes
+CLASSDEF.C	src/cpp	C++ classes, members, overloading, names
+CLSMEMB.C	src/cpp	C++ classes, members, overloading, names
+CODENODE.C	src/codegen	code generator and optimiser passes
+CODEOP.C	src/codegen	code generator and optimiser passes
+CODEPASS.C	src/codegen	code generator and optimiser passes
+COMMAEXP.C	src/expr	expression trees, checks and folding
+COMMENT.C	src/lexer	lexer and input
+CONFIG.C	src/driver	start-up, main, compile driver, options and initialisation
+CONSTFLD.C	src/expr	expression trees, checks and folding
+CONSTVAL.C	src/expr	expression trees, checks and folding
+CONVERT.C	src/expr	expression trees, checks and folding
+CPPCALL.C	src/cpp	C++ classes, members, overloading, names
+CPPCAST.C	src/cpp	C++ classes, members, overloading, names
+CPPCTOR.C	src/cpp	C++ classes, members, overloading, names
+CPPEXPCK.C	src/cpp	C++ classes, members, overloading, names
+CPPEXPR.C	src/cpp	C++ classes, members, overloading, names
+CPPFINAL.C	src/cpp	C++ classes, members, overloading, names
+CPPIFEXP.C	src/preproc	preprocessor and precompiled headers
+CPPINIT.C	src/cpp	C++ classes, members, overloading, names
+CPPSCOPE.C	src/cpp	C++ classes, members, overloading, names
+CPRAGFN.C	src/preproc	preprocessor and precompiled headers
+CROSSJMP.C	src/codegen	code generator and optimiser passes
+CSYMTAB.C	src/types	types and symbols
+CTORBODY.C	src/cpp	C++ classes, members, overloading, names
+DEBUGREC.C	src/output	object, debug and assembly-text output
+DECLSPEC.C	src/parser	statement and declaration parsers
+DIAG.C	src/diag	diagnostics and the message table
+DIAGFMT.C	src/diag	diagnostics and the message table
+DIRTAIL.C	src/preproc	preprocessor and precompiled headers
+DPRINTF.C	src/rtl	run-time library
+DRVLINK.C	src/driver	start-up, main, compile driver, options and initialisation
+DVPRINTF.C	src/rtl	run-time library
+EMITBIN.C	src/codegen	code generator and optimiser passes
+EMITBLK.C	src/codegen	code generator and optimiser passes
+EMITFPU.C	src/codegen	code generator and optimiser passes
+EMITFUNC.C	src/codegen	code generator and optimiser passes
+EMITHELP.C	src/codegen	code generator and optimiser passes
+EMITHIST.C	src/codegen	code generator and optimiser passes
+EMITINSN.C	src/codegen	code generator and optimiser passes
+EMSBANK.C	src/heap	far-memory heap and pools
+ERRREPT.C	src/diag	diagnostics and the message table
+EXECMEM.C	src/rtl	run-time library
+EXPRCHK.C	src/expr	expression trees, checks and folding
+EXPRDISP.C	src/expr	expression trees, checks and folding
+EXPRMAKE.C	src/expr	expression trees, checks and folding
+EXPRNOD2.C	src/expr	expression trees, checks and folding
+EXPRPACK.C	src/expr	expression trees, checks and folding
+EXPRPARS.C	src/expr	expression trees, checks and folding
+EXPRPOOL.C	src/expr	expression trees, checks and folding
+EXTBANK.C	src/heap	far-memory heap and pools
+EXTDECL.C	src/parser	statement and declaration parsers
+FATAL.C	src/diag	diagnostics and the message table
+FILETIME.C	src/rtl	run-time library
+FLDPLACE.C	src/types	types and symbols
+FLOWBLK.C	src/codegen	code generator and optimiser passes
+FRAME.C	src/codegen	code generator and optimiser passes
+FUNCDECL.C	src/cpp	C++ classes, members, overloading, names
+FUNCDEF.C	src/parser	statement and declaration parsers
+GETSTAT.C	src/heap	far-memory heap and pools
+HEAPMAIN.C	src/heap	far-memory heap and pools
+HPADDFRE.C	src/heap	far-memory heap and pools
+HPALLOC.C	src/heap	far-memory heap and pools
+HPALLOCH.C	src/heap	far-memory heap and pools
+HPAVAIL.C	src/heap	far-memory heap and pools
+HPCOPYD.C	src/heap	far-memory heap and pools
+HPDEFTAG.C	src/heap	far-memory heap and pools
+HPDESC.C	src/heap	far-memory heap and pools
+HPDISP.C	src/heap	far-memory heap and pools
+HPDOSCLS.C	src/heap	far-memory heap and pools
+HPDOSDEL.C	src/heap	far-memory heap and pools
+HPDOSIO.ASM	src/heap	far-memory heap and pools
+HPEMSREL.C	src/heap	far-memory heap and pools
+HPEVICT.C	src/heap	far-memory heap and pools
+HPEXTEND.C	src/heap	far-memory heap and pools
+HPEXTREL.C	src/heap	far-memory heap and pools
+HPFIXHI.C	src/heap	far-memory heap and pools
+HPFIXLO.C	src/heap	far-memory heap and pools
+HPFREEHB.C	src/heap	far-memory heap and pools
+HPFREETG.C	src/heap	far-memory heap and pools
+HPGATHER.C	src/heap	far-memory heap and pools
+HPGATHHI.C	src/heap	far-memory heap and pools
+HPGATHLO.C	src/heap	far-memory heap and pools
+HPGETITM.C	src/heap	far-memory heap and pools
+HPGROW.C	src/heap	far-memory heap and pools
+HPHSIZE.C	src/heap	far-memory heap and pools
+HPINBNK5.C	src/heap	far-memory heap and pools
+HPINITBK.C	src/heap	far-memory heap and pools
+HPNEWB5.C	src/heap	far-memory heap and pools
+HPNEWPG.C	src/heap	far-memory heap and pools
+HPOWNTAG.C	src/heap	far-memory heap and pools
+HPPUTITM.C	src/heap	far-memory heap and pools
+HPRCLNOD.C	src/heap	far-memory heap and pools
+HPRCLSPC.C	src/heap	far-memory heap and pools
+HPRELCB.C	src/heap	far-memory heap and pools
+HPRELFIX.C	src/heap	far-memory heap and pools
+HPRELND.C	src/heap	far-memory heap and pools
+HPRESIZE.C	src/heap	far-memory heap and pools
+HPRESIZH.C	src/heap	far-memory heap and pools
+HPRING.C	src/heap	far-memory heap and pools
+HPSHRINK.C	src/heap	far-memory heap and pools
+HPSHRNKH.C	src/heap	far-memory heap and pools
+HPSHRNKN.C	src/heap	far-memory heap and pools
+HPSHUTDN.C	src/heap	far-memory heap and pools
+HPSLICE.C	src/heap	far-memory heap and pools
+HPSPACE.C	src/heap	far-memory heap and pools
+HPSTUBEM.C	src/heap	far-memory heap and pools
+HPSTUBIN.C	src/heap	far-memory heap and pools
+HPSTUBIO.C	src/heap	far-memory heap and pools
+HPSTUBOV.C	src/heap	far-memory heap and pools
+HPSTUBSW.C	src/heap	far-memory heap and pools
+HPSWPDIS.C	src/heap	far-memory heap and pools
+HPTAG.C	src/heap	far-memory heap and pools
+HPUNFXHI.C	src/heap	far-memory heap and pools
+HPUNFXLO.C	src/heap	far-memory heap and pools
+HPUNTAG.C	src/heap	far-memory heap and pools
+HUGEDATA.C	src/output	object, debug and assembly-text output
+I642LD.ASM	src/float	80-bit real arithmetic
+IMPLMEMB.C	src/cpp	C++ classes, members, overloading, names
+INITDATA.C	src/codegen	code generator and optimiser passes
+INITLIST.C	src/parser	statement and declaration parsers
+INITMARK.C	src/heap	far-memory heap and pools
+INITPOOL.C	src/driver	start-up, main, compile driver, options and initialisation
+INITTYPE.C	src/driver	start-up, main, compile driver, options and initialisation
+INLINASM.ASM	src/inlasm	inline assembler and instruction encoders
+INLINEBD.C	src/cpp	C++ classes, members, overloading, names
+INLINEXP.C	src/expr	expression trees, checks and folding
+INPUT.C	src/lexer	lexer and input
+INTRINS.C	src/codegen	code generator and optimiser passes
+JUMPOPT.C	src/codegen	code generator and optimiser passes
+LD2DBL.ASM	src/float	80-bit real arithmetic
+LD2FLOAT.ASM	src/float	80-bit real arithmetic
+LD2I64.ASM	src/float	80-bit real arithmetic
+LD2LONG.ASM	src/float	80-bit real arithmetic
+LD2ULONG.ASM	src/float	80-bit real arithmetic
+LDARITH.ASM	src/float	80-bit real arithmetic
+LDCMP.ASM	src/float	80-bit real arithmetic
+LDISNAN.C	src/float	80-bit real arithmetic
+LDRNDDBL.ASM	src/float	80-bit real arithmetic
+LDRNDFLT.ASM	src/float	80-bit real arithmetic
+LDUNPACK.ASM	src/float	80-bit real arithmetic
+LEXER.C	src/lexer	lexer and input
+LMULOVF.ASM	src/float	80-bit real arithmetic
+LONG2LD.ASM	src/float	80-bit real arithmetic
+LOOKAHD.C	src/parser	statement and declaration parsers
+LOWEREXP.C	src/expr	expression trees, checks and folding
+MACROS.C	src/preproc	preprocessor and precompiled headers
+MANGLE.C	src/cpp	C++ classes, members, overloading, names
+MEMBPTR.C	src/cpp	C++ classes, members, overloading, names
+MEMINIT.C	src/heap	far-memory heap and pools
+MESSAGES.C	src/diag	diagnostics and the message table
+MSGGET.C	src/diag	diagnostics and the message table
+NAMEPOOL.C	src/types	types and symbols
+OBJPUBS.C	src/output	object, debug and assembly-text output
+OBJSEGS.C	src/output	object, debug and assembly-text output
+OBJSYMS.C	src/output	object, debug and assembly-text output
+OMFWRITE.C	src/output	object, debug and assembly-text output
+OOMHAND.C	src/heap	far-memory heap and pools
+OPPREC.C	src/parser	statement and declaration parsers
+OPTIONS.C	src/driver	start-up, main, compile driver, options and initialisation
+OUTINIT.C	src/codegen	code generator and optimiser passes
+OVERLOAD.C	src/cpp	C++ classes, members, overloading, names
+OVREXMEM.ASM	src/overlay	overlay manager
+OVRLOAD.ASM	src/overlay	overlay manager
+OVRMGR.ASM	src/overlay	overlay manager
+PCH.C	src/preproc	preprocessor and precompiled headers
+PEEPHOLE.C	src/codegen	code generator and optimiser passes
+POOLINIT.C	src/heap	far-memory heap and pools
+POOLMARK.C	src/heap	far-memory heap and pools
+POOLS.C	src/heap	far-memory heap and pools
+PREPROC.C	src/preproc	preprocessor and precompiled headers
+PTRMOD.C	src/types	types and symbols
+R5ALLOC.C	src/rtl	run-time library
+RUNLINK.C	src/rtl	run-time library
+RADDSL.C	src/rtl	run-time library
+RAHELP.ASM	src/rtl	run-time library
+RARGV0F0.C	src/rtl	run-time library
+RATOL.C	src/rtl	run-time library
+RBSRCH.C	src/rtl	run-time library
+RCHMOD.C	src/rtl	run-time library
+RCLOSE.C	src/rtl	run-time library
+RCOPY.ASM	src/rtl	run-time library
+RCREAT.C	src/rtl	run-time library
+RCTRL23.C	src/rtl	run-time library
+RDATE.C	src/rtl	run-time library
+RDIV.ASM	src/rtl	run-time library
+RDOSAH.C	src/rtl	run-time library
+RDOSPTR.C	src/rtl	run-time library
+RDRV388.C	src/driver	start-up, main, compile driver, options and initialisation
+REGALLOC.C	src/codegen	code generator and optimiser passes
+REGMOVOP.C	src/codegen	code generator and optimiser passes
+REGVARS.C	src/codegen	code generator and optimiser passes
+REXEC.C	src/rtl	run-time library
+REXIT09F.C	src/rtl	run-time library
+RFFIND.C	src/rtl	run-time library
+RFILEIO.C	src/rtl	run-time library
+RFNSPLIT.C	src/rtl	run-time library
+RGETENV.C	src/rtl	run-time library
+RHAPI.C	src/heap	far-memory heap and pools
+RHCYCLE.C	src/heap	far-memory heap and pools
+RHINIT.C	src/heap	far-memory heap and pools
+RHLINK.C	src/heap	far-memory heap and pools
+RHSETCUR.C	src/heap	far-memory heap and pools
+RHSWAP.C	src/heap	far-memory heap and pools
+RHUNLINK.C	src/heap	far-memory heap and pools
+RINIT.C	src/rtl	run-time library
+RIRQ1B.C	src/rtl	run-time library
+RLMUL.ASM	src/rtl	run-time library
+RLSEEK.C	src/rtl	run-time library
+RLSHL.ASM	src/rtl	run-time library
+RLSHR.ASM	src/rtl	run-time library
+RLTOA.ASM	src/rtl	run-time library
+RMAIN13C.C	src/driver	start-up, main, compile driver, options and initialisation
+RMMOVE.C	src/rtl	run-time library
+RMSET.C	src/rtl	run-time library
+RMSET0.ASM	src/rtl	run-time library
+RNEWNODE.C	src/heap	far-memory heap and pools
+RNOOPS.C	src/heap	far-memory heap and pools
+ROPEN.C	src/rtl	run-time library
+RPOW10.ASM	src/float	80-bit real arithmetic
+RPUTS.C	src/rtl	run-time library
+RREAD.C	src/rtl	run-time library
+RRETNDES.C	src/heap	far-memory heap and pools
+RSCAT.C	src/rtl	run-time library
+RSCMP.C	src/rtl	run-time library
+RSCPY.C	src/rtl	run-time library
+RSHAR.ASM	src/rtl	run-time library
+RSLEN.C	src/rtl	run-time library
+RSTACK.ASM	src/rtl	run-time library
+RSTRCHR.C	src/rtl	run-time library
+RSTRICMP.C	src/rtl	run-time library
+RSTRLOW.C	src/rtl	run-time library
+RSTRTOD.ASM	src/float	80-bit real arithmetic
+RT2F09.C	src/heap	far-memory heap and pools
+RTOUPPER.C	src/rtl	run-time library
+RVECGET.C	src/rtl	run-time library
+RVECSET.C	src/rtl	run-time library
+RVECT.C	src/rtl	run-time library
+RWRITE.C	src/rtl	run-time library
+SAVEREGS.C	src/codegen	code generator and optimiser passes
+SEARCHP.C	src/rtl	run-time library
+SEGNAMES.C	src/driver	start-up, main, compile driver, options and initialisation
+OWNERTAG.C	src/heap	far-memory heap and pools
+SETTOP.C	src/rtl	run-time library
+SIMPLIFY.C	src/expr	expression trees, checks and folding
+SKIPLINE.C	src/preproc	preprocessor and precompiled headers
+SPECMEMB.C	src/cpp	C++ classes, members, overloading, names
+SRCSEGS.C	src/output	object, debug and assembly-text output
+STMTBLK.C	src/codegen	code generator and optimiser passes
+STMTC.C	src/parser	statement and declaration parsers
+STMTCPP.C	src/parser	statement and declaration parsers
+STORAGE.C	src/codegen	code generator and optimiser passes
+STRLIT.C	src/lexer	lexer and input
+SWITCH.C	src/codegen	code generator and optimiser passes
+SYMSCAN.C	src/parser	statement and declaration parsers
+SYMSCANC.C	src/parser	statement and declaration parsers
+TASSERT.C	src/parser	statement and declaration parsers
+TCALL.C	src/parser	statement and declaration parsers
+TCHECK.C	src/parser	statement and declaration parsers
+TLOOK.C	src/types	types and symbols
+TOKADV.C	src/lexer	lexer and input
+TOKSTRM.C	src/lexer	lexer and input
+TOLOWER.C	src/rtl	run-time library
+TRUNCVAL.C	src/expr	expression trees, checks and folding
+TYPEREC.C	src/types	types and symbols
+TYPESIZE.C	src/types	types and symbols
+TYPESPEL.C	src/diag	diagnostics and the message table
+TYPSTART.C	src/parser	statement and declaration parsers
+ULDIV10.ASM	src/rtl	run-time library
+ULONG2LD.ASM	src/float	80-bit real arithmetic
+UNARYOP.C	src/expr	expression trees, checks and folding
+USAGE.C	src/driver	start-up, main, compile driver, options and initialisation
+VARUSES.C	src/codegen	code generator and optimiser passes
+WARNREPT.C	src/diag	diagnostics and the message table

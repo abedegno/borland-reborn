@@ -1,0 +1,140 @@
+Turbo Assembler	 Version 2.51	     10/30/26 01:19:13	    Page 1
+G:\FULLRLOW.ASM
+
+
+
+      1				     ; Direct-segment relocation references
+      2						     extrn   BCC_COPY_WORDS:far
+      3						     extrn   BCC_DIAGNOSTIC:far
+      4						     extrn   BCC_FAR_245C:far
+      5						     extrn   BCC_FAR_5E22:far
+      6						     extrn   BCC_FAR_AB12:far
+      7						     extrn   BCC_FAR_AB51:far
+      8						     extrn   BCC_FAR_AB9B:far
+      9						     extrn   BCC_FAR_ABBB:far
+     10						     extrn   BCC_FAR_AF23:far
+     11						     extrn   BCC_RF_15C5_010D:far
+     12						     extrn   BCC_SEG_15:far
+     13						     extrn   BCC_SEG_180:far
+     14						     extrn   BCC_SEG_24:far
+     15						     extrn   BCC_SEG_26:far
+     16						     extrn   BCC_SEG_28:far
+     17						     extrn   BCC_SEG_42:far
+     18						     extrn   X02E_00:far
+     19						     extrn   X034_01:far
+     20						     extrn   X036_00:far
+     21				     DGROUP  group   _DATA,_BSS
+     22	0000			     _DATA   segment para public 'DATA'
+     23	0000			     _DATA   ends
+     24	0000			     _BSS    segment word public 'DATA'
+     25	0000			     _BSS    ends
+     26
+     27	0000			     CODE_1 segment byte public	'CODE'
+     28					     assume cs:CODE_1
+     29
+     30	0000  55			     db	055h
+     31	0001  8B			     db	08Bh
+     32	0002  EC			     db	0ECh
+     33	0003  8B			     db	08Bh
+     34	0004  46			     db	046h
+     35	0005  06			     db	006h
+     36	0006  0B			     db	00Bh
+     37	0007  46			     db	046h
+     38	0008  08			     db	008h
+     39	0009  75			     db	075h
+     40	000A  18			     db	018h
+     41	000B  EB			     db	0EBh
+     42	000C  1F			     db	01Fh
+     43	000D  C4			     db	0C4h
+     44	000E  5E			     db	05Eh
+     45	000F  06			     db	006h
+     46	0010  26			     db	026h
+     47	0011  8A			     db	08Ah
+     48	0012  07			     db	007h
+     49	0013  98			     db	098h
+     50	0014  50			     db	050h
+     51	0015  9A			     db	09Ah
+     52	0016  31			     db	031h
+     53	0017  00			     db	000h
+     54	0018  0000s				     dw	     seg BCC_FAR_AB51
+     55	001A  C4			     db	0C4h
+     56	001B  5E			     db	05Eh
+     57	001C  06			     db	006h
+Turbo Assembler	 Version 2.51	     10/30/26 01:19:13	    Page 2
+G:\FULLRLOW.ASM
+
+
+
+     58	001D  26			     db	026h
+     59	001E  88			     db	088h
+     60	001F  07			     db	007h
+     61	0020  FF			     db	0FFh
+     62
+     63
+     64
+     65
+     66
+     67
+     68
+     69	0021  46			     db	046h
+     70	0022  06			     db	006h
+     71	0023  C4			     db	0C4h
+     72	0024  5E			     db	05Eh
+     73	0025  06			     db	006h
+     74	0026  26			     db	026h
+     75	0027  80			     db	080h
+     76	0028  3F			     db	03Fh
+     77	0029  00			     db	000h
+     78	002A  75			     db	075h
+     79	002B  E1			     db	0E1h
+     80	002C  5D			     db	05Dh
+     81	002D  CA			     db	0CAh
+     82	002E  04			     db	004h
+     83	002F  00			     db	000h
+     84
+     85	0030			     CODE_1 ends
+     86				     end
+Turbo Assembler	 Version 2.51	     10/30/26 01:19:13	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "10/30/26"
+??FILENAME			  Text	 "FULLRLOW"
+??TIME				  Text	 "01:19:13"
+??VERSION			  Number 0205
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE_1
+@FILENAME			  Text	 FULLRLOW
+@WORDSIZE			  Text	 2
+BCC_COPY_WORDS (BCC_COPY_WORDS)	  Far	 ----:---- Extern
+BCC_DIAGNOSTIC (BCC_DIAGNOSTIC)	  Far	 ----:---- Extern
+BCC_FAR_245C (BCC_FAR_245C)	  Far	 ----:---- Extern
+BCC_FAR_5E22 (BCC_FAR_5E22)	  Far	 ----:---- Extern
+BCC_FAR_AB12 (BCC_FAR_AB12)	  Far	 ----:---- Extern
+BCC_FAR_AB51 (BCC_FAR_AB51)	  Far	 ----:---- Extern
+BCC_FAR_AB9B (BCC_FAR_AB9B)	  Far	 ----:---- Extern
+BCC_FAR_ABBB (BCC_FAR_ABBB)	  Far	 ----:---- Extern
+BCC_FAR_AF23 (BCC_FAR_AF23)	  Far	 ----:---- Extern
+BCC_RF_15C5_010D	       +  Far	 ----:---- Extern
+(BCC_RF_15C5_010D)
+BCC_SEG_15 (BCC_SEG_15)		  Far	 ----:---- Extern
+BCC_SEG_180 (BCC_SEG_180)	  Far	 ----:---- Extern
+BCC_SEG_24 (BCC_SEG_24)		  Far	 ----:---- Extern
+BCC_SEG_26 (BCC_SEG_26)		  Far	 ----:---- Extern
+BCC_SEG_28 (BCC_SEG_28)		  Far	 ----:---- Extern
+BCC_SEG_42 (BCC_SEG_42)		  Far	 ----:---- Extern
+X02E_00	(X02E_00)		  Far	 ----:---- Extern
+X034_01	(X034_01)		  Far	 ----:---- Extern
+X036_00	(X036_00)		  Far	 ----:---- Extern
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE_1				  16  0030 Byte	  Public  CODE
+DGROUP				  Group
+  _BSS				  16  0000 Word	  Public  DATA
+  _DATA				  16  0000 Para	  Public  DATA
+

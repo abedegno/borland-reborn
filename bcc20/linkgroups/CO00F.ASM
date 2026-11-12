@@ -1,0 +1,1342 @@
+; Recovered FBOV far-pointer references
+		extrn	BCC_COPY_WORDS:far
+		extrn	BCC_FAR_AF23:far
+CO003_TEXT	segment byte public 'CODE'
+CO003_TEXT	ends
+CO00A_TEXT	segment byte public 'CODE'
+CO00A_TEXT	ends
+CO00E_TEXT	segment byte public 'CODE'
+CO00E_TEXT	ends
+CO010_TEXT	segment byte public 'CODE'
+CO010_TEXT	ends
+CO019_TEXT	segment byte public 'CODE'
+CO019_TEXT	ends
+CO021_TEXT	segment byte public 'CODE'
+CO021_TEXT	ends
+CO023_TEXT	segment byte public 'CODE'
+CO023_TEXT	ends
+CO028_TEXT	segment byte public 'CODE'
+CO028_TEXT	ends
+CO02A_TEXT	segment byte public 'CODE'
+CO02A_TEXT	ends
+CO02B_TEXT	segment byte public 'CODE'
+CO02B_TEXT	ends
+CO02C_TEXT	segment byte public 'CODE'
+CO02C_TEXT	ends
+CO035_TEXT	segment byte public 'CODE'
+CO035_TEXT	ends
+CO043_TEXT	segment byte public 'CODE'
+CO043_TEXT	ends
+CO056_TEXT	segment byte public 'CODE'
+CO056_TEXT	ends
+CO06A_TEXT	segment byte public 'CODE'
+CO06A_TEXT	ends
+CO06B_TEXT	segment byte public 'CODE'
+CO06B_TEXT	ends
+CO06C_TEXT	segment byte public 'CODE'
+CO06C_TEXT	ends
+		public	X00F_0C
+		public	X00F_0B
+		public	X00F_0A
+		public	X00F_0F
+		public	X00F_0E
+		public	X00F_0D
+		public	X00F_1E
+		public	X00F_29
+		public	X00F_1C
+		public	X00F_1B
+		public	X00F_1A
+		public	X00F_1F
+		public	X00F_22
+		public	X00F_1D
+		public	X00F_28
+		public	X00F_23
+		public	X00F_21
+		public	X00F_20
+		public	X00F_27
+		public	X00F_26
+		public	X00F_25
+		public	X00F_24
+		public	X00F_2A
+		public	X00F_12
+		public	X00F_19
+		public	X00F_18
+		public	X00F_13
+		public	X00F_11
+		public	X00F_10
+		public	X00F_17
+		public	X00F_16
+		public	X00F_15
+		public	X00F_14
+		public	X00F_09
+		public	X00F_08
+		public	X00F_03
+		public	X00F_02
+		public	X00F_01
+		public	X00F_00
+		public	X00F_07
+		public	X00F_06
+		public	X00F_05
+		public	X00F_04
+DGROUP	group	_DATA,_BSS
+_DATA	segment para public 'DATA'
+_DATA	ends
+_BSS	segment word public 'DATA'
+_BSS	ends
+; Consolidated original-order group ovr_1be4_6000
+; BEGIN C236UNIT (listing ovr_1be4_6000:0000)
+CO00F_TEXT	segment byte public 'CODE'
+		assume	cs:CO00F_TEXT
+; Original-image layout stub: not recovered source
+
+
+X00F_17	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,08Bh,076h,006h,0EBh,017h,089h,076h,0FEh; ovr_1be4_6000:0000
+		db	08Eh,006h,008h,064h,026h,08Bh,034h,01Eh,0B8h,008h,064h,050h,0FFh,076h	; ovr_1be4_6000:000E
+		db	0FEh,09Ah
+		dw	034h
+		dw	seg CO043_TEXT
+		db	00Bh,0F6h,075h,0E5h,05Eh,08Bh,0E5h,05Dh; ovr_1be4_6000:001C
+		db	0CAh,002h,000h; raw:002A
+X00F_26	label	far
+		db	055h,08Bh,0ECh,056h,057h,08Bh,07Eh,008h,08Bh,076h,006h; ovr_1be4_6000:002A
+		db	00Bh,0F6h,075h,004h,0B0h,000h,0EBh,027h,08Eh,006h,0EAh,063h,026h,089h	; ovr_1be4_6000:0038
+		db	03Eh,002h,000h,0EBh,007h,08Eh,006h,0EAh,063h,026h,08Bh,034h,08Eh,006h	; ovr_1be4_6000:0046
+		db	0EAh,063h,026h,039h,07Ch,002h,075h,0EFh,00Bh,0F6h,074h,005h,0B8h,001h	; ovr_1be4_6000:0054
+		db	000h,0EBh,002h,033h,0C0h,05Fh,05Eh,05Dh,0CAh,004h,000h; raw:0062
+X00F_1A	label	far
+		db	055h,08Bh,0ECh; ovr_1be4_6000:0062
+		db	083h,0ECh,004h,056h,057h,08Bh,076h,006h,0A0h,0AEh,063h,0B4h,000h,00Bh	; ovr_1be4_6000:0070
+		db	0C0h,075h,003h,0E9h,0C0h,000h,08Eh,006h,010h,064h,026h,08Ah,044h,00Ch	; ovr_1be4_6000:007E
+		db	0B4h,000h,025h,003h,000h,03Dh,001h,000h,074h,011h,026h,08Ah,044h,00Ch	; ovr_1be4_6000:008C
+		db	0B4h,000h,025h,003h,000h,03Dh,002h,000h,074h,003h,0E9h,09Dh,000h,08Eh	; ovr_1be4_6000:009A
+		db	006h,010h,064h,026h,0F7h,044h,00Ah,002h,000h,074h,003h,0E9h,08Eh,000h	; ovr_1be4_6000:00A8
+		db	080h,03Eh,063h,017h,003h,075h,070h,0A0h,0D1h,077h,098h,00Bh,0C0h,074h	; ovr_1be4_6000:00B6
+		db	007h,026h,0F6h,044h,006h,090h,074h,061h,0A1h,07Eh,086h,089h,046h,0FCh	; ovr_1be4_6000:00C4
+		db	08Eh,006h,010h,064h,026h,0F6h,044h,006h,080h,074h,005h,081h,04Eh,0FCh	; ovr_1be4_6000:00D2
+		db	000h,080h,0A1h,09Eh,02Ah,005h,000h,040h,050h,0FFh,076h,0FCh,0B8h,002h	; ovr_1be4_6000:00E0
+		db	000h,050h,056h,09Ah
+		dw	02Ah
+		dw	seg CO00E_TEXT
+		db	052h,050h,09Ah
+		dw	043h
+		dw	seg CO035_TEXT
+		db	050h,09Ah
+		dw	025h
+		dw	seg CO056_TEXT
+		db	089h,046h,0FEh,056h,09Ah
+		dw	066h
+		dw	seg CO02C_TEXT
+		db	08Bh,0F8h,057h,0FFh,076h,0FEh,0FFh,01Eh,040h,081h,057h,0A1h; ovr_1be4_6000:00EE
+		db	09Eh,02Ah,0FFh,006h,09Eh,02Ah,050h,0FFh,01Eh,03Ch,081h,057h,0B8h,000h	; ovr_1be4_6000:0118
+		db	001h,050h,09Ah
+		dw	084h
+		dw	seg CO02C_TEXT
+		db	08Eh,006h,010h,064h,026h,081h,04Ch; ovr_1be4_6000:0126
+		db	00Ah,002h,000h,0FFh,036h,056h,061h,056h,09Ah
+		dw	0CFh
+		dw	seg CO02C_TEXT
+		db	0A3h; ovr_1be4_6000:0134
+		db	056h,061h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,002h,000h; raw:0142
+X00F_07	label	far
+		db	055h,08Bh,0ECh,04Ch; ovr_1be4_6000:0142
+		db	04Ch,056h,057h,08Bh,07Eh,008h,08Bh,076h,006h,057h,056h,0B0h,000h,050h	; ovr_1be4_6000:0150
+		db	09Ah
+		dw	02Ah
+		dw	seg CO023_TEXT
+		db	00Ah,0C0h,075h,026h,08Eh,006h,09Ah,063h,026h; ovr_1be4_6000:015E
+		db	08Bh,01Dh,0F6h,087h,0CAh,009h,014h,074h,01Ch,026h,0F6h,045h,002h,020h	; ovr_1be4_6000:016C
+		db	074h,015h,026h,0FFh,075h,007h,056h,0B0h,000h,050h,09Ah
+		dw	02Ah
+		dw	seg CO023_TEXT
+		db	00Ah,0C0h,074h,004h,0B0h,000h,0EBh,037h,08Eh,006h,09Ah,063h,026h; ovr_1be4_6000:017A
+		db	08Bh,01Ch,0F6h,087h,0CAh,009h,014h,074h,00Bh,026h,0F6h,044h,002h,020h	; ovr_1be4_6000:0196
+		db	074h,004h,026h,08Bh,074h,007h,057h,056h,0B0h,000h,050h,033h,0C0h,050h	; ovr_1be4_6000:01A4
+		db	050h,09Ah
+		dw	025h
+		dw	seg CO028_TEXT
+		db	089h,046h,0FEh,083h,07Eh,0FEh,000h,075h; ovr_1be4_6000:01B2
+		db	005h,0B8h,001h,000h,0EBh,002h,033h,0C0h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh	; ovr_1be4_6000:01C0
+		db	004h,000h; raw:01CE
+X00F_16	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,057h,0FFh,076h,006h,033h,0C0h; ovr_1be4_6000:01CE
+		db	050h,0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	08Bh,0F8h,0FFh,036h,096h; ovr_1be4_6000:01DC
+		db	063h,08Eh,006h,09Ah,063h,026h,0FFh,035h,0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	089h,046h,0FEh,0FFh,076h,0FEh,0B8h,01Dh,000h,050h,0FFh,076h; ovr_1be4_6000:01EA
+		db	00Ah,09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	084h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h; ovr_1be4_6000:0206
+		db	0B8h,016h,000h,050h,056h,0FFh,036h,0C8h,05Eh,08Bh,046h,008h,099h,052h	; ovr_1be4_6000:0214
+		db	050h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h; ovr_1be4_6000:0222
+		db	0B8h,018h,000h,050h,057h,056h,09Ah
+		dw	084h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,006h,000h; ovr_1be4_6000:0230
+X00F_0B	label	far
+		db	055h,08Bh,0ECh; ovr_1be4_6000:023E
+		db	04Ch,04Ch,056h,0FFh,036h,0FCh,063h,0B8h,01Dh,000h,050h,0FFh,076h,00Ah	; ovr_1be4_6000:024C
+		db	09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	084h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h,0B8h; ovr_1be4_6000:025A
+		db	016h,000h,050h,056h,0FFh,036h,0C8h,05Eh,08Bh,046h,008h,099h,052h,050h	; ovr_1be4_6000:0268
+		db	09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h,0FFh; ovr_1be4_6000:0276
+		db	076h,006h,033h,0C0h,050h,0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	089h; ovr_1be4_6000:0284
+		db	046h,0FEh,0B8h,018h,000h,050h,0FFh,076h,0FEh,033h,0C0h,050h,0B0h,000h	; ovr_1be4_6000:0292
+		db	050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	050h,056h,09Ah
+		dw	084h
+		dw	seg CO023_TEXT
+		db	050h; ovr_1be4_6000:02A0
+		db	09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	05Eh,08Bh,0E5h,05Dh,0CAh,006h,000h,055h,08Bh; ovr_1be4_6000:02AE
+		db	0ECh,04Ch,04Ch,056h,057h,08Bh,07Eh,006h,0FFh,036h,0C8h,05Eh,08Bh,0C7h	; ovr_1be4_6000:02BC
+		db	099h,052h,050h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,033h,0C0h,050h,09Ah
+		dw	0B6h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,0B8h,006h,000h,050h,0FFh,076h,00Ah,0FFh; ovr_1be4_6000:02CA
+		db	076h,0FEh,090h,00Eh,0E8h,07Bh,009h,08Bh,0F0h,0F7h,0C7h,002h,000h,075h	; ovr_1be4_6000:02E6
+		db	013h,08Eh,006h,086h,081h,026h,08Bh,05Ch,00Ah,026h,08Bh,05Fh,00Ch,08Bh	; ovr_1be4_6000:02F4
+		db	046h,008h,026h,089h,047h,00Ch,08Bh,0C6h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh	; ovr_1be4_6000:0302
+		db	006h,000h; raw:0310
+X00F_1F	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,008h,056h,057h,08Bh,07Eh,00Ah,08Bh; ovr_1be4_6000:0310
+		db	076h,008h,0C7h,046h,0FEh,000h,000h,0C7h,046h,0FCh,001h,000h,08Eh,006h	; ovr_1be4_6000:031E
+		db	09Ah,063h,026h,0F6h,045h,002h,008h,075h,003h,0E9h,0C5h,001h,0EBh,034h	; ovr_1be4_6000:032C
+		db	08Eh,006h,09Ah,063h,026h,08Bh,04Dh,00Bh,026h,08Bh,05Dh,009h,08Bh,056h	; ovr_1be4_6000:033A
+		db	0FEh,08Bh,046h,0FCh,09Ah
+		dw	03A9h
+		dw	seg BCC_COPY_WORDS
+		db	089h,056h,0FEh,089h,046h; ovr_1be4_6000:0348
+		db	0FCh,0B8h,018h,000h,050h,0FFh,076h,00Ch,09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	089h; ovr_1be4_6000:0356
+		db	046h,00Ch,08Eh,006h,09Ah,063h,026h,08Bh,07Dh,007h,08Eh,006h,09Ah,063h	; ovr_1be4_6000:0364
+		db	026h,083h,03Dh,011h,074h,0C2h,056h,09Ah
+		dw	04Dh
+		dw	seg CO023_TEXT
+		db	00Ah,0C0h; ovr_1be4_6000:0372
+		db	074h,045h,00Bh,0F6h,074h,041h,056h,0FFh,036h,0C8h,05Eh,09Ah
+		dw	020h
+		dw	seg CO003_TEXT
+		db	050h,0B0h,000h,050h,09Ah
+		dw	061h
+		dw	seg CO02A_TEXT
+		db	08Bh,0F0h,08Eh; ovr_1be4_6000:0380
+		db	006h,086h,081h,026h,083h,03Ch,002h,075h,022h,026h,08Bh,044h,00Ah,099h	; ovr_1be4_6000:039C
+		db	050h,052h,08Bh,056h,0FEh,08Bh,046h,0FCh,059h,05Bh,09Ah
+		dw	03A9h
+		dw	seg BCC_COPY_WORDS
+		db	089h,056h,0FEh,089h,046h,0FCh,056h,09Ah
+		dw	06Bh
+		dw	seg CO023_TEXT
+		db	033h; ovr_1be4_6000:03AA
+		db	0F6h,00Bh,0F6h,075h,02Fh,083h,07Eh,0FEh,000h,075h,00Bh,083h,07Eh,0FCh	; ovr_1be4_6000:03C6
+		db	001h,075h,005h,0B8h,001h,000h,0EBh,002h,033h,0C0h,088h,046h,0F9h,0B4h	; ovr_1be4_6000:03D4
+		db	000h,00Bh,0C0h,075h,033h,0FFh,036h,0C8h,05Eh,0FFh,076h,0FEh,0FFh,076h	; ovr_1be4_6000:03E2
+		db	0FCh,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h,0EBh,020h,0C6h,046h,0F9h,000h; ovr_1be4_6000:03F0
+		db	0B8h,018h,000h,050h,056h,0FFh,036h,0C8h,05Eh,0FFh,076h,0FEh,0FFh,076h	; ovr_1be4_6000:03FE
+		db	0FCh,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h; ovr_1be4_6000:040C
+		db	0FFh,036h,08Eh,061h,057h,09Ah
+		dw	0C5h
+		dw	seg CO02C_TEXT
+		db	089h,046h,0FAh,0FFh; ovr_1be4_6000:041A
+		db	076h,0FAh,0FFh,036h,038h,064h,09Ah
+		dw	034h
+		dw	seg CO06C_TEXT
+		db	0B4h,000h,00Bh; ovr_1be4_6000:0428
+		db	0C0h,075h,02Ch,0B8h,0A6h,000h,050h,08Eh,006h,09Ah,063h,026h,08Bh,05Dh	; ovr_1be4_6000:0436
+		db	005h,08Eh,006h,03Eh,05Fh,026h,0FFh,077h,006h,09Ah
+		dw	04Dh
+		dw	seg CO019_TEXT
+		db	052h,050h,033h,0C0h,033h,0D2h,050h,052h,09Ah
+		dw	043h
+		dw	seg CO019_TEXT
+		db	0FFh; ovr_1be4_6000:0452
+		db	076h,00Ch,0E9h,0A1h,000h,080h,07Eh,0F9h,000h,074h,00Eh,0FFh,076h,00Ch	; ovr_1be4_6000:0460
+		db	057h,0FFh,076h,006h,00Eh,0E8h,044h,0FEh,0E9h,094h,000h,0FFh,036h,07Ch	; ovr_1be4_6000:046E
+		db	061h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,0FFh,036h,098h,062h,0B8h,01Dh,000h; ovr_1be4_6000:047C
+		db	050h,0FFh,076h,00Ch,09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	084h
+		dw	seg CO023_TEXT
+		db	050h,0FFh,036h,098h,064h,057h,09Ah
+		dw	02Fh
+		dw	seg CO00A_TEXT
+		db	052h,050h; ovr_1be4_6000:048A
+		db	09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,056h,0FFh,036h,0C8h,05Eh,057h,08Bh,05Eh; ovr_1be4_6000:04A6
+		db	0FAh,08Eh,006h,0A4h,078h,026h,0FFh,077h,006h,090h,00Eh,0E8h,0D7h,002h	; ovr_1be4_6000:04B4
+		db	050h,08Bh,046h,006h,025h,001h,000h,0D1h,0E0h,0D1h,0E0h,0D1h,0E0h,05Ah	; ovr_1be4_6000:04C2
+		db	00Bh,0C2h,099h,052h,050h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,0B8h,01Dh,000h; ovr_1be4_6000:04D0
+		db	050h,08Bh,05Eh,0FAh,08Eh,006h,0A4h,078h,026h,0FFh,077h,006h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	08Eh
+		dw	seg CO023_TEXT
+		db	0EBh,010h,0FFh,076h,00Ch,09Ah
+		dw	043h
+		dw	seg CO023_TEXT
+		db	056h,09Ah
+		dw	043h
+		dw	seg CO023_TEXT
+		db	033h,0C0h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,008h,000h,055h; ovr_1be4_6000:04DE
+		db	08Bh,0ECh,083h,0ECh,004h,056h,057h,033h,0F6h,08Bh,05Eh,006h,08Eh,006h	; ovr_1be4_6000:0516
+		db	09Ah,063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,047h,00Ch	; ovr_1be4_6000:0524
+		db	0EBh,050h,08Bh,05Eh,0FEh,08Eh,006h,008h,064h,026h,08Ah,047h,007h,0B4h	; ovr_1be4_6000:0532
+		db	000h,00Bh,0C0h,075h,035h,026h,08Bh,05Fh,002h,08Eh,006h,09Ah,063h,026h	; ovr_1be4_6000:0540
+		db	0F6h,047h,002h,008h,074h,026h,0FFh,076h,008h,09Ah
+		dw	066h
+		dw	seg CO023_TEXT
+		db	050h,08Bh,05Eh,0FEh,08Eh,006h,008h,064h,026h,0FFh,077h,002h,033h,0C0h	; ovr_1be4_6000:055C
+		db	050h,00Eh,0E8h,04Bh,0FDh,08Bh,0F8h,057h,056h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h,08Eh,006h,008h,064h,08Bh,05Eh,0FEh,026h,08Bh,007h,089h,046h	; ovr_1be4_6000:0578
+		db	0FEh,083h,07Eh,0FEh,000h,075h,0A7h,08Bh,05Eh,006h,08Eh,006h,09Ah,063h	; ovr_1be4_6000:0586
+		db	026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,047h,002h,0EBh,064h	; ovr_1be4_6000:0594
+		db	08Bh,05Eh,0FCh,08Eh,006h,0A4h,078h,026h,0F6h,047h,004h,003h,075h,04Ch	; ovr_1be4_6000:05A2
+		db	026h,08Bh,05Fh,008h,08Eh,006h,09Ah,063h,026h,0F6h,047h,002h,008h,074h	; ovr_1be4_6000:05B0
+		db	03Dh,0B8h,02Fh,000h,050h,0FFh,076h,008h,09Ah
+		dw	066h
+		dw	seg CO023_TEXT
+		db	050h; ovr_1be4_6000:05BE
+		db	0FFh,076h,0FCh,09Ah
+		dw	07Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,057h,08Bh,05Eh,0FCh,08Eh,006h,0A4h,078h,026h,0FFh,077h,008h	; ovr_1be4_6000:05DA
+		db	033h,0C0h,050h,0B8h,002h,000h,050h,00Eh,0E8h,01Fh,0FDh,050h,056h,09Ah	; ovr_1be4_6000:05E8
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h,08Eh,006h,0A4h,078h,08Bh,05Eh,0FCh,026h; ovr_1be4_6000:05F6
+		db	08Bh,007h,089h,046h,0FCh,083h,07Eh,0FCh,000h,075h,093h,0FFh,076h,008h	; ovr_1be4_6000:0604
+		db	09Ah
+		dw	043h
+		dw	seg CO023_TEXT
+		db	08Bh,0C6h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,004h; ovr_1be4_6000:0612
+		db	000h; raw:0620
+X00F_06	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,01Eh,0B8h,0A6h,063h,050h,0B8h,006h,000h; ovr_1be4_6000:0620
+		db	050h,09Ah
+		dw	025h
+		dw	seg CO043_TEXT
+		db	089h,046h,0FEh,08Bh,0E5h,05Dh,0CBh; raw:062E
+X00F_04	label	far
+		db	055h; ovr_1be4_6000:062E
+		db	08Bh,0ECh,01Eh,0B8h,0A6h,063h,050h,0FFh,076h,006h,09Ah
+		dw	034h
+		dw	seg CO043_TEXT
+		db	05Dh,0CAh,002h,000h; ovr_1be4_6000:063C
+X00F_25	label	far
+		db	055h,08Bh,0ECh,056h,057h,0FFh,076h,00Ah,0FFh; ovr_1be4_6000:064A
+		db	076h,008h,033h,0C0h,050h,0B8h,002h,000h,050h,00Eh,0E8h,0ADh,0FCh,08Bh	; ovr_1be4_6000:0658
+		db	0F8h,00Bh,0FFh,075h,006h,08Bh,046h,006h,0E9h,0A3h,000h,083h,03Eh,0BCh	; ovr_1be4_6000:0666
+		db	063h,000h,074h,024h,0B8h,029h,001h,050h,08Bh,05Eh,008h,08Eh,006h,09Ah	; ovr_1be4_6000:0674
+		db	063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,05Fh,006h,08Eh	; ovr_1be4_6000:0682
+		db	006h,010h,064h,026h,0FFh,077h,002h,09Ah
+		dw	02Fh
+		dw	seg CO019_TEXT
+		db	083h,03Eh; ovr_1be4_6000:0690
+		db	0AEh,062h,000h,074h,022h,0B8h,059h,001h,050h,01Eh,0B8h,070h,00Fh,050h	; ovr_1be4_6000:069E
+		db	033h,0C0h,033h,0D2h,050h,052h,09Ah
+		dw	03Eh
+		dw	seg CO019_TEXT
+		db	08Bh,01Eh,0DCh; ovr_1be4_6000:06AC
+		db	05Eh,08Eh,006h,010h,064h,026h,081h,067h,00Ah,0FBh,0FFh,0FFh,006h,08Ah	; ovr_1be4_6000:06BA
+		db	064h,00Eh,0E8h,054h,0FFh,08Bh,0F0h,08Eh,006h,0A6h,063h,08Bh,046h,006h	; ovr_1be4_6000:06C8
+		db	026h,089h,004h,0A1h,08Ah,064h,026h,089h,044h,002h,0A1h,098h,063h,03Bh	; ovr_1be4_6000:06D6
+		db	006h,0C0h,063h,074h,015h,057h,0FFh,036h,09Eh,062h,09Ah
+		dw	020h
+		dw	seg CO003_TEXT
+		db	050h,0B0h,001h,050h,09Ah
+		dw	061h
+		dw	seg CO02A_TEXT
+		db	08Bh,0F8h,057h,09Ah; ovr_1be4_6000:06E4
+		dw	02Fh
+		dw	seg CO02B_TEXT
+		db	08Eh,006h,0A6h,063h,026h,089h,044h,004h,057h,09Ah; ovr_1be4_6000:0700
+		dw	043h
+		dw	seg CO023_TEXT
+		db	08Bh,0C6h,05Fh,05Eh,05Dh,0CAh,006h,000h; raw:070E
+X00F_1D	label	far
+		db	055h,08Bh; ovr_1be4_6000:070E
+		db	0ECh,056h,057h,08Bh,07Eh,008h,033h,0F6h,0EBh,00Dh,08Eh,006h,0A6h,063h	; ovr_1be4_6000:071C
+		db	08Bh,05Eh,006h,026h,08Bh,007h,089h,046h,006h,08Bh,05Eh,006h,08Eh,006h	; ovr_1be4_6000:072A
+		db	0A6h,063h,026h,08Bh,047h,002h,026h,03Bh,045h,002h,077h,0E2h,0EBh,01Dh	; ovr_1be4_6000:0738
+		db	056h,08Eh,006h,0A6h,063h,026h,0FFh,075h,004h,09Ah
+		dw	02Ah
+		dw	seg CO02B_TEXT
+		db	050h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h,08Eh,006h,0A6h,063h,026h,08Bh; ovr_1be4_6000:0754
+		db	03Dh,08Eh,006h,0A6h,063h,026h,08Bh,045h,002h,08Bh,05Eh,006h,026h,03Bh	; ovr_1be4_6000:0762
+		db	047h,002h,077h,0D2h,00Bh,0F6h,074h,019h,08Eh,006h,086h,081h,0A1h,085h	; ovr_1be4_6000:0770
+		db	063h,026h,089h,044h,014h,0A1h,087h,063h,026h,089h,044h,016h,0A1h,089h	; ovr_1be4_6000:077E
+		db	063h,026h,089h,044h,018h,08Bh,0C6h,05Fh,05Eh,05Dh,0CAh,004h,000h; raw:078C
+X00F_1B	label	far
+		db	055h; ovr_1be4_6000:078C
+		db	08Bh,0ECh,056h,057h,08Bh,07Eh,006h,033h,0F6h,08Eh,006h,010h,064h,026h	; ovr_1be4_6000:079A
+		db	08Bh,05Dh,004h,08Eh,006h,09Ah,063h,026h,0F6h,047h,00Ch,001h,074h,003h	; ovr_1be4_6000:07A8
+		db	0BEh,001h,000h,08Eh,006h,010h,064h,026h,08Bh,05Dh,004h,08Eh,006h,09Ah	; ovr_1be4_6000:07B6
+		db	063h,026h,080h,07Fh,00Bh,002h,075h,004h,081h,0CEh,002h,000h,08Bh,05Eh	; ovr_1be4_6000:07C4
+		db	008h,08Eh,006h,09Ah,063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h	; ovr_1be4_6000:07D2
+		db	0F7h,047h,018h,008h,001h,074h,004h,081h,0CEh,004h,000h,08Bh,0C6h,05Fh	; ovr_1be4_6000:07E0
+		db	05Eh,05Dh,0CAh,004h,000h; raw:07EE
+X00F_12	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,006h,056h,057h,08Bh; ovr_1be4_6000:07EE
+		db	076h,006h,0FFh,036h,098h,064h,056h,09Ah
+		dw	02Fh
+		dw	seg CO00A_TEXT
+		db	052h,050h; ovr_1be4_6000:07FC
+		db	09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,0FFh,036h,05Ah,062h,056h,09Ah; ovr_1be4_6000:080A
+		dw	025h
+		dw	seg CO06C_TEXT
+		db	089h,046h,0FCh,083h,07Eh,0FCh,000h,075h,00Ch,0FFh; ovr_1be4_6000:0818
+		db	036h,0D2h,063h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,0EBh,021h,08Bh,05Eh,0FCh; ovr_1be4_6000:0826
+		db	08Eh,006h,0A4h,078h,026h,0FFh,077h,006h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	089h; ovr_1be4_6000:0834
+		db	046h,0FAh,08Bh,05Eh,0FAh,08Eh,006h,086h,081h,026h,089h,077h,00Eh,0FFh	; ovr_1be4_6000:0842
+		db	076h,0FAh,0FFh,076h,0FEh,033h,0C0h,050h,050h,050h,050h,09Ah
+		dw	08Eh
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,056h,033h,0C0h,050h,0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	050h,057h,09Ah
+		dw	084h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0B8h,00Bh,000h; ovr_1be4_6000:0850
+		db	050h,0FFh,076h,008h,090h,00Eh,0E8h,0B0h,002h,050h,057h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,004h,000h; ovr_1be4_6000:087A
+X00F_27	label	far
+		db	055h,08Bh,0ECh,04Ch; ovr_1be4_6000:0888
+		db	04Ch,056h,0FFh,036h,012h,05Fh,0FFh,076h,006h,00Eh,0E8h,050h,0FFh,08Bh	; ovr_1be4_6000:0896
+		db	0F0h,0FFh,076h,008h,090h,00Eh,0E8h,086h,002h,089h,046h,0FEh,0B8h,06Bh	; ovr_1be4_6000:08A4
+		db	000h,050h,0FFh,076h,0FEh,0FFh,036h,0C8h,05Eh,033h,0C0h,033h,0D2h,050h	; ovr_1be4_6000:08B2
+		db	052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,056h,09Ah
+		dw	039h
+		dw	seg CO023_TEXT
+		db	08Bh; ovr_1be4_6000:08C0
+		db	0F0h,05Eh,08Bh,0E5h,05Dh,0CAh,004h,000h; raw:08CE
+X00F_23	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,004h; ovr_1be4_6000:08CE
+		db	056h,057h,0C7h,046h,0FEh,000h,000h,0FFh,076h,008h,090h,00Eh,0E8h,026h	; ovr_1be4_6000:08DC
+		db	00Eh,08Bh,0F0h,08Bh,0F8h,0EBh,055h,08Eh,006h,008h,064h,026h,08Bh,05Ch	; ovr_1be4_6000:08EA
+		db	002h,08Eh,006h,09Ah,063h,026h,0F6h,047h,002h,008h,074h,03Bh,0FFh,076h	; ovr_1be4_6000:08F8
+		db	006h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,08Eh,006h,008h,064h,026h,0FFh,074h; ovr_1be4_6000:0906
+		db	004h,026h,0FFh,074h,002h,00Eh,0E8h,0B3h,0F8h,089h,046h,0FCh,0FFh,076h	; ovr_1be4_6000:0914
+		db	0FCh,08Eh,006h,008h,064h,026h,0FFh,074h,002h,033h,0C0h,050h,050h,00Eh	; ovr_1be4_6000:0922
+		db	0E8h,0DFh,0F9h,050h,0FFh,076h,0FEh,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h; ovr_1be4_6000:0930
+		db	0FEh,08Eh,006h,008h,064h,026h,08Bh,034h,00Bh,0F6h,075h,0A7h,057h,00Eh	; ovr_1be4_6000:093E
+		db	0E8h,0B1h,0F6h,08Bh,046h,0FEh,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,004h,000h	; ovr_1be4_6000:094C
+X00F_0E	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,00Ah,056h,057h,0FFh,076h,00Ah,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,0FFh,076h,00Ch,00Eh,0E8h,0A3h,0FBh,089h,046h,0FCh,0FFh; ovr_1be4_6000:095A
+		db	076h,00Ch,0FFh,076h,00Ah,00Eh,0E8h,057h,0FFh,08Bh,0F8h,00Bh,0FFh,074h	; ovr_1be4_6000:0976
+		db	051h,0B8h,01Bh,000h,050h,0FFh,076h,006h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h; ovr_1be4_6000:0984
+		db	0FFh,036h,0C8h,05Eh,033h,0C0h,0BAh,002h,000h,050h,052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FAh,0B8h,06Bh,000h; ovr_1be4_6000:0992
+		db	050h,0FFh,076h,0FAh,057h,0FFh,036h,0C8h,05Eh,033h,0C0h,033h,0D2h,050h	; ovr_1be4_6000:09AE
+		db	052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	039h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h; ovr_1be4_6000:09BC
+		db	0FFh,076h,0FCh,057h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FCh,0FFh,036h; ovr_1be4_6000:09CA
+		db	054h,062h,0FFh,076h,00Ch,09Ah
+		dw	039h
+		dw	seg CO06C_TEXT
+		db	089h,046h,0FEh,083h; ovr_1be4_6000:09D8
+		db	07Eh,0FEh,000h,075h,018h,0FFh,036h,08Ch,064h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,0FFh,076h,00Ah,090h,00Eh,0E8h,036h,001h,050h,033h,0C0h,0E9h,082h	; ovr_1be4_6000:09F4
+		db	000h,08Bh,05Eh,0FEh,08Eh,006h,0A4h,078h,026h,08Bh,077h,006h,08Eh,006h	; ovr_1be4_6000:0A02
+		db	010h,064h,026h,083h,07Ch,013h,000h,074h,01Eh,026h,08Bh,05Ch,004h,08Eh	; ovr_1be4_6000:0A10
+		db	006h,09Ah,063h,026h,08Bh,05Fh,009h,08Eh,006h,028h,064h,026h,083h,03Fh	; ovr_1be4_6000:0A1E
+		db	000h,075h,008h,08Eh,006h,010h,064h,026h,08Bh,074h,013h,056h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,08Eh,006h,086h,081h,08Bh,046h,00Ch,026h,089h; ovr_1be4_6000:0A2C
+		db	045h,00Eh,057h,0FFh,076h,00Ah,090h,00Eh,0E8h,0E0h,000h,050h,08Eh,006h	; ovr_1be4_6000:0A48
+		db	010h,064h,026h,08Bh,05Ch,004h,08Eh,006h,09Ah,063h,026h,08Bh,05Fh,009h	; ovr_1be4_6000:0A56
+		db	08Eh,006h,028h,064h,026h,083h,03Fh,000h,074h,015h,0FFh,036h,098h,064h	; ovr_1be4_6000:0A64
+		db	0FFh,076h,00Ch,09Ah
+		dw	02Fh
+		dw	seg CO00A_TEXT
+		db	052h,050h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	0EBh,002h,033h,0C0h,050h,033h,0C0h,050h,050h,050h,09Ah
+		dw	08Eh
+		dw	seg CO023_TEXT
+		db	089h,046h,0F8h,0B8h,01Bh,000h,050h,0FFh,076h,006h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,0FFh,036h,0C8h,05Eh,033h,0C0h,0BAh,001h,000h,050h; ovr_1be4_6000:0A72
+		db	052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h; ovr_1be4_6000:0AAA
+		db	0FAh,0B8h,06Bh,000h,050h,0FFh,076h,0FAh,0FFh,076h,0F8h,0FFh,036h,0C8h	; ovr_1be4_6000:0AB8
+		db	05Eh,033h,0C0h,033h,0D2h,050h,052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah; ovr_1be4_6000:0AC6
+		dw	039h
+		dw	seg CO023_TEXT
+		db	089h,046h,0F6h,0FFh,076h,0FCh,0FFh,076h,0F6h,09Ah; ovr_1be4_6000:0AD4
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FCh,080h,07Eh,008h,000h,074h,00Ah,0FFh; ovr_1be4_6000:0AE2
+		db	076h,00Ah,090h,00Eh,0E8h,03Ch,000h,0EBh,010h,0FFh,036h,0C8h,05Eh,033h	; ovr_1be4_6000:0AF0
+		db	0C0h,0BAh,001h,000h,050h,052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FAh; ovr_1be4_6000:0AFE
+		db	0B8h,06Bh,000h,050h,0FFh,076h,0FAh,0FFh,076h,0FCh,0FFh,036h,0C8h,05Eh	; ovr_1be4_6000:0B0C
+		db	033h,0C0h,033h,0D2h,050h,052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	039h
+		dw	seg CO023_TEXT
+		db	05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,008h,000h; ovr_1be4_6000:0B1A
+X00F_15	label	far
+		db	055h,08Bh,0ECh; ovr_1be4_6000:0B28
+		db	056h,057h,08Bh,07Eh,006h,057h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h,08Eh; ovr_1be4_6000:0B36
+		db	006h,010h,064h,026h,08Bh,05Dh,004h,08Eh,006h,09Ah,063h,026h,0FFh,077h	; ovr_1be4_6000:0B44
+		db	007h,08Eh,006h,010h,064h,026h,08Bh,05Dh,004h,08Eh,006h,09Ah,063h,026h	; ovr_1be4_6000:0B52
+		db	0FFh,037h,0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	08Eh,006h,086h,081h; ovr_1be4_6000:0B60
+		db	026h,089h,044h,008h,08Eh,006h,010h,064h,026h,08Bh,05Dh,004h,08Eh,006h	; ovr_1be4_6000:0B6E
+		db	09Ah,063h,026h,0F6h,047h,002h,001h,074h,01Bh,08Eh,006h,086h,081h,026h	; ovr_1be4_6000:0B7C
+		db	0FFh,074h,008h,0B0h,000h,050h,0B0h,001h,050h,09Ah
+		dw	039h
+		dw	seg CO010_TEXT
+		db	08Eh,006h,086h,081h,026h,089h,044h,008h,08Eh,006h,086h,081h,026h,0C6h	; ovr_1be4_6000:0B98
+		db	044h,006h,001h,08Bh,0C6h,05Fh,05Eh,05Dh,0CAh,002h,000h; raw:0BA6
+X00F_0C	label	far
+		db	055h,08Bh,0ECh; ovr_1be4_6000:0BA6
+		db	056h,057h,08Bh,076h,006h,033h,0FFh,08Eh,006h,09Ah,063h,026h,08Bh,05Ch	; ovr_1be4_6000:0BB4
+		db	005h,08Eh,006h,03Eh,05Fh,026h,083h,07Fh,010h,000h,077h,03Eh,08Eh,006h	; ovr_1be4_6000:0BC2
+		db	09Ah,063h,026h,08Bh,05Ch,005h,08Eh,006h,03Eh,05Fh,026h,0F7h,047h,018h	; ovr_1be4_6000:0BD0
+		db	000h,008h,074h,02Eh,0EBh,028h,0FFh,036h,068h,062h,056h,09Ah
+		dw	0C5h
+		dw	seg CO02C_TEXT
+		db	08Bh,0F8h,00Bh,0FFh,075h,018h,08Eh,006h,09Ah,063h,026h,08Bh; ovr_1be4_6000:0BDE
+		db	05Ch,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,05Fh,00Ch,08Eh,006h,008h,064h	; ovr_1be4_6000:0BFA
+		db	026h,08Bh,077h,002h,00Bh,0FFh,074h,0D4h,08Bh,0C7h,05Fh,05Eh,05Dh,0CAh	; ovr_1be4_6000:0C08
+		db	002h,000h; raw:0C16
+X00F_20	label	far
+		db	055h,08Bh,0ECh,056h,033h,0C0h,050h,09Ah
+		dw	03Eh
+		dw	seg CO02C_TEXT
+		db	08Bh,0F0h,0FFh,036h,0A4h,078h,056h,0FFh,036h,0A4h,078h,0FFh,076h,00Ch	; ovr_1be4_6000:0C24
+		db	0B9h,00Ch,000h,09Ah
+		dw	0402h
+		dw	seg BCC_COPY_WORDS
+		db	08Eh,006h,0A4h,078h,08Bh,046h; ovr_1be4_6000:0C32
+		db	008h,026h,089h,004h,026h,08Ah,044h,004h,024h,0E3h,08Ah,056h,006h,080h	; ovr_1be4_6000:0C40
+		db	0E2h,007h,0D0h,0E2h,0D0h,0E2h,00Ah,0C2h,026h,088h,044h,004h,08Bh,046h	; ovr_1be4_6000:0C4E
+		db	00Ah,026h,089h,044h,006h,08Bh,0C6h,05Eh,05Dh,0CAh,008h,000h; raw:0C5C
+X00F_19	label	far
+		db	055h,08Bh; ovr_1be4_6000:0C5C
+		db	0ECh,04Ch,04Ch,056h,057h,08Bh,076h,00Ah,0B8h,02Fh,000h,050h,0FFh,076h	; ovr_1be4_6000:0C6A
+		db	008h,08Bh,0DEh,0D1h,0E3h,0FFh,0B7h,082h,061h,083h,0FEh,005h,075h,005h	; ovr_1be4_6000:0C78
+		db	0B8h,003h,000h,0EBh,00Dh,083h,0FEh,006h,075h,005h,0B8h,004h,000h,0EBh	; ovr_1be4_6000:0C86
+		db	003h,0B8h,001h,000h,050h,09Ah
+		dw	07Ah
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,0FFh,076h,0FEh,033h,0C0h,050h,050h,050h,050h; ovr_1be4_6000:0C94
+		db	050h,09Ah
+		dw	08Eh
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,08Eh,006h,086h,081h,08Bh,046h; ovr_1be4_6000:0CB0
+		db	006h,026h,089h,045h,00Ch,08Bh,0C7h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,006h	; ovr_1be4_6000:0CBE
+		db	000h; raw:0CCC
+X00F_1E	label	far
+		db	055h,08Bh,0ECh,056h,057h,08Bh,07Eh,008h,08Bh,076h,006h,08Eh,006h; ovr_1be4_6000:0CCC
+		db	09Ah,063h,026h,08Bh,05Dh,005h,08Eh,006h,03Eh,05Fh,026h,0F7h,047h,018h	; ovr_1be4_6000:0CDA
+		db	004h,000h,074h,018h,0FFh,036h,0C8h,05Eh,033h,0C0h,033h,0D2h,050h,052h	; ovr_1be4_6000:0CE8
+		db	09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,056h,09Ah
+		dw	0B6h
+		dw	seg CO023_TEXT
+		db	08Bh,0F0h; ovr_1be4_6000:0CF6
+		db	0B8h,005h,000h,050h,0FFh,076h,00Ah,056h,00Eh,0E8h,058h,0FFh,05Fh,05Eh	; ovr_1be4_6000:0D04
+		db	05Dh,0CAh,006h,000h; raw:0D12
+X00F_10	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,057h,08Bh,076h,008h; ovr_1be4_6000:0D12
+		db	08Bh,07Eh,006h,08Eh,006h,09Ah,063h,026h,08Bh,05Ch,005h,08Eh,006h,03Eh	; ovr_1be4_6000:0D20
+		db	05Fh,026h,0F7h,047h,018h,004h,000h,074h,019h,0FFh,036h,0C8h,05Eh,033h	; ovr_1be4_6000:0D2E
+		db	0C0h,0BAh,001h,000h,050h,052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,057h,09Ah; ovr_1be4_6000:0D3C
+		dw	0B6h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0B8h,005h,000h,050h,0FFh,076h,00Ah,057h; ovr_1be4_6000:0D4A
+		db	00Eh,0E8h,00Ch,0FFh,089h,046h,0FEh,08Bh,05Eh,0FEh,08Eh,006h,086h,081h	; ovr_1be4_6000:0D58
+		db	026h,08Bh,05Fh,00Ah,026h,08Bh,05Fh,00Ch,026h,089h,077h,00Ch,05Fh,05Eh	; ovr_1be4_6000:0D66
+		db	08Bh,0E5h,05Dh,0CAh,006h,000h; raw:0D74
+X00F_14	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,057h,08Bh; ovr_1be4_6000:0D74
+		db	07Eh,00Ah,080h,07Eh,008h,000h,075h,01Bh,08Eh,006h,09Ah,063h,08Bh,05Eh	; ovr_1be4_6000:0D82
+		db	00Ch,026h,08Bh,01Fh,0F6h,087h,0CAh,009h,040h,074h,031h,08Bh,05Eh,00Ch	; ovr_1be4_6000:0D90
+		db	026h,0F6h,047h,002h,004h,074h,027h,080h,07Eh,006h,000h,074h,011h,0FFh	; ovr_1be4_6000:0D9E
+		db	076h,00Eh,0FFh,076h,00Ch,057h,00Eh,0E8h,060h,0FFh,089h,046h,0FEh,0E9h	; ovr_1be4_6000:0DAC
+		db	08Ch,000h,0FFh,076h,00Eh,0FFh,076h,00Ch,057h,00Eh,0E8h,006h,0FFh,089h	; ovr_1be4_6000:0DBA
+		db	046h,0FEh,0EBh,07Ch,00Bh,0FFh,075h,00Eh,0B8h,087h,000h,050h,0FFh,076h	; ovr_1be4_6000:0DC8
+		db	00Eh,09Ah
+		dw	0CFh
+		dw	seg CO023_TEXT
+		db	0EBh,0D8h,0B8h,005h,000h,050h,0FFh,076h; ovr_1be4_6000:0DD6
+		db	00Eh,08Eh,006h,086h,081h,026h,0FFh,075h,00Ch,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,08Eh,006h,086h,081h,026h,08Bh,075h,00Ah,057h,09Ah
+		dw	06Bh
+		dw	seg CO023_TEXT
+		db	00Bh,0F6h,074h,03Dh,0B8h,087h,000h,050h,033h,0C0h,033h; ovr_1be4_6000:0DF2
+		db	0D2h,050h,052h,050h,052h,08Eh,006h,086h,081h,026h,08Bh,05Ch,00Ch,026h	; ovr_1be4_6000:0E0E
+		db	0FFh,077h,016h,050h,09Ah
+		dw	052h
+		dw	seg CO019_TEXT
+		db	0EBh,01Dh,08Eh,006h,086h; ovr_1be4_6000:0E1C
+		db	081h,026h,0FFh,074h,00Ch,09Ah
+		dw	043h
+		dw	seg CO023_TEXT
+		db	08Bh,0FEh,08Eh,006h; ovr_1be4_6000:0E2A
+		db	086h,081h,026h,08Bh,074h,00Ah,057h,09Ah
+		dw	06Bh
+		dw	seg CO023_TEXT
+		db	00Bh,0F6h; ovr_1be4_6000:0E38
+		db	075h,0DFh,08Bh,046h,0FEh,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,00Ah,000h,045h	; ovr_1be4_6000:0E46
+		db	055h,08Bh,0ECh,083h,0ECh,004h,056h,057h,08Bh,07Eh,00Eh,08Bh,05Eh,00Ch	; ovr_1be4_6000:0E54
+		db	08Eh,006h,09Ah,063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh	; ovr_1be4_6000:0E62
+		db	077h,00Ch,0C4h,05Eh,004h,026h,0C7h,007h,000h,000h,0C4h,05Eh,008h,026h	; ovr_1be4_6000:0E70
+		db	0C6h,007h,000h,0E9h,099h,000h,08Eh,006h,008h,064h,026h,08Bh,05Ch,002h	; ovr_1be4_6000:0E7E
+		db	08Eh,006h,09Ah,063h,026h,08Bh,047h,005h,026h,03Bh,045h,005h,075h,00Fh	; ovr_1be4_6000:0E8C
+		db	0C7h,046h,0FEh,001h,000h,08Eh,006h,008h,064h,026h,08Ah,044h,007h,0EBh	; ovr_1be4_6000:0E9A
+		db	034h,057h,08Eh,006h,008h,064h,026h,0FFh,074h,002h,016h,08Dh,046h,0FDh	; ovr_1be4_6000:0EA8
+		db	050h,016h,08Dh,046h,0FEh,050h,0E8h,094h,0FFh,083h,07Eh,0FEh,000h,076h	; ovr_1be4_6000:0EB6
+		db	01Bh,080h,07Eh,0FDh,000h,075h,00Bh,08Eh,006h,008h,064h,026h,080h,07Ch	; ovr_1be4_6000:0EC4
+		db	007h,000h,074h,005h,0B8h,001h,000h,0EBh,002h,033h,0C0h,088h,046h,0FDh	; ovr_1be4_6000:0ED2
+		db	0C4h,05Eh,004h,026h,083h,03Fh,001h,075h,015h,083h,07Eh,0FEh,001h,075h	; ovr_1be4_6000:0EE0
+		db	00Fh,0C4h,05Eh,008h,026h,080h,03Fh,000h,074h,006h,080h,07Eh,0FDh,000h	; ovr_1be4_6000:0EEE
+		db	075h,018h,0C4h,05Eh,004h,08Bh,046h,0FEh,026h,001h,007h,083h,07Eh,0FEh	; ovr_1be4_6000:0EFC
+		db	000h,076h,009h,0C4h,05Eh,008h,08Ah,046h,0FDh,026h,088h,007h,08Eh,006h	; ovr_1be4_6000:0F0A
+		db	008h,064h,026h,08Bh,034h,00Bh,0F6h,074h,003h,0E9h,060h,0FFh,05Fh,05Eh	; ovr_1be4_6000:0F18
+		db	08Bh,0E5h,05Dh,04Dh,0C2h,00Ch,000h; raw:0F26
+X00F_13	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,006h,056h; ovr_1be4_6000:0F26
+		db	057h,08Bh,076h,00Ah,08Bh,07Eh,008h,08Eh,006h,09Ah,063h,026h,08Bh,01Dh	; ovr_1be4_6000:0F34
+		db	08Ah,087h,0CAh,009h,0B4h,000h,0A9h,040h,000h,074h,00Eh,026h,08Bh,01Ch	; ovr_1be4_6000:0F42
+		db	08Ah,087h,0CAh,009h,0B4h,000h,0A9h,040h,000h,075h,005h,0B0h,000h,0E9h	; ovr_1be4_6000:0F50
+		db	0ABh,000h,08Eh,006h,09Ah,063h,026h,08Bh,045h,005h,026h,03Bh,044h,005h	; ovr_1be4_6000:0F5E
+		db	075h,002h,0EBh,04Ah,056h,057h,016h,08Dh,046h,0FDh,050h,016h,08Dh,046h	; ovr_1be4_6000:0F6C
+		db	0FEh,050h,0E8h,0D4h,0FEh,080h,07Eh,006h,000h,074h,07Ch,083h,07Eh,0FEh	; ovr_1be4_6000:0F7A
+		db	001h,074h,002h,0EBh,0CEh,033h,0C0h,050h,050h,056h,057h,09Ah
+		dw	03Eh
+		dw	seg CO06C_TEXT
+		db	089h,046h,0FAh,08Eh,006h,09Ah,063h,026h,08Bh,05Ch,005h,08Eh; ovr_1be4_6000:0F88
+		db	006h,03Eh,05Fh,026h,0FFh,077h,006h,09Ah
+		dw	020h
+		dw	seg CO06C_TEXT
+		db	00Ah,0C0h; ovr_1be4_6000:0FA4
+		db	075h,006h,083h,07Eh,0FAh,000h,075h,004h,0B0h,001h,0EBh,04Dh,08Bh,01Eh	; ovr_1be4_6000:0FB2
+		db	038h,064h,08Eh,006h,09Ah,063h,026h,08Bh,047h,005h,026h,03Bh,045h,005h	; ovr_1be4_6000:0FC0
+		db	074h,01Fh,026h,08Bh,047h,005h,026h,03Bh,044h,005h,074h,015h,026h,08Bh	; ovr_1be4_6000:0FCE
+		db	05Dh,005h,08Eh,006h,03Eh,05Fh,026h,0FFh,077h,006h,09Ah
+		dw	020h
+		dw	seg CO06C_TEXT
+		db	00Ah,0C0h,074h,00Fh,083h,07Eh,0FAh,003h,074h,005h,0B8h,001h,000h; ovr_1be4_6000:0FDC
+		db	0EBh,011h,0EBh,00Dh,0EBh,00Dh,0E9h,05Ah,0FFh,083h,07Eh,0FEh,000h,076h	; ovr_1be4_6000:0FF8
+		db	002h,0EBh,0ECh,033h,0C0h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,006h,000h; raw:1006
+X00F_11	label	far
+		db	055h; ovr_1be4_6000:1006
+		db	08Bh,0ECh,083h,0ECh,004h,056h,057h,08Bh,076h,008h,08Bh,07Eh,006h,08Eh	; ovr_1be4_6000:1014
+		db	006h,09Ah,063h,026h,08Bh,01Dh,08Ah,087h,0CAh,009h,0B4h,000h,0A9h,040h	; ovr_1be4_6000:1022
+		db	000h,074h,00Eh,026h,08Bh,01Ch,08Ah,087h,0CAh,009h,0B4h,000h,0A9h,040h	; ovr_1be4_6000:1030
+		db	000h,075h,004h,0B0h,000h,0EBh,037h,08Eh,006h,09Ah,063h,026h,08Bh,045h	; ovr_1be4_6000:103E
+		db	005h,026h,03Bh,044h,005h,075h,004h,0B0h,001h,0EBh,025h,056h,057h,016h	; ovr_1be4_6000:104C
+		db	08Dh,046h,0FDh,050h,016h,08Dh,046h,0FEh,050h,0E8h,0EDh,0FDh,083h,07Eh	; ovr_1be4_6000:105A
+		db	0FEh,001h,075h,00Eh,08Ah,046h,0FDh,0B4h,000h,00Bh,0C0h,075h,005h,0B8h	; ovr_1be4_6000:1068
+		db	001h,000h,0EBh,002h,033h,0C0h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,004h,000h	; ovr_1be4_6000:1076
+X00F_28	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,004h,056h,057h,08Bh,076h,008h,08Bh,07Eh,006h; ovr_1be4_6000:1084
+		db	08Eh,006h,09Ah,063h,026h,08Bh,01Dh,08Ah,087h,0CAh,009h,0B4h,000h,0A9h	; ovr_1be4_6000:1092
+		db	040h,000h,074h,00Eh,026h,08Bh,01Ch,08Ah,087h,0CAh,009h,0B4h,000h,0A9h	; ovr_1be4_6000:10A0
+		db	040h,000h,075h,004h,0B0h,000h,0EBh,02Eh,08Eh,006h,09Ah,063h,026h,08Bh	; ovr_1be4_6000:10AE
+		db	045h,005h,026h,03Bh,044h,005h,075h,004h,0B0h,001h,0EBh,01Ch,056h,057h	; ovr_1be4_6000:10BC
+		db	016h,08Dh,046h,0FDh,050h,016h,08Dh,046h,0FEh,050h,0E8h,07Ch,0FDh,083h	; ovr_1be4_6000:10CA
+		db	07Eh,0FEh,001h,075h,005h,0B8h,001h,000h,0EBh,002h,033h,0C0h,05Fh,05Eh	; ovr_1be4_6000:10D8
+		db	08Bh,0E5h,05Dh,0CAh,004h,000h; raw:10E6
+X00F_18	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,057h,0FFh; ovr_1be4_6000:10E6
+		db	036h,08Ch,061h,0FFh,076h,008h,09Ah
+		dw	0C5h
+		dw	seg CO02C_TEXT
+		db	089h,046h,0FEh; ovr_1be4_6000:10F4
+		db	083h,07Eh,0FEh,000h,075h,002h,0EBh,064h,08Bh,05Eh,0FEh,08Eh,006h,0A4h	; ovr_1be4_6000:1102
+		db	078h,026h,08Bh,07Fh,006h,0EBh,053h,08Eh,006h,010h,064h,026h,08Bh,05Dh	; ovr_1be4_6000:1110
+		db	004h,08Eh,006h,09Ah,063h,026h,08Bh,077h,009h,08Bh,05Eh,008h,026h,08Bh	; ovr_1be4_6000:111E
+		db	05Fh,005h,08Eh,006h,03Eh,05Fh,026h,0F7h,047h,018h,004h,000h,074h,007h	; ovr_1be4_6000:112C
+		db	08Eh,006h,028h,064h,026h,08Bh,034h,08Eh,006h,028h,064h,026h,083h,03Ch	; ovr_1be4_6000:113A
+		db	000h,074h,013h,026h,08Bh,01Ch,026h,083h,07Fh,008h,000h,074h,00Dh,08Ah	; ovr_1be4_6000:1148
+		db	046h,006h,0B4h,000h,00Bh,0C0h,075h,004h,08Bh,0C7h,0EBh,00Eh,08Eh,006h	; ovr_1be4_6000:1156
+		db	010h,064h,026h,08Bh,07Dh,013h,00Bh,0FFh,075h,0A9h,033h,0C0h,05Fh,05Eh	; ovr_1be4_6000:1164
+		db	08Bh,0E5h,05Dh,0CAh,004h,000h,055h,08Bh,0ECh,083h,0ECh,004h,056h,057h	; ovr_1be4_6000:1172
+		db	0FFh,076h,008h,033h,0C0h,050h,0B0h,001h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	089h,046h,0FCh,08Bh,05Eh,00Ah,0D1h,0E3h,0FFh,0B7h,082h,061h,0FFh,076h	; ovr_1be4_6000:118E
+		db	008h,09Ah
+		dw	0C5h
+		dw	seg CO02C_TEXT
+		db	089h,046h,0FEh,083h,07Eh,0FEh,000h,075h; ovr_1be4_6000:119C
+		db	003h,0E9h,08Dh,000h,08Bh,05Eh,0FEh,08Eh,006h,0A4h,078h,026h,08Bh,07Fh	; ovr_1be4_6000:11AA
+		db	006h,0EBh,07Ch,08Eh,006h,010h,064h,026h,08Bh,05Dh,004h,08Eh,006h,09Ah	; ovr_1be4_6000:11B8
+		db	063h,026h,08Bh,077h,009h,083h,07Eh,00Ah,005h,075h,01Ah,08Bh,05Eh,008h	; ovr_1be4_6000:11C6
+		db	026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,0F7h,047h,018h,004h,000h	; ovr_1be4_6000:11D4
+		db	074h,007h,08Eh,006h,028h,064h,026h,08Bh,034h,08Eh,006h,028h,064h,026h	; ovr_1be4_6000:11E2
+		db	08Bh,034h,00Bh,0F6h,074h,039h,08Eh,006h,028h,064h,026h,0FFh,074h,002h	; ovr_1be4_6000:11F0
+		db	0FFh,076h,0FCh,0B8h,002h,000h,050h,09Ah
+		dw	020h
+		dw	seg CO00A_TEXT
+		db	0B4h,000h; ovr_1be4_6000:11FE
+		db	00Bh,0C0h,074h,01Fh,08Eh,006h,028h,064h,026h,08Bh,034h,00Bh,0F6h,074h	; ovr_1be4_6000:120C
+		db	010h,026h,083h,07Ch,008h,000h,074h,00Dh,08Ah,046h,006h,0B4h,000h,00Bh	; ovr_1be4_6000:121A
+		db	0C0h,075h,004h,08Bh,0C7h,0EBh,00Eh,08Eh,006h,010h,064h,026h,08Bh,07Dh	; ovr_1be4_6000:1228
+		db	013h,00Bh,0FFh,075h,080h,033h,0C0h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,006h	; ovr_1be4_6000:1236
+		db	000h; raw:1244
+X00F_22	label	far
+		db	055h,08Bh,0ECh,0B8h,005h,000h,050h,0FFh,076h,008h,08Ah,046h,006h; ovr_1be4_6000:1244
+		db	050h,00Eh,0E8h,021h,0FFh,05Dh,0CAh,004h,000h; raw:1252
+X00F_21	label	far
+		db	055h,08Bh,0ECh,0B8h,00Bh; ovr_1be4_6000:1252
+		db	000h,050h,0FFh,076h,008h,08Ah,046h,006h,050h,00Eh,0E8h,00Bh,0FFh,05Dh	; ovr_1be4_6000:1260
+		db	0CAh,004h,000h; raw:126E
+X00F_0A	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,057h,08Bh,07Eh,006h,0C6h; ovr_1be4_6000:126E
+		db	046h,0FFh,000h,0EBh,00Ch,0C6h,046h,0FFh,001h,08Eh,006h,09Ah,063h,026h	; ovr_1be4_6000:127C
+		db	08Bh,07Dh,007h,08Eh,006h,09Ah,063h,026h,083h,03Dh,011h,074h,0EAh,0FFh	; ovr_1be4_6000:128A
+		db	076h,008h,057h,08Ah,046h,0FFh,050h,00Eh,0E8h,0D5h,0FEh,08Eh,006h,010h	; ovr_1be4_6000:1298
+		db	064h,08Bh,0D8h,026h,08Bh,05Fh,004h,08Eh,006h,09Ah,063h,026h,08Bh,077h	; ovr_1be4_6000:12A6
+		db	009h,08Eh,006h,028h,064h,026h,08Bh,034h,083h,07Eh,008h,005h,075h,01Bh	; ovr_1be4_6000:12B4
+		db	08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h,08Eh,006h,03Eh,05Fh,026h,0F7h	; ovr_1be4_6000:12C2
+		db	047h,018h,004h,000h,074h,007h,08Eh,006h,028h,064h,026h,08Bh,034h,08Eh	; ovr_1be4_6000:12D0
+		db	006h,028h,064h,026h,08Bh,05Ch,002h,08Eh,006h,09Ah,063h,026h,08Bh,05Fh	; ovr_1be4_6000:12DE
+		db	007h,026h,08Ah,047h,002h,0B4h,000h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,004h	; ovr_1be4_6000:12EC
+		db	000h; raw:12FA
+X00F_03	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,057h,08Bh,07Eh,00Ah,09Ah
+		dw	0DEh
+		dw	seg CO02C_TEXT
+		db	08Bh,0F0h,08Eh,006h,028h,064h,026h,0C7h,004h,000h,000h,083h; ovr_1be4_6000:12FA
+		db	07Eh,008h,000h,074h,071h,057h,0F7h,046h,008h,002h,000h,074h,005h,0B8h	; ovr_1be4_6000:1316
+		db	001h,000h,0EBh,002h,033h,0C0h,050h,08Ah,046h,008h,024h,001h,050h,09Ah	; ovr_1be4_6000:1324
+		dw	039h
+		dw	seg CO010_TEXT
+		db	089h,046h,0FEh,0FFh,076h,0FEh,08Eh,006h,09Ah,063h; ovr_1be4_6000:1332
+		db	026h,08Bh,05Dh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,05Fh,014h,08Eh,006h	; ovr_1be4_6000:1340
+		db	09Ah,063h,026h,0FFh,037h,0B0h,001h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	089h; ovr_1be4_6000:134E
+		db	046h,0FEh,08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h,08Eh,006h,03Eh,05Fh	; ovr_1be4_6000:135C
+		db	026h,08Bh,05Fh,014h,08Eh,006h,09Ah,063h,026h,08Ah,047h,002h,024h,003h	; ovr_1be4_6000:136A
+		db	08Bh,05Eh,0FEh,026h,008h,047h,002h,08Eh,006h,028h,064h,08Bh,046h,0FEh	; ovr_1be4_6000:1378
+		db	026h,089h,044h,002h,0EBh,018h,08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h	; ovr_1be4_6000:1386
+		db	08Eh,006h,03Eh,05Fh,026h,08Bh,047h,014h,08Eh,006h,028h,064h,026h,089h	; ovr_1be4_6000:1394
+		db	044h,002h,08Bh,05Eh,006h,0D1h,0E3h,08Bh,087h,082h,061h,08Eh,006h,028h	; ovr_1be4_6000:13A2
+		db	064h,026h,089h,044h,004h,026h,0C6h,044h,006h,000h,026h,0C7h,044h,008h	; ovr_1be4_6000:13B0
+		db	000h,000h,08Bh,0C6h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,006h,000h; raw:13BE
+X00F_2A	label	far
+		db	055h,08Bh; ovr_1be4_6000:13BE
+		db	0ECh,056h,057h,08Bh,076h,006h,0FFh,076h,008h,08Eh,006h,09Ah,063h,026h	; ovr_1be4_6000:13CC
+		db	08Ah,044h,002h,0B4h,000h,025h,003h,000h,050h,0B8h,072h,000h,050h,00Eh	; ovr_1be4_6000:13DA
+		db	0E8h,010h,0FFh,08Bh,0F8h,08Eh,006h,09Ah,063h,026h,08Bh,044h,009h,08Eh	; ovr_1be4_6000:13E8
+		db	006h,028h,064h,026h,089h,005h,026h,0C6h,045h,007h,001h,08Eh,006h,09Ah	; ovr_1be4_6000:13F6
+		db	063h,026h,089h,07Ch,009h,08Bh,046h,008h,026h,089h,044h,003h,05Fh,05Eh	; ovr_1be4_6000:1404
+		db	05Dh,0CAh,004h,000h; raw:1412
+X00F_24	label	far
+		db	055h,08Bh,0ECh,04Ch,04Ch,056h,057h,08Bh,076h,008h; ovr_1be4_6000:1412
+		db	08Bh,07Eh,006h,08Eh,006h,09Ah,063h,026h,083h,03Ch,011h,075h,011h,026h	; ovr_1be4_6000:1420
+		db	0FFh,074h,007h,033h,0C0h,050h,0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	08Bh,0F0h,056h,057h,033h,0C0h,050h,09Ah
+		dw	020h
+		dw	seg CO00A_TEXT
+		db	088h,046h; ovr_1be4_6000:143C
+		db	0FFh,0B4h,000h,00Bh,0C0h,075h,053h,08Eh,006h,09Ah,063h,026h,08Bh,01Ch	; ovr_1be4_6000:144A
+		db	0F6h,087h,0CAh,009h,014h,074h,017h,026h,0F6h,044h,002h,020h,074h,010h	; ovr_1be4_6000:1458
+		db	026h,0FFh,074h,007h,057h,033h,0C0h,050h,09Ah
+		dw	020h
+		dw	seg CO00A_TEXT
+		db	088h; ovr_1be4_6000:1466
+		db	046h,0FFh,08Ah,046h,0FFh,0B4h,000h,00Bh,0C0h,075h,025h,08Eh,006h,09Ah	; ovr_1be4_6000:1474
+		db	063h,026h,08Bh,01Dh,0F6h,087h,0CAh,009h,014h,074h,017h,026h,0F6h,045h	; ovr_1be4_6000:1482
+		db	002h,020h,074h,010h,056h,026h,0FFh,075h,007h,033h,0C0h,050h,09Ah
+		dw	020h
+		dw	seg CO00A_TEXT
+		db	088h,046h,0FFh,08Ah,046h,0FFh,05Fh,05Eh,08Bh,0E5h,05Dh; ovr_1be4_6000:1490
+		db	0CAh,004h,000h; raw:14AC
+X00F_1C	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,006h,056h,057h,0C6h,046h,0FBh; ovr_1be4_6000:14AC
+		db	000h,08Bh,05Eh,008h,08Eh,006h,09Ah,063h,026h,08Ah,047h,00Ch,08Bh,05Eh	; ovr_1be4_6000:14BA
+		db	006h,026h,00Ah,047h,00Ch,0A8h,008h,074h,007h,0C6h,046h,0FBh,001h,0E9h	; ovr_1be4_6000:14C8
+		db	0B6h,000h,08Bh,05Eh,008h,08Eh,006h,09Ah,063h,026h,08Ah,047h,00Ch,0B4h	; ovr_1be4_6000:14D6
+		db	000h,025h,004h,000h,08Bh,05Eh,006h,026h,08Ah,057h,00Ch,0B6h,000h,081h	; ovr_1be4_6000:14E4
+		db	0E2h,004h,000h,03Bh,0C2h,074h,003h,0E9h,092h,000h,08Bh,05Eh,008h,026h	; ovr_1be4_6000:14F2
+		db	08Ah,047h,002h,0B4h,000h,025h,003h,000h,08Bh,05Eh,006h,026h,08Ah,057h	; ovr_1be4_6000:1500
+		db	002h,0B6h,000h,081h,0E2h,003h,000h,03Bh,0C2h,075h,075h,08Bh,05Eh,008h	; ovr_1be4_6000:150E
+		db	026h,08Bh,05Fh,009h,08Eh,006h,028h,064h,026h,08Bh,037h,08Bh,05Eh,006h	; ovr_1be4_6000:151C
+		db	08Eh,006h,09Ah,063h,026h,08Bh,05Fh,009h,08Eh,006h,028h,064h,026h,08Bh	; ovr_1be4_6000:152A
+		db	03Fh,0C6h,046h,0FBh,001h,0EBh,02Dh,08Eh,006h,028h,064h,026h,08Bh,044h	; ovr_1be4_6000:1538
+		db	002h,089h,046h,0FEh,026h,08Bh,045h,002h,089h,046h,0FCh,0FFh,076h,0FEh	; ovr_1be4_6000:1546
+		db	0FFh,076h,0FCh,033h,0C0h,050h,09Ah
+		dw	020h
+		dw	seg CO00A_TEXT
+		db	088h,046h,0FBh; ovr_1be4_6000:1554
+		db	08Eh,006h,028h,064h,026h,08Bh,034h,026h,08Bh,03Dh,00Bh,0F6h,074h,00Ah	; ovr_1be4_6000:1562
+		db	00Bh,0FFh,074h,006h,080h,07Eh,0FBh,000h,075h,0C5h,080h,07Eh,0FBh,000h	; ovr_1be4_6000:1570
+		db	074h,009h,03Bh,0F7h,075h,005h,0B8h,001h,000h,0EBh,002h,033h,0C0h,088h	; ovr_1be4_6000:157E
+		db	046h,0FBh,08Ah,046h,0FBh,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,004h,000h,055h	; ovr_1be4_6000:158C
+		db	08Bh,0ECh,04Ch,04Ch,056h,057h,08Bh,076h,006h,0E9h,0B3h,000h,08Eh,006h	; ovr_1be4_6000:159A
+		db	008h,064h,026h,08Bh,004h,089h,046h,0FEh,083h,07Eh,008h,000h,075h,011h	; ovr_1be4_6000:15A8
+		db	089h,076h,008h,026h,0C7h,004h,000h,000h,026h,0C7h,044h,004h,000h,000h	; ovr_1be4_6000:15B6
+		db	0E9h,08Fh,000h,08Bh,07Eh,008h,0EBh,007h,08Eh,006h,008h,064h,026h,08Bh	; ovr_1be4_6000:15C4
+		db	03Dh,08Eh,006h,008h,064h,026h,083h,03Dh,000h,074h,01Eh,026h,08Bh,05Dh	; ovr_1be4_6000:15D2
+		db	002h,08Eh,006h,09Ah,063h,026h,08Bh,047h,005h,08Eh,006h,008h,064h,026h	; ovr_1be4_6000:15E0
+		db	08Bh,05Ch,002h,08Eh,006h,09Ah,063h,026h,03Bh,047h,005h,075h,0D1h,08Eh	; ovr_1be4_6000:15EE
+		db	006h,008h,064h,026h,08Bh,05Dh,002h,08Eh,006h,09Ah,063h,026h,08Bh,047h	; ovr_1be4_6000:15FC
+		db	005h,08Eh,006h,008h,064h,026h,08Bh,05Ch,002h,08Eh,006h,09Ah,063h,026h	; ovr_1be4_6000:160A
+		db	03Bh,047h,005h,075h,00Dh,01Eh,0B8h,008h,064h,050h,056h,09Ah
+		dw	034h
+		dw	seg CO043_TEXT
+		db	0EBh,02Ch,08Eh,006h,008h,064h,026h,0C7h,004h,000h,000h,026h; ovr_1be4_6000:1618
+		db	08Bh,045h,004h,026h,08Bh,05Dh,002h,08Eh,006h,09Ah,063h,026h,08Bh,05Fh	; ovr_1be4_6000:1634
+		db	005h,08Eh,006h,03Eh,05Fh,026h,003h,047h,016h,08Eh,006h,008h,064h,026h	; ovr_1be4_6000:1642
+		db	089h,044h,004h,026h,089h,035h,08Bh,076h,0FEh,00Bh,0F6h,074h,003h,0E9h	; ovr_1be4_6000:1650
+		db	046h,0FFh,08Bh,046h,008h,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,004h,000h,055h	; ovr_1be4_6000:165E
+		db	08Bh,0ECh,04Ch,04Ch,056h,057h,0C7h,046h,0FEh,000h,000h,08Bh,05Eh,006h	; ovr_1be4_6000:166C
+		db	08Eh,006h,09Ah,063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,0F7h	; ovr_1be4_6000:167A
+		db	047h,018h,004h,000h,074h,078h,08Bh,05Eh,006h,08Eh,006h,09Ah,063h,026h	; ovr_1be4_6000:1688
+		db	08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,077h,00Ch,0EBh,05Fh,0FFh	; ovr_1be4_6000:1696
+		db	076h,0FEh,08Eh,006h,008h,064h,026h,0FFh,074h,002h,00Eh,0E8h,0B9h,0FFh	; ovr_1be4_6000:16A4
+		db	050h,00Eh,0E8h,0E2h,0FEh,089h,046h,0FEh,08Eh,006h,008h,064h,026h,080h	; ovr_1be4_6000:16B2
+		db	07Ch,007h,000h,074h,036h,01Eh,0B8h,008h,064h,050h,0B8h,009h,000h,050h	; ovr_1be4_6000:16C0
+		db	09Ah
+		dw	025h
+		dw	seg CO043_TEXT
+		db	08Bh,0F8h,0FFh,036h,008h,064h,057h,0FFh,036h; ovr_1be4_6000:16CE
+		db	008h,064h,056h,0B9h,009h,000h,09Ah
+		dw	0402h
+		dw	seg BCC_COPY_WORDS
+		db	08Eh,006h,008h; ovr_1be4_6000:16DC
+		db	064h,026h,0C7h,005h,000h,000h,0FFh,076h,0FEh,057h,00Eh,0E8h,0A1h,0FEh	; ovr_1be4_6000:16EA
+		db	089h,046h,0FEh,08Eh,006h,008h,064h,026h,08Bh,034h,00Bh,0F6h,075h,09Dh	; ovr_1be4_6000:16F8
+		db	08Bh,046h,0FEh,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,002h,000h; raw:1706
+X00F_08	label	far
+		db	055h,08Bh,0ECh; ovr_1be4_6000:1706
+		db	04Ch,04Ch,056h,057h,08Bh,07Eh,006h,057h,00Eh,0E8h,04Bh,0FFh,089h,046h	; ovr_1be4_6000:1714
+		db	0FEh,08Bh,076h,0FEh,0EBh,023h,08Eh,006h,008h,064h,026h,08Bh,044h,004h	; ovr_1be4_6000:1722
+		db	08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h,08Eh,006h,03Eh,05Fh,026h,003h	; ovr_1be4_6000:1730
+		db	047h,016h,08Eh,006h,008h,064h,026h,089h,044h,004h,026h,08Bh,034h,00Bh	; ovr_1be4_6000:173E
+		db	0F6h,075h,0D9h,08Bh,046h,0FEh,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,002h,000h	; ovr_1be4_6000:174C
+		db	045h,055h,08Bh,0ECh,056h,08Bh,076h,004h,0EBh,018h,08Eh,006h,046h,05Fh	; ovr_1be4_6000:175A
+		db	026h,08Bh,044h,002h,03Bh,046h,006h,075h,004h,08Bh,0C6h,0EBh,00Dh,08Eh	; ovr_1be4_6000:1768
+		db	006h,046h,05Fh,026h,08Bh,034h,00Bh,0F6h,075h,0E4h,033h,0C0h,05Eh,05Dh	; ovr_1be4_6000:1776
+		db	04Dh,0C2h,004h,000h; raw:1784
+X00F_09	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,004h,056h,057h,033h,0FFh; ovr_1be4_6000:1784
+		db	08Bh,01Eh,038h,064h,08Eh,006h,09Ah,063h,026h,08Bh,05Fh,005h,08Eh,006h	; ovr_1be4_6000:1792
+		db	03Eh,05Fh,026h,08Bh,077h,002h,0E9h,064h,001h,08Eh,006h,0A4h,078h,026h	; ovr_1be4_6000:17A0
+		db	0F6h,044h,004h,003h,074h,003h,0E9h,04Fh,001h,056h,0FFh,076h,006h,0E8h	; ovr_1be4_6000:17AE
+		db	09Ch,0FFh,089h,046h,0FCh,083h,07Eh,0FCh,000h,074h,016h,057h,08Bh,05Eh	; ovr_1be4_6000:17BC
+		db	0FCh,08Eh,006h,046h,05Fh,026h,0FFh,077h,004h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0E9h,029h,001h,08Eh,006h,0A4h,078h,026h,08Bh,05Ch,008h,08Eh	; ovr_1be4_6000:17D8
+		db	006h,09Ah,063h,026h,0F6h,047h,002h,004h,075h,003h,0E9h,0C1h,000h,08Eh	; ovr_1be4_6000:17E6
+		db	006h,0A4h,078h,026h,08Bh,05Ch,008h,08Eh,006h,09Ah,063h,026h,083h,03Fh	; ovr_1be4_6000:17F4
+		db	011h,075h,039h,0B8h,02Fh,000h,050h,0FFh,036h,012h,05Fh,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,056h,09Ah
+		dw	07Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,057h,0FFh,076h,0FEh,08Eh,006h,0A4h,078h,026h,0FFh; ovr_1be4_6000:1802
+		db	074h,008h,09Ah
+		dw	020h
+		dw	seg CO06B_TEXT
+		db	050h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh; ovr_1be4_6000:182C
+		db	0F8h,0E9h,0C8h,000h,08Eh,006h,0A4h,078h,026h,0FFh,074h,008h,0B0h,000h	; ovr_1be4_6000:183A
+		db	050h,00Eh,0E8h,09Fh,0F8h,00Bh,0C0h,074h,03Ah,0B8h,02Fh,000h,050h,0FFh	; ovr_1be4_6000:1848
+		db	036h,012h,05Fh,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,056h,09Ah
+		dw	07Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,057h,0FFh,076h,0FEh; ovr_1be4_6000:1856
+		db	08Eh,006h,0A4h,078h,026h,0FFh,074h,008h,033h,0C0h,050h,00Eh,0E8h,04Ch	; ovr_1be4_6000:1872
+		db	0F4h,050h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0EBh,07Bh,0B8h,0E0h,000h; ovr_1be4_6000:1880
+		db	050h,0B8h,005h,000h,050h,033h,0C0h,050h,08Eh,006h,0A4h,078h,026h,0FFh	; ovr_1be4_6000:188E
+		db	074h,008h,09Ah
+		dw	020h
+		dw	seg CO021_TEXT
+		db	052h,050h,056h,09Ah
+		dw	048h
+		dw	seg CO019_TEXT
+		db	052h,050h,09Ah
+		dw	03Eh
+		dw	seg CO019_TEXT
+		db	0EBh,052h,08Eh,006h,0A4h,078h; ovr_1be4_6000:189C
+		db	026h,08Bh,05Ch,008h,08Eh,006h,09Ah,063h,026h,08Bh,01Fh,0F6h,087h,0CAh	; ovr_1be4_6000:18B8
+		db	009h,014h,074h,018h,08Eh,006h,0A4h,078h,026h,08Bh,05Ch,008h,08Eh,006h	; ovr_1be4_6000:18C6
+		db	09Ah,063h,026h,0F6h,047h,002h,020h,074h,005h,0B8h,0DBh,000h,0EBh,016h	; ovr_1be4_6000:18D4
+		db	08Eh,006h,0A4h,078h,026h,08Bh,05Ch,008h,08Eh,006h,09Ah,063h,026h,0F6h	; ovr_1be4_6000:18E2
+		db	047h,002h,001h,074h,011h,0B8h,058h,001h,050h,08Eh,006h,0A4h,078h,026h	; ovr_1be4_6000:18F0
+		db	0FFh,074h,002h,09Ah
+		dw	02Fh
+		dw	seg CO019_TEXT
+		db	08Eh,006h,0A4h,078h,026h,08Bh; ovr_1be4_6000:18FE
+		db	034h,00Bh,0F6h,074h,003h,0E9h,095h,0FEh,08Bh,0C7h,05Fh,05Eh,08Bh,0E5h	; ovr_1be4_6000:190C
+		db	05Dh,0CAh,002h,000h; raw:191A
+X00F_0D	label	far
+		db	055h,08Bh,0ECh,056h,01Eh,0B8h,046h,05Fh,050h,0B8h; ovr_1be4_6000:191A
+		db	006h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO043_TEXT
+		db	08Bh,0F0h,0FFh,036h,046h,05Fh; ovr_1be4_6000:1928
+		db	056h,033h,0C0h,050h,0B8h,006h,000h,050h,09Ah
+		dw	03h
+		dw	seg BCC_FAR_AF23
+		db	08Eh; ovr_1be4_6000:1936
+		db	006h,046h,05Fh,08Bh,046h,006h,026h,089h,004h,08Bh,0C6h,05Eh,05Dh,0CAh	; ovr_1be4_6000:1944
+		db	002h,000h,045h,055h,08Bh,0ECh,04Ch,04Ch,056h,08Bh,076h,004h,0EBh,017h	; ovr_1be4_6000:1952
+		db	089h,076h,0FEh,08Eh,006h,046h,05Fh,026h,08Bh,034h,01Eh,0B8h,046h,05Fh	; ovr_1be4_6000:1960
+		db	050h,0FFh,076h,0FEh,09Ah
+		dw	034h
+		dw	seg CO043_TEXT
+		db	00Bh,0F6h,075h,0E5h,05Eh; ovr_1be4_6000:196E
+		db	08Bh,0E5h,05Dh,04Dh,0C2h,002h,000h,045h,055h,08Bh,0ECh,056h,08Bh,076h	; ovr_1be4_6000:197C
+		db	004h,0EBh,018h,08Eh,006h,046h,05Fh,026h,08Bh,044h,002h,03Bh,046h,006h	; ovr_1be4_6000:198A
+		db	075h,004h,08Bh,0C6h,0EBh,00Dh,08Eh,006h,046h,05Fh,026h,08Bh,034h,00Bh	; ovr_1be4_6000:1998
+		db	0F6h,075h,0E4h,033h,0C0h,05Eh,05Dh,04Dh,0C2h,004h,000h; raw:19A6
+X00F_0F	label	far
+		db	055h,08Bh,0ECh; ovr_1be4_6000:19A6
+		db	083h,0ECh,006h,056h,057h,033h,0FFh,08Bh,01Eh,038h,064h,08Eh,006h,09Ah	; ovr_1be4_6000:19B4
+		db	063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,077h,00Ch,0E9h	; ovr_1be4_6000:19C2
+		db	021h,001h,08Eh,006h,008h,064h,026h,080h,07Ch,007h,000h,074h,003h,0E9h	; ovr_1be4_6000:19D0
+		db	00Ch,001h,08Eh,006h,008h,064h,026h,0FFh,074h,002h,0FFh,076h,006h,0E8h	; ovr_1be4_6000:19DE
+		db	095h,0FFh,089h,046h,0FAh,083h,07Eh,0FAh,000h,074h,016h,057h,08Bh,05Eh	; ovr_1be4_6000:19EC
+		db	0FAh,08Eh,006h,046h,05Fh,026h,0FFh,077h,004h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0E9h,0DFh,000h,08Eh,006h,008h,064h,026h,0FFh,074h,002h,0B0h	; ovr_1be4_6000:1A08
+		db	000h,050h,00Eh,0E8h,0D0h,0F6h,089h,046h,0FCh,083h,07Eh,0FCh,000h,075h	; ovr_1be4_6000:1A16
+		db	003h,0E9h,08Ch,000h,0FFh,076h,0FCh,0FFh,036h,038h,064h,09Ah
+		dw	02Fh
+		dw	seg CO06C_TEXT
+		db	0B4h,000h,00Bh,0C0h,075h,00Fh,0B8h,0B6h,000h,050h,0FFh,076h; ovr_1be4_6000:1A24
+		db	0FCh,09Ah
+		dw	039h
+		dw	seg CO021_TEXT
+		db	0E9h,096h,000h,0FFh,036h,012h,05Fh,09Ah; ovr_1be4_6000:1A40
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,08Eh,006h,008h,064h,026h,0FFh,074h,002h,033h; ovr_1be4_6000:1A4E
+		db	0C0h,050h,00Eh,0E8h,0B4h,0F2h,089h,046h,0FEh,080h,07Eh,008h,000h,074h	; ovr_1be4_6000:1A5C
+		db	042h,08Bh,05Eh,0FCh,08Eh,006h,010h,064h,026h,0F7h,047h,00Ah,010h,000h	; ovr_1be4_6000:1A6A
+		db	074h,033h,0FFh,036h,038h,064h,033h,0C0h,050h,0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO00A_TEXT
+		db	050h,0FFh,076h,0FEh,09Ah
+		dw	084h
+		dw	seg CO023_TEXT
+		db	089h,046h; ovr_1be4_6000:1A78
+		db	0FEh,0B8h,00Bh,000h,050h,0FFh,036h,012h,05Fh,00Eh,0E8h,092h,0F0h,050h	; ovr_1be4_6000:1A94
+		db	0FFh,076h,0FEh,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,057h,0FFh,076h; ovr_1be4_6000:1AA2
+		db	0FEh,0E9h,04Fh,0FFh,08Eh,006h,008h,064h,026h,08Bh,05Ch,002h,08Eh,006h	; ovr_1be4_6000:1AB0
+		db	09Ah,063h,026h,0F6h,047h,002h,004h,074h,025h,0B8h,0DFh,000h,050h,0B8h	; ovr_1be4_6000:1ABE
+		db	005h,000h,050h,033h,0C0h,050h,08Eh,006h,008h,064h,026h,0FFh,074h,002h	; ovr_1be4_6000:1ACC
+		db	09Ah
+		dw	020h
+		dw	seg CO021_TEXT
+		db	052h,050h,033h,0C0h,033h,0D2h,050h,052h,09Ah; ovr_1be4_6000:1ADA
+		dw	03Eh
+		dw	seg CO019_TEXT
+		db	08Eh,006h,008h,064h,026h,08Bh,034h,00Bh,0F6h,074h; ovr_1be4_6000:1AE8
+		db	003h,0E9h,0D8h,0FEh,0FFh,076h,006h,0E8h,054h,0FEh,08Bh,0C7h,05Fh,05Eh	; ovr_1be4_6000:1AF6
+		db	08Bh,0E5h,05Dh,0CAh,004h,000h,055h,08Bh,0ECh,083h,0ECh,00Ch,056h,057h	; ovr_1be4_6000:1B04
+		db	08Bh,07Eh,006h,0C7h,046h,0FEh,000h,000h,08Bh,05Eh,00Eh,08Eh,006h,09Ah	; ovr_1be4_6000:1B12
+		db	063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h,08Bh,077h,00Ch,0E9h	; ovr_1be4_6000:1B20
+		db	018h,001h,08Eh,006h,008h,064h,026h,080h,07Ch,007h,000h,075h,003h,0E9h	; ovr_1be4_6000:1B2E
+		db	07Fh,000h,026h,08Bh,05Ch,002h,08Eh,006h,09Ah,063h,026h,08Bh,047h,005h	; ovr_1be4_6000:1B3C
+		db	08Eh,006h,008h,064h,026h,08Bh,05Dh,002h,08Eh,006h,09Ah,063h,026h,03Bh	; ovr_1be4_6000:1B4A
+		db	047h,005h,075h,061h,0FFh,076h,00Ch,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,08Eh; ovr_1be4_6000:1B58
+		db	006h,008h,064h,08Bh,046h,008h,026h,003h,044h,004h,050h,026h,0FFh,074h	; ovr_1be4_6000:1B66
+		db	002h,00Eh,0E8h,0D0h,0E6h,089h,046h,0FAh,0FFh,076h,00Ch,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,08Eh,006h,008h,064h,026h,0FFh,075h,004h,026h,0FFh,075h; ovr_1be4_6000:1B74
+		db	002h,00Eh,0E8h,03Bh,0E6h,089h,046h,0F8h,0FFh,076h,0FEh,0B8h,005h,000h	; ovr_1be4_6000:1B90
+		db	050h,0FFh,076h,0FAh,0B8h,01Dh,000h,050h,0FFh,076h,0F8h,09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,08Eh,006h,008h,064h,026h,080h,07Ch,007h,000h,074h,044h	; ovr_1be4_6000:1BBA
+		db	08Bh,046h,00Ah,089h,046h,0F6h,08Bh,05Eh,0F6h,08Eh,006h,008h,064h,026h	; ovr_1be4_6000:1BC8
+		db	08Bh,05Fh,002h,08Eh,006h,09Ah,063h,026h,08Bh,047h,005h,08Eh,006h,008h	; ovr_1be4_6000:1BD6
+		db	064h,026h,08Bh,05Ch,002h,08Eh,006h,09Ah,063h,026h,03Bh,047h,005h,075h	; ovr_1be4_6000:1BE4
+		db	00Dh,08Bh,05Eh,0F6h,08Eh,006h,008h,064h,026h,08Bh,047h,004h,0EBh,017h	; ovr_1be4_6000:1BF2
+		db	08Eh,006h,008h,064h,08Bh,05Eh,0F6h,026h,08Bh,007h,0EBh,0BFh,08Eh,006h	; ovr_1be4_6000:1C00
+		db	008h,064h,08Bh,046h,008h,026h,003h,044h,004h,089h,046h,0F4h,08Eh,006h	; ovr_1be4_6000:1C0E
+		db	008h,064h,026h,0FFh,074h,002h,0FFh,076h,00Ch,0FFh,076h,00Ah,0FFh,076h	; ovr_1be4_6000:1C1C
+		db	0F4h,057h,00Eh,0E8h,0DAh,0FEh,089h,046h,0FCh,0FFh,076h,0FEh,0FFh,076h	; ovr_1be4_6000:1C2A
+		db	0FCh,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,08Eh,006h,008h,064h,026h; ovr_1be4_6000:1C38
+		db	08Bh,034h,00Bh,0F6h,074h,003h,0E9h,0E1h,0FEh,08Bh,046h,0FEh,05Fh,05Eh	; ovr_1be4_6000:1C46
+		db	08Bh,0E5h,05Dh,0CAh,00Ah,000h; raw:1C54
+X00F_29	label	far
+		db	055h,08Bh,0ECh,083h,0ECh,008h,056h,057h; ovr_1be4_6000:1C54
+		db	033h,0FFh,0FFh,036h,038h,064h,00Eh,0E8h,0A5h,0FAh,08Bh,0F0h,089h,046h	; ovr_1be4_6000:1C62
+		db	0FCh,0E9h,0EEh,000h,08Eh,006h,008h,064h,026h,0FFh,074h,002h,0FFh,076h	; ovr_1be4_6000:1C70
+		db	006h,0E8h,001h,0FDh,089h,046h,0F8h,083h,07Eh,0F8h,000h,074h,016h,057h	; ovr_1be4_6000:1C7E
+		db	08Bh,05Eh,0F8h,08Eh,006h,046h,05Fh,026h,0FFh,077h,004h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0E9h,09Eh,000h,08Eh,006h,008h,064h,026h,0FFh,074h; ovr_1be4_6000:1C8C
+		db	002h,0B0h,000h,050h,00Eh,0E8h,03Ch,0F4h,089h,046h,0FAh,083h,07Eh,0FAh	; ovr_1be4_6000:1CA8
+		db	000h,074h,04Eh,0FFh,076h,0FAh,0FFh,036h,038h,064h,09Ah
+		dw	02Fh
+		dw	seg CO06C_TEXT
+		db	0B4h,000h,00Bh,0C0h,075h,00Eh,0B8h,0B6h,000h,050h,0FFh,076h,0FAh; ovr_1be4_6000:1CB6
+		db	09Ah
+		dw	039h
+		dw	seg CO021_TEXT
+		db	0EBh,059h,0FFh,036h,012h,05Fh,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,0FFh,076h,0FEh,08Eh,006h,008h,064h,026h,0FFh; ovr_1be4_6000:1CD2
+		db	074h,002h,033h,0C0h,050h,00Eh,0E8h,01Fh,0F0h,089h,046h,0FEh,057h,0FFh	; ovr_1be4_6000:1CEE
+		db	076h,0FEh,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0EBh,038h,08Eh,006h,008h; ovr_1be4_6000:1CFC
+		db	064h,026h,08Bh,05Ch,002h,08Eh,006h,09Ah,063h,026h,0F6h,047h,002h,004h	; ovr_1be4_6000:1D0A
+		db	074h,025h,0B8h,0DFh,000h,050h,0B8h,005h,000h,050h,033h,0C0h,050h,08Eh	; ovr_1be4_6000:1D18
+		db	006h,008h,064h,026h,0FFh,074h,002h,09Ah
+		dw	020h
+		dw	seg CO021_TEXT
+		db	052h,050h; ovr_1be4_6000:1D26
+		db	033h,0C0h,033h,0D2h,050h,052h,09Ah
+		dw	03Eh
+		dw	seg CO019_TEXT
+		db	0FFh,036h,038h; ovr_1be4_6000:1D34
+		db	064h,0FFh,036h,012h,05Fh,0FFh,076h,0FCh,033h,0C0h,050h,056h,00Eh,0E8h	; ovr_1be4_6000:1D42
+		db	0B8h,0FDh,050h,057h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,08Eh,006h,008h; ovr_1be4_6000:1D50
+		db	064h,026h,08Bh,034h,00Bh,0F6h,074h,003h,0E9h,00Bh,0FFh,00Bh,0FFh,074h	; ovr_1be4_6000:1D5E
+		db	025h,0B8h,020h,000h,050h,0FFh,076h,008h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h; ovr_1be4_6000:1D6C
+		db	0FFh,036h,0C8h,05Eh,033h,0C0h,033h,0D2h,050h,052h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,057h,09Ah
+		dw	039h
+		dw	seg CO023_TEXT
+		db	08Bh,0F8h,0FFh,076h,0FCh,00Eh; ovr_1be4_6000:1D7A
+		db	0E8h,067h,0E2h,0FFh,076h,006h,0E8h,0B5h,0FBh,08Bh,0C7h,05Fh,05Eh,08Bh	; ovr_1be4_6000:1D96
+		db	0E5h,05Dh,0CAh,004h,000h,055h,08Bh,0ECh,083h,0ECh,008h,056h,057h,08Bh	; ovr_1be4_6000:1DA4
+		db	07Eh,012h,0C7h,046h,0FEh,000h,000h,08Eh,006h,09Ah,063h,026h,08Bh,05Dh	; ovr_1be4_6000:1DB2
+		db	005h,08Eh,006h,03Eh,05Fh,026h,083h,07Fh,010h,000h,077h,017h,08Eh,006h	; ovr_1be4_6000:1DC0
+		db	09Ah,063h,026h,08Bh,05Dh,005h,08Eh,006h,03Eh,05Fh,026h,0F7h,047h,018h	; ovr_1be4_6000:1DCE
+		db	000h,008h,075h,003h,0E9h,006h,001h,08Ah,046h,006h,0B4h,000h,00Bh,0C0h	; ovr_1be4_6000:1DDC
+		db	074h,003h,0E9h,0FAh,000h,08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h,08Eh	; ovr_1be4_6000:1DEA
+		db	006h,03Eh,05Fh,026h,08Bh,047h,010h,089h,046h,0FAh,057h,00Eh,0E8h,0AAh	; ovr_1be4_6000:1DF8
+		db	0EDh,089h,046h,0F8h,08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h,08Eh,006h	; ovr_1be4_6000:1E06
+		db	03Eh,05Fh,026h,0F7h,047h,018h,000h,008h,074h,052h,0FFh,036h,098h,062h	; ovr_1be4_6000:1E14
+		db	09Ah
+		dw	02Fh
+		dw	seg CO00A_TEXT
+		db	050h,0FFh,036h,0B0h,063h,09Ah
+		dw	02Fh
+		dw	seg CO00A_TEXT
+		db	08Bh,0D0h,058h,003h,0C2h,08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h; ovr_1be4_6000:1E22
+		db	08Eh,006h,03Eh,05Fh,026h,0F7h,06Fh,01Ah,050h,0FFh,036h,0B0h,063h,09Ah	; ovr_1be4_6000:1E3E
+		dw	02Fh
+		dw	seg CO00A_TEXT
+		db	050h,08Bh,05Eh,0F8h,08Eh,006h,0A4h,078h,026h,0FFh; ovr_1be4_6000:1E4C
+		db	077h,008h,09Ah
+		dw	02Fh
+		dw	seg CO00A_TEXT
+		db	05Ah,003h,0D0h,058h,003h,0C2h,0C4h; ovr_1be4_6000:1E5A
+		db	05Eh,008h,026h,003h,007h,026h,089h,007h,0FFh,076h,010h,09Ah
+		dw	066h
+		dw	seg CO023_TEXT
+		db	050h,0FFh,076h,00Eh,057h,00Eh,0E8h,04Fh,0E3h,089h,046h,0FEh; ovr_1be4_6000:1E68
+		db	0B8h,02Fh,000h,050h,0FFh,076h,0FEh,0FFh,076h,0F8h,09Ah
+		dw	07Fh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,0B8h,01Dh,000h,050h; ovr_1be4_6000:1E84
+		db	0B8h,003h,000h,050h,0FFh,076h,00Ch,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	050h,0FFh; ovr_1be4_6000:1EA0
+		db	036h,0C8h,05Eh,0C4h,05Eh,008h,026h,08Bh,007h,099h,052h,050h,09Ah
+		dw	0C5h
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	050h,09Ah
+		dw	02Fh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FCh,0B8h,00Bh,000h,050h,0FFh,076h,0FEh,0FFh,076h,0FCh; ovr_1be4_6000:1EAE
+		db	09Ah
+		dw	0BBh
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,0C4h,05Eh,008h,08Bh,046h,0FAh; ovr_1be4_6000:1ED8
+		db	026h,001h,007h,08Eh,006h,09Ah,063h,026h,08Bh,05Dh,005h,08Eh,006h,03Eh	; ovr_1be4_6000:1EE6
+		db	05Fh,026h,08Bh,077h,00Ch,0EBh,047h,08Eh,006h,008h,064h,026h,08Ah,044h	; ovr_1be4_6000:1EF4
+		db	007h,0B4h,000h,00Bh,0C0h,075h,032h,026h,0FFh,074h,002h,0FFh,076h,010h	; ovr_1be4_6000:1F02
+		db	026h,08Bh,044h,004h,003h,046h,00Eh,050h,0FFh,076h,00Ch,0FFh,076h,00Ah	; ovr_1be4_6000:1F10
+		db	0FFh,076h,008h,026h,08Ah,044h,008h,050h,00Eh,0E8h,07Fh,0FEh,089h,046h	; ovr_1be4_6000:1F1E
+		db	0FCh,0FFh,076h,0FEh,0FFh,076h,0FCh,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h; ovr_1be4_6000:1F2C
+		db	0FEh,08Eh,006h,008h,064h,026h,08Bh,034h,00Bh,0F6h,075h,0B5h,08Bh,046h	; ovr_1be4_6000:1F3A
+		db	0FEh,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh,00Eh,000h; raw:1F48
+X00F_05	label	far
+		db	055h,08Bh,0ECh,083h,0ECh; ovr_1be4_6000:1F48
+		db	00Ch,056h,057h,08Bh,05Eh,006h,08Eh,006h,09Ah,063h,026h,08Bh,05Fh,005h	; ovr_1be4_6000:1F56
+		db	08Eh,006h,03Eh,05Fh,026h,08Bh,047h,012h,089h,046h,0F6h,0C7h,046h,0F4h	; ovr_1be4_6000:1F64
+		db	000h,000h,0FFh,076h,008h,09Ah
+		dw	093h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FAh,0FFh; ovr_1be4_6000:1F72
+		db	076h,006h,0FFh,076h,0FAh,033h,0C0h,050h,0FFh,076h,0F6h,016h,08Dh,046h	; ovr_1be4_6000:1F80
+		db	0F4h,050h,0B0h,000h,050h,00Eh,0E8h,012h,0FEh,089h,046h,0FEh,08Bh,05Eh	; ovr_1be4_6000:1F8E
+		db	006h,08Eh,006h,09Ah,063h,026h,08Bh,05Fh,005h,08Eh,006h,03Eh,05Fh,026h	; ovr_1be4_6000:1F9C
+		db	0F7h,047h,018h,004h,000h,075h,003h,0E9h,09Bh,000h,0FFh,076h,006h,00Eh	; ovr_1be4_6000:1FAA
+		db	0E8h,056h,0F7h,08Bh,0F0h,0C7h,046h,0F8h,000h,000h,0FFh,076h,0FAh,09Ah	; ovr_1be4_6000:1FB8
+		dw	06Bh
+		dw	seg CO023_TEXT
+		db	0FFh,076h,008h,00Eh,0E8h,062h,0EBh,089h,046h,0FAh; ovr_1be4_6000:1FC6
+		db	0EBh,067h,0FFh,076h,0FAh,09Ah
+		dw	066h
+		dw	seg CO023_TEXT
+		db	050h,0FFh,076h,006h; ovr_1be4_6000:1FD4
+		db	033h,0C0h,050h,08Eh,006h,008h,064h,026h,0FFh,074h,002h,0B0h,001h,050h	; ovr_1be4_6000:1FE2
+		db	0B0h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO06A_TEXT
+		db	089h,046h,0FCh,08Eh,006h,008h; ovr_1be4_6000:1FF0
+		db	064h,026h,0FFh,074h,002h,0FFh,076h,0FCh,033h,0C0h,050h,0FFh,076h,0F6h	; ovr_1be4_6000:1FFE
+		db	016h,08Dh,046h,0F4h,050h,0B0h,000h,050h,00Eh,0E8h,091h,0FDh,089h,046h	; ovr_1be4_6000:200C
+		db	0FCh,0FFh,076h,0F8h,0FFh,076h,0FCh,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h; ovr_1be4_6000:201A
+		db	0F8h,08Bh,0FEh,08Eh,006h,008h,064h,026h,08Bh,034h,01Eh,0B8h,008h,064h	; ovr_1be4_6000:2028
+		db	050h,057h,09Ah
+		dw	034h
+		dw	seg CO043_TEXT
+		db	00Bh,0F6h,075h,095h,0FFh,076h,0FEh; ovr_1be4_6000:2036
+		db	0FFh,076h,0F8h,09Ah
+		dw	025h
+		dw	seg CO023_TEXT
+		db	089h,046h,0FEh,0FFh,076h,0FAh; ovr_1be4_6000:2044
+		db	09Ah
+		dw	06Bh
+		dw	seg CO023_TEXT
+		db	08Bh,046h,0FEh,05Fh,05Eh,08Bh,0E5h,05Dh,0CAh; ovr_1be4_6000:2052
+		db	004h,000h; raw:2060
+X00F_01	label	far
+		db	055h,08Bh,0ECh,056h,0C4h,05Eh,014h,026h,08Bh,037h,08Eh,006h; ovr_1be4_6000:2060
+		db	008h,064h,08Bh,046h,00Ch,026h,0A3h,002h,000h,0EBh,007h,08Eh,006h,008h	; ovr_1be4_6000:206E
+		db	064h,026h,08Bh,034h,08Eh,006h,008h,064h,026h,08Bh,05Ch,002h,08Eh,006h	; ovr_1be4_6000:207C
+		db	09Ah,063h,026h,08Bh,047h,005h,08Bh,05Eh,00Ch,026h,03Bh,047h,005h,075h	; ovr_1be4_6000:208A
+		db	0E0h,00Bh,0F6h,074h,009h,0C4h,05Eh,006h,026h,0C6h,007h,001h,0EBh,03Eh	; ovr_1be4_6000:2098
+		db	01Eh,0B8h,008h,064h,050h,0B8h,009h,000h,050h,09Ah
+		dw	025h
+		dw	seg CO043_TEXT
+		db	08Bh,0F0h,0FFh,036h,008h,064h,056h,08Dh,046h,00Ah,016h,050h,0B9h,009h	; ovr_1be4_6000:20B4
+		db	000h,09Ah
+		dw	0402h
+		dw	seg BCC_COPY_WORDS
+		db	08Eh,006h,008h,064h,006h,0C4h,05Eh,014h; ovr_1be4_6000:20C2
+		db	026h,08Bh,007h,007h,026h,089h,004h,08Eh,046h,016h,026h,089h,037h,0C4h	; ovr_1be4_6000:20D0
+		db	05Eh,006h,026h,0C6h,007h,000h,05Eh,05Dh,0CAh,012h,000h; raw:20DE
+X00F_00	label	far
+		db	055h,08Bh,0ECh; ovr_1be4_6000:20DE
+		db	01Eh,0B8h,008h,064h,050h,0FFh,076h,006h,09Ah
+		dw	034h
+		dw	seg CO043_TEXT
+		db	05Dh; ovr_1be4_6000:20EC
+		db	0CAh,002h,000h; raw:20FA
+X00F_02	label	far
+		db	055h,08Bh,0ECh,056h,057h,08Bh,07Eh,008h,09Ah
+		dw	0DEh
+		dw	seg CO02C_TEXT
+		db	08Bh,0F0h,08Eh,006h,028h,064h,0A1h,0C8h,05Eh,026h,089h,044h; ovr_1be4_6000:20FA
+		db	002h,08Bh,05Eh,006h,0D1h,0E3h,08Bh,087h,082h,061h,026h,089h,044h,004h	; ovr_1be4_6000:2116
+		db	026h,0C6h,044h,006h,000h,026h,0C7h,044h,008h,000h,000h,08Eh,006h,09Ah	; ovr_1be4_6000:2124
+		db	063h,026h,08Bh,045h,009h,08Eh,006h,028h,064h,026h,089h,004h,026h,0C6h	; ovr_1be4_6000:2132
+		db	044h,007h,001h,08Eh,006h,09Ah,063h,026h,089h,075h,009h,05Fh,05Eh,05Dh	; ovr_1be4_6000:2140
+		db	0CAh,004h,000h	; ovr_1be4_6000:214E
+
+CO00F_TEXT	ends
+; END C236UNIT
+		end

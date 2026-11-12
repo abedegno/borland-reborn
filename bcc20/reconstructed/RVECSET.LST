@@ -1,0 +1,92 @@
+Turbo Assembler	 Version 2.51	     10/30/26 14:02:34	    Page 1
+G:\RVECSET.ASM
+
+
+
+      1				     ; Direct-segment relocation references
+      2						     extrn   BCC_COPY_WORDS:far
+      3						     extrn   BCC_DIAGNOSTIC:far
+      4						     extrn   BCC_FAR_245C:far
+      5						     extrn   BCC_FAR_5E22:far
+      6						     extrn   BCC_FAR_AB12:far
+      7						     extrn   BCC_FAR_AB51:far
+      8						     extrn   BCC_FAR_AB9B:far
+      9						     extrn   BCC_FAR_ABBB:far
+     10						     extrn   BCC_FAR_AF23:far
+     11						     extrn   BCC_RF_15C5_010D:far
+     12						     extrn   BCC_SEG_15:far
+     13						     extrn   BCC_SEG_180:far
+     14						     extrn   BCC_SEG_24:far
+     15						     extrn   BCC_SEG_26:far
+     16						     extrn   BCC_SEG_28:far
+     17						     extrn   BCC_SEG_42:far
+     18						     extrn   X02E_00:far
+     19						     extrn   X034_01:far
+     20						     extrn   X036_00:far
+     21				     DGROUP  group   _DATA,_BSS
+     22	0000			     _DATA   segment para public 'DATA'
+     23	0000			     _DATA   ends
+     24	0000			     _BSS    segment word public 'DATA'
+     25	0000			     _BSS    ends
+     26	0000			     CODE_1  segment byte public 'CODE'
+     27						     assume  cs:CODE_1
+     28
+     29
+     30
+     31	0000  55 8B EC 80 3E 1A			     db	055h,08Bh,0ECh,080h,03Eh,01Ah
+     32	0006  00 08 74 10 FF 76	0A+		     db	000h,008h,074h,010h,0FFh,076h,00Ah,0FFh,076h,008h,0FFh,076h,006h,09Ah
+     33	      FF 76 08 FF 76 06	9A
+     34	0014  1B 00				     db	01Bh,000h
+     35	0016  0000s				     dw	seg BCC_SEG_28
+     36	0018  EB 17 50 52 8C D8	1E+		     db	0EBh,017h,050h,052h,08Ch,0D8h,01Eh,08Bh,056h,006h
+     37	      8B 56 06
+     38	0022  8E 5E 08 8A 46 0A	B4+		     db	08Eh,05Eh,008h,08Ah,046h,00Ah,0B4h,025h,0CDh,021h,058h,08Eh,0D8h,05Ah
+     39	      25 CD 21 58 8E D8	5A
+     40	0030  58 5D CA 06 00			     db	058h,05Dh,0CAh,006h,000h
+     41	0035			     CODE_1 ends
+     42
+     43				     end
+Turbo Assembler	 Version 2.51	     10/30/26 14:02:34	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "10/30/26"
+??FILENAME			  Text	 "RVECSET "
+??TIME				  Text	 "14:02:34"
+??VERSION			  Number 0205
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE_1
+@FILENAME			  Text	 RVECSET
+@WORDSIZE			  Text	 2
+BCC_COPY_WORDS (BCC_COPY_WORDS)	  Far	 ----:---- Extern
+BCC_DIAGNOSTIC (BCC_DIAGNOSTIC)	  Far	 ----:---- Extern
+BCC_FAR_245C (BCC_FAR_245C)	  Far	 ----:---- Extern
+BCC_FAR_5E22 (BCC_FAR_5E22)	  Far	 ----:---- Extern
+BCC_FAR_AB12 (BCC_FAR_AB12)	  Far	 ----:---- Extern
+BCC_FAR_AB51 (BCC_FAR_AB51)	  Far	 ----:---- Extern
+BCC_FAR_AB9B (BCC_FAR_AB9B)	  Far	 ----:---- Extern
+BCC_FAR_ABBB (BCC_FAR_ABBB)	  Far	 ----:---- Extern
+BCC_FAR_AF23 (BCC_FAR_AF23)	  Far	 ----:---- Extern
+BCC_RF_15C5_010D	       +  Far	 ----:---- Extern
+(BCC_RF_15C5_010D)
+BCC_SEG_15 (BCC_SEG_15)		  Far	 ----:---- Extern
+BCC_SEG_180 (BCC_SEG_180)	  Far	 ----:---- Extern
+BCC_SEG_24 (BCC_SEG_24)		  Far	 ----:---- Extern
+BCC_SEG_26 (BCC_SEG_26)		  Far	 ----:---- Extern
+BCC_SEG_28 (BCC_SEG_28)		  Far	 ----:---- Extern
+BCC_SEG_42 (BCC_SEG_42)		  Far	 ----:---- Extern
+X02E_00	(X02E_00)		  Far	 ----:---- Extern
+X034_01	(X034_01)		  Far	 ----:---- Extern
+X036_00	(X036_00)		  Far	 ----:---- Extern
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE_1				  16  0035 Byte	  Public  CODE
+DGROUP				  Group
+  _BSS				  16  0000 Word	  Public  DATA
+  _DATA				  16  0000 Para	  Public  DATA
+

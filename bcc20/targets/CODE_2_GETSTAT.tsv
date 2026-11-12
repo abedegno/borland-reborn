@@ -1,0 +1,2 @@
+# segment CODE_2_GETSTAT base 0x46E8 size 0xF org 0x2DA8
+BCC_READ_STATUS	GETSTAT	0x0	0xF

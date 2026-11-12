@@ -1,0 +1,116 @@
+Turbo Assembler	 Version 2.51	     10/30/26 17:27:18	    Page 1
+G:\RINIT.ASM
+
+
+
+      1				     ; Direct-segment relocation references
+      2						     extrn   BCC_COPY_WORDS:far
+      3						     extrn   BCC_DIAGNOSTIC:far
+      4						     extrn   BCC_FAR_245C:far
+      5						     extrn   BCC_FAR_5E22:far
+      6						     extrn   BCC_FAR_AB12:far
+      7						     extrn   BCC_FAR_AB51:far
+      8						     extrn   BCC_FAR_AB9B:far
+      9						     extrn   BCC_FAR_ABBB:far
+     10						     extrn   BCC_FAR_AF23:far
+     11						     extrn   BCC_RF_15C5_010D:far
+     12						     extrn   BCC_SEG_15:far
+     13						     extrn   BCC_SEG_180:far
+     14						     extrn   BCC_SEG_24:far
+     15						     extrn   BCC_SEG_26:far
+     16						     extrn   BCC_SEG_28:far
+     17						     extrn   BCC_SEG_42:far
+     18						     extrn   X02E_00:far
+     19						     extrn   X034_01:far
+     20						     extrn   X036_00:far
+     21				     DGROUP  group   _DATA,_BSS
+     22	0000			     _DATA   segment para public 'DATA'
+     23	0000			     _DATA   ends
+     24	0000			     _BSS    segment word public 'DATA'
+     25	0000			     _BSS    ends
+     26
+     27
+     28
+     29
+     30	0000			     CODE_1  segment byte public 'CODE'
+     31						     assume  cs:CODE_1,ds:DGROUP
+     32
+     33
+     34	0000			     BCC_LINE_HOOK   label   far
+     35	0000			     BCC_FAR_04CF    proc    far
+     36	0000  55				     push    BP
+     37	0001  8B EC				     mov     BP,SP
+     38	0003  0E				     push    CS
+     39	0004  E8				     db	     0E8h
+     40	0005  FFA2				     dw	     0FFA2h
+     41	0007  B8 0100				     mov     AX,100h
+     42	000A  50				     push    AX
+     43	000B  0E				     push    CS
+     44	000C  E8				     db	     0E8h
+     45	000D  FFD1				     dw	     0FFD1h
+     46	000F  5D				     pop     BP
+     47	0010  CB				     retf
+     48	0011			     BCC_FAR_04CF    endp
+     49	0011			     CODE_1  ends
+     50
+     51				     ; Original-target semantic	aliases	(zero bytes)
+     52
+     53	      =	CODE_1:0450	     BCC_NAME_APPEND equ     BCC_FAR_04CF+450h
+     54				     ; Target-qualified	reference aliases (zero	bytes)
+     55
+     56	      =	CODE_1:-0020	     BCC_RF_1041_009F	     equ     BCC_FAR_04CF-20h
+     57
+Turbo Assembler	 Version 2.51	     10/30/26 17:27:18	    Page 2
+G:\RINIT.ASM
+
+
+
+     58				     end
+Turbo Assembler	 Version 2.51	     10/30/26 17:27:18	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "10/30/26"
+??FILENAME			  Text	 "RINIT	  "
+??TIME				  Text	 "17:27:18"
+??VERSION			  Number 0205
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE_1
+@FILENAME			  Text	 RINIT
+@WORDSIZE			  Text	 2
+BCC_COPY_WORDS (BCC_COPY_WORDS)	  Far	 ----:---- Extern
+BCC_DIAGNOSTIC (BCC_DIAGNOSTIC)	  Far	 ----:---- Extern
+BCC_FAR_04CF			  Far	 CODE_1:0000
+BCC_FAR_245C (BCC_FAR_245C)	  Far	 ----:---- Extern
+BCC_FAR_5E22 (BCC_FAR_5E22)	  Far	 ----:---- Extern
+BCC_FAR_AB12 (BCC_FAR_AB12)	  Far	 ----:---- Extern
+BCC_FAR_AB51 (BCC_FAR_AB51)	  Far	 ----:---- Extern
+BCC_FAR_AB9B (BCC_FAR_AB9B)	  Far	 ----:---- Extern
+BCC_FAR_ABBB (BCC_FAR_ABBB)	  Far	 ----:---- Extern
+BCC_FAR_AF23 (BCC_FAR_AF23)	  Far	 ----:---- Extern
+BCC_LINE_HOOK			  Far	 CODE_1:0000
+BCC_NAME_APPEND			  Number CODE_1:0450
+BCC_RF_1041_009F		  Number CODE_1:-0020
+BCC_RF_15C5_010D	       +  Far	 ----:---- Extern
+(BCC_RF_15C5_010D)
+BCC_SEG_15 (BCC_SEG_15)		  Far	 ----:---- Extern
+BCC_SEG_180 (BCC_SEG_180)	  Far	 ----:---- Extern
+BCC_SEG_24 (BCC_SEG_24)		  Far	 ----:---- Extern
+BCC_SEG_26 (BCC_SEG_26)		  Far	 ----:---- Extern
+BCC_SEG_28 (BCC_SEG_28)		  Far	 ----:---- Extern
+BCC_SEG_42 (BCC_SEG_42)		  Far	 ----:---- Extern
+X02E_00	(X02E_00)		  Far	 ----:---- Extern
+X034_01	(X034_01)		  Far	 ----:---- Extern
+X036_00	(X036_00)		  Far	 ----:---- Extern
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE_1				  16  0011 Byte	  Public  CODE
+DGROUP				  Group
+  _BSS				  16  0000 Word	  Public  DATA
+  _DATA				  16  0000 Para	  Public  DATA
+

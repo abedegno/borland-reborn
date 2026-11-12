@@ -1,0 +1,76 @@
+#ifndef CPPCALL_H
+#define CPPCALL_H
+#include "DATA.H"
+extern unsigned int EXPR_POOL_SEG; extern unsigned int SCOPE_POOL_SEG;
+struct C18Location { unsigned int words[3]; };
+
+extern unsigned int far pascal RESOLVE_SYMBOL_REFERENCE(unsigned int,unsigned int);
+extern unsigned int far pascal ANALYZE_EXPRESSION(unsigned int,unsigned int,unsigned int);
+extern unsigned int far pascal CHECK_CALL_ARGUMENTS(unsigned int,unsigned int);
+extern void far pascal REPORT_ARGUMENT_MISMATCH(unsigned int,unsigned int,unsigned int,int,unsigned int);
+extern unsigned int far pascal CONVERT_EXPR_TO_TYPE(unsigned int,unsigned int,unsigned int);
+extern unsigned int far pascal MAKE_ADDRESS_OF(unsigned int);
+extern unsigned char far pascal IS_BIT_FIELD_NODE(unsigned int);
+extern unsigned int far pascal MAKE_DEREFERENCE(unsigned int);
+extern unsigned int far pascal CONVERT_TO_RVALUE(unsigned int);
+extern unsigned int far pascal DECAY_TO_POINTER(unsigned int);
+extern unsigned int far pascal NODE_ENUM_TO_INT(unsigned int);
+extern unsigned char far pascal TYPES_COMPATIBLE(unsigned int,unsigned int,unsigned int);
+extern unsigned int far pascal MAKE_POINTER_TYPE(unsigned int,unsigned int,unsigned char);
+extern unsigned int far pascal BCC_MEMBER_LOOKUP(unsigned int);
+extern unsigned int far pascal REGISTER_TEMP_DESTRUCTOR(unsigned int,unsigned int,unsigned int);
+extern unsigned char far pascal IS_BASE_CLASS(unsigned int,unsigned int,unsigned char);
+extern unsigned char far pascal CANNOT_CONVERT_TYPES(unsigned int,unsigned int);
+extern unsigned int far pascal STRIP_CV_QUALIFIERS(unsigned int);
+extern void far pascal REPORT_CURRENT_TOKEN(unsigned int);
+extern void far pascal REPORT_DIAGNOSTIC(unsigned int,char far *,long);
+extern void far pascal REPORT_DIAGNOSTIC_AT(unsigned int,char far *,long,unsigned int,unsigned int);
+extern char far * far pascal FORMAT_CALL_SIGNATURE(unsigned int,unsigned int);
+extern char far * far pascal FORMAT_SYMBOL(unsigned int);
+extern long far pascal FORMAT_TYPE(unsigned int);
+extern unsigned int far pascal JOIN_COMMA_EXPR(unsigned int,unsigned int);
+extern unsigned char far pascal C7_TYPE_COMPAT(unsigned int,unsigned int,unsigned char);
+extern unsigned int far pascal MAKE_UNARY_NODE(unsigned int,unsigned int);
+extern unsigned int far pascal MAKE_CONDITIONAL_NODE(unsigned int,unsigned int,unsigned int,unsigned int);
+extern unsigned int far pascal REPORT_EXPR_ERROR(unsigned int,char far *,long,unsigned int);
+extern void far pascal FREE_EXPR_TREE(unsigned int);
+extern unsigned char far pascal IS_LINK_TIME_CONSTANT(unsigned int);
+extern void far pascal SAVE_EXPR_IN_TEMP(unsigned int far *,unsigned int far *);
+extern unsigned int far pascal COPY_EXPR_TREE(unsigned int);
+extern void far pascal FREE_EXPR_NODE(unsigned int);
+extern unsigned int far pascal CHECK_NULL_CONSTANT(unsigned int,unsigned char far *);
+extern unsigned int far pascal MAKE_FIELD_REF_NODE(unsigned int);
+extern unsigned int far pascal MAKE_CAST_NODE(unsigned int,unsigned int);
+extern unsigned int far pascal MAKE_SYMBOL_NODE(unsigned int);
+extern unsigned char far pascal IS_NAMED_OBJECT_EXPR(unsigned int);
+extern unsigned int far pascal MAKE_LIST_NODE(unsigned int,unsigned int);
+extern unsigned int far pascal MAKE_BINARY_NODE(unsigned int,unsigned int,unsigned int);
+extern unsigned int far pascal CREATE_LOCAL_TEMP(unsigned int);
+extern unsigned int far pascal MAKE_INT_CONSTANT(unsigned int,long);
+extern unsigned char far pascal IS_LVALUE(unsigned int);
+extern unsigned int far pascal REPORT_EXPR_ERROR_PLAIN(unsigned int,unsigned int);
+extern unsigned int far pascal NULL_CONSTANT_TO_POINTER(unsigned int,unsigned int);
+extern unsigned int far pascal FIND_USER_CONVERSION(unsigned int,unsigned int,unsigned char,unsigned int,unsigned int);
+extern unsigned int far pascal SELECT_OVERLOAD(unsigned int,unsigned int,unsigned int,unsigned int);
+extern unsigned int far pascal UNPACK_EXPR_TREE(unsigned int);
+extern unsigned int far pascal LOOKUP_NAME(unsigned int);
+extern unsigned int far pascal REWRITE_FOR_REFERENCE_BIND(unsigned int);
+extern unsigned int far pascal CONVERT_DERIVED_TO_BASE(unsigned int,unsigned int,unsigned int,unsigned int,unsigned char,unsigned char);
+extern unsigned int far pascal DEREF_REFERENCE_EXPR(unsigned int);
+extern unsigned int far pascal FIND_MEMBER_REPORT(unsigned int,unsigned int);
+extern unsigned char far pascal SYMBOL_ACCESSIBLE(unsigned int,unsigned int);
+
+static unsigned int near pascal ADJUST_THIS_ARGUMENT(register unsigned int expression,unsigned int type);
+unsigned int far pascal RESOLVE_OVERLOADED_CALL(register unsigned int expression,unsigned int type);
+unsigned int far pascal VIRTUAL_TABLE_ENTRY(unsigned int index,register unsigned int type,unsigned int expression);
+void far pascal LOWER_VIRTUAL_CALL(unsigned int expression,unsigned int far *type);
+static void near pascal CHECK_CONST_THIS(register unsigned int symbol,register unsigned int expression);
+unsigned char far pascal TRY_UNARY_OPERATOR_CALL(unsigned int far *output,unsigned int operation,unsigned int context);
+unsigned char far pascal TRY_BINARY_OPERATOR_CALL(unsigned int far *output,unsigned int operation,unsigned int context);
+static void near pascal LOWER_MEMBER_POINTER_CALL(unsigned int far *left,unsigned int far *right,unsigned int far *sequence);
+static void near pascal REWRITE_MEMBER_CALL(register unsigned int expression,unsigned int far *sequence,unsigned int far *type);
+static unsigned int near pascal FIND_CALL_OPERATOR(register unsigned int expression);
+unsigned int far pascal PREPARE_CALL(register unsigned int expression,unsigned int far *sequence);
+unsigned int far pascal CONVERT_ARGUMENT(unsigned int expression,unsigned int formal,unsigned int symbol,int position);
+unsigned int far pascal DEFAULT_ARGUMENT(register unsigned int formal);
+#endif

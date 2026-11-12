@@ -1,0 +1,2 @@
+# segment CODE_4_R5BED base 0x6BED size 0x70 org 0x17D
+REPORT_WARNING	R5BED	0x0	0x70

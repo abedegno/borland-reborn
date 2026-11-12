@@ -1,0 +1,2 @@
+# segment CODE_2_RH110A base 0x2A4A size 0x118 org 0x110A
+HEAP_ALLOC_NODE	RH110A	0x0	0x118

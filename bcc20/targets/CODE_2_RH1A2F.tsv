@@ -1,0 +1,2 @@
+# segment CODE_2_RH1A2F base 0x336F size 0xB1 org 0x1A2F
+SHRINK_HEAP_TO	RH1A2F	0x0	0xB1

@@ -1,0 +1,2 @@
+# segment CODE_2_RT2F09 base 0x4849 size 0x1A org 0x2F09
+RESOLVE_HANDLE_FAR	RT2F09	0x0	0x1A
