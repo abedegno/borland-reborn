@@ -1,16 +1,16 @@
 # Code coverage of the test corpus
 
 Which of BCC.EXE's code the modding build's test corpus runs (`tools/modtrace.py`):
-Borland's BCC.EXE runs the 1832 compiles of `tools/modtest.py` (919 files, each
+Borland's BCC.EXE runs the 1836 compiles of `tools/modtest.py` (923 files, each
 with its own switches) in a tracing emu2, which records every instruction that runs.
 The modding build is checked by these compiles, so code they never run is not checked
 by them.
 
 | Part | Code bytes | Ran | Share |
 |---|---|---|---|
-| resident | 45525 | 29840 | 65% |
-| overlays | 370416 | 315633 | 85% |
-| all | 415941 | 345473 | 83% |
+| resident | 45525 | 29968 | 65% |
+| overlays | 370416 | 317398 | 85% |
+| all | 415941 | 347366 | 83% |
 
 Modules by share of code that ran (lowest first):
 
@@ -22,7 +22,6 @@ Modules by share of code that ran (lowest first):
 | HPUNFXHI | 82 | 0% |
 | RLTOA | 72 | 0% |
 | OOMHAND | 68 | 0% |
-| LDISNAN | 67 | 0% |
 | RCTRL23 | 55 | 0% |
 | HPSWPDIS | 52 | 0% |
 | HPHSIZE | 51 | 0% |
@@ -42,7 +41,6 @@ Modules by share of code that ran (lowest first):
 | HPSTUBOV | 8 | 0% |
 | HPSTUBIO | 8 | 0% |
 | INITMARK | 1 | 0% |
-| CPRAGFN | 123 | 11% |
 | EMSBANK | 972 | 13% |
 | HEAPMAIN | 2468 | 30% |
 | INTRINS | 1991 | 36% |
@@ -76,7 +74,6 @@ Modules by share of code that ran (lowest first):
 | CPPIFEXP | 306 | 65% |
 | FRAME | 4533 | 66% |
 | EMITBIN | 350 | 68% |
-| PREPROC | 4677 | 68% |
 | CGCONV | 1710 | 69% |
 | CGOPER | 4397 | 70% |
 | RVECGET | 43 | 74% |
@@ -94,7 +91,6 @@ Modules by share of code that ran (lowest first):
 | ASMEXTRN | 1228 | 77% |
 | HPALLOC | 280 | 77% |
 | LDRNDDBL | 86 | 77% |
-| LEXER | 9306 | 78% |
 | HPFREEHB | 112 | 78% |
 | RATOL | 170 | 78% |
 | SIMPLIFY | 11988 | 78% |
@@ -111,6 +107,7 @@ Modules by share of code that ran (lowest first):
 | OBJPUBS | 1971 | 82% |
 | EMITBLK | 3153 | 82% |
 | RLSEEK | 35 | 82% |
+| LEXER | 9306 | 83% |
 | CGCALL | 1693 | 83% |
 | CONSTFLD | 6474 | 84% |
 | INITDATA | 623 | 84% |
@@ -155,7 +152,6 @@ Modules by share of code that ran (lowest first):
 | COMMENT | 288 | 90% |
 | STRLIT | 135 | 90% |
 | HPSHUTDN | 65 | 90% |
-| LDARITH | 1597 | 90% |
 | EMITINSN | 2547 | 90% |
 | DEBUGREC | 8729 | 90% |
 | EXPRDISP | 2477 | 90% |
@@ -167,12 +163,12 @@ Modules by share of code that ran (lowest first):
 | RDOSPTR | 26 | 92% |
 | SAVEREGS | 2570 | 92% |
 | INITLIST | 3925 | 92% |
+| PREPROC | 4677 | 92% |
 | REGVARS | 1332 | 93% |
 | NAMEPOOL | 498 | 93% |
 | CPPEXPCK | 7611 | 93% |
 | OMFWRITE | 3497 | 93% |
 | BLKLAYOT | 3307 | 93% |
-| INPUT | 3080 | 93% |
 | HPRELFIX | 31 | 93% |
 | REGALLOC | 5673 | 93% |
 | RREAD | 32 | 93% |
@@ -185,6 +181,7 @@ Modules by share of code that ran (lowest first):
 | TOKSTRM | 2052 | 94% |
 | MEMBPTR | 491 | 94% |
 | BASECONV | 3006 | 94% |
+| LDARITH | 1597 | 94% |
 | TOKADV | 278 | 94% |
 | TRUNCVAL | 252 | 95% |
 | JUMPOPT | 2152 | 95% |
@@ -197,6 +194,7 @@ Modules by share of code that ran (lowest first):
 | PEEPHOLE | 1643 | 95% |
 | EMITHIST | 328 | 96% |
 | CPPCAST | 2471 | 96% |
+| INPUT | 3080 | 96% |
 | HPRESIZE | 895 | 96% |
 | SEARCHP | 289 | 96% |
 | INITTYPE | 4151 | 96% |
@@ -218,13 +216,14 @@ Modules by share of code that ran (lowest first):
 | LD2ULONG | 46 | 97% |
 | ACCESS | 1303 | 97% |
 | CGDRIVER | 340 | 97% |
-| OBJSEGS | 1875 | 98% |
 | HPGETITM | 109 | 98% |
 | HPSHRINK | 177 | 98% |
 | LOOKAHD | 1043 | 98% |
 | FLOWBLK | 3886 | 98% |
+| LDISNAN | 67 | 98% |
 | INLINEBD | 947 | 98% |
 | STMTBLK | 1580 | 98% |
+| OBJSEGS | 1875 | 98% |
 | SRCSEGS | 377 | 98% |
 | HPFREETG | 192 | 99% |
 | CROSSJMP | 2048 | 99% |
@@ -247,6 +246,7 @@ Modules by share of code that ran (lowest first):
 | RSCPY | 127 | 100% |
 | I642LD | 126 | 100% |
 | RPOW10 | 124 | 100% |
+| CPRAGFN | 123 | 100% |
 | RBSRCH | 115 | 100% |
 | CONSTVAL | 115 | 100% |
 | LDCMP | 114 | 100% |

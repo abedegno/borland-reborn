@@ -67,5 +67,8 @@ void scratch_release(u16 mark);
    data segment's paragraph from the load segment, for turning addresses back into names. */
 #define DGROUP_PARA 0x0DEF
 void *code_function(farptr code);
+/* a near code pointer (an offset in a module's code segment, as handler tables hold them) as
+   the port function it stands for; module is the original source's stem */
+void *near_function(const char *module, u16 off);
 
 #endif

@@ -38,7 +38,7 @@ both kinds of edit (below).
 
 ## What it proves
 
-`tools/modtest.py` runs 1832 compiles of 919 files with both compilers. The files are:
+`tools/modtest.py` runs 1836 compiles of 923 files with both compilers. The files are:
 
 - the project's own C sources, every C file BCC builds, each with its own switches, as
   object code (`-c`) and as assembly (`-S`);
@@ -84,7 +84,10 @@ The tests cover these areas:
 - two sets of many switches;
 - precompiled headers (`-H`), written in one step and read in the next;
 - a compile that runs TLINK;
-- BCC with no arguments.
+- BCC with no arguments;
+- every `#pragma`, well-formed and malformed, also in strict ANSI mode (`-A`), `#error`,
+  and strings made by macro expansion, with escapes and unterminated literals (added for
+  the port's checks: `PRAGMAS.C`, `PRAGMAA.C`, `ERRDIR.C`, `STRINGS.C`).
 
 Three of them record faults of Borland's compiler, which both compilers must reproduce
 (`docs/FINDINGS.md`). Every object, listing, console message and exit status must be
@@ -106,6 +109,7 @@ compile then checks it by reading it back. Results:
 | `tools/modedits.py`: two new files (one resident, one in an overlay, each with data), a changed context source of five files, and two changed files compiled with context sources | 522 / 522; the tracer shows both new functions ran |
 | *with Borland's examples, 742 compiles:* unchanged, `--pad-code 16`, and `--pad-data 1`, `16` and `256` early, in the middle and at the end; and `tools/modedits.py` | 742 / 742 each; the tracer shows both new functions ran |
 | *with the outside suites, 1832 compiles:* the same builds, and `tools/modedits.py` | 1832 / 1832 each; the tracer shows both new functions ran |
+| *with the preprocessor tests, 1836 compiles:* all seven builds rebuilt, and `tools/modedits.py` | 1836 / 1836 each; the tracer shows both new functions ran |
 
 A resident change was also tested by hand. `RPUTS.C` was changed to write every string
 twice: the banner and file names print twice, the resident code after it moves by up to 2Ah

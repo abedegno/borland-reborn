@@ -40,6 +40,11 @@ SCALAR = {"unsigned char": "u8", "char": "i8", "signed char": "i8",
           "signed int": "i16", "short int": "i16", "unsigned long": "u32",
           "unsigned long int": "u32", "long": "i32", "long int": "i32", "signed long": "i32"}
 HEAD = re.compile(r"^(?!extern|typedef|\s)([^;{}()#=\n]*?)\b([A-Za-z_]\w*)\s*\(([^;{}]*)\)\s*\{", re.M)
+# functions the original declares void that return a value in AX (a documented fall-off-end):
+# the port gives them the result their callers through pointers expect
+RETURN_OVERRIDES = {
+    "PARSE_PP_IF_EXPRESSION": "i16",    # CPRAGFN.C: EVAL_EXPRESSION hook, PARSE_CONSTANT_EXPR's AX
+}
 KEYWORDS = {"if", "while", "for", "switch", "return", "sizeof", "char", "int", "short", "long",
             "unsigned", "signed", "void", "far", "near", "huge", "pascal", "cdecl", "struct",
             "union", "enum", "interrupt", "_loadds"}
@@ -155,6 +160,9 @@ def definitions():
         if len(ds) == 1 and None not in ds:
             ret, args, near, cdecl = ds.pop()
             found[name] = (ret, list(args), near, cdecl)
+    for name, ret in RETURN_OVERRIDES.items():
+        if name in found and found[name]:
+            found[name] = (ret,) + tuple(found[name][1:])
     return {n: d for n, d in found.items() if d is not None and n not in dup}
 
 
@@ -223,8 +231,37 @@ def write_adapters(target):
     lines += [f"    {{0x{seg:04X}, 0x{off:04X}, (void *){name}}}," for (seg, off), name in
               sorted(code_addresses(defs).items())]
     lines += ["    {0, 0, 0},", "};", ""]
+    # near code pointers (handler tables hold offsets in their code segment): each module's
+    # code segment, and the functions by file offset, for near_function()
+    bases, at = segment_bases(), {}
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import record
+    for name, off in record.function_offsets().items():
+        if name in defs:
+            at.setdefault(off, name)
+    lines += ["typedef struct { const char *module; u32 base; } ModuleBase;",
+              "const ModuleBase MODULE_BASES[] = {"]
+    lines += [f'    {{"{stem}", 0x{base:X}}},' for stem, base in sorted(bases.items())]
+    lines += ["    {0, 0},", "};", "typedef struct { u32 at; void *function; } CodeAt;", "const CodeAt CODE_AT[] = {"]
+    lines += [f"    {{0x{off:X}, (void *){name}}}," for off, name in sorted(at.items())]
+    lines += ["    {0, 0},", "};", ""]
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(lines))
+
+
+def segment_bases():
+    """module -> file offset of its code segment's start (an overlay's segment, or the
+    resident code block), what a near code pointer in it is relative to"""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import struct
+    import record
+    data = record.modtest.ORIGINAL.read_bytes()
+    header = struct.unpack_from("<H", data, 8)[0] * 16
+    original = record.modlink.Original()
+    out = {}
+    for m in record.modlink.load_modules():
+        out[m.stem] = m.base - m.org if m.overlay else header + original.block_para[m.block] * 16
+    return out
 
 
 def code_addresses(defs):

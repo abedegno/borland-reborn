@@ -50,8 +50,19 @@ def function_offsets():
     header = struct.unpack_from("<H", data, 8)[0] * 16
     original = modlink.Original()
     out = {}
+    overlay_seg = {}     # overlay number -> its code segment's file offset
+    for m in modlink.load_modules():
+        n = re.match(r"ovr(\d+)_", m.target)
+        if n:
+            overlay_seg.setdefault(int(n.group(1)), m.base - m.org)
     for line in (BCC20 / "symbols.tsv").read_text().splitlines():
         parts = line.split("\t")
+        ovl = len(parts) >= 2 and re.fullmatch(r"OVL:([0-9A-F]{4}):([0-9A-F]{4})", parts[1])
+        if ovl:              # OVL:nn:off, an offset in overlay nn (a body label)
+            number, off = (int(x, 16) for x in ovl.groups())
+            if number in overlay_seg:
+                out[parts[0]] = overlay_seg[number] + off
+            continue
         if len(parts) < 2 or not re.fullmatch(r"[0-9A-F]{4}:[0-9A-F]{4}", parts[1]):
             continue
         seg, off = (int(x, 16) for x in parts[1].split(":"))
@@ -145,6 +156,9 @@ def main():
     for name, off in offsets.items():
         if off in inner and name in declared and inner[off] not in declared:
             inner[off] = name
+    # an address of a translated function is never a child, whatever name reached it
+    translated = {offsets[f] for f in genadapters.prototypes() if f in offsets}
+    inner = {off: name for off, name in inner.items() if off not in translated}
 
     jobs = [(name, path, opts, mode) for name, path, opts, steps in modtest.corpus()
             for modes in steps for mode in modes if mode in ("-c", "-S")]

@@ -17,10 +17,11 @@ as it is and remains the reference. [../bcc20/docs/PORT.md](../bcc20/docs/PORT.m
 what that source assumes about DOS and the 8086, with counts.
 
 **Status:** the checking machinery, the shared definitions, the run-time library's string
-functions, the record pools, and the lexer: input stack, token streams, token reader,
-comments, string literals and the scanner itself (83 functions, 36,818 recorded calls, all
-matching). Four lexer functions are never reached by the corpus and are not checked yet
-(`make check` lists them). Nothing compiles yet.
+functions, the record pools, the lexer (input stack, token streams, token reader, comments,
+string literals, the scanner) and the preprocessor (directives, pragmas, the macro table,
+conditional compilation, the #if evaluators), each function matching every call recorded
+over the whole corpus. A few are never reached by the corpus and are not checked yet (`make
+check` lists them). Nothing compiles yet.
 
 ## How a translation is checked
 
@@ -54,7 +55,7 @@ Two checks, both against Borland's own BCC.EXE:
      stand-in, so its effect on the heap is reproduced;
    - DOS's own memory, the callers' stack frames and a call's own frame are left out of the
      comparisons: none of them are the translation's business.
-2. **Output for output.** The corpus of `../bcc20/tools/modtest.py`, 1,832 compiles, run
+2. **Output for output.** The corpus of `../bcc20/tools/modtest.py`, 1,836 compiles, run
    natively and compared with what BCC.EXE writes in emu2: every file, the exit code and the
    console text. (To come: it needs a port that compiles.)
 
@@ -138,6 +139,10 @@ Places where the original's behaviour depends on something a port does not have:
   stringized argument, `__FILE__` with backslashes). It stays a stand-in until the native
   build decides: keep `quote` across calls (most likely what the original meant), or work
   out what each caller leaves there.
+- **FIND_NAMED_FUNCTION** (CPRAGFN.C) tests whether a #pragma startup or exit function
+  takes parameters, but on the path where the test fails it returns the symbol anyway (what
+  is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
+  such functions.
 - **The "Available memory" line** BCC prints is computed from its heap. The native heap must
   report the same figure, or the console text of every compile differs.
 

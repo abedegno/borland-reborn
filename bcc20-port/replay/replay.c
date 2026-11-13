@@ -272,6 +272,9 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     for (unsigned i = 0; i < c->n_runs; i++)
         if (c->runs[i].kind == 'R')
             memcpy(mem + c->runs[i].lin, c->runs[i].bytes, c->runs[i].n);
+    /* the return address and arguments as the caller pushed them (a first read of an
+       argument can be lost when the overlay manager writes on the stack) */
+    memcpy(mem + LIN(c->in[R_SS], c->in[R_SP]), c->stack, sizeof c->stack);
     memcpy(expect, mem, MEM_SIZE);
     /* the return address and arguments: up to the SP the call returned with (a pascal
        function pops its arguments), or fn->args bytes past the return address */
@@ -348,8 +351,10 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
             memcpy(mem + c->runs[i].lin, c->runs[i].bytes, c->runs[i].n);
     /* the scratch area is the translation's own (port.h) */
     memcpy(mem + LIN(SCRATCH_SEG, 0), expect + LIN(SCRATCH_SEG, 0), 0x10000);
-    /* and the callers' frames above the arguments are left out, as above */
-    memcpy(mem + args_hi, expect + args_hi, stack_top - args_hi);
+    /* and the stack from the call's own frame up (its frame, return address, arguments and
+       the callers' frames) is left out, as above */
+    u32 frame_lo = LIN(c->in[R_SS], frame_low(c));
+    memcpy(mem + frame_lo, expect + frame_lo, stack_top - frame_lo);
     if (memcmp(mem, expect, MEM_SIZE)) {
         unsigned shown = 0;
         for (u32 a = 0; a < MEM_SIZE; a++)

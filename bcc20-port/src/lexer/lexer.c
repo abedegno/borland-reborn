@@ -1111,7 +1111,8 @@ i16 LEX_CHARACTER(void)
         TOKEN_TYPE_WORD = 101;
         value = UNSIGNED_CHAR != 0 ? (u8)value : (i8)value;
     }
-    i32 (*convert)(i32, i16) = (i32 (*)(i32, i16))code_function(TOKEN_CONVERT);
+    /* the hook is CODE_MASK (i32, u8), which masks the value to the type's size */
+    i32 (*convert)(i32, u8) = (i32 (*)(i32, u8))code_function(TOKEN_CONVERT);
     TOKEN_CONST_VALUE = (u32)convert(value, 5);
     TOKEN_AUX = 5;
     return count == 1 ? 101 : 50;

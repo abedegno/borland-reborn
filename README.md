@@ -60,7 +60,7 @@ identical to Borland's.
 
 To change the compiler, use the **modding build**. It links the same sources with a layout
 TLINK chooses, so any function may grow or shrink, new data may go between any two data
-items, and new source files may be added. It is checked by running 1832 compiles with both
+items, and new source files may be added. It is checked by running 1836 compiles with both
 compilers (Borland's own example programs and old GCC and cfront tests among them) and comparing every output, with the code and the data moved in several ways and
 with new and edited files. A tracing emulator shows which words of the data the compiler
 uses as addresses, and which of its code the tests run: 83%

@@ -2,6 +2,7 @@
    BCC code addresses. Port material, no original. */
 #include "port.h"
 #include "data.h"
+#include <string.h>
 
 static u16 scratch_top;
 
@@ -35,5 +36,29 @@ void *code_function(farptr code)
         if (c->seg == seg && c->off == off)
             return c->function;
     code_unknown(code);
+    return 0;
+}
+
+/* near code pointers: a handler table holds the offset of each function in its code segment;
+   module is the original source's stem (PREPROC for src/preproc/PREPROC.C) */
+typedef struct {
+    const char *module;
+    u32 base;
+} ModuleBase;
+typedef struct {
+    u32 at;
+    void *function;
+} CodeAt;
+extern const ModuleBase MODULE_BASES[];
+extern const CodeAt CODE_AT[];
+
+void *near_function(const char *module, u16 off)
+{
+    for (const ModuleBase *m = MODULE_BASES; m->module; m++)
+        if (!strcmp(m->module, module))
+            for (const CodeAt *c = CODE_AT; c->function; c++)
+                if (c->at == m->base + off)
+                    return c->function;
+    code_unknown(MK_FP(0, off));
     return 0;
 }

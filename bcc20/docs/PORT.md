@@ -21,7 +21,7 @@ searches of `src/` (the commands are at the end), so treat them as sizes, not ex
 
 - The tree rebuilds BCC.EXE byte for byte (the exact link), and the modding build links
   changed sources of any size (docs/MODDING.md).
-- The test corpus: 1,832 compiles from 919 files. The modding build's output must equal
+- The test corpus: 1,836 compiles from 923 files. The modding build's output must equal
   that of Borland's BCC.EXE running in emu2: the files written, the exit code and the
   console text. It runs 83% of BCC.EXE's code (docs/COVERAGE.md).
 - A compiler is a good program to port. Everything it reads and writes is a file plus a
@@ -187,7 +187,7 @@ expects it) or fixes it (and the corpus's expected output needs an exception).
 
 [bcc20-port/README.md](../../bcc20-port/README.md) has the plan, the order of translation and
 how each step is checked: calls recorded in Borland's BCC.EXE replayed against each
-translated function, then the whole corpus of 1,832 compiles compared output for output.
+translated function, then the whole corpus of 1,836 compiles compared output for output.
 The corpus runs 83% of BCC.EXE's code, and the recorded calls the same 83%; code no test
 reaches needs new tests before its translation can be trusted (docs/COVERAGE.md lists it).
 
