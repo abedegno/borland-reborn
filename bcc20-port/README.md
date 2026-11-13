@@ -21,8 +21,9 @@ functions, the record pools, the lexer (input stack, token streams, token reader
 string literals, the scanner), the preprocessor (directives, pragmas, the macro table,
 conditional compilation, the #if evaluators) and types and symbols (the identifier table,
 type records, sizes and compatibility, struct layout, the C symbol table), and the first
-expression files (lowering for the back end, packing, comma expressions, constant values):
-210 functions, each matching every call recorded
+expression files (lowering for the back end, packing, comma expressions, constant values,
+call checking):
+217 functions, each matching every call recorded
 over the whole corpus. A few are never reached by the corpus and are not checked yet (`make
 check` lists them). Nothing compiles yet.
 
@@ -123,6 +124,9 @@ translation keeps on purpose (an original bug the output depends on, for example
    - Calls through BCC's code pointers use `CALL_FAR` / `CALL_NEAR` (`calls.h`), never a C
      function pointer cast.
    - A local whose address is passed on lives in the scratch area (`scratch_alloc`).
+   - Where several arguments of one call are themselves calls, put them in variables in
+     Turbo C's order: left to right for a pascal function, right to left for cdecl. C
+     leaves the order open, and the replay checks the order of the calls.
 4. Its prototype is already in `include/protos.h`, generated from the original; keep the
    original's argument order and types. The adapter is generated too; a function that passes
    a value in another register gets a hand-written one in `replay/functions.c` instead. The
@@ -130,7 +134,9 @@ translation keeps on purpose (an original bug the output depends on, for example
 5. `python3 tools/record.py NAME`, then `build/replay NAME records/NAME.rec`, and at the end
    `make check`.
 
-A function the corpus never calls cannot be checked. If nothing calls it at all (search
+A function the corpus never calls cannot be checked. Some code is reached only in a mode the
+corpus never gives it: CALLCHK.C runs only for C++ (EXPRPARS.C checks a C call's arguments
+itself), so its C branches, C5ARG among them, are translated but unchecked. If nothing calls it at all (search
 `../bcc20/src`), leave it out and say so in the file's comment, as `src/rtl/rscat.c` does for
 STRING_APPEND_N.
 
