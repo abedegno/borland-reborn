@@ -19,14 +19,13 @@ what that source assumes about DOS and the 8086, with counts.
 **Status:** the checking machinery, the shared definitions, the run-time library's string
 functions, the record pools, the lexer (input stack, token streams, token reader, comments,
 string literals, the scanner), the preprocessor (directives, pragmas, the macro table,
-conditional compilation, the #if evaluators) and types and symbols (the identifier table,
-type records, sizes and compatibility, struct layout, the C symbol table), and the first
-expression files (lowering for the back end, packing, comma expressions, constant values,
-call checking, unary operators, the analyser's dispatch, conversions, the C front end's node
-builders, constant folding, the operator checkers, the C++ node toolkit, inline expansion,
-the simplifier): 436 functions, each matching every call recorded over the whole corpus. A
-few are never reached by the corpus and are not checked yet (`make check` lists them).
-Nothing compiles yet.
+conditional compilation, the #if evaluators), types and symbols (the identifier table, type
+records, sizes and compatibility, struct layout, the C symbol table) and all the expression
+files of `../bcc20/src/expr` (the C++ analyser and its checkers, conversions, call checking,
+inline expansion, the simplifier, constant folding, lowering for the back end, and the C
+front end's expression parser and node builders): 473 functions, each matching every call
+recorded over the whole corpus. A few are never reached by the corpus and are not checked
+yet (`make check` lists them). Nothing compiles yet.
 
 ## How a translation is checked
 
@@ -179,10 +178,11 @@ Places where the original's behaviour depends on something a port does not have:
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
 - **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C), **FOLD_EXPRESSION**
-  (CONSTFLD.C), **SUBSTITUTE_PARAMETERS** (INLINEXP.C) and **SIMPLIFY_NODE** (SIMPLIFY.C)
-  stop with "out of memory" when the 8086 stack pointer drops below 8F0Ch, which only a very
-  deeply nested expression reaches. The port has no such stack and leaves the check out; the
-  native build could limit the nesting depth instead, if it wants the same error.
+  (CONSTFLD.C), **SUBSTITUTE_PARAMETERS** (INLINEXP.C), **SIMPLIFY_NODE** (SIMPLIFY.C) and
+  **STEVALN** (EXPRPARS.C) stop with "out of memory" when the 8086 stack pointer drops below
+  8F0Ch, which only a very deeply nested expression reaches. The port has no such stack and
+  leaves the check out; the native build could limit the nesting depth instead, if it wants
+  the same error.
 - **PARSE_INLINE_STATEMENT** (INLINEXP.C) returns an unset register (the caller's SI) for a
   stray "else" or a token that cannot start a statement in an inline body. The port returns
   0; the native build should do the same, or report the error and stop expanding.
