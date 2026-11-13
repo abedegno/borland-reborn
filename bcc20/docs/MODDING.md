@@ -40,11 +40,16 @@ identical, except for the "Available memory" line. Results:
 | `LEXER.C` and `CLASSDEF.C` with a new function at their start (19 labels other modules use move with their functions) | 478 / 478 |
 | `--pad-code 16`: every code block and overlay starts 16 bytes later | 478 / 478 |
 | `--pad-data 16 --pad-at END`: 16 new bytes at the end of `_DATA` (`_BSS` and the stack move) | 478 / 478 |
+| `--pad-data 16`: 16 new bytes at DS:0100, so nearly all the data moves | 478 / 478 |
+| `--pad-data 1` and `--pad-data 256` at DS:0100 (an odd and a large shift) | 478 / 478 |
+| `--pad-data 16 --pad-at 3308`: 16 new bytes in the middle of `_DATA` | 478 / 478 |
 
 A resident change was also tested by hand. `RPUTS.C` was changed to write every string
 twice: the banner and file names print twice, the resident code after it moves by up to 2Ah
 bytes and the data segment by 10h, and the compiler's objects and messages stay identical.
-The runs use emu2 (`sh ../exhume/tools/setup-emu2.sh`); the program also runs in DOSBox-X.
+The runs use emu2 (`sh ../exhume/tools/setup-emu2.sh`), one compile per process and as many at once as
+there are processors (`--jobs N`), so the 478 compiles take about ten seconds on eight cores; the
+program also runs in DOSBox-X.
 
 Two layout tests move everything of one kind:
 
@@ -54,7 +59,8 @@ Two layout tests move everything of one kind:
 - `--pad-data N --pad-at END` adds N bytes at the end of `_DATA`, so `_BSS` and the stack move:
   new initialised data goes there.
 - `--pad-data N` alone inserts them at DS:0100, early in `_DATA`, so nearly all data moves.
-  This one does **not** pass yet (see Limits).
+  It found the last pointers that were numbers, and some words wrongly taken for pointers
+  (see "Tracing" below).
 
 ## How it works
 
@@ -77,9 +83,10 @@ program out itself. Everything it adds is generated afresh each run.
   - every `symbols.tsv` name public at its original offset;
   - far pointers written as the functions they point at, and far pointers into the data as
     `dw offset DGROUP:NAME,DGROUP`;
-  - the 862 near pointers to data that `tools/findptrs.py` found
-    ([`map/data-pointers.tsv`](../map/data-pointers.tsv)), written as the items they point at;
-  - the 178 near pointers into code, kept as numbers tagged `; @code FUNCTION`.
+  - the 876 near pointers to data that `tools/findptrs.py` found
+    ([`map/data-pointers.tsv`](../map/data-pointers.tsv)), written as the items they point at
+    (the run-time trace below is part of its evidence);
+  - the 185 near pointers into code, kept as numbers tagged `; @code FUNCTION`.
 
   The build assembles the file. With nothing edited, the data comes out equal to the original
   except for the words TLINK relocates. Near pointers into code cannot be names: TLINK would
@@ -116,17 +123,59 @@ program out itself. Everything it adds is generated afresh each run.
   `OVR_ENSURE_IMAGE_LOADED`, which returns the loaded image with the offset it was given. TLINK
   would make that offset a stub entry (20h), so that one fixup is pointed at an absolute 0.
 
+## Tracing: pointers and coverage
+
+`tools/modtrace.py` runs Borland's BCC.EXE over the same corpus in a tracing emu2
+(`sh ../exhume/tools/setup-emu2-trace.sh` builds it into `../exhume/tools/emu2-trace`). The tracer
+marks every byte of memory with the offset in BCC.EXE it was loaded from, overlays included,
+and carries those marks through registers, the stack and copies. A register keeps the mark
+of the word it was loaded from while it is moved, or moved on by add, sub, inc or dec; a
+byte written into it, a shift, a logic operation or a multiply clears it. The run takes
+about ten seconds on eight cores and writes:
+
+- [`map/traced-pointers.tsv`](../map/traced-pointers.tsv): every word of the data that the
+  corpus used as a near address of a DGROUP item (a register still holding that word, give
+  or take under 100h, forms the address of an access through DGROUP with a displacement
+  under 100h) or as a code address (a call or jump through it), with the number of uses.
+  `findptrs.py` reads it: a traced word is never taken for text, a record field that holds
+  one is filled for every record of its table, and a traced word nothing else finds is
+  added on its own. This found 65 pointers of the inline assembler's keyword table that the
+  text test had hidden (a pointer such as 2F0Ah before a small token number reads as text).
+  Every traced word is now in `map/data-pointers.tsv`; the reverse does not hold, since the
+  corpus does not run every table.
+
+  The early `--pad-data` test then found what tracing cannot: words wrongly taken for
+  pointers, which move with the data when they must not. A 4-byte record's second word (a
+  token and its flags, such as 0A78 or 1778, the address of `OPTION_FLAG`) passed for a
+  pointer at stride 2, as did byte pairs beside a pointer table; and the `#pragma` handler
+  of `PREAMBLE_DIRECTIVE_TABLE`, at code offset 0E4F, was taken for a pointer to the string
+  at DS:0E4F. `findptrs.py` now keeps a plain array's gaps between its found pointers,
+  drops a weaker stride's entries that fall on another field of an item's records, trims a
+  run's end that points far from the rest, and takes a word beside code pointers whose
+  value starts a function for a code pointer. `LEXER.C` also wrote one address as a number
+  (`0x2301`, the macro-expanding character class table); it is a name now, with the same
+  bytes. To find such faults, bisect with `--pad-at` over named items only (padding inside
+  a table breaks its indexing by design), then compare the failing and passing builds: the
+  words that differ outside the moved range are the culprits. The tracer's
+  `EMU2_TRACE_READ=LO-HI` lists the instructions that read a range of the file's bytes.
+- [`docs/COVERAGE.md`](COVERAGE.md), and per function `build-source/MODTRACE/coverage.tsv`:
+  the share of each module's code that the corpus runs. About half the code runs; what
+  never runs (debug information, the messages, some C++ and inline assembler paths) is not
+  checked by `modtest.py` either.
+
+To see why a word was traced, run one compile by hand with `EMU2_TRACE_WATCH` set to the
+word's file offset: the tracer prints the offset of each instruction behind its first uses.
+
 ## Limits
 
-- **Data in the middle of `_DATA`.** New data goes at the end of `_DATA`, at the line marked
-  `END-OF-DATA`, or of `_BSS`. Inserting data early (`--pad-data` alone) still breaks
-  compiles. Some words in the data are pointers that are still numbers. They point into
-  tables that are neither strings nor named items, inside records whose layout
-  `findptrs.py` cannot see. Some items must also stay next to each other: the pseudo-register
-  names `_AX`..`_ES` are reached as a base plus four times an index. The pointer table is
-  found by heuristics, each entry with its evidence, so a few of its entries may be
-  wrong as well. Each fix so far has been checked by the gate (exact link) and by
-  `--pad-data` runs, using `--pad-at XXXX` to bisect over the data items.
+- **Data in the middle of `_DATA`.** New data may now go anywhere between two items: the
+  corpus passes with data inserted at DS:0100, in the middle and at the end. Some items must
+  stay next to each other, because the code reaches one from another's address: the
+  pseudo-register names `_AX`..`_ES` (a base plus four times an index), and
+  `MIRROR_COMPARE_TABLE`, read as `INVERT_COMPARE_TABLE` plus 0Ch. Padding between such
+  items, or inside a table, breaks it. The pointer table is still found by heuristics, each
+  entry with its evidence, and the corpus runs about half the code (`docs/COVERAGE.md`), so a
+  table no test reaches may still hold a wrong entry.
 - **Context sources.** The seven files compiled with a `/* context: */` helper
   (`tools/compile_context.py`) cannot be changed through `--src` yet.
 - **New files** need a place in the link and are refused for now.

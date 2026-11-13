@@ -812,10 +812,8 @@ done:
     MACRO_EXPANSION_DEPTH++;
     PUSH_MACRO_EXPANSION(0, 0, expansion);
     saved_class = CHAR_CLASS_PTR;
-    /* LEX_READ_MODE1_CLASSES + 1 (CHAR_CLASS + 0x201), the table LEX_READ selects by
-       name: the original stores this DGROUP offset as a constant with no
-       relocation, so it would break if the data moved. */
-    CHAR_CLASS_PTR = (signed char *)0x2301;
+    /* the table LEX_READ selects for reading text with macros expanded */
+    CHAR_CLASS_PTR = LEX_READ_MODE1_CLASSES + 1;
     depth = 0;
     TOKEN_PTR = saved_ptr;
     *TOKEN_PTR = 0;

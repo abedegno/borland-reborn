@@ -17,6 +17,11 @@ item) or of a named item, in _DATA or _BSS; `code`, the start of a function of a
 that refers to the item (the table's own users call through it, near, inside their own
 segment), as an offset in that module's segment (its code block, or its overlay).
 
+Run-time evidence: map/traced-pointers.tsv (tools/modtrace.py) lists the words the test
+corpus used as DGROUP addresses or code addresses.  Those words are never taken for text, a
+record field that holds one is filled for every record like a field whose record size the
+code pointers show, and a traced word found by nothing else is added on its own.
+
 Each line: offset, target, kind, evidence.  Code targets are written as function names and
 resolved by tools/modlink.py at link time; data targets as names (DATA_xxxx when the item
 has none).  The modding build's --pad-data and --pad-code tests check the result.
@@ -36,6 +41,18 @@ DATA_END = modlink.DATA_END
 # addresses: the operator code of each token.
 NOT_POINTERS = {"TOKEN_OPERATOR_CODE", "OPERATOR_BY_TOKEN"}
 BSS_END = DATA_END + 12208
+TRACED = modlink.ROOT / "map" / "traced-pointers.tsv"
+
+
+def traced():
+    """{DS offset: kind} of the words the corpus used as addresses (map/traced-pointers.tsv)."""
+    out = {}
+    if TRACED.exists():
+        for line in TRACED.read_text().splitlines():
+            if line and not line.startswith("#"):
+                off, _, kind, _ = line.split("\t")
+                out.setdefault(int(off, 16), kind)
+    return out
 
 
 def main():
@@ -60,17 +77,25 @@ def main():
         for name in omfedit.externs(omfedit.read(modlink.ROOT / "build-source" / m.stem / f"{m.stem}.OBJ")):
             users[name].add(m)
 
-    # bytes of text: printable runs of three or more that end in a 0 (a word there is text)
+    # bytes of text: runs of three or more printable characters (tabs and line ends among
+    # them) that end in a 0 (a word there is text).  Tabs and line ends do not count towards
+    # the three: a pointer such as 2F0A (bytes 0A 2F) before a small word looks like "\n/!".
     text = set()
-    run = 0
+    run = printable = 0
     for off in range(0, DATA_END):
         b = image[ds + off]
         if 0x20 <= b < 0x7F or b in (9, 10, 13):
             run += 1
+            printable += 0x20 <= b < 0x7F
         else:
-            if b == 0 and run >= 3:
+            if b == 0 and printable >= 3:
                 text.update(range(off - run, off + 1))
-            run = 0
+            run = printable = 0
+
+    seen = traced()
+    for off, kind in seen.items():
+        if kind == "data":
+            text.difference_update((off, off + 1))
 
     def word(off):
         return struct.unpack_from("<H", image, ds + off)[0]
@@ -169,7 +194,59 @@ def main():
             if len(offs) < 4 and len(offs) * 4 < best:
                 for off in offs:
                     del found[off]
+    # A word in a code-pointer field (a code pointer one record before or after it) whose
+    # value starts a function is a code pointer, even when it also starts a string: the
+    # handler of #pragma in PREAMBLE_DIRECTIVE_TABLE is at 0E4F, where "0123456789abcdef" is.
+    for i, start in enumerate(starts):
+        if start >= DATA_END or start not in record_size:
+            continue
+        stop = min(starts[i + 1] if i + 1 < len(starts) else DATA_END, DATA_END)
+        codes = code_targets(set().union(*(users.get(n, set()) for n in names[start])))
+        for size in record_size[start]:
+            for off in range(start, stop - 1):
+                v = word(off)
+                if (v and v in codes and found.get(off, (None, "data"))[1] != "code"
+                        and any(found.get(off + d, (None, None))[1] == "code" for d in (-size, size))):
+                    found[off] = (codes[v], "code", f"field of a {size}-byte record in {names[start][0]}"
+                                  " (beside its code pointers)")
+                    for o in (off - 1, off + 1):
+                        if o in found and found[o][1] == "data":
+                            del found[o]
+    # Within one item whose data pointers mostly share a stride, a weaker stride's entries
+    # that fall on another field of those records are chance: the token and flags word of
+    # an ASM_KEYWORD_TABLE record (78 17) equals OPTION_FLAG's address.
+    data_by_item = defaultdict(lambda: defaultdict(list))
+    for off, (target, kind, why) in found.items():
+        m = re.match(r"field of a (\d+)-byte record in (\S+)$", why)
+        if m and kind == "data":
+            data_by_item[m.group(2)][int(m.group(1))].append(off)
+    item_start = {names[st][0]: st for st in starts}
+    for item, strides in data_by_item.items():
+        main = max(strides, key=lambda k: (len(strides[k]), k))
+        st = item_start[item]
+        phases = {(o - st) % main for o in strides[main]}
+        for stride, offs in strides.items():
+            if stride != main and len(offs) * 2 < len(strides[main]):
+                for off in offs:
+                    if (off - st) % main not in phases:
+                        del found[off]
     runs = [r for r in runs if all(o in found for o in r[3])]
+    # The first or last word of a run whose value lies far from all the others' is a
+    # neighbour that happened to fit (bytes 0A 0B after a table of pointers into 528B..52BA
+    # pass for a pointer to the string "O" at 0B0A): drop it, unless it points at a named item.
+    trimmed = []
+    for start, stop, stride, offsets in runs:
+        offsets = sorted(set(offsets))
+        for end in (-1, 0):
+            while len(offsets) >= 4:
+                rest = [word(o) for o in offsets if o != offsets[end]]
+                v = word(offsets[end])
+                if v in names or min(rest) - 0x100 <= v <= max(rest) + 0x100:
+                    break   # a named item is an address wherever it lies
+                found.pop(offsets[end], None)
+                del offsets[end]
+        trimmed.append((start, stop, stride, offsets))
+    runs = trimmed
     # Extend each plain array of data pointers (stride 2, four or more found) or long record
     # table (six or more) to its neighbours in the same item whose values lie in its address
     # range: pointers to byte tables, and to string tails (BCC shares the tails of strings).
@@ -191,24 +268,53 @@ def main():
     # Fill each data-pointer field of a plain array (stride 2) or of a record table whose
     # record size its code pointers show: every record has a pointer in that field, so a word
     # there that lies in DGROUP (and is not text) is one too, though it points at neither a
-    # string nor a named item (a sub-table, say).
+    # string nor a named item (a sub-table, say).  In a traced field a word that looks like
+    # text counts too when it lies between two pointers of the field and in their range: the
+    # records' small numbers are often printable, but a table's last name runs on into text.
     for start, stop, stride, phase in set(fields):
         sizes = record_size.get(start, {})
         best = max(sizes.values()) if sizes else 0
         size = min((k for k, n in sizes.items() if n * 2 >= best), default=0)
-        if not (stride == 2 or stride == size):
-            continue    # only plain arrays, and records whose size the code pointers show
+        # a traced field: the item's record size (the stride most of its found fields have)
+        # with a word the corpus used as an address
+        strides = by_item.get(names[start][0], {})
+        dominant = max(strides, key=lambda k: (len(strides[k]), k)) if strides else 0
+        confirmed = stride == dominant and any(seen.get(o) == "data" for o in range(start + phase, stop, stride))
+        # a plain array only where the item is one (a 4-byte record's second word, a token
+        # and its flags such as 0A78, passes for an array of pointers at stride 2)
+        plain = stride == 2 and dominant in (0, 2)
+        if not (plain or stride == size or confirmed and stride >= 4):
+            continue    # plain arrays, records whose size the code pointers show, traced fields
         if not any(o in found for o in range(start + phase, stop, stride)):
             continue    # the field was dropped above
+        # the field's pointers found so far, and the range of their values
+        known = [o for o in range(start + phase, stop, stride) if o in found]
+        values = [word(o) for o in known]
+        low, high = (min(values) - 0x40, max(values) + 0x40) if values else (0, -1)
+
+        def inside(o, v):
+            return known and known[0] < o < known[-1] and low <= v <= high
+
         off = start + phase
         while off + 2 <= stop:
             v = word(off)
-            if (off not in found and off - 1 not in found and off + 1 not in found and v >= 0x100
-                    and v < BSS_END and v & 0xFF != v >> 8 and off not in text and off + 1 not in text
-                    and off not in relocated):
+            if plain and not (known and known[0] < off < known[-1]):
+                pass    # a plain array's gaps only: byte tables often sit beside it in one item
+            elif (off not in found and off - 1 not in found and off + 1 not in found and v >= 0x100
+                    and v < BSS_END and v & 0xFF != v >> 8 and off not in relocated
+                    and (off not in text and off + 1 not in text
+                         or confirmed and inside(off, v))):
                 found[off] = (names[v][0] if v in names else f"DATA_{v:04X}", "data",
-                              f"in a pointer field of {names[start][0]} ({stride}-byte records)")
+                              f"in a pointer field of {names[start][0]} ({stride}-byte records"
+                              + (", traced)" if confirmed and stride != size and stride != 2 else ")"))
             off += stride
+    # a traced data address that nothing above found
+    for off, kind in seen.items():
+        if kind == "data" and off not in found and off - 1 not in found and off + 1 not in found \
+                and off not in relocated and off < DATA_END:
+            v = word(off)
+            found[off] = (names[v][0] if v in names else f"DATA_{v:04X}", "data",
+                          "used as a DGROUP address at run time (map/traced-pointers.tsv)")
     # two candidates may overlap by a byte (records of odd stride): keep the earlier
     for off in sorted(found):
         if off in found and off + 1 in found:

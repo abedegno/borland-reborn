@@ -450,28 +450,8 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	C_PARAM_POOL_SEG
 		public	C_STRING_LITERAL_SYMBOL
 		public	C_UNNAMED_GLOBAL_LIST
-		public	DATA_0100
-		public	DATA_0102
-		public	DATA_0178
-		public	DATA_0201
-		public	DATA_0203
-		public	DATA_0278
-		public	DATA_0301
-		public	DATA_0378
-		public	DATA_0405
-		public	DATA_0478
-		public	DATA_0578
-		public	DATA_0607
-		public	DATA_0678
 		public	DATA_0702
 		public	DATA_0709
-		public	DATA_0778
-		public	DATA_0809
-		public	DATA_0878
-		public	DATA_0978
-		public	DATA_0A78
-		public	DATA_0B0A
-		public	DATA_0B78
 		public	DATA_0B94
 		public	DATA_0C1F
 		public	DATA_0C29
@@ -483,7 +463,6 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_0C62
 		public	DATA_0C67
 		public	DATA_0C75
-		public	DATA_0C78
 		public	DATA_0C7B
 		public	DATA_0C82
 		public	DATA_0C8E
@@ -496,7 +475,6 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_0CC2
 		public	DATA_0CCA
 		public	DATA_0CD1
-		public	DATA_0D78
 		public	DATA_0E2C
 		public	DATA_0E2F
 		public	DATA_0E32
@@ -512,25 +490,16 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_0E49
 		public	DATA_0E4C
 		public	DATA_0E4F
-		public	DATA_0F78
-		public	DATA_1078
 		public	DATA_110A
 		public	DATA_1110
 		public	DATA_1116
 		public	DATA_111C
-		public	DATA_116D
-		public	DATA_1178
-		public	DATA_1278
-		public	DATA_1378
-		public	DATA_1478
 		public	DATA_14FE
-		public	DATA_1578
 		public	DATA_15C2
 		public	DATA_15F2
 		public	DATA_164A
 		public	DATA_1656
 		public	DATA_165E
-		public	DATA_1678
 		public	DATA_16FD
 		public	DATA_193E
 		public	DATA_195E
@@ -785,11 +754,33 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_2EFF
 		public	DATA_2F02
 		public	DATA_2F06
+		public	DATA_2F0A
+		public	DATA_2F0D
 		public	DATA_2F11
 		public	DATA_2F14
 		public	DATA_2F17
 		public	DATA_2F1B
 		public	DATA_2F1E
+		public	DATA_2F21
+		public	DATA_2F24
+		public	DATA_2F25
+		public	DATA_2F2A
+		public	DATA_2F2D
+		public	DATA_2F33
+		public	DATA_2F36
+		public	DATA_2F3C
+		public	DATA_2F42
+		public	DATA_2F47
+		public	DATA_2F4C
+		public	DATA_2F52
+		public	DATA_2F56
+		public	DATA_2F5B
+		public	DATA_2F61
+		public	DATA_2F66
+		public	DATA_2F6C
+		public	DATA_2F71
+		public	DATA_2F77
+		public	DATA_2F7E
 		public	DATA_2F86
 		public	DATA_2F89
 		public	DATA_2F8C
@@ -817,9 +808,26 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_2FF9
 		public	DATA_3000
 		public	DATA_3004
+		public	DATA_3009
 		public	DATA_300F
 		public	DATA_3016
 		public	DATA_301D
+		public	DATA_3024
+		public	DATA_302B
+		public	DATA_3032
+		public	DATA_3038
+		public	DATA_303D
+		public	DATA_3042
+		public	DATA_3048
+		public	DATA_304F
+		public	DATA_3056
+		public	DATA_305C
+		public	DATA_3063
+		public	DATA_3064
+		public	DATA_3068
+		public	DATA_306F
+		public	DATA_3076
+		public	DATA_307E
 		public	DATA_3085
 		public	DATA_308C
 		public	DATA_3092
@@ -849,6 +857,13 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_3111
 		public	DATA_3119
 		public	DATA_311D
+		public	DATA_3120
+		public	DATA_3124
+		public	DATA_3128
+		public	DATA_312D
+		public	DATA_3132
+		public	DATA_3137
+		public	DATA_3138
 		public	DATA_313C
 		public	DATA_313F
 		public	DATA_3143
@@ -902,7 +917,25 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_3214
 		public	DATA_321A
 		public	DATA_3220
+		public	DATA_3225
+		public	DATA_3229
+		public	DATA_322D
+		public	DATA_3231
+		public	DATA_3236
+		public	DATA_323C
+		public	DATA_3242
+		public	DATA_3246
+		public	DATA_324B
 		public	DATA_3250
+		public	DATA_3254
+		public	DATA_3259
+		public	DATA_325F
+		public	DATA_3265
+		public	DATA_3269
+		public	DATA_326D
+		public	DATA_3271
+		public	DATA_3276
+		public	DATA_327C
 		public	DATA_3282
 		public	DATA_3287
 		public	DATA_328B
@@ -945,6 +978,7 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_3804
 		public	DATA_3809
 		public	DATA_5050
+		public	DATA_5051
 		public	DATA_5054
 		public	DATA_5059
 		public	DATA_505D
@@ -2255,61 +2289,29 @@ STR_SYNTAX_IS_BCC_OPTIONS	label	byte
 		db	'Syntax is: BCC [ options ] file[s]     *',' = default; -x- = turn switch x off'
 		db	00Dh,00Ah,'  -1      80186/286 Instructions    -2  ','    80286 Pro'
 ; PAD-POINT (tools/modlink.py --pad-data inserts its test padding here)
-; @0100
-DATA_0100	label	byte
-		db	'te'
-; @0102
-DATA_0102	label	byte
-		db	'cted Mode Inst.',00Dh,00Ah,'  -Ax     Disable extensions        -B  '
-		db	'    Compile via assembly',00Dh,00Ah,'  -C      Allow nested comments    '
-; @0178
-DATA_0178	label	byte
-		db	' -Dxxx   Define macro',00Dh,00Ah,'  -Exxx   Alternate Assembler name  -G  '
+		db	'tected Mode Inst.',00Dh,00Ah,'  -Ax     Disable extensions        -B  '
+		db	'    Compile via assembly',00Dh,00Ah,'  -C      Allow nested comments     -Dxx'
+		db	'x   Define macro',00Dh,00Ah,'  -Exxx   Alternate Assembler name  -G  '
 		db	'    Generate for speed',00Dh,00Ah,'  -Hxxx   Use pre-compiled headers  -Ixx'
-		db	'x   Includ'
-; @0201
-DATA_0201	label	byte
-		db	'e '
-; @0203
-DATA_0203	label	byte
-		db	'files directory',00Dh,00Ah,'  -K      Default char is unsigned  -Lxx'
-		db	'x   Libraries directory',00Dh,00Ah,'  -M      Generate link map        '
-; @0278
-DATA_0278	label	byte
-		db	' -N      Check stack overflow',00Dh,00Ah,'  -O      Optimize jumps            -P  '
+		db	'x   Include files directory',00Dh,00Ah,'  -K      Default char is unsigned  -Lxx'
+		db	'x   Libraries directory',00Dh,00Ah,'  -M      Generate link map         -N  '
+		db	'    Check stack overflow',00Dh,00Ah,'  -O      Optimize jumps            -P  '
 		db	'    Force C++ compile',00Dh,00Ah,'  -Qxxx   Memory usage control      -S  '
-		db	'   '
-; @0301
-DATA_0301	label	byte
-		db	' Produce assembly output',00Dh,00Ah,'  -Txxx   Set assembler option      -Uxx'
-		db	'x   Undefine macro',00Dh,00Ah,'  -Vx     Virtual table control  '
-; @0378
-DATA_0378	label	byte
-		db	'   -Wxxx   Create Windows application',00Dh,00Ah,'  -X      Suppress autodep. output  -Yx '
+		db	'    Produce assembly output',00Dh,00Ah,'  -Txxx   Set assembler option      -Uxx'
+		db	'x   Undefine macro',00Dh,00Ah,'  -Vx     Virtual table control     -Wxx'
+		db	'x   Create Windows application',00Dh,00Ah,'  -X      Suppress autodep. output  -Yx '
 		db	'    Overlay control',00Dh,00Ah,'  -Z      Optimize register usage   -a  '
-		db	' '
-; @0405
-DATA_0405	label	byte
-		db	'   Generate word alignment',00Dh,00Ah,'  -b    * Treat enums as integers   -c  '
-		db	'    Compile only',00Dh,00Ah,'  -d      Merge duplicate str'
-; @0478
-DATA_0478	label	byte
-		db	'ings   -exxx   Executable file name',00Dh,00Ah,'  -fxx    Floating point options    -gN '
+		db	'    Generate word alignment',00Dh,00Ah,'  -b    * Treat enums as integers   -c  '
+		db	'    Compile only',00Dh,00Ah,'  -d      Merge duplicate strings   -exx'
+		db	'x   Executable file name',00Dh,00Ah,'  -fxx    Floating point options    -gN '
 		db	'    Stop after N warnings',00Dh,00Ah,'  -iN     Max. identifier length    -jN '
 		db	'    Stop after N errors',00Dh,00Ah,'  -k      Standard stack frame      -lx '
-		db	'    Set linker option',00Dh,00Ah,'  -mx     Set Memory Mod'
-; @0578
-DATA_0578	label	byte
-		db	'el          -nxxx   Output file director','y',00Dh,00Ah,'  -oxxx   Object file name          -p  '
+		db	'    Set linker option',00Dh,00Ah,'  -mx     Set Memory Model          -nxx'
+		db	'x   Output file directory',00Dh,00Ah,'  -oxxx   Object file name          -p  '
 		db	'    Pascal calls',00Dh,00Ah,'  -r    * Register variables        -u  '
-		db	'  '
-; @0607
-DATA_0607	label	byte
-		db	'* Underscores on externs',00Dh,00Ah,'  -v      Source level debugging    -wxx'
-		db	'x   Warning control',00Dh,00Ah,'  -y      Produce line num'
-; @0678
-DATA_0678	label	byte
-		db	'ber info  -zxxx   Set segment names',000h
+		db	'  * Underscores on externs',00Dh,00Ah,'  -v      Source level debugging    -wxx'
+		db	'x   Warning control',00Dh,00Ah,'  -y      Produce line number info  -zxx'
+		db	'x   Set segment names',000h
 ; @069C
 STR_ASM	label	byte
 		db	'.asm',000h
@@ -2407,14 +2409,12 @@ STR_FOR	label	byte
 ; @0768
 EXPR_OP_FLAGS	label	byte
 		db	004h,004h,004h,004h,004h,004h,004h,004h,002h,000h,002h,000h
-		db	000h,000h,000h,002h
-; @0778
-DATA_0778	label	byte
-		db	002h,002h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h
-		db	001h,008h,008h,008h,008h,008h,008h,000h,000h,000h,000h,008h
-		db	008h,000h,000h,000h,000h,000h,000h,000h,008h,000h,000h,004h
-		db	000h,000h,001h,000h,004h,004h,000h,000h,000h,000h,000h,001h
-		db	001h,001h,000h,001h,000h,000h,001h,001h,005h,000h,004h
+		db	000h,000h,000h,002h,002h,002h,001h,001h,001h,001h,001h,001h
+		db	001h,001h,001h,001h,001h,008h,008h,008h,008h,008h,008h,000h
+		db	000h,000h,000h,008h,008h,000h,000h,000h,000h,000h,000h,000h
+		db	008h,000h,000h,004h,000h,000h,001h,000h,004h,004h,000h,000h
+		db	000h,000h,000h,001h,001h,001h,000h,001h,000h,000h,001h,001h
+		db	005h,000h,004h
 ; @07B3
 TYPE_FLAGS	label	byte
 		db	000h,002h,'P',01Dh,000h,018h,010h,01Ch,000h,018h,000h,007h,000h
@@ -2423,26 +2423,21 @@ TYPE_FLAGS	label	byte
 		db	000h,01Ch,000h,01Ch,000h,01Ch,'@',01Dh,'@',01Dh,'P',01Dh,000h
 		db	01Ch,000h,01Ch,'P',01Dh,000h,01Ch,000h,01Ch,000h,01Ch,000h,01Ch
 		db	000h,018h,000h,01Bh,000h,01Ch,000h,01Ch,000h,01Ch,000h,01Ch
-		db	000h,01Ch,000h,01Ch,000h,01Ch,000h,01Ch,'@',01Dh
-; @0809
-DATA_0809	label	byte
-		db	'`',01Dh,'@',019h,'@',01Dh,'@',01Dh,000h,018h,000h,01Ch,'X'
-		db	019h,'@',019h,'@',019h,'@',019h,009h,012h,009h,012h,009h,012h
-		db	009h,012h,009h,012h,00Eh,01Ah,00Eh,01Ah,00Eh,01Ah,00Eh,01Ah
-		db	00Eh,01Ah,00Eh,01Ah,00Eh,01Ah,00Eh,01Ah,00Ah,01Ah,00Ah,01Ah
-		db	00Ah,01Ah,00Eh,01Ah,010h,'0',010h,'0',010h,'0',000h,'0',00Ah
-		db	01Ah,00Ah,01Ah,010h,'0',010h,'0',010h,'0',010h,'0',010h,'0'
-		db	010h,'0',010h,'0',010h,'0',010h,'0',010h,'0',010h,'0',080h,003h
-		db	080h,003h,000h,003h,000h,003h,080h,003h,080h,003h,080h,003h
-		db	080h,003h,000h,007h,000h,003h,000h,003h,000h
-; @0878
-DATA_0878	label	byte
-		db	003h,000h,001h,000h,000h,'@',019h,000h,004h,'@',019h,00Ah,01Ah
-		db	'@',01Dh,009h,012h,009h,012h,'@',01Dh,'P',019h,009h,012h,' '
-		db	000h,' ',000h,' ',000h,'@',019h,009h,012h,000h,000h,000h,000h
+		db	000h,01Ch,000h,01Ch,000h,01Ch,000h,01Ch,'@',01Dh,'`',01Dh,'@'
+		db	019h,'@',01Dh,'@',01Dh,000h,018h,000h,01Ch,'X',019h,'@',019h
+		db	'@',019h,'@',019h,009h,012h,009h,012h,009h,012h,009h,012h,009h
+		db	012h,00Eh,01Ah,00Eh,01Ah,00Eh,01Ah,00Eh,01Ah,00Eh,01Ah,00Eh
+		db	01Ah,00Eh,01Ah,00Eh,01Ah,00Ah,01Ah,00Ah,01Ah,00Ah,01Ah,00Eh
+		db	01Ah,010h,'0',010h,'0',010h,'0',000h,'0',00Ah,01Ah,00Ah,01Ah
+		db	010h,'0',010h,'0',010h,'0',010h,'0',010h,'0',010h,'0',010h,'0'
+		db	010h,'0',010h,'0',010h,'0',010h,'0',080h,003h,080h,003h,000h
+		db	003h,000h,003h,080h,003h,080h,003h,080h,003h,080h,003h,000h
+		db	007h,000h,003h,000h,003h,000h,003h,000h,001h,000h,000h,'@',019h
+		db	000h,004h,'@',019h,00Ah,01Ah,'@',01Dh,009h,012h,009h,012h,'@'
+		db	01Dh,'P',019h,009h,012h,' ',000h,' ',000h,' ',000h,'@',019h
+		db	009h,012h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
 		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
-		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
-		db	000h,000h
+		db	000h,000h,000h,000h,000h,000h,000h,000h
 ; @08B9
 WARNING_SWITCH_TABLE	label	byte
 		db	'att',001h,'bbf',000h,'bdf',001h,'bei',001h,'scp',001h,'lin'
@@ -2453,12 +2448,10 @@ WARNING_SWITCH_TABLE	label	byte
 		db	000h,'cln',000h,'cpt',001h,'def',000h,'rng',001h,'dup',001h
 		db	'pia',001h,'rvl',001h,'sig',000h,'nod',000h,'eff',001h,'aus'
 		db	001h,'ill',001h,'sus',001h,'rch',001h,'rpt',001h,'stv',000h
-		db	'vrt',001h,'big',001h,'ucp',000h,'use'
-; @0978
-DATA_0978	label	byte
-		db	000h,'zdi',001h,'bcs',001h,'stu',001h,'ext',001h,'bfs',001h
-		db	'dpu',001h,'fdt',001h,'eas',001h,'hid',001h,'ncf',001h,'ncf'
-		db	001h,'ias',001h,000h,000h,000h,000h
+		db	'vrt',001h,'big',001h,'ucp',000h,'use',000h,'zdi',001h,'bcs'
+		db	001h,'stu',001h,'ext',001h,'bfs',001h,'dpu',001h,'fdt',001h
+		db	'eas',001h,'hid',001h,'ncf',001h,'ncf',001h,'ias',001h,000h
+		db	000h,000h,000h
 ; @09AD
 REAL_ZERO	label	byte
 		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
@@ -2486,37 +2479,29 @@ C9_TOKEN_NAMES	label	byte
 		db	000h,000h,01Ch,000h,000h,000h,01Dh,000h,000h,000h,01Eh,000h
 		db	000h,000h,01Fh,000h,000h,000h,' ',000h,000h,000h,'!',000h,000h
 		db	000h,'"',000h,000h,000h,'#',000h,000h,000h,'$',000h,000h,000h
-		db	'%',000h,000h,000h,'&',000h
-; @0A78
-DATA_0A78	label	byte
-		db	000h,000h,027h,000h,000h,000h,'(',000h,000h,000h,')',000h,000h
-		db	000h,'*',000h,000h,000h,'+',000h,000h,000h,',',000h,000h,000h
-		db	'-',000h,000h,000h,'.',000h,000h,000h,'/',000h,000h,000h,'0'
-		db	000h,000h,000h,'5',000h,000h,000h,'6',000h,000h,000h,'7',000h
-		db	000h,000h,'8',000h,000h,000h,'9',000h,000h,000h,':',000h,000h
-		db	000h,';',000h,000h,000h,'<',000h,000h,000h,'=',000h,000h,000h
-		db	'>',000h,000h,000h,'?',000h,000h,000h,'@',000h,000h,000h,'A'
-		db	000h,000h,000h,'B',000h,000h,000h,'C',000h,000h,000h,'D',000h
-		db	000h,000h,'E',000h,000h,000h,'F',000h,000h,000h,'G',000h,000h
-		db	000h,'H',000h,000h,000h,'I',000h,000h,000h,'J',000h,000h,000h
-		db	'K',000h,000h,000h,'L',000h,000h,000h,'M',000h,000h,000h,'N'
-		db	000h,000h,000h
-; @0B0A
-DATA_0B0A	label	byte
-		db	'O',000h,000h,000h,'P',000h,000h,000h,'Q',000h,000h,000h,'R'
-		db	000h,000h,000h,'S',000h,000h,000h,'T',000h,000h,000h,'U',000h
-		db	000h,000h,'V',000h,000h,000h,'X',000h,000h,000h,'Y',000h,000h
-		db	000h,'Z',000h,000h,000h,'[',000h,000h,000h,'\',000h,000h,000h
-		db	']',000h,000h,000h,'^',000h,000h,000h,'_',000h,000h,000h,'`'
-		db	000h,000h,000h,'a',000h,000h,000h,'b',000h,000h,000h,'c',000h
-		db	000h,000h,'d',000h,000h,000h,'e',000h,000h,000h,'f',000h,000h
-		db	000h,'g',000h,000h,000h,'h',000h,000h,000h,'i',000h,000h,000h
-		db	'j',000h,000h,000h,'k',000h
-; @0B78
-DATA_0B78	label	byte
-		db	000h,000h,'l',000h,000h,000h,'m',000h,000h,000h,'n',000h,000h
-		db	000h,'o',000h,000h,000h,'p',000h,000h,000h,'q',000h,000h,000h
-		db	'r',000h
+		db	'%',000h,000h,000h,'&',000h,000h,000h,027h,000h,000h,000h,'('
+		db	000h,000h,000h,')',000h,000h,000h,'*',000h,000h,000h,'+',000h
+		db	000h,000h,',',000h,000h,000h,'-',000h,000h,000h,'.',000h,000h
+		db	000h,'/',000h,000h,000h,'0',000h,000h,000h,'5',000h,000h,000h
+		db	'6',000h,000h,000h,'7',000h,000h,000h,'8',000h,000h,000h,'9'
+		db	000h,000h,000h,':',000h,000h,000h,';',000h,000h,000h,'<',000h
+		db	000h,000h,'=',000h,000h,000h,'>',000h,000h,000h,'?',000h,000h
+		db	000h,'@',000h,000h,000h,'A',000h,000h,000h,'B',000h,000h,000h
+		db	'C',000h,000h,000h,'D',000h,000h,000h,'E',000h,000h,000h,'F'
+		db	000h,000h,000h,'G',000h,000h,000h,'H',000h,000h,000h,'I',000h
+		db	000h,000h,'J',000h,000h,000h,'K',000h,000h,000h,'L',000h,000h
+		db	000h,'M',000h,000h,000h,'N',000h,000h,000h,'O',000h,000h,000h
+		db	'P',000h,000h,000h,'Q',000h,000h,000h,'R',000h,000h,000h,'S'
+		db	000h,000h,000h,'T',000h,000h,000h,'U',000h,000h,000h,'V',000h
+		db	000h,000h,'X',000h,000h,000h,'Y',000h,000h,000h,'Z',000h,000h
+		db	000h,'[',000h,000h,000h,'\',000h,000h,000h,']',000h,000h,000h
+		db	'^',000h,000h,000h,'_',000h,000h,000h,'`',000h,000h,000h,'a'
+		db	000h,000h,000h,'b',000h,000h,000h,'c',000h,000h,000h,'d',000h
+		db	000h,000h,'e',000h,000h,000h,'f',000h,000h,000h,'g',000h,000h
+		db	000h,'h',000h,000h,000h,'i',000h,000h,000h,'j',000h,000h,000h
+		db	'k',000h,000h,000h,'l',000h,000h,000h,'m',000h,000h,000h,'n'
+		db	000h,000h,000h,'o',000h,000h,000h,'p',000h,000h,000h,'q',000h
+		db	000h,000h,'r',000h
 ; @0B94
 DATA_0B94	label	byte
 		db	000h,000h,'s',000h
@@ -2587,10 +2572,7 @@ DATA_0C67	label	byte
 		db	'unsigned long',000h
 ; @0C75
 DATA_0C75	label	byte
-		db	'flo'
-; @0C78
-DATA_0C78	label	byte
-		db	'at',000h
+		db	'float',000h
 ; @0C7B
 DATA_0C7B	label	byte
 		db	'double',000h
@@ -2671,10 +2653,7 @@ STR__VECTOR_VAPPLY_	label	byte
 		db	'_vector_vapply_',000h
 ; @0D6B
 STR__FPURE_ERROR_	label	byte
-		db	'_fpure_error_'
-; @0D78
-DATA_0D78	label	byte
-		db	000h
+		db	'_fpure_error_',000h
 ; @0D79
 STR__NPURE_ERROR_	label	byte
 		db	'_npure_error_',000h
@@ -2924,10 +2903,7 @@ STR_ZYXWVUTSRQPONMLKJIHGFEDC	label	byte
 		db	000h
 ; @0F70
 STR_LOCAL_DESTRUCTORS	label	byte
-		db	'local de'
-; @0F78
-DATA_0F78	label	byte
-		db	'structors',000h
+		db	'local destructors',000h
 ; @0F82
 STR_ARRAY_BOUNDS	label	byte
 		db	'Array bounds',000h,000h
@@ -2996,7 +2972,6 @@ C31_DEFAULT_DISPATCH	label	byte
 		dd	SET_STORAGE_ARG_COUNT
 		dd	SET_STORAGE_SEGMENT
 		dd	SET_STORAGE_SEGMENT_FLAG_8
-DATA_1078	equ	$-2
 		dd	SET_STORAGE_FIRST_WORD
 		dd	DECLARE_RUNTIME_SYMBOL
 		dd	SYMBOL_CATEGORY
@@ -3097,16 +3072,10 @@ STR_CONST_2	label	byte
 		db	' const ',000h
 ; @116A
 STR_VOLATILE_2	label	byte
-		db	' vo'
-; @116D
-DATA_116D	label	byte
-		db	'latile ',000h
+		db	' volatile ',000h
 ; @1175
 STR_STRUCT	label	byte
-		db	'str'
-; @1178
-DATA_1178	label	byte
-		db	'uct',000h
+		db	'struct',000h
 ; @117C
 STR_UNION	label	byte
 		db	'union',000h
@@ -3157,10 +3126,7 @@ BINARY_PRECEDENCE_BY_TOKEN	label	byte
 		db	'~',004h,'x',006h,'x~~~(~~&&&&&&&&&&&',012h,012h,010h,010h,010h
 		db	01Ah,01Eh,01Ch,014h,014h,'$*" ',018h,018h,016h,016h,016h,016h
 		db	'~~',00Ah,00Ah,00Ah,006h,006h,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-		db	'~~~~~~~~~'
-; @1278
-DATA_1278	label	byte
-		db	'~',00Ah,00Eh,'~',00Eh,'~~',00Ah,'~~',00Ah,'~~~~~~~~~~~~~~~~~~~~~~'
+		db	'~~~~~~~~~~',00Ah,00Eh,'~',00Eh,'~~',00Ah,'~~',00Ah,'~~~~~~~~~~~~~~~~~~~~~~'
 ; @1299
 STACK_PRECEDENCE_BY_OP	label	byte
 		db	07Fh,'|',001h,'z',001h,07Fh,07Fh,07Fh,'(',07Fh,07Fh,027h,027h
@@ -3178,10 +3144,7 @@ STACK_PRECEDENCE_BY_OP	label	byte
 PREFIX_PRECEDENCE_BY_TOKEN	label	byte
 		db	'~||||~~~|~~|||||||||||',00Ah,00Ah,00Ah,'||',00Ah,'||||||||||||||'
 		db	00Ah,00Ah,00Ah,00Ah,00Ah,'||~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-		db	'~~||',00Ah
-; @1378
-DATA_1378	label	byte
-		db	00Ah,00Ah,00Ah,'|||~~|~|~~',00Ah,'~~',00Ah,'~~~~~~~~~~~~~~~~~~~~~~'
+		db	'~~||',00Ah,00Ah,00Ah,00Ah,'|||~~|~|~~',00Ah,'~~',00Ah,'~~~~~~~~~~~~~~~~~~~~~~'
 ; @139F
 STR_SUBSCRIPTING	label	byte
 		db	'Subscripting',000h
@@ -3230,7 +3193,6 @@ FOLD_SUB_UNSIGNED_FN	label	byte
 ; @1476
 FOLD_MUL_SIGNED_FN	label	byte
 		dd	FOLD_MUL_SIGNED
-DATA_1478	equ	$-2
 ; @147A
 FOLD_MUL_UNSIGNED_FN	label	byte
 		dd	FOLD_MUL_UNSIGNED
@@ -3359,8 +3321,6 @@ DATA_14FE	label	byte
 		db	01Fh,000h
 		dw	offset DGROUP:DATA_1D45
 		db	' ',000h
-; @1578
-DATA_1578	label	byte
 		dw	offset DGROUP:DATA_1D48
 		db	'!',000h
 		dw	offset DGROUP:DATA_1D4A
@@ -3499,8 +3459,6 @@ DATA_165E	label	byte
 		db	'b',000h
 		dw	offset DGROUP:DATA_1E8C
 		db	']',000h
-; @1678
-DATA_1678	label	byte
 		dw	offset DGROUP:DATA_1E94
 		db	'A',000h
 		dw	offset DGROUP:DATA_1E97
@@ -3879,7 +3837,9 @@ COMMAND_OPTION_TABLE	label	byte
 		db	000h,000h,'e',000h
 		dw	005A6h	; @code SET_STRING_OPTION
 		dw	offset DGROUP:LINK_OUTPUT_NAME
-		db	000h,000h,'D',000h,')',009h,000h,000h,000h,000h,'I',000h
+		db	000h,000h,'D',000h
+		dw	00929h	; @code DEFINE_MACROS_OPTION
+		db	000h,000h,000h,000h,'I',000h
 		dw	009FDh	; @code BCC_SET_OPTION_INCLUDE
 		db	000h,000h,000h,000h,'L',000h
 		dw	00A21h	; @code BCC_SET_OPTION_LIBRARY_PATH
@@ -4014,7 +3974,8 @@ DATA_1A2E	label	byte
 		db	000h,002h
 		dw	00581h	; @code SET_OPTION_VALUE
 		dw	offset DGROUP:OPTION_CALLING_CONVENTION
-		db	001h,000h,'-',002h,081h,005h
+		db	001h,000h,'-',002h
+		dw	00581h	; @code SET_OPTION_VALUE
 		dw	offset DGROUP:OPTION_CALLING_CONVENTION
 		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
 ; @1A46
@@ -4049,7 +4010,8 @@ DATA_1A76	label	byte
 		db	003h,000h,'T',002h
 		dw	00581h	; @code SET_OPTION_VALUE
 		dw	offset DGROUP:LANGUAGE_MODE
-		db	000h,000h,'U',002h,081h,005h
+		db	000h,000h,'U',002h
+		dw	00581h	; @code SET_OPTION_VALUE
 		dw	offset DGROUP:LANGUAGE_MODE
 		db	002h,000h,'-',002h
 		dw	00581h	; @code SET_OPTION_VALUE
@@ -4209,7 +4171,8 @@ DATA_1C2E	label	byte
 		db	001h,000h,'1',000h
 		dw	00581h	; @code SET_OPTION_VALUE
 		dw	offset DGROUP:VTABLE_MODE
-		db	002h,000h,'s',000h,081h,005h
+		db	002h,000h,'s',000h
+		dw	00581h	; @code SET_OPTION_VALUE
 		dw	offset DGROUP:VTABLE_MODE
 		db	000h,000h,'f',000h
 		dw	0039Ch	; @code HANDLE_FLAG_OPTION
@@ -4669,7 +4632,8 @@ DIRECTIVE_TABLE	label	byte
 		db	006h
 		dw	00E04h	; @code PARSE_ENDIF
 		dw	offset DGROUP:STR_LINE
-		db	009h,'7',00Eh
+		db	009h
+		dw	00E37h	; @code BCC_PARSE_LINE
 ; @1F5C
 PRAGMA_TABLE	label	byte
 		dw	0013Ah	; @code PRAGMA_WARN
@@ -5621,9 +5585,13 @@ ASM_KEYWORD_TABLE	label	byte
 		dw	offset DGROUP:DATA_2F02
 		db	't',000h
 		dw	offset DGROUP:DATA_2F06
-		db	't',000h,00Ah,'/t',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_2F0A
+		db	't',000h
 		dw	offset DGROUP:DATA_2E9D
-		db	't',000h,00Dh,'/t',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_2F0D
+		db	't',000h
 		dw	offset DGROUP:DATA_2F11
 		db	'z',000h
 		dw	offset DGROUP:DATA_2F14
@@ -5633,10 +5601,45 @@ ASM_KEYWORD_TABLE	label	byte
 		dw	offset DGROUP:DATA_2F1B
 		db	'z',000h
 		dw	offset DGROUP:DATA_2F1E
-		db	'z',000h,'!/t',000h,'$/y',000h,'*/z',000h,'-/t',000h,'3/z',000h
-		db	'6/t',000h,'</t',000h,'B/t',000h,'G/t',000h,'L/t',000h,'R/~'
-		db	000h,'V/t',000h,'[/t',000h,'a/t',000h,'f/t',000h,'l/t',000h
-		db	'q/t',000h,'w/t',000h,'~/t',000h
+		db	'z',000h
+		dw	offset DGROUP:DATA_2F21
+		db	't',000h
+		dw	offset DGROUP:DATA_2F24
+		db	'y',000h
+		dw	offset DGROUP:DATA_2F2A
+		db	'z',000h
+		dw	offset DGROUP:DATA_2F2D
+		db	't',000h
+		dw	offset DGROUP:DATA_2F33
+		db	'z',000h
+		dw	offset DGROUP:DATA_2F36
+		db	't',000h
+		dw	offset DGROUP:DATA_2F3C
+		db	't',000h
+		dw	offset DGROUP:DATA_2F42
+		db	't',000h
+		dw	offset DGROUP:DATA_2F47
+		db	't',000h
+		dw	offset DGROUP:DATA_2F4C
+		db	't',000h
+		dw	offset DGROUP:DATA_2F52
+		db	'~',000h
+		dw	offset DGROUP:DATA_2F56
+		db	't',000h
+		dw	offset DGROUP:DATA_2F5B
+		db	't',000h
+		dw	offset DGROUP:DATA_2F61
+		db	't',000h
+		dw	offset DGROUP:DATA_2F66
+		db	't',000h
+		dw	offset DGROUP:DATA_2F6C
+		db	't',000h
+		dw	offset DGROUP:DATA_2F71
+		db	't',000h
+		dw	offset DGROUP:DATA_2F77
+		db	't',000h
+		dw	offset DGROUP:DATA_2F7E
+		db	't',000h
 		dw	offset DGROUP:DATA_2F86
 		db	't',000h
 		dw	offset DGROUP:DATA_2F8C
@@ -5680,15 +5683,45 @@ ASM_KEYWORD_TABLE	label	byte
 		dw	offset DGROUP:DATA_3000
 		db	't',000h
 		dw	offset DGROUP:DATA_3004
-		db	't',000h,009h,'0t',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_3009
+		db	't',000h
 		dw	offset DGROUP:DATA_300F
 		db	't',000h
 		dw	offset DGROUP:DATA_3016
 		db	't',000h
 		dw	offset DGROUP:DATA_301D
-		db	't',000h,'$0t',000h,'+0t',000h,'20t',000h,'80t',000h,'=0t',000h
-		db	'B0t',000h,'H0t',000h,'O0t',000h,'V0t',000h,'\0t',000h,'c0t'
-		db	000h,'h0t',000h,'o0t',000h,'v0t',000h,'~0t',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_3024
+		db	't',000h
+		dw	offset DGROUP:DATA_302B
+		db	't',000h
+		dw	offset DGROUP:DATA_3032
+		db	't',000h
+		dw	offset DGROUP:DATA_3038
+		db	't',000h
+		dw	offset DGROUP:DATA_303D
+		db	't',000h
+		dw	offset DGROUP:DATA_3042
+		db	't',000h
+		dw	offset DGROUP:DATA_3048
+		db	't',000h
+		dw	offset DGROUP:DATA_304F
+		db	't',000h
+		dw	offset DGROUP:DATA_3056
+		db	't',000h
+		dw	offset DGROUP:DATA_305C
+		db	't',000h
+		dw	offset DGROUP:DATA_3063
+		db	't',000h
+		dw	offset DGROUP:DATA_3068
+		db	't',000h
+		dw	offset DGROUP:DATA_306F
+		db	't',000h
+		dw	offset DGROUP:DATA_3076
+		db	't',000h
+		dw	offset DGROUP:DATA_307E
+		db	't',000h
 		dw	offset DGROUP:DATA_3085
 		db	't',000h
 		dw	offset DGROUP:DATA_308C
@@ -5744,73 +5777,85 @@ ASM_KEYWORD_TABLE	label	byte
 		dw	offset DGROUP:DATA_2FD5
 		db	't',000h
 		dw	offset DGROUP:DATA_311D
-		db	't',000h,' 1t',000h,'$1w',000h,'(1w',000h,'-1w',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_3120
+		db	't',000h
+		dw	offset DGROUP:DATA_3124
+		db	'w',000h
+		dw	offset DGROUP:DATA_3128
+		db	'w',000h
+		dw	offset DGROUP:DATA_312D
+		db	'w',000h
 		dw	offset DGROUP:DATA_309C
-		db	't',000h,'21t',000h,'71t',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_3132
+		db	't',000h
+		dw	offset DGROUP:DATA_3137
+		db	't',000h
 		dw	offset DGROUP:DATA_313C
-		dw	offset DGROUP:DATA_0578
+		db	'x',005h
 		dw	offset DGROUP:DATA_313F
-		dw	offset DGROUP:DATA_0978
+		db	'x',009h
 		dw	offset DGROUP:DATA_3143
-		dw	offset DGROUP:DATA_0478
+		db	'x',004h
 		dw	offset DGROUP:DATA_3146
-		dw	offset DGROUP:DATA_0878
+		db	'x',008h
 		dw	offset DGROUP:DATA_314A
-		dw	offset DGROUP:DATA_0C78
+		db	'x',00Ch
 		dw	offset DGROUP:DATA_314D
-		dw	offset DGROUP:DATA_1678
+		db	'x',016h
 		dw	offset DGROUP:DATA_3152
-		dw	offset DGROUP:DATA_0A78
+		db	'x',00Ah
 		dw	offset DGROUP:DATA_3155
-		dw	offset DGROUP:DATA_0378
+		db	'x',003h
 		dw	offset DGROUP:DATA_3158
-		dw	offset DGROUP:DATA_0778
+		db	'x',007h
 		dw	offset DGROUP:DATA_315C
-		dw	offset DGROUP:DATA_0278
+		db	'x',002h
 		dw	offset DGROUP:DATA_315F
-		dw	offset DGROUP:DATA_0678
+		db	'x',006h
 		dw	offset DGROUP:DATA_3163
-		dw	offset DGROUP:DATA_0178
+		db	'x',001h
 		dw	offset DGROUP:DATA_3167
-		dw	offset DGROUP:DATA_0878
+		db	'x',008h
 		dw	offset DGROUP:DATA_316B
-		dw	offset DGROUP:DATA_0478
+		db	'x',004h
 		dw	offset DGROUP:DATA_3170
-		dw	offset DGROUP:DATA_0978
+		db	'x',009h
 		dw	offset DGROUP:DATA_3174
-		dw	offset DGROUP:DATA_0578
+		db	'x',005h
 		dw	offset DGROUP:DATA_3179
-		dw	offset DGROUP:DATA_0D78
+		db	'x',00Dh
 		dw	offset DGROUP:DATA_317D
-		dw	offset DGROUP:DATA_0B78
+		db	'x',00Bh
 		dw	offset DGROUP:DATA_3181
-		dw	offset DGROUP:DATA_0678
+		db	'x',006h
 		dw	offset DGROUP:DATA_3185
-		dw	offset DGROUP:DATA_0278
+		db	'x',002h
 		dw	offset DGROUP:DATA_318A
-		dw	offset DGROUP:DATA_0778
+		db	'x',007h
 		dw	offset DGROUP:DATA_318E
-		dw	offset DGROUP:DATA_0378
+		db	'x',003h
 		dw	offset DGROUP:DATA_3193
-		dw	offset DGROUP:DATA_0F78
+		db	'x',00Fh
 		dw	offset DGROUP:DATA_3197
-		dw	offset DGROUP:DATA_1378
+		db	'x',013h
 		dw	offset DGROUP:DATA_319B
-		dw	offset DGROUP:DATA_1178
+		db	'x',011h
 		dw	offset DGROUP:DATA_319F
-		dw	offset DGROUP:DATA_0B78
+		db	'x',00Bh
 		dw	offset DGROUP:DATA_31A3
-		dw	offset DGROUP:STR_SUB
+		db	'x',00Eh
 		dw	offset DGROUP:DATA_31A6
-		dw	offset DGROUP:DATA_1278
+		db	'x',012h
 		dw	offset DGROUP:DATA_31A9
-		dw	offset DGROUP:DATA_1278
+		db	'x',012h
 		dw	offset DGROUP:DATA_31AD
-		dw	offset DGROUP:DATA_1378
+		db	'x',013h
 		dw	offset DGROUP:DATA_31B1
-		dw	offset DGROUP:DATA_1078
+		db	'x',010h
 		dw	offset DGROUP:DATA_31B4
-		dw	offset DGROUP:DATA_0A78
+		db	'x',00Ah
 		dw	offset DGROUP:DATA_31B7
 		db	't',000h
 		dw	offset DGROUP:DATA_31BC
@@ -5832,15 +5877,15 @@ ASM_KEYWORD_TABLE	label	byte
 		dw	offset DGROUP:DATA_31E2
 		db	'w',000h
 		dw	offset DGROUP:DATA_31E8
-		dw	offset DGROUP:OPTION_FLAG
+		db	'x',017h
 		dw	offset DGROUP:DATA_31ED
-		dw	offset DGROUP:DATA_1478
+		db	'x',014h
 		dw	offset DGROUP:DATA_31F3
-		dw	offset DGROUP:DATA_1578
+		db	'x',015h
 		dw	offset DGROUP:DATA_31FA
-		dw	offset DGROUP:DATA_1578
+		db	'x',015h
 		dw	offset DGROUP:DATA_3201
-		dw	offset DGROUP:DATA_1478
+		db	'x',014h
 		dw	offset DGROUP:DATA_3207
 		db	't',000h
 		dw	offset DGROUP:DATA_320B
@@ -5854,15 +5899,53 @@ ASM_KEYWORD_TABLE	label	byte
 		dw	offset DGROUP:DATA_2FD6
 		db	't',000h
 		dw	offset DGROUP:DATA_3220
-		db	07Fh,000h,'%2t',000h,'d0t',000h,')2t',000h
+		db	07Fh,000h
+		dw	offset DGROUP:DATA_3225
+		db	't',000h
+		dw	offset DGROUP:DATA_3064
+		db	't',000h
+		dw	offset DGROUP:DATA_3229
+		db	't',000h
 		dw	offset DGROUP:DATA_30A4
-		db	't',000h,'-2t',000h,'12w',000h,'62w',000h,'<2w',000h,'B2t',000h
-		db	'F2t',000h,'K2t',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_322D
+		db	't',000h
+		dw	offset DGROUP:DATA_3231
+		db	'w',000h
+		dw	offset DGROUP:DATA_3236
+		db	'w',000h
+		dw	offset DGROUP:DATA_323C
+		db	'w',000h
+		dw	offset DGROUP:DATA_3242
+		db	't',000h
+		dw	offset DGROUP:DATA_3246
+		db	't',000h
+		dw	offset DGROUP:DATA_324B
+		db	't',000h
 		dw	offset DGROUP:DATA_3250
-		db	081h,000h,'T2t',000h,'Y2t',000h,'_2t',000h,'e2t',000h,'i2t'
-		db	000h,'m2v',000h,'q2v',000h,'v2v',000h,'|2v',000h
+		db	081h,000h
+		dw	offset DGROUP:DATA_3254
+		db	't',000h
+		dw	offset DGROUP:DATA_3259
+		db	't',000h
+		dw	offset DGROUP:DATA_325F
+		db	't',000h
+		dw	offset DGROUP:DATA_3265
+		db	't',000h
+		dw	offset DGROUP:DATA_3269
+		db	't',000h
+		dw	offset DGROUP:DATA_326D
+		db	'v',000h
+		dw	offset DGROUP:DATA_3271
+		db	'v',000h
+		dw	offset DGROUP:DATA_3276
+		db	'v',000h
+		dw	offset DGROUP:DATA_327C
+		db	'v',000h
 		dw	offset DGROUP:DATA_3282
-		db	'v',000h,'81t',000h
+		db	'v',000h
+		dw	offset DGROUP:DATA_3138
+		db	't',000h
 		dw	offset DGROUP:DATA_3287
 		db	't',000h
 		dw	offset DGROUP:DATA_328B
@@ -5916,7 +5999,9 @@ ASM_KEYWORD_TABLE	label	byte
 		dw	offset DGROUP:DATA_32F1
 		db	't',000h
 		dw	offset DGROUP:DATA_30F4
-		db	't',000h,'%/y',000h
+		db	't',000h
+		dw	offset DGROUP:DATA_2F25
+		db	'y',000h
 		dw	offset DGROUP:DATA_32F6
 		db	't',000h
 		dw	offset DGROUP:DATA_32FB
@@ -6030,7 +6115,13 @@ DATA_2F02	label	byte
 		db	'daa',000h
 ; @2F06
 DATA_2F06	label	byte
-		db	'das',000h,'db',000h,'dec',000h
+		db	'das',000h
+; @2F0A
+DATA_2F0A	label	byte
+		db	'db',000h
+; @2F0D
+DATA_2F0D	label	byte
+		db	'dec',000h
 ; @2F11
 DATA_2F11	label	byte
 		db	'dh',000h
@@ -6045,10 +6136,67 @@ DATA_2F1B	label	byte
 		db	'dl',000h
 ; @2F1E
 DATA_2F1E	label	byte
-		db	'ds',000h,'dw',000h,'dword',000h,'dx',000h,'enter',000h,'es'
-		db	000h,'extrn',000h,'f2xm1',000h,'fabs',000h,'fadd',000h,'faddp'
-		db	000h,'far',000h,'fbld',000h,'fbstp',000h,'fchs',000h,'fclex'
-		db	000h,'fcom',000h,'fcomp',000h,'fcompp',000h,'fdecstp',000h
+		db	'ds',000h
+; @2F21
+DATA_2F21	label	byte
+		db	'dw',000h
+; @2F24
+DATA_2F24	label	byte
+		db	'd'
+; @2F25
+DATA_2F25	label	byte
+		db	'word',000h
+; @2F2A
+DATA_2F2A	label	byte
+		db	'dx',000h
+; @2F2D
+DATA_2F2D	label	byte
+		db	'enter',000h
+; @2F33
+DATA_2F33	label	byte
+		db	'es',000h
+; @2F36
+DATA_2F36	label	byte
+		db	'extrn',000h
+; @2F3C
+DATA_2F3C	label	byte
+		db	'f2xm1',000h
+; @2F42
+DATA_2F42	label	byte
+		db	'fabs',000h
+; @2F47
+DATA_2F47	label	byte
+		db	'fadd',000h
+; @2F4C
+DATA_2F4C	label	byte
+		db	'faddp',000h
+; @2F52
+DATA_2F52	label	byte
+		db	'far',000h
+; @2F56
+DATA_2F56	label	byte
+		db	'fbld',000h
+; @2F5B
+DATA_2F5B	label	byte
+		db	'fbstp',000h
+; @2F61
+DATA_2F61	label	byte
+		db	'fchs',000h
+; @2F66
+DATA_2F66	label	byte
+		db	'fclex',000h
+; @2F6C
+DATA_2F6C	label	byte
+		db	'fcom',000h
+; @2F71
+DATA_2F71	label	byte
+		db	'fcomp',000h
+; @2F77
+DATA_2F77	label	byte
+		db	'fcompp',000h
+; @2F7E
+DATA_2F7E	label	byte
+		db	'fdecstp',000h
 ; @2F86
 DATA_2F86	label	byte
 		db	'fdi'
@@ -6129,7 +6277,10 @@ DATA_3000	label	byte
 		db	'fld',000h
 ; @3004
 DATA_3004	label	byte
-		db	'fld1',000h,'fldcw',000h
+		db	'fld1',000h
+; @3009
+DATA_3009	label	byte
+		db	'fldcw',000h
 ; @300F
 DATA_300F	label	byte
 		db	'fldenv',000h
@@ -6138,10 +6289,55 @@ DATA_3016	label	byte
 		db	'fldl2e',000h
 ; @301D
 DATA_301D	label	byte
-		db	'fldl2t',000h,'fldlg2',000h,'fldln2',000h,'fldpi',000h,'fldz'
-		db	000h,'fmul',000h,'fmulp',000h,'fnclex',000h,'fndisi',000h,'fneni'
-		db	000h,'fninit',000h,'fnop',000h,'fnsave',000h,'fnstcw',000h,'fnstenv'
-		db	000h,'fnstsw',000h
+		db	'fldl2t',000h
+; @3024
+DATA_3024	label	byte
+		db	'fldlg2',000h
+; @302B
+DATA_302B	label	byte
+		db	'fldln2',000h
+; @3032
+DATA_3032	label	byte
+		db	'fldpi',000h
+; @3038
+DATA_3038	label	byte
+		db	'fldz',000h
+; @303D
+DATA_303D	label	byte
+		db	'fmul',000h
+; @3042
+DATA_3042	label	byte
+		db	'fmulp',000h
+; @3048
+DATA_3048	label	byte
+		db	'fnclex',000h
+; @304F
+DATA_304F	label	byte
+		db	'fndisi',000h
+; @3056
+DATA_3056	label	byte
+		db	'fneni',000h
+; @305C
+DATA_305C	label	byte
+		db	'fninit',000h
+; @3063
+DATA_3063	label	byte
+		db	'f'
+; @3064
+DATA_3064	label	byte
+		db	'nop',000h
+; @3068
+DATA_3068	label	byte
+		db	'fnsave',000h
+; @306F
+DATA_306F	label	byte
+		db	'fnstcw',000h
+; @3076
+DATA_3076	label	byte
+		db	'fnstenv',000h
+; @307E
+DATA_307E	label	byte
+		db	'fnstsw',000h
 ; @3085
 DATA_3085	label	byte
 		db	'fpatan',000h
@@ -6228,8 +6424,28 @@ DATA_3119	label	byte
 		db	'hlt',000h
 ; @311D
 DATA_311D	label	byte
-		db	'in',000h,'inc',000h,'ins',000h,'insb',000h,'insw',000h,'into'
-		db	000h,'iret',000h
+		db	'in',000h
+; @3120
+DATA_3120	label	byte
+		db	'inc',000h
+; @3124
+DATA_3124	label	byte
+		db	'ins',000h
+; @3128
+DATA_3128	label	byte
+		db	'insb',000h
+; @312D
+DATA_312D	label	byte
+		db	'insw',000h
+; @3132
+DATA_3132	label	byte
+		db	'into',000h
+; @3137
+DATA_3137	label	byte
+		db	'i'
+; @3138
+DATA_3138	label	byte
+		db	'ret',000h
 ; @313C
 DATA_313C	label	byte
 		db	'ja',000h
@@ -6388,12 +6604,64 @@ DATA_321A	label	byte
 		db	'movsw',000h
 ; @3220
 DATA_3220	label	byte
-		db	'near',000h,'neg',000h,'not',000h,'out',000h,'outs',000h,'outsb'
-		db	000h,'outsw',000h,'pop',000h,'popa',000h,'popf',000h
+		db	'near',000h
+; @3225
+DATA_3225	label	byte
+		db	'neg',000h
+; @3229
+DATA_3229	label	byte
+		db	'not',000h
+; @322D
+DATA_322D	label	byte
+		db	'out',000h
+; @3231
+DATA_3231	label	byte
+		db	'outs',000h
+; @3236
+DATA_3236	label	byte
+		db	'outsb',000h
+; @323C
+DATA_323C	label	byte
+		db	'outsw',000h
+; @3242
+DATA_3242	label	byte
+		db	'pop',000h
+; @3246
+DATA_3246	label	byte
+		db	'popa',000h
+; @324B
+DATA_324B	label	byte
+		db	'popf',000h
 ; @3250
 DATA_3250	label	byte
-		db	'ptr',000h,'push',000h,'pusha',000h,'pushf',000h,'rcl',000h
-		db	'rcr',000h,'rep',000h,'repe',000h,'repne',000h,'repnz',000h
+		db	'ptr',000h
+; @3254
+DATA_3254	label	byte
+		db	'push',000h
+; @3259
+DATA_3259	label	byte
+		db	'pusha',000h
+; @325F
+DATA_325F	label	byte
+		db	'pushf',000h
+; @3265
+DATA_3265	label	byte
+		db	'rcl',000h
+; @3269
+DATA_3269	label	byte
+		db	'rcr',000h
+; @326D
+DATA_326D	label	byte
+		db	'rep',000h
+; @3271
+DATA_3271	label	byte
+		db	'repe',000h
+; @3276
+DATA_3276	label	byte
+		db	'repne',000h
+; @327C
+DATA_327C	label	byte
+		db	'repnz',000h
 ; @3282
 DATA_3282	label	byte
 		db	'repz',000h
@@ -6566,7 +6834,7 @@ PCH_OPTION_FLAG_PTRS	label	byte
 ; @33E6
 PREAMBLE_DIRECTIVE_TABLE	label	byte
 		dw	offset DGROUP:DATA_3460
-		dw	offset DGROUP:DATA_0E4F
+		dw	00E4Fh	; @code PCH_DIRECTIVE_PRAGMA
 		dw	offset DGROUP:DATA_3467
 		dw	01017h	; @code PCH_DIRECTIVE_INCLUDE
 		dw	offset DGROUP:DATA_346F
@@ -6578,7 +6846,7 @@ PREAMBLE_DIRECTIVE_TABLE	label	byte
 		dw	offset DGROUP:DATA_347F
 		dw	0128Ah	; @code PCH_DIRECTIVE_IFNDEF
 		dw	offset DGROUP:DATA_3486
-		dw	offset DGROUP:DATA_116D
+		dw	0116Dh	; @code PCH_DIRECTIVE_ELSE
 		dw	offset DGROUP:DATA_348B
 		dw	0116Dh	; @code PCH_DIRECTIVE_ELSE
 		dw	offset DGROUP:DATA_3490
@@ -7529,8 +7797,10 @@ OPCODE_DESC_BYTE8	label	byte
 		db	000h,000h,000h,000h,000h
 		dw	offset DGROUP:DATA_50FC
 		db	002h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
-		db	000h,000h,000h,000h,000h,'QP',004h,000h,000h,000h,000h,000h
-		db	000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+		db	000h,000h,000h,000h,000h
+		dw	offset DGROUP:DATA_5051
+		db	004h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+		db	000h,000h,000h,000h,000h
 		dw	offset DGROUP:DATA_517E
 		db	001h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,0FAh
 		db	000h,000h,000h,000h,000h
@@ -7667,7 +7937,10 @@ OPER_OPCODE_KIND_OFFSET	label	byte
 		db	001h,001h,001h,001h,001h,000h,001h,001h,001h,001h,'nop',000h
 ; @5050
 DATA_5050	label	byte
-		db	'add',000h
+		db	'a'
+; @5051
+DATA_5051	label	byte
+		db	'dd',000h
 ; @5054
 DATA_5054	label	byte
 		db	'fadd',000h
@@ -7923,18 +8196,11 @@ REGISTER_NEED_TABLE	label	byte
 		db	005h,000h
 ; @5235
 OPERATOR_HELPER_NAME_TABLE	label	byte
-		db	000h,000h,000h,000h,000h,000h
-		dw	offset DGROUP:DATA_0100
-		dw	offset DGROUP:DATA_0201
-		db	002h,002h,002h,002h,001h,001h,001h,001h,001h,001h,002h,002h
-		db	002h,002h
-		dw	offset DGROUP:DATA_0102
-		db	001h,001h,001h,001h,001h,001h,001h,001h,001h,001h
-		dw	offset DGROUP:DATA_0100
-		db	001h,001h,001h,000h
-		dw	offset DGROUP:DATA_0100
-		db	001h,001h,001h,001h,001h,001h,001h,001h
-		dw	offset DGROUP:DATA_0301
+		db	000h,000h,000h,000h,000h,000h,000h,001h,001h,002h,002h,002h
+		db	002h,002h,001h,001h,001h,001h,001h,001h,002h,002h,002h,002h
+		db	002h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h
+		db	000h,001h,001h,001h,001h,000h,000h,001h,001h,001h,001h,001h
+		db	001h,001h,001h,001h,001h,003h
 		dw	offset DGROUP:DATA_528B
 		dw	offset DGROUP:DATA_528B
 		dw	offset DGROUP:DATA_5292
@@ -7945,12 +8211,7 @@ OPERATOR_HELPER_NAME_TABLE	label	byte
 		dw	offset DGROUP:DATA_52AC
 		dw	offset DGROUP:DATA_52B3
 		dw	offset DGROUP:DATA_52BA
-		dw	offset DGROUP:DATA_0B0A
-		dw	offset DGROUP:DATA_0405
-		dw	offset DGROUP:DATA_0809
-		dw	offset DGROUP:DATA_0B0A
-		dw	offset DGROUP:DATA_0203
-		dw	offset DGROUP:DATA_0607
+		db	00Ah,00Bh,005h,004h,009h,008h,00Ah,00Bh,003h,002h,007h,006h
 ; @528B
 DATA_528B	label	byte
 		db	'lxmul@',000h

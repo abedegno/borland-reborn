@@ -58,8 +58,11 @@ original byte for byte, verifies every relocation and name, and links a new `BCC
 identical to Borland's.
 
 To change the compiler, use the **modding build**. It links the same sources with a layout
-TLINK chooses, so any function may grow or shrink. It is checked by compiling 478 test cases
-with both compilers and comparing every output. See [bcc20/docs/MODDING.md](bcc20/docs/MODDING.md).
+TLINK chooses, so any function may grow or shrink and new data may go between any two data
+items. It is checked by compiling 478 test cases with both compilers and comparing every
+output, with the code and the data moved in several ways. A tracing emulator shows which
+words of the data the compiler uses as addresses, and which of its code the tests run
+([bcc20/docs/COVERAGE.md](bcc20/docs/COVERAGE.md)). See [bcc20/docs/MODDING.md](bcc20/docs/MODDING.md).
 
 ## How it works
 
