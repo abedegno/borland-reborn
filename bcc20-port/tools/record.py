@@ -1,6 +1,7 @@
 """Record calls of BCC.EXE functions over the test corpus, for build/replay.
 
     python3 tools/record.py FUNCTION... [--per-run N] [--max N] [--runs N] [--emu2 PATH]
+    python3 tools/record.py --all ...      every function the port declares (include/*.h)
 
 Runs Borland's BCC.EXE over the corpus of ../bcc20/tools/modtest.py in the tracing emu2 with
 its call recorder on (EMU2_RECORD), and writes records/FUNCTION.rec: up to --max different
@@ -27,10 +28,11 @@ from pathlib import Path
 PORT = Path(__file__).resolve().parents[1]
 BCC20 = PORT.parent / "bcc20"
 sys.path.insert(0, str(BCC20 / "tools"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 import modlink  # noqa: E402
 import modtest  # noqa: E402
 
-WORK = PORT / "build" / "record"
+WORK = PORT / "build" / f"record-{os.getpid()}"   # one per run: agents record in parallel
 
 
 def function_offsets():
@@ -48,7 +50,8 @@ def function_offsets():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("functions", nargs="+")
+    ap.add_argument("functions", nargs="*")
+    ap.add_argument("--all", action="store_true")
     ap.add_argument("--per-run", type=int, default=20)
     ap.add_argument("--max", type=int, default=500)
     ap.add_argument("--runs", type=int, default=0)
@@ -57,6 +60,11 @@ def main():
     ap.add_argument("--jobs", type=int, default=os.cpu_count() or 4)
     args = ap.parse_args()
 
+    if args.all:
+        import genadapters
+        args.functions = sorted(genadapters.prototypes())
+    if not args.functions:
+        raise SystemExit("record: name the functions, or --all")
     offsets = function_offsets()
     missing = [f for f in args.functions if f not in offsets]
     if missing:

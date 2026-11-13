@@ -11,7 +11,7 @@
 /cpp20/src/data/
 */work/
 # build output
-*/build-source/
+*/build-source
 */build/
 # Python and editor clutter
 __pycache__/

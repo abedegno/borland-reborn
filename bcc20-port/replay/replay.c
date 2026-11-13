@@ -10,11 +10,13 @@
    recorded stack).  Then:
      - the registers the function returns in (functions.c) must equal the recorded ones;
      - every byte the original wrote must hold the same value, and no other byte may have
-       changed.  The original's own stack frame is not compared: the translation keeps its
-       locals on the host stack.
+       changed.  The original's own stack frame is not compared (the translation keeps its
+       locals on the host stack), nor its return address and arguments: Turbo C changes a
+       parameter in place (a++ on a pointer parameter), and the caller never reads it back.
    A read of a byte the original never read finds poison, which almost always shows up as a
    difference.  A call that has not returned after 2 seconds stops the run (a translation
-   that loops, often on poison it should never have read).  Calls that made DOS or BIOS calls are skipped: their records are incomplete.
+   that loops, often on poison it should never have read).  Calls that made DOS or BIOS
+   calls are skipped: their records are incomplete.
    Exit status 0 only if every compared call matched. */
 #define _POSIX_C_SOURCE 200809L
 #include <signal.h>
@@ -24,8 +26,10 @@
 #include <string.h>
 #include "port.h"
 #include "replay.h"
+#include "data.h"
 
 u8 *mem;
+u16 DGROUP;   /* data.h: set from each call's DS */
 static u8 *expect;
 static char hung[512];   /* what to say if a call does not return */
 
@@ -119,12 +123,23 @@ static int replay(const Function *fn, Record *c, const char *file, int verbose)
         if (c->runs[i].kind == 'R')
             memcpy(mem + c->runs[i].lin, c->runs[i].bytes, c->runs[i].n);
     memcpy(expect, mem, MEM_SIZE);
+    /* the return address and arguments: up to the SP the call returned with (a pascal
+       function pops its arguments), or fn->args bytes past the return address */
+    u32 args_lo = LIN(c->in[R_SS], c->in[R_SP]);
+    u32 args_hi = args_lo + (u16)(c->out[R_SP] - c->in[R_SP]);
+    if (args_hi < args_lo + fn->args)
+        args_hi = args_lo + fn->args;
     for (unsigned i = 0; i < c->n_runs; i++)
         if (c->runs[i].kind == 'W')
-            memcpy(expect + c->runs[i].lin, c->runs[i].bytes, c->runs[i].n);
+            for (unsigned j = 0; j < c->runs[i].n; j++) {
+                u32 a = c->runs[i].lin + j;
+                if (a < args_lo || a >= args_hi)
+                    expect[a] = c->runs[i].bytes[j];
+            }
 
     u16 r[13];
     memcpy(r, c->in, sizeof r);
+    DGROUP = r[R_DS];
     snprintf(hung, sizeof hung, "  %s call %u: %s did not return within 2 seconds\n", file,
              c->seq, fn->name);
     alarm(2);
@@ -132,6 +147,12 @@ static int replay(const Function *fn, Record *c, const char *file, int verbose)
     alarm(0);
 
     int ok = 1;
+    if ((fn->outs & OUT_AL) && (u8)r[R_AX] != (u8)c->out[R_AX]) {
+        if (verbose)
+            printf("  %s call %u: AL is %02X, BCC.EXE left %02X\n", file, c->seq, (u8)r[R_AX],
+                   (u8)c->out[R_AX]);
+        ok = 0;
+    }
     for (int i = 0; i < 13; i++)
         if ((fn->outs >> i & 1) && r[i] != c->out[i]) {
             if (verbose)
@@ -191,6 +212,10 @@ int main(int argc, char **argv)
         fclose(f);
     }
     clear(&c);
+    if (!calls) {
+        printf("%s: no recorded calls, not checked (does the corpus reach it?)\n", fn->name);
+        return 1;
+    }
     printf("%s: %u calls, %u match", fn->name, calls, matched);
     if (skipped)
         printf(", %u skipped (made DOS calls)", skipped);

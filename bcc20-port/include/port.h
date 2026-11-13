@@ -23,6 +23,8 @@ typedef int32_t i32;
 /* a word that may sit at an odd address and alias any other type */
 typedef u16 __attribute__((aligned(1), may_alias)) u16u;
 typedef u32 __attribute__((aligned(1), may_alias)) u32u;
+typedef i16 __attribute__((aligned(1), may_alias)) i16u;
+typedef i32 __attribute__((aligned(1), may_alias)) i32u;
 
 /* the 8086 address space: 1 MB, plus 64 KB past the end for segment:offset values that run
    beyond it (BCC never relies on wrapping at 1 MB) */
@@ -46,6 +48,8 @@ static inline farptr fp_add(farptr p, i16 n) { return MK_FP(FP_SEG(p), FP_OFF(p)
 #define B(p) (*at(p))
 #define SB(p) (*(i8 *)at(p))
 #define W(p) (*(u16u *)at(p))
+#define SW(p) (*(i16u *)at(p))
 #define D(p) (*(u32u *)at(p))
+#define SD(p) (*(i32u *)at(p))
 
 #endif

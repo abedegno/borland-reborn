@@ -16,8 +16,8 @@ It is translated from the byte-matched source in [../bcc20](../bcc20/README.md),
 as it is and remains the reference. [../bcc20/docs/PORT.md](../bcc20/docs/PORT.md) lists
 what that source assumes about DOS and the 8086, with counts.
 
-**Status:** the checking machinery and the first six run-time functions. Nothing compiles
-yet.
+**Status:** the checking machinery, the shared definitions, and 13 run-time functions, each
+matching every call recorded over the whole corpus. Nothing compiles yet.
 
 ## How a translation is checked
 
@@ -63,25 +63,40 @@ committed; make them again from your own BCC.EXE.
 | Path | What it holds |
 |---|---|
 | `include/port.h` | the machine model: the address space, far pointers, byte and word access |
-| `include/rtl.h` | the run-time library functions translated so far |
+| `include/data.h`, `globals.h` | BCC's global data at its DGROUP offsets: `NAME`, `NAME_AT(i)`, `NAME_P` (globals.h is generated from DATA.H; data.h holds the items sources declare for themselves) |
+| `include/pool.h` | the record pool accessors (`TYPE_W(r, TYPE_KIND)`...), generated from POOL.H |
+| `include/fields.h`, `msg.h`, `token.h`, `kind.h`, `exprop.h` | the original's constants, copied |
+| `include/rtl.h` | the run-time library functions translated so far (one header per source directory) |
 | `src/rtl/` | translations of `../bcc20/src/rtl/`, one file per original file, lower-case names |
 | `replay/replay.c` | the harness: reads records, runs a function, compares |
-| `replay/functions.c` | how the harness calls each function: where its arguments are, which registers it returns in |
-| `tools/record.py` | records calls over the corpus |
+| `replay/functions.c` | hand-written adapters, for functions that pass values in other registers |
+| `tools/record.py` | records calls over the corpus (`--all`: every translated function) |
+| `tools/genadapters.py` | generates the adapters (build/adapters.c) from the port's prototypes and the original definitions' calling conventions |
+| `tools/genheaders.py` | regenerates the copied headers, pool.h and globals.h |
+| `tools/ready.py` | the work queue: functions whose callees are all translated, smallest first |
 
 Each translated file starts with a comment naming the original file and anything the
 translation keeps on purpose (an original bug the output depends on, for example).
 
 ## Translating a function
 
-1. Read the original in `../bcc20/src`, its comments and its assembly where it has any.
-2. Write the C in the matching file under `src/`, with fixed-size types (`u8`, `i16`,
-   `u32`...), far pointers as `farptr` and memory through `B()`, `W()` and `D()`. Far
-   pointer arithmetic changes only the offset: use `fp_add`.
-3. Add an entry to `replay/functions.c`: for a far pascal function the return address takes
-   4 bytes at SP and the arguments follow with the last one first; `outs` names the
-   registers it returns in (AX, or DX:AX for a long or a far pointer).
-4. `python3 tools/record.py NAME`, then `make check`.
+1. Pick a function from `python3 tools/ready.py` (its callees are all translated, so its
+   recorded calls can be replayed).
+2. Read the original in `../bcc20/src`, its comments and its assembly where it has any.
+3. Write the C in the matching file under `src/`, with fixed-size types (`u8`, `i16`,
+   `u32`...), far pointers as `farptr` and memory through `B()`, `W()` and `D()`; globals
+   by name (`globals.h`), records through `pool.h` and the field constants. Far pointer
+   arithmetic changes only the offset: use `fp_add`. Far pointers compare by offset with
+   `<` and `>`, as in Borland C. Pseudo-registers become locals.
+4. Declare it in the directory's header (`include/rtl.h` for `src/rtl/`), with the original's
+   argument order. The adapter is generated from that prototype; a function that passes a
+   value in another register gets a hand-written one in `replay/functions.c` instead.
+5. `python3 tools/record.py NAME`, then `build/replay NAME records/NAME.rec`, and at the end
+   `make check`.
+
+A function the corpus never calls cannot be checked. If nothing calls it at all (search
+`../bcc20/src`), leave it out and say so in the file's comment, as `src/rtl/rscat.c` does for
+STRING_APPEND_N.
 
 Prove the check can fail: a wrong translation should be caught. On the first function, a
 loop that missed the terminator hung (caught by the time limit) and a sign error failed 383
@@ -89,20 +104,23 @@ of 500 calls.
 
 ## Plan
 
-1. **Checking machinery** (done): the call recorder, the replay harness, six run-time
+1. **Checking machinery** (done): the call recorder, the replay harness, generated adapters,
+   globals and headers, the work queue, and the run-time library's string and character
    functions.
-2. **Translate what `-c` on plain C reaches first**: the rest of the run-time library the
-   compiler uses, then the lexer and input, preprocessor, parser, expressions, code
-   generator and object writer, each function checked against its recorded calls. Coverage
-   decides the order (`../bcc20/docs/COVERAGE.md`).
-3. **First native compile**: a driver with host file I/O, no overlays, memory banks or
+2. **The foundation**: the far heap's conventional-memory path (pool growth goes through
+   `RESIZE_POOL_BLOCK`, a heap entry), the record pools and the diagnostics formatter.
+   Nearly every other function calls into them (`tools/ready.py`).
+3. **Translate what `-c` on plain C reaches**: the lexer and input, preprocessor, parser,
+   expressions, code generator and object writer, each function checked against its
+   recorded calls, following the work queue.
+4. **First native compile**: a driver with host file I/O, no overlays, memory banks or
    interrupt handlers; `HELLO.C` with `-c` writes the same `T.OBJ` as BCC.EXE. Then `-S`,
    then the whole corpus.
-4. **The compiler work written in TASM**: the 80-bit real arithmetic (`../bcc20/src/float/`)
+5. **The compiler work written in TASM**: the 80-bit real arithmetic (`../bcc20/src/float/`)
    and the inline assembler (`INLINASM.ASM`), in C.
-5. **The library interface**: compile from memory to memory, with state reset between
+6. **The library interface**: compile from memory to memory, with state reset between
    compiles; then explanation output; then a permuter in Exhume that uses them.
-6. **Restructure**: host data structures in place of the 8086 memory model, under the corpus
+7. **Restructure**: host data structures in place of the 8086 memory model, under the corpus
    check.
 
 A game is matched only with the exact compiler that built it. This port gives Borland C++
