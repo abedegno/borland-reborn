@@ -20,13 +20,20 @@ extern u16 DGROUP;
 
 /* pool descriptors declared as structs in the sources (struct Pool, struct C31Bank): their
    first word is the pool's segment, which is all pool.h needs */
-#define SCOPE_POOL_SEG W(DSPTR(0x782A))
-#define NAME_POOL_SEG W(DSPTR(0x7832))
-#define HASH_CHAIN_LINK_SEG W(DSPTR(0x783A))
-#define EXPR_POOL_SEG W(DSPTR(0x8186))
-#define SRCFILE_POOL_SEG W(DSPTR(0x818E))
-#define FLOW_BLOCK_POOL_SEG W(DSPTR(0x8654))
-#define VARIABLE_TABLE_SEG W(DSPTR(0x866E))
+#define SCOPE_POOL_SEG_P DSPTR(0x782A)
+#define SCOPE_POOL_SEG W(SCOPE_POOL_SEG_P)
+#define NAME_POOL_SEG_P DSPTR(0x7832)
+#define NAME_POOL_SEG W(NAME_POOL_SEG_P)
+#define HASH_CHAIN_LINK_SEG_P DSPTR(0x783A)
+#define HASH_CHAIN_LINK_SEG W(HASH_CHAIN_LINK_SEG_P)
+#define EXPR_POOL_SEG_P DSPTR(0x8186)
+#define EXPR_POOL_SEG W(EXPR_POOL_SEG_P)
+#define SRCFILE_POOL_SEG_P DSPTR(0x818E)
+#define SRCFILE_POOL_SEG W(SRCFILE_POOL_SEG_P)
+#define FLOW_BLOCK_POOL_SEG_P DSPTR(0x8654)
+#define FLOW_BLOCK_POOL_SEG W(FLOW_BLOCK_POOL_SEG_P)
+#define VARIABLE_TABLE_SEG_P DSPTR(0x866E)
+#define VARIABLE_TABLE_SEG W(VARIABLE_TABLE_SEG_P)
 
 #include "globals.h"
 

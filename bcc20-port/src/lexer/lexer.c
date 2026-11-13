@@ -27,6 +27,7 @@
 #include "pool.h"
 #include "msg.h"
 #include "protos.h"
+#include "calls.h"
 #include "variadic.h"
 
 /* globals as this file declares them */
@@ -1111,9 +1112,7 @@ i16 LEX_CHARACTER(void)
         TOKEN_TYPE_WORD = 101;
         value = UNSIGNED_CHAR != 0 ? (u8)value : (i8)value;
     }
-    /* the hook is CODE_MASK (i32, u8), which masks the value to the type's size */
-    i32 (*convert)(i32, u8) = (i32 (*)(i32, u8))code_function(TOKEN_CONVERT);
-    TOKEN_CONST_VALUE = (u32)convert(value, 5);
+    TOKEN_CONST_VALUE = CALL_FAR(TOKEN_CONVERT, A32((i32)value), A16(5));
     TOKEN_AUX = 5;
     return count == 1 ? 101 : 50;
 }
@@ -1290,7 +1289,7 @@ static void restore_out(i16 mode, i8 c)
     if (mode == 2)
         EMIT_VALUE(c);
     else if (mode == 1)
-        ((void (*)(i8))code_function(BYTE_HOOK))(c);
+        CALL_FAR(BYTE_HOOK, A16(c));
 }
 
 /* replay the pending pool text (or read a fresh string literal) and pass each character

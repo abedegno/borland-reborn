@@ -19,6 +19,7 @@
 #include "pool.h"
 #include "msg.h"
 #include "protos.h"
+#include "calls.h"
 #include "variadic.h"
 
 /* globals as this file declares them */
@@ -89,7 +90,7 @@ void DIRECTIVE_START(u16 process)
         if (COMPARE_NAME(DS(W(DS(entry))), TOKEN_TEXT_BUFFER_P) == 0) {
             if (process) {
                 LOGICAL_LINE = CURRENT_LINE;
-                ((void (*)(i16))near_function("PREPROC", W(DS(entry + 3))))(value);
+                CALL_NEAR("PREPROC", W(DS(entry + 3)), A16(value));
             } else {
                 DIRECTIVE_MODE = (u16)(i16)SB(DS(entry + 2));
                 --INPUT_INDEX;
@@ -159,8 +160,7 @@ i16 PARSE_STARTUP_EXIT(i16 input, u16 mode)
         return value;
     }
     value = SCAN_TOKEN(value);
-    /* the hook is FIND_NAMED_FUNCTION or FIND_NAMED_FUNCTION_PREPARED: u16 (u16) */
-    i16 found = (i16)((u16 (*)(u16))code_function(PRAGMA_FUNC_LOOKUP_HOOK))(0);
+    i16 found = (i16)CALL_FAR(PRAGMA_FUNC_LOOKUP_HOOK, A16(0));
     if (found == -1)
         return value;
     if (!found) {
@@ -252,7 +252,7 @@ i16 PRAGMA_CODESEG(i16 input)
 {
     i16 value = input;
     u16 name, extra = 0, quoted = 0;
-    ((void (*)(void))code_function(BEGIN_BACKEND_OUTPUT_HOOK))();
+    CALL_FAR0(BEGIN_BACKEND_OUTPUT_HOOK);
     PRAGMA_CODESEG_SEEN = 1;
     value = SCAN_NEXT(value);
     if (line_end(value)) {
@@ -317,7 +317,7 @@ void PARSE_PRAGMA(i16 value)
         value = SCAN_NEXT(SCAN_TOKEN(value));
         for (u16 entry = FP_OFF(PRAGMA_TABLE_P); W(DS(entry + 2)) != 0; entry += 4)
             if (COMPARE_NAME(NAME_BUFFER_P, DS(W(DS(entry + 2)))) == 0) {
-                value = ((i16 (*)(i16))near_function("PREPROC", W(DS(entry))))(value);
+                value = (i16)CALL_NEAR("PREPROC", W(DS(entry)), A16(value));
                 break;
             }
     }
@@ -535,10 +535,10 @@ void SAVE_LINE_MARKER(i16 value)
     LINE_RECORD = offset + 4;
 }
 
-/* the hook is PARSE_PP_IF_EXPRESSION (C) or EVAL_CONSTANT_CONDITION (C++), both i16 (void) */
+/* the hook is PARSE_PP_IF_EXPRESSION (C) or EVAL_CONSTANT_CONDITION (C++) */
 static i16 eval_expression(void)
 {
-    return ((i16 (*)(void))code_function(EVAL_EXPRESSION))();
+    return (i16)CALL_FAR0(EVAL_EXPRESSION);
 }
 
 /* #if: a valid nonzero expression compiles the group (state 1); otherwise its lines are

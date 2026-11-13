@@ -12,6 +12,7 @@
 #include "pool.h"
 #include "msg.h"
 #include "protos.h"
+#include "calls.h"
 #include "variadic.h"
 
 #define LANGUAGE_MODE B(LANGUAGE_MODE_P)
@@ -99,7 +100,7 @@ i16 MACRO_DEFINED(farptr text)
     if (NAME_VALIDATE(text))
         return 1;
     if (SB(text) == '_' && (SB(fp_add(text, 1)) == '_' || SB(fp_add(text, 1)) == 'W'))
-        ((void (*)(void))code_function(BEGIN_BACKEND_OUTPUT_HOOK))();
+        CALL_FAR0(BEGIN_BACKEND_OUTPUT_HOOK);
     if (HLINK_W(BCC_SYMBOL_CREATE(text, 0), HLINK_MACRO))
         return 1;
     return 0;

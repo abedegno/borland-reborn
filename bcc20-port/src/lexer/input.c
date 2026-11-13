@@ -24,6 +24,7 @@
 #include "pool.h"
 #include "msg.h"
 #include "protos.h"
+#include "calls.h"
 #include "variadic.h"
 
 #define C(o, n) FAR_W(CONTEXT_SEG, (o), (n))
@@ -397,13 +398,13 @@ static i16 next_input(void)
 }
 
 /* copy a quoted string or character constant, its opening quote read, through emit (a far
-   code pointer: void emit(signed char)), quotes included and escapes left as written.  With
+   code pointer to a function taking a signed char), quotes included and escapes left as written.  With
    PENDING_STRING_TEXT set the text comes from TOKEN_POOL instead (a stringized macro
    argument: quotes and backslashes in it are escaped).  1 when the closing quote was found,
    0 at a line end or end of input (an "unterminated string" error if diagnose is set). */
 i16 COPY_STRING_LITERAL(i8 quote, farptr emit, u16 diagnose)
 {
-    void (*out)(i8) = (void (*)(i8))code_function(emit);
+#define out(c) CALL_FAR(emit, A16((i8)(c)))
     out(quote);
     if (PENDING_STRING_TEXT) {
         for (u16 cursor = PENDING_STRING_TEXT; AT_B(TOKEN_POOL, cursor) != 0; ++cursor) {
@@ -444,6 +445,7 @@ i16 COPY_STRING_LITERAL(i8 quote, farptr emit, u16 diagnose)
     }
     --INPUT_INDEX;
     return 0;
+#undef out
 }
 
 /* the byte position in the current file: the buffer's file position plus the read

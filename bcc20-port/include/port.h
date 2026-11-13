@@ -62,13 +62,8 @@ farptr scratch_alloc(u16 bytes);
 u16 scratch_mark(void);
 void scratch_release(u16 mark);
 
-/* code addresses: a far pointer to BCC code (an overlay function's stub entry, or resident
-   code) as the port function it stands for, translated or a stand-in; 0 if unknown.  The
-   data segment's paragraph from the load segment, for turning addresses back into names. */
+/* the data segment's paragraph from the load segment, for turning code addresses back
+   into names (calls.h) */
 #define DGROUP_PARA 0x0DEF
-void *code_function(farptr code);
-/* a near code pointer (an offset in a module's code segment, as handler tables hold them) as
-   the port function it stands for; module is the original source's stem */
-void *near_function(const char *module, u16 off);
 
 #endif
