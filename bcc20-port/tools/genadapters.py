@@ -220,14 +220,48 @@ def write_adapters(target):
     # BCC's functions by code address (symbols.tsv: resident code or an overlay stub entry),
     # for code_function()
     lines += ["typedef struct { u16 seg, off; void *function; } CodeName;", "const CodeName CODE_NAMES[] = {"]
-    for line in (PORT.parent / "bcc20" / "symbols.tsv").read_text().splitlines():
-        parts = line.split("\t")
-        if len(parts) >= 2 and parts[0] in defs and re.fullmatch(r"[0-9A-F]{4}:[0-9A-F]{4}", parts[1]):
-            seg, off = parts[1].split(":")
-            lines.append(f"    {{0x{seg}, 0x{off}, (void *){parts[0]}}},")
+    lines += [f"    {{0x{seg:04X}, 0x{off:04X}, (void *){name}}}," for (seg, off), name in
+              sorted(code_addresses(defs).items())]
     lines += ["    {0, 0, 0},", "};", ""]
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(lines))
+
+
+def code_addresses(defs):
+    """(segment from the load segment, offset) -> declared function: the addresses BCC's code
+    is called at, from symbols.tsv and from every entry of every overlay stub segment (an
+    overlay function's address as data is its stub entry; symbols.tsv names only some)"""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import struct
+    import record
+    offsets = record.function_offsets()
+    by_offset = {}
+    for name, off in offsets.items():
+        if name in defs:
+            by_offset.setdefault(off, name)
+    out = {}
+    for line in (PORT.parent / "bcc20" / "symbols.tsv").read_text().splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 2 and parts[0] in defs and re.fullmatch(r"[0-9A-F]{4}:[0-9A-F]{4}", parts[1]):
+            seg, off = (int(x, 16) for x in parts[1].split(":"))
+            out[(seg, off)] = parts[0]
+    data = record.modtest.ORIGINAL.read_bytes()
+    header = struct.unpack_from("<H", data, 8)[0] * 16
+    original = record.modlink.Original()
+    for para in range((len(data) - header) // 16):
+        at = header + para * 16
+        if data[at:at + 4] != b"\xcd\x3f\x00\x00":
+            continue
+        count = struct.unpack_from("<H", data, at + 12)[0]
+        entries = [at + 0x20 + 5 * i for i in range(count)]
+        if not count or count > 400 or any(data[e:e + 2] != b"\xcd\x3f" for e in entries):
+            continue
+        base = original.stub_file_offset(para) + record.modlink.OVERLAY_BASE
+        for e in entries:
+            name = by_offset.get(base + struct.unpack_from("<H", data, e + 2)[0])
+            if name:
+                out.setdefault((para, e - at), name)
+    return out
 
 
 def prototypes():

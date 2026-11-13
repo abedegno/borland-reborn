@@ -14,14 +14,20 @@
        locals on the host stack), nor its return address and arguments: Turbo C changes a
        parameter in place (a++ on a pointer parameter), and the caller never reads it back.
 
+   The overlay manager's work is not recorded as calls; what it wrote comes as external writes
+   (X lines), applied before the child they precede, or at the end of the call.
+
    Functions the port does not define yet are stand-ins (build/adapters.c).  A record carries
    the calls the original made to them inside the recorded call, its children, in order.
    When the translation calls a stand-in, the next child must be a call of that function with
    the same arguments, made from the same memory (the bytes the child read must hold what it
    read); then the child's writes are applied (but for its own frame and arguments) and its
    result returned.  A different call, or one too many or too few, fails the replay.  The
-   stack around the two frames is left out of the check of what the child read: the
-   translation's locals are not in the address space.
+   stack from below the child up to the top of the stack segment is left out of the check of
+   what the child read: the translation's locals are not in the address space, and the
+   callers' frames are not its business (the overlay manager, whose work is not recorded,
+   rewrites return addresses there).  For the same reason the callers' frames are left out
+   of the final comparison.
 
    A read of a byte the original never read finds poison, which almost always shows up as a
    difference.  A call that has not returned after 2 seconds stops the run (a translation
@@ -51,6 +57,7 @@ static const char *REG[13] = {"AX", "BX", "CX", "DX", "SP", "BP", "SI", "DI",
 
 typedef struct {
     unsigned at, seq, steps, bios, child;
+    u16 min_sp;                   /* FRAME: the lowest SP of the call */
     char name[64];
     u16 in[13], out[13];
     u8 stack[32];
@@ -125,8 +132,10 @@ static Record *read_records(const char *file, unsigned *count)
             regs(line + 3, c->out);
         else if (!strncmp(line, "S ", 2))
             hex_bytes(line + 2, c->stack);
-        else if (line[0] == 'R' || line[0] == 'W')
+        else if (line[0] == 'R' || line[0] == 'W' || line[0] == 'X')
             add_run(c, line[0], line + 2);
+        else if (!strncmp(line, "FRAME ", 6))
+            c->min_sp = (u16)strtoul(line + 6, 0, 16);
         else if (!strncmp(line, "STEPS ", 6))
             c->steps = atoi(line + 6);
         else if (!strncmp(line, "BIOS ", 5))
@@ -167,6 +176,16 @@ static void fail(const char *fmt, ...)
 
 static int in_window(u32 a) { return a >= now.window_lo && a < now.window_hi; }
 
+/* scratch.c: a function pointer to a code address the port has no function for */
+void code_unknown(farptr code)
+{
+    fail("%s calls code at %04X:%04X (load segment +%04X), which names no known function",
+         now.fn->name, FP_SEG(code), FP_OFF(code), (u16)(FP_SEG(code) - (DGROUP - DGROUP_PARA)));
+}
+
+/* the bottom of a call's own frame: its lowest SP (records made before FRAME lines: a guess) */
+static u16 frame_low(const Record *c) { return c->min_sp ? c->min_sp : c->in[R_SP] - 0x100; }
+
 /* a byte of the original's stack as the translation's scratch byte, if it lies within 256
    bytes after a pointer the translation passed in its place; else 0 */
 static u32 mapped(u32 a)
@@ -182,6 +201,10 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     if (now.next >= now.n_children)
         fail("%s calls %s, where BCC.EXE made no more calls", now.fn->name, name);
     Record *c = &now.children[now.next++];
+    /* what the overlay manager (not recorded as a call) wrote before this call */
+    for (unsigned i = 0; i < c->n_runs; i++)
+        if (c->runs[i].kind == 'X')
+            memcpy(mem + c->runs[i].lin, c->runs[i].bytes, c->runs[i].n);
     if (strcmp(c->name, name))
         fail("%s calls %s, where BCC.EXE called %s (its call %u)", now.fn->name, name, c->name,
              now.next);
@@ -204,7 +227,7 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     }
     /* the memory it read must be as the original had it, outside the stack */
     u32 lo = now.window_lo;
-    u32 child_lo = LIN(c->in[R_SS], c->in[R_SP]) - 0x1000;
+    u32 child_lo = LIN(c->in[R_SS], frame_low(c));
     if (child_lo < now.window_lo)
         now.window_lo = child_lo;
     for (unsigned i = 0; i < c->n_runs; i++)
@@ -221,10 +244,10 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     /* its writes, but for its own frame and arguments: everything else it changed is part
        of the state, the caller's stack included (the overlay manager rewrites return
        addresses there when the heap moves an overlay) */
-    u32 own_lo = LIN(c->in[R_SS], c->in[R_SP]) - 0x1000;
+    u32 own_lo = LIN(c->in[R_SS], frame_low(c));
     u32 own_hi = LIN(c->in[R_SS], c->in[R_SP]) + (u16)(c->out[R_SP] - c->in[R_SP]);
-    if (own_hi < own_lo + 0x1000 + 4)
-        own_hi = own_lo + 0x1000 + 4;
+    if (own_hi < LIN(c->in[R_SS], c->in[R_SP]) + 4)
+        own_hi = LIN(c->in[R_SS], c->in[R_SP]) + 4;
     for (unsigned i = 0; i < c->n_runs; i++)
         if (c->runs[i].kind == 'W')
             for (unsigned j = 0; j < c->runs[i].n; j++) {
@@ -256,8 +279,15 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     u32 args_hi = args_lo + (u16)(c->out[R_SP] - c->in[R_SP]);
     if (args_hi < args_lo + fn->args)
         args_hi = args_lo + fn->args;
+    /* the final memory: what the overlay manager wrote before each child (as it was then),
+       then the call's own writes and what the overlay manager wrote after the last child (as
+       they were at the end) */
+    for (unsigned k = 0; k < n_children; k++)
+        for (unsigned i = 0; i < children[k].n_runs; i++)
+            if (children[k].runs[i].kind == 'X')
+                memcpy(expect + children[k].runs[i].lin, children[k].runs[i].bytes, children[k].runs[i].n);
     for (unsigned i = 0; i < c->n_runs; i++)
-        if (c->runs[i].kind == 'W')
+        if (c->runs[i].kind == 'W' || c->runs[i].kind == 'X')
             for (unsigned j = 0; j < c->runs[i].n; j++) {
                 u32 a = c->runs[i].lin + j;
                 if (a < args_lo || a >= args_hi)
@@ -269,8 +299,12 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     now.children = children;
     now.n_children = n_children;
     now.next = 0;
-    now.window_lo = args_lo - 0x1000;
-    now.window_hi = args_hi + 0x40;
+    /* the stack around the call, up to the top of the stack segment: the callers' frames are
+       not the translation's business, and the overlay manager rewrites return addresses
+       there (its work is not recorded) */
+    u32 stack_top = LIN(c->in[R_SS], 0) + 0x10000;
+    now.window_lo = LIN(c->in[R_SS], frame_low(c));
+    now.window_hi = stack_top;
     now.file = file;
     now.verbose = verbose;
     if (setjmp(now.fail)) {
@@ -308,8 +342,14 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
                        r[i], c->out[i]);
             ok = 0;
         }
+    /* what the overlay manager wrote after the last child */
+    for (unsigned i = 0; i < c->n_runs; i++)
+        if (c->runs[i].kind == 'X')
+            memcpy(mem + c->runs[i].lin, c->runs[i].bytes, c->runs[i].n);
     /* the scratch area is the translation's own (port.h) */
     memcpy(mem + LIN(SCRATCH_SEG, 0), expect + LIN(SCRATCH_SEG, 0), 0x10000);
+    /* and the callers' frames above the arguments are left out, as above */
+    memcpy(mem + args_hi, expect + args_hi, stack_top - args_hi);
     if (memcmp(mem, expect, MEM_SIZE)) {
         unsigned shown = 0;
         for (u32 a = 0; a < MEM_SIZE; a++)

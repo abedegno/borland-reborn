@@ -16,6 +16,10 @@ u16 scratch_mark(void) { return scratch_top; }
 
 void scratch_release(u16 mark) { scratch_top = mark; }
 
+/* a code address that names no function the port knows: replay fails the call, the native
+   build stops */
+extern void code_unknown(farptr code);
+
 /* generated with the adapters (tools/genadapters.py): BCC's functions by code address,
    segment relative to the load segment */
 typedef struct {
@@ -30,5 +34,6 @@ void *code_function(farptr code)
     for (const CodeName *c = CODE_NAMES; c->function; c++)
         if (c->seg == seg && c->off == off)
             return c->function;
+    code_unknown(code);
     return 0;
 }

@@ -28,7 +28,7 @@ def copy_constants(name):
     text = (INC / f"{name}.H").read_text(encoding="latin1")
     first = text.index("*/")
     text = text[:first].rstrip() + "\n" + NOTE.format(f"{name}.H") + text[first + 2:]
-    text = text.replace(f"{name}_H", f"PORT_{name}_H")
+    text = re.sub(rf"\b{name}_H\b", f"PORT_{name}_H", text)
     text = re.sub(r'#include "(\w+)\.H"', lambda m: f'#include "{m.group(1).lower()}.h"', text)
     (PORT / "include" / f"{name.lower()}.h").write_text(text)
 

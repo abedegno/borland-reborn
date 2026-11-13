@@ -29,6 +29,7 @@ TYPES = {
     "unsigned char": (1, "B"), "char": (1, "SB"), "signed char": (1, "SB"),
     "unsigned long": (4, "D"), "long": (4, "SD"),
     "char near *": (2, "W"), "unsigned char near *": (2, "W"),
+    "far fn": (4, "D"), "near fn": (2, "W"),
 }
 LINE = re.compile(r"^extern\s+(.+?)\s*\b([A-Za-z_]\w*)\s*(\[[^\]]*\])?\s*;\s*/\*\s*DS:([0-9A-F]{4})\b")
 
@@ -69,14 +70,20 @@ def main():
     type_re = re.compile(r"^\s*((?:struct|union)\s+\w+|(?:(?:unsigned|signed|int|char|short|long)\b\s*)+)")
     for path in sorted(SRC.rglob("*.[CH]")):
         text = re.sub(r"/\*.*?\*/", " ", path.read_text(encoding="latin1"), flags=re.S)
+        for m in re.finditer(r"\bextern\s+[^;{}()]*\(\s*(far|near)?\s*(?:pascal|cdecl)?\s*\*\s*(\w+)\s*\)\s*\([^;{}]*\)\s*;", text):
+            seen.setdefault(m.group(2), set()).add(("far fn" if m.group(1) == "far" else "near fn", False))
         for m in decl.finditer(text):
             body = m.group(1)
+            fp = re.match(r"^[^(]*\(\s*(far|near)?\s*(?:pascal|cdecl)?\s*\*\s*(\w+)\s*\)\s*\(", body)
+            if fp:                                  # a function pointer: far is a farptr
+                seen.setdefault(fp.group(2), set()).add(("far fn" if fp.group(1) == "far" else "near fn", False))
+                continue
             first = type_re.match(body)
             if not first:
                 continue
             base = re.sub(r"\s+", " ", first.group(1).strip())
             for item in body[first.end():].split(","):
-                im = re.match(r"\s*(?:near\s+|far\s+)?(\*?)\s*(?:near\s+|far\s+)?([A-Za-z_]\w*)\s*(\[[^\]]*\])?\s*$", item)
+                im = re.match(r"\s*(?:near\s+|far\s+)?(\*?)\s*(?:near\s+|far\s+)?([A-Za-z_]\w*)\s*((?:\[[^\]]*\])+)?\s*$", item)
                 if not im:
                     continue
                 star, name, array = im.groups()

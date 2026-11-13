@@ -61,6 +61,8 @@ def function_offsets():
                              + struct.unpack_from("<H", data, at + off + 2)[0])
         else:
             out[parts[0]] = at + off
+        if parts[0].startswith("_") and not parts[0].startswith("__"):
+            out.setdefault(parts[0][1:], out[parts[0]])    # a cdecl function's C name
     for m in modlink.load_modules():
         start = m.base if m.overlay else header + original.block_para[m.block] * 16 + m.org
         for name, off in m.functions:
@@ -184,13 +186,17 @@ def main():
                 head, body = rec.split("\n", 1)
                 off = int(head.split()[1], 16)
                 if body.startswith("PARENT "):
-                    parents = []
+                    parents = []    # each parent with its external writes (X lines)
                     while body.startswith("PARENT "):
                         parent, body = body.split("\n", 1)
-                        parents.append(parent.split()[1:])
-                    for p_off, p_seq, index in parents:
+                        xs = ""
+                        while body.startswith("X "):
+                            x, body = body.split("\n", 1)
+                            xs += x + "\n"
+                        parents.append((*parent.split()[1:], xs))
+                    for p_off, p_seq, index, xs in parents:
                         children.setdefault((int(p_off, 16), int(p_seq)), []).append(
-                            (int(index), f"CALL {off:X} 0 {inner[off]}\nPARENT\n{body}"))
+                            (int(index), f"CALL {off:X} 0 {inner[off]}\nPARENT\n{xs}{body}"))
                     continue
                 name = wanted[off]
                 kids = "".join(k for _, k in sorted(children.pop((off, int(head.split()[2])), [])))

@@ -70,10 +70,18 @@ def call_graph():
     names = set(where)
     for name in names:
         size[name] = row_size.get(offsets.get(name), 0)
+    # other names for a defined function (a body label called directly, X_BODY): the
+    # function defined at the same address
+    at = {}
+    for name in names:
+        if name in offsets:
+            at.setdefault(offsets[name], name)
+    alias = {n: at[o] for n, o in offsets.items() if n not in names and o in at}
     calls = {}
     for path, text in texts.items():
         for name, body in bodies(text, names).items():
-            calls[name] = {w for w in re.findall(r"\b[A-Za-z_]\w*\b", body) if w in names and w != name}
+            words = set(re.findall(r"\b[A-Za-z_]\w*\b", body))
+            calls[name] = {alias.get(w, w) for w in words if w in names or w in alias} - {name}
     return where, size, calls
 
 

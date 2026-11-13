@@ -27,9 +27,7 @@ build/obj/%.o: %.c $(wildcard include/*.h replay/*.h)
 # replay every translated function against its records (tools/record.py makes them)
 .PHONY: check
 check: build/replay
-	@for f in $$(build/replay --list); do \
-	  if [ -f records/$$f.rec ]; then build/replay $$f records/$$f.rec || exit 1; \
-	  else echo "$$f: no records (python3 tools/record.py $$f)"; exit 1; fi; done
+	@sh tools/check.sh
 
 .PHONY: clean
 clean:

@@ -165,7 +165,7 @@
 #define MSG_MEMBER_INITIALIZED 172          /* Member '%s' is initialized more than once */
 #define MSG_MULTIPLE_DECLARATION 173        /* Multiple declaration for '%s' */
 #define MSG_BASE_CLASS_INITIALIZED 174      /* Base class '%s' is initialized more than once */
-#define PORT_MSG_HAS_ALREADY_BEEN 175            /* '%s' has already been included */
+#define MSG_HAS_ALREADY_BEEN 175            /* '%s' has already been included */
 #define MSG_BODY_HAS_ALREADY_BEEN 176       /* Body has already been defined for this function */
 #define MSG_VIRTUAL_SPECIFIED_MORE 177      /* virtual specified more than once */
 #define MSG_FILE_MUST_CONTAIN 178           /* File must contain at least one external declaration */
@@ -331,7 +331,7 @@
 #define MSG_NONPORTABLE_POINTER_375 375     /* Nonportable pointer conversion */
 #define MSG_STRUCTURE_PASSED_VALUE 376      /* Structure passed by value */
 #define MSG_VOID_FUNCTIONS_MAY_NOT 377      /* Void functions may not return a value */
-#define PORT_MSG_HEXADECIMAL_VALUE 378           /* Hexadecimal value contains more than 3 digits */
+#define MSG_HEXADECIMAL_VALUE 378           /* Hexadecimal value contains more than 3 digits */
 #define MSG_MIXING_POINTERS_SIGNED 379      /* Mixing pointers to signed and unsigned char */
 #define MSG_DECLARED_BUT_NEVER 380          /* '%s' is declared but never used */
 #define MSG_DIVISION_ZERO_381 381           /* Division by zero */

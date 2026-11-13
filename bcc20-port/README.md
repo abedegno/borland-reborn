@@ -17,8 +17,10 @@ as it is and remains the reference. [../bcc20/docs/PORT.md](../bcc20/docs/PORT.m
 what that source assumes about DOS and the 8086, with counts.
 
 **Status:** the checking machinery, the shared definitions, the run-time library's string
-functions, the record pools and the token streams (39 functions), each matching every call
-recorded over the whole corpus. Nothing compiles yet.
+functions, the record pools, and the lexer: input stack, token streams, token reader,
+comments, string literals and the scanner itself (83 functions, 36,818 recorded calls, all
+matching). Four lexer functions are never reached by the corpus and are not checked yet
+(`make check` lists them). Nothing compiles yet.
 
 ## How a translation is checked
 
@@ -41,6 +43,17 @@ Two checks, both against Borland's own BCC.EXE:
    made from the same memory; then the original's writes are applied and its result
    returned. So translation does not have to go from the leaves up: the heap, the overlay
    manager and the DOS calls can stay untranslated while everything above them is checked.
+
+   What makes this exact:
+   - a function called through a pointer (a callback, a hook table) is found through the
+     code-address table: every resident function and every overlay stub entry;
+   - a local whose address the original passes on lives in a scratch area of the address
+     space, and replay maps the original's stack address onto it;
+   - the overlay manager's own work (loading an overlay when one calls into another) is not
+     recorded as calls, but what it writes is kept and applied at the next call to a
+     stand-in, so its effect on the heap is reproduced;
+   - DOS's own memory, the callers' stack frames and a call's own frame are left out of the
+     comparisons: none of them are the translation's business.
 2. **Output for output.** The corpus of `../bcc20/tools/modtest.py`, 1,832 compiles, run
    natively and compared with what BCC.EXE writes in emu2: every file, the exit code and the
    console text. (To come: it needs a port that compiles.)
@@ -84,6 +97,8 @@ committed; make them again from your own BCC.EXE.
 | `tools/genadapters.py` | generates include/protos.h, and build/adapters.c: an adapter for each translated function and a stand-in for each other one, with the original's calling convention |
 | `tools/genheaders.py` | regenerates the copied headers, pool.h and globals.h |
 | `tools/ready.py` | the work queue: untranslated functions whose callees all have prototypes, smallest first |
+| `tools/check.sh` | `make check`: every translated function against its records |
+| `src/rtl/scratch.c` | port material: the scratch area for address-taken locals, and the code-address lookup |
 
 Each translated file starts with a comment naming the original file and anything the
 translation keeps on purpose (an original bug the output depends on, for example).
@@ -112,6 +127,19 @@ STRING_APPEND_N.
 Prove the check can fail: a wrong translation should be caught. On the first function, a
 loop that missed the terminator hung (caught by the time limit) and a sign error failed 383
 of 500 calls.
+
+## Decisions for the native build
+
+Places where the original's behaviour depends on something a port does not have:
+
+- **NEXT_POOL_CHARACTER** (LEXER.C) reads its `quote` register uninitialised unless `reset`
+  is 0: it holds whatever the caller left in that register, which depends on the caller's
+  register allocation. It affects escapes and quotes in macro-produced string text (a
+  stringized argument, `__FILE__` with backslashes). It stays a stand-in until the native
+  build decides: keep `quote` across calls (most likely what the original meant), or work
+  out what each caller leaves there.
+- **The "Available memory" line** BCC prints is computed from its heap. The native heap must
+  report the same figure, or the console text of every compile differs.
 
 ## Plan
 

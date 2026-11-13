@@ -7,5 +7,6 @@
 
 void REPORT_FATAL(i16 error, ...);     /* diag/FATAL.C, far cdecl: stops the compile */
 void REPORT_ERROR(i16 error, ...);     /* diag/ERRREPT.C, far cdecl */
+void REPORT_WARNING(u16 error, ...);   /* diag/WARNREPT.C, far cdecl */
 
 #endif
