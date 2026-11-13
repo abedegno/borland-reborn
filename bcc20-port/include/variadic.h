@@ -6,5 +6,6 @@
 #include "port.h"
 
 void REPORT_FATAL(i16 error, ...);     /* diag/FATAL.C, far cdecl: stops the compile */
+void REPORT_ERROR(i16 error, ...);     /* diag/ERRREPT.C, far cdecl */
 
 #endif

@@ -44,19 +44,35 @@ def bodies(text, names):
 
 
 def call_graph():
-    """(function -> its source, function -> its size, function -> the functions it names)"""
-    where, size = {}, {}
+    """(function -> its source, function -> its size, function -> the functions it names),
+    by the names the sources use: C functions from their definitions, TASM ones from the
+    target tables and symbols.tsv; sizes from the target table row at the same place"""
+    import record
+    offsets = record.function_offsets()
+    data = record.modtest.ORIGINAL.read_bytes()
+    header = record.struct.unpack_from("<H", data, 8)[0] * 16
+    original = modlink.Original()
+    where, size, row_size = {}, {}, {}
     for m in modlink.load_modules():
         path = next(p for p in (BCC20 / "src").rglob(m.stem + ".*") if p.suffix.upper() in (".C", ".ASM"))
+        start = m.base if m.overlay else header + original.block_para[m.block] * 16 + m.org
         for name, off in m.functions:
-            where[name] = path
-            size[name] = m.sizes.get(off, 0)
+            row_size[start + off] = m.sizes.get(off, 0)
+            if path.suffix.upper() == ".ASM":
+                where[name] = path
+    texts = {}
+    for path in sorted((BCC20 / "src").rglob("*.C")):
+        text = path.read_text(encoding="latin1")
+        texts[path] = text
+        for m in genadapters.HEAD.finditer(re.sub(r"/\*.*?\*/", " ", text, flags=re.S)):
+            if m.group(2) not in genadapters.KEYWORDS:
+                where.setdefault(m.group(2), path)
     names = set(where)
+    for name in names:
+        size[name] = row_size.get(offsets.get(name), 0)
     calls = {}
-    for path in sorted(set(where.values())):
-        if path.suffix.upper() != ".C":
-            continue
-        for name, body in bodies(path.read_text(encoding="latin1"), names).items():
+    for path, text in texts.items():
+        for name, body in bodies(text, names).items():
             calls[name] = {w for w in re.findall(r"\b[A-Za-z_]\w*\b", body) if w in names and w != name}
     return where, size, calls
 

@@ -16,6 +16,12 @@ void REPORT_FATAL(i16 error, ...)
     stand_in("REPORT_FATAL", 0, args, 1);
 }
 
+void REPORT_ERROR(i16 error, ...)
+{
+    const StandInArg args[] = {{4, 2, 2, (u32)error}};
+    stand_in("REPORT_ERROR", 0, args, 1);
+}
+
 static const Function HAND_FUNCTIONS[] = {
     {0, 0, 0, 0},
 };

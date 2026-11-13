@@ -52,4 +52,20 @@ static inline farptr fp_add(farptr p, i16 n) { return MK_FP(FP_SEG(p), FP_OFF(p)
 #define D(p) (*(u32u *)at(p))
 #define SD(p) (*(i32u *)at(p))
 
+/* Locals whose address is taken (passed to another function as a far pointer) live in a
+   scratch area of the address space, since the host stack is not in it.  SCRATCH(n) gives n
+   bytes there; scratch_mark()/scratch_release() free everything given since the mark (a
+   function marks on entry and releases before it returns).  Replay maps the original's stack
+   addresses onto these (replay.c). */
+#define SCRATCH_SEG 0xF000
+farptr scratch_alloc(u16 bytes);
+u16 scratch_mark(void);
+void scratch_release(u16 mark);
+
+/* code addresses: a far pointer to BCC code (an overlay function's stub entry, or resident
+   code) as the port function it stands for, translated or a stand-in; 0 if unknown.  The
+   data segment's paragraph from the load segment, for turning addresses back into names. */
+#define DGROUP_PARA 0x0DEF
+void *code_function(farptr code);
+
 #endif

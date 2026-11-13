@@ -143,6 +143,10 @@ static struct {
     Record *call, *children;
     unsigned n_children, next;
     u32 window_lo, window_hi;     /* the stack around the two frames, left out of checks */
+    /* far pointers into the original's stack that the translation passed as scratch
+       pointers (port.h): original linear address -> the translation's */
+    struct { u32 orig, port; } map[16];
+    unsigned n_map;
     const char *file;
     int verbose;
     jmp_buf fail;
@@ -163,6 +167,16 @@ static void fail(const char *fmt, ...)
 
 static int in_window(u32 a) { return a >= now.window_lo && a < now.window_hi; }
 
+/* a byte of the original's stack as the translation's scratch byte, if it lies within 256
+   bytes after a pointer the translation passed in its place; else 0 */
+static u32 mapped(u32 a)
+{
+    for (unsigned i = 0; i < now.n_map; i++)
+        if (a >= now.map[i].orig && a < now.map[i].orig + 256)
+            return now.map[i].port + (a - now.map[i].orig);
+    return 0;
+}
+
 u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n)
 {
     if (now.next >= now.n_children)
@@ -171,11 +185,19 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     if (strcmp(c->name, name))
         fail("%s calls %s, where BCC.EXE called %s (its call %u)", now.fn->name, name, c->name,
              now.next);
+    now.n_map = 0;
     for (unsigned i = 0; i < n; i++) {
         u32 want = 0;
         for (unsigned b = 0; b < args[i].size; b++)
             want |= (u32)c->stack[args[i].off + b] << (8 * b);
         u32 mask = args[i].bytes == 1 ? 0xFF : args[i].size == 2 ? 0xFFFF : 0xFFFFFFFF;
+        /* a pointer to a local of the caller: the translation's is in the scratch area */
+        if (args[i].size == 4 && FP_SEG(want) == c->in[R_SS] && FP_SEG(args[i].value) == SCRATCH_SEG &&
+            in_window(LIN(FP_SEG(want), FP_OFF(want))) && now.n_map < 16) {
+            now.map[now.n_map].orig = LIN(FP_SEG(want), FP_OFF(want));
+            now.map[now.n_map++].port = LIN(FP_SEG(args[i].value), FP_OFF(args[i].value));
+            continue;
+        }
         if ((args[i].value & mask) != (want & mask))
             fail("%s calls %s with argument %u = %X, BCC.EXE passed %X", now.fn->name, name, i + 1,
                  args[i].value & mask, want & mask);
@@ -189,7 +211,9 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
         if (c->runs[i].kind == 'R')
             for (unsigned j = 0; j < c->runs[i].n; j++) {
                 u32 a = c->runs[i].lin + j;
-                if (!in_window(a) && mem[a] != c->runs[i].bytes[j])
+                if (in_window(a))
+                    a = mapped(a);
+                if (a && mem[a] != c->runs[i].bytes[j])
                     fail("before %s calls %s, byte %05X is %02X, BCC.EXE had %02X", now.fn->name,
                          name, a, mem[a], c->runs[i].bytes[j]);
             }
@@ -205,7 +229,9 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
         if (c->runs[i].kind == 'W')
             for (unsigned j = 0; j < c->runs[i].n; j++) {
                 u32 a = c->runs[i].lin + j;
-                if (a < own_lo || a >= own_hi)
+                if (in_window(a) && mapped(a))
+                    mem[mapped(a)] = c->runs[i].bytes[j];
+                else if (a < own_lo || a >= own_hi)
                     mem[a] = c->runs[i].bytes[j];
             }
     if (outs & OUT_AL)
@@ -255,6 +281,7 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     u16 r[13];
     memcpy(r, c->in, sizeof r);
     DGROUP = r[R_DS];
+    scratch_release(0);
     snprintf(hung, sizeof hung, "  %s call %u: %s did not return within 2 seconds\n", file,
              c->seq, fn->name);
     alarm(2);
@@ -281,6 +308,8 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
                        r[i], c->out[i]);
             ok = 0;
         }
+    /* the scratch area is the translation's own (port.h) */
+    memcpy(mem + LIN(SCRATCH_SEG, 0), expect + LIN(SCRATCH_SEG, 0), 0x10000);
     if (memcmp(mem, expect, MEM_SIZE)) {
         unsigned shown = 0;
         for (u32 a = 0; a < MEM_SIZE; a++)

@@ -13,7 +13,9 @@ A function is found by its name in the matched tree (../bcc20/src, the target ta
 first instruction's offset in BCC.EXE, which holds for overlay code too.  Inside each
 recorded call, the calls it makes to functions the port does not define yet (directly, or
 through translated functions) are recorded as its children (EMU2_RECORD_INNER), so replay
-can answer them; they follow their parent in the file, named on their CALL lines.  The compile and
+can answer them; they follow their parent in the file, named on their CALL lines.  The
+overlay manager's work (OVRMGR, OVRLOAD: loading an overlay when one calls into another) is
+not recorded (EMU2_RECORD_IGNORE): no translation does it.  The compile and
 -S steps are recorded; steps that link are not (TLINK would run in the same emulator).
 The records hold memory of Borland's program, so records/ is never committed.
 """
@@ -40,11 +42,25 @@ WORK = PORT / "build" / f"record-{os.getpid()}"   # one per run: agents record i
 
 
 def function_offsets():
-    """name -> offset of its first instruction in BCC.EXE"""
+    """name -> offset of its first instruction in BCC.EXE.  From ../bcc20/symbols.tsv: a
+    resident function's segment:offset, or an overlay function's stub entry (CD 3F and the
+    offset in the overlay), whose overlay starts at the stub's file offset; then the target
+    tables, whose older names some functions still have there."""
     data = modtest.ORIGINAL.read_bytes()
     header = struct.unpack_from("<H", data, 8)[0] * 16
     original = modlink.Original()
     out = {}
+    for line in (BCC20 / "symbols.tsv").read_text().splitlines():
+        parts = line.split("\t")
+        if len(parts) < 2 or not re.fullmatch(r"[0-9A-F]{4}:[0-9A-F]{4}", parts[1]):
+            continue
+        seg, off = (int(x, 16) for x in parts[1].split(":"))
+        at = header + seg * 16
+        if data[at:at + 2] == b"\xcd\x3f" and data[at + off:at + off + 2] == b"\xcd\x3f":
+            out[parts[0]] = (original.stub_file_offset(seg) + modlink.OVERLAY_BASE
+                             + struct.unpack_from("<H", data, at + off + 2)[0])
+        else:
+            out[parts[0]] = at + off
     for m in modlink.load_modules():
         start = m.base if m.overlay else header + original.block_para[m.block] * 16 + m.org
         for name, off in m.functions:
@@ -52,13 +68,38 @@ def function_offsets():
     return out
 
 
+def ignored_code():
+    """the overlay manager's code, as EMU2_RECORD_IGNORE ranges of file offsets"""
+    data = modtest.ORIGINAL.read_bytes()
+    header = struct.unpack_from("<H", data, 8)[0] * 16
+    original = modlink.Original()
+    ranges = []
+    for m in modlink.load_modules():
+        if m.stem in ("OVRMGR", "OVRLOAD"):
+            start = header + original.block_para[m.block] * 16 + m.org
+            ranges.append(f"{start:X}-{start + m.size - 1:X}")
+    return ",".join(ranges)
+
+
 def boundary(functions):
     """the functions the port does not define that these reach directly or through
-    translated functions: what their translations call as stand-ins"""
+    translated functions, and every untranslated function whose address is taken (it may
+    be called through a pointer): what their translations call as stand-ins"""
     import ready
-    _, _, graph = ready.call_graph()
+    where, _, graph = ready.call_graph()
     done = set(genadapters.prototypes())
     out, seen, todo = set(), set(), list(functions)
+    # functions called through pointers (callbacks, hook tables) are not in the call graph:
+    # every function whose address is taken somewhere may be called that way
+    names = set(where)
+    for path in set(where.values()):
+        if path.suffix.upper() == ".C":
+            text = re.sub(r"/\*.*?\*/", " ", path.read_text(encoding="latin1"), flags=re.S)
+            out |= {m.group(1) for m in re.finditer(r"\b([A-Za-z_]\w*)\b(?!\s*\()", text)
+                    if m.group(1) in names and m.group(1) not in done}
+    # and the code pointers in the data segment's initial values
+    dgroup = (BCC20 / "src" / "data" / "DGROUP.ASM").read_text(encoding="latin1")
+    out |= {m.group(1) for m in re.finditer(r"^\s+dd\s+([A-Za-z_@][\w@]*)", dgroup, re.M)} - done
     while todo:
         f = todo.pop()
         for c in graph.get(f, ()):
@@ -92,7 +133,16 @@ def main():
     if missing:
         raise SystemExit(f"record: not in the matched tree: {' '.join(missing)}")
     wanted = {offsets[f]: f for f in args.functions}
-    inner = {offsets[f]: f for f in boundary(args.functions) if f in offsets}
+    # children by offset; where names share an address, the one the port declares (the name
+    # replay's stand-in and code_function() use)
+    declared = genadapters.definitions()
+    inner = {}
+    for f in sorted(boundary(args.functions), key=lambda f: f not in declared):
+        if f in offsets:
+            inner.setdefault(offsets[f], f)
+    for name, off in offsets.items():
+        if off in inner and name in declared and inner[off] not in declared:
+            inner[off] = name
 
     jobs = [(name, path, opts, mode) for name, path, opts, steps in modtest.corpus()
             for modes in steps for mode in modes if mode in ("-c", "-S")]
@@ -104,6 +154,7 @@ def main():
     shutil.copy(modtest.ORIGINAL, WORK / "BCC.EXE")
     env_at = ",".join(f"{o:X}" for o in wanted)
     env_inner = ",".join(f"{o:X}" for o in inner)
+    env_ignore = ignored_code()
 
     def run(job):
         index, (name, path, opts, mode) = job
@@ -114,7 +165,8 @@ def main():
         src = d / modtest.source_name(path)
         shutil.copy(path, src)
         env = dict(os.environ, EMU2_RECORD=str(d / "rec"), EMU2_RECORD_AT=env_at,
-                   EMU2_RECORD_INNER=env_inner, EMU2_RECORD_MAX=str(args.per_run))
+                   EMU2_RECORD_INNER=env_inner, EMU2_RECORD_IGNORE=env_ignore,
+                   EMU2_RECORD_MAX=str(args.per_run))
         try:
             subprocess.run([args.emu2, "BCC.EXE", *modtest.command(mode, opts, src.name)],
                            cwd=d, env=env, capture_output=True, timeout=300)
