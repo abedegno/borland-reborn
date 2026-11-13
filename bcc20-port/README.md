@@ -23,9 +23,9 @@ conditional compilation, the #if evaluators) and types and symbols (the identifi
 type records, sizes and compatibility, struct layout, the C symbol table), and the first
 expression files (lowering for the back end, packing, comma expressions, constant values,
 call checking, unary operators, the analyser's dispatch, conversions, the C front end's node
-builders, constant folding): 297 functions, each matching every call recorded over the whole
-corpus. A few are never reached by the corpus and are not checked yet (`make check` lists
-them). Nothing compiles yet.
+builders, constant folding, the operator checkers): 316 functions, each matching every call
+recorded over the whole corpus. A few are never reached by the corpus and are not checked
+yet (`make check` lists them). Nothing compiles yet.
 
 ## How a translation is checked
 
@@ -86,11 +86,11 @@ make check                                      # every translated function agai
 or `$EMU2_TRACE_BIN`). Records hold memory of Borland's program, so `records/` is never
 committed; make them again from your own BCC.EXE.
 
-`--all` records every translated function in one pass over the corpus (about three minutes
-with 12 cores). A run nests at most 16 recorded calls, so a function reached only below that,
-inside a deep recursion of recorded functions, gets no calls that way: record it on its own
-(C78_special_symbol is one). `--runs N` samples N compiles, which can miss the functions only
-the targeted tests reach.
+`--all` records every translated function in one pass over the corpus (about five minutes
+with 12 cores). A run follows recorded calls 32 deep; a call deeper than that leaves the
+calls around it unrecorded, so a function reached only that deep gets no calls from `--all`
+and must be recorded on its own. `--runs N` samples N compiles, which can miss the functions
+only the targeted tests reach.
 
 ## Layout
 
@@ -130,6 +130,9 @@ translation keeps on purpose (an original bug the output depends on, for example
    - Calls through BCC's code pointers use `CALL_FAR` / `CALL_NEAR` (`calls.h`), never a C
      function pointer cast.
    - A local whose address is passed on lives in the scratch area (`scratch_alloc`).
+   - A function that takes a structure by value is declared by hand in
+     `include/structargs.h`, the structure passed as its words, with its stand-in in
+     `replay/functions.c`.
    - What the original reads from the 8086 flags (`_FLAGS`, or a TASM helper that reports
      in OF) is computed: a signed overflow test, or a port global the helper's
      translation sets (`include/overflow.h`). Shift counts are taken modulo 32, as the
