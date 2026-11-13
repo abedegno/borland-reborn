@@ -27,6 +27,7 @@ rebuilds Borland's `BCC.EXE` byte for byte (502,432 bytes, SHA-256
 | `scripts/prepare.py` | makes the link inputs that are derived from your own BCC.EXE |
 | `tools/` | the exact link and its helpers; the modding build (`modlink.py`, `modtest.py`) |
 | [`docs/MODDING.md`](docs/MODDING.md) | building with changed sources, and how that build is checked |
+| [`docs/PORT.md`](docs/PORT.md) | what a native port still has to replace, with counts, a plan and its checks |
 
 ## Build
 
