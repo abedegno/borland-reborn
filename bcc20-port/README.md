@@ -23,9 +23,9 @@ conditional compilation, the #if evaluators) and types and symbols (the identifi
 type records, sizes and compatibility, struct layout, the C symbol table), and the first
 expression files (lowering for the back end, packing, comma expressions, constant values,
 call checking, unary operators, the analyser's dispatch, conversions, the C front end's node
-builders): 285 functions, each matching every call recorded over the whole corpus. A few are
-never reached by the corpus and are not checked yet (`make check` lists them). Nothing
-compiles yet.
+builders, constant folding): 297 functions, each matching every call recorded over the whole
+corpus. A few are never reached by the corpus and are not checked yet (`make check` lists
+them). Nothing compiles yet.
 
 ## How a translation is checked
 
@@ -130,6 +130,10 @@ translation keeps on purpose (an original bug the output depends on, for example
    - Calls through BCC's code pointers use `CALL_FAR` / `CALL_NEAR` (`calls.h`), never a C
      function pointer cast.
    - A local whose address is passed on lives in the scratch area (`scratch_alloc`).
+   - What the original reads from the 8086 flags (`_FLAGS`, or a TASM helper that reports
+     in OF) is computed: a signed overflow test, or a port global the helper's
+     translation sets (`include/overflow.h`). Shift counts are taken modulo 32, as the
+     80186 does (and emu2).
    - Where several arguments of one call are themselves calls, put them in variables in
      Turbo C's order: left to right for a pascal function, right to left for cdecl. C
      leaves the order open, and the replay checks the order of the calls.
@@ -164,7 +168,8 @@ Places where the original's behaviour depends on something a port does not have:
   takes parameters, but on the path where the test fails it returns the symbol anyway (what
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
-- **LOWER_EXPR_TREE** (LOWEREXP.C) and **ANALYZE_EXPRESSION** (EXPRDISP.C) stop with "out of
+- **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C) and
+  **FOLD_EXPRESSION** (CONSTFLD.C) stop with "out of
   memory" when the 8086 stack pointer drops below 8F0Ch, which only a very deeply nested expression reaches. The port has no
   such stack and leaves the check out; the native build could limit the nesting depth
   instead, if it wants the same error.
