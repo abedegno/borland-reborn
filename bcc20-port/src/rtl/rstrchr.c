@@ -5,7 +5,7 @@
    reads the byte before the string, as the original does (docs/FINDINGS.md).  Far pointers
    are compared by offset, as Borland C compares them with < and >. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 farptr STRING_FIND_CHAR(farptr string, i8 c)
 {

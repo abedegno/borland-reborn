@@ -1,7 +1,7 @@
 /* rstrlow.c: RTL_STRUPR, from bcc20/src/rtl/RSTRLOW.C: strupr on a far string (a null
    pointer, segment and offset both zero, is left alone). */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 void RTL_STRUPR(farptr text)
 {

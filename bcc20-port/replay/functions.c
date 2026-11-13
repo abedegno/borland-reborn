@@ -7,6 +7,14 @@
 #include <stdio.h>
 #include <string.h>
 #include "replay.h"
+#include "variadic.h"
+
+/* stand-ins for variadic functions: the fixed arguments are checked */
+void REPORT_FATAL(i16 error, ...)
+{
+    const StandInArg args[] = {{4, 2, 2, (u32)error}};
+    stand_in("REPORT_FATAL", 0, args, 1);
+}
 
 static const Function HAND_FUNCTIONS[] = {
     {0, 0, 0, 0},

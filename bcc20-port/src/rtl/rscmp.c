@@ -9,7 +9,7 @@
    when the two bytes differ by more than 127 (docs/FINDINGS.md).  Kept: callers only test
    for zero, and replay compares the exact value. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 i16 COMPARE_NAME(farptr a, farptr b)
 {

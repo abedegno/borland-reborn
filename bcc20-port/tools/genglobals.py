@@ -9,14 +9,19 @@ each item this writes, at that offset in DGROUP (include/data.h):
     NAME            the item as an lvalue, for a scalar (near pointers are u16 offsets)
     NAME_AT(i)      element i as an lvalue, for an array
 
-Items declared elsewhere (sources that view the same bytes in different ways) go by hand
-in include/data.h.
+Then the items the sources declare for themselves (extern declarations in any source or
+header), at their address in ../bcc20/symbols.tsv: a scalar or array whose declarations all
+agree gets the same accessors; a struct, or an item declared in different ways, gets NAME_P
+only (the translation reads its fields at their offsets).  include/data.h may add more by
+hand.
 """
 import re
 from pathlib import Path
 
 PORT = Path(__file__).resolve().parents[1]
 DATA_H = PORT.parent / "bcc20" / "src" / "include" / "DATA.H"
+SRC = PORT.parent / "bcc20" / "src"
+SYMBOLS = PORT.parent / "bcc20" / "symbols.tsv"
 
 # element type -> (size, accessor macro of port.h)
 TYPES = {
@@ -51,6 +56,49 @@ def main():
         else:
             out.append(f"#define {name} {acc}({name}_P)")
         count += 1
+    # the items sources declare for themselves
+    done = {l.split()[1][:-2] for l in out if l.startswith("#define ") and l.split()[1].endswith("_P")}
+    hand = (PORT / "include" / "data.h").read_text()
+    address = {}
+    for line in SYMBOLS.read_text().splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 2 and parts[1].startswith("DS:"):
+            address[parts[0]] = parts[1][3:]
+    seen = {}
+    decl = re.compile(r"\bextern\s+([^;(){}]*?);")
+    type_re = re.compile(r"^\s*((?:struct|union)\s+\w+|(?:(?:unsigned|signed|int|char|short|long)\b\s*)+)")
+    for path in sorted(SRC.rglob("*.[CH]")):
+        text = re.sub(r"/\*.*?\*/", " ", path.read_text(encoding="latin1"), flags=re.S)
+        for m in decl.finditer(text):
+            body = m.group(1)
+            first = type_re.match(body)
+            if not first:
+                continue
+            base = re.sub(r"\s+", " ", first.group(1).strip())
+            for item in body[first.end():].split(","):
+                im = re.match(r"\s*(?:near\s+|far\s+)?(\*?)\s*(?:near\s+|far\s+)?([A-Za-z_]\w*)\s*(\[[^\]]*\])?\s*$", item)
+                if not im:
+                    continue
+                star, name, array = im.groups()
+                key = (base + (" near *" if star else ""), array is not None)
+                seen.setdefault(name, set()).add(key)
+    extra = 0
+    for name in sorted(seen):
+        if name in done or name not in address or f"#define {name} " in hand or f"#define {name}_P" in hand:
+            continue
+        kinds = seen[name]
+        out.append(f"#define {name}_P DSPTR(0x{address[name]})")
+        if len(kinds) == 1:
+            (ctype, is_array), = kinds
+            if ctype in TYPES:
+                size, acc = TYPES[ctype]
+                if is_array:
+                    index = "(i)" if size == 1 else f"(i) * {size}"
+                    out.append(f"#define {name}_AT(i) {acc}(fp_add({name}_P, {index}))")
+                else:
+                    out.append(f"#define {name} {acc}({name}_P)")
+        extra += 1
+    print(f"include/globals.h: {extra} more from the sources' own declarations")
     out += ["", "#endif", ""]
     (PORT / "include" / "globals.h").write_text("\n".join(out))
     print(f"include/globals.h: {count} globals")

@@ -13,8 +13,8 @@ build/replay: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # the generated adapters (tools/genadapters.py)
-build/adapters.c: tools/genadapters.py $(wildcard include/*.h)
-	python3 tools/genadapters.py $@
+build/adapters.c: tools/genadapters.py $(SRC)
+	python3 tools/genadapters.py adapters $@
 
 build/obj/adapters.o: build/adapters.c $(wildcard include/*.h replay/*.h)
 	@mkdir -p $(dir $@)

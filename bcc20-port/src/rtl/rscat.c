@@ -1,7 +1,7 @@
 /* rscat.c: STRING_APPEND, from bcc20/src/rtl/RSCAT.C: strcat on far strings.
    STRING_APPEND_N (strncat) is left out: nothing in BCC calls it. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 farptr STRING_APPEND(farptr destination, farptr source)
 {

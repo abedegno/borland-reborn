@@ -4,7 +4,7 @@
    TOLOWER (which takes it as unsigned char), the lower-cased results are compared as signed
    chars, and when a ends, the sign of b's character decides. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 i16 STRING_COMPARE(farptr a, farptr b)
 {

@@ -2,7 +2,7 @@
    The argument is taken as an unsigned char, so EOF (-1) becomes 255. */
 #include "port.h"
 #include "data.h"
-#include "rtl.h"
+#include "protos.h"
 
 u16 TOLOWER(i16 value)
 {

@@ -4,7 +4,7 @@
    Skips spaces and tabs (only those), takes one minus sign and decimal digits.  The value
    wraps at 32 bits as the 8086's long arithmetic does. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 i32 RTL_ATOL(farptr string)
 {

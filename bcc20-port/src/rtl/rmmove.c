@@ -6,7 +6,7 @@
    count.  Within one segment that is memmove: overlapping blocks are copied correctly.  A
    byte loop in the same direction gives the same result there. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 void RTL_MEMMOVE(farptr destination, farptr source, u16 count)
 {

@@ -3,7 +3,7 @@
    The original scans with REPNE SCASB from a count of FFFFh, so the offset wraps inside the
    string's segment and the result is the number of bytes before the terminator. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 u16 STRING_LENGTH(farptr string)
 {

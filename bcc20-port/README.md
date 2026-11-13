@@ -16,8 +16,9 @@ It is translated from the byte-matched source in [../bcc20](../bcc20/README.md),
 as it is and remains the reference. [../bcc20/docs/PORT.md](../bcc20/docs/PORT.md) lists
 what that source assumes about DOS and the 8086, with counts.
 
-**Status:** the checking machinery, the shared definitions, and 13 run-time functions, each
-matching every call recorded over the whole corpus. Nothing compiles yet.
+**Status:** the checking machinery, the shared definitions, the run-time library's string
+functions, the record pools and the token streams (39 functions), each matching every call
+recorded over the whole corpus. Nothing compiles yet.
 
 ## How a translation is checked
 
@@ -32,6 +33,14 @@ Two checks, both against Borland's own BCC.EXE:
    read holds poison, which shows up as a difference; a call that does not return within two
    seconds fails. Calls are recorded by where their code came from in BCC.EXE, so overlay
    functions are found wherever they load.
+
+   A translated function may call functions that are not translated yet. Those are
+   **stand-ins** (generated from `include/protos.h`), and the recording carries the calls the
+   original made to them inside each recorded call, in order. When the translation calls a
+   stand-in, the next recorded call must be to the same function with the same arguments,
+   made from the same memory; then the original's writes are applied and its result
+   returned. So translation does not have to go from the leaves up: the heap, the overlay
+   manager and the DOS calls can stay untranslated while everything above them is checked.
 2. **Output for output.** The corpus of `../bcc20/tools/modtest.py`, 1,832 compiles, run
    natively and compared with what BCC.EXE writes in emu2: every file, the exit code and the
    console text. (To come: it needs a port that compiles.)
@@ -45,7 +54,8 @@ host data structures under the corpus check alone.
 ## Use
 
 Needs the Borland C++ 2.0 toolchain installed for `../bcc20` (docs/SETUP.md at the
-repository root), the tracing emu2, Python 3 and a C compiler.
+repository root), the tracing emu2 with nested call recording (Exhume's
+`tools/setup-emu2-trace.sh`), Python 3 and a C compiler.
 
 ```sh
 make                                            # build/replay
@@ -66,31 +76,32 @@ committed; make them again from your own BCC.EXE.
 | `include/data.h`, `globals.h` | BCC's global data at its DGROUP offsets: `NAME`, `NAME_AT(i)`, `NAME_P` (globals.h is generated from DATA.H; data.h holds the items sources declare for themselves) |
 | `include/pool.h` | the record pool accessors (`TYPE_W(r, TYPE_KIND)`...), generated from POOL.H |
 | `include/fields.h`, `msg.h`, `token.h`, `kind.h`, `exprop.h` | the original's constants, copied |
-| `include/rtl.h` | the run-time library functions translated so far (one header per source directory) |
+| `include/protos.h` | every function of the original in the port's types, generated from the original definitions (and the TASM functions' extern declarations); `variadic.h` the few with variable arguments |
 | `src/rtl/` | translations of `../bcc20/src/rtl/`, one file per original file, lower-case names |
 | `replay/replay.c` | the harness: reads records, runs a function, compares |
-| `replay/functions.c` | hand-written adapters, for functions that pass values in other registers |
+| `replay/functions.c` | hand-written adapters and stand-ins: variadic functions, and functions that pass values in other registers |
 | `tools/record.py` | records calls over the corpus (`--all`: every translated function) |
-| `tools/genadapters.py` | generates the adapters (build/adapters.c) from the port's prototypes and the original definitions' calling conventions |
+| `tools/genadapters.py` | generates include/protos.h, and build/adapters.c: an adapter for each translated function and a stand-in for each other one, with the original's calling convention |
 | `tools/genheaders.py` | regenerates the copied headers, pool.h and globals.h |
-| `tools/ready.py` | the work queue: functions whose callees are all translated, smallest first |
+| `tools/ready.py` | the work queue: untranslated functions whose callees all have prototypes, smallest first |
 
 Each translated file starts with a comment naming the original file and anything the
 translation keeps on purpose (an original bug the output depends on, for example).
 
 ## Translating a function
 
-1. Pick a function from `python3 tools/ready.py` (its callees are all translated, so its
-   recorded calls can be replayed).
+1. Pick a function from `python3 tools/ready.py` (its callees are translated or have
+   prototypes, so its recorded calls can be replayed).
 2. Read the original in `../bcc20/src`, its comments and its assembly where it has any.
 3. Write the C in the matching file under `src/`, with fixed-size types (`u8`, `i16`,
    `u32`...), far pointers as `farptr` and memory through `B()`, `W()` and `D()`; globals
    by name (`globals.h`), records through `pool.h` and the field constants. Far pointer
    arithmetic changes only the offset: use `fp_add`. Far pointers compare by offset with
    `<` and `>`, as in Borland C. Pseudo-registers become locals.
-4. Declare it in the directory's header (`include/rtl.h` for `src/rtl/`), with the original's
-   argument order. The adapter is generated from that prototype; a function that passes a
-   value in another register gets a hand-written one in `replay/functions.c` instead.
+4. Its prototype is already in `include/protos.h`, generated from the original; keep the
+   original's argument order and types. The adapter is generated too; a function that passes
+   a value in another register gets a hand-written one in `replay/functions.c` instead. The
+   original's static functions are external in the port, so they can be checked.
 5. `python3 tools/record.py NAME`, then `build/replay NAME records/NAME.rec`, and at the end
    `make check`.
 
@@ -107,12 +118,13 @@ of 500 calls.
 1. **Checking machinery** (done): the call recorder, the replay harness, generated adapters,
    globals and headers, the work queue, and the run-time library's string and character
    functions.
-2. **The foundation**: the far heap's conventional-memory path (pool growth goes through
-   `RESIZE_POOL_BLOCK`, a heap entry), the record pools and the diagnostics formatter.
-   Nearly every other function calls into them (`tools/ready.py`).
-3. **Translate what `-c` on plain C reaches**: the lexer and input, preprocessor, parser,
+2. **Translate what `-c` on plain C reaches**: the lexer and input, preprocessor, parser,
    expressions, code generator and object writer, each function checked against its
-   recorded calls, following the work queue.
+   recorded calls, with stand-ins for what is not translated yet. The heap, overlay manager
+   and DOS calls stay stand-ins in this stage.
+3. **A native heap and platform layer**: a simple heap that gives pools the same behaviour
+   (a pool that grows, its handle word rewritten), host file I/O, no overlays. These are
+   checked by the corpus as a whole, not call by call: their segment values need not match.
 4. **First native compile**: a driver with host file I/O, no overlays, memory banks or
    interrupt handlers; `HELLO.C` with `-c` writes the same `T.OBJ` as BCC.EXE. Then `-S`,
    then the whole corpus.

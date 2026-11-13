@@ -1,7 +1,7 @@
 /* rscpy.c: STRING_COPY and RTL_STRNCPY, from bcc20/src/rtl/RSCPY.C: strcpy and strncpy on
    far strings, built on STRING_LENGTH, RTL_MEMMOVE and RTL_MEMSET as in the original. */
 #include "port.h"
-#include "rtl.h"
+#include "protos.h"
 
 farptr STRING_COPY(farptr destination, farptr source)
 {
