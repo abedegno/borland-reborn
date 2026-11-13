@@ -18,8 +18,10 @@ what that source assumes about DOS and the 8086, with counts.
 
 **Status:** the checking machinery, the shared definitions, the run-time library's string
 functions, the record pools, the lexer (input stack, token streams, token reader, comments,
-string literals, the scanner) and the preprocessor (directives, pragmas, the macro table,
-conditional compilation, the #if evaluators), each function matching every call recorded
+string literals, the scanner), the preprocessor (directives, pragmas, the macro table,
+conditional compilation, the #if evaluators) and types and symbols (the identifier table,
+type records, sizes and compatibility, struct layout, the C symbol table): 191
+functions, each matching every call recorded
 over the whole corpus. A few are never reached by the corpus and are not checked yet (`make
 check` lists them). Nothing compiles yet.
 
