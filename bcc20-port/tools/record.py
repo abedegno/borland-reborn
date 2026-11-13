@@ -78,7 +78,21 @@ def function_offsets():
         start = m.base if m.overlay else header + original.block_para[m.block] * 16 + m.org
         for name, off in m.functions:
             out.setdefault(name, start + off)
+    # static functions inside another function's row of the target table, at the offset in
+    # that row where their frame starts (the comments of the source give the offsets)
+    for name, (row, off) in INNER_BODIES.items():
+        at = out[row] + off
+        assert data[at:at + 3] == b"\x55\x8b\xec" or data[at:at + 4] == b"\x45\x55\x8b\xec", name
+        out.setdefault(name, at)
     return out
+
+
+INNER_BODIES = {
+    "C78_special_symbol": ("RESOLVE_SYMBOL_REFERENCE", 0x88),      # EXPRDISP.C
+    "C78_reconcile_pair": ("RESOLVE_SYMBOL_REFERENCE", 0xD3),
+    "C78_lower_value": ("RESOLVE_SYMBOL_REFERENCE", 0x4E5),
+    "C78_apply_value_type": ("RESOLVE_SYMBOL_REFERENCE", 0x56A),
+}
 
 
 def ignored_code():
@@ -105,14 +119,21 @@ def boundary(functions):
     # functions called through pointers (callbacks, hook tables) are not in the call graph:
     # every function whose address is taken somewhere may be called that way
     names = set(where)
+    taken = set()
     for path in set(where.values()):
         if path.suffix.upper() == ".C":
             text = re.sub(r"/\*.*?\*/", " ", path.read_text(encoding="latin1"), flags=re.S)
-            out |= {m.group(1) for m in re.finditer(r"\b([A-Za-z_]\w*)\b(?!\s*\()", text)
-                    if m.group(1) in names and m.group(1) not in done}
+            taken |= {m.group(1) for m in re.finditer(r"\b([A-Za-z_]\w*)\b(?!\s*\()", text)
+                      if m.group(1) in names}
     # and the code pointers in the data segment's initial values
     dgroup = (BCC20 / "src" / "data" / "DGROUP.ASM").read_text(encoding="latin1")
-    out |= {m.group(1) for m in re.finditer(r"^\s+dd\s+([A-Za-z_@][\w@]*)", dgroup, re.M)} - done
+    taken |= {m.group(1) for m in re.finditer(r"^\s+dd\s+([A-Za-z_@][\w@]*)", dgroup, re.M)}
+    # near code pointers (handler tables), which DGROUP.ASM gives as numbers named in comments
+    taken |= {m.group(1) for m in re.finditer(r";\s*@code\s+([A-Za-z_]\w*)", dgroup)} & names
+    out |= taken - done
+    # a translated function reached through a pointer runs in the port, so what it calls
+    # is reached too
+    todo += sorted(taken & done)
     while todo:
         f = todo.pop()
         for c in graph.get(f, ()):

@@ -22,8 +22,8 @@ string literals, the scanner), the preprocessor (directives, pragmas, the macro 
 conditional compilation, the #if evaluators) and types and symbols (the identifier table,
 type records, sizes and compatibility, struct layout, the C symbol table), and the first
 expression files (lowering for the back end, packing, comma expressions, constant values,
-call checking):
-217 functions, each matching every call recorded
+call checking, unary operators, the analyser's dispatch):
+244 functions, each matching every call recorded
 over the whole corpus. A few are never reached by the corpus and are not checked yet (`make
 check` lists them). Nothing compiles yet.
 
@@ -85,6 +85,12 @@ make check                                      # every translated function agai
 `tools/record.py --emu2 PATH` picks the tracing emu2 (default: `../exhume/tools/emu2-trace/emu2`
 or `$EMU2_TRACE_BIN`). Records hold memory of Borland's program, so `records/` is never
 committed; make them again from your own BCC.EXE.
+
+`--all` records every translated function in one pass over the corpus (about three minutes
+with 12 cores). A run nests at most 16 recorded calls, so a function reached only below that,
+inside a deep recursion of recorded functions, gets no calls that way: record it on its own
+(C78_special_symbol is one). `--runs N` samples N compiles, which can miss the functions only
+the targeted tests reach.
 
 ## Layout
 
@@ -158,8 +164,8 @@ Places where the original's behaviour depends on something a port does not have:
   takes parameters, but on the path where the test fails it returns the symbol anyway (what
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
-- **LOWER_EXPR_TREE** (LOWEREXP.C) stops with "out of memory" when the 8086 stack pointer
-  drops below 8F0Ch, which only a very deeply nested expression reaches. The port has no
+- **LOWER_EXPR_TREE** (LOWEREXP.C) and **ANALYZE_EXPRESSION** (EXPRDISP.C) stop with "out of
+  memory" when the 8086 stack pointer drops below 8F0Ch, which only a very deeply nested expression reaches. The port has no
   such stack and leaves the check out; the native build could limit the nesting depth
   instead, if it wants the same error.
 - **The "Available memory" line** BCC prints is computed from its heap. The native heap must
