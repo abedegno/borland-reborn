@@ -23,10 +23,10 @@ conditional compilation, the #if evaluators) and types and symbols (the identifi
 type records, sizes and compatibility, struct layout, the C symbol table), and the first
 expression files (lowering for the back end, packing, comma expressions, constant values,
 call checking, unary operators, the analyser's dispatch, conversions, the C front end's node
-builders, constant folding, the operator checkers, the C++ node toolkit, inline expansion):
-382 functions, each matching every call recorded over the whole corpus. A few are never
-reached by the corpus and are not checked yet (`make check` lists them). Nothing compiles
-yet.
+builders, constant folding, the operator checkers, the C++ node toolkit, inline expansion,
+the simplifier): 436 functions, each matching every call recorded over the whole corpus. A
+few are never reached by the corpus and are not checked yet (`make check` lists them).
+Nothing compiles yet.
 
 ## How a translation is checked
 
