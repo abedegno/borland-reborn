@@ -9,7 +9,8 @@ with, endorsed by or supported by either company.
 - **Recovered sources** (`*/src/`, `*/linkgroups/`, `*/reconstructed/` and the tables beside
   them): C and assembly sources reconstructed from the published binaries so that they
   rebuild those binaries byte for byte, together with the names, comments and documentation
-  written while reading them. They are derived from Borland's copyrighted programs. They are
+  written while reading them, and the port's translations of them (`bcc20-port/src/` and
+  the headers declaring them). They are derived from Borland's copyrighted programs. They are
   provided for study, preservation and interoperability research. **No rights in them are
   claimed or granted.** The MIT licence in `LICENSE` does not apply to them.
 - **Project material** (`scripts/`, the build tools, `docs/`, the READMEs and the findings):

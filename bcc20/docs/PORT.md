@@ -1,13 +1,21 @@
 # Porting BCC.EXE to modern hosts
 
-The goal is a version of Borland C++ 2.0's command-line compiler that runs natively on
-modern systems (Linux, macOS, Windows) and still writes the same DOS output: the same object
-files, assembly listings and messages as BCC.EXE. This page lists what the recovered source
-still assumes about DOS and the 8086, with counts measured on the tree as it is now. It ends
-with a plan and the checks that keep the port honest. Nothing here has been changed yet.
+The port is a tool for decompiling and preserving early-1990s DOS games built with Borland
+C++. Matching a game's code byte for byte means compiling candidate C again and again with
+the exact compiler that built it. A native Borland C++ 2.0 that writes exactly the object
+files BCC.EXE writes makes that faster: a library call instead of a DOS emulator, so a tool
+can compile thousands of variants. Being source, it can also explain its choices (which
+register the allocator took, which tails cross-jumping merged, what the peephole pass
+removed), which is what a matcher most needs when the bytes differ.
 
-The counts come from simple searches of `src/` (the commands are at the end), so treat them
-as sizes, not exact totals.
+The port is its own tree, [../../bcc20-port](../../bcc20-port/README.md), free to change
+anything. This tree stays as it is: it rebuilds BCC.EXE byte for byte and is the reference.
+The port is judged by what it writes (the test corpus) and, function by function, by calls
+recorded in Borland's BCC.EXE (bcc20-port/README.md).
+
+This page lists what the recovered source assumes about DOS and the 8086, which a
+translation has to deal with, with counts measured on the tree. The counts come from simple
+searches of `src/` (the commands are at the end), so treat them as sizes, not exact totals.
 
 ## Starting point
 
@@ -37,9 +45,11 @@ compiler.
 - No C file does arithmetic on a segment value (no `segment + n`). That matters: the
   segment can become a handle in a port.
 
-**For the port:** keep the records as 16-bit offsets into 64 KB blocks, so record layouts,
-sizes and the 64 KB limits stay as they are. Redefine `MK_FP(s, o)` in the port's own header
-as `pool_base[s] + o`, where `s` is a pool handle. This is one header change, not a rewrite.
+**For the port:** the first stage keeps the records as 16-bit offsets in their segments and
+the whole 8086 address space as one array (bcc20-port/include/port.h), so a translated
+function can be run from a state recorded in BCC.EXE. The second stage can turn each pool
+into a host block, or records into structures; with no segment arithmetic, the segment is
+only ever a handle.
 
 ### 2. Register pseudo-variables
 
@@ -63,11 +73,11 @@ cases are values that pass through a register between functions:
   see the fall-off-end policy);
 - arguments passed in registers to the TASM modules.
 
-**For the port:** in the port's header, define the pseudo-variables as locals of each
-function that uses them. Then find, with a new scan, every function that reads a
-pseudo-variable before it writes it, or reads one after a call. Each of those is a value
-passing between functions, and needs a real parameter or return value in the port. The scan
-gives the size of the hand work before any of it starts.
+**For the port:** a translation writes the pseudo-variables as ordinary locals. A value
+that passes between functions in a register becomes a real parameter or return value, and
+the recorded calls show which registers each function really returns in. A scan for
+functions that read a pseudo-variable before writing it, or after a call, gives the size of
+that work in advance.
 
 ### 3. 16-bit `int`
 
@@ -76,14 +86,12 @@ gives the size of the hand work before any of it starts.
 the promotion of `unsigned` values all change. A compiler cannot afford that: its constant
 folding, sizes and offsets must wrap exactly as BCC's did, or the object files differ.
 
-**For the port:** in the shared sources, write the integer types as typedefs (`int16`,
-`uint16`, `int32`) that are `int`, `unsigned` and `long` in the DOS build. The gate proves
-each such change keeps every byte. The port then defines them as `int16_t` and so on. A
-second audit is still needed: on a host, a `uint16_t` value is promoted to a 32-bit `int` in
-arithmetic, so expressions whose result is used before being stored back into a 16-bit
-variable (comparisons, divisions, right shifts, array indexes) must be checked. The
-compiler's warnings (`-Wconversion`, `-Wsign-compare`) and UBSan over the corpus find most
-of them.
+**For the port:** the translation uses fixed-size types (`u16`, `i16`, `u32`, `i32`). On a
+host, a 16-bit value is still promoted to a 32-bit `int` in arithmetic, so expressions whose
+result is used before being stored back into a 16-bit variable (comparisons, divisions,
+right shifts, array indexes) need a cast where the 8086 would have wrapped. The recorded
+calls catch the cases they reach; the compiler's warnings (`-Wconversion`, `-Wsign-compare`)
+and UBSan find others.
 
 ### 4. The data segment is still bytes
 
@@ -102,13 +110,15 @@ Some tables are reached from another item's address, for example the pseudo-regi
 the opcode descriptors, the message table, the option table and so on. On a host a pointer
 is 8 bytes, so any table holding pointers changes size, and every place that steps through
 a table by a byte count (`base + 4 * index`) has to become an array index. This can be
-partly generated, from DATA.H's types and the pointer tables. The DOS build keeps
-DGROUP.ASM until a C version of the data compiles to the same bytes.
+partly generated, from DATA.H's types and the pointer tables. The first stage needs none of
+this: the data stays at its offsets in the address space, loaded from the program's own
+data segment.
 
 ### 5. Platform code
 
-These files do the DOS and hardware work, and the port replaces them with host code. They
-are the port's platform layer.
+These files do the DOS and hardware work. The port replaces the few it needs (files, the
+command line, the environment) with host code and drops the rest: a tool that compiles to
+object files needs no expanded memory, overlays, interrupt handlers or precompiled headers.
 
 - **Start-up:** `driver/C0.ASM` (Turbo C start-up).
 - **DOS calls** (INT 21h, interrupt vectors, files, dates, exec): in `rtl/` RCHMOD, RCLOSE,
@@ -173,46 +183,13 @@ expects it) or fixes it (and the corpus's expected output needs an exception).
 - The `-#` switch can never be used. Copy it (it is an error).
 - Uninitialised pad bytes in `TCDEF.SYM`. The port's format writes zeros.
 
-## Plan
+## Plan and checks
 
-One tree, two builds. The DOS build and the port compile the same C sources. Each change to
-a shared source must still produce the original's bytes, and the gate proves it. Anything
-that cannot be written that way goes in the port's own files. The exact link stays the
-reference the whole time.
-
-1. **Measure.** Write `tools/portscan.py`. It reports the counts on this page per file,
-   and adds the two scans that need more than a search: pseudo-variables whose values pass
-   between functions, and binary writes of whole integers or structures. It is rerun after
-   each step, so progress can be tracked.
-2. **Types.** Add the integer typedefs and the port's headers: the pool macros, `MK_FP`
-   and the pseudo-variables as locals. Change only shared sources whose bytes stay the same.
-3. **Values that pass between functions.** Fix each case the scan lists, in a way that keeps
-   the DOS bytes, or else in a port-only version of that function.
-4. **Platform layer.** Host versions of the DOS calls, memory (bank 0 only), no overlays, no
-   interrupt handlers, and exec of TASM and TLINK through an emulator.
-5. **Data.** Generate C for the data segment, starting with the tables the front end needs.
-6. **Compiler work written in TASM.** The 80-bit real arithmetic in C first, since constant
-   folding needs it and it is small. Then the inline assembler, with the corpus's asm tests
-   (ASM.C, ASMCPP.CPP, ASMENUM.CPP) as its first checks.
-7. **First compile.** The port compiles `tests/modbuild/HELLO.C` with `-c` and writes the
-   same `T.OBJ` as BCC.EXE. Then `-S`, then the whole corpus.
-
-## Checks that keep the port honest
-
-- **The corpus is the test.** For every one of the 1,832 compiles, record what Borland's
-  BCC.EXE writes in emu2 once (the files, the exit code and the console text) and keep it
-  as the expected result. The port runs the same compiles natively and must match. This is
-  the comparison `tools/modtest.py` already makes, with the port in place of the modding
-  build.
-- **The DOS build keeps matching.** The gate (`tools/gate.py check`) runs on every change to
-  a shared source.
-- **Host hazards.** DOS let BCC read past arrays, read through null pointers and write into
-  string literals, with no crash. Build the port with AddressSanitizer and UBSan and run the
-  corpus under them. Every overrun found is noted here, with whether the original read
-  something that mattered.
-- **Coverage.** The corpus runs 83% of BCC.EXE. A port bug in the other 17% will not show,
-  so add tests for any code the port touches that the corpus never runs (docs/COVERAGE.md
-  lists it).
+[bcc20-port/README.md](../../bcc20-port/README.md) has the plan, the order of translation and
+how each step is checked: calls recorded in Borland's BCC.EXE replayed against each
+translated function, then the whole corpus of 1,832 compiles compared output for output.
+The corpus runs 83% of BCC.EXE's code, and the recorded calls the same 83%; code no test
+reaches needs new tests before its translation can be trusted (docs/COVERAGE.md lists it).
 
 ## How the counts were measured
 

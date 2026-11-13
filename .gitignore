@@ -19,4 +19,7 @@ __pycache__/
 .venv/
 .DS_Store
 ._*
-bcc20/testsuites/
+bcc20/testsuites
+# the port: build output and recorded calls (made from your own BCC.EXE)
+bcc20-port/build/
+bcc20-port/records/
