@@ -130,9 +130,9 @@ translation keeps on purpose (an original bug the output depends on, for example
    - Calls through BCC's code pointers use `CALL_FAR` / `CALL_NEAR` (`calls.h`), never a C
      function pointer cast.
    - A local whose address is passed on lives in the scratch area (`scratch_alloc`).
-   - A function that takes a structure by value is declared by hand in
-     `include/structargs.h`, the structure passed as its words, with its stand-in in
-     `replay/functions.c`.
+   - A function that takes a structure by value is listed in genadapters'
+     `STRUCT_ARGUMENTS`: the port passes the structure as its words in the order a pascal
+     call pushes them, its last word first (MAKE_MEMBER_NODE(member, word3, line, file)).
    - What the original reads from the 8086 flags (`_FLAGS`, or a TASM helper that reports
      in OF) is computed: a signed overflow test, or a port global the helper's
      translation sets (`include/overflow.h`). Shift counts are taken modulo 32, as the

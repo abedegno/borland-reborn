@@ -42,6 +42,12 @@ SCALAR = {"unsigned char": "u8", "char": "i8", "signed char": "i8",
 HEAD = re.compile(r"^(?!extern|typedef|\s)([^;{}()#=\n]*?)\b([A-Za-z_]\w*)\s*\(([^;{}]*)\)\s*\{", re.M)
 # functions the original declares void that return a value in AX (a documented fall-off-end):
 # the port gives them the result their callers through pointers expect
+# functions that take a structure by value: their arguments as the words on the stack, in
+# the order of a pascal call's pushes (the structure's words from the highest down)
+STRUCT_ARGUMENTS = {
+    # expr/EXPRPOOL.C MAKE_MEMBER_NODE(member, struct C21Location {file, line, word3})
+    "MAKE_MEMBER_NODE": ("u16", ["u16", "u16", "u16", "u16"], False, False),
+}
 RETURN_OVERRIDES = {
     "PARSE_PP_IF_EXPRESSION": "i16",    # CPRAGFN.C: EVAL_EXPRESSION hook, PARSE_CONSTANT_EXPR's AX
 }
@@ -163,6 +169,8 @@ def definitions():
         if len(ds) == 1 and None not in ds:
             ret, args, near, cdecl = ds.pop()
             found[name] = (ret, list(args), near, cdecl)
+    found.update(STRUCT_ARGUMENTS)
+    dup -= set(STRUCT_ARGUMENTS)
     for name, ret in RETURN_OVERRIDES.items():
         if name in found and found[name]:
             found[name] = (ret,) + tuple(found[name][1:])

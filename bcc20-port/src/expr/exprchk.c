@@ -18,7 +18,6 @@
 #include "exprop.h"
 #include "msg.h"
 #include "protos.h"
-#include "structargs.h"
 
 #define OP(n) EXPR_W((n), EXPR_OP)
 #define LEFT(n) EXPR_W((n), EXPR_LEFT)
@@ -489,7 +488,7 @@ u16 BUILD_MEMBER_ACCESS(u16 node)
         member = LEFT(right);
     FREE_EXPR_NODE(right);
     /* the freed node's source position, read after the free as in the original */
-    u16 made = MAKE_MEMBER_NODE(member, EXPR_W(right, 0x14), EXPR_W(right, 0x16), EXPR_W(right, 0x18));
+    u16 made = MAKE_MEMBER_NODE(member, EXPR_W(right, 0x18), EXPR_W(right, 0x16), EXPR_W(right, 0x14));
     RIGHT(node) = made;
     u16 qualified = ADD_CV_QUALIFIERS(MEMBER_W(member, MEMB_TYPE), (TYPE_B(type, TYPE_ATTRS) & 2) != 0,
                                       (TYPE_B(type, TYPE_ATTRS) & 1) != 0);
