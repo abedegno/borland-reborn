@@ -22,8 +22,8 @@ string literals, the scanner), the preprocessor (directives, pragmas, the macro 
 conditional compilation, the #if evaluators) and types and symbols (the identifier table,
 type records, sizes and compatibility, struct layout, the C symbol table), and the first
 expression files (lowering for the back end, packing, comma expressions, constant values,
-call checking, unary operators, the analyser's dispatch, conversions):
-263 functions, each matching every call recorded
+call checking, unary operators, the analyser's dispatch, conversions, the C front end's node builders):
+285 functions, each matching every call recorded
 over the whole corpus. A few are never reached by the corpus and are not checked yet (`make
 check` lists them). Nothing compiles yet.
 

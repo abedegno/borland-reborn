@@ -111,6 +111,9 @@ def param_type(param):
     if "(" in p:
         return port_type(p)
     m = re.match(r"^(.*?)\b([A-Za-z_]\w*)\s*(\[[^\]]*\])?$", p)
+    # an unnamed parameter whose type ends in a type word ("unsigned long"): no name
+    if m and m.group(2) in ("int", "long", "short", "char", "signed", "unsigned"):
+        m = None
     if m and m.group(1).strip() and port_type(m.group(1)) is not None:
         return port_type(m.group(1) + (m.group(3) or ""))
     return port_type(p)
