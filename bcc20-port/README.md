@@ -169,8 +169,8 @@ Places where the original's behaviour depends on something a port does not have:
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
 - **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C) and
-  **FOLD_EXPRESSION** (CONSTFLD.C) stop with "out of
-  memory" when the 8086 stack pointer drops below 8F0Ch, which only a very deeply nested expression reaches. The port has no
+  **FOLD_EXPRESSION** (CONSTFLD.C) stop with "out of memory" when the 8086 stack pointer
+  drops below 8F0Ch, which only a very deeply nested expression reaches. The port has no
   such stack and leaves the check out; the native build could limit the nesting depth
   instead, if it wants the same error.
 - **The "Available memory" line** BCC prints is computed from its heap. The native heap must
