@@ -23,9 +23,10 @@ conditional compilation, the #if evaluators) and types and symbols (the identifi
 type records, sizes and compatibility, struct layout, the C symbol table), and the first
 expression files (lowering for the back end, packing, comma expressions, constant values,
 call checking, unary operators, the analyser's dispatch, conversions, the C front end's node
-builders, constant folding, the operator checkers): 316 functions, each matching every call
-recorded over the whole corpus. A few are never reached by the corpus and are not checked
-yet (`make check` lists them). Nothing compiles yet.
+builders, constant folding, the operator checkers, the C++ node toolkit, inline expansion):
+382 functions, each matching every call recorded over the whole corpus. A few are never
+reached by the corpus and are not checked yet (`make check` lists them). Nothing compiles
+yet.
 
 ## How a translation is checked
 
@@ -91,6 +92,12 @@ with 12 cores). A run follows recorded calls 32 deep; a call deeper than that le
 calls around it unrecorded, so a function reached only that deep gets no calls from `--all`
 and must be recorded on its own. `--runs N` samples N compiles, which can miss the functions
 only the targeted tests reach.
+
+To look into one failing call: `REPLAY_ONLY=N build/replay NAME records/NAME.rec` replays
+only the recorded call N, and `REPLAY_TRACE=1` prints each call the translation makes to a
+function not yet translated, beside the one BCC.EXE made. `make check` also runs
+`tools/aliascheck.py`, which finds calls written with a stub's or body label's name instead
+of the definition's.
 
 ## Layout
 
@@ -171,11 +178,14 @@ Places where the original's behaviour depends on something a port does not have:
   takes parameters, but on the path where the test fails it returns the symbol anyway (what
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
-- **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C) and
-  **FOLD_EXPRESSION** (CONSTFLD.C) stop with "out of memory" when the 8086 stack pointer
-  drops below 8F0Ch, which only a very deeply nested expression reaches. The port has no
-  such stack and leaves the check out; the native build could limit the nesting depth
-  instead, if it wants the same error.
+- **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C), **FOLD_EXPRESSION**
+  (CONSTFLD.C) and **SUBSTITUTE_PARAMETERS** (INLINEXP.C) stop with "out of memory" when the
+  8086 stack pointer drops below 8F0Ch, which only a very deeply nested expression reaches.
+  The port has no such stack and leaves the check out; the native build could limit the
+  nesting depth instead, if it wants the same error.
+- **PARSE_INLINE_STATEMENT** (INLINEXP.C) returns an unset register (the caller's SI) for a
+  stray "else" or a token that cannot start a statement in an inline body. The port returns
+  0; the native build should do the same, or report the error and stop expanding.
 - **The "Available memory" line** BCC prints is computed from its heap. The native heap must
   report the same figure, or the console text of every compile differs.
 

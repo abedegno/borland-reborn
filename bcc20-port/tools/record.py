@@ -93,6 +93,7 @@ INNER_BODIES = {
     "C78_lower_value": ("RESOLVE_SYMBOL_REFERENCE", 0x4E5),
     "C78_apply_value_type": ("RESOLVE_SYMBOL_REFERENCE", 0x56A),
     "REASSOCIATE_OPERANDS": ("BCC_EXPR_6CC3", 0),                 # CONSTFLD.C, under its row name
+    "COUNT_SYMBOL_USES": ("IS_TRIVIAL_ARGUMENT", 0x63),           # INLINEXP.C
 }
 
 

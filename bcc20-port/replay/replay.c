@@ -201,6 +201,8 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     if (now.next >= now.n_children)
         fail("%s calls %s, where BCC.EXE made no more calls", now.fn->name, name);
     Record *c = &now.children[now.next++];
+    if (getenv("REPLAY_TRACE"))
+        fprintf(stderr, "    %u: %s (BCC.EXE: %s)\n", now.next, name, c->name);
     /* what the overlay manager (not recorded as a call) wrote before this call */
     for (unsigned i = 0; i < c->n_runs; i++)
         if (c->runs[i].kind == 'X')
@@ -392,7 +394,7 @@ int main(int argc, char **argv)
             unsigned kids = 0;
             while (k + 1 + kids < n && all[k + 1 + kids].child)
                 kids++;
-            if (!all[k].child) {
+            if (!all[k].child && (!getenv("REPLAY_ONLY") || (unsigned)atoi(getenv("REPLAY_ONLY")) == all[k].seq)) {
                 calls++;
                 with_children += kids > 0;
                 int ok = replay(fn, &all[k], &all[k + 1], kids, argv[i], failed_shown < 5);
