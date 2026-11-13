@@ -27,6 +27,7 @@
 #include "variadic.h"
 #include "calls.h"
 #include "overflow.h"
+#include "longops.h"
 
 #define OP(n) EXPR_W((n), EXPR_OP)
 #define KIND(n) EXPR_W((n), EXPR_KIND)
@@ -48,46 +49,6 @@ static void copy_node(u16 to, u16 from)
     for (int i = 0; i < 20; i++)
         EXPR_B(to, i) = EXPR_B(from, i);
 }
-
-/* 16-bit shifts as the 80186 does them: the count taken modulo 32 */
-static u16 shl16(u16 v, u8 c) { c &= 31; return c >= 16 ? 0 : (u16)(v << c); }
-static u16 shr16(u16 v, u8 c) { c &= 31; return c >= 16 ? 0 : (u16)(v >> c); }
-static u16 sar16(u16 v, u8 c) { c &= 31; return (u16)((i16)v >> (c >= 16 ? 15 : c)); }
-
-/* Borland's long shift helpers (F_LXLSH@, F_LXRSH@, F_LXURSH@): DX:AX by CL */
-static i32 long_shl(i32 value, u8 cl)
-{
-    u16 ax = (u16)value, dx = (u16)((u32)value >> 16);
-    if (cl < 16) {
-        u16 bx = ax;
-        ax = shl16(ax, cl);
-        dx = shl16(dx, cl) | shr16(bx, (u8)(16 - cl));
-    } else {
-        dx = shl16(ax, (u8)(cl - 16));
-        ax = 0;
-    }
-    return (i32)((u32)dx << 16 | ax);
-}
-
-static i32 long_shr(i32 value, u8 cl, int is_unsigned)
-{
-    u16 ax = (u16)value, dx = (u16)((u32)value >> 16);
-    if (cl < 16) {
-        u16 bx = dx;
-        ax = shr16(ax, cl);
-        dx = is_unsigned ? shr16(dx, cl) : sar16(dx, cl);
-        ax |= shl16(bx, (u8)(16 - cl));
-    } else {
-        ax = is_unsigned ? shr16(dx, (u8)(cl - 16)) : sar16(dx, (u8)(cl - 16));
-        dx = is_unsigned ? 0 : (u16)((i16)dx >> 15);
-    }
-    return (i32)((u32)dx << 16 | ax);
-}
-
-/* the signed long division and remainder of Borland's helpers, where the host's could trap
-   (the most negative value by -1 gives itself, remainder 0) */
-static i32 long_div(i32 a, i32 b) { return (a == INT32_MIN && b == -1) ? a : a / b; }
-static i32 long_mod(i32 a, i32 b) { return (a == INT32_MIN && b == -1) ? 0 : a % b; }
 
 /* simplifies the expression of an expression statement (its value unused): side effects
    moved out, then the tree folded */

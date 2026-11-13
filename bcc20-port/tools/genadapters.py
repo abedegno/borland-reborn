@@ -111,6 +111,22 @@ def split_head(prefix):
     return " ".join(type_words) or "int", "near" in attrs, "cdecl" in attrs
 
 
+def split_params(text):
+    """a parameter list split at its top-level commas (a function pointer parameter has
+    commas of its own inside parentheses)"""
+    out, depth, start = [], 0, 0
+    for i, c in enumerate(text):
+        if c == "(":
+            depth += 1
+        elif c == ")":
+            depth -= 1
+        elif c == "," and depth == 0:
+            out.append(text[start:i])
+            start = i + 1
+    out.append(text[start:])
+    return out
+
+
 def param_type(param):
     """the port type of one parameter declaration (with or without its name)"""
     p = param.strip()
@@ -142,7 +158,7 @@ def definitions():
             elif "..." in ps:
                 args = None
             else:
-                args = [param_type(p) for p in ps.split(",")]
+                args = [param_type(p) for p in split_params(ps)]
             if ret is None or args is None or None in args:
                 found.setdefault(name, None)
                 continue
@@ -162,7 +178,7 @@ def definitions():
             ret_text, near, cdecl = split_head(prefix)
             ret = "void" if ret_text == "void" else port_type(ret_text)
             ps = params.strip()
-            args = [] if ps in ("", "void") else None if "..." in ps else [param_type(x) for x in ps.split(",")]
+            args = [] if ps in ("", "void") else None if "..." in ps else [param_type(x) for x in split_params(ps)]
             d = None if ret is None or args is None or None in args else (ret, tuple(args), near, cdecl)
             seen.setdefault(name, set()).add(d)
     for name, ds in seen.items():

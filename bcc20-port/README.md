@@ -179,10 +179,10 @@ Places where the original's behaviour depends on something a port does not have:
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
 - **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C), **FOLD_EXPRESSION**
-  (CONSTFLD.C) and **SUBSTITUTE_PARAMETERS** (INLINEXP.C) stop with "out of memory" when the
-  8086 stack pointer drops below 8F0Ch, which only a very deeply nested expression reaches.
-  The port has no such stack and leaves the check out; the native build could limit the
-  nesting depth instead, if it wants the same error.
+  (CONSTFLD.C), **SUBSTITUTE_PARAMETERS** (INLINEXP.C) and **SIMPLIFY_NODE** (SIMPLIFY.C)
+  stop with "out of memory" when the 8086 stack pointer drops below 8F0Ch, which only a very
+  deeply nested expression reaches. The port has no such stack and leaves the check out; the
+  native build could limit the nesting depth instead, if it wants the same error.
 - **PARSE_INLINE_STATEMENT** (INLINEXP.C) returns an unset register (the caller's SI) for a
   stray "else" or a token that cannot start a statement in an inline body. The port returns
   0; the native build should do the same, or report the error and stop expanding.
