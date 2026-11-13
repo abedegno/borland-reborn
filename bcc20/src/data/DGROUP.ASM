@@ -977,12 +977,14 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_37FD
 		public	DATA_3804
 		public	DATA_3809
+		public	DATA_3811
 		public	DATA_3F66
 		public	DATA_3F6C
 		public	DATA_3F72
 		public	DATA_3F78
 		public	DATA_3F7E
 		public	DATA_3F84
+		public	DATA_504C
 		public	DATA_5050
 		public	DATA_5051
 		public	DATA_5054
@@ -7140,7 +7142,8 @@ STORAGE_CLASS_NAMES	label	byte
 		dw	offset DGROUP:DATA_3804
 		db	000h,000h,000h,000h
 		dw	offset DGROUP:DATA_3809
-		db	000h,000h,000h,000h,000h,000h,000h,000h,011h,'8'
+		db	000h,000h,000h,000h,000h,000h,000h,000h
+		dw	offset DGROUP:DATA_3811
 ; @37F6
 DATA_37F6	label	byte
 		db	'extern',000h
@@ -7152,7 +7155,10 @@ DATA_3804	label	byte
 		db	'auto',000h
 ; @3809
 DATA_3809	label	byte
-		db	'typedef',000h,'register',000h
+		db	'typedef',000h
+; @3811
+DATA_3811	label	byte
+		db	'register',000h
 ; @381A
 STR_DEBUG_C	label	byte
 		db	009h,'?debug',009h,'C ',000h
@@ -7364,7 +7370,8 @@ STR_FTOL	label	byte
 		db	'ftol@',000h,000h
 ; @3F98
 OPCODE_DESCRIPTOR_TABLE	label	byte
-		db	'LP',001h
+		dw	offset DGROUP:DATA_504C
+		db	001h
 ; @3F9B
 CODE_OP_INFO_TABLE	label	byte
 		db	000h,' ',000h,000h,000h
@@ -7957,7 +7964,10 @@ LEAF_OPCODE_KIND_OFFSET	label	byte
 ; @5036
 OPER_OPCODE_KIND_OFFSET	label	byte
 		db	000h,000h,000h,001h,001h,001h,001h,001h,001h,002h,003h,004h
-		db	001h,001h,001h,001h,001h,000h,001h,001h,001h,001h,'nop',000h
+		db	001h,001h,001h,001h,001h,000h,001h,001h,001h,001h
+; @504C
+DATA_504C	label	byte
+		db	'nop',000h
 ; @5050
 DATA_5050	label	byte
 		db	'a'

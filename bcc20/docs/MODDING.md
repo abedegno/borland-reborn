@@ -38,10 +38,37 @@ both kinds of edit (below).
 
 ## What it proves
 
-`tools/modtest.py` runs 522 compiles of 264 files with both compilers. The files are:
+`tools/modtest.py` runs 1832 compiles of 919 files with both compilers. The files are:
 
 - the project's own C sources, every C file BCC builds, each with its own switches, as
   object code (`-c`) and as assembly (`-S`);
+- 110 of Borland's own example programs and its container class library, which shipped on
+  the Borland C++ 2.0 disks and were written for this compiler:
+  - DOS and Windows examples (`-W`, `-WD`);
+  - the manual's chapter examples;
+  - TCALC;
+  - the Turbo Profiler and Turbo Debugger examples.
+
+  `scripts/setup-toolchains.py` installs them from your own disks, as it does the
+  compilers. They are not in this repository.
+  [`tests/modbuild/BORLAND.TSV`](../tests/modbuild/BORLAND.TSV) lists them with their
+  switches, taken from Borland's build files where there are any. A few fail in both
+  compilers alike, for instance where an example is meant to be built with assembly
+  modules. emu2 does not cut names to 8.3 as DOS does, so the test's copy of the headers
+  also holds `STRSTREAM.H`;
+- 545 files of outside test suites that `tools/fetch-testsuites.py` downloads at pinned
+  versions into `testsuites/` (git ignores it):
+  - from GCC's test suites (GPL): `gcc.c-torture`, small C programs, and `g++.old-deja`, the
+    g++ tests of the 1990s, written against the ARM-era C++ this compiler implements;
+  - from AT&T cfront 3.0.3: the demos and libraries (seyko2/cfront-3).
+
+  They were chosen by tracing Borland's compiler over all of the suites' files (6968 from
+  GCC, 81 from cfront) and keeping each file that reaches code the rest of the corpus does
+  not. [`tests/modbuild/EXTERNAL.TSV`](../tests/modbuild/EXTERNAL.TSV) lists them. Most
+  stop with errors in Borland C++ 2.0 (GCC extensions, templates, AT&T's headers), which
+  exercises its error paths; both compilers must report them alike. Two files are left
+  out: their output in Borland's own compiler changes with its layout
+  (`docs/FINDINGS.md`);
 - the tests in [`tests/modbuild/`](../tests/modbuild/), each aimed at code the sources do
   not reach, with its switches on its first line (`/* modtest: ... */`).
 
@@ -77,6 +104,8 @@ compile then checks it by reading it back. Results:
 | `--pad-data 16 --pad-at 3308`: 16 new bytes in the middle of `_DATA` | 478 / 478 |
 | *after the corpus grew to 522:* unchanged, `--pad-code 16`, and `--pad-data 1`, `16` and `256` early (at DS:069C, see below), in the middle and at the end | 522 / 522 each |
 | `tools/modedits.py`: two new files (one resident, one in an overlay, each with data), a changed context source of five files, and two changed files compiled with context sources | 522 / 522; the tracer shows both new functions ran |
+| *with Borland's examples, 742 compiles:* unchanged, `--pad-code 16`, and `--pad-data 1`, `16` and `256` early, in the middle and at the end; and `tools/modedits.py` | 742 / 742 each; the tracer shows both new functions ran |
+| *with the outside suites, 1832 compiles:* the same builds, and `tools/modedits.py` | 1832 / 1832 each; the tracer shows both new functions ran |
 
 A resident change was also tested by hand. `RPUTS.C` was changed to write every string
 twice: the banner and file names print twice, the resident code after it moves by up to 2Ah
@@ -218,8 +247,9 @@ about ten seconds on eight cores and writes:
   words that differ outside the moved range are the culprits. The tracer's
   `EMU2_TRACE_READ=LO-HI` lists the instructions that read a range of the file's bytes.
 - [`docs/COVERAGE.md`](COVERAGE.md), and per function `build-source/MODTRACE/coverage.tsv`:
-  the share of each module's code that the corpus runs: 70% (61% of the resident code, 71%
-  of the overlays), up from 56% before the tests in `tests/modbuild/` were added. Modules that
+  the share of each module's code that the corpus runs: 83% (65% of the resident code, 85%
+  of the overlays). It was 56% before the tests in `tests/modbuild/` were added, 70% before
+  Borland's examples and 75% before the outside suites. Modules that
   never run hold 0.4% of the code (1695 bytes). Most handle extended and expanded memory,
   the heap under memory pressure, and the Ctrl-C and Ctrl-Break handlers, which the
   emulator does not exercise. The rest are a few run-time helpers. Most of the code that
@@ -227,7 +257,13 @@ about ten seconds on eight cores and writes:
   have moved with the data: CGOPER chose six huge-pointer helper names (`padd@` and the
   rest) by `?:` between two numbers. With data inserted, the huge model's output named the
   wrong helpers. Names would change BC's code there, so they are listed in
-  `map/code-numbers.tsv`.
+  `map/code-numbers.tsv`. Borland's Windows examples found the last one so far: the first
+  entry of `OPCODE_DESCRIPTOR_TABLE` (19-byte records, each starting with a pointer to its
+  mnemonic) points to `nop` at DS:504C. Its bytes read as the text "LP" and labels split
+  the record, so only the tracer saw it. With the old table, 14 of the 36 Windows compiles
+  differ once data moves; with it in the table, none do. The outside suites found one more:
+  the last entry of `STORAGE_CLASS_NAMES` points to `register` at DS:3811, and its bytes
+  read as 11h and "8".
 
 To see why a word was traced, run one compile by hand with `EMU2_TRACE_WATCH` set to the
 word's file offset: the tracer prints the offset of each instruction behind its first uses.

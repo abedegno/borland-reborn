@@ -7,7 +7,11 @@ same switches, and every output must be identical.
                                 DIR for the runs (default build-source/MODTEST)
 
 The corpus is the project's own C sources (each with the switches its /* opts: */ line
-gives, as object code and with -S as assembly) plus the tests in tests/modbuild/.  A test
+gives, as object code and with -S as assembly), Borland's own example programs and class
+library where scripts/setup-toolchains.py installed them (tests/modbuild/BORLAND.TSV lists
+them with their switches), files of GCC's and cfront's test suites where
+tools/fetch-testsuites.py fetched them (tests/modbuild/EXTERNAL.TSV), and the tests in
+tests/modbuild/.  A test
 there gives its switches in its first lines, `/* modtest: SWITCHES */` (or `// modtest:` in
 C++; default -ml -O -G), and may give its steps, `/* modes: STEP ... */`: each step is -c,
 -S or `link` (no switch: BCC compiles and runs Borland's TLINK, which stops for want of the
@@ -38,6 +42,14 @@ ORIGINAL = ROOT / "toolchain" / "BC20" / "BIN" / "BCC.EXE"
 STAMP = 671371200  # 1991-04-23 12:00 UTC, the date of Borland's BCC.EXE
 
 
+CPP_FILES = set()     # .C files of GCC and cfront: C++ by their convention
+
+
+def source_name(path):
+    """The name a test's source gets in its run directory: T.C or T.CPP."""
+    return "T.CPP" if path in CPP_FILES else "T" + path.suffix.upper()
+
+
 def corpus():
     """(name, file, switches, steps) for every test compile.  steps is a list of runs, each
     a list of modes run one after the other in one directory."""
@@ -49,6 +61,26 @@ def corpus():
         opts = re.search(r"opts:\s*([^*\n]*)", head).group(1).split()
         opts = [o for o in opts if not o.startswith("-T") and o != "-B"]  # -B, -T: TASM steps
         out.append((path.stem, path, opts, [["-c"], ["-S"]]))
+    # Borland's examples and class library, where setup-toolchains.py installed them
+    bc20 = ROOT / "toolchain" / "BC20"
+    for line in (ROOT / "tests" / "modbuild" / "BORLAND.TSV").read_text().splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        rel, switches, *steps = line.split("\t")
+        path = bc20 / rel
+        if path.exists():
+            out.append((f"BC20:{rel}", path, switches.split(),
+                        [steps[0].split()] if steps and steps[0].strip() else [["-c"], ["-S"]]))
+    # files of outside test suites, where tools/fetch-testsuites.py fetched them
+    for line in (ROOT / "tests" / "modbuild" / "EXTERNAL.TSV").read_text().splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        suite, rel, switches = line.split("\t")[:3]
+        path = ROOT / "testsuites" / suite / rel
+        if path.exists():
+            if path.suffix == ".C":
+                CPP_FILES.add(path)
+            out.append((f"{suite}:{rel}", path, switches.split(), [["-c"], ["-S"]]))
     for path in sorted((ROOT / "tests" / "modbuild").glob("*.C*")):
         head = path.read_bytes()[:1000].decode("latin1")
         found = re.search(r"modtest:\s*([^*\n]*)", head)
@@ -69,10 +101,31 @@ def run(exe, args, cwd, timeout=120):
 
 def command(mode, opts, src):
     """BCC's arguments for one step: -c or -S, `link` (none: compile and link), or `alone`
-    (BCC with no arguments at all, which prints its usage text)."""
+    (BCC with no arguments at all, which prints its usage text).  C:\\SRC is the source's own
+    folder and C:\\CLASSINC Borland's class library headers (stage)."""
     if mode == "alone":
         return []
-    return [*([] if mode == "link" else [mode]), *opts, r"-IC:\INCLUDE;C:\PROJ", src]
+    return [*([] if mode == "link" else [mode]), *opts, r"-IC:\SRC;C:\INCLUDE;C:\PROJ;C:\CLASSINC", src]
+
+
+def headers(work):
+    """Copy the compilers' headers to work/INCLUDE and the project's to work/PROJ.  DOS cuts a
+    name to 8.3 when it opens a file and emu2 does not, so <strstream.h> (STRSTREA.H on the
+    disks) gets a copy under its long name."""
+    shutil.copytree(ROOT / "toolchain" / "BC20" / "INCLUDE", work / "INCLUDE")
+    shutil.copytree(ROOT / "src" / "include", work / "PROJ")
+    if (work / "INCLUDE" / "STRSTREA.H").exists():
+        shutil.copy(work / "INCLUDE" / "STRSTREA.H", work / "INCLUDE" / "STRSTREAM.H")
+
+
+def stage(d, path, work):
+    """Link a run directory to what its compiles read: the headers, the source's folder (for
+    its own headers) and the class library's headers."""
+    links = {"INCLUDE": work / "INCLUDE", "PROJ": work / "PROJ", "SRC": path.parent,
+             "CLASSINC": ROOT / "toolchain" / "BC20" / "CLASSLIB" / "INCLUDE"}
+    for name, target in links.items():
+        if target.is_dir() and not (d / name).exists():
+            (d / name).symlink_to(target.resolve(), target_is_directory=True)
 
 
 def settle(name, data):
@@ -91,13 +144,12 @@ def compare(job):
     index, name, path, opts, modes = job
     d = WORK / "runs" / f"{index:04d}"
     d.mkdir(parents=True)
-    keep = {"INCLUDE", "PROJ", "ORIG.EXE", "NEW.EXE", "TLINK.EXE"}
-    for sub in ("INCLUDE", "PROJ"):
-        (d / sub).symlink_to(WORK / sub, target_is_directory=True)
+    keep = {"INCLUDE", "PROJ", "SRC", "CLASSINC", "ORIG.EXE", "NEW.EXE", "TLINK.EXE"}
+    stage(d, path, WORK)
     # BCC runs TLINK for a test that links: it finds it here, and stops for want of the
     # libraries, so both compilers run the same program the same way
     (d / "TLINK.EXE").symlink_to(WORK / "TLINK.EXE")
-    src = "T" + path.suffix.upper()
+    src = source_name(path)
     results = {}
     for exe in ("ORIG.EXE", "NEW.EXE"):
         for stale in d.iterdir():   # all the other compiler left (DOS writes lower case names)
@@ -149,8 +201,7 @@ def main():
     if WORK.exists():
         shutil.rmtree(WORK)
     WORK.mkdir(parents=True)
-    shutil.copytree(ROOT / "toolchain" / "BC20" / "INCLUDE", WORK / "INCLUDE")
-    shutil.copytree(ROOT / "src" / "include", WORK / "PROJ")
+    headers(WORK)
     shutil.copy(ORIGINAL, WORK / "ORIG.EXE")
     shutil.copy(ORIGINAL.parent / "TLINK.EXE", WORK / "TLINK.EXE")
     shutil.copy(new, WORK / "NEW.EXE")

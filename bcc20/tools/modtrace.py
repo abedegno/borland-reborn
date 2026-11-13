@@ -54,8 +54,7 @@ def main():
     if WORK.exists():
         shutil.rmtree(WORK)
     WORK.mkdir(parents=True)
-    shutil.copytree(ROOT / "toolchain" / "BC20" / "INCLUDE", WORK / "INCLUDE")
-    shutil.copytree(ROOT / "src" / "include", WORK / "PROJ")
+    modtest.headers(WORK)
     shutil.copy(ORIGINAL, WORK / "BCC.EXE")
     shutil.copy(ORIGINAL.parent / "TLINK.EXE", WORK / "TLINK.EXE")
     jobs, i = [], 0
@@ -68,14 +67,11 @@ def main():
         emu2, index, name, path, opts, modes = job
         d = WORK / "runs" / f"{index:04d}"
         d.mkdir(parents=True, exist_ok=True)
-        for sub in ("INCLUDE", "PROJ"):
-            link = d / sub
-            if not link.exists():
-                link.symlink_to(WORK / sub, target_is_directory=True)
+        modtest.stage(d, path, WORK)
         for exe in ("BCC.EXE", "TLINK.EXE"):    # TLINK: for the tests that link (modtest.py)
             if not (d / exe).exists():
                 (d / exe).symlink_to(WORK / exe)
-        src = d / ("T" + path.suffix.upper())
+        src = d / modtest.source_name(path)
         shutil.copy(path, src)
         os.utime(src, (modtest.STAMP, modtest.STAMP))
         for step, mode in enumerate(modes):

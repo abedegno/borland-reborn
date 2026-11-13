@@ -10,7 +10,7 @@ rebuilds Borland's `BCC.EXE` byte for byte (502,432 bytes, SHA-256
 | Lines | about 71,000 lines of C, a fifth of them comments |
 | Names | about 3,100 functions, globals and labels; 300 record fields; 40 record layouts |
 | Status | every function matches, every relocation verifies, the linked EXE is byte-identical |
-| Modding | the sources also link into a BCC.EXE whose layout may change; new files may be added; it runs 522 compiles exactly as Borland's does ([docs/MODDING.md](docs/MODDING.md)) |
+| Modding | the sources also link into a BCC.EXE whose layout may change; new files may be added; it runs 1832 compiles exactly as Borland's does ([docs/MODDING.md](docs/MODDING.md)) |
 
 ## Layout
 

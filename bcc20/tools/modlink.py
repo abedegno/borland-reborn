@@ -461,8 +461,10 @@ def compile_changed(src_dir):
     import modcontext
     src_dir = Path(src_dir).resolve()
     matched = {p.stem.upper(): p for p in (ROOT / "src").rglob("*") if p.suffix.upper() in (".C", ".ASM")}
+    # src/data/DGROUP.ASM is not a module: the link assembles it itself (MODDATA.ASM)
     tree = {p.stem.upper(): p for p in src_dir.rglob("*")
-            if p.suffix.upper() in (".C", ".ASM") and "include" not in p.parts}
+            if p.suffix.upper() in (".C", ".ASM") and "include" not in p.parts
+            and not (p.stem.upper() == "DGROUP" and p.parent.name == "data")}
     changed = {stem for stem, p in tree.items()
                if stem not in matched or p.read_bytes() != matched[stem].read_bytes()}
 

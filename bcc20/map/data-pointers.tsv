@@ -601,7 +601,7 @@
 2B7A	DATA_2F4C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2B7E	DATA_2F52	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2B82	DATA_2F56	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
-2B86	DATA_2F5B	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2B86	DATA_2F5B	data	field of a 8-byte record in ASM_KEYWORD_TABLE
 2B8A	DATA_2F61	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
 2B8E	DATA_2F66	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
 2B92	DATA_2F6C	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
@@ -737,13 +737,13 @@
 2D9A	DATA_3214	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2D9E	DATA_321A	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2DA2	DATA_2FD6	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
-2DA6	DATA_3220	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
-2DAA	DATA_3225	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2DA6	DATA_3220	data	field of a 8-byte record in ASM_KEYWORD_TABLE
+2DAA	DATA_3225	data	field of a 8-byte record in ASM_KEYWORD_TABLE
 2DAE	DATA_3064	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
-2DB2	DATA_3229	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2DB2	DATA_3229	data	field of a 8-byte record in ASM_KEYWORD_TABLE
 2DB6	DATA_30A4	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
-2DBA	DATA_322D	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
-2DBE	DATA_3231	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
+2DBA	DATA_322D	data	field of a 8-byte record in ASM_KEYWORD_TABLE
+2DBE	DATA_3231	data	field of a 8-byte record in ASM_KEYWORD_TABLE
 2DC2	DATA_3236	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
 2DC6	DATA_323C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2DCA	DATA_3242	data	field of a 4-byte record in ASM_KEYWORD_TABLE
@@ -760,7 +760,7 @@
 2DF6	DATA_3276	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2DFA	DATA_327C	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2DFE	DATA_3282	data	field of a 4-byte record in ASM_KEYWORD_TABLE
-2E02	DATA_3138	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
+2E02	DATA_3138	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
 2E06	DATA_3287	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2E0A	DATA_328B	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2E0E	DATA_328F	data	field of a 4-byte record in ASM_KEYWORD_TABLE
@@ -787,7 +787,7 @@
 2E62	DATA_32E7	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2E66	DATA_32EC	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2E6A	DATA_32F1	data	field of a 4-byte record in ASM_KEYWORD_TABLE
-2E6E	DATA_30F4	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
+2E6E	DATA_30F4	data	next to a pointer field of ASM_KEYWORD_TABLE, in its range
 2E72	DATA_2F25	data	in a pointer field of ASM_KEYWORD_TABLE (4-byte records, traced)
 2E76	DATA_32F6	data	field of a 4-byte record in ASM_KEYWORD_TABLE
 2E7A	DATA_32FB	data	field of a 4-byte record in ASM_KEYWORD_TABLE
@@ -863,6 +863,8 @@
 37E2	DATA_37FD	data	field of a 2-byte record in STORAGE_CLASS_NAMES
 37E4	DATA_3804	data	field of a 2-byte record in STORAGE_CLASS_NAMES
 37EA	DATA_3809	data	field of a 2-byte record in STORAGE_CLASS_NAMES
+37F4	DATA_3811	data	field of a 2-byte record in STORAGE_CLASS_NAMES
+3F98	DATA_504C	data	used as a DGROUP address at run time (map/traced-pointers.tsv)
 41AC	DATA_5050	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
 41BF	DATA_5050	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range
 41D2	DATA_5050	data	next to a pointer field of OPCODE_DESC_BYTE8, in its range

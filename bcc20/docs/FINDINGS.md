@@ -27,6 +27,15 @@ the naming agents were checked against the code where marked.
   `ENCODE_ASM_SYMBOL_ALT` (`ASMENC2.C`, the C++ twin of the asm name encoder) has a branch
   that writes an enumerator's value, which this error keeps from being reached. Effect:
   write the number instead; a port could fix it.
+- **Output that depends on the program's own layout** (likely, found by the modding build's
+  outside tests): for two of GCC's old g++ tests, Borland's compiler writes output that
+  changes when any of its code or data moves. In `g++.other/bitfld3.C` (`-S`), a `?:`
+  between bitfields used as an lvalue, it writes a symbol's name as `@_` from bytes it
+  never set; in `g++.law/access4.C` an access error becomes "Compiler table limit exceeded
+  in function {". Padding any one of five of eight groups of code blocks changes the
+  output, so it is no single address written as a number. Probably a read of memory never
+  set up, such as a stale stack slot. Effect: wrong text in those error and listing paths;
+  both files are left out of the comparison (`tests/modbuild/EXTERNAL.TSV`).
 - **Precompiled header files hold uninitialised bytes** (confirmed, `MACROS.C`):
   MACRO_DEFINE rounds each macro definition up to an even size and never writes the pad
   byte, and `-H` writes the macro pool to `TCDEF.SYM` as it is in memory. So the file holds

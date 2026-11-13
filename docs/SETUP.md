@@ -58,7 +58,8 @@ python3 scripts/setup-toolchains.py \
 ```
 
 This unpacks the floppy images into `toolchains/BC20` and `toolchains/TC201` (git ignores
-both). It verifies every installed file against the manifest, then links each version's
+both). It also installs the sources of Borland's example programs and container class
+library, which the modding build's tests compile. It verifies every installed file against the manifest, then links each version's
 `toolchain/` folder to them. No DOS installer is run. The command-line tools are in an
 archive that Borland's installer splits across disks 3 and 8; the script joins the two parts.
 You can also pass folders that hold the extracted `.IMG` files.
@@ -115,7 +116,8 @@ modding build, which lets TLINK lay the program out:
 ```sh
 sh ../exhume/tools/setup-emu2.sh                      # once: the DOS emulator the comparison uses
 ../.venv/bin/python tools/modlink.py                  # build-source/MODLINK/run/BCC.EXE
-../.venv/bin/python tools/modtest.py                  # 522 compiles, compared with Borland's BCC.EXE
+../.venv/bin/python tools/fetch-testsuites.py         # once, optional: GCC's and cfront's tests (git)
+../.venv/bin/python tools/modtest.py                  # 1832 compiles, compared with Borland's BCC.EXE
 sh ../exhume/tools/setup-emu2-trace.sh                # once, optional: the tracing emu2
 ../.venv/bin/python tools/modtrace.py                 # which data words are pointers, which code runs
 ../.venv/bin/python tools/modedits.py                 # new files and edited context sources, tested

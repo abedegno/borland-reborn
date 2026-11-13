@@ -100,6 +100,28 @@ def setup_bc20(path, work):
         if h.parent.name.upper() == 'SYS' or h.parent == bc / 'INCLUDE':
             continue
         shutil.move(str(h), bc / 'INCLUDE' / h.name)
+    install_examples(disks, bc)
+
+
+# Borland's example programs and class library: source the modding build's tests compile
+# (bcc20/tools/modtest.py, bcc20/tests/modbuild/BORLAND.TSV).  Only the C and C++ sources
+# and headers are installed, where Borland's installer puts them; WINCLUDE.ZIP holds
+# WINDOWS.H, which the Windows examples include.
+EXAMPLES = [('EXAMPLES.ZIP', 'EXAMPLES'), ('WEXAMPLE.ZIP', 'EXAMPLES/WIN'),
+            ('CHAPXMPL.ZIP', 'EXAMPLES/CHAPXMPL'), ('TCALC.ZIP', 'EXAMPLES/TCALC'),
+            ('BGI.ZIP', 'EXAMPLES/BGI'), ('TFEXMPL.ZIP', 'EXAMPLES/TF'),
+            ('TDEXMPL.ZIP', 'EXAMPLES/TD'), ('TDWEXMPL.ZIP', 'EXAMPLES/TDW'),
+            ('CLASSSRC.ZIP', 'CLASSLIB/SOURCE'), ('CLASSINC.ZIP', 'CLASSLIB/INCLUDE'),
+            ('CLASSEXM.ZIP', 'CLASSLIB/EXAMPLES'), ('WINCLUDE.ZIP', 'INCLUDE')]
+
+
+def install_examples(disks, bc):
+    for name, sub in EXAMPLES:
+        z = find(disks, name)
+        if not z:
+            die(f'{name} not found on the Borland C++ 2.0 disks')
+        (bc / sub).mkdir(parents=True, exist_ok=True)
+        unzip(z, bc / sub, ['*.C', '*.CPP', '*.H', '*.HPP'])
 
 
 def setup_tc201(path, work):
