@@ -39,7 +39,10 @@ def pool():
            "   segment is in the global the line names; FAR_x(s, r, o) the same in segment s,",
            "   AT_x(s, o) the item at s:o.  Suffixes: W u16, I/SW i16, B u8, SC/SB i8, L i32,",
            "   UL u32.  ES_x of the original (the segment in ES) has no port form: name the",
-           NOTE.format("POOL.H").replace("   (", "   segment.  ("),
+           "   segment.  A store whose value comes from a call that may grow the pool (POOL_ALLOC moves",
+           "   the block) must compute the value first, into a variable: C does not say whether the",
+           "   pool's segment is read before or after the call, and Turbo C reads it after.",
+           NOTE.format("POOL.H"),
            "#ifndef PORT_POOL_H", "#define PORT_POOL_H", '#include "data.h"', '#include "fields.h"', ""]
     pools = set()
     for line in (INC / "POOL.H").read_text(encoding="latin1").splitlines():

@@ -187,12 +187,14 @@ void STREAM_DECODE_TOKEN(farptr token, u16 stream)
     for (;;) {
         kind = STREAM_GET_BYTE(stream);
         if (kind == 0x84) {
-            S_FILE(stream) = (u16)STREAM_GET_INT(stream);
+            u16 file = (u16)STREAM_GET_INT(stream);   /* may grow the pool: read first */
+            S_FILE(stream) = file;
             CURRENT_FILE_NAME = AT_W(SRCFILE_POOL_SEG, FIND_NODE_BY_SERIAL(S_FILE(stream)));
             continue;
         }
         if (kind == 0x83) {
-            S_LINE(stream) += (u16)STREAM_GET_INT(stream);
+            u16 lines = (u16)STREAM_GET_INT(stream);
+            S_LINE(stream) += lines;
             continue;
         }
         break;

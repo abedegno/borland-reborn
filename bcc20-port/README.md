@@ -20,8 +20,9 @@ what that source assumes about DOS and the 8086, with counts.
 functions, the record pools, the lexer (input stack, token streams, token reader, comments,
 string literals, the scanner), the preprocessor (directives, pragmas, the macro table,
 conditional compilation, the #if evaluators) and types and symbols (the identifier table,
-type records, sizes and compatibility, struct layout, the C symbol table): 191
-functions, each matching every call recorded
+type records, sizes and compatibility, struct layout, the C symbol table), and the first
+expression files (lowering for the back end, packing, comma expressions, constant values):
+210 functions, each matching every call recorded
 over the whole corpus. A few are never reached by the corpus and are not checked yet (`make
 check` lists them). Nothing compiles yet.
 
@@ -116,6 +117,12 @@ translation keeps on purpose (an original bug the output depends on, for example
    by name (`globals.h`), records through `pool.h` and the field constants. Far pointer
    arithmetic changes only the offset: use `fp_add`. Far pointers compare by offset with
    `<` and `>`, as in Borland C. Pseudo-registers become locals.
+   - A store into a pool record whose value comes from a call that may allocate must put
+     the value in a variable first: the call can move the pool, and C does not say whether
+     the record's address is formed before or after it (Turbo C forms it after).
+   - Calls through BCC's code pointers use `CALL_FAR` / `CALL_NEAR` (`calls.h`), never a C
+     function pointer cast.
+   - A local whose address is passed on lives in the scratch area (`scratch_alloc`).
 4. Its prototype is already in `include/protos.h`, generated from the original; keep the
    original's argument order and types. The adapter is generated too; a function that passes
    a value in another register gets a hand-written one in `replay/functions.c` instead. The
@@ -145,6 +152,10 @@ Places where the original's behaviour depends on something a port does not have:
   takes parameters, but on the path where the test fails it returns the symbol anyway (what
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
+- **LOWER_EXPR_TREE** (LOWEREXP.C) stops with "out of memory" when the 8086 stack pointer
+  drops below 8F0Ch, which only a very deeply nested expression reaches. The port has no
+  such stack and leaves the check out; the native build could limit the nesting depth
+  instead, if it wants the same error.
 - **The "Available memory" line** BCC prints is computed from its heap. The native heap must
   report the same figure, or the console text of every compile differs.
 
