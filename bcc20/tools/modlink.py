@@ -7,7 +7,9 @@ as they are and lets it lay the program out, so any source may change.
 
     python3 tools/modlink.py [--src DIR] [--out DIR]
         link build-source/MODLINK/run/BCC.EXE (or DIR/run/BCC.EXE); with --src, the files of
-        DIR (a copy of src/) that differ from src/ are compiled and used instead
+        DIR (a copy of src/) that differ from src/ are compiled and used instead, with the
+        files compiled with a changed context source (tools/modcontext.py); a new file
+        says which module's code segment it joins: /* link: with STEM */
 
 docs/MODDING.md explains the build, how it is checked (tools/modtest.py) and its limits.
 
@@ -24,8 +26,8 @@ original BCC.EXE (to read the data segment and the far pointers in it).  What it
   words as DGROUP;
 - MODORDER.ASM, the segment order (DOSSEG, then the code blocks in original order).
 
-Near pointers inside the data stay numbers: the data segment keeps its original layout,
-so they stay right as long as nothing is inserted into it (add new data at its end).
+The data segment is a source, src/data/DGROUP.ASM, with its near pointers written as the
+items they point at (map/data-pointers.tsv), so new data may go between its items.
 """
 import csv
 import re
@@ -453,26 +455,47 @@ def object_path(m):
 
 def compile_changed(src_dir):
     """Compile the sources under src_dir whose text differs from the matched tree's, into
-    build-source/MODLINK/build (the matched objects are not touched)."""
+    build-source/MODLINK/build (the matched objects are not touched).  A source compiled with
+    a changed context source is compiled again too.  New sources (no counterpart in src/)
+    must say which module's code segment they join: `/* link: with STEM */`."""
+    import modcontext
+    src_dir = Path(src_dir).resolve()
     matched = {p.stem.upper(): p for p in (ROOT / "src").rglob("*") if p.suffix.upper() in (".C", ".ASM")}
-    changed = [p for p in sorted(Path(src_dir).rglob("*"))
-               if p.suffix.upper() in (".C", ".ASM") and "include" not in p.parts
-               and (p.stem.upper() not in matched or p.read_bytes() != matched[p.stem.upper()].read_bytes())]
-    new = [p for p in changed if p.stem.upper() not in matched]
-    if new:
-        raise SystemExit(f"new source files need a place in the link: {[p.name for p in new]}")
+    tree = {p.stem.upper(): p for p in src_dir.rglob("*")
+            if p.suffix.upper() in (".C", ".ASM") and "include" not in p.parts}
+    changed = {stem for stem, p in tree.items()
+               if stem not in matched or p.read_bytes() != matched[stem].read_bytes()}
+
+    def find(name):
+        return tree.get(Path(name).stem.upper())
+    helpers = {stem: modcontext.helpers_of(p, find) for stem, p in tree.items()
+               if p.suffix.upper() == ".C" and modcontext.CONTEXT.search(p.read_text(encoding="latin1"))}
+    # a changed helper changes the code compiled after it
+    changed |= {stem for stem, hs in helpers.items() if any(h.stem.upper() in changed for h in hs)}
     if not changed:
         return
+    for stem in sorted(changed - matched.keys()):
+        m = re.search(r"/\*\s*link:\s*with\s+(\w+)", modcontext.head(tree[stem]))
+        if not m:
+            raise SystemExit(f"{tree[stem].name} is a new source: say which module's code segment it "
+                             "joins with a line /* link: with STEM */ (docs/MODDING.md)")
+        if m.group(1).upper() not in matched:
+            raise SystemExit(f"{tree[stem].name}: /* link: with {m.group(1)} */ names no module of src/")
+        NEW[stem] = m.group(1).upper()
+    aliases = modcontext.body_aliases([src_dir])
     bc20 = ROOT / "toolchain" / "BC20"
-    for p in changed:
-        head = p.read_bytes()[:4000].decode("latin1")
-        if re.search(r"/\*\s*context:", head):
-            raise SystemExit(f"{p.name} is compiled with a context source (tools/compile_context.py); "
-                             "changing it is not supported yet")
+    # helpers first: a primary is cut by its helpers' objects
+    order = sorted(changed, key=lambda s: (len(helpers.get(s, ())), s))
+    for stem in order:
+        p = tree[stem]
+        head = modcontext.head(p)
         opts = re.search(r"opts:\s*([^*\n]*)", head).group(1).strip()
-        stem = p.stem.upper()
         out_dir = OUT / "build" / stem
         out_dir.mkdir(parents=True, exist_ok=True)
+        staged = p
+        if stem in helpers:
+            staged = out_dir / f"context-{stem}.C"
+            staged.write_text(modcontext.compose(p, helpers[stem]), encoding="latin1")
         args = ["--stage", str(bc20 / "BIN"), "--stage", str(bc20 / "INCLUDE")]
         if p.suffix.upper() == ".ASM":
             command = f"TASM {opts} {stem}.ASM"
@@ -482,18 +505,27 @@ def compile_changed(src_dir):
             command = f"TCC -c {opts} -IC:\\ {stem}.C"
         else:
             command = f"BCC -c {opts} -IC:\\ {stem}.C"
-        for header in (ROOT / "src" / "include").iterdir():
+        for header in (src_dir / "include").iterdir():
             args += ["-f", str(header)]
-        args += ["-f", f"{p}={stem}{p.suffix.upper()}", "-c", f"{command} > BUILD.LOG",
+        args += ["-f", f"{staged}={stem}{p.suffix.upper()}", "-c", f"{command} > BUILD.LOG",
                  "-o", "BUILD.LOG", "-O", f"{stem}.OBJ"]
+        made = out_dir / f"{stem}.OBJ"
+        made.unlink(missing_ok=True)
         dos(out_dir, args)
-        if not (out_dir / f"{stem}.OBJ").exists():
+        if not made.exists():
             raise SystemExit(f"{p.name} did not compile:\n" + (out_dir / "BUILD.LOG").read_text(errors="replace"))
-        CHANGED[stem] = out_dir / f"{stem}.OBJ"
-    print("recompiled: " + ", ".join(p.name for p in changed))
+        if stem in helpers:
+            hs = helpers[stem]
+            objects = [CHANGED.get(h.stem.upper(), ROOT / "build-source" / h.stem.upper() / f"{h.stem.upper()}.OBJ")
+                       .read_bytes() for h in hs]
+            (out_dir / f"context-{stem}.OBJ").write_bytes(made.read_bytes())
+            made.write_bytes(modcontext.split(made.read_bytes(), p, hs, objects, aliases, find))
+        CHANGED[stem] = made
+    print("recompiled: " + ", ".join(tree[s].name for s in order))
 
 
 CHANGED = {}
+NEW = {}         # new source stem -> the module whose code segment it joins
 _IMAGES = {}
 # test aid: limit --pad-code to these blocks (CODE_n, OVR_xxxx), from MODLINK_PAD_ONLY
 PAD_ONLY = set(__import__("os").environ.get("MODLINK_PAD_ONLY", "").split())
@@ -516,7 +548,10 @@ def _matches(module, start, limit=None):
     masked = {i - start for i in old_fixed if start <= i < start + size}
     found = []
     for at in range(0, len(new) - size + 1):
-        if all(i in masked or (at + i) in new_fixed or new[at + i] == body[i] for i in range(size)):
+        # a fixup must be at the same place in both (an unchanged function keeps its fixups);
+        # skipping a byte that is a fixup in only one of them lets code match a call's address
+        if all(((at + i) in new_fixed) if i in masked else
+               ((at + i) not in new_fixed and new[at + i] == body[i]) for i in range(size)):
             found.append(at)
             if limit and len(found) >= limit:
                 break
@@ -574,6 +609,30 @@ def prepare_objects(modules, layout, defines, aligned):
         if extra:
             records = omfedit.add_publics(records, [(n, code_index, o) for n, o in extra])
         omfedit.write(records, OUT / "obj" / f"{m.stem}.OBJ")
+
+
+def prepare_new_objects(by_stem, layout):
+    """Copy each new source's object with its code segment named as the module it joins."""
+    resident, overlaid = [], []
+    for stem, anchor in sorted(NEW.items()):
+        m = by_stem.get(anchor)
+        if m is None:
+            raise SystemExit(f"{stem}: /* link: with {anchor} */ names no linked module")
+        records = omfedit.read(CHANGED[stem])
+        segs = omfedit.segments(records)
+        code = [i for i, s in enumerate(segs, 1) if s[1] == "CODE"]
+        if len(code) != 1:
+            raise SystemExit(f"{stem}: a new source must have one code segment, not {len(code)}")
+        name = f"OVR_{layout.overlay_of[anchor]:04X}" if m.overlay else m.block
+        # DGROUP.ASM's _BSS has class DATA, the compiler's has class BSS: TLINK would keep
+        # them apart and put the new data after _BSSEND, outside what the startup clears
+        rename = {segs[code[0] - 1][0]: name}
+        if any(s[0] == "_BSS" and s[1] == "BSS" for s in segs):
+            rename["BSS"] = "DATA"
+        records = omfedit.rename_lnames(records, rename)
+        omfedit.write(records, OUT / "obj" / f"{stem}.OBJ")
+        (overlaid if m.overlay else resident).append(stem)
+    return resident, overlaid
 
 
 def write_order(blocks, pad=0):
@@ -638,6 +697,11 @@ def main():
             data_names[alias] = data_names[canonical]
 
     publics, needed = {}, set()
+    for stem in NEW:
+        records = omfedit.read(CHANGED[stem])
+        for name, _, _ in omfedit.publics(records):
+            publics[name] = stem
+        needed.update(omfedit.externs(records))
     for m in modules:
         records = omfedit.read(object_path(m))
         for name, _, _ in omfedit.publics(records):
@@ -654,7 +718,13 @@ def main():
     def define(name, stem, offset):
         """offset is in the original module; a changed module's is found by relocate()."""
         if name not in publics and stem in CHANGED:
-            offset = relocate(by_stem[stem], offset, name)
+            try:
+                offset = relocate(by_stem[stem], offset, name)
+            except SystemExit:
+                # a static entry at a module's start (a context source's, named by its body
+                # alias) stays first in its file
+                if offset != 0:
+                    raise
         if name not in publics:
             defines[stem].append((name, offset))
             publics[name] = stem
@@ -701,6 +771,7 @@ def main():
         else:
             unresolved.append((name, None))
     prepare_objects(modules, layout, defines, alignments(modules, original))
+    new_resident, new_overlaid = prepare_new_objects(by_stem, layout)
     # Labels other modules use inside these modules: a changed copy of one of them must
     # make the label public itself (in C that means splitting the function there).
     (OUT / "run" / "ADDED-PUBLICS.TXT").write_text(
@@ -732,8 +803,13 @@ def main():
                 padded.append((key, pad_stem))
             padded.append((key, stem))
         overlaid = padded
+    # New sources come after the original's modules: their code at the end of the segment
+    # they join, their data after all of the original's data, so nothing original moves
+    # within its segment.
     lines = ["/m /s /c O\\MODORDER"] + [f"O\\{m.stem}" for m in resident] + ["O\\MODGLUE", "O\\MODDATA"]
+    lines += [f"O\\{stem}" for stem in new_resident]
     lines += ["/o O\\" + overlaid[0][1]] + [f"O\\{stem}" for _, stem in overlaid[1:]]
+    lines += [f"O\\{stem}" for stem in new_overlaid]
     response = " +\r\n".join(lines) + "\r\nBCC.EXE\r\nBCC.MAP\r\n\r\n"
     (OUT / "run" / "MOD.RSP").write_text(response)
     print(f"modules: {len(resident)} resident, {len(overlaid)} overlaid; "
@@ -804,12 +880,25 @@ def data_check(original, offsets):
         if line and not line.startswith("#") and line.split("\t")[2] == "code":
             off = int(line.split("\t")[0], 16)
             loose.update((off, off + 1))
+    # New sources' initialised data goes after the original's, so the zeroed data (_BSS)
+    # after it moves: pointers to it differ by that shift
+    bss = re.search(r"^ ([0-9A-F]{5})H \S+ \S+ _BSS\s+DATA", text, re.M)
+    shift = int(bss.group(1), 16) - int(m.group(1), 16) - DATA_END
+    if shift:
+        for line in (ROOT / "map" / "data-pointers.tsv").read_text().splitlines():
+            if line and not line.startswith("#") and line.split("\t")[2] == "data":
+                off = int(line.split("\t")[0], 16)
+                was, now = struct.unpack_from("<H", old, off)[0], struct.unpack_from("<H", new, off)[0]
+                if was >= DATA_END and now - was == shift:
+                    loose.update((off, off + 1))
     differ = [i for i in range(DATA_END) if i not in loose and old[i] != new[i]]
     if differ:
         print(f"data check: _DATA differs from the original at {len(differ)} bytes, from DS:{differ[0]:04X} "
               "(expected only where src/data/DGROUP.ASM was edited)")
     else:
-        print("data check: _DATA equals the original's, but for far pointers and code pointers")
+        print("data check: _DATA equals the original's, but for far pointers and code pointers"
+              + (f", and pointers to the zeroed data, which new sources' data moved by {shift} bytes"
+                 if shift else ""))
 
 
 def code_numbers():

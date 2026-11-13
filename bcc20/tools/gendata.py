@@ -25,7 +25,7 @@ import modlink  # noqa: E402
 ROOT = modlink.ROOT
 TARGET = ROOT / "src" / "data" / "DGROUP.ASM"
 POINTERS = ROOT / "map" / "data-pointers.tsv"
-PAD_POINT = 0x0100   # where tools/modlink.py --pad-data inserts its test padding
+PAD_POINT = 0x0100   # tools/modlink.py --pad-data inserts its test padding at the first item from here
 
 HEADER = """\
 ; DGROUP.ASM: BCC.EXE's data segment (DGROUP), as source.
@@ -124,9 +124,13 @@ def main():
     lines += [f"\t\textrn\t{n}:far" for n in sorted(region.externs)]
     lines += [f"\t\tpublic\t{n}" for n in sorted(data_names)]
     lines.append("_DATA\t\tsegment para public 'DATA'")
-    lines += region.lines(0, PAD_POINT)
+    # the padding goes between two items: before the first named one from PAD_POINT on (a
+    # DATA_xxxx label may be inside a table or a string)
+    pad = min(o for o, names in region.labels.items()
+              if o >= PAD_POINT and any(not n.startswith("DATA_") for n in names))
+    lines += region.lines(0, pad)
     lines.append("; PAD-POINT (tools/modlink.py --pad-data inserts its test padding here)")
-    lines += region.lines(PAD_POINT, modlink.DATA_END)
+    lines += region.lines(pad, modlink.DATA_END)
     lines.append("; END-OF-DATA (new initialised data goes here; tools/modlink.py --pad-at END tests it)")
     lines += ["_DATA\t\tends", "_BSS\t\tsegment word public 'DATA'"]
     start = modlink.Region(original, layout, invented, original.dgroup + modlink.DATA_END, 6)

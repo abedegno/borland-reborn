@@ -13,3 +13,9 @@ ASMCODE	059C	5518	"FIDRQQ"
 ASMCODE	0612	551F	"FIWRQQ"
 EXTDECL	1331	0702	"friend", in a ?: in PARSE_EXTERNAL_DECLARATIONS
 EXTDECL	133E	0709	"virtual"
+CGOPER	05B9	3F66	"padd@", in a ?: (huge pointer add or subtract helper)
+CGOPER	05BE	3F6C	"psub@"
+CGOPER	0A49	3F72	"psba@", in a ?: (huge pointer -= or += helper)
+CGOPER	0A4E	3F78	"pada@"
+CGOPER	0DE8	3F7E	"psbh@", in a ?: (huge pointer difference, by HUGE_PTR_AHSHIFT_MODE)
+CGOPER	0DED	3F84	"psbp@"

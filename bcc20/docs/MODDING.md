@@ -22,16 +22,48 @@ cp -R src ../my-src
 ```
 
 Only the files that differ from `src/` are compiled (with the switches on their `opts:` line,
-into `--out`'s `build/`). Every other module uses the matched object. The matched tree and
-its objects are never touched.
+into `--out`'s `build/`), and the files compiled with a changed context source (below).
+Every other module uses the matched object. The matched tree and its objects are never
+touched. A new file names the module whose code segment it joins on a line of its own:
+
+```c
+/* opts: -mm -G -O -Z -p */
+/* link: with RMAIN13C */
+```
+
+Its code goes at the end of that module's segment (resident, or that module's overlay, in
+which case compile it with `-Y` as the overlaid sources are), and its data after all of the
+original's data, so nothing original moves within its segment. `tools/modedits.py` tests
+both kinds of edit (below).
 
 ## What it proves
 
-`tools/modtest.py` compiles 239 files with both compilers, each with its own switches, as
-object code (`-c`) and as assembly (`-S`). The files are the project's own C sources (every
-C file BCC builds, which exercises the C and C++ front ends, the optimiser and both back
-ends) and the tests in `tests/modbuild/`. Every object, listing and console message must be
-identical, except for the "Available memory" line. Results:
+`tools/modtest.py` runs 522 compiles of 264 files with both compilers. The files are:
+
+- the project's own C sources, every C file BCC builds, each with its own switches, as
+  object code (`-c`) and as assembly (`-S`);
+- the tests in [`tests/modbuild/`](../tests/modbuild/), each aimed at code the sources do
+  not reach, with its switches on its first line (`/* modtest: ... */`).
+
+The tests cover these areas:
+- bitfields;
+- initialiser lists;
+- C++ classes, operators, member pointers and huge arrays;
+- debug information (`-v`), in C and C++;
+- 8087, fast and emulated floating point;
+- the huge model, and far and huge data;
+- inline assembly in C and C++;
+- diagnostics in C and C++, with all warnings on;
+- two sets of many switches;
+- precompiled headers (`-H`), written in one step and read in the next;
+- a compile that runs TLINK;
+- BCC with no arguments.
+
+Three of them record faults of Borland's compiler, which both compilers must reproduce
+(`docs/FINDINGS.md`). Every object, listing, console message and exit status must be
+identical, except for the "Available memory" line. A precompiled header file is compared
+only by size: it holds BCC's own data addresses, and bytes BCC never writes. The second
+compile then checks it by reading it back. Results:
 
 | Build | Compiles identical |
 |---|---|
@@ -43,6 +75,8 @@ identical, except for the "Available memory" line. Results:
 | `--pad-data 16`: 16 new bytes at DS:0100, so nearly all the data moves | 478 / 478 |
 | `--pad-data 1` and `--pad-data 256` at DS:0100 (an odd and a large shift) | 478 / 478 |
 | `--pad-data 16 --pad-at 3308`: 16 new bytes in the middle of `_DATA` | 478 / 478 |
+| *after the corpus grew to 522:* unchanged, `--pad-code 16`, and `--pad-data 1`, `16` and `256` early (at DS:069C, see below), in the middle and at the end | 522 / 522 each |
+| `tools/modedits.py`: two new files (one resident, one in an overlay, each with data), a changed context source of five files, and two changed files compiled with context sources | 522 / 522; the tracer shows both new functions ran |
 
 A resident change was also tested by hand. `RPUTS.C` was changed to write every string
 twice: the banner and file names print twice, the resident code after it moves by up to 2Ah
@@ -58,7 +92,9 @@ Two layout tests move everything of one kind:
   It found the inline assembler reading its ModR/M table at `cs:[bx+1164h]`, now a name.
 - `--pad-data N --pad-at END` adds N bytes at the end of `_DATA`, so `_BSS` and the stack move:
   new initialised data goes there.
-- `--pad-data N` alone inserts them at DS:0100, early in `_DATA`, so nearly all data moves.
+- `--pad-data N` alone inserts them early in `_DATA`, so nearly all data moves: before the
+  first named item from DS:0100 on, DS:069C. Until the corpus printed BCC's usage text the
+  point was DS:0100 itself, which is inside that text, and the test split it.
   It found the last pointers that were numbers, and some words wrongly taken for pointers
   (see "Tracing" below).
 
@@ -114,11 +150,34 @@ program out itself. Everything it adds is generated afresh each run.
 - **Labels used from other modules.** 107 names that other modules use sit inside a module
   with no public there: static functions, and entry points in the middle of a function. They
   are added to the objects as publics. A module that was changed with `--src` still provides
-  them. Each label stays at its distance into its function, and the function is found in the
-  new object by its original bytes, with fixup positions masked. When two copies match, the
-  shift of the nearest earlier function decides. If the function holding a label was itself
-  edited, the label has no safe place and the build stops with its name. The list is
-  written to `run/ADDED-PUBLICS.TXT`.
+  them. Each label stays at its distance into its function. The function is found in the new
+  object by its original bytes; a fixup must sit at the same place in both, and those bytes
+  are not compared. When two copies match, the shift of the nearest earlier function
+  decides. If the function holding a label was itself edited, the label has no safe place
+  and the build stops with its name. The exception is a label at a module's start, such as a
+  context source's static entry, which stays at the start. The list is written to
+  `run/ADDED-PUBLICS.TXT`. (The first version accepted a byte that was a fixup in either
+  object, so the edited RVECSET matched 8 bytes late, over a call's address; every compile
+  of that build hung, and the test caught it.)
+- **Context sources** (`tools/modcontext.py`). Seven sources are compiled with others in
+  front of them (`/* context: FILE.C */`): in Borland's source they shared a file, so the
+  calls between them are `push cs; call near` with no fixup. The exact build proves the
+  split with Exhume's `compile_context.py`, from the original's sizes and call offsets. An
+  edited file has other sizes and offsets, so the modding build finds them itself:
+  1. it compiles the helpers and the file together, as Borland did;
+  2. it checks that each helper's part equals that helper's own object, with fixup
+     positions masked, which proves where each part ends;
+  3. it cuts out the file's own part with Exhume's slicer, and turns each call into a
+     helper into a near reference to the helper's name.
+
+  When a helper changes, every file compiled with it is compiled again. A branch from the
+  file into a helper that is not such a call, or data the composed source defines, stops
+  the build.
+- **New sources** are linked after the original's modules. Their code segment is renamed to
+  the segment of the module they name, and their `_BSS` gets `DGROUP.ASM`'s class (`DATA`, not
+  the compiler's `BSS`). Otherwise TLINK would put their zeroed data after `_BSSEND`, outside
+  what the start-up code clears. Their initialised data comes after the original's, so
+  `_BSS` moves by its size. The data check expects that shift in pointers to `_BSS`.
 - **One offset reference.** `MSGGET` hands `BCC_MESSAGE_IMAGE` (the message overlay) to
   `OVR_ENSURE_IMAGE_LOADED`, which returns the loaded image with the offset it was given. TLINK
   would make that offset a stub entry (20h), so that one fixup is pointed at an absolute 0.
@@ -159,26 +218,36 @@ about ten seconds on eight cores and writes:
   words that differ outside the moved range are the culprits. The tracer's
   `EMU2_TRACE_READ=LO-HI` lists the instructions that read a range of the file's bytes.
 - [`docs/COVERAGE.md`](COVERAGE.md), and per function `build-source/MODTRACE/coverage.tsv`:
-  the share of each module's code that the corpus runs. About half the code runs; what
-  never runs (debug information, the messages, some C++ and inline assembler paths) is not
-  checked by `modtest.py` either.
+  the share of each module's code that the corpus runs: 70% (61% of the resident code, 71%
+  of the overlays), up from 56% before the tests in `tests/modbuild/` were added. Modules that
+  never run hold 0.4% of the code (1695 bytes). Most handle extended and expanded memory,
+  the heap under memory pressure, and the Ctrl-C and Ctrl-Break handlers, which the
+  emulator does not exercise. The rest are a few run-time helpers. Most of the code that
+  does not run is branches inside modules that do: error paths and rare cases. The widened corpus found one more number in the code that should
+  have moved with the data: CGOPER chose six huge-pointer helper names (`padd@` and the
+  rest) by `?:` between two numbers. With data inserted, the huge model's output named the
+  wrong helpers. Names would change BC's code there, so they are listed in
+  `map/code-numbers.tsv`.
 
 To see why a word was traced, run one compile by hand with `EMU2_TRACE_WATCH` set to the
 word's file offset: the tracer prints the offset of each instruction behind its first uses.
 
 ## Limits
 
-- **Data in the middle of `_DATA`.** New data may now go anywhere between two items: the
-  corpus passes with data inserted at DS:0100, in the middle and at the end. Some items must
-  stay next to each other, because the code reaches one from another's address: the
+- **Data in the middle of `_DATA`.** New data may go anywhere between two items: the corpus
+  passes with data inserted early (DS:069C), in the middle and at the end. Some items must stay
+  next to each other, because the code reaches one from another's address: the
   pseudo-register names `_AX`..`_ES` (a base plus four times an index), and
   `MIRROR_COMPARE_TABLE`, read as `INVERT_COMPARE_TABLE` plus 0Ch. Padding between such
   items, or inside a table, breaks it. The pointer table is still found by heuristics, each
-  entry with its evidence, and the corpus runs about half the code (`docs/COVERAGE.md`), so a
+  entry with its evidence, and the corpus runs 70% of the code (`docs/COVERAGE.md`), so a
   table no test reaches may still hold a wrong entry.
-- **Context sources.** The seven files compiled with a `/* context: */` helper
-  (`tools/compile_context.py`) cannot be changed through `--src` yet.
-- **New files** need a place in the link and are refused for now.
+- **New files** take their place from the module they name. Their code goes at the end of
+  that segment, not next to the module. A new file's data cannot go between the original's
+  items: put such data in `src/data/DGROUP.ASM`.
+- **Context sources** may be edited, but the file's calls into its helpers must stay plain
+  calls (no jump shared with a helper's tail), and the composed source may not define data.
+  A changed helper's static entry must stay the first function of its file.
 - The output is not byte-identical to Borland's even with nothing changed: the stubs differ
   in their entry order and the data segment starts 40h later. That is expected. The exact
   link is the byte-for-byte proof, and this build is checked by what it does.

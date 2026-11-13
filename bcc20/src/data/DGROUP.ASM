@@ -977,6 +977,12 @@ DGROUP		group	_DATA,_BSS,_BSSEND,_STACK
 		public	DATA_37FD
 		public	DATA_3804
 		public	DATA_3809
+		public	DATA_3F66
+		public	DATA_3F6C
+		public	DATA_3F72
+		public	DATA_3F78
+		public	DATA_3F7E
+		public	DATA_3F84
 		public	DATA_5050
 		public	DATA_5051
 		public	DATA_5054
@@ -2287,31 +2293,31 @@ STR_AVAILABLE_MEMORY	label	byte
 ; @007E
 STR_SYNTAX_IS_BCC_OPTIONS	label	byte
 		db	'Syntax is: BCC [ options ] file[s]     *',' = default; -x- = turn switch x off'
-		db	00Dh,00Ah,'  -1      80186/286 Instructions    -2  ','    80286 Pro'
+		db	00Dh,00Ah,'  -1      80186/286 Instructions    -2  ','    80286 Protected Mode Inst.'
+		db	00Dh,00Ah,'  -Ax     Disable extensions        -B  ','    Compile via assembly'
+		db	00Dh,00Ah,'  -C      Allow nested comments     -Dxx','x   Define macro'
+		db	00Dh,00Ah,'  -Exxx   Alternate Assembler name  -G  ','    Generate for speed'
+		db	00Dh,00Ah,'  -Hxxx   Use pre-compiled headers  -Ixx','x   Include files directory'
+		db	00Dh,00Ah,'  -K      Default char is unsigned  -Lxx','x   Libraries directory'
+		db	00Dh,00Ah,'  -M      Generate link map         -N  ','    Check stack overflow'
+		db	00Dh,00Ah,'  -O      Optimize jumps            -P  ','    Force C++ compile'
+		db	00Dh,00Ah,'  -Qxxx   Memory usage control      -S  ','    Produce assembly output'
+		db	00Dh,00Ah,'  -Txxx   Set assembler option      -Uxx','x   Undefine macro'
+		db	00Dh,00Ah,'  -Vx     Virtual table control     -Wxx','x   Create Windows application'
+		db	00Dh,00Ah,'  -X      Suppress autodep. output  -Yx ','    Overlay control'
+		db	00Dh,00Ah,'  -Z      Optimize register usage   -a  ','    Generate word alignment'
+		db	00Dh,00Ah,'  -b    * Treat enums as integers   -c  ','    Compile only'
+		db	00Dh,00Ah,'  -d      Merge duplicate strings   -exx','x   Executable file name'
+		db	00Dh,00Ah,'  -fxx    Floating point options    -gN ','    Stop after N warnings'
+		db	00Dh,00Ah,'  -iN     Max. identifier length    -jN ','    Stop after N errors'
+		db	00Dh,00Ah,'  -k      Standard stack frame      -lx ','    Set linker option'
+		db	00Dh,00Ah,'  -mx     Set Memory Model          -nxx','x   Output file directory'
+		db	00Dh,00Ah,'  -oxxx   Object file name          -p  ','    Pascal calls'
+		db	00Dh,00Ah,'  -r    * Register variables        -u  ','  * Underscores on externs'
+		db	00Dh,00Ah,'  -v      Source level debugging    -wxx','x   Warning control'
+		db	00Dh,00Ah,'  -y      Produce line number info  -zxx','x   Set segment names'
+		db	000h
 ; PAD-POINT (tools/modlink.py --pad-data inserts its test padding here)
-		db	'tected Mode Inst.',00Dh,00Ah,'  -Ax     Disable extensions        -B  '
-		db	'    Compile via assembly',00Dh,00Ah,'  -C      Allow nested comments     -Dxx'
-		db	'x   Define macro',00Dh,00Ah,'  -Exxx   Alternate Assembler name  -G  '
-		db	'    Generate for speed',00Dh,00Ah,'  -Hxxx   Use pre-compiled headers  -Ixx'
-		db	'x   Include files directory',00Dh,00Ah,'  -K      Default char is unsigned  -Lxx'
-		db	'x   Libraries directory',00Dh,00Ah,'  -M      Generate link map         -N  '
-		db	'    Check stack overflow',00Dh,00Ah,'  -O      Optimize jumps            -P  '
-		db	'    Force C++ compile',00Dh,00Ah,'  -Qxxx   Memory usage control      -S  '
-		db	'    Produce assembly output',00Dh,00Ah,'  -Txxx   Set assembler option      -Uxx'
-		db	'x   Undefine macro',00Dh,00Ah,'  -Vx     Virtual table control     -Wxx'
-		db	'x   Create Windows application',00Dh,00Ah,'  -X      Suppress autodep. output  -Yx '
-		db	'    Overlay control',00Dh,00Ah,'  -Z      Optimize register usage   -a  '
-		db	'    Generate word alignment',00Dh,00Ah,'  -b    * Treat enums as integers   -c  '
-		db	'    Compile only',00Dh,00Ah,'  -d      Merge duplicate strings   -exx'
-		db	'x   Executable file name',00Dh,00Ah,'  -fxx    Floating point options    -gN '
-		db	'    Stop after N warnings',00Dh,00Ah,'  -iN     Max. identifier length    -jN '
-		db	'    Stop after N errors',00Dh,00Ah,'  -k      Standard stack frame      -lx '
-		db	'    Set linker option',00Dh,00Ah,'  -mx     Set Memory Model          -nxx'
-		db	'x   Output file directory',00Dh,00Ah,'  -oxxx   Object file name          -p  '
-		db	'    Pascal calls',00Dh,00Ah,'  -r    * Register variables        -u  '
-		db	'  * Underscores on externs',00Dh,00Ah,'  -v      Source level debugging    -wxx'
-		db	'x   Warning control',00Dh,00Ah,'  -y      Produce line number info  -zxx'
-		db	'x   Set segment names',000h
 ; @069C
 STR_ASM	label	byte
 		db	'.asm',000h
@@ -7331,8 +7337,25 @@ CONVERSION_RULES	label	byte
 		db	001h
 ; @3F5C
 STR_AHSHIFT_2	label	byte
-		db	'__AHSHIFT',000h,'padd@',000h,'psub@',000h,'psba@',000h,'pada@'
-		db	000h,'psbh@',000h,'psbp@',000h
+		db	'__AHSHIFT',000h
+; @3F66
+DATA_3F66	label	byte
+		db	'padd@',000h
+; @3F6C
+DATA_3F6C	label	byte
+		db	'psub@',000h
+; @3F72
+DATA_3F72	label	byte
+		db	'psba@',000h
+; @3F78
+DATA_3F78	label	byte
+		db	'pada@',000h
+; @3F7E
+DATA_3F7E	label	byte
+		db	'psbh@',000h
+; @3F84
+DATA_3F84	label	byte
+		db	'psbp@',000h
 ; @3F8A
 STR_SCOPY_2	label	byte
 		db	'scopy@',000h

@@ -3,7 +3,7 @@
 Things learnt about BCC.EXE while recovering and reading its source. Each item says how sure
 it is: **confirmed** (a second witness: the data, a table, or the code path itself),
 **likely** (clear from the code, not tested), **possible** (an inference). Items found by
-the naming passes were checked against the code where marked.
+the naming agents were checked against the code where marked.
 
 ## Likely bugs and odd behaviour (kept as they are: the source reproduces the original)
 - **strrchr reads before the string** (confirmed, `RSTRCHR.C`): for an empty string it
@@ -15,6 +15,30 @@ the naming passes were checked against the code where marked.
   heap stubs `RH_SELF_CALL_*` (seven of them) and `CALL_SELF_FOREVER_RG2BEND` only call
   themselves; nothing calls them. Probably
   placeholders in Borland's source that the compiler kept.
+- **Post-increment of a bitfield through a far pointer fails** (confirmed by running
+  Borland's BCC.EXE, `tests/modbuild/BITFAIL.C`): `return f->count++;` for a bitfield of a
+  structure reached through a pointer stops the compile with "Fatal: Register allocation
+  failure" in the compact, large and huge models, with or without `-O`; post-decrement
+  fails alike. Pre-increment, the small model, and a global structure compile. Effect: such
+  code cannot be compiled; a port need not reproduce the failure.
+- **Enumeration constants fail in C++ inline assembly** (confirmed by running Borland's
+  BCC.EXE, `tests/modbuild/ASMENUM.CPP`): `asm mov cx, second`, where `second` is an
+  enumerator, stops with "Improper use of a typedef symbol" in C++, while C takes it.
+  `ENCODE_ASM_SYMBOL_ALT` (`ASMENC2.C`, the C++ twin of the asm name encoder) has a branch
+  that writes an enumerator's value, which this error keeps from being reached. Effect:
+  write the number instead; a port could fix it.
+- **Precompiled header files hold uninitialised bytes** (confirmed, `MACROS.C`):
+  MACRO_DEFINE rounds each macro definition up to an even size and never writes the pad
+  byte, and `-H` writes the macro pool to `TCDEF.SYM` as it is in memory. So the file holds
+  whatever that heap memory held before, which depends on the program's memory layout
+  The file also holds near addresses of BCC's own data, so it only suits the compiler that
+  wrote it (`tools/modtest.py` compares its size, and checks it by reading it back).
+  Effect: harmless; the byte is never read.
+- **The -# switch cannot be used** (confirmed by running BCC.EXE, `RARGV0F0.C`): it is read
+  before the memory manager starts and sets the heap size in paragraphs, but the option
+  parser then rejects it ("Incorrect command line option"). With a small value it goes
+  wrong sooner: `-#60` printed an empty "Error:", and `-#1500` had not finished after ten
+  minutes in emu2. Probably a leftover debugging switch.
 - **Stubs that return 0** (likely): `ASM_FLUSH_KIND2_STUB`, `ASM_COLON_LABEL_STUB`, and
   `RETURN_MINUS_ONE_STUB` (-1).
 - **A declaration that drops a return value** (confirmed, `LEXER.C`): `RTL_SCAN_LDOUBLE` is
@@ -137,8 +161,7 @@ Still to check:
 
 ## Open questions
 - Pass 3 named every remaining placeholder. Where the code did not show a purpose, the
-  name says literally what the code does (basis `descriptive`; every rename and its evidence is
-  in [map/names.tsv](../map/names.tsv)).
+  name says literally what the code does (basis `descriptive`, evidence in names.log).
 - Operators 1, 3-7, 0x33 and 0x42 have no name (EXPROP.H): their printed token
   is an identifier or nothing.
 - The six names the proof tools pinned are renamed too (`HEAP_ALLOC_ITEM`, `HEAP_FREE_ITEM`,

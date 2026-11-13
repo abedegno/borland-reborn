@@ -115,9 +115,10 @@ modding build, which lets TLINK lay the program out:
 ```sh
 sh ../exhume/tools/setup-emu2.sh                      # once: the DOS emulator the comparison uses
 ../.venv/bin/python tools/modlink.py                  # build-source/MODLINK/run/BCC.EXE
-../.venv/bin/python tools/modtest.py                  # 478 compiles, compared with Borland's BCC.EXE
+../.venv/bin/python tools/modtest.py                  # 522 compiles, compared with Borland's BCC.EXE
 sh ../exhume/tools/setup-emu2-trace.sh                # once, optional: the tracing emu2
 ../.venv/bin/python tools/modtrace.py                 # which data words are pointers, which code runs
+../.venv/bin/python tools/modedits.py                 # new files and edited context sources, tested
 cp -R src ../my-src                                   # edit the copy, then:
 ../.venv/bin/python tools/modlink.py --src ../my-src --out build-source/MYBUILD
 ```

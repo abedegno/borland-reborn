@@ -21,7 +21,10 @@
    with 1 is AH. Helper names are near pointers into DS (0x3F5C probably __AHSHIFT, the
    huge-pointer segment step used when HUGE_PTR_AHSHIFT_MODE is set; 0x3F66..0x3F8A the
    huge-pointer and struct-copy helpers); 0x1055 and 0x1040 are probably the registers each
-   helper call destroys. */
+   helper call destroys.
+   match: the six helper names chosen by ?: (0x3F66..0x3F84) stay numbers, as names would
+   change BC's code there; map/code-numbers.tsv lists them, so the modding build still
+   moves them with the data (found by tests/modbuild/HUGE.C with --pad-data). */
 /* Complete main emitter, including its genuine 100-byte switch suffix. */
 #include <dos.h>
 #include "EMITMAIN.H"

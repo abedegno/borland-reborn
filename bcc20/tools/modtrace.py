@@ -6,7 +6,7 @@ The tracing emu2 (Exhume's tools/emu2-trace, built by tools/setup-emu2-trace.sh)
 byte of memory with the program-file offset it was loaded from and follows those marks
 through registers and copies.  For each compile it writes which words of BCC.EXE were used
 as addresses of data-segment items, which as code addresses, and which instructions ran.
-This runs the corpus of tools/modtest.py (each source with its own switches, as -c and -S),
+This runs the corpus of tools/modtest.py (each source with its own switches and steps),
 merges the traces and writes:
 
 - map/traced-pointers.tsv: the data-segment words used as DGROUP addresses or as code
@@ -43,6 +43,7 @@ DGROUP_PARA = 0x0DEF        # DGROUP's paragraph from the load segment
 DATA_END = modlink.DATA_END
 # modules linked as code that hold data: the message texts, read as an image by MSGGET
 NOT_CODE = {"MESSAGES"}
+RUNS = [0, 0]               # compiles and files of the last run, for the summary
 
 
 def main():
@@ -56,32 +57,36 @@ def main():
     shutil.copytree(ROOT / "toolchain" / "BC20" / "INCLUDE", WORK / "INCLUDE")
     shutil.copytree(ROOT / "src" / "include", WORK / "PROJ")
     shutil.copy(ORIGINAL, WORK / "BCC.EXE")
+    shutil.copy(ORIGINAL.parent / "TLINK.EXE", WORK / "TLINK.EXE")
     jobs, i = [], 0
-    for name, path, opts in modtest.corpus():
-        for mode in ("-c", "-S"):
-            jobs.append((args.emu2, i, name, path, opts, mode))
+    for name, path, opts, steps in modtest.corpus():
+        for modes in steps:
+            jobs.append((args.emu2, i, name, path, opts, modes))
             i += 1
     # each run needs its own working directory for T.C and its outputs
     def run_in_dir(job):
-        emu2, index, name, path, opts, mode = job
+        emu2, index, name, path, opts, modes = job
         d = WORK / "runs" / f"{index:04d}"
         d.mkdir(parents=True, exist_ok=True)
         for sub in ("INCLUDE", "PROJ"):
             link = d / sub
             if not link.exists():
                 link.symlink_to(WORK / sub, target_is_directory=True)
-        if not (d / "BCC.EXE").exists():
-            (d / "BCC.EXE").symlink_to(WORK / "BCC.EXE")
+        for exe in ("BCC.EXE", "TLINK.EXE"):    # TLINK: for the tests that link (modtest.py)
+            if not (d / exe).exists():
+                (d / exe).symlink_to(WORK / exe)
         src = d / ("T" + path.suffix.upper())
         shutil.copy(path, src)
         os.utime(src, (modtest.STAMP, modtest.STAMP))
-        env = dict(os.environ, EMU2_TRACE=str(d / "trace"), EMU2_TRACE_DGROUP=f"{DGROUP_PARA:X}")
-        try:
-            subprocess.run([emu2, "BCC.EXE", mode, *opts, r"-IC:\INCLUDE;C:\PROJ", src.name],
-                           cwd=d, env=env, capture_output=True, timeout=300)
-        except subprocess.TimeoutExpired:
-            return f"{name} {mode} timeout"
+        for step, mode in enumerate(modes):
+            env = dict(os.environ, EMU2_TRACE=str(d / f"trace{step}"), EMU2_TRACE_DGROUP=f"{DGROUP_PARA:X}")
+            try:
+                subprocess.run([emu2, "BCC.EXE", *modtest.command(mode, opts, src.name)],
+                               cwd=d, env=env, capture_output=True, timeout=300)
+            except subprocess.TimeoutExpired:
+                return f"{name} {mode} timeout"
         return None
+    RUNS[:] = [len(jobs), len({j[3] for j in jobs})]
     with ThreadPoolExecutor(args.jobs) as pool:
         for problem in pool.map(run_in_dir, jobs):
             if problem:
@@ -94,7 +99,7 @@ def report():
     header = struct.unpack_from("<H", data, 8)[0] * 16
     dgroup_file = header + DGROUP_PARA * 16
     P, C, E = defaultdict(int), defaultdict(int), set()
-    for f in (WORK / "runs").glob("*/trace.*"):
+    for f in (WORK / "runs").glob("*/trace*.*"):
         for line in f.read_text().splitlines():
             kind, off, *n = line.split()
             off = int(off, 16)
@@ -161,9 +166,10 @@ def write_summary(totals, count):
 
     lines = ["# Code coverage of the test corpus", "",
              "Which of BCC.EXE's code the modding build's test corpus runs (`tools/modtrace.py`):",
-             "Borland's BCC.EXE compiles the 239 files of `tools/modtest.py` as object code and as",
-             "assembly in a tracing emu2, which records every instruction that runs. The modding",
-             "build is checked by these compiles, so code they never run is not checked by them.",
+             f"Borland's BCC.EXE runs the {RUNS[0]} compiles of `tools/modtest.py` ({RUNS[1]} files, each",
+             "with its own switches) in a tracing emu2, which records every instruction that runs.",
+             "The modding build is checked by these compiles, so code they never run is not checked",
+             "by them.",
              "", "| Part | Code bytes | Ran | Share |", "|---|---|---|---|"]
     for label, group in (("resident", resident), ("overlays", overlaid), ("all", totals)):
         s, r, p = share(group)
