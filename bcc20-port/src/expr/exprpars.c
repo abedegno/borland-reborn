@@ -857,7 +857,7 @@ u16 STCVT4(u8 mode, farptr list, u16 node, u16 which)
         } else {
             DIAG_NAME_BUFFER = 0;
             farptr function = NAME_TEXT_COPY(which);
-            REPORT_ERROR(which ? MSG_TYPE_MISMATCH_77 : MSG_TYPE_MISMATCH_79, (i32)(i16)CALL_ARGUMENT_NUMBER, function);
+            REPORT_ERROR(which ? MSG_TYPE_MISMATCH_77 : MSG_TYPE_MISMATCH_79, (long)(i16)CALL_ARGUMENT_NUMBER, function);
         }
         ++CALL_ARGUMENT_NUMBER;
     } else if (mode != 4) {

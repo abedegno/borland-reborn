@@ -78,6 +78,19 @@ STRUCT_ARGUMENTS = {
     # high word is used and a pad byte, which is not compared
     "ADD_UNIQUE_PARAM": ("void", ["farptr", "u8", "u16", "u16", "u16", "u16", "farptr"], False, False),
 }
+# names the original gives to two different functions (so the scan above drops them as
+# duplicates): the one the port defines under that name; the other stays inside its file
+SAME_NAME = {
+    # codegen/FLOWBLK.C EXPR_REGISTER_NEED(node), near; expr/INLINEXP.C has a far one with
+    # two arguments, kept as a static helper in inlinexp.c
+    "EXPR_REGISTER_NEED": ("i16", ["u16"], True, False),
+}
+# declarations the scan reads wrongly: a near code pointer parameter is one word
+DECLARATION_OVERRIDES = {
+    # driver/DRVLINK.C: static near pascal EXPAND_WILDCARDS(char far *path,
+    # int (near pascal *callback)(char far *))
+    "EXPAND_WILDCARDS": ("i16", ["farptr", "u16"], True, False),
+}
 RETURN_OVERRIDES = {
     "PARSE_PP_IF_EXPRESSION": "i16",    # CPRAGFN.C: EVAL_EXPRESSION hook, PARSE_CONSTANT_EXPR's AX
 }
@@ -235,6 +248,10 @@ def definitions():
             found[name] = (ret, list(args), near, cdecl)
     found.update(STRUCT_ARGUMENTS)
     dup -= set(STRUCT_ARGUMENTS)
+    found.update(SAME_NAME)
+    dup -= set(SAME_NAME)
+    found.update(DECLARATION_OVERRIDES)
+    dup -= set(DECLARATION_OVERRIDES)
     for name, ret in RETURN_OVERRIDES.items():
         if name in found and found[name]:
             found[name] = (ret,) + tuple(found[name][1:])
@@ -381,10 +398,18 @@ def code_addresses(defs):
     return out
 
 
+# the variadic originals (include/variadic.h): translated when their _ARGS form is defined;
+# replay/functions.c has their adapters
+VARIADIC = {"REPORT_FATAL": ("void", ["i16"]), "REPORT_ERROR": ("void", ["i16"]),
+            "REPORT_WARNING": ("void", ["u16"]), "RTL_DPRINTF": ("void", ["farptr"])}
+
+
 def prototypes():
     """the translated functions: name -> (result, args)"""
     defs, mine = definitions(), defined_in_port()
-    return {n: (d[0], d[1]) for n, d in defs.items() if n in mine}
+    found = {n: (d[0], d[1]) for n, d in defs.items() if n in mine}
+    found.update({n: d for n, d in VARIADIC.items() if n + "_ARGS" in mine})
+    return found
 
 
 if __name__ == "__main__":

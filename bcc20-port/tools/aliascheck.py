@@ -19,7 +19,11 @@ def main():
     for name in where:
         if name in offsets:
             at.setdefault(offsets[name], name)
-    alias = {n: at[o] for n, o in offsets.items() if n not in where and o in at}
+    # a name an assembly module declares public is its definition's name too
+    public = set()
+    for path in (PORT.parent / "bcc20" / "src").rglob("*.ASM"):
+        public |= set(re.findall(r"^\s*public\s+(\w+)", path.read_text(encoding="latin1"), re.M))
+    alias = {n: at[o] for n, o in offsets.items() if n not in where and n not in public and o in at}
     found = 0
     for path in sorted((PORT / "src").rglob("*.c")):
         text = re.sub(r"/\*.*?\*/", " ", path.read_text(), flags=re.S)

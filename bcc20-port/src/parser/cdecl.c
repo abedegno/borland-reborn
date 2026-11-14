@@ -1181,7 +1181,7 @@ u16 BCC_STMT_COUNT_NEAR(u16 item)
     count = 1;
     while (item) {
         if (!CPARM_W(item, CPARM_NAME))
-            REPORT_ERROR(MSG_PARAMETER_D_MISSING, (i32)count);
+            REPORT_ERROR(MSG_PARAMETER_D_MISSING, (long)count);
         u16 record = DECLARE_SYMBOL(CPARM_W(item, CPARM_NAME), C_DECL_SCOPE, 0, 6, CPARM_W(item, CPARM_TYPE), 0,
                                     CPARM_B(item, CPARM_REG_MARK) == 254 ? 72 : 64);
         u16 entry = FIND_OR_ADD_VARIABLE(record, TYPE_B(CSYM_W(record, CSYM_TYPE), TYPE_KIND), CSYM_B(record, CSYM_FLAGS));

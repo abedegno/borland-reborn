@@ -34,8 +34,14 @@ virtual tables, the type and scope tables), and the first part of the code gener
 (`../bcc20/src/codegen`: code ops and the variable table, conversions, bit fields, storage
 queries, the back-end driver, the byte pool, initialised data, the instruction emitter,
 register variables, calls, operators, statement blocks, switches, intrinsics, the
-peephole, cross-jump and jump optimisers): 976 functions checked, each matching every call
-recorded over the whole corpus. A few are never reached by the corpus and are not checked
+peephole, cross-jump and jump optimisers, frames, register allocation, expression code and
+the code passes), the object and assembly writers (`../bcc20/src/output`), the driver
+(options, configuration, the link and TASM steps, start-up of the front ends), the inline
+assembler's C side (operands, symbol encoding, the instruction encoder), precompiled headers,
+the diagnostics (message printing, through `include/variadic.h`, and type spelling), the
+80-bit real arithmetic of `../bcc20/src/float` (the assembly modules, in C) and more of the
+run-time library: 1457 functions checked, each matching every call recorded over the whole
+corpus (at most 200 different calls a function). A few are never reached by the corpus and are not checked
 yet (`make check` lists them). Nothing compiles yet.
 
 ## How a translation is checked

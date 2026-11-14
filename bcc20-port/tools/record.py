@@ -99,6 +99,8 @@ INNER_BODIES = {
     "BCC_STMT_CHECK_TYPE_NEAR": ("STCTYPE", 0),                   # CDECL.C, under its row name
     "CTORBODY": ("C11FIND", 0),                                   # CTORBODY.C, under its row name
     "IMPLMEMB": ("C12CHECK", 0),                                  # IMPLMEMB.C, under its row name
+    "HANDLE_NEGATED_FLAG_OPTION": ("HANDLE_FLAG_OPTION", 0x79),   # OPTIONS.C, after the switch table
+    "COPY_TO_END": ("FNSPLIT", 0x1A5),                            # RFNSPLIT.C, after FNSPLIT's retf
 }
 
 
@@ -218,15 +220,26 @@ def main():
                    EMU2_RECORD_INNER=env_inner, EMU2_RECORD_IGNORE=env_ignore,
                    EMU2_RECORD_MAX=str(args.per_run))
         try:
-            subprocess.run([args.emu2, "BCC.EXE", *modtest.command(mode, opts, src.name)],
-                           cwd=d, env=env, capture_output=True, timeout=300)
+            done = subprocess.run([args.emu2, "BCC.EXE", *modtest.command(mode, opts, src.name)],
+                                  cwd=d, env=env, capture_output=True, timeout=300)
+            # the recorder refuses lists it cannot hold; never take that run as no calls
+            if b"emu2 record:" in done.stderr:
+                raise SystemExit(done.stderr.decode(errors="replace").strip())
         except subprocess.TimeoutExpired:
             pass
         text = "".join(f.read_text() for f in d.glob("rec.*"))
         shutil.rmtree(d)
         return text
 
-    calls = {f: {} for f in args.functions}
+    # only each call's hash stays in memory; the bodies go to one spool file per function
+    # (holding them all took several GB once the port had 1500 functions)
+    calls = {f: set() for f in args.functions}
+    spool = WORK / "spool"
+    spool.mkdir()
+    out = Path(args.out) if args.out else PORT / "records"
+    out.mkdir(exist_ok=True)
+    for name in args.functions:     # the new records replace them; free the disk first
+        (out / f"{name}.rec").unlink(missing_ok=True)
     with ThreadPoolExecutor(args.jobs) as pool:
         for text in pool.map(run, enumerate(jobs)):
             children = {}
@@ -249,13 +262,20 @@ def main():
                 name = wanted[off]
                 kids = "".join(k for _, k in sorted(children.pop((off, int(head.split()[2])), [])))
                 if len(calls[name]) < args.max:
-                    calls[name].setdefault(hashlib.sha1((body + kids).encode()).hexdigest(), body + kids)
-    out = Path(args.out) if args.out else PORT / "records"
-    out.mkdir(exist_ok=True)
+                    key = hashlib.sha1((body + kids).encode()).hexdigest()
+                    if key not in calls[name]:
+                        calls[name].add(key)
+                        with open(spool / name, "a") as f:
+                            f.write(f"CALL {offsets[name]:X} {len(calls[name]) - 1}\n{body}{kids}")
     for name, found in calls.items():
-        (out / f"{name}.rec").write_text("".join(
-            f"CALL {offsets[name]:X} {i}\n{body}" for i, body in enumerate(found.values())))
+        target = out / f"{name}.rec"
+        target.unlink(missing_ok=True)
+        if (spool / name).exists():
+            shutil.move(spool / name, target)
+        else:
+            target.write_text("")
         print(f"{name}: {len(found)} different calls from {len(jobs)} compiles -> records/{name}.rec")
+    shutil.rmtree(WORK, ignore_errors=True)
 
 
 if __name__ == "__main__":

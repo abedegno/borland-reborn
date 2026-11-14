@@ -62,6 +62,17 @@ farptr scratch_alloc(u16 bytes);
 u16 scratch_mark(void);
 void scratch_release(u16 mark);
 
+/* A local whose address is passed as a near pointer (DS-relative) must lie in DGROUP:
+   BCC's stack is in DGROUP (SS is DS), so BCC can hand a stack buffer to code that reads it
+   through DS.  near_scratch_alloc(n) gives n bytes in DGROUP, growing down from
+   near_scratch_top, which replay sets to the replayed call's SP (inside the stack window
+   replay leaves out of its checks); near_scratch_mark()/near_scratch_release() free what was
+   given since the mark. */
+extern u16 near_scratch_top;
+farptr near_scratch_alloc(u16 bytes);
+u16 near_scratch_mark(void);
+void near_scratch_release(u16 mark);
+
 /* An argument the original passes from a local it never set (a stack slot holding whatever
    an earlier call left there) cannot be reproduced.  UNSET_ARGS(mask) before a call of a
    stand-in says which of its arguments (bit 0 the first) are such: replay does not compare
@@ -85,11 +96,19 @@ void UNSET_RESULT(farptr p, u16 n);
 extern u16 unset_returns;
 extern const char *unset_returns_owner;
 #define UNSET_RETURN(mask) (unset_returns |= (mask), unset_returns_owner = __func__)
+/* A function that returns a callee's result as it is passes on the callee's marks:
+   UNSET_PASS(call) makes the call and, when the result registers came back marked unset,
+   marks them for the calling function too (other marks are kept as they were). */
+void unset_push(void);
+u32 unset_pass(u32 value, const char *owner);
+#define UNSET_PASS(call) (unset_push(), unset_pass((u32)(call), __func__))
 int result_unset(u32 linear);
 void unset_results_clear(void);
 
 /* the data segment's paragraph from the load segment, for turning code addresses back
    into names (calls.h) */
 #define DGROUP_PARA 0x0DEF
+
+
 
 #endif

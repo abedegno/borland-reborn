@@ -131,7 +131,7 @@ u32 GENERATE_BITFIELD_STORE(u16 dest, u16 source, u16 keep)
 u32 GENERATE_BITFIELD_OP_ASSIGN(u16 first, u16 second)
 {
     u16 node = (u16)CALL_FAR(EXPAND_COMPOUND_ASSIGN_HOOK, A16(first));
-    return GENERATE_EXPRESSION(node, second);
+    return UNSET_PASS(GENERATE_EXPRESSION(node, second));
 }
 
 /* x++ or x-- (EXPR_OP 23h/24h; 19/20 are += and -=) on a bit-field.  When the storage

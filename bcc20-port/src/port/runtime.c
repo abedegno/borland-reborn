@@ -2,6 +2,7 @@
    (port.h), and calls through BCC's code pointers (calls.h). */
 #include <string.h>
 #include "port.h"
+#include "variadic.h"
 #include "data.h"
 #include "calls.h"
 
@@ -16,6 +17,18 @@ farptr scratch_alloc(u16 bytes)
 }
 
 u16 scratch_mark(void) { return scratch_top; }
+
+/* ---- the near scratch area (port.h): grows down from near_scratch_top in DGROUP ---- */
+u16 near_scratch_top = 0xFFF0;
+
+farptr near_scratch_alloc(u16 bytes)
+{
+    near_scratch_top -= (bytes + 1) & ~1u;
+    return DSPTR(near_scratch_top);
+}
+
+u16 near_scratch_mark(void) { return near_scratch_top; }
+void near_scratch_release(u16 mark) { near_scratch_top = mark; }
 
 /* scratch bytes the original leaves unset (port.h): offset ranges [lo, hi) */
 static u16 unset_lo[16], unset_hi[16];
@@ -70,6 +83,33 @@ void unset_results_clear(void) { n_results = 0; }
 u32 unset_args;
 u16 unset_returns;
 const char *unset_returns_owner;
+
+/* UNSET_PASS (port.h): the marks before the call, put back when the call made none */
+static struct { u16 mask; const char *owner; } unset_saved[64];
+static unsigned n_unset_saved;
+
+void unset_push(void)
+{
+    if (n_unset_saved < 64) {
+        unset_saved[n_unset_saved].mask = unset_returns;
+        unset_saved[n_unset_saved].owner = unset_returns_owner;
+    }
+    n_unset_saved++;
+    unset_returns = 0;
+    unset_returns_owner = 0;
+}
+
+u32 unset_pass(u32 value, const char *owner)
+{
+    n_unset_saved--;
+    if (unset_returns)
+        unset_returns_owner = owner;
+    else if (n_unset_saved < 64) {
+        unset_returns = unset_saved[n_unset_saved].mask;
+        unset_returns_owner = unset_saved[n_unset_saved].owner;
+    }
+    return value;
+}
 
 /* ---- calls through code pointers ---- */
 
@@ -167,3 +207,22 @@ u32 call_near_args(const char *module, u16 off, const FarArg *args, unsigned n)
     const Function *f = near_entry(module, off);
     return f ? call_entry(f, args, n) : 0;
 }
+
+/* ---- variadic arguments (variadic.h): the block the original's cdecl stack held ---- */
+farptr dos_argument_block(const DosArg *args)
+{
+    u16 bytes = 0;
+    for (const DosArg *a = args; a->size; a++)
+        bytes += a->size;
+    farptr block = scratch_alloc(bytes);
+    farptr p = block;
+    for (const DosArg *a = args; a->size; a++) {
+        if (a->size == 4)
+            D(p) = a->value;
+        else
+            W(p) = (u16)a->value;
+        p = fp_add(p, a->size);
+    }
+    return block;
+}
+

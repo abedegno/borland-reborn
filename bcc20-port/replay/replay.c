@@ -183,6 +183,10 @@ void code_unknown(farptr code)
          now.fn->name, FP_SEG(code), FP_OFF(code), (u16)(FP_SEG(code) - (DGROUP - DGROUP_PARA)));
 }
 
+/* the near scratch area runs from near_scratch_top up to the replayed call's SP */
+static u16 near_scratch_base;
+static int in_near_scratch(u16 off) { return off >= near_scratch_top && off < near_scratch_base; }
+
 /* the bottom of a call's own frame: its lowest SP (records made before FRAME lines: a guess) */
 static u16 frame_low(const Record *c) { return c->min_sp ? c->min_sp : c->in[R_SP] - 0x100; }
 
@@ -224,12 +228,25 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
         for (unsigned b = 0; b < args[i].size; b++)
             want |= (u32)c->stack[args[i].off + b] << (8 * b);
         u32 mask = args[i].bytes == 1 ? 0xFF : args[i].size == 2 ? 0xFFFF : 0xFFFFFFFF;
-        /* a pointer to a local of the caller: the translation's is in the scratch area */
+        /* a pointer to a local of the caller: the translation's is in the scratch area, or
+           in the near scratch area (DGROUP, below the call's SP) for a local BCC reaches
+           through DS; a near pointer is an offset in SS, which is DGROUP */
         if (args[i].size == 4 && FP_SEG(want) == c->in[R_SS] && FP_SEG(args[i].value) == SCRATCH_SEG &&
             in_window(LIN(FP_SEG(want), FP_OFF(want))) && now.n_map < 16) {
             now.map[now.n_map].orig = LIN(FP_SEG(want), FP_OFF(want));
             now.map[now.n_map++].port = LIN(FP_SEG(args[i].value), FP_OFF(args[i].value));
             continue;
+        }
+        if (args[i].bytes != 1 && (args[i].value & mask) != (want & mask) && now.n_map < 16) {
+            u16 seg = args[i].size == 4 ? FP_SEG(args[i].value) : c->in[R_SS];
+            u16 off = (u16)args[i].value;
+            u16 want_seg = args[i].size == 4 ? FP_SEG(want) : c->in[R_SS];
+            if (seg == c->in[R_SS] && want_seg == c->in[R_SS] && in_near_scratch(off) &&
+                in_window(LIN(want_seg, (u16)want))) {
+                now.map[now.n_map].orig = LIN(want_seg, (u16)want);
+                now.map[now.n_map++].port = LIN(seg, off);
+                continue;
+            }
         }
         if ((args[i].value & mask) != (want & mask))
             fail("%s calls %s with argument %u = %X, BCC.EXE passed %X", now.fn->name, name, i + 1,
@@ -332,6 +349,8 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     memcpy(r, c->in, sizeof r);
     DGROUP = r[R_DS];
     scratch_release(0);
+    near_scratch_release(r[R_SP]);
+    near_scratch_base = r[R_SP];
     unset_results_clear();
     unset_returns = 0;
     unset_returns_owner = 0;
@@ -373,6 +392,11 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     /* and the stack from the call's own frame up (its frame, return address, arguments and
        the callers' frames) is left out, as above */
     u32 frame_lo = LIN(c->in[R_SS], frame_low(c));
+    /* the frames of the calls it made are its own stack use too: a stand-in's writes there
+       are not applied (stand_in), so they are not compared either */
+    for (unsigned k = 0; k < n_children; k++)
+        if (children[k].in[R_SS] == c->in[R_SS] && LIN(c->in[R_SS], frame_low(&children[k])) < frame_lo)
+            frame_lo = LIN(c->in[R_SS], frame_low(&children[k]));
     memcpy(mem + frame_lo, expect + frame_lo, stack_top - frame_lo);
     /* a far pointer to one of the original's locals, left behind in memory (a dangling
        pointer to a dead frame, as after an error path): the translation's local is in the
