@@ -162,6 +162,26 @@ bcc20_compile(&job, &result);     /* result.outputs[0]: T.OBJ */
 bcc20_free(&result);
 ```
 
+The compiler can explain its choices (`include/explain.h`): the job's `explain` callback,
+or `BCC_EXPLAIN=1` on the command line (stderr), gets one line per event, read from BCC's
+memory without changing it (`nativetest.py --lib` runs the whole corpus with it on):
+
+```
+function name=sum
+regvar_candidate var=i score=12 reg=si
+regvar var=i reg=si score=12
+regvar var=total reg=di score=11
+reg op=17 preferred=bx,si,di allowed=ax,dx,bx,cx,si,di,bp,sp,es,ds,cs,ss free=dx,bx,cx narrowed_to=bx,si,di chose=bx
+spill op=40 pushed_value=31
+crossjump merged=3 ops left_block=12 right_block=20 tail_block=44
+peephole removed_load op=52 value_in=ax
+```
+
+A register pick shows the registers the value's users preferred, those its class allows,
+those free at that point, the set the allocator then chose from and the register it took
+(the lowest-numbered of that set): what ruled the others out. Register variables show
+every candidate's score for each free register in turn.
+
 `BCC_TRACE=1` shows each file the native build opens or looks for; `BCC_SCRATCH_FILL=n`
 fills every new translated local with byte n, which finds code whose result depends on a
 local the original never set. `BCC_DOS_RUNNER=emu2` runs the DOS programs BCC calls
@@ -207,6 +227,7 @@ of the definition's.
 | `tools/nativetest.py` | the native build against BCC.EXE over the corpus |
 | `native/image.c`, `native/stack_table.c` | generated data: the parts of BCC.EXE's image the translations read (`tools/genimage.py`) and BCC.EXE's stack as measured over the corpus (`tools/genstack.py`) |
 | `include/bcc20.h`, `native/lib.c`, `tools/bcc20run.c` | the library interface: one compile in-process, memory to memory |
+| `include/explain.h`, `native/explain.c` | the compiler explaining its choices (register variables and registers, spills, cross-jumps, removed loads) |
 | `tools/coverage.py` | which of the unchecked functions BCC.EXE runs at all over the corpus |
 
 Each translated file starts with a comment naming the original file and anything the
@@ -371,8 +392,8 @@ Places where the original's behaviour depends on something a port does not have:
 5. **The compiler work written in TASM** (done): the 80-bit real arithmetic (`../bcc20/src/float/`)
    and the inline assembler (`INLINASM.ASM`), in C.
 6. **The library interface**: compile from memory to memory, with state reset between
-   compiles (done: `include/bcc20.h`); then explanation output; then a permuter in Exhume
-   that uses them.
+   compiles (done: `include/bcc20.h`); then explanation output (done:
+   `include/explain.h`); then a permuter in Exhume that uses them.
 7. **Restructure**: host data structures in place of the 8086 memory model, under the corpus
    check.
 

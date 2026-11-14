@@ -15,6 +15,7 @@
 #include "pool.h"
 #include "protos.h"
 #include "calls.h"
+#include "explain.h"
 
 #define MASK_BIT(n) ((u16)(1u << ((n) & 31)))
 
@@ -43,6 +44,8 @@ void ASSIGN_REGISTER_VARIABLES(void)
             break;
         VAR_B(entry, VAR_FLAGS) |= 2;
         VAR_B(entry, VAR_REGISTER) = B(flag);
+        EXPLAIN("regvar var=%s reg=%s score=%u", explain_symbol(VAR_W(entry, VAR_SYMBOL)),
+                explain_register((u16)SB(flag)), W(count));
         if (VAR_W(entry, VAR_SYMBOL))
             CALL_FAR(REGVAR_ASSIGNED_HOOK, A16(VAR_W(entry, VAR_SYMBOL)), A16((i16)SB(flag)));
         u16 bit = MASK_BIT(SB(flag));
@@ -70,6 +73,9 @@ void FIND_BEST_REGISTER_VARIABLE(u16 root, farptr best, farptr symbol, farptr no
             if (VAR_W(entry, VAR_SCOPE_BLOCK) != root)
                 continue;
             u16 score = REGISTER_VARIABLE_SCORE(entry, selected, mask);
+            if (score)
+                EXPLAIN("regvar_candidate var=%s score=%u reg=%s", explain_symbol(VAR_W(entry, VAR_SYMBOL)),
+                        score, explain_register((u16)SB(selected)));
             if (W(best) < score) {
                 W(symbol) = entry;
                 W(node) = root;

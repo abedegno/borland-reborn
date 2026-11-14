@@ -20,4 +20,6 @@ void native_stack_enable(int on);
 int native_run(int argc, const char *const *argv);
 void native_job_begin(const bcc20_job *job);
 void native_job_end(bcc20_result *result);
+/* explain.c: where EXPLAIN's lines go for this run */
+void native_explain_begin(void (*callback)(void *, const char *), void *context);
 #endif

@@ -31,6 +31,7 @@
 #include "calls.h"
 #include "msg.h"
 #include "variadic.h"
+#include "explain.h"
 
 #define BIT(n) ((u16)(1u << ((n) & 31)))
 #define OP_FLAGS(op) D(fp_add(CODE_OP_INFO_TABLE_P, (op) * 19))
@@ -525,6 +526,8 @@ void ADD_OPERAND_REQUEST(u16 operand, u16 mode, u16 class)
    pending request holds; spills live values until one is free */
 u8 PICK_FREE_REGISTER(u16 preferred, u16 allowed)
 {
+    u16 asked = allowed;    /* what the caller allowed, for EXPLAIN */
+    (void)asked;
     if (allowed & preferred) {
         u16 mask = allowed & preferred;
         if ((mask & PENDING_REGISTER_MASK) != mask && (BLOCK_FREE_REGISTER_MASK & mask))
@@ -535,8 +538,13 @@ u8 PICK_FREE_REGISTER(u16 preferred, u16 allowed)
         u16 bits = ALLOCATABLE_REGISTER_MASK & allowed;
         if (bits)
             for (u16 mask = 1; mask; mask <<= 1, position++)
-                if ((mask & bits) == mask)
+                if ((mask & bits) == mask) {
+                    EXPLAIN("reg op=%u preferred=%s allowed=%s free=%s narrowed_to=%s chose=%s",
+                            CURRENT_INSN_INDEX, explain_registers(preferred), explain_registers(asked),
+                            explain_registers(ALLOCATABLE_REGISTER_MASK), explain_registers(allowed),
+                            explain_register(position));
                     return position;
+                }
         SPILL_REGISTER();
     }
 }
@@ -561,12 +569,14 @@ void SPILL_REGISTER(void)
             ALLOCATABLE_REGISTER_MASK |= BIT(FIND_VALUE_REGISTER(SLOT(slot))) & BLOCK_FREE_REGISTER_MASK;
             RECORD_REGISTER_MOVE(3, CLASS_IS_WORD(type), selected, SLOT(slot), 0);
             ALLOCATABLE_REGISTER_MASK &= ~BIT(selected);
+            EXPLAIN("spill op=%u moved_value=%u to=%s", CURRENT_INSN_INDEX, SLOT(slot), explain_register(selected));
         } else
             fatal();
     } else {
         ALLOCATABLE_REGISTER_MASK |= BIT(FIND_VALUE_REGISTER(SLOT(slot))) & BLOCK_FREE_REGISTER_MASK;
         RECORD_REGISTER_MOVE(1, 0, 0xFF, SLOT(slot), 0);
         LIVE_VALUE_SPILL_END = slot + 4;
+        EXPLAIN("spill op=%u pushed_value=%u", CURRENT_INSN_INDEX, SLOT(slot));
     }
 }
 

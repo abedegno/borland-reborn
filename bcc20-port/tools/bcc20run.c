@@ -1,13 +1,15 @@
 /* bcc20run: runs one BCC command line through the library (include/bcc20.h), for testing
    it against build/bcc (tools/nativetest.py --lib).
 
-     bcc20run [--file NAME[=PATH]]... [--root DIR] [--time SECONDS] [--repeat N] -- ARGS...
+     bcc20run [--file NAME[=PATH]]... [--root DIR] [--time SECONDS] [--repeat N]
+              [--explain PATH] [--no-stack-limit] -- ARGS...
 
    Each --file is given to BCC from memory under its DOS name (read from PATH, default the
    host file NAME); other files come from --root.  The files BCC wrote are written to the
    current directory under their names, its console text to stdout, and its exit status is
    bcc20run's.  --repeat N runs the same job N times in this one process and fails unless
-   every run gives the same output, which shows that runs do not share state. */
+   every run gives the same output, which shows that runs do not share state.  --explain
+   writes the compiler's explanation of its choices (include/explain.h) to PATH. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +32,11 @@ static void *read_file(const char *path, size_t *size)
     }
     fclose(f);
     return data;
+}
+
+static void explain_line(void *context, const char *line)
+{
+    fprintf((FILE *)context, "%s\n", line);
 }
 
 static int same(const bcc20_result *a, const bcc20_result *b)
@@ -67,6 +74,15 @@ int main(int argc, char **argv)
             repeat = atoi(argv[++i]);
         else if (!strcmp(argv[i], "--no-stack-limit"))
             job.stack_limit = 0;
+        else if (!strcmp(argv[i], "--explain") && i + 1 < argc) {
+            FILE *f = fopen(argv[++i], "w");
+            if (!f) {
+                perror(argv[i]);
+                return 2;
+            }
+            job.explain = explain_line;
+            job.explain_context = f;
+        }
         else {
             fprintf(stderr, "bcc20run: unknown option %s\n", argv[i]);
             return 2;

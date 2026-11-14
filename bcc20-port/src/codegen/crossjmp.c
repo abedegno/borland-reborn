@@ -12,6 +12,7 @@
 #include "data.h"
 #include "pool.h"
 #include "protos.h"
+#include "explain.h"
 
 #define OP_FLAGS(op) D(fp_add(CODE_OP_INFO_TABLE_P, (op) * 19))
 #define OPTION_OPTIMIZE_SPEED B(OPTION_OPTIMIZE_SPEED_P)
@@ -169,6 +170,8 @@ u16 SPLIT_COMMON_TAIL(u16 left, u16 right)
     CNODE_W(result, CNODE_FLAGS) = 16;
     if (count1 == 0 || count2 == 0)
         CROSS_JUMP_CHANGED = 1;
+    EXPLAIN("crossjump merged=%u ops left_block=%u right_block=%u tail_block=%u",
+            CNODE_W(result, CNODE_OP_COUNT), left, right, result);
     return result;
 }
 

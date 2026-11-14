@@ -17,6 +17,7 @@
 #include "data.h"
 #include "pool.h"
 #include "protos.h"
+#include "explain.h"
 
 #define COP_SC(r, o) SB(MK_FP(CODE_OP_POOL_SEG, (r) + (o)))
 #define ENTRY(op) fp_add(OPCODE_DESCRIPTOR_TABLE_P, (op) * 19)
@@ -109,6 +110,7 @@ void MARK_REDUNDANT_OPERAND(u16 second, u16 first)
             COP_B(entry, COP_REGISTER) = FIND_ASSIGNED_REGISTER(second);
             COP_B(entry, COP_FLAGS) &= 1;
             COP_B(entry, COP_FLAGS) |= 0x40;
+            EXPLAIN("peephole removed_load op=%u value_in=%s", second, explain_register(COP_B(entry, COP_REGISTER)));
             return;
         }
     }

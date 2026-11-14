@@ -28,6 +28,12 @@ typedef struct {
                                    0 for the host's clock */
     int stack_limit;            /* 1: stop where BCC.EXE's 8086 stack would ("Out of
                                    memory"); 0: no limit (README.md, "Decisions") */
+    /* the compiler explaining its choices, one line per event, or NULL: "function name=f",
+       "regvar var=i reg=si score=12", "regvar_candidate ...", "reg op=7 preferred=ax
+       allowed=ax,dx,bx free=dx,bx narrowed_to=ax,dx,bx chose=dx", "spill ...", "crossjump
+       merged=3 ops ...", "peephole removed_load op=12 value_in=ax" (include/explain.h) */
+    void (*explain)(void *context, const char *line);
+    void *explain_context;
 } bcc20_job;
 
 typedef struct {

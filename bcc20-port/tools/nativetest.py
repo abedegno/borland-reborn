@@ -13,8 +13,9 @@ memory" figure comes from the heap and is left out of the comparison.
 
 With --lib the port side runs through the library (include/bcc20.h, build/bcc20run): the
 source is given from memory, the run directory is the job's root for the headers, the
-clock is pinned to the source's time, and each compile runs twice in one process, which
-must give the same output both times.  Link steps are left out there (TLINK, a separate
+clock is pinned to the source's time, each compile runs twice in one process, which must
+give the same output both times, and the compiler's explanation of its choices is on
+(EXPLAIN.TXT), which must change nothing.  Link steps are left out there (TLINK, a separate
 program, cannot see files that are only in memory).
 """
 import argparse
@@ -64,7 +65,8 @@ def run_one(job, emu2, keep, lib=False):
                 cmd = [emu2, "BCC.EXE", *args]
             elif lib:
                 cmd = [str(PORT / "build" / "bcc20run"), "--file", f"{src.name}={src.name}", "--root", ".",
-                       "--time", str(int(src.stat().st_mtime)), "--repeat", "2", "--", *args]
+                       "--time", str(int(src.stat().st_mtime)), "--repeat", "2",
+                       "--explain", "EXPLAIN.TXT", "--", *args]
             else:
                 cmd = [str(PORT / "build" / "bcc"), *args]
             try:

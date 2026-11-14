@@ -218,6 +218,7 @@ int native_run(int argc, const char *const *argv)
         mem = calloc(1, MEM_SIZE);
     memset(mem, 0, MEM_SIZE);
     reset_platform();
+    native_explain_begin(job ? job->explain : 0, job ? job->explain_context : 0);
     int status = setjmp(run_exit);
     if (status) {
         running = 0;

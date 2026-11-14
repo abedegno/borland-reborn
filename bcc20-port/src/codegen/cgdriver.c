@@ -11,6 +11,7 @@
 #include "data.h"
 #include "pool.h"
 #include "protos.h"
+#include "explain.h"
 
 #define OPTION_WINDOWS_MODE B(OPTION_WINDOWS_MODE_P)
 
@@ -18,6 +19,7 @@
    list */
 void GENERATE_FUNCTION_CODE(farptr value)
 {
+    EXPLAIN("function name=%s", explain_symbol(CODEGEN_FUNCTION_SYMBOL));
     BACKEND_NOOP_HOOK();
     if (OPTIMIZE_ENABLED) {
         RESOLVE_JUMP_TARGETS();
