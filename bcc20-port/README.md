@@ -24,9 +24,8 @@ records, sizes and compatibility, struct layout, the C symbol table) and all the
 files of `../bcc20/src/expr` (the C++ analyser and its checkers, conversions, call checking,
 inline expansion, the simplifier, constant folding, lowering for the back end, and the C
 front end's expression parser and node builders), and most of the parser (`../bcc20/src/parser`:
-the C front end's top level, declarators and statements, the C++ front end's file-level
-declarations, initializers, function definitions, look-ahead and operator-precedence
-expression parser, inline asm statements): 541 functions checked, each matching every call
+all of it: both front ends' declarations, declarators, statements and expressions,
+initializers, function definitions, look-ahead and inline asm statements): 618 functions checked, each matching every call
 recorded over the whole corpus. A few are never reached by the corpus and are not checked
 yet (`make check` lists them). Nothing compiles yet.
 
@@ -97,7 +96,10 @@ only the targeted tests reach.
 
 To look into one failing call: `REPLAY_ONLY=N build/replay NAME records/NAME.rec` replays
 only the recorded call N, and `REPLAY_TRACE=1` prints each call the translation makes to a
-function not yet translated, beside the one BCC.EXE made. `make check` also runs
+function not yet translated, beside the one BCC.EXE made. `REPLAY_WATCH=ADDR` (a linear hex
+address) prints that byte before each such call, which brackets the translated code that
+changed it. To record one corpus test on its own, with every call kept, use `record.py NAMES
+--only TEST --out DIR --per-run 100000 --max 100000`. `make check` also runs
 `tools/aliascheck.py`, which finds calls written with a stub's or body label's name instead
 of the definition's.
 
@@ -152,7 +154,8 @@ translation keeps on purpose (an original bug the output depends on, for example
    - An argument the original passes from a local it never set cannot be reproduced: pass
      0 and say so with `UNSET_ARGS(mask)` just before the call of the stand-in (bit 0 the
      first argument), so the replay skips it; list the place below. A scratch local the
-     original never sets before a stand-in reads it gets `UNSET_BYTES(p, n)` instead.
+     original never sets before a stand-in reads it gets `UNSET_BYTES(p, n)` instead, and
+     memory a translated callee fills with such a value `UNSET_RESULT(p, n)`.
    - Where several arguments of one call are themselves calls, put them in variables in
      Turbo C's order: left to right for a pascal function, right to left for cdecl. C
      leaves the order open, and the replay checks the order of the calls.
@@ -209,6 +212,14 @@ Places where the original's behaviour depends on something a port does not have:
   MERGE_FUNCTION_DECLARATION, and in C++ BCC_TYPE_MATCH may read it before setting it. The
   port marks the byte unset for the replay (`UNSET_BYTES`, port.h); the native build must
   check what BCC_TYPE_MATCH does with it.
+- **BCC_STMT_PARSE_NEXT** (CDECL.C) passes its `linkage` local unset to DECLARE_SYMBOL for a
+  typedef, which keeps it as the symbol's segment word (PCH.C's typedefs end up with 1
+  there in BCC.EXE), and **PARSE_DECLARATOR** (DECLSPEC.C) lets TYPE_PATH read its unset
+  `retain` flag as the fourth byte after the modifier triple. The port passes 0 and marks
+  them for the replay (`UNSET_ARGS`, `UNSET_RESULT`); the native build should confirm that
+  neither value is used. A far pointer the original leaves pointing at a dead local (as
+  CURRENT_LOOP_CONTEXT after an error in a loop) is accepted by the replay when the port's
+  points into the scratch area.
 - **PARSE_EXPRESSION_PREC** (OPPREC.C) reads its paren and bracket counts unset in its error
   recovery when the expression did not start with an expression token (`if ()`), so
   whether it steps over a closing parenthesis there depends on an earlier call's stack. The

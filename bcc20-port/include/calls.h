@@ -45,6 +45,8 @@ typedef struct {
    arguments in the order of the original declaration; the result is DX:AX */
 u32 call_far_args(farptr code, const FarArg *args, unsigned n);
 u32 call_near_args(const char *module, u16 off, const FarArg *args, unsigned n);
+/* the far code address of a function, as the original passes it as an argument */
+farptr code_address(const char *name);
 #define CALL_FAR(code, ...) \
     call_far_args((code), (const FarArg[]){__VA_ARGS__}, sizeof((const FarArg[]){__VA_ARGS__}) / sizeof(FarArg))
 #define CALL_FAR0(code) call_far_args((code), 0, 0)

@@ -57,6 +57,16 @@ STRUCT_ARGUMENTS = {
     # parser/OPPREC.C BUILD_IDENTIFIER_NODE(type, token, struct C77Record6 {first, second,
     # third}): the structure's words last first
     "BUILD_IDENTIFIER_NODE": ("u16", ["u16", "farptr", "u16", "u16", "u16"], False, False),
+    # parser/DECLSPEC.C: struct C16Spec {first, second, third} by value as its words, high
+    # (third and a pad byte) first; PARSE_TYPE_MODIFIERS returns it through a hidden far
+    # pointer pushed before it, and that pointer's offset in AX
+    "PARSE_POINTER_DECLARATOR": ("u16", ["u16", "u8", "u16"], False, False),
+    "PARSE_FUNCTION_DECLARATOR": ("u16", ["u16", "u8", "u16"], False, False),
+    "PARSE_ARRAY_DECLARATOR": ("u16", ["u8", "u16", "u8", "u16"], True, False),
+    "PARSE_TYPE_MODIFIERS": ("u16", ["farptr", "u8", "u16"], False, False),
+    # BUILD_BASIC_TYPE(struct C16TypeWords {primary, sign, size, constant, changing}, named,
+    # type): the record's four words, last first
+    "BUILD_BASIC_TYPE": ("u16", ["u16", "u16", "u16", "u16", "u8", "u16"], True, False),
     # parser/CDECLR.C BCC_STMT_BEGIN(struct Flags {first, second, third}): returns the
     # structure through a hidden far pointer pushed before it (retf 8), and that pointer's
     # offset in AX; the structure's high word is third and a pad byte, not compared
@@ -143,9 +153,20 @@ def split_params(text):
     return out
 
 
+# structures passed by value that expand by rule into their words, in the order a pascal
+# call pushes them (the last word first)
+STRUCT_WORDS = {
+    "C77Record6": ["u16", "u16", "u16"],        # a source position {first, second, third}
+}
+
+
 def param_type(param):
-    """the port type of one parameter declaration (with or without its name)"""
+    """the port type of one parameter declaration (with or without its name); a list for a
+    structure of STRUCT_WORDS"""
     p = param.strip()
+    m = re.match(r"^struct\s+(\w+)\b", p)
+    if m and m.group(1) in STRUCT_WORDS and "*" not in p:
+        return STRUCT_WORDS[m.group(1)]
     if "(" in p:
         return port_type(p)
     m = re.match(r"^(.*?)\b([A-Za-z_]\w*)\s*(\[[^\]]*\])?$", p)
@@ -155,6 +176,13 @@ def param_type(param):
     if m and m.group(1).strip() and port_type(m.group(1)) is not None:
         return port_type(m.group(1) + (m.group(3) or ""))
     return port_type(p)
+
+
+def flatten(types):
+    out = []
+    for t in types:
+        out += t if isinstance(t, list) else [t]
+    return out
 
 
 def definitions():
@@ -174,7 +202,7 @@ def definitions():
             elif "..." in ps:
                 args = None
             else:
-                args = [param_type(p) for p in split_params(ps)]
+                args = flatten([param_type(p) for p in split_params(ps)])
             if ret is None or args is None or None in args:
                 found.setdefault(name, None)
                 continue
@@ -194,7 +222,7 @@ def definitions():
             ret_text, near, cdecl = split_head(prefix)
             ret = "void" if ret_text == "void" else port_type(ret_text)
             ps = params.strip()
-            args = [] if ps in ("", "void") else None if "..." in ps else [param_type(x) for x in split_params(ps)]
+            args = [] if ps in ("", "void") else None if "..." in ps else flatten([param_type(x) for x in split_params(ps)])
             d = None if ret is None or args is None or None in args else (ret, tuple(args), near, cdecl)
             seen.setdefault(name, set()).add(d)
     for name, ds in seen.items():

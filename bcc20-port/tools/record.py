@@ -96,6 +96,7 @@ INNER_BODIES = {
     "COUNT_SYMBOL_USES": ("IS_TRIVIAL_ARGUMENT", 0x63),           # INLINEXP.C
     "MAKE_VOID_ZERO_NODE": ("SIMPLIFY_BINARY", 0x23F),            # SIMPLIFY.C, after the switch table
     "BEGIN_SOURCE_FILE": ("SCAN_FILE_SYMBOLS_C", 0x258),          # SYMSCANC.C, after the switch table
+    "BCC_STMT_CHECK_TYPE_NEAR": ("STCTYPE", 0),                   # CDECL.C, under its row name
 }
 
 
@@ -160,6 +161,8 @@ def main():
     ap.add_argument("--emu2", default=os.environ.get("EMU2_TRACE_BIN",
                     str(modtest.EXHUME / "tools" / "emu2-trace" / "emu2")))
     ap.add_argument("--jobs", type=int, default=os.cpu_count() or 4)
+    ap.add_argument("--only", help="record only the compiles of this corpus test name")
+    ap.add_argument("--out", help="write the records here instead of records/")
     args = ap.parse_args()
 
     if args.all:
@@ -187,6 +190,8 @@ def main():
 
     jobs = [(name, path, opts, mode) for name, path, opts, steps in modtest.corpus()
             for modes in steps for mode in modes if mode in ("-c", "-S")]
+    if args.only:
+        jobs = [j for j in jobs if j[0] == args.only]
     if args.runs and args.runs < len(jobs):
         jobs = [jobs[i * len(jobs) // args.runs] for i in range(args.runs)]
     shutil.rmtree(WORK, ignore_errors=True)
@@ -243,7 +248,7 @@ def main():
                 kids = "".join(k for _, k in sorted(children.pop((off, int(head.split()[2])), [])))
                 if len(calls[name]) < args.max:
                     calls[name].setdefault(hashlib.sha1((body + kids).encode()).hexdigest(), body + kids)
-    out = PORT / "records"
+    out = Path(args.out) if args.out else PORT / "records"
     out.mkdir(exist_ok=True)
     for name, found in calls.items():
         (out / f"{name}.rec").write_text("".join(

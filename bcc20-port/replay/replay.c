@@ -203,6 +203,10 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     Record *c = &now.children[now.next++];
     if (getenv("REPLAY_TRACE"))
         fprintf(stderr, "    %u: %s (BCC.EXE: %s)\n", now.next, name, c->name);
+    /* REPLAY_WATCH=ADDR: a byte's value before each stand-in call (debugging) */
+    const char *watch = getenv("REPLAY_WATCH");
+    if (watch)
+        fprintf(stderr, "    watch %s = %02X before call %u (%s)\n", watch, mem[strtoul(watch, 0, 16)], now.next, name);
     /* what the overlay manager (not recorded as a call) wrote before this call */
     for (unsigned i = 0; i < c->n_runs; i++)
         if (c->runs[i].kind == 'X')
@@ -328,6 +332,7 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     memcpy(r, c->in, sizeof r);
     DGROUP = r[R_DS];
     scratch_release(0);
+    unset_results_clear();
     snprintf(hung, sizeof hung, "  %s call %u: %s did not return within 2 seconds\n", file,
              c->seq, fn->name);
     alarm(2);
@@ -364,6 +369,24 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
        the callers' frames) is left out, as above */
     u32 frame_lo = LIN(c->in[R_SS], frame_low(c));
     memcpy(mem + frame_lo, expect + frame_lo, stack_top - frame_lo);
+    /* a far pointer to one of the original's locals, left behind in memory (a dangling
+       pointer to a dead frame, as after an error path): the translation's local is in the
+       scratch area, so a scratch pointer stands for any address in the call's own frames */
+    for (u32 a = 0; a + 4 <= MEM_SIZE; a++)
+        if (mem[a] != expect[a])
+            for (u32 s = a >= 3 ? a - 3 : 0; s <= a && s + 4 <= MEM_SIZE; s++) {
+                u16 want_seg = expect[s + 2] | expect[s + 3] << 8, want_off = expect[s] | expect[s + 1] << 8;
+                u16 got_seg = mem[s + 2] | mem[s + 3] << 8;
+                if (want_seg == c->in[R_SS] && got_seg == SCRATCH_SEG && want_off >= frame_low(c) &&
+                    want_off < c->in[R_SP]) {
+                    memcpy(mem + s, expect + s, 4);
+                    break;
+                }
+            }
+    /* memory the translation marked as holding an unset value (port.h) */
+    for (u32 a = 0; a < MEM_SIZE; a++)
+        if (mem[a] != expect[a] && result_unset(a))
+            mem[a] = expect[a];
     if (memcmp(mem, expect, MEM_SIZE)) {
         unsigned shown = 0;
         for (u32 a = 0; a < MEM_SIZE; a++)

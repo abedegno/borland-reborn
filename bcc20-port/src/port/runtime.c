@@ -44,6 +44,28 @@ int scratch_unset(u16 offset)
     return 0;
 }
 
+/* memory left holding an unset value (port.h): linear ranges [lo, hi) */
+static u32 result_lo[32], result_hi[32];
+static unsigned n_results;
+
+void UNSET_RESULT(farptr p, u16 n)
+{
+    if (n_results < 32) {
+        result_lo[n_results] = LIN(FP_SEG(p), FP_OFF(p));
+        result_hi[n_results++] = LIN(FP_SEG(p), FP_OFF(p)) + n;
+    }
+}
+
+int result_unset(u32 linear)
+{
+    for (unsigned i = 0; i < n_results; i++)
+        if (linear >= result_lo[i] && linear < result_hi[i])
+            return 1;
+    return 0;
+}
+
+void unset_results_clear(void) { n_results = 0; }
+
 /* ---- arguments the original leaves unset (port.h) ---- */
 u32 unset_args;
 
@@ -120,6 +142,16 @@ static u32 call_entry(const Function *f, const FarArg *args, unsigned n)
     if (f->outs & OUT_AL)
         return (u8)r[R_AX];
     return (u32)r[R_DX] << 16 | r[R_AX];
+}
+
+/* the far code address the original pushes for a function passed as an argument (calls.h);
+   0 for a function with none */
+farptr code_address(const char *name)
+{
+    for (const CodeName *c = CODE_NAMES; c->function != 0xFFFF; c++)
+        if (!strcmp(ALL_FUNCTIONS[c->function].name, name))
+            return MK_FP(c->seg + (DGROUP - DGROUP_PARA), c->off);
+    return 0;
 }
 
 u32 call_far_args(farptr code, const FarArg *args, unsigned n)

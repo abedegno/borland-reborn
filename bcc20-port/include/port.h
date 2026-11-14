@@ -75,6 +75,13 @@ extern u32 unset_args;
 void UNSET_BYTES(farptr p, u16 n);
 int scratch_unset(u16 offset);
 
+/* Memory that receives such an unset value (stored by a translated callee): UNSET_RESULT(p,
+   n) says its n bytes end the call holding whatever the original's stack held, so replay
+   does not compare them.  The marks last until the next replayed call. */
+void UNSET_RESULT(farptr p, u16 n);
+int result_unset(u32 linear);
+void unset_results_clear(void);
+
 /* the data segment's paragraph from the load segment, for turning code addresses back
    into names (calls.h) */
 #define DGROUP_PARA 0x0DEF
