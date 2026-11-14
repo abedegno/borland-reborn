@@ -11,7 +11,7 @@ need no Borland header (`tests/golden/`, made locally by `tools/golden.py make`)
    calls recorded from BCC.EXE; 1629 functions, every recorded call matching.
 2. **Output for output** (`tools/nativetest.py`). Every compile step of the corpus runs in
    BCC.EXE and in the native build; the object or assembly files, the exit status and the
-   console text must be the same (1872 of 1878 steps; the other six are
+   console text must be the same (1874 of 1880 steps; the other six are
    [accepted known differences](NATIVE.md#known-differences)).
 
 ## Recording and replaying calls
@@ -92,6 +92,30 @@ based pointers and others. A test names its switches and steps in its first line
 modtest's do (`/* modtest: -ml -H */`, `/* modes: -c -c */`); the modes of a step run in
 order in one directory, so a second compile can load what the first saved. A test `NAME.C`
 with a `NAME.CFG` beside it gets that file as `TURBOC.CFG`.
+
+## A game's own build
+
+`tools/gametest.py GAME/BUILD/MAKEFILE` takes a decompiled game's Borland MAKE makefile and
+runs every C compile it lists in BCC.EXE and in the native build, each in a copy of the
+game's tree standing for drive C:, and compares the objects and console text. The game's
+sources stay in your own clone.
+
+Ultima 7 ([Kitrinx/Ultima7_Decomp](https://github.com/Kitrinx/Ultima7_Decomp), built with
+Borland C++ 2.0) was the first: all 922 C compiles of its eight programs (Black Gate and
+Serpent Isle) are the same. On the way it found three port bugs the corpus had not reached,
+each now covered by a port test:
+
+- the native heap moved the malloc pool, which BCC fixes, so a long `-I` list in a
+  configuration file lost its directories (`tests/IPATH.C`);
+- four accesses read a pool's segment before a call that can move the pool, which C allows
+  and BCC.EXE never does; `MACRO_DEFINED` lost include guards that way (`tests/MACGROW.C`;
+  `tools/segorder.py`, run by `make check`, finds the shape);
+- the native build passed host descriptors to BCC as DOS handles, and left directories of
+  finished searches open; handles are now numbered as DOS numbers them.
+
+It also showed what the port needed to build a game's tree as it stands: `BCC_ROOT`
+([NATIVE.md](NATIVE.md#environment-switches)) for absolute paths and `..\` out of the build
+directory.
 
 ## Looking into a failing call
 

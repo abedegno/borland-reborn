@@ -15,7 +15,8 @@ It is translated, function by function, from the byte-matched source in
 |---|---|
 | Translation | all of BCC.EXE's C and assembly, 1629 functions |
 | Checked call by call | every function, against calls recorded from BCC.EXE ([how](docs/CHECKING.md)) |
-| Output | 1872 of 1878 corpus compile steps identical to BCC.EXE; the other 6 are [failing compiles only](docs/NATIVE.md#known-differences) |
+| Output | 1874 of 1880 corpus compile steps identical to BCC.EXE; the other 6 are [failing compiles only](docs/NATIVE.md#known-differences) |
+| A real game | Ultima 7's own makefiles: all 922 C compiles identical to BCC.EXE ([how](docs/CHECKING.md#a-games-own-build)) |
 | Native build | `bcc`: runs without BCC.EXE or a DOS emulator, models BCC.EXE's stack limit ([details](docs/NATIVE.md)) |
 | Library | `libbcc20`: one compile in-process, memory to memory, well under a millisecond for a small function ([API](docs/LIBRARY.md)) |
 | Explain output | why each register was chosen, what was merged or removed ([format](docs/LIBRARY.md#explain-output)) |

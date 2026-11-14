@@ -17,11 +17,14 @@ else is read. BCC's code is not needed: all of it is translated.
   the environment and argc/argv (the command line cut to DOS's 126 characters), clears the
   BSS and calls the driver. BCC's exit comes back to the caller, so the same code serves the
   library.
-- **Files**: DOS handles are host descriptors. The drive's root is the current directory;
-  a name is cut to 8.3 when the host has no file under the full name. Find first and next
-  read host directories.
+- **Files**: DOS handles are numbered as DOS numbers them (the lowest free one from 5),
+  each standing for a host descriptor; BCC never sees the host's numbers. Drive C:'s root is
+  the current directory, or `BCC_ROOT` (below); a name is cut to 8.3 when the host has no
+  file under the full name. Find first and next read host directories.
 - **Heap** (`heap.c`): one bank of conventional memory, no EMS, extended memory or swap
   files, no overlays; pools grow and move as BCC expects (their handle words rewritten).
+  The malloc pool is fixed, as BCC fixes it (FIX_HEAP_NODE_LOW): its items point at one
+  another, so when it grows the blocks after it move instead.
 - **Stack model** (`stack.c`): see below.
 - **DOS programs** (TASM, TLINK) cannot run natively. With `BCC_DOS_RUNNER=emu2` they run in
   that emulator and their exit code comes back; without it the exec fails as for a missing
@@ -35,6 +38,7 @@ else is read. BCC's code is not needed: all of it is translated.
 | `BCC_EXPLAIN=1` | print the compiler's explanation of its choices ([LIBRARY.md](LIBRARY.md#explain-output)) |
 | `BCC_STACK_LIMIT=0` | no model of BCC.EXE's stack: a source nested too deeply for BCC.EXE compiles |
 | `BCC_DOS_RUNNER=emu2` | run TLINK and TASM in that DOS emulator |
+| `BCC_ROOT=DIR` | DIR stands for drive C:'s root, and the current directory is the DOS one under it: a makefile's `C:\BORLANDC\INCLUDE` or a `..\` out of the build directory work as in DOS, and TASM run through emu2 sees the same drive |
 | `BCC_SCRATCH_FILL=n` | fill each new translated local with byte n (finds results that depend on unset locals) |
 | `BCC_EMU2_FIND=1` | find and open names longer than 8.3 as emu2 does (the reference for the checks) |
 
@@ -78,7 +82,7 @@ does:
 
 ## Known differences
 
-Accepted on 2026-11-14. Six of the corpus's 1878 compile steps differ, all in compiles that
+Accepted on 2026-11-14. Six of the corpus's 1880 compile steps differ, all in compiles that
 fail in both, and only in their follow-on error messages, because BCC.EXE reads bytes it
 never set whose contents come from its DOS memory history. No compile that succeeds
 differs, so matching is not affected.
@@ -88,6 +92,13 @@ differs, so matching is not affected.
   left operand, and CHECK_DOT_MEMBER analyses node 0, the first bytes of the expression pool.
   In BCC.EXE they hold leftover memory carried along each time the heap moved the block, so
   one more message ("Left side must be a structure") appears.
+
+Found by the Ultima 7 test (CHECKING.md): BCC.EXE loses or hangs on a long `-I` list (in our
+tests from 13 directories of 9 characters in one option). Its malloc pool is fixed at the low end
+of the heap and can grow only while nothing else fixed lies above it; when it cannot, the
+directory nodes already made are lost or BCC loops in its out-of-memory handling. Ultima 7's
+makefiles give one directory a line for that reason. The port's heap always grows the pool,
+so the port compiles what BCC.EXE fails on; for a list BCC.EXE accepts the two agree.
 
 A macro called with too few arguments is the same kind of case: BCC.EXE expands the missing
 argument from pool memory the compile never wrote. The port's tests avoid it.

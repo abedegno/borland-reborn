@@ -226,7 +226,8 @@ void PARSE_ASM_JUMP_LABEL_ALT(u16 kind)
     u16 symbol = LOOKUP_SYMBOL(name, C_FUNCTION_SCOPE, 1);
     if (symbol == 0) {
         symbol = DECLARE_SYMBOL(name, C_FUNCTION_SCOPE, 1, 3, 0, 0, 0);
-        CSYM_W(symbol, CSYM_LABEL) = NEW_LABEL();
+        u16 label = NEW_LABEL();        /* NEW_LABEL may grow a pool: called first */
+        CSYM_W(symbol, CSYM_LABEL) = label;
     }
     CSYM_W(symbol, CSYM_FLAGS) |= 0x80;
     u16 node = NEW_JUMP_BLOCK(CSYM_W(symbol, CSYM_LABEL), TOKEN_FILE_NODE, TOKEN_LINE, TOKEN_FILE_NODE, TOKEN_LINE);

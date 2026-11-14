@@ -251,7 +251,8 @@ void PARSE_ASM_JUMP_LABEL(u16 kind)
     if (!label) {
         label = ALLOC_LABEL_RECORD();
         LABEL_W(label, LABEL_NAME) = name;
-        LABEL_W(label, LABEL_BLOCK) = NEW_LABEL_IF_ENABLED();
+        u16 block = NEW_LABEL_IF_ENABLED();     /* may grow the pool: called first */
+        LABEL_W(label, LABEL_BLOCK) = block;
         LABEL_W(label, LABEL_TEMPS) = 0;
         LABEL_W(label, LABEL_SERIAL_LOW) = 0;
         LABEL_W(label, LABEL_SERIAL_HIGH) = 0x7FFF;

@@ -101,7 +101,10 @@ i16 MACRO_DEFINED(farptr text)
         return 1;
     if (SB(text) == '_' && (SB(fp_add(text, 1)) == '_' || SB(fp_add(text, 1)) == 'W'))
         CALL_FAR0(BEGIN_BACKEND_OUTPUT_HOOK);
-    if (HLINK_W(BCC_SYMBOL_CREATE(text, 0), HLINK_MACRO))
+    /* the call first: it can grow the hash chain pool, whose segment HLINK_W reads (C does
+       not order the two; BCC.EXE calls first) */
+    u16 node = BCC_SYMBOL_CREATE(text, 0);
+    if (HLINK_W(node, HLINK_MACRO))
         return 1;
     return 0;
 }

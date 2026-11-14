@@ -3,6 +3,7 @@
 # never calls cannot be checked; they are listed, and do not fail the check.
 fail=0; unchecked=""
 python3 tools/aliascheck.py || fail=1
+python3 tools/segorder.py || fail=1
 for f in $(build/replay --list); do
     if [ ! -f "records/$f.rec" ]; then
         echo "$f: no records (python3 tools/record.py $f)"; fail=1; continue

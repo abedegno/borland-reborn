@@ -6,7 +6,9 @@
    (a pool that grows past its neighbour is copied elsewhere); every block records the
    default owner tag of its allocation, and FREE_TAG_NODES frees all blocks of a tag,
    clearing their handles; HEAP_ALLOC_HANDLE hands out heap-owned handle words.  Blocks are
-   zero-filled when allocated. */
+   zero-filled when allocated.  A block fixed with FIX_HEAP_NODE_LOW (the malloc pool, whose
+   items hold far pointers to one another) never moves: when it grows, the blocks in its way
+   move instead, as the original's RESIZE_NODE gathers free space above a fixed node. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,6 +22,7 @@ typedef struct {
     farptr handle;      /* the owner's word holding seg */
     u8 tag;
     u8 item;            /* the handle is a heap-owned item (HEAP_ALLOC_HANDLE) */
+    u8 fixed;           /* FIX_HEAP_NODE_LOW: never moves */
 } Block;
 
 #define MAX_BLOCKS 4096
@@ -87,7 +90,7 @@ static u16 new_block(farptr handle, u32 bytes, u8 item)
     if (!seg || block_count == MAX_BLOCKS)
         out_of_memory(bytes);
     memset(mem + LIN(seg, 0), 0, (size_t)paras * 16);
-    blocks[block_count++] = (Block){seg, paras, handle, HEAP_DEFAULT_OWNER_TAG, item};
+    blocks[block_count++] = (Block){seg, paras, handle, HEAP_DEFAULT_OWNER_TAG, item, 0};
     sort_blocks();
     W(handle) = seg;
     return seg;
@@ -121,8 +124,23 @@ u16 INIT_HEAP(u16 start, u16 limit, u16 descriptors, farptr callback, farptr swa
 
 u16 FIX_HEAP_NODE_LOW(farptr handle)
 {
-    (void)handle;
+    int i = find_block(W(handle));
+    if (i >= 0)
+        blocks[i].fixed = 1;
     return 0;
+}
+
+/* moves block i to the first gap that fits it (its handle follows) */
+static void move_block(int i)
+{
+    Block *b = &blocks[i];
+    u16 seg = find_gap(b->paras, i);
+    if (!seg)
+        out_of_memory((u32)b->paras * 16);
+    memmove(mem + LIN(seg, 0), mem + LIN(b->seg, 0), (size_t)b->paras * 16);
+    b->seg = seg;
+    W(b->handle) = seg;
+    sort_blocks();
 }
 
 u16 POOL_INIT(farptr handle, u16 bytes)
@@ -145,6 +163,26 @@ void RESIZE_POOL_BLOCK(farptr handle, u16 bytes)
         if (paras > b->paras)
             memset(mem + LIN(b->seg + b->paras, 0), 0, (size_t)(paras - b->paras) * 16);
         b->paras = paras;
+        return;
+    }
+    if (b->fixed) {
+        /* claim the space and move each block in it out of the way */
+        u16 seg = b->seg, old = b->paras;
+        if ((u32)seg + paras > heap_hi)
+            out_of_memory(bytes);
+        b->paras = paras;
+        for (;;) {
+            int k = find_block(seg), j = -1;
+            for (int n = 0; n < block_count; n++)
+                if (n != k && blocks[n].seg >= seg && blocks[n].seg < seg + paras) {
+                    j = n;
+                    break;
+                }
+            if (j < 0)
+                break;
+            move_block(j);
+        }
+        memset(mem + LIN(seg + old, 0), 0, (size_t)(paras - old) * 16);
         return;
     }
     u16 seg = find_gap(paras, i);

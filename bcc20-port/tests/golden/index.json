@@ -1801,6 +1801,38 @@
   "source": "bcc20-port/tests/INTRET.C",
   "status": 0
  },
+ "port-IPATH-c": {
+  "args": [
+   "-c",
+   "-O",
+   "-G",
+   "-P",
+   "+C:\\SRC\\IPATHU7.CFG",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/IPATH.C",
+  "status": 0
+ },
+ "port-MACGROW-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/MACGROW.C",
+  "status": 0
+ },
  "port-MEMBPTR-cpp-S": {
   "args": [
    "-S",

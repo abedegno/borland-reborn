@@ -34,8 +34,10 @@ behaviour the output depends on, for example).
    `u32`...), far pointers as `farptr` and memory through `B()`, `W()` and `D()`; globals by
    name, records through `pool.h` and the field constants. Far pointer arithmetic changes
    only the offset: use `fp_add`. Pseudo-registers become locals.
-   - A store into a pool record whose value comes from a call that may allocate puts the
-     value in a variable first: the call can move the pool.
+   - A call that may allocate is made before the pool is addressed, in a statement of its
+     own: `TYPE_W(r, F) = NEW_X()` and `HLINK_W(CREATE(name), F)` leave C free to read the
+     pool's segment first, and the call can move the pool (BCC.EXE always calls first).
+     `tools/segorder.py` (run by `make check`) finds such places.
    - Calls through BCC's code pointers use `CALL_FAR` / `CALL_NEAR` (`calls.h`).
    - A local whose address is passed on lives in the scratch area (`scratch_alloc`); keep
      the original frame's layout among several such locals.

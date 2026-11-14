@@ -100,8 +100,11 @@ typedef struct {
 } MemFile;
 static MemFile mem_files[64];
 static int n_mem_files;
-#define MEM_HANDLE 100          /* handles of memory files: MEM_HANDLE + slot */
-static struct { int file; size_t position; int used; } mem_handles[32];
+/* DOS file handles, as DOS and emu2 hand them out: the lowest free one from 5 (0 to 4 are
+   the standard devices).  Each is a host file descriptor, or in library mode a memory file.
+   BCC sees only these numbers, never the host's descriptors. */
+#define DOS_HANDLES 255
+static struct { int used; int fd; int file; size_t position; } handles[DOS_HANDLES];   /* fd -1: memory file */
 static char *console_text;
 static size_t console_size, console_capacity;
 
@@ -143,6 +146,8 @@ static void normalise(const char *dos, char *out, size_t size)
     out[n] = 0;
 }
 
+static i16 dos_result(int result, u16 error);
+
 static int find_mem_file(const char *dos)
 {
     char name[160];
@@ -153,16 +158,47 @@ static int find_mem_file(const char *dos)
     return -1;
 }
 
-static int open_mem_handle(int file)
+/* a new DOS handle for a host descriptor (or, fd -1, memory file file); -1 when all are in
+   use (DOS error 4, too many open files) */
+static int new_handle(int fd, int file)
 {
-    for (int h = 0; h < 32; h++)
-        if (!mem_handles[h].used) {
-            mem_handles[h].used = 1;
-            mem_handles[h].file = file;
-            mem_handles[h].position = 0;
-            return MEM_HANDLE + h;
+    for (int h = 5; h < DOS_HANDLES; h++)
+        if (!handles[h].used) {
+            handles[h].used = 1;
+            handles[h].fd = fd;
+            handles[h].file = file;
+            handles[h].position = 0;
+            return h;
         }
     return -1;
+}
+
+static int open_mem_handle(int file)
+{
+    return new_handle(-1, file);
+}
+
+/* a host descriptor opened for a DOS handle: the handle, or -1 with ERRNO set */
+static i16 host_handle(int fd, u16 error)
+{
+    if (fd < 0)
+        return dos_result(-1, error);
+    int h = new_handle(fd, -1);
+    if (h < 0) {
+        close(fd);
+        return dos_result(-1, 4);
+    }
+    return (i16)h;
+}
+
+/* the host descriptor of a DOS handle, -1 if none (the standard devices are the host's) */
+static int host_fd(i16 handle)
+{
+    if (handle >= 0 && handle < 5)
+        return handle < 3 ? handle : 2;
+    if (handle < 0 || handle >= DOS_HANDLES || !handles[handle].used)
+        return -1;
+    return handles[handle].fd;
 }
 
 static time_t clock_now(void) { return job && job->time ? (time_t)job->time : time(0); }
@@ -394,7 +430,23 @@ void C0_TERMINATE(i16 status)
 }
 
 /* ---- files ---- */
-/* a DOS path as the host's: '\' as '/', relative to the current directory */
+/* BCC_ROOT: the host directory standing for drive C:'s root; the current directory is then
+   the DOS current directory under it (a makefile's C:\BORLANDC\INCLUDE, a "..\" out of the
+   build directory).  Unset, the current directory is the root, as it was. */
+#ifdef _WIN32
+#define full_path(path, out) _fullpath((out), (path), 1024)
+#else
+#define full_path(path, out) realpath((path), (out))
+#endif
+
+static const char *drive_root(void)
+{
+    const char *root = job ? 0 : getenv("BCC_ROOT");
+    return root && *root ? root : 0;
+}
+
+/* a DOS path as the host's: '\' as '/', relative to the current directory, or to the drive
+   root when it starts at the root */
 static char *host_path(farptr name)
 {
     static char path[512];
@@ -406,9 +458,15 @@ static char *host_path(farptr name)
     char *start = path;
     if (n >= 2 && ((path[0] | 0x20) >= 'a' && (path[0] | 0x20) <= 'z') && path[1] == ':')
         start += 2;
+    int absolute = *start == '/';
     while (*start == '/')
         start++;
     memmove(path, start, strlen(start) + 1);
+    if (absolute && drive_root()) {
+        char rooted[1024];
+        snprintf(rooted, sizeof rooted, "%s/%s", drive_root(), path);
+        snprintf(path, sizeof path, "%s", rooted);
+    }
     if (!path[0])
         strcpy(path, ".");
     /* DOS cuts each name to 8.3 (STRSTREAM.H opens STRSTREA.H); the host's file under the
@@ -499,7 +557,7 @@ i16 RTL_OPEN(farptr name, i16 mode)
             return dos_result(open_mem_handle(n_mem_files++), 4);
         }
     }
-    i16 result = dos_result(open(host_path(name), modes[mode & 3]), 2);
+    i16 result = host_handle(open(host_path(name), modes[mode & 3]), 2);
     if (tracing())
         fprintf(stderr, "open %s -> %d\n", host_path(name), result);
     return result;
@@ -525,20 +583,20 @@ i16 RTL_CREAT(farptr name, i16 attribute)
         mem_files[file].size = 0;
         return dos_result(open_mem_handle(file), 4);
     }
-    return dos_result(open(host_path(name), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0644), 5);
+    return host_handle(open(host_path(name), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0644), 5);
 }
 
 static MemFile *mem_file_of(i16 handle)
 {
-    unsigned h = (unsigned)(handle - MEM_HANDLE);
-    return h < 32 && mem_handles[h].used ? &mem_files[mem_handles[h].file] : 0;
+    return handle >= 5 && handle < DOS_HANDLES && handles[handle].used && handles[handle].fd < 0
+        ? &mem_files[handles[handle].file] : 0;
 }
 
 i16 RTL_READ(i16 handle, farptr buffer, u16 count)
 {
     MemFile *f = mem_file_of(handle);
     if (f) {
-        size_t *position = &mem_handles[handle - MEM_HANDLE].position;
+        size_t *position = &handles[handle].position;
         size_t n = *position < f->size ? f->size - *position : 0;
         if (n > count)
             n = count;
@@ -546,14 +604,14 @@ i16 RTL_READ(i16 handle, farptr buffer, u16 count)
         *position += n;
         return (i16)n;
     }
-    return dos_result((int)read(handle, at(buffer), count), 6);
+    return dos_result((int)read(host_fd(handle), at(buffer), count), 6);
 }
 
 i16 RTL_WRITE(i16 handle, farptr buffer, u16 count)
 {
     MemFile *f = mem_file_of(handle);
     if (f) {
-        size_t *position = &mem_handles[handle - MEM_HANDLE].position;
+        size_t *position = &handles[handle].position;
         if (!f->owned) {            /* a job's file written to: BCC's own copy from now on */
             u8 *copy = malloc(f->size + 1);
             memcpy(copy, f->data, f->size);
@@ -580,14 +638,14 @@ i16 RTL_WRITE(i16 handle, farptr buffer, u16 count)
     }
     if (handle == 1)
         fflush(stdout);
-    return dos_result((int)write(handle, at(buffer), count), 6);
+    return dos_result((int)write(host_fd(handle), at(buffer), count), 6);
 }
 
 i32 RTL_LSEEK(i16 handle, i32 position, i16 whence)
 {
     MemFile *f = mem_file_of(handle);
     if (f) {
-        size_t *at_pos = &mem_handles[handle - MEM_HANDLE].position;
+        size_t *at_pos = &handles[handle].position;
         long long to = whence == 0 ? position : whence == 1 ? (long long)*at_pos + position : (long long)f->size + position;
         if (to < 0) {
             ERRNO = 6;
@@ -596,7 +654,7 @@ i32 RTL_LSEEK(i16 handle, i32 position, i16 whence)
         *at_pos = (size_t)to;
         return (i32)to;
     }
-    off_t result = lseek(handle, position, whence);
+    off_t result = lseek(host_fd(handle), position, whence);
     if (result < 0) {
         ERRNO = 6;
         return -1;
@@ -606,11 +664,10 @@ i32 RTL_LSEEK(i16 handle, i32 position, i16 whence)
 
 i16 RTL_CLOSE(i16 handle)
 {
-    if (mem_file_of(handle)) {
-        mem_handles[handle - MEM_HANDLE].used = 0;
-        return 0;
-    }
-    return dos_result(close(handle), 6);
+    if (handle < 5 || handle >= DOS_HANDLES || !handles[handle].used)
+        return dos_result(-1, 6);
+    handles[handle].used = 0;
+    return handles[handle].fd < 0 ? 0 : dos_result(close(handles[handle].fd), 6);
 }
 
 i16 DELETE_FILE(farptr path)
@@ -722,8 +779,11 @@ i16 FINDFIRST(farptr path, farptr record, i16 attribute)
     unsigned slot;
     for (slot = 0; slot < 16 && searches[slot].dir; slot++)
         ;
-    if (slot == 16)
+    if (slot == 16) {
         slot = 0;
+        closedir(searches[slot].dir);
+        searches[slot].dir = 0;
+    }
     char *host = host_path(path);
     char *slash = strrchr(host, '/');
     if (slash) {
@@ -911,8 +971,27 @@ i16 RTL_EXEC(farptr path, i8 mode, farptr block)
     for (char *word = strtok(text, " \t\r"); word && argc < 69; word = strtok(0, " \t\r"))
         argv[argc++] = word;
     argv[argc] = 0;
+    /* the child sees the same drive C: and current directory (emu2's settings) */
+    char cwd_env[300] = "", root_env[1100] = "";
+    if (drive_root()) {
+        char root[1024], cwd[1024], here[1024];
+        if (full_path(drive_root(), root) && getcwd(cwd, sizeof cwd) && full_path(cwd, here)) {
+            size_t k = strlen(root);
+            if (!strncmp(here, root, k) && (here[k] == '/' || here[k] == 0)) {
+                snprintf(root_env, sizeof root_env, "EMU2_DRIVE_C=%s", root);
+                int m = snprintf(cwd_env, sizeof cwd_env, "EMU2_CWD=C:\\%s", here[k] ? here + k + 1 : "");
+                for (int i = 0; i < m; i++)
+                    if (cwd_env[i] == '/')
+                        cwd_env[i] = '\\';
+            }
+        }
+    }
     fflush(stdout);
 #ifdef _WIN32
+    if (root_env[0]) {
+        _putenv(root_env);
+        _putenv(cwd_env);
+    }
     intptr_t code = _spawnvp(_P_WAIT, runner, (const char *const *)argv);
     if (code < 0) {
         ERRNO = 2;
@@ -926,6 +1005,10 @@ i16 RTL_EXEC(farptr path, i8 mode, farptr block)
         return -1;
     }
     if (child == 0) {
+        if (root_env[0]) {
+            putenv(root_env);
+            putenv(cwd_env);
+        }
         execvp(runner, argv);
         _exit(127);
     }
@@ -943,7 +1026,10 @@ static void reset_platform(void)
 {
     close_searches();
     memset(jumps, 0, sizeof jumps);
-    memset(mem_handles, 0, sizeof mem_handles);
+    for (int h = 5; h < DOS_HANDLES; h++)         /* files a run left open */
+        if (handles[h].used && handles[h].fd >= 0)
+            close(handles[h].fd);
+    memset(handles, 0, sizeof handles);
     native_stack_unwind(0);
     native_stack_enable(job ? job->stack_limit : -1);
     scratch_release(0);

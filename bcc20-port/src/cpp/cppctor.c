@@ -623,7 +623,8 @@ u16 COPY_PARAM_QUALIFIERS(u16 kind, u16 type)
         indirect = 1;
         type = TYPE_W(type, TYPE_TARGET);
     }
-    u16 parameter = TYPE_W(SYM_W(FIND_COPY_MEMBER(kind, type, indirect), SYM_TYPE), TYPE_PARAMS);
+    u16 member = FIND_COPY_MEMBER(kind, type, indirect);     /* called before the pool is read */
+    u16 parameter = TYPE_W(SYM_W(member, SYM_TYPE), TYPE_PARAMS);
     parameter = FORMAL_W(parameter, FORMAL_NEXT);
     if (kind == 5 && (CLASS_FLAGS(type) & 4))
         parameter = FORMAL_W(parameter, FORMAL_NEXT);
