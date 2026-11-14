@@ -28,12 +28,12 @@ jobs:
       run:
         shell: ${{ matrix.shell }}     # the runner context is not available here
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
         with:
-          msystem: MINGW64
-          install: make zip mingw-w64-x86_64-gcc mingw-w64-x86_64-python
+          msystem: UCRT64
+          install: make zip mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-python
       - name: Build
         run: make -C bcc20-port -j4 native lib shlib
       - name: Check against BCC.EXE's golden outputs
@@ -46,6 +46,9 @@ jobs:
           cp bcc bcc.exe bcc20run bcc20run.exe ../../dist/$name/ 2>/dev/null || true
           cp libbcc20.a libbcc20.so libbcc20.dylib libbcc20.dll ../../dist/$name/lib/ 2>/dev/null || true
           cd ../..
+          # the build keeps debug information (-g); the packages do not
+          strip dist/$name/bcc* || true
+          strip -S dist/$name/lib/* || true
           cp bcc20-port/include/bcc20.h dist/$name/include/
           cp LICENSE NOTICE.md dist/$name/
           cp bcc20-port/docs/RELEASE-README.md dist/$name/README.md
@@ -55,7 +58,7 @@ jobs:
           else
             tar czf $name.tar.gz $name
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: bcc20-${{ matrix.platform }}
           path: dist/bcc20-${{ matrix.platform }}.*
@@ -66,7 +69,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           path: dist
           merge-multiple: true
