@@ -9,10 +9,23 @@
 /* ---- the scratch area: grows up from SCRATCH_SEG:0 ---- */
 static u16 scratch_top;
 
+#ifdef PORT_NATIVE
+#include <stdlib.h>
+/* BCC_SCRATCH_FILL=n (native build): new locals filled with byte n, to find code that reads
+   a local the original never set (its value is then the original's stack garbage) */
+static int scratch_fill = -2;
+#endif
+
 farptr scratch_alloc(u16 bytes)
 {
     farptr p = MK_FP(SCRATCH_SEG, scratch_top);
     scratch_top += (bytes + 1) & ~1u;
+#ifdef PORT_NATIVE
+    if (scratch_fill == -2)
+        scratch_fill = getenv("BCC_SCRATCH_FILL") ? atoi(getenv("BCC_SCRATCH_FILL")) : -1;
+    if (scratch_fill >= 0)
+        memset(at(p), scratch_fill, bytes);
+#endif
     return p;
 }
 

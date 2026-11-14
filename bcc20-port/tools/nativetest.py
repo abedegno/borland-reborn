@@ -1,7 +1,9 @@
 """Compare the native build (build/bcc) with BCC.EXE over the corpus (README.md, "Plan",
 step 4): every compile step of every corpus test (-c and -S) runs in BCC.EXE under emu2 and
 in build/bcc, each in its own staged directory (tools/record.py's staging), and the output
-files (T.OBJ, T.ASM) and the console text must be the same.  The console's "Available
+files (T.OBJ, T.ASM) and the console text must be the same.  The port runs with
+BCC_EMU2_FIND set, so that like emu2 it neither cuts a name longer than 8.3 when it opens a
+file nor finds such a name with find first (DOS cuts it in both).  The console's "Available
 memory" figure comes from the heap and is left out of the comparison.
 
     python3 tools/nativetest.py [--runs N] [--only NAME] [--jobs J] [--keep]
@@ -44,7 +46,8 @@ def run_one(job, emu2, keep):
         else:
             cmd = [str(PORT / "build" / "bcc"), *args]
         try:
-            done = subprocess.run(cmd, cwd=d, capture_output=True, timeout=300)
+            env = dict(os.environ, BCC_EMU2_FIND="1", BCC_HEAP_CUT=os.environ.get("BCC_HEAP_CUT", "0"))     # emu2's find first (native.c)
+            done = subprocess.run(cmd, cwd=d, capture_output=True, timeout=300, env=env)
             out, rc = done.stdout.decode("latin1") + done.stderr.decode("latin1"), done.returncode
         except subprocess.TimeoutExpired:
             out, rc = "TIMEOUT", -1

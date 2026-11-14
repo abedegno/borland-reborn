@@ -1371,18 +1371,18 @@ u16 FLUSH_PENDING_POOL(void)
    TOKEN_POOL) or, without one, of a fresh string literal from the input; -1 at its end.
    In the pool text the bytes FCh and FBh are skipped, FFh quotes the next byte, a '\'
    starts an escape except inside a nested quote, and '"' or '\'' open and close such a
-   quote.  reset 0 starts with no quote open.  The original keeps the quote in a register
-   it clears only when reset is 0, so for a nonzero reset it starts with whatever the
-   caller left in the register; the port carries the quote over from the previous call
-   instead, the evident intent */
+   quote.  The original keeps the quote in DI and clears it only when reset is 0; for any
+   other reset it starts with the caller's DI.  Every caller reads a literal with
+   NEXT_LITERAL_CHAR(index++), the index in DI, so DI is then reset + 1: a quote that is no
+   character for small indexes, so a '\' is kept as it is (the doubled backslashes of
+   __FILE__ stay doubled), and one that is '"' for index 33.  The port starts from that
+   value, as every recorded call shows. */
 i16 NEXT_POOL_CHARACTER(i16 reset)
 {
-    static i16 quote;
 #define PENDING_BYTE(o) B(MK_FP(W(TOKEN_POOL_P), (o)))
     if (W(PENDING_STRING_TEXT_P) == 0)
         return DECODE_ESCAPE_CHAR(34);
-    if (reset == 0)
-        quote = 0;
+    i16 quote = reset == 0 ? 0 : (i16)(reset + 1);     /* the caller's DI */
     while (PENDING_BYTE(W(PENDING_STRING_TEXT_P)) == 0xFC || PENDING_BYTE(W(PENDING_STRING_TEXT_P)) == 0xFB)
         W(PENDING_STRING_TEXT_P)++;
     i16 value = PENDING_BYTE(W(PENDING_STRING_TEXT_P));

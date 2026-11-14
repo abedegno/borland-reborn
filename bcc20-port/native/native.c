@@ -113,7 +113,7 @@ int main(int argc, char **argv)
     memset(mem + LIN(DGROUP, BSS_START), 0, 0x10000 - BSS_START);
     env_seg = DGROUP + 0x1000;
     arg_seg = env_seg + ENV_PARAS;
-    u16 heap_start = arg_seg + ARG_PARAS, heap_end = SCRATCH_SEG;
+    u16 heap_start = arg_seg + ARG_PARAS, heap_end = (u16)(SCRATCH_SEG - (getenv("BCC_HEAP_CUT") ? atoi(getenv("BCC_HEAP_CUT")) : 0));
     /* the environment: no variables, then the program's path (DOS 3) */
     farptr env = MK_FP(env_seg, 0);
     B(env) = 0;
@@ -128,15 +128,31 @@ int main(int argc, char **argv)
     W(DSPTR(0x08)) = W(DSPTR(0x10)) = heap_end;
     W(DSPTR(0x12)) = W(DSPTR(0x16)) = PSP_SEG;
     W(DSPTR(0x14)) = env_seg;
-    /* argv: far pointers, then the strings */
-    farptr vector = MK_FP(arg_seg, 0);
-    farptr text = fp_add(vector, (argc + 1) * 4);
-    for (int i = 0; i < argc; i++) {
-        D(fp_add(vector, i * 4)) = text;
-        text = put_string(text, i == 0 ? "BCC.EXE" : argv[i]);
+    /* the command tail as DOS passes it: the arguments joined by blanks, at most 126
+       characters (a longer command line loses its end), split again at blanks and tabs
+       by the start-up code into argv: far pointers, then the strings */
+    char tail[128];
+    size_t length = 0;
+    for (int i = 1; i < argc; i++) {
+        if (i > 1 && length < 126)
+            tail[length++] = ' ';
+        for (const char *c = argv[i]; *c && length < 126; c++)
+            tail[length++] = *c;
     }
-    D(fp_add(vector, argc * 4)) = 0;
-    RMAIN13C((i16)argc, vector);
+    tail[length] = 0;
+    farptr vector = MK_FP(arg_seg, 0);
+    char *words[64];
+    int count = 0;
+    words[count++] = "BCC.EXE";
+    for (char *w = strtok(tail, " \t"); w && count < 63; w = strtok(0, " \t"))
+        words[count++] = w;
+    farptr text = fp_add(vector, (count + 1) * 4);
+    for (int i = 0; i < count; i++) {
+        D(fp_add(vector, i * 4)) = text;
+        text = put_string(text, words[i]);
+    }
+    D(fp_add(vector, count * 4)) = 0;
+    RMAIN13C((i16)count, vector);
     return 0;
 }
 
@@ -199,7 +215,7 @@ void C0_TERMINATE(i16 status)
 }
 
 /* ---- files ---- */
-/* a DOS path as the host's: the drive letter dropped, '\' as '/' */
+/* a DOS path as the host's: '\' as '/', relative to the current directory */
 static char *host_path(farptr name)
 {
     static char path[512];
@@ -216,6 +232,38 @@ static char *host_path(farptr name)
     memmove(path, start, strlen(start) + 1);
     if (!path[0])
         strcpy(path, ".");
+    /* DOS cuts each name to 8.3 (STRSTREAM.H opens STRSTREA.H); the host's file under the
+       full name is used when there is one (emu2 does the same), else the 8.3 one */
+    struct stat st;
+    if (stat(path, &st) == 0 || getenv("BCC_EMU2_FIND"))      /* emu2 does not cut names */
+        return path;
+    char cut[512];
+    size_t k = 0;
+    for (char *part = path; *part && k < sizeof cut - 16;) {
+        char *end = strchr(part, '/');
+        size_t length = end ? (size_t)(end - part) : strlen(part);
+        char *dot = memchr(part, '.', length);
+        size_t base = dot ? (size_t)(dot - part) : length;
+        if (strncmp(part, ".", length) && strncmp(part, "..", length)) {
+            memcpy(cut + k, part, base < 8 ? base : 8);
+            k += base < 8 ? base : 8;
+            if (dot) {
+                size_t ext = length - base - 1;
+                cut[k++] = '.';
+                memcpy(cut + k, dot + 1, ext < 3 ? ext : 3);
+                k += ext < 3 ? ext : 3;
+            }
+        } else {
+            memcpy(cut + k, part, length);
+            k += length;
+        }
+        if (!end)
+            break;
+        cut[k++] = '/';
+        part = end + 1;
+    }
+    cut[k] = 0;
+    strcpy(path, cut);
     return path;
 }
 
@@ -334,6 +382,20 @@ i16 FINDFIRST(farptr path, farptr record, i16 attribute)
     (void)attribute;
     if (tracing())
         fprintf(stderr, "find %s\n", host_path(path));
+    /* BCC_EMU2_FIND set (tools/nativetest.py): fail on a name longer than 8.3 as emu2's
+       find first does, where DOS would cut it to 8.3 and find the file */
+    if (getenv("BCC_EMU2_FIND")) {
+        const char *name = (const char *)at(path), *last = name;
+        for (const char *c = name; *c; c++)
+            if (*c == '\\' || *c == '/' || *c == ':')
+                last = c + 1;
+        const char *dot = strchr(last, '.');
+        size_t base = dot ? (size_t)(dot - last) : strlen(last);
+        if (base > 8 || (dot && strlen(dot + 1) > 3)) {
+            ERRNO = 2;
+            return -1;
+        }
+    }
     unsigned slot;
     for (slot = 0; slot < 16 && searches[slot].dir; slot++)
         ;
@@ -452,4 +514,48 @@ void RTL_ITOA10(i16 value, farptr buffer)
     char text[8];
     snprintf(text, sizeof text, "%d", value);
     put_string(buffer, text);
+}
+
+/* ---- programs (TASM, TLINK) ---- */
+/* searchpath (../bcc20/src/rtl/SEARCHP.C): file itself if it exists, else the first
+   directory of the DOS environment's PATH holding it, in the static SEARCH_BUFFER; 0 when
+   it is nowhere.  The native build's environment has no PATH. */
+farptr RTL_SEARCHPATH(farptr file)
+{
+    farptr buffer = DSPTR(0x8BCE);
+    struct stat st;
+    if (stat(host_path(file), &st) == 0) {
+        put_string(buffer, (const char *)at(file));
+        return buffer;
+    }
+    farptr path = RTL_GETENV(DSPTR(0x5C8E));      /* "PATH" */
+    if (!path)
+        return 0;
+    while (SB(path)) {
+        farptr end = path;
+        while (SB(end) && SB(end) != ';')
+            end = fp_add(end, 1);
+        u16 length = (u16)(FP_OFF(end) - FP_OFF(path));
+        memmove(at(buffer), at(path), length);
+        B(fp_add(buffer, length)) = 0;
+        if (length && SB(fp_add(buffer, length - 1)) != ':' && SB(fp_add(buffer, length - 1)) != '/' &&
+            SB(fp_add(buffer, length - 1)) != '\\')
+            B(fp_add(buffer, length++)) = '\\';
+        put_string(fp_add(buffer, length), (const char *)at(file));
+        if (stat(host_path(buffer), &st) == 0)
+            return buffer;
+        path = SB(end) ? fp_add(end, 1) : end;
+    }
+    return 0;
+}
+
+/* a DOS program cannot run in the native build: EXEC fails as for a file that is not
+   there (BCC then reports "Unable to execute command") */
+i16 RTL_EXEC(farptr path, i8 mode, farptr block)
+{
+    (void)path;
+    (void)mode;
+    (void)block;
+    ERRNO = 2;
+    return -1;
 }

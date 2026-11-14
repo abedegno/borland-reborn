@@ -350,6 +350,12 @@ u16 PARSE_ARRAY_DECLARATOR(u8 runtime, u16 type, u8 third, u16 low)
         expression = PARSE_ASSIGNMENT_EXPR(4);
         expression_bound = 1;
     } else {
+        /* after an error CONST_EXPR_VALUE_BODY leaves count as it was, and the original
+           never set it: a stack slot holding whatever an earlier call left.  Over the
+           corpus a small positive value gives the original's follow-on messages in every
+           case but one (where the slot held a huge value); the port starts it at 2 */
+        SD(count) = 2;
+        UNSET_BYTES(count, 4);
         CONST_EXPR_VALUE_BODY(4, count);
         if (SD(count) < 0 || (SD(count) == 0 && CPP_MODE)) {
             REPORT_CURRENT_TOKEN(MSG_ARRAY_MUST_HAVE_LEAST);
