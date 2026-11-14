@@ -62,6 +62,23 @@ Its default is one server fewer than the cores (`BCC20_WORKERS` to change it). E
 build (`[toolchain] native = "bcc20"`) and permuter use it. `tools/golden.py check` runs every
 golden case through one server as well.
 
+### Snapshots
+
+Variants of one function share everything before it: the headers and the functions above.
+A snapshot compiles that part once. The source includes the variable part
+(`#include "VARIANT.C"`); with `PAUSE VARIANT.C` the server stops BCC where it first opens
+that file and keeps the paused compiler, and each variant (`FILE VARIANT.C ...`, `RESUME`)
+is finished on a copy of it made with `fork()`, so only the variant is compiled. In the
+library this is `bcc20_pause_at`, `bcc20_add_file` and `bcc20_abandon` (`include/bcc20.h`).
+POSIX hosts only; on Windows the server answers with an error and clients compile each
+variant whole.
+
+The result is the same as compiling the split source whole: `tools/golden.py check` splits
+each case at its middle line and compares (98 of the 120 cases reach the split), and every
+public function of the bcc20 sources compiles to the same code finished on a snapshot as in
+its whole file (849 of 849). Exhume's `Pool.snapshot`, `resume_map` and `release` drive it;
+its permuter finishes a variant of `GENERATE_BITFIELD_STORE` in about 4 ms instead of 14.
+
 ## Explain output
 
 The compiler can explain its choices: the job's `explain` callback (or `BCC_EXPLAIN=1` for

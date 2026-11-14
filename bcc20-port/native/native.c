@@ -151,6 +151,52 @@ static void normalise(const char *dos, char *out, size_t size)
 
 static i16 dos_result(int result, u16 error);
 
+/* pausing (bcc20_pause_at): a run calls pause before it first opens the file named */
+static char pause_name[160];
+static void (*pause_callback)(void *);
+static void *pause_context;
+static int paused;
+
+void native_pause_at(const char *name, void (*pause)(void *), void *context)
+{
+    pause_name[0] = 0;
+    if (name) {
+        char full[160];
+        normalise(name, full, sizeof full);
+        const char *base = strrchr(full, '/');
+        snprintf(pause_name, sizeof pause_name, "%s", base ? base + 1 : full);
+    }
+    pause_callback = pause;
+    pause_context = context;
+}
+
+/* a file more for the run (during a pause), -1 if there is no room */
+int native_add_file(const char *name, const void *data, size_t size)
+{
+    if (n_mem_files == MAX_MEM_FILES)
+        return -1;
+    MemFile *f = &mem_files[n_mem_files++];
+    memset(f, 0, sizeof *f);
+    normalise(name, f->name, sizeof f->name);
+    f->data = (u8 *)data;
+    f->size = f->capacity = size;
+    return 0;
+}
+
+static void maybe_pause(const char *dos)
+{
+    if (!job || !pause_name[0] || paused)
+        return;
+    char full[160];
+    normalise(dos, full, sizeof full);
+    const char *base = strrchr(full, '/');
+    if (strcmp(base ? base + 1 : full, pause_name))
+        return;
+    paused = 1;
+    fflush(stdout);
+    pause_callback(pause_context);
+}
+
 static int find_mem_file(const char *dos)
 {
     char name[160];
@@ -212,6 +258,7 @@ int native_job_begin(const bcc20_job *j)
     job = j;
     n_mem_files = 0;
     console_size = 0;
+    paused = 0;
     if (j->n_files > BCC20_MAX_FILES)
         return -1;
     for (int i = 0; i < j->n_files; i++) {
@@ -581,6 +628,7 @@ i16 RTL_OPEN(farptr name, i16 mode)
 {
     static const int modes[] = {O_RDONLY | O_BINARY, O_WRONLY | O_BINARY, O_RDWR | O_BINARY, O_RDONLY | O_BINARY};
     if (job) {
+        maybe_pause((const char *)at(name));
         int file = find_mem_file((const char *)at(name));
         if (file >= 0)
             return dos_result(open_mem_handle(file), 4);

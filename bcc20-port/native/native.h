@@ -20,6 +20,8 @@ void native_stack_enable(int on);
 int native_run(int argc, const char *const *argv);
 int native_job_begin(const bcc20_job *job);
 void native_job_end(bcc20_result *result);
+void native_pause_at(const char *name, void (*pause)(void *), void *context);
+int native_add_file(const char *name, const void *data, size_t size);
 /* explain.c: where EXPLAIN's lines go for this run */
 void native_explain_begin(void (*callback)(void *, const char *), void *context);
 #endif

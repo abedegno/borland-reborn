@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "native.h"
+#include "protos.h"
 
 int bcc20_compile(const bcc20_job *job, bcc20_result *result)
 {
@@ -23,6 +24,22 @@ int bcc20_compile(const bcc20_job *job, bcc20_result *result)
     result->status = status;
     free(argv);
     return status;
+}
+
+void bcc20_pause_at(const char *name, void (*pause)(void *context), void *context)
+{
+    native_pause_at(name, pause, context);
+}
+
+int bcc20_add_file(const char *name, const void *data, size_t size)
+{
+    return native_add_file(name, data, size);
+}
+
+/* the run ends as if BCC had exited with status 255 (C0_TERMINATE's long jump) */
+void bcc20_abandon(void)
+{
+    C0_TERMINATE(255);
 }
 
 void bcc20_free(bcc20_result *result)

@@ -51,4 +51,14 @@ typedef struct {
 int bcc20_compile(const bcc20_job *job, bcc20_result *result);
 /* frees what bcc20_compile put in result */
 void bcc20_free(bcc20_result *result);
+
+/* Pausing a compile, for a server that keeps a paused compiler and forks a copy of it for
+   each variant of the rest of a source (bcc20run --serve, SNAPSHOT): in the compiles that
+   follow, when BCC first opens a file named name (its directory ignored), pause(context) is
+   called before the file is looked for.  Inside pause, bcc20_add_file gives the run another
+   file (the one about to be opened, say; data must outlive the run) and bcc20_abandon ends
+   the run at once (bcc20_compile then returns 255).  A NULL name stops pausing. */
+void bcc20_pause_at(const char *name, void (*pause)(void *context), void *context);
+int bcc20_add_file(const char *name, const void *data, size_t size);
+void bcc20_abandon(void);
 #endif

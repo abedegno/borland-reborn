@@ -149,6 +149,41 @@ class Server:
             b"".join(self.record("FILE", n, d) for n, d in files.items()) + b"RUN\n"
         self.proc.stdin.write(job)
         self.proc.stdin.flush()
+        return self.answer()
+
+    def snapshot_case(self, args, src, root):
+        """the case split at its middle line: the first half compiled once and paused, the
+        second finished on a copy (RESUME), against an ordinary compile of the same split
+        source; None where the host has no snapshots"""
+        lines = src.read_bytes().split(b"\n")
+        half = len(lines) // 2
+        main = b"\n".join(lines[:half]) + b'\n#include "VARIANT.C"\n'
+        rest = b"\n".join(lines[half:])
+        name = src.name
+        plain = self.run(args, {name: main, "VARIANT.C": rest}, root)
+        job = self.record("PAUSE", "VARIANT.C") + self.record("ROOT", str(root)) + f"TIME {STAMP}\n".encode() + \
+            b"".join(self.record("ARG", a) for a in args) + self.record("FILE", name, main) + b"RUN\n"
+        self.proc.stdin.write(job)
+        self.proc.stdin.flush()
+        first = self.proc.stdout.readline().strip()
+        if first == b"ERROR" or first.startswith(b"ERROR"):
+            raise SystemExit("server: " + self.proc.stdout.read(int(first.split()[1])).decode())
+        if first != b"PAUSED":           # the half never reaches the #include (an #error...)
+            self.proc.stdout.readline()
+            while not self.proc.stdout.readline().startswith(b"DONE"):
+                pass
+            self.proc.stdin.write(b"PAUSE 0\n")
+            return "not paused"
+        self.proc.stdin.write(self.record("FILE", "VARIANT.C", rest) + b"RESUME\n")
+        self.proc.stdin.flush()
+        resumed = self.answer()
+        self.proc.stdin.write(b"RELEASE\n")
+        self.proc.stdin.flush()
+        self.answer()
+        self.proc.stdin.write(b"PAUSE 0\n")
+        return "paused" if resumed == plain else False
+
+    def answer(self):
         status, console, outputs, out = None, "", {}, self.proc.stdout
         while True:
             words = out.readline().split()
@@ -212,7 +247,21 @@ def check():
             if problems:
                 failures += 1
                 print(f"{case} ({side}): " + "\n  ".join(problems))
+    snapshots = 0
+    if os.name != "nt":                 # snapshots fork: POSIX hosts
+        for case, want in sorted(index.items()):
+            with tempfile.TemporaryDirectory() as tmp:
+                d = Path(tmp)
+                src = stage(d, PORT.parent / want["source"])
+                outcome = server.snapshot_case(want["args"], src, d)
+                if not outcome:
+                    failures += 1
+                    print(f"{case} (snapshot): differs from an ordinary compile of the same split source")
+                snapshots += outcome == "paused"
     server.close()
+    if snapshots:
+        print(f"{snapshots} cases split, paused and finished on a snapshot the same as an ordinary "
+              "compile of the split source (the others never reach the split)")
     total = 3 * len(index)
     print(f"{total - failures} of {total} runs the same as BCC.EXE ({len(index)} cases: native, library, server)")
     return 1 if failures else 0

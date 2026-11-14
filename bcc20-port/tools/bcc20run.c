@@ -28,6 +28,13 @@
      ARG len             text        the next BCC argument of the job
      FILE namelen len    name data   a file of this job only (it hides a kept one)
      RUN                             compiles the job, answers, and starts an empty one
+     PAUSE len           name        a snapshot (POSIX hosts): RUN then stops BCC when it
+                                     first opens a file of that name, answers PAUSED, and
+                                     keeps the paused compiler; each variant is FILE records
+                                     then RESUME, which finishes a copy of the paused compile
+                                     with those files (the paused name among them) and
+                                     answers as RUN does; RELEASE ends the paused compile,
+                                     answered as RUN (status 255).  PAUSE 0 stops pausing.
      QUIT
 
    The answer to RUN is STATUS n, CONSOLE len + text, one OUTPUT namelen len + name data
@@ -37,6 +44,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bcc20.h"
+#ifndef _WIN32
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
 #ifdef _WIN32
 #include <fcntl.h>
 #include <io.h>
@@ -97,6 +108,61 @@ static void *read_bytes(size_t n)
     return data;
 }
 
+/* the paused compiler (PAUSE): copies of it finish each variant */
+static int in_child;
+
+static void paused(void *context)
+{
+    (void)context;
+#ifdef _WIN32
+    fail("no snapshot on this host");
+#else
+    char line[256];
+    Held variant[64];
+    int n = 0;
+    printf("PAUSED\n");
+    fflush(stdout);
+    while (fgets(line, sizeof line, stdin)) {
+        char tag[16];
+        unsigned long long a = 0, b = 0;
+        int got = sscanf(line, "%15s %llu %llu", tag, &a, &b);
+        if (got == 3 && !strcmp(tag, "FILE")) {
+            if (n == 64)
+                fail("more than 64 files in a variant");
+            variant[n].name = read_bytes((size_t)a);
+            variant[n].data = read_bytes((size_t)b);
+            variant[n].size = (size_t)b;
+            n++;
+        } else if (got >= 1 && !strcmp(tag, "RESUME")) {
+            fflush(stdout);
+            pid_t child = fork();
+            if (child < 0)
+                fail("fork failed");
+            if (child == 0) {           /* the copy: the variant's files, then on with the run */
+                in_child = 1;
+                for (int k = 0; k < n; k++)
+                    if (bcc20_add_file(variant[k].name, variant[k].data, variant[k].size))
+                        fail("no room for the variant's files");
+                return;
+            }
+            int status;
+            waitpid(child, &status, 0);
+            if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+                fail("a variant's compile crashed");
+            for (int k = 0; k < n; k++) {
+                free(variant[k].name);
+                free(variant[k].data);
+            }
+            n = 0;
+        } else if (got >= 1 && !strcmp(tag, "RELEASE"))
+            bcc20_abandon();
+        else
+            fail("only FILE, RESUME and RELEASE while paused");
+    }
+    exit(0);
+#endif
+}
+
 static int serve(void)
 {
     Held kept[BCC20_MAX_FILES], files[BCC20_MAX_FILES];
@@ -145,6 +211,12 @@ static int serve(void)
             stack_limit = a != 0;
         else if (!strcmp(tag, "EXPLAIN") && got == 2)
             explain = a != 0;
+        else if (!strcmp(tag, "PAUSE") && got == 2) {
+            static char *pause_name;
+            free(pause_name);
+            pause_name = a ? read_bytes((size_t)a) : 0;
+            bcc20_pause_at(pause_name, paused, 0);
+        }
         else if (!strcmp(tag, "ARG") && got == 2) {
             if (n_args == 256)
                 fail("more than 256 arguments");
@@ -185,6 +257,8 @@ static int serve(void)
             }
             printf("DONE\n");
             fflush(stdout);
+            if (in_child)               /* a variant's copy: its answer is all it gives */
+                _exit(0);
             bcc20_free(&result);
             free(explained.text);
             free(all);
