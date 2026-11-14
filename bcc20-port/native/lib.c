@@ -12,7 +12,12 @@ int bcc20_compile(const bcc20_job *job, bcc20_result *result)
     for (int i = 0; i < job->argc; i++)
         argv[i + 1] = job->argv[i];
     argv[job->argc + 1] = 0;
-    native_job_begin(job);
+    memset(result, 0, sizeof *result);
+    if (native_job_begin(job) != 0) {           /* more files than BCC20_MAX_FILES */
+        free(argv);
+        result->status = -1;
+        return -1;
+    }
     int status = native_run(job->argc + 1, argv);
     native_job_end(result);
     result->status = status;

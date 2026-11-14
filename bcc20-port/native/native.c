@@ -100,7 +100,8 @@ typedef struct {
     size_t size, capacity;
     int written, deleted, owned;
 } MemFile;
-static MemFile mem_files[64];
+#define MAX_MEM_FILES 4096       /* a job's files and the files BCC writes (bcc20.h) */
+static MemFile mem_files[MAX_MEM_FILES];
 static int n_mem_files;
 /* DOS file handles, as DOS and emu2 hand them out: the lowest free one from 5 (0 to 4 are
    the standard devices).  Each is a host file descriptor, or in library mode a memory file.
@@ -206,18 +207,21 @@ static int host_fd(i16 handle)
 static time_t clock_now(void) { return job && job->time ? (time_t)job->time : time(0); }
 
 /* lib.c: the files of a job, before a run */
-void native_job_begin(const bcc20_job *j)
+int native_job_begin(const bcc20_job *j)
 {
     job = j;
     n_mem_files = 0;
     console_size = 0;
-    for (int i = 0; i < j->n_files && n_mem_files < 64; i++) {
+    if (j->n_files > BCC20_MAX_FILES)
+        return -1;
+    for (int i = 0; i < j->n_files; i++) {
         MemFile *f = &mem_files[n_mem_files++];
         memset(f, 0, sizeof *f);
         normalise(j->files[i].name, f->name, sizeof f->name);
         f->data = (u8 *)j->files[i].data;
         f->size = f->capacity = j->files[i].size;
     }
+    return 0;
 }
 
 /* lib.c: what the run wrote, after it */
@@ -583,7 +587,7 @@ i16 RTL_OPEN(farptr name, i16 mode)
         if (mode & 3) {             /* the host is never written in library mode: a root
                                        file opened for writing is copied into memory first */
             FILE *host = fopen(host_path(name), "rb");
-            if (!host || n_mem_files == 64) {
+            if (!host || n_mem_files == MAX_MEM_FILES) {
                 if (host)
                     fclose(host);
                 return dos_result(-1, host ? 4 : 2);
@@ -614,7 +618,7 @@ i16 RTL_CREAT(farptr name, i16 attribute)
     if (job) {
         int file = find_mem_file((const char *)at(name));
         if (file < 0) {
-            if (n_mem_files == 64)
+            if (n_mem_files == MAX_MEM_FILES)
                 return dos_result(-1, 4);
             file = n_mem_files++;
             memset(&mem_files[file], 0, sizeof mem_files[file]);

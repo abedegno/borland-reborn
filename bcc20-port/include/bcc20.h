@@ -12,6 +12,8 @@
 #define BCC20_H
 #include <stddef.h>
 
+#define BCC20_MAX_FILES 4000    /* a job's files; bcc20_compile returns -1 for more */
+
 typedef struct {
     const char *name;           /* a DOS name, as BCC will ask for it: "T.C", "PROJ\\X.H" */
     const void *data;
@@ -22,7 +24,7 @@ typedef struct {
     int argc;                   /* BCC's arguments, without the program's own name */
     const char *const *argv;
     const bcc20_file *files;    /* the files BCC may read */
-    int n_files;
+    int n_files;                /* at most BCC20_MAX_FILES */
     const char *root;           /* host directory for any other file, or NULL */
     long long time;             /* the clock and the files' times, in seconds since 1970;
                                    0 for the host's clock */
@@ -44,7 +46,8 @@ typedef struct {
     int n_outputs;
 } bcc20_result;
 
-/* runs the job; returns BCC's exit status (also in result->status) */
+/* runs the job; returns BCC's exit status (also in result->status), or -1 without running
+   when the job has more than BCC20_MAX_FILES files */
 int bcc20_compile(const bcc20_job *job, bcc20_result *result);
 /* frees what bcc20_compile put in result */
 void bcc20_free(bcc20_result *result);

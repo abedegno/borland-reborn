@@ -11,7 +11,8 @@ headers) come from memory, every file BCC writes (object file, listing, precompi
 comes back in the result, and so does the console text. Each call starts BCC afresh, its
 whole memory image reloaded, so compiles never share state. Files the job does not hold are
 read from its root directory (standing for `C:\`, the toolchain's headers for example); the
-host is never written. One compile at a time per process.
+host is never written. One compile at a time per process. A job holds at most `BCC20_MAX_FILES` (4000)
+files; `bcc20_compile` returns -1 without running for more.
 
 ```c
 #include "bcc20.h"
@@ -32,7 +33,9 @@ bcc20_compile(&job, &result);     /* result.outputs[0] is T.OBJ */
 bcc20_free(&result);
 ```
 
-A small function compiles in well under a millisecond. `build/bcc20run` drives the library
+A small function compiles in well under a millisecond. Exhume's `tools/build.py` uses the library for
+projects on the Borland C++ 2.0 profile with `[toolchain] native = "bcc20"` (Exhume's
+docs/config.md). `build/bcc20run` drives the library
 from the command line (`--file NAME=PATH`, `--root DIR`, `--time T`, `--repeat N`,
 `--explain PATH`); `tools/nativetest.py --lib` runs the whole corpus through it, each
 compile twice in one process.
