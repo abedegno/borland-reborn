@@ -51,6 +51,18 @@ STRUCT_ARGUMENTS = {
     # qualifier}, name): the 3-byte structure takes 4 bytes; its high word is the qualifier
     # and a pad byte, which is not compared
     "DECLARE_TYPEDEF": ("void", ["u16", "u8", "u16", "u16"], False, False),
+    # parser/EXTDECL.C DECLARE_VARIABLE(input, name, token, defining, struct
+    # DeclarationAttributes): the structure's high word (qualifier and a pad byte) first
+    "DECLARE_VARIABLE": ("u16", ["u16", "u16", "u16", "u8", "u8", "u16"], False, False),
+    # parser/OPPREC.C BUILD_IDENTIFIER_NODE(type, token, struct C77Record6 {first, second,
+    # third}): the structure's words last first
+    "BUILD_IDENTIFIER_NODE": ("u16", ["u16", "farptr", "u16", "u16", "u16"], False, False),
+    # parser/CDECLR.C BCC_STMT_BEGIN(struct Flags {first, second, third}): returns the
+    # structure through a hidden far pointer pushed before it (retf 8), and that pointer's
+    # offset in AX; the structure's high word is third and a pad byte, not compared
+    "BCC_STMT_BEGIN": ("u16", ["farptr", "u8", "u16"], False, False),
+    # parser/CDECLR.C NEW_DECLARATOR_NODE(kind, value, first, second, flags, struct Flags)
+    "NEW_DECLARATOR_NODE": ("u16", ["u16", "i32", "u16", "u16", "u8", "u8", "u16"], True, False),
 }
 RETURN_OVERRIDES = {
     "PARSE_PP_IF_EXPRESSION": "i16",    # CPRAGFN.C: EVAL_EXPRESSION hook, PARSE_CONSTANT_EXPR's AX

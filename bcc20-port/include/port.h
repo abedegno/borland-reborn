@@ -62,6 +62,19 @@ farptr scratch_alloc(u16 bytes);
 u16 scratch_mark(void);
 void scratch_release(u16 mark);
 
+/* An argument the original passes from a local it never set (a stack slot holding whatever
+   an earlier call left there) cannot be reproduced.  UNSET_ARGS(mask) before a call of a
+   stand-in says which of its arguments (bit 0 the first) are such: replay does not compare
+   them, and the mask is cleared by that call.  The translation passes 0 for them. */
+extern u32 unset_args;
+#define UNSET_ARGS(mask) (unset_args = (mask))
+
+/* The same for a local in the scratch area that the original never sets before a stand-in
+   reads it: UNSET_BYTES(p, n) says its n bytes hold whatever the original's stack held, so
+   replay does not compare that stand-in read.  It lasts until the scratch is released. */
+void UNSET_BYTES(farptr p, u16 n);
+int scratch_unset(u16 offset);
+
 /* the data segment's paragraph from the load segment, for turning code addresses back
    into names (calls.h) */
 #define DGROUP_PARA 0x0DEF

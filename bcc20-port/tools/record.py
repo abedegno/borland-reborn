@@ -95,6 +95,7 @@ INNER_BODIES = {
     "REASSOCIATE_OPERANDS": ("BCC_EXPR_6CC3", 0),                 # CONSTFLD.C, under its row name
     "COUNT_SYMBOL_USES": ("IS_TRIVIAL_ARGUMENT", 0x63),           # INLINEXP.C
     "MAKE_VOID_ZERO_NODE": ("SIMPLIFY_BINARY", 0x23F),            # SIMPLIFY.C, after the switch table
+    "BEGIN_SOURCE_FILE": ("SCAN_FILE_SYMBOLS_C", 0x258),          # SYMSCANC.C, after the switch table
 }
 
 
@@ -195,6 +196,7 @@ def main():
     env_at = ",".join(f"{o:X}" for o in wanted)
     env_inner = ",".join(f"{o:X}" for o in inner)
     env_ignore = ignored_code()
+    env_unwind = f"{offsets['C45_LONGJUMP']:X}"     # the run-time library's long jump
 
     def run(job):
         index, (name, path, opts, mode) = job
@@ -205,6 +207,7 @@ def main():
         src = d / modtest.source_name(path)
         shutil.copy(path, src)
         env = dict(os.environ, EMU2_RECORD=str(d / "rec"), EMU2_RECORD_AT=env_at,
+                   EMU2_RECORD_UNWIND=env_unwind,
                    EMU2_RECORD_INNER=env_inner, EMU2_RECORD_IGNORE=env_ignore,
                    EMU2_RECORD_MAX=str(args.per_run))
         try:

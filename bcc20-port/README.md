@@ -23,7 +23,10 @@ conditional compilation, the #if evaluators), types and symbols (the identifier 
 records, sizes and compatibility, struct layout, the C symbol table) and all the expression
 files of `../bcc20/src/expr` (the C++ analyser and its checkers, conversions, call checking,
 inline expansion, the simplifier, constant folding, lowering for the back end, and the C
-front end's expression parser and node builders): 473 functions, each matching every call
+front end's expression parser and node builders), and most of the parser (`../bcc20/src/parser`:
+the C front end's top level, declarators and statements, the C++ front end's file-level
+declarations, initializers, function definitions, look-ahead and operator-precedence
+expression parser, inline asm statements): 541 functions checked, each matching every call
 recorded over the whole corpus. A few are never reached by the corpus and are not checked
 yet (`make check` lists them). Nothing compiles yet.
 
@@ -146,6 +149,10 @@ translation keeps on purpose (an original bug the output depends on, for example
      in OF) is computed: a signed overflow test, or a port global the helper's
      translation sets (`include/overflow.h`). Shift counts are taken modulo 32, as the
      80186 does (and emu2).
+   - An argument the original passes from a local it never set cannot be reproduced: pass
+     0 and say so with `UNSET_ARGS(mask)` just before the call of the stand-in (bit 0 the
+     first argument), so the replay skips it; list the place below. A scratch local the
+     original never sets before a stand-in reads it gets `UNSET_BYTES(p, n)` instead.
    - Where several arguments of one call are themselves calls, put them in variables in
      Turbo C's order: left to right for a pascal function, right to left for cdecl. C
      leaves the order open, and the replay checks the order of the calls.
@@ -181,14 +188,31 @@ Places where the original's behaviour depends on something a port does not have:
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
 - **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C), **FOLD_EXPRESSION**
-  (CONSTFLD.C), **SUBSTITUTE_PARAMETERS** (INLINEXP.C), **SIMPLIFY_NODE** (SIMPLIFY.C) and
-  **STEVALN** (EXPRPARS.C) stop with "out of memory" when the 8086 stack pointer drops below
+  (CONSTFLD.C), **SUBSTITUTE_PARAMETERS** (INLINEXP.C), **SIMPLIFY_NODE** (SIMPLIFY.C),
+  **STEVALN** (EXPRPARS.C) and **PARSE_DECLARATOR_TREE** (CDECLR.C) stop with "out of memory" when the 8086 stack pointer drops below
   8F0Ch, which only a very deeply nested expression reaches. The port has no such stack and
   leaves the check out; the native build could limit the nesting depth instead, if it wants
   the same error.
 - **PARSE_INLINE_STATEMENT** (INLINEXP.C) returns an unset register (the caller's SI) for a
   stray "else" or a token that cannot start a statement in an inline body. The port returns
   0; the native build should do the same, or report the error and stop expanding.
+- **PARSE_STATEMENT_C** (STMTC.C) passes an unset local (the line where a for loop's test
+  ends) to NEW_BRANCH_BLOCK when the test starts on the line of the loop's initialisation,
+  as in `for (i = 0; i < n; i++)`. The value is whatever an earlier call left in that stack
+  slot. The port passes 0 and tells the replay not to compare it (`UNSET_ARGS`, port.h). The
+  native build must find out whether the value reaches the output (a debug line number?)
+  and, if it does, what the original's stack held there.
+- **DECLARE_VARIABLE** (EXTDECL.C) redeclaring a far array without an initializer in C++
+  passes an unset local (prepared) to the segment hook when automatic far data did not set
+  it. The port passes 0.
+- **DECLARE_FUNCTION** (EXTDECL.C) leaves its `changed` flag unset when it passes it to
+  MERGE_FUNCTION_DECLARATION, and in C++ BCC_TYPE_MATCH may read it before setting it. The
+  port marks the byte unset for the replay (`UNSET_BYTES`, port.h); the native build must
+  check what BCC_TYPE_MATCH does with it.
+- **PARSE_EXPRESSION_PREC** (OPPREC.C) reads its paren and bracket counts unset in its error
+  recovery when the expression did not start with an expression token (`if ()`), so
+  whether it steps over a closing parenthesis there depends on an earlier call's stack. The
+  port uses 0 (never steps over); the native build should do the same.
 - **The "Available memory" line** BCC prints is computed from its heap. The native heap must
   report the same figure, or the console text of every compile differs.
 

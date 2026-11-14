@@ -211,7 +211,11 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
         fail("%s calls %s, where BCC.EXE called %s (its call %u)", now.fn->name, name, c->name,
              now.next);
     now.n_map = 0;
+    u32 unset = unset_args;      /* arguments the original passes unset (port.h) */
+    unset_args = 0;
     for (unsigned i = 0; i < n; i++) {
+        if (i < 32 && (unset >> i & 1))
+            continue;
         u32 want = 0;
         for (unsigned b = 0; b < args[i].size; b++)
             want |= (u32)c->stack[args[i].off + b] << (8 * b);
@@ -238,6 +242,9 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
                 u32 a = c->runs[i].lin + j;
                 if (in_window(a))
                     a = mapped(a);
+                if (a >= LIN(SCRATCH_SEG, 0) && a < LIN(SCRATCH_SEG, 0) + 0x10000 &&
+                    scratch_unset((u16)(a - LIN(SCRATCH_SEG, 0))))
+                    continue;   /* a local the original leaves unset (port.h) */
                 if (a && mem[a] != c->runs[i].bytes[j])
                     fail("before %s calls %s, byte %05X is %02X, BCC.EXE had %02X", now.fn->name,
                          name, a, mem[a], c->runs[i].bytes[j]);

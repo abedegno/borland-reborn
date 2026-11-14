@@ -17,7 +17,35 @@ farptr scratch_alloc(u16 bytes)
 
 u16 scratch_mark(void) { return scratch_top; }
 
-void scratch_release(u16 mark) { scratch_top = mark; }
+/* scratch bytes the original leaves unset (port.h): offset ranges [lo, hi) */
+static u16 unset_lo[16], unset_hi[16];
+static unsigned n_unset;
+
+void scratch_release(u16 mark)
+{
+    scratch_top = mark;
+    while (n_unset && unset_lo[n_unset - 1] >= mark)
+        n_unset--;
+}
+
+void UNSET_BYTES(farptr p, u16 n)
+{
+    if (FP_SEG(p) == SCRATCH_SEG && n_unset < 16) {
+        unset_lo[n_unset] = FP_OFF(p);
+        unset_hi[n_unset++] = FP_OFF(p) + n;
+    }
+}
+
+int scratch_unset(u16 offset)
+{
+    for (unsigned i = 0; i < n_unset; i++)
+        if (offset >= unset_lo[i] && offset < unset_hi[i])
+            return 1;
+    return 0;
+}
+
+/* ---- arguments the original leaves unset (port.h) ---- */
+u32 unset_args;
 
 /* ---- calls through code pointers ---- */
 
