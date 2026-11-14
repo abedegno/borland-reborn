@@ -73,15 +73,18 @@ jobs:
         with:
           path: dist
           merge-multiple: true
-      - uses: softprops/action-gh-release@v2
-        with:
-          name: "Borland C++ 2.0 native compiler ${{ github.ref_name }}"
-          files: dist/*
-          body: |
-            `bcc` (Borland C++ 2.0's command-line compiler as a native program) and `libbcc20`
-            (one compile in-process, memory to memory), for Linux, macOS and Windows. Each build
-            was checked against BCC.EXE's own outputs before release.
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > notes.md <<'NOTES'
+          `bcc` (Borland C++ 2.0's command-line compiler as a native program) and `libbcc20`
+          (one compile in-process, memory to memory), for Linux, macOS and Windows. Each build
+          was checked against BCC.EXE's own outputs before release.
 
-            Borland's headers and libraries are not included: `bcc` needs Borland C++ 2.0's
-            `INCLUDE` directory (see the README in each archive). The compiler contains data
-            from Borland's BCC.EXE; read NOTICE.md.
+          Borland's headers and libraries are not included: `bcc` needs Borland C++ 2.0's
+          `INCLUDE` directory (see the README in each archive). The compiler contains data
+          from Borland's BCC.EXE; read NOTICE.md.
+          NOTES
+          gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" \
+            --title "Borland C++ 2.0 native compiler $GITHUB_REF_NAME" --notes-file notes.md
