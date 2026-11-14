@@ -19,14 +19,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: ubuntu-24.04, platform: linux-x86_64 }
-          - { os: ubuntu-24.04-arm, platform: linux-arm64 }
-          - { os: macos-15, platform: macos-arm64 }
-          - { os: windows-2025, platform: windows-x86_64 }
+          - { os: ubuntu-24.04, platform: linux-x86_64, shell: bash }
+          - { os: ubuntu-24.04-arm, platform: linux-arm64, shell: bash }
+          - { os: macos-15, platform: macos-arm64, shell: bash }
+          - { os: windows-2025, platform: windows-x86_64, shell: "msys2 {0}" }
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        shell: ${{ runner.os == 'Windows' && 'msys2 {0}' || 'bash' }}
+        shell: ${{ matrix.shell }}     # the runner context is not available here
     steps:
       - uses: actions/checkout@v4
       - if: runner.os == 'Windows'
