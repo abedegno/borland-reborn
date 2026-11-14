@@ -339,7 +339,7 @@ u16 PARSE_ARRAY_DECLARATOR(u8 runtime, u16 type, u8 third, u16 low)
     struct Spec spec = { (i8)low, (i8)(low >> 8), (i8)third };
     u16 mark = scratch_mark();
     farptr count = scratch_alloc(4);
-    u8 expression_bound = 0;
+    u8 expression_bound = 0, count_unset = 0;
     u16 expression = 0;
     if ((EXPR_FLAGS_AT(T(type, 0)) & 0x14) && (TB(type, 2) & 0x20))
         REPORT_CURRENT_TOKEN(MSG_ARRAY_REFERENCES_NOT);
@@ -356,7 +356,9 @@ u16 PARSE_ARRAY_DECLARATOR(u8 runtime, u16 type, u8 third, u16 low)
            case but one (where the slot held a huge value); the port starts it at 2 */
         SD(count) = 2;
         UNSET_BYTES(count, 4);
+        u16 errors = ERROR_COUNT;
         CONST_EXPR_VALUE_BODY(4, count);
+        count_unset = ERROR_COUNT != errors && SD(count) == 2;   /* still the preset */
         if (SD(count) < 0 || (SD(count) == 0 && CPP_MODE)) {
             REPORT_CURRENT_TOKEN(MSG_ARRAY_MUST_HAVE_LEAST);
             SD(count) = 1;
@@ -377,8 +379,11 @@ u16 PARSE_ARRAY_DECLARATOR(u8 runtime, u16 type, u8 third, u16 low)
         T(result, 13) = expression;
         T(result, 11) = 0;
         T(result, 9) = 0;
-    } else
+    } else {
         TYPE_L(result, TYPE_PARAMS) = SD(count);
+        if (count_unset)
+            UNSET_RESULT(MK_FP(TYPE_POOL, result + TYPE_PARAMS), 4);
+    }
     if (spec.second == 10)
         TB(result, 2) |= 0x40;
     if (TB(type, 2) & 4)
@@ -885,6 +890,7 @@ u16 PARSE_RECORD_SPECIFIER(u16 token, u8 allow_forward)
         return S(symbol, 4);
     u16 saved_special = BCC_TREE_SPECIAL;
     BCC_TREE_SPECIAL = 0;
+    u8 saved = BCC_TREE_FLAG != 0;
     if (BCC_TREE_FLAG++)
         for (int i = 0; i < CONTEXT_SIZE; i++)
             saved_context[i] = B(fp_add(STRUCT_BODY_TYPE_P, i));
@@ -917,9 +923,18 @@ u16 PARSE_RECORD_SPECIFIER(u16 token, u8 allow_forward)
     u16 type = STRUCT_BODY_TYPE;
     if (snapshot != ERROR_COUNT)
         CL(type, 24) |= 0x200;
-    if (--BCC_TREE_FLAG)
-        for (int i = 0; i < CONTEXT_SIZE; i++)
-            B(fp_add(STRUCT_BODY_TYPE_P, i)) = saved_context[i];
+    if (--BCC_TREE_FLAG) {
+        /* match: an inner definition that took the malformed-entry exit above left the
+           count raised, so an outer definition that saved nothing (the count was 0 when
+           it started) restores its never-written buffer: BCC.EXE's stack garbage.  The
+           port leaves the state as it is and marks it unset for the replay (README.md,
+           "Decisions for the native build") */
+        if (saved)
+            for (int i = 0; i < CONTEXT_SIZE; i++)
+                B(fp_add(STRUCT_BODY_TYPE_P, i)) = saved_context[i];
+        else
+            UNSET_RESULT(STRUCT_BODY_TYPE_P, CONTEXT_SIZE);
+    }
     CURRENT_CLASS_TYPE = saved_scope;
     BCC_TREE_SPECIAL = saved_special;
     return type;

@@ -57,6 +57,7 @@ static const char *REG[13] = {"AX", "BX", "CX", "DX", "SP", "BP", "SI", "DI",
 
 typedef struct {
     unsigned at, seq, steps, bios, child;
+    unsigned noreturn;            /* NORETURN: ended by a long jump or the program's exit */
     u16 min_sp;                   /* FRAME: the lowest SP of the call */
     char name[64];
     u16 in[13], out[13];
@@ -130,6 +131,10 @@ static Record *read_records(const char *file, unsigned *count)
             regs(line + 3, c->in);
         else if (!strncmp(line, "OUT", 3))
             regs(line + 3, c->out);
+        else if (!strncmp(line, "NORETURN", 8)) {
+            c->noreturn = 1;        /* no registers out: SP as at entry */
+            memcpy(c->out, c->in, sizeof c->out);
+        }
         else if (!strncmp(line, "S ", 2))
             hex_bytes(line + 2, c->stack);
         else if (line[0] == 'R' || line[0] == 'W' || line[0] == 'X')
@@ -159,6 +164,7 @@ static struct {
     const char *file;
     int verbose;
     jmp_buf fail;
+    jmp_buf noreturn;             /* a NORETURN record's last child jumps back here */
 } now;
 
 static void fail(const char *fmt, ...)
@@ -200,6 +206,16 @@ static u32 mapped(u32 a)
     return 0;
 }
 
+/* the translation's near scratch area as allocated now: the original's frames lie at the
+   same DGROUP addresses, and what a child wrote there (a buffer in the call's own frame)
+   is the original's, not the translation's, so it is not applied (and the final check
+   leaves those frames out) */
+static int in_live_near_scratch(u32 a)
+{
+    u32 lo = LIN(DGROUP, near_scratch_top), hi = LIN(DGROUP, near_scratch_base);
+    return a >= lo && a < hi;
+}
+
 u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n)
 {
     if (now.next >= now.n_children)
@@ -211,10 +227,14 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     const char *watch = getenv("REPLAY_WATCH");
     if (watch)
         fprintf(stderr, "    watch %s = %02X before call %u (%s)\n", watch, mem[strtoul(watch, 0, 16)], now.next, name);
-    /* what the overlay manager (not recorded as a call) wrote before this call */
+    /* what the overlay manager (not recorded as a call) wrote before this call; not over
+       the translation's near scratch area, where its rewrites of return addresses in the
+       original's frames would land */
     for (unsigned i = 0; i < c->n_runs; i++)
         if (c->runs[i].kind == 'X')
-            memcpy(mem + c->runs[i].lin, c->runs[i].bytes, c->runs[i].n);
+            for (unsigned j = 0; j < c->runs[i].n; j++)
+                if (!in_live_near_scratch(c->runs[i].lin + j))
+                    mem[c->runs[i].lin + j] = c->runs[i].bytes[j];
     if (strcmp(c->name, name))
         fail("%s calls %s, where BCC.EXE called %s (its call %u)", now.fn->name, name, c->name,
              now.next);
@@ -295,6 +315,8 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
                 if (a >= LIN(SCRATCH_SEG, 0) && a < LIN(SCRATCH_SEG, 0) + 0x10000 &&
                     scratch_unset((u16)(a - LIN(SCRATCH_SEG, 0))))
                     continue;   /* a local the original leaves unset (port.h) */
+                if (a && result_unset(a))
+                    continue;   /* memory holding a value the original left unset (UNSET_RESULT) */
                 if (a && mem[a] != c->runs[i].bytes[j])
                     fail("before %s calls %s, byte %05X is %02X, BCC.EXE had %02X", now.fn->name,
                          name, a, mem[a], c->runs[i].bytes[j]);
@@ -313,9 +335,18 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
                 u32 a = c->runs[i].lin + j;
                 if (in_window(a) && mapped(a))
                     mem[mapped(a)] = c->runs[i].bytes[j];
-                else if (a < own_lo || a >= own_hi)
+                else if ((a < own_lo || a >= own_hi) && !in_live_near_scratch(a))
                     mem[a] = c->runs[i].bytes[j];
             }
+    /* a call that never returns (a long jump, the program's exit): the call being replayed
+       ends here, as the original's did */
+    if (c->noreturn) {
+        if (!now.call->noreturn)
+            fail("%s calls %s, which did not return in BCC.EXE, though the call did", now.fn->name, name);
+        if (now.next < now.n_children)
+            fail("%s's call of %s did not return in BCC.EXE, but more calls follow", now.fn->name, name);
+        longjmp(now.noreturn, 1);
+    }
     if (outs & OUT_AL)
         return (u8)c->out[R_AX];
     if (outs & OUT(R_DX))
@@ -386,7 +417,15 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     snprintf(hung, sizeof hung, "  %s call %u: %s did not return within 2 seconds\n", file,
              c->seq, fn->name);
     alarm(2);
-    fn->call(r);
+    if (!c->noreturn || !setjmp(now.noreturn)) {
+        fn->call(r);
+        if (c->noreturn) {
+            alarm(0);
+            if (verbose)
+                printf("  %s call %u: %s returned, where BCC.EXE's call never did\n", file, c->seq, fn->name);
+            return 0;
+        }
+    }
     alarm(0);
     /* registers the translation says the original returns unset (port.h), for itself only */
     if (!unset_returns_owner || strcmp(unset_returns_owner, fn->name) != 0)
@@ -399,13 +438,15 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
                    n_children - now.next, children[now.next].name);
         ok = 0;
     }
-    if ((fn->outs & OUT_AL) && !(unset_returns & 1) && (u8)r[R_AX] != (u8)c->out[R_AX]) {
+    if (c->noreturn)
+        ;   /* no registers to compare: the call never returned */
+    else if ((fn->outs & OUT_AL) && !(unset_returns & 1) && (u8)r[R_AX] != (u8)c->out[R_AX]) {
         if (verbose)
             printf("  %s call %u: AL is %02X, BCC.EXE left %02X\n", file, c->seq, (u8)r[R_AX],
                    (u8)c->out[R_AX]);
         ok = 0;
     }
-    for (int i = 0; i < 13; i++)
+    for (int i = 0; i < 13 && !c->noreturn; i++)
         if ((fn->outs >> i & 1) && !(unset_returns >> i & 1) && r[i] != c->out[i]) {
             if (verbose)
                 printf("  %s call %u: %s is %04X, BCC.EXE left %04X\n", file, c->seq, REG[i],
@@ -441,6 +482,15 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
                     break;
                 }
             }
+    /* the segment alone of such a pointer (BCC_INPUT_STRING keeps the segment of the text
+       it pushes, a local buffer, in STRING_DATA): the stack segment in BCC.EXE, the scratch
+       area's in the translation */
+    for (u32 a = 0; a + 2 <= MEM_SIZE; a++)
+        if (mem[a] != expect[a] || mem[a + 1] != expect[a + 1]) {
+            u16 want = expect[a] | expect[a + 1] << 8, got = mem[a] | mem[a + 1] << 8;
+            if (want == c->in[R_SS] && got == SCRATCH_SEG)
+                memcpy(mem + a, expect + a, 2);
+        }
     /* memory the translation marked as holding an unset value (port.h) */
     for (u32 a = 0; a < MEM_SIZE; a++)
         if (mem[a] != expect[a] && result_unset(a))

@@ -40,25 +40,20 @@ the code passes), the object and assembly writers (`../bcc20/src/output`), the d
 assembler's C side (operands, symbol encoding, the instruction encoder), precompiled headers,
 the diagnostics (message printing, through `include/variadic.h`, and type spelling), the
 80-bit real arithmetic of `../bcc20/src/float` (the assembly modules, in C) and more of the
-run-time library: 1545 functions checked, each matching every call recorded over the whole
+run-time library: 1588 functions checked, each matching every call recorded over the whole
 corpus (at most 200 different calls a function), and the inline assembler's engine
 (`INLINASM.ASM`) in C, matching every recorded statement.
 
-`make check` lists the translated functions that have no recorded call (77);
-`tools/coverage.py` tells them apart by whether BCC.EXE runs them at all over the corpus:
-
-- **Run, but never recorded** (20): the calls that enclose a whole compile, whose overlay
-  loads move the memory they then read, and those that end in a long jump or in the
-  program's exit. The native corpus checks them as a whole: BCC_STATEMENT_MAIN, BEGIN_SESSION, C11UNNAMED, C9TYPES, COMPILE_C_SOURCE, COMPILE_FILE_REPORT_ERRORS, COMPILE_ONE_FILE, EXIT, FATAL_EXIT, FILE_FATAL, INIT_PARSER, LG0A1, MODE_FALLBACK, PARSE_ERROR_DIRECTIVE, PARSE_EXTERNAL_DECLARATIONS, PATH_PROCESS, PRINT_USAGE_AND_EXIT, PROCESS_FILE_ARGUMENT, REPORT_FATAL, RMAIN13C.
-- **Never run by BCC.EXE** (57): paths the corpus does not take. Many are unreachable from
-  BCC 2.0's driver: the C++ front end's C mode (BUILD_MEMBER_ACCESS, TYPE_CHECK2,
-  BCC_TYPE_FINISH, C5ARG, C10PROMOTE ...) runs only for a C++ compile with option bit 0
-  clear, which every route to the C++ front end sets; HANDLE_NEGATED_FLAG_OPTION is in no
-  option table. Others hang off function tables in DGROUP (the constant folders, the
-  precompiled-header directive table) for entries no input selects: APPLY_BASED_POINTER, APPLY_BASED_POINTER_C, ASM_COLON_LABEL_STUB, ASM_FLUSH_KIND2_STUB, BCC_NODE_CONVERT, BCC_NODE_ERROR, BCC_NODE_MODE, BCC_NODE_NORMALIZE, BCC_STRING_CONCAT_NEAR, BCC_TYPE_FINISH, BUILD_MEMBER_ACCESS, C0FINAL, C0RELINK, C10DEFAULTS, C10PROMOTE, C13SPECIAL, C51_EMIT_PATH_CALLBACK, C5ARG, CONTEXT_DIAGNOSTIC, COPY_VECTOR_ELEMENTS, EMIT_COMM_DECLARATION, EMIT_DB_LINE, EMIT_HELPER_CALL_FOR_NODE, EMIT_INSN_NODE_REG, EMIT_INSN_STACK_REG, EXPAND_POST_INC_DEC, FIND_BASE_SYMBOL, FIND_MATCHING_ENDIF, FLUSH_PENDING_POOL, FOLD_DIV_SIGNED, FOLD_MOD_SIGNED, FOLD_MOD_UNSIGNED, FOLD_SUB_SIGNED, FOLD_SUB_UNSIGNED, FOLD_XOR_LONG, HANDLE_NEGATED_FLAG_OPTION, HIGH_BIT_INDEX, HOIST_LVALUE_ADDR_TO_TEMP, INVALIDATE_PCH_ENTRY, IS_BASED_NEAR_PTR, IS_STRING_LITERAL_STORAGE, LINE_HOOK, LINKAGE_NAME, MAKE_ADDRESS_OF_TYPED, NEW_BITFIELD_NODE_ALT, NO_REAL_FOLD, PARSE_IDENTIFIER, PCH_DIRECTIVE_IFNDEF, PCH_PUSH_BACK_DIRECTIVE_NOW, REQUIRED_TYPE_TEXT, SET_PREPARED_SYMBOL_FLAGS, STBIN10, STORAGE_IDENTITY, TEMP_STORAGE_FOR_TYPE, TREE_HAS_SIDE_EFFECTS_ALT, TYPE_CHECK2, WRAP_IN_UNARY_NODE.
+`make check` lists the translated functions that have no recorded call (41), and
+`tools/coverage.py` shows that BCC.EXE itself never runs any of them over the corpus: every
+function BCC.EXE runs is checked. Many are unreachable from BCC 2.0's driver: the C++ front
+end's C mode (BUILD_MEMBER_ACCESS, TYPE_CHECK2, BCC_TYPE_FINISH, C5ARG, C10PROMOTE ...) runs
+only for a C++ compile with option bit 0 clear, which every route to the C++ front end sets;
+HANDLE_NEGATED_FLAG_OPTION is in no option table and PCH_PUSH_BACK_DIRECTIVE_NOW in no
+directive table. Others hang off paths or table entries no input selects: APPLY_BASED_POINTER, APPLY_BASED_POINTER_C, ASM_COLON_LABEL_STUB, ASM_FLUSH_KIND2_STUB, BCC_NODE_CONVERT, BCC_NODE_ERROR, BCC_STRING_CONCAT_NEAR, BCC_TYPE_FINISH, BUILD_MEMBER_ACCESS, C0FINAL, C0RELINK, C10DEFAULTS, C10PROMOTE, C13SPECIAL, C51_EMIT_PATH_CALLBACK, C5ARG, CONTEXT_DIAGNOSTIC, COPY_VECTOR_ELEMENTS, EMIT_COMM_DECLARATION, EMIT_DB_LINE, EMIT_HELPER_CALL_FOR_NODE, EMIT_INSN_NODE_REG, EXPAND_POST_INC_DEC, FIND_BASE_SYMBOL, FLUSH_PENDING_POOL, FOLD_SUB_UNSIGNED, HANDLE_NEGATED_FLAG_OPTION, HIGH_BIT_INDEX, IS_BASED_NEAR_PTR, IS_STRING_LITERAL_STORAGE, LINE_HOOK, MAKE_ADDRESS_OF_TYPED, NO_REAL_FOLD, PARSE_IDENTIFIER, PCH_PUSH_BACK_DIRECTIVE_NOW, REQUIRED_TYPE_TEXT, SET_PREPARED_SYMBOL_FLAGS, STBIN10, STORAGE_IDENTITY, TREE_HAS_SIDE_EFFECTS_ALT, TYPE_CHECK2.
 
 The native build (`make native`, `build/bcc`) compiles: with the heap, overlay manager and
-DOS services replaced by `native/`, 1861 of the corpus's 1867 compile steps (`-c`, `-S`,
+DOS services replaced by `native/`, 1868 of the corpus's 1874 compile steps (`-c`, `-S`,
 precompiled headers written and loaded, links, BCC alone) give the same object or assembly
 file, exit status and messages as BCC.EXE (`tools/nativetest.py`).
 The other 6 are listed under "Decisions for the native build".
@@ -94,10 +89,19 @@ Two checks, both against Borland's own BCC.EXE:
      recorded as calls, but what it writes is kept and applied at the next call to a
      stand-in, so its effect on the heap is reproduced;
    - DOS's own memory, the callers' stack frames and a call's own frame are left out of the
-     comparisons: none of them are the translation's business.
-2. **Output for output.** The corpus of `../bcc20/tools/modtest.py`, 1,836 compiles, run
+     comparisons: none of them are the translation's business;
+   - a call that never returns (a long jump unwinds it, or the program exits inside it) is
+     recorded up to that point (NORETURN): its last recorded child is the jump or the exit,
+     and replay stops the translation there and compares memory;
+   - so whole compiles are checked call by call too: RMAIN13C, COMPILE_ONE_FILE and the
+     front ends' entries match every recorded call.
+
+   One recorded call is wrong rather than the translation: PARSE_CV_QUALIFIERS' call 92 in
+   the current records runs 12 instructions, makes a BIOS call (the function makes none)
+   and "returns" to segment 0, the recorder having credited the function with other code.
+2. **Output for output.** The corpus of `../bcc20/tools/modtest.py` and `tests/`, run
    natively and compared with what BCC.EXE writes in emu2: every file, the exit code and the
-   console text. (To come: it needs a port that compiles.)
+   console text (`tools/nativetest.py`).
 
 The function-by-function check needs the port to keep BCC's memory exactly as the DOS
 program laid it out. That is the first stage's machine model
@@ -321,6 +325,11 @@ Places where the original's behaviour depends on something a port does not have:
   emulator (emu2) the native build runs them there and passes on the exit code
   (`tools/nativetest.py` sets it, so a link runs Borland's TLINK in both); without it EXEC
   fails as for a missing file.
+- **PARSE_RECORD_SPECIFIER** (DECLSPEC.C) saves the 44-byte parse state around a nested
+  class definition when its nesting count was already set, and restores it whenever the
+  count is still set afterwards. A malformed inner definition returns without lowering the
+  count, so an outer definition can restore a buffer it never saved: BCC.EXE's stack
+  garbage. The port then leaves the state as it is (marked unset for the replay).
 - **A macro called with too few arguments** (COLLECT_MACRO_ARGUMENTS, LEXER.C) is reported
   and expanded anyway, and the missing argument is read past the end of what was written to
   POOL_A: memory this compile never wrote, whose contents come from BCC.EXE's DOS heap
