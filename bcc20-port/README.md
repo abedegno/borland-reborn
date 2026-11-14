@@ -399,8 +399,11 @@ Places where the original's behaviour depends on something a port does not have:
    assignments, increments), compiles each variant in-process (well under a millisecond
    for a small function) and keeps those that come no further from the target bytes,
    until they match.
-7. **Restructure**: host data structures in place of the 8086 memory model, under the corpus
-   check.
+7. **Restructure** (deferred for now, by decision on 2026-11-14): host data structures in
+   place of the 8086 memory model, under the corpus check. It would give up the call-by-call
+   replay against BCC.EXE, which depends on the memory layout; naming record fields and
+   typed accessors over the same model would make the code more readable and keep the
+   replay.
 
 A game is matched only with the exact compiler that built it. This port gives Borland C++
 2.0; Turbo C++ 1.0 and Borland C++ 3.x very likely share much of its code generator, so it
