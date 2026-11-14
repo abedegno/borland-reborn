@@ -24,6 +24,7 @@
 #include "data.h"
 #include "pool.h"
 #include "protos.h"
+#include "setjump.h"
 #include "calls.h"
 #include "msg.h"
 #include "variadic.h"

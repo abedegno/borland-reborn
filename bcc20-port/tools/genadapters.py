@@ -317,7 +317,8 @@ def write_adapters(target):
             arr = f"const StandInArg args[] = {{{items}}}" if args else "const StandInArg *args = 0"
             scall = f'stand_in("{name}", {outs}, args, {len(args)})'
             sbody = f"{scall};" if res is None else f"return ({ret}){scall};"
-            stand_ins.insert(0, f"{ret} {name}({params}) {{ {arr}; {sbody} }}")
+            # weak: the native build (native/) defines the platform's functions itself
+            stand_ins.insert(0, f"__attribute__((weak)) {ret} {name}({params}) {{ {arr}; {sbody} }}")
     lines[3:3] = ["/* stand-ins for the functions the port does not define (replay.c: stand_in) */"] + \
         sorted(stand_ins) + [""]
     lines += ["", "const Function GENERATED_FUNCTIONS[] = {"] + table + ["    {0, 0, 0, 0, 0},", "};", "",
@@ -376,9 +377,10 @@ def code_addresses(defs):
     out = {}
     for line in (PORT.parent / "bcc20" / "symbols.tsv").read_text().splitlines():
         parts = line.split("\t")
-        if len(parts) >= 2 and parts[0] in defs and re.fullmatch(r"[0-9A-F]{4}:[0-9A-F]{4}", parts[1]):
+        name = parts[0] if parts[0] in defs else parts[0][1:] if parts[0][:1] == "_" else parts[0]
+        if len(parts) >= 2 and name in defs and re.fullmatch(r"[0-9A-F]{4}:[0-9A-F]{4}", parts[1]):
             seg, off = (int(x, 16) for x in parts[1].split(":"))
-            out[(seg, off)] = parts[0]
+            out[(seg, off)] = name               # a cdecl function's C name without its _
     data = record.modtest.ORIGINAL.read_bytes()
     header = struct.unpack_from("<H", data, 8)[0] * 16
     original = record.modlink.Original()

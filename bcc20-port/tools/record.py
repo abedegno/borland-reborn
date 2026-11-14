@@ -101,6 +101,7 @@ INNER_BODIES = {
     "IMPLMEMB": ("C12CHECK", 0),                                  # IMPLMEMB.C, under its row name
     "HANDLE_NEGATED_FLAG_OPTION": ("HANDLE_FLAG_OPTION", 0x79),   # OPTIONS.C, after the switch table
     "COPY_TO_END": ("FNSPLIT", 0x1A5),                            # RFNSPLIT.C, after FNSPLIT's retf
+    "INITTYPE": ("C9BANKS", -0x182),                              # INITTYPE.C, at the overlay's start
 }
 
 

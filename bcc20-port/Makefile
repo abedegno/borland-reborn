@@ -24,6 +24,26 @@ build/obj/%.o: %.c $(wildcard include/*.h replay/*.h)
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
+# the native build (README.md, "Plan", step 3): the translations with native/ in place of
+# the replay harness
+NATIVE := $(sort $(wildcard native/*.c))
+NATIVE_OBJ := $(patsubst %.c,build/native/%.o,$(SRC) $(NATIVE)) build/native/adapters.o
+BCC20_EXE ?= $(abspath ../bcc20/toolchain/BC20/BIN/BCC.EXE)
+
+build/bcc: $(NATIVE_OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
+
+build/native/adapters.o: build/adapters.c $(wildcard include/*.h replay/*.h native/*.h)
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE $(CFLAGS) -c -o $@ $<
+
+build/native/%.o: %.c $(wildcard include/*.h replay/*.h native/*.h)
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE -DBCC20_EXE_DEFAULT='"$(BCC20_EXE)"' $(CFLAGS) -c -o $@ $<
+
+.PHONY: native
+native: build/bcc
+
 # replay every translated function against its records (tools/record.py makes them)
 .PHONY: check
 check: build/replay

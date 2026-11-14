@@ -1366,3 +1366,44 @@ u16 FLUSH_PENDING_POOL(void)
     TOKEN_PTR = position;
     return result;
 }
+
+/* the next character of the pending pool text (PENDING_STRING_TEXT, an offset in
+   TOKEN_POOL) or, without one, of a fresh string literal from the input; -1 at its end.
+   In the pool text the bytes FCh and FBh are skipped, FFh quotes the next byte, a '\'
+   starts an escape except inside a nested quote, and '"' or '\'' open and close such a
+   quote.  reset 0 starts with no quote open.  The original keeps the quote in a register
+   it clears only when reset is 0, so for a nonzero reset it starts with whatever the
+   caller left in the register; the port carries the quote over from the previous call
+   instead, the evident intent */
+i16 NEXT_POOL_CHARACTER(i16 reset)
+{
+    static i16 quote;
+#define PENDING_BYTE(o) B(MK_FP(W(TOKEN_POOL_P), (o)))
+    if (W(PENDING_STRING_TEXT_P) == 0)
+        return DECODE_ESCAPE_CHAR(34);
+    if (reset == 0)
+        quote = 0;
+    while (PENDING_BYTE(W(PENDING_STRING_TEXT_P)) == 0xFC || PENDING_BYTE(W(PENDING_STRING_TEXT_P)) == 0xFB)
+        W(PENDING_STRING_TEXT_P)++;
+    i16 value = PENDING_BYTE(W(PENDING_STRING_TEXT_P));
+    if (value == 0xFF) {
+        W(PENDING_STRING_TEXT_P)++;
+        value = PENDING_BYTE(W(PENDING_STRING_TEXT_P));
+    } else if (value == 92) {
+        if (quote == 0)
+            value = (u8)LEX_STRING_ESCAPE(PENDING_STRING_TEXT_P);
+        else if (PENDING_BYTE(W(PENDING_STRING_TEXT_P) + TOKPOOL_NEXT_CHAR) == quote)
+            quote = 0;
+    } else if (value == 26 || value == 0) {
+        W(PENDING_STRING_TEXT_P) = 0;
+        return -1;
+    } else if (value == 34 || value == 39) {
+        if (quote == 0)
+            quote = value;
+        else if (quote == value)
+            quote = 0;
+    }
+    W(PENDING_STRING_TEXT_P)++;
+    return value;
+#undef PENDING_BYTE
+}
