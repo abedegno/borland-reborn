@@ -257,10 +257,39 @@ u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n
     u32 child_lo = LIN(c->in[R_SS], frame_low(c));
     if (child_lo < now.window_lo)
         now.window_lo = child_lo;
+    /* a far pointer to a local, read from memory passed through a mapping (an argument block
+       holding a pointer to the caller's text): the translation's points into its scratch
+       areas, and is mapped like a pointer argument */
+    u32 skip[8];
+    unsigned n_skip = 0;
+    for (unsigned i = 0; i < c->n_runs; i++)
+        if (c->runs[i].kind == 'R')
+            for (unsigned j = 0; j + 4 <= c->runs[i].n; j++) {
+                u32 a = c->runs[i].lin + j;
+                if (!in_window(a) || !mapped(a) || n_skip == 8 || now.n_map == 16)
+                    continue;
+                const u8 *o = c->runs[i].bytes + j, *q = mem + mapped(a);
+                u16 o_off = (u16)(o[0] | o[1] << 8), o_seg = (u16)(o[2] | o[3] << 8);
+                u16 q_off = (u16)(q[0] | q[1] << 8), q_seg = (u16)(q[2] | q[3] << 8);
+                if (o_seg != c->in[R_SS] || !in_window(LIN(o_seg, o_off)) || mapped(LIN(o_seg, o_off)) ||
+                    (o_off == q_off && o_seg == q_seg))
+                    continue;
+                if (!(q_seg == SCRATCH_SEG || (q_seg == c->in[R_SS] && in_near_scratch(q_off))))
+                    continue;
+                now.map[now.n_map].orig = LIN(o_seg, o_off);
+                now.map[now.n_map++].port = LIN(q_seg, q_off);
+                skip[n_skip++] = a;
+                j += 3;
+            }
     for (unsigned i = 0; i < c->n_runs; i++)
         if (c->runs[i].kind == 'R')
             for (unsigned j = 0; j < c->runs[i].n; j++) {
                 u32 a = c->runs[i].lin + j;
+                int pointer = 0;
+                for (unsigned k = 0; k < n_skip; k++)
+                    pointer |= a >= skip[k] && a < skip[k] + 4;
+                if (pointer)
+                    continue;   /* a mapped pointer (above) */
                 if (in_window(a))
                     a = mapped(a);
                 if (a >= LIN(SCRATCH_SEG, 0) && a < LIN(SCRATCH_SEG, 0) + 0x10000 &&

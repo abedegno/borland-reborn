@@ -41,8 +41,14 @@ assembler's C side (operands, symbol encoding, the instruction encoder), precomp
 the diagnostics (message printing, through `include/variadic.h`, and type spelling), the
 80-bit real arithmetic of `../bcc20/src/float` (the assembly modules, in C) and more of the
 run-time library: 1457 functions checked, each matching every call recorded over the whole
-corpus (at most 200 different calls a function). A few are never reached by the corpus and are not checked
-yet (`make check` lists them). Nothing compiles yet.
+corpus (at most 200 different calls a function), and the inline assembler's engine
+(`INLINASM.ASM`) in C, matching every recorded statement. A few are never reached by the
+corpus and are not checked yet (`make check` lists them).
+
+The native build (`make native`, `build/bcc`) compiles: with the heap, overlay manager and
+DOS services replaced by `native/`, 1823 of the corpus's 1837 compiles (`-c` and `-S`) give
+the same object or assembly file and the same messages as BCC.EXE (`tools/nativetest.py`).
+The other 14 are listed under "Decisions for the native build".
 
 ## How a translation is checked
 
@@ -108,6 +114,21 @@ with 12 cores). A run follows recorded calls 32 deep; a call deeper than that le
 calls around it unrecorded, so a function reached only that deep gets no calls from `--all`
 and must be recorded on its own. `--runs N` samples N compiles, which can miss the functions
 only the targeted tests reach.
+
+The native build reads BCC's initial data from the program file (`BCC20_EXE`, default the
+toolchain's BCC.EXE; its code is never run) and runs like BCC.EXE in a DOS directory: the
+drive's root is the current directory, names are cut to 8.3 when the host has no file
+under the full name, and the command line is cut to DOS's 126 characters.
+
+```sh
+make native                                     # build/bcc
+build/bcc -c -IC:\\INCLUDE HELLO.C               # as BCC.EXE would, writes hello.obj
+python3 tools/nativetest.py [--only TEST]       # build/bcc against BCC.EXE over the corpus
+```
+
+`BCC_TRACE=1` shows each file the native build opens or looks for; `BCC_SCRATCH_FILL=n`
+fills every new translated local with byte n, which finds code whose result depends on a
+local the original never set.
 
 To look into one failing call: `REPLAY_ONLY=N build/replay NAME records/NAME.rec` replays
 only the recorded call N, and `REPLAY_TRACE=1` prints each call the translation makes to a
@@ -197,12 +218,14 @@ of 500 calls.
 
 Places where the original's behaviour depends on something a port does not have:
 
-- **NEXT_POOL_CHARACTER** (LEXER.C) reads its `quote` register uninitialised unless `reset`
-  is 0: it holds whatever the caller left in that register, which depends on the caller's
-  register allocation. It affects escapes and quotes in macro-produced string text (a
-  stringized argument, `__FILE__` with backslashes). It stays a stand-in until the native
-  build decides: keep `quote` across calls (most likely what the original meant), or work
-  out what each caller leaves there.
+- **NEXT_POOL_CHARACTER** (LEXER.C) reads its `quote` register (DI) uninitialised unless
+  `reset` is 0. Every caller reads a literal with `NEXT_LITERAL_CHAR(index++)`, the index in
+  DI, so it is then `reset + 1`, as every recorded call shows; the port starts from that.
+  (So `__FILE__`'s doubled backslashes stay doubled, as in BCC.EXE.)
+- **PARSE_ARRAY_DECLARATOR** (DECLSPEC.C) keeps an unset count when the bound is not a
+  constant: BCC.EXE's stack garbage. The port uses 2, which gives BCC.EXE's follow-on
+  messages over the corpus except in `mangle10.C` (two compiles), where the slot held a
+  huge value.
 - **FIND_NAMED_FUNCTION** (CPRAGFN.C) tests whether a #pragma startup or exit function
   takes parameters, but on the path where the test fails it returns the symbol anyway (what
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
@@ -245,25 +268,36 @@ Places where the original's behaviour depends on something a port does not have:
   recovery when the expression did not start with an expression token (`if ()`), so
   whether it steps over a closing parenthesis there depends on an earlier call's stack. The
   port uses 0 (never steps over); the native build should do the same.
-- **The "Available memory" line** BCC prints is computed from its heap. The native heap must
-  report the same figure, or the console text of every compile differs.
+- **The "Available memory" line** BCC prints is computed from its heap; the native heap's
+  figure differs (`tools/nativetest.py` leaves the line out).
+- **Running out of memory**: BCC.EXE stops with "Out of memory" when its stack gets too deep
+  (GENERATE_EXPRESSION checks SP against 8F0Ch); the native build runs on the host's stack
+  and does not, so deeply nested torture tests compile (eight compiles of the corpus).
+- **Error cascades** in two cfront sources (`sin.C`, `sqrt.C`, four compiles) lose one
+  follow-on message, most likely another local the original never set.
+- **Names longer than 8.3**: DOS cuts them; emu2, which runs the reference BCC.EXE for the
+  checks, does not cut a name it opens and does not find such a name with find first. The
+  native build follows DOS, or emu2 with `BCC_EMU2_FIND` set (which `tools/nativetest.py`
+  sets).
+- **DOS programs** (TASM, TLINK) cannot run in the native build: EXEC fails as for a missing
+  file, as it does for BCC.EXE under emu2 without them.
 
 ## Plan
 
 1. **Checking machinery** (done): the call recorder, the replay harness, generated adapters,
    globals and headers, the work queue, and the run-time library's string and character
    functions.
-2. **Translate what `-c` on plain C reaches**: the lexer and input, preprocessor, parser,
+2. **Translate what `-c` on plain C reaches** (done): the lexer and input, preprocessor, parser,
    expressions, code generator and object writer, each function checked against its
    recorded calls, with stand-ins for what is not translated yet. The heap, overlay manager
    and DOS calls stay stand-ins in this stage.
-3. **A native heap and platform layer**: a simple heap that gives pools the same behaviour
+3. **A native heap and platform layer** (done, `native/`): a simple heap that gives pools the same behaviour
    (a pool that grows, its handle word rewritten), host file I/O, no overlays. These are
    checked by the corpus as a whole, not call by call: their segment values need not match.
-4. **First native compile**: a driver with host file I/O, no overlays, memory banks or
+4. **First native compile** (done: 1823 of 1837 corpus compiles): a driver with host file I/O, no overlays, memory banks or
    interrupt handlers; `HELLO.C` with `-c` writes the same `T.OBJ` as BCC.EXE. Then `-S`,
    then the whole corpus.
-5. **The compiler work written in TASM**: the 80-bit real arithmetic (`../bcc20/src/float/`)
+5. **The compiler work written in TASM** (done): the 80-bit real arithmetic (`../bcc20/src/float/`)
    and the inline assembler (`INLINASM.ASM`), in C.
 6. **The library interface**: compile from memory to memory, with state reset between
    compiles; then explanation output; then a permuter in Exhume that uses them.
