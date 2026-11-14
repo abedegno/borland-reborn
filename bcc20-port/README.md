@@ -32,8 +32,9 @@ special and implicit members, name mangling, class bodies and definitions, funct
 declarations, calls, base conversions, constructors and destructors, end-of-file work and
 virtual tables, the type and scope tables), and the first part of the code generator
 (`../bcc20/src/codegen`: code ops and the variable table, conversions, bit fields, storage
-queries, the back-end driver, the byte pool, initialised data, the instruction-emitter
-helpers): 954 functions checked, each matching every call
+queries, the back-end driver, the byte pool, initialised data, the instruction emitter,
+register variables, calls, operators, statement blocks, switches, intrinsics, the
+peephole, cross-jump and jump optimisers): 976 functions checked, each matching every call
 recorded over the whole corpus. A few are never reached by the corpus and are not checked
 yet (`make check` lists them). Nothing compiles yet.
 
