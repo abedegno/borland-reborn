@@ -391,9 +391,14 @@ Places where the original's behaviour depends on something a port does not have:
    then the whole corpus.
 5. **The compiler work written in TASM** (done): the 80-bit real arithmetic (`../bcc20/src/float/`)
    and the inline assembler (`INLINASM.ASM`), in C.
-6. **The library interface**: compile from memory to memory, with state reset between
-   compiles (done: `include/bcc20.h`); then explanation output (done:
-   `include/explain.h`); then a permuter in Exhume that uses them.
+6. **The library interface** (done): compile from memory to memory, with state reset
+   between compiles (`include/bcc20.h`, `make lib`, `make shlib` for a shared library);
+   explanation output (`include/explain.h`); and a permuter in Exhume that uses them
+   (`../exhume/tools/permute.py` through `../exhume/tools/bcc20.py`): it rewrites one
+   function's source (commutative operands, declaration order, `register`, compound
+   assignments, increments), compiles each variant in-process (well under a millisecond
+   for a small function) and keeps those that come no further from the target bytes,
+   until they match.
 7. **Restructure**: host data structures in place of the 8086 memory model, under the corpus
    check.
 

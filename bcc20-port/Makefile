@@ -1,7 +1,7 @@
 # The port of BCC.EXE: build/replay, the harness that checks translated functions against
 # calls recorded in Borland's BCC.EXE (README.md).
 CC ?= cc
-CFLAGS ?= -std=c11 -O2 -g -Wall -Wextra -Wno-missing-field-initializers \
+CFLAGS ?= -std=c11 -O2 -g -fPIC -Wall -Wextra -Wno-missing-field-initializers \
           -Werror=implicit-function-declaration
 CPPFLAGS += -Iinclude -Ireplay
 
@@ -66,8 +66,14 @@ build/libbcc20.a: $(LIB_OBJ)
 build/bcc20run: tools/bcc20run.c build/libbcc20.a include/bcc20.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ tools/bcc20run.c build/libbcc20.a
 
-.PHONY: lib
+# the same as a shared library, for callers in other languages (Exhume's tools/bcc20.py)
+SHLIB := build/libbcc20$(if $(filter Darwin,$(shell uname -s)),.dylib,.so)
+$(SHLIB): build/libbcc20.a
+	$(CC) -shared -o $@ build/lib/bcc20.o
+
+.PHONY: lib shlib
 lib: build/libbcc20.a build/bcc20run
+shlib: $(SHLIB)
 
 # replay every translated function against its records (tools/record.py makes them)
 .PHONY: check
