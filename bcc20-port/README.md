@@ -28,9 +28,12 @@ all of it: both front ends' declarations, declarators, statements and expression
 initializers, function definitions, look-ahead and inline asm statements), and most of the
 C++ front end (`../bcc20/src/cpp`: member pointers, inline bodies, access checks,
 initializers, casts, constructor bodies, C++ expressions and their checks, overloading,
-special and implicit members, name mangling, class bodies, function declarations, calls,
-base conversions, end-of-file work and virtual tables, the type and scope tables):
-827 functions checked, each matching every call
+special and implicit members, name mangling, class bodies and definitions, function
+declarations, calls, base conversions, constructors and destructors, end-of-file work and
+virtual tables, the type and scope tables), and the first part of the code generator
+(`../bcc20/src/codegen`: code ops and the variable table, conversions, bit fields, storage
+queries, the back-end driver, the byte pool, initialised data, the instruction-emitter
+helpers): 954 functions checked, each matching every call
 recorded over the whole corpus. A few are never reached by the corpus and are not checked
 yet (`make check` lists them). Nothing compiles yet.
 
@@ -160,7 +163,9 @@ translation keeps on purpose (an original bug the output depends on, for example
      0 and say so with `UNSET_ARGS(mask)` just before the call of the stand-in (bit 0 the
      first argument), so the replay skips it; list the place below. A scratch local the
      original never sets before a stand-in reads it gets `UNSET_BYTES(p, n)` instead, and
-     memory a translated callee fills with such a value `UNSET_RESULT(p, n)`.
+     memory a translated callee fills with such a value `UNSET_RESULT(p, n)`. A register
+     the original returns without having set it gets `UNSET_RETURN(mask)` in the function
+     that returns it (bit 0 AX, bit 3 DX); the replay skips it for that function only.
    - Where several arguments of one call are themselves calls, put them in variables in
      Turbo C's order: left to right for a pascal function, right to left for cdecl. C
      leaves the order open, and the replay checks the order of the calls.
@@ -225,6 +230,10 @@ Places where the original's behaviour depends on something a port does not have:
   neither value is used. A far pointer the original leaves pointing at a dead local (as
   CURRENT_LOOP_CONTEXT after an error in a loop) is accepted by the replay when the port's
   points into the scratch area.
+- **GENERATE_BITFIELD_STORE** and **GENERATE_BITFIELD_INC_DEC** (BITFIELD.C) return a
+  result whose low word was never set when the caller does not keep the value (whatever the
+  stack held there). The port returns 0 and marks AX unset for the replay (`UNSET_RETURN`,
+  port.h); callers that pass keep 0 discard the result, so the native build can return 0.
 - **PARSE_EXPRESSION_PREC** (OPPREC.C) reads its paren and bracket counts unset in its error
   recovery when the expression did not start with an expression token (`if ()`), so
   whether it steps over a closing parenthesis there depends on an earlier call's stack. The

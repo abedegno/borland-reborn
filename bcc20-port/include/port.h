@@ -79,6 +79,12 @@ int scratch_unset(u16 offset);
    n) says its n bytes end the call holding whatever the original's stack held, so replay
    does not compare them.  The marks last until the next replayed call. */
 void UNSET_RESULT(farptr p, u16 n);
+/* A register the original returns without having set it (whatever an earlier call left in
+   it): UNSET_RETURN(mask) says the replay does not compare it (bit i register i: AX 0,
+   DX 3), for the function that says it (unset_returns_owner); cleared before each call. */
+extern u16 unset_returns;
+extern const char *unset_returns_owner;
+#define UNSET_RETURN(mask) (unset_returns |= (mask), unset_returns_owner = __func__)
 int result_unset(u32 linear);
 void unset_results_clear(void);
 

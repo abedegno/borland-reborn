@@ -333,11 +333,16 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
     DGROUP = r[R_DS];
     scratch_release(0);
     unset_results_clear();
+    unset_returns = 0;
+    unset_returns_owner = 0;
     snprintf(hung, sizeof hung, "  %s call %u: %s did not return within 2 seconds\n", file,
              c->seq, fn->name);
     alarm(2);
     fn->call(r);
     alarm(0);
+    /* registers the translation says the original returns unset (port.h), for itself only */
+    if (!unset_returns_owner || strcmp(unset_returns_owner, fn->name) != 0)
+        unset_returns = 0;
 
     int ok = 1;
     if (now.next < n_children) {
@@ -346,14 +351,14 @@ static int replay(const Function *fn, Record *c, Record *children, unsigned n_ch
                    n_children - now.next, children[now.next].name);
         ok = 0;
     }
-    if ((fn->outs & OUT_AL) && (u8)r[R_AX] != (u8)c->out[R_AX]) {
+    if ((fn->outs & OUT_AL) && !(unset_returns & 1) && (u8)r[R_AX] != (u8)c->out[R_AX]) {
         if (verbose)
             printf("  %s call %u: AL is %02X, BCC.EXE left %02X\n", file, c->seq, (u8)r[R_AX],
                    (u8)c->out[R_AX]);
         ok = 0;
     }
     for (int i = 0; i < 13; i++)
-        if ((fn->outs >> i & 1) && r[i] != c->out[i]) {
+        if ((fn->outs >> i & 1) && !(unset_returns >> i & 1) && r[i] != c->out[i]) {
             if (verbose)
                 printf("  %s call %u: %s is %04X, BCC.EXE left %04X\n", file, c->seq, REG[i],
                        r[i], c->out[i]);

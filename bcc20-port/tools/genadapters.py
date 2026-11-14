@@ -73,6 +73,10 @@ STRUCT_ARGUMENTS = {
     "BCC_STMT_BEGIN": ("u16", ["farptr", "u8", "u16"], False, False),
     # parser/CDECLR.C NEW_DECLARATOR_NODE(kind, value, first, second, flags, struct Flags)
     "NEW_DECLARATOR_NODE": ("u16", ["u16", "i32", "u16", "u16", "u8", "u8", "u16"], True, False),
+    # cpp/CPPCTOR.C ADD_UNIQUE_PARAM(list, struct ParameterItem {next, type, offset, scope,
+    # qualifier, used}, found): the 9-byte record takes 10 bytes, its words last first; the
+    # high word is used and a pad byte, which is not compared
+    "ADD_UNIQUE_PARAM": ("void", ["farptr", "u8", "u16", "u16", "u16", "u16", "farptr"], False, False),
 }
 RETURN_OVERRIDES = {
     "PARSE_PP_IF_EXPRESSION": "i16",    # CPRAGFN.C: EVAL_EXPRESSION hook, PARSE_CONSTANT_EXPR's AX

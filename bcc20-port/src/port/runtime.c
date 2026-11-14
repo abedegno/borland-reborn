@@ -68,6 +68,8 @@ void unset_results_clear(void) { n_results = 0; }
 
 /* ---- arguments the original leaves unset (port.h) ---- */
 u32 unset_args;
+u16 unset_returns;
+const char *unset_returns_owner;
 
 /* ---- calls through code pointers ---- */
 
