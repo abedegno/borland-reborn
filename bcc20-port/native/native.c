@@ -21,12 +21,14 @@
 #include <strings.h>
 #include <sys/stat.h>
 #ifdef _WIN32
+#include <direct.h>
 #include <io.h>
 #include <process.h>
 #else
 #include <sys/wait.h>
 #endif
 #include <time.h>
+#include <utime.h>
 #include <unistd.h>
 #include "port.h"
 #include "data.h"
@@ -1047,6 +1049,207 @@ farptr RTL_SEARCHPATH(farptr file)
    words, and the result is its exit code; without it EXEC fails as for a file that is not
    there (BCC then reports "Unable to execute command").  block is DOS's parameter block:
    environment segment, far command tail (length byte, text, CR), two far FCB pointers */
+/* ---- library mode: a DOS program (TASM, for -B) run on the job's memory files ---- */
+/* The program reads and writes files, which in library mode are memory: they are written
+   to a scratch directory standing for C:\ (with the job's time), the program runs there
+   through the runner with its console text kept for the result, and every file it wrote or
+   changed comes back as a memory file.  The directory is then removed. */
+
+static void remove_tree(const char *dir)
+{
+    DIR *d = opendir(dir);
+    struct dirent *e;
+    while (d && (e = readdir(d))) {
+        if (!strcmp(e->d_name, ".") || !strcmp(e->d_name, ".."))
+            continue;
+        char path[1200];
+        snprintf(path, sizeof path, "%s/%s", dir, e->d_name);
+        struct stat st;
+        if (stat(path, &st) == 0 && S_ISDIR(st.st_mode))
+            remove_tree(path);
+        else
+            remove(path);
+    }
+    if (d)
+        closedir(d);
+    rmdir(dir);
+}
+
+static int make_scratch(char *dir, size_t size)
+{
+    const char *tmp = getenv("TMPDIR");
+    if (!tmp || !*tmp)
+        tmp = getenv("TEMP");
+    if (!tmp || !*tmp)
+        tmp = "/tmp";
+#ifdef _WIN32
+    for (int n = 0; n < 1000; n++) {
+        snprintf(dir, size, "%s/bcc20-exec-%d-%d", tmp, (int)_getpid(), n);
+        if (_mkdir(dir) == 0)
+            return 0;
+    }
+    return -1;
+#else
+    snprintf(dir, size, "%s/bcc20-exec-XXXXXX", tmp);
+    return mkdtemp(dir) ? 0 : -1;
+#endif
+}
+
+#define EXEC_CONSOLE "BCC20EXE.OUT"     /* the program's console text, in the scratch directory */
+
+static void stage_mem_files(const char *dir)
+{
+    for (int i = 0; i < n_mem_files; i++) {
+        MemFile *f = &mem_files[i];
+        if (f->deleted)
+            continue;
+        char path[1200];
+        snprintf(path, sizeof path, "%s/%s", dir, f->name);
+        for (char *c = path + strlen(dir) + 1; *c; c++)       /* its directories */
+            if (*c == '/') {
+                *c = 0;
+#ifdef _WIN32
+                _mkdir(path);
+#else
+                mkdir(path, 0755);
+#endif
+                *c = '/';
+            }
+        FILE *out = fopen(path, "wb");
+        if (!out)
+            continue;
+        if (f->size)
+            fwrite(f->data, 1, f->size, out);
+        fclose(out);
+        if (job->time) {
+            struct utimbuf t = {(time_t)job->time, (time_t)job->time};
+            utime(path, &t);
+        }
+    }
+}
+
+/* the files under dir/sub that are new or differ from the memory files become memory files */
+static void collect_mem_files(const char *dir, const char *sub)
+{
+    char here[1200];
+    snprintf(here, sizeof here, "%s%s%s", dir, *sub ? "/" : "", sub);
+    DIR *d = opendir(here);
+    struct dirent *e;
+    while (d && (e = readdir(d))) {
+        if (!strcmp(e->d_name, ".") || !strcmp(e->d_name, "..") || (!*sub && !strcasecmp(e->d_name, EXEC_CONSOLE)))
+            continue;
+        char rel[400], path[1600];
+        snprintf(rel, sizeof rel, "%s%s%s", sub, *sub ? "/" : "", e->d_name);
+        snprintf(path, sizeof path, "%s/%s", dir, rel);
+        struct stat st;
+        if (stat(path, &st) != 0)
+            continue;
+        if (S_ISDIR(st.st_mode)) {
+            collect_mem_files(dir, rel);
+            continue;
+        }
+        FILE *in = fopen(path, "rb");
+        if (!in)
+            continue;
+        u8 *data = malloc((size_t)st.st_size + 1);
+        size_t size = fread(data, 1, (size_t)st.st_size, in);
+        fclose(in);
+        int k = find_mem_file(rel);
+        MemFile *f = k >= 0 ? &mem_files[k] : 0;
+        if (f && !f->deleted && f->size == size && !memcmp(f->data, data, size)) {
+            free(data);                 /* unchanged */
+            continue;
+        }
+        if (!f) {
+            if (n_mem_files == MAX_MEM_FILES) {
+                free(data);
+                continue;
+            }
+            f = &mem_files[n_mem_files++];
+            memset(f, 0, sizeof *f);
+            normalise(rel, f->name, sizeof f->name);
+        } else if (f->owned)
+            free(f->data);
+        f->data = data;
+        f->size = f->capacity = size;
+        f->owned = f->written = 1;
+        f->deleted = 0;
+    }
+    if (d)
+        closedir(d);
+}
+
+static i16 exec_on_mem_files(char **argv)
+{
+    char dir[1024];
+    if (make_scratch(dir, sizeof dir) != 0) {
+        ERRNO = 8;
+        return -1;
+    }
+    char program[1024];
+    if (!full_path(argv[1], program)) {         /* the child runs in the scratch directory */
+        remove_tree(dir);
+        ERRNO = 2;
+        return -1;
+    }
+    argv[1] = program;
+    stage_mem_files(dir);
+    char console_path[1200];
+    snprintf(console_path, sizeof console_path, "%s/%s", dir, EXEC_CONSOLE);
+    fflush(stdout);
+    int status = -1;
+#ifdef _WIN32
+    char saved[1024];
+    if (_getcwd(saved, sizeof saved) && _chdir(dir) == 0) {
+        int out = _open(console_path, _O_WRONLY | _O_CREAT | _O_TRUNC | _O_BINARY, 0644);
+        int old1 = _dup(1), old2 = _dup(2);
+        _dup2(out, 1);
+        _dup2(out, 2);
+        intptr_t code = _spawnvp(_P_WAIT, argv[0], (const char *const *)argv);
+        _dup2(old1, 1);
+        _dup2(old2, 2);
+        _close(old1);
+        _close(old2);
+        _close(out);
+        _chdir(saved);
+        status = code < 0 ? -1 : (int)(code & 0xFF);
+    }
+#else
+    pid_t child = fork();
+    if (child == 0) {
+        if (chdir(dir) != 0)
+            _exit(127);
+        int out = open(console_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        if (out >= 0) {
+            dup2(out, 1);
+            dup2(out, 2);
+        }
+        unsetenv("EMU2_DRIVE_C");               /* drive C: is the scratch directory */
+        unsetenv("EMU2_CWD");
+        execvp(argv[0], argv);
+        _exit(127);
+    }
+    int st;
+    if (child > 0 && waitpid(child, &st, 0) >= 0 && WIFEXITED(st) && WEXITSTATUS(st) != 127)
+        status = WEXITSTATUS(st) & 0xFF;
+#endif
+    FILE *con = fopen(console_path, "rb");
+    if (con) {
+        char buf[4096];
+        size_t n;
+        while ((n = fread(buf, 1, sizeof buf, con)) > 0)
+            console_put(buf, n);
+        fclose(con);
+    }
+    collect_mem_files(dir, "");
+    remove_tree(dir);
+    if (status < 0) {
+        ERRNO = 2;
+        return -1;
+    }
+    return (i16)status;
+}
+
 i16 RTL_EXEC(farptr path, i8 mode, farptr block)
 {
     const char *runner = getenv("BCC_DOS_RUNNER");
@@ -1068,6 +1271,8 @@ i16 RTL_EXEC(farptr path, i8 mode, farptr block)
     for (char *word = strtok(text, " \t\r"); word && argc < 69; word = strtok(0, " \t\r"))
         argv[argc++] = word;
     argv[argc] = 0;
+    if (job)                                    /* library mode: the job's memory files */
+        return exec_on_mem_files(argv);
     /* the child sees the same drive C: and current directory (emu2's settings) */
     char cwd_env[300] = "", root_env[1100] = "";
     if (drive_root()) {

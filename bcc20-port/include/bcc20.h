@@ -7,7 +7,12 @@
 
    Files BCC asks for that the job does not hold are read from the host directory root,
    which stands for drive C:'s root and the current directory (for the toolchain's
-   headers, say); with no root they are not found.  BCC never writes to the host. */
+   headers, say); with no root they are not found.  BCC never writes to the host, with one
+   exception: when it runs a DOS program (TASM, for -B or inline assembly) and the
+   environment's BCC_DOS_RUNNER names a DOS emulator (emu2), the job's files are written to a
+   scratch directory in the temporary directory, the program runs there, and the files it
+   writes come back in the result; the directory is removed.  Without a runner the exec
+   fails as for a missing program. */
 #ifndef BCC20_H
 #define BCC20_H
 #include <stddef.h>

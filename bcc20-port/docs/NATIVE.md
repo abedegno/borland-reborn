@@ -37,7 +37,7 @@ else is read. BCC's code is not needed: all of it is translated.
 | `BCC_TRACE=1` | print every file the native build opens or looks for |
 | `BCC_EXPLAIN=1` | print the compiler's explanation of its choices ([LIBRARY.md](LIBRARY.md#explain-output)) |
 | `BCC_STACK_LIMIT=0` | no model of BCC.EXE's stack: a source nested too deeply for BCC.EXE compiles |
-| `BCC_DOS_RUNNER=emu2` | run TLINK and TASM in that DOS emulator |
+| `BCC_DOS_RUNNER=emu2` | run TLINK and TASM in that DOS emulator (in the library and the compile servers too: on the job's files, in a scratch directory) |
 | `BCC_ROOT=DIR` | DIR stands for drive C:'s root, and the current directory is the DOS one under it: a makefile's `C:\BORLANDC\INCLUDE` or a `..\` out of the build directory work as in DOS, and TASM run through emu2 sees the same drive |
 | `BCC_SCRATCH_FILL=n` | fill each new translated local with byte n (finds results that depend on unset locals) |
 | `BCC_EMU2_FIND=1` | find and open names longer than 8.3 as emu2 does (the reference for the checks) |

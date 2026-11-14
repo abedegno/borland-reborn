@@ -14,6 +14,12 @@ read from its root directory (standing for `C:\`, the toolchain's headers for ex
 host is never written. One compile at a time per process. A job holds at most `BCC20_MAX_FILES` (4000)
 files; `bcc20_compile` returns -1 without running for more.
 
+A compile that runs TASM (`-B`, or inline assembly) works in-process too when the
+environment's `BCC_DOS_RUNNER` names emu2: BCC compiles to assembly in the port, the job's
+files go to a scratch directory, TASM runs there in emu2 with its console text added to the
+result, and the object comes back from memory like any output. A `-B` compile of a 2,000-line
+file takes about 0.13 s this way, against about a second with BCC.EXE and TASM both in emu2.
+
 ```c
 #include "bcc20.h"
 
