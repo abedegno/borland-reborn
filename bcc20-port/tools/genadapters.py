@@ -1,7 +1,7 @@
 """Generate the port's prototypes and replay's adapters and stand-ins.
 
     python3 tools/genadapters.py protos            include/protos.h
-    python3 tools/genadapters.py adapters OUT.c    build/adapters.c
+    python3 tools/genadapters.py adapters OUT.c    generated/adapters.c (make does it)
 
 include/protos.h declares every function of the original (../bcc20/src) in the port's
 types, from its definition: unsigned char u8, char and signed char i8, unsigned and
@@ -12,7 +12,7 @@ declarations, when all of them agree.  Functions with float, struct or variable 
 are left out (they need hand-written declarations), as are names declared in different
 ways.
 
-build/adapters.c holds, for each function the port defines (src/), an adapter that reads
+generated/adapters.c holds, for each function the port defines (src/), an adapter that reads
 its arguments where BCC.EXE's caller put them and stores its result where BCC.EXE returns
 it; and for each function the port does not define, a stand-in with the same prototype that
 replay answers from the recorded calls of that function made inside the call being replayed

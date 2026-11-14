@@ -12,7 +12,7 @@ wrong.
 |---|---|---|
 | [`bcc20/`](bcc20/) | **Borland C++ 2.0** (1991), `BCC.EXE`, the command-line compiler | Complete: rebuilds byte-identical (SHA-256 `dd5744b9...`) |
 | [`cpp20/`](cpp20/) | **Borland C++ 2.0** (1991), `CPP.EXE`, the standalone preprocessor | Complete: rebuilds byte-identical (SHA-256 `39879c60...`) |
-| [`bcc20-port/`](bcc20-port/) | `BCC.EXE` as a native tool for decompiling Borland-built games | Started: call recorder, replay harness, first run-time functions |
+| [`bcc20-port/`](bcc20-port/) | `BCC.EXE` as a native compiler and library, for decompiling Borland-built games | Complete: every function checked against BCC.EXE; 1872 of 1878 corpus compiles identical; native binaries and a library |
 
 More Borland and Turbo versions will join as further top-level directories, sharing the
 [`scripts/`](scripts/) and the [Exhume](https://github.com/abedegno/Exhume) build tools.

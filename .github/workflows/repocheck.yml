@@ -1,6 +1,7 @@
 # Hosted CI runs only what needs neither Borland's toolchain nor BCC.EXE, which must never be
 # on GitHub: Exhume's repocheck (every script compiles, every Markdown link resolves, and no
-# executable, object, library or disk image is committed). The real proof, the byte-identical
+# executable, object, library or disk image is committed), and the port's build and golden
+# check (bcc20-port.yml). The real proof, the byte-identical
 # rebuild, is `gate.py check --all`, run locally (see docs/SETUP.md).
 name: repocheck
 on:
@@ -21,4 +22,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: python3 exhume/tools/repocheck.py --root . --allow '^exhume/'
+      # bcc20-port/tests/golden/ holds BCC.EXE's object files for sources of this repository,
+      # the reference the port's CI checks its native build against (bcc20-port.yml)
+      - run: python3 exhume/tools/repocheck.py --root . --allow '^exhume/' --allow '^bcc20-port/tests/golden/'

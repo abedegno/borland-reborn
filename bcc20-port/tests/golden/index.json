@@ -1,0 +1,2032 @@
+{
+ "bcc20-ASMSYMS-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError C:\\PROJ\\ASMSYMS.H 3: Unable to open include file 'dos.h'\nError C:\\PROJ\\POOL.H 14: Unable to open include file 'dos.h'\n*** 2 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/output/ASMSYMS.C",
+  "status": 1
+ },
+ "bcc20-BACKINIT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 91: Undefined structure 'ffblk'",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/driver/BACKINIT.C",
+  "status": 0
+ },
+ "bcc20-BANKINIT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/BANKINIT.C",
+  "status": 0
+ },
+ "bcc20-COMMENT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-O-",
+   "-Z",
+   "-p",
+   "-Y",
+   "-y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'refill_sub' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'refill_sub' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'refill_sub' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Expression syntax in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nError t.c 145: Undefined symbol 'DGROUP' in function COMMENT_BLOCK\nWarning t.c 210: Parameter 'value' is never used in function SCAN_EMPTY\n*** 15 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/lexer/COMMENT.C",
+  "status": 1
+ },
+ "bcc20-CONFIG-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError C:\\PROJ\\CONFIG.H 3: Unable to open include file 'dos.h'\nError C:\\PROJ\\CONFIG.H 4: Unable to open include file 'dir.h'\nError t.c 34: Undefined symbol 'MAXDRIVE' in function READ_CONFIG_AND_ARGS\nError t.c 34: Array must have at least one element in function READ_CONFIG_AND_ARGS\nError t.c 41: Undefined symbol 'MAXDIR' in function READ_CONFIG_AND_ARGS\nError t.c 41: Array must have at least one element in function READ_CONFIG_AND_ARGS\nError t.c 42: Undefined symbol 'MAXPATH' in function READ_CONFIG_AND_ARGS\nError t.c 42: Array must have at least one element in function READ_CONFIG_AND_ARGS\nError t.c 102: Type mismatch in parameter 2 in call to 'RTL_READ' in function READ_CONFIG_AND_ARGS\nError t.c 172: Undefined structure 'ffblk' in function FILE_TEST\nError t.c 172: Size of 'info' is unknown or zero in function FILE_TEST\n*** 11 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/driver/CONFIG.C",
+  "status": 1
+ },
+ "bcc20-DRVLINK-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError C:\\PROJ\\DRVLINK.H 3: Unable to open include file 'dos.h'\nError C:\\PROJ\\DRVLINK.H 4: Unable to open include file 'dir.h'\nError t.c 228: Undefined symbol 'MAXEXT' in function FILE_APPEND_CALLBACK\nError t.c 228: Array must have at least one element in function FILE_APPEND_CALLBACK\nError t.c 229: Undefined symbol 'MAXFILE' in function FILE_APPEND_CALLBACK\nError t.c 229: Array must have at least one element in function FILE_APPEND_CALLBACK\nError t.c 492: Undefined structure 'ffblk' in function EXPAND_WILDCARDS\nError t.c 492: Size of 'search' is unknown or zero in function EXPAND_WILDCARDS\nError t.c 498: Undefined symbol 'ff_name' in function EXPAND_WILDCARDS\n*** 9 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/driver/DRVLINK.C",
+  "status": 1
+ },
+ "bcc20-ERRREPT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/diag/ERRREPT.C",
+  "status": 0
+ },
+ "bcc20-EXECMEM-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/EXECMEM.C",
+  "status": 0
+ },
+ "bcc20-EXPRNOD2-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError C:\\PROJ\\EXPRNOD2.H 3: Unable to open include file 'dos.h'\n*** 1 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/expr/EXPRNOD2.C",
+  "status": 1
+ },
+ "bcc20-FATAL-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/diag/FATAL.C",
+  "status": 0
+ },
+ "bcc20-GETSTAT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/GETSTAT.C",
+  "status": 0
+ },
+ "bcc20-HPADDFRE-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPADDFRE.C",
+  "status": 0
+ },
+ "bcc20-HPALLOC-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 66: Possibly incorrect assignment in function HEAP_ALLOC_NODE",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPALLOC.C",
+  "status": 0
+ },
+ "bcc20-HPAVAIL-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPAVAIL.C",
+  "status": 0
+ },
+ "bcc20-HPDEFTAG-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPDEFTAG.C",
+  "status": 0
+ },
+ "bcc20-HPEMSREL-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPEMSREL.C",
+  "status": 0
+ },
+ "bcc20-HPEXTEND-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPEXTEND.C",
+  "status": 0
+ },
+ "bcc20-HPEXTREL-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPEXTREL.C",
+  "status": 0
+ },
+ "bcc20-HPFIXHI-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 41: Possibly incorrect assignment in function ALLOC_FIXED_HIGH",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPFIXHI.C",
+  "status": 0
+ },
+ "bcc20-HPFIXLO-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 41: Possibly incorrect assignment in function ALLOC_FIXED_LOW",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPFIXLO.C",
+  "status": 0
+ },
+ "bcc20-HPGATHHI-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 65: Undefined structure 'PoolNode'",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPGATHHI.C",
+  "status": 0
+ },
+ "bcc20-HPGATHLO-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 57: Undefined structure 'PoolNode'",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPGATHLO.C",
+  "status": 0
+ },
+ "bcc20-HPGETITM-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPGETITM.C",
+  "status": 0
+ },
+ "bcc20-HPNEWB5-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPNEWB5.C",
+  "status": 0
+ },
+ "bcc20-HPOWNTAG-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPOWNTAG.C",
+  "status": 0
+ },
+ "bcc20-HPRCLNOD-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPRCLNOD.C",
+  "status": 0
+ },
+ "bcc20-HPRELCB-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 17: Undefined structure 'PoolNode'",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPRELCB.C",
+  "status": 0
+ },
+ "bcc20-HPRELFIX-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPRELFIX.C",
+  "status": 0
+ },
+ "bcc20-HPRELND-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPRELND.C",
+  "status": 0
+ },
+ "bcc20-HPRESIZE-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPRESIZE.C",
+  "status": 0
+ },
+ "bcc20-HPSHRNKH-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSHRNKH.C",
+  "status": 0
+ },
+ "bcc20-HPSHRNKN-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSHRNKN.C",
+  "status": 0
+ },
+ "bcc20-HPSHUTDN-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSHUTDN.C",
+  "status": 0
+ },
+ "bcc20-HPSPACE-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 30: Function should return a value in function HEAP_SPACE_BELOW_LIMIT\nError t.c 30: Undefined symbol 'DGROUP' in function HEAP_SPACE_BELOW_LIMIT\nError t.c 30: Undefined symbol 'DGROUP' in function HEAP_SPACE_BELOW_LIMIT\nError t.c 30: Undefined symbol 'DGROUP' in function HEAP_SPACE_BELOW_LIMIT\n*** 3 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/heap/HPSPACE.C",
+  "status": 1
+ },
+ "bcc20-HPSTUBEM-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSTUBEM.C",
+  "status": 0
+ },
+ "bcc20-HPSTUBIN-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSTUBIN.C",
+  "status": 0
+ },
+ "bcc20-HPSTUBIO-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSTUBIO.C",
+  "status": 0
+ },
+ "bcc20-HPSTUBOV-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSTUBOV.C",
+  "status": 0
+ },
+ "bcc20-HPSTUBSW-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPSTUBSW.C",
+  "status": 0
+ },
+ "bcc20-HPUNFXHI-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPUNFXHI.C",
+  "status": 0
+ },
+ "bcc20-HPUNFXLO-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/HPUNFXLO.C",
+  "status": 0
+ },
+ "bcc20-INITMARK-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-zCCO042_TEXT",
+   "-zECO042_TEXT",
+   "-zFCODE",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/INITMARK.C",
+  "status": 0
+ },
+ "bcc20-LDISNAN-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O-",
+   "-Z",
+   "-r-",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/float/LDISNAN.C",
+  "status": 0
+ },
+ "bcc20-LOOKAHD-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/parser/LOOKAHD.C",
+  "status": 0
+ },
+ "bcc20-MACROS-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError C:\\PROJ\\MACROS.H 3: Unable to open include file 'dos.h'\nError C:\\PROJ\\POOL.H 14: Unable to open include file 'dos.h'\nError t.c 97: Type mismatch in parameter 'source' in call to 'RTL_MEMMOVE' in function MACRO_DEFINE\n*** 3 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/preproc/MACROS.C",
+  "status": 1
+ },
+ "bcc20-OOMHAND-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 35: Parameter 'domain' is never used in function OUT_OF_MEMORY_HANDLER\nWarning t.c 35: Parameter 'status' is never used in function OUT_OF_MEMORY_HANDLER",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/OOMHAND.C",
+  "status": 0
+ },
+ "bcc20-OUTINIT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 62: Undefined structure 'ffblk'",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/codegen/OUTINIT.C",
+  "status": 0
+ },
+ "bcc20-OWNERTAG-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/OWNERTAG.C",
+  "status": 0
+ },
+ "bcc20-POOLMARK-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/POOLMARK.C",
+  "status": 0
+ },
+ "bcc20-RARGV0F0-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RARGV0F0.C",
+  "status": 0
+ },
+ "bcc20-RCTRL23-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RCTRL23.C",
+  "status": 0
+ },
+ "bcc20-RDRV388-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/driver/RDRV388.C",
+  "status": 0
+ },
+ "bcc20-REGMOVOP-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/codegen/REGMOVOP.C",
+  "status": 0
+ },
+ "bcc20-REXIT09F-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/REXIT09F.C",
+  "status": 0
+ },
+ "bcc20-RHCYCLE-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RHCYCLE.C",
+  "status": 0
+ },
+ "bcc20-RHLINK-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RHLINK.C",
+  "status": 0
+ },
+ "bcc20-RHSETCUR-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RHSETCUR.C",
+  "status": 0
+ },
+ "bcc20-RHSWAP-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RHSWAP.C",
+  "status": 0
+ },
+ "bcc20-RHUNLINK-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RHUNLINK.C",
+  "status": 0
+ },
+ "bcc20-RINIT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RINIT.C",
+  "status": 0
+ },
+ "bcc20-RIRQ1B-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RIRQ1B.C",
+  "status": 0
+ },
+ "bcc20-RMAIN13C-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 95: Nonportable pointer conversion in function RMAIN13C\nWarning t.c 101: Nonportable pointer conversion in function RMAIN13C\nWarning t.c 103: Nonportable pointer conversion in function RMAIN13C",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/driver/RMAIN13C.C",
+  "status": 0
+ },
+ "bcc20-RNEWNODE-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RNEWNODE.C",
+  "status": 0
+ },
+ "bcc20-RNOOPS-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 13: Parameter 'value' is never used in function BANK5_NOOP_NODE_HOOK\nWarning t.c 13: Parameter 'node' is never used in function BANK5_NOOP_NODE_HOOK\nWarning t.c 16: Parameter 'request' is never used in function BANK5_NOOP_REQUEST_HOOK\nWarning t.c 18: Undefined structure 'HeapNode'",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RNOOPS.C",
+  "status": 0
+ },
+ "bcc20-RPUTS-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RPUTS.C",
+  "status": 0
+ },
+ "bcc20-RRETNDES-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-r-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RRETNDES.C",
+  "status": 0
+ },
+ "bcc20-RSTRICMP-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RSTRICMP.C",
+  "status": 0
+ },
+ "bcc20-RSTRLOW-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RSTRLOW.C",
+  "status": 0
+ },
+ "bcc20-RT2F09-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/heap/RT2F09.C",
+  "status": 0
+ },
+ "bcc20-RTOUPPER-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-r-",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RTOUPPER.C",
+  "status": 0
+ },
+ "bcc20-RUNLINK-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/RUNLINK.C",
+  "status": 0
+ },
+ "bcc20-SEGNAMES-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError C:\\PROJ\\SEGNAMES.H 3: Unable to open include file 'dos.h'\n*** 1 errors in Compile ***",
+  "files": [],
+  "source": "bcc20/src/driver/SEGNAMES.C",
+  "status": 1
+ },
+ "bcc20-SETTOP-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError: Unable to execute command 'tasm.exe'",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20/src/rtl/SETTOP.C",
+  "status": 1
+ },
+ "bcc20-STRLIT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/lexer/STRLIT.C",
+  "status": 0
+ },
+ "bcc20-TASSERT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/parser/TASSERT.C",
+  "status": 0
+ },
+ "bcc20-TCALL-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/parser/TCALL.C",
+  "status": 0
+ },
+ "bcc20-TCHECK-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/parser/TCHECK.C",
+  "status": 0
+ },
+ "bcc20-TOKADV-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-Y",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/lexer/TOKADV.C",
+  "status": 0
+ },
+ "bcc20-TOLOWER-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-r-",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/rtl/TOLOWER.C",
+  "status": 0
+ },
+ "bcc20-TRUNCVAL-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/expr/TRUNCVAL.C",
+  "status": 0
+ },
+ "bcc20-TYPSTART-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/parser/TYPSTART.C",
+  "status": 0
+ },
+ "bcc20-USAGE-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G",
+   "-O",
+   "-Z",
+   "-p",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/driver/USAGE.C",
+  "status": 0
+ },
+ "bcc20-WARNREPT-c": {
+  "args": [
+   "-c",
+   "-mm",
+   "-G-",
+   "-O",
+   "-Z",
+   "-p",
+   "-u-",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20/src/diag/WARNREPT.C",
+  "status": 0
+ },
+ "port-ASMSEG-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/ASMSEG.C",
+  "status": 0
+ },
+ "port-ASMSEG-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/ASMSEG.C",
+  "status": 0
+ },
+ "port-BADOPT-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-Yq",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nError: Incorrect command line option: -Yq",
+  "files": [],
+  "source": "bcc20-port/tests/BADOPT.C",
+  "status": 1
+ },
+ "port-BASED-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-O",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/BASED.C",
+  "status": 0
+ },
+ "port-BASED-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/BASED.C",
+  "status": 0
+ },
+ "port-BASED-cpp-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-O",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/BASED.CPP",
+  "status": 0
+ },
+ "port-BASED-cpp-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/BASED.CPP",
+  "status": 0
+ },
+ "port-CONFIG-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/CONFIG.C",
+  "status": 0
+ },
+ "port-DYNDISP-cpp-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:\nWarning t.cpp 17: Base initialization without a class name is now obsolete in function Derived::Derived()\nError t.cpp 18: Cannot call dynamically dispatched function 'Window::paint()' in function use(Window far*)\nError t.cpp 18: Cannot call dynamically dispatched function 'Window::size(int)' in function use(Window far*)\n*** 2 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/DYNDISP.CPP",
+  "status": 1
+ },
+ "port-DYNDISP-cpp-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:\nWarning t.cpp 17: Base initialization without a class name is now obsolete in function Derived::Derived()\nError t.cpp 18: Cannot call dynamically dispatched function 'Window::paint()' in function use(Window far*)\nError t.cpp 18: Cannot call dynamically dispatched function 'Window::size(int)' in function use(Window far*)\n*** 2 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/DYNDISP.CPP",
+  "status": 1
+ },
+ "port-ERRDIR-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError t.c 7: Wrong number of arguments in call of 'PAIR'\nError t.c 7: Expression syntax\nError t.c 9: Error directive: stop here\n*** 3 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/ERRDIR.C",
+  "status": 1
+ },
+ "port-FOLDS-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-O",
+   "-G",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/FOLDS.C",
+  "status": 0
+ },
+ "port-FOLDS-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-G",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/FOLDS.C",
+  "status": 0
+ },
+ "port-HUGEINIT-S": {
+  "args": [
+   "-S",
+   "-mh",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/HUGEINIT.C",
+  "status": 0
+ },
+ "port-HUGEINIT-c": {
+  "args": [
+   "-c",
+   "-mh",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/HUGEINIT.C",
+  "status": 0
+ },
+ "port-INLASMRS-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError: Unable to execute command 'tasm.exe'",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/INLASMRS.C",
+  "status": 1
+ },
+ "port-INLINES-cpp-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-O",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/INLINES.CPP",
+  "status": 0
+ },
+ "port-INLINES-cpp-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/INLINES.CPP",
+  "status": 0
+ },
+ "port-INTRET-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/INTRET.C",
+  "status": 0
+ },
+ "port-INTRET-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/INTRET.C",
+  "status": 0
+ },
+ "port-MEMBPTR-cpp-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/MEMBPTR.CPP",
+  "status": 0
+ },
+ "port-MEMBPTR-cpp-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/MEMBPTR.CPP",
+  "status": 0
+ },
+ "port-MESSAGES-cpp-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:\nError t.cpp 6: Unknown language, must be C or C++\nError t.cpp 10: Illegal structure operation in function use(int far*,double)\nError t.cpp 11: Declaration does not specify a tag or an identifier in function use(int far*,double)\nError t.cpp 11: Declaration missing ; in function use(int far*,double)\nError t.cpp 11: Expression of integral type expected in function use(int far*,double)\nError t.cpp 12: Illegal use of pointer in function use(int far*,double)\nError t.cpp 13: Operator cannot be applied to these operand types in function use(int far*,double)\nError t.cpp 14: Illegal structure operation in function use(int far*,double)\nError t.cpp 15: Illegal use of floating point in function use(int far*,double)\nWarning t.cpp 16: Parameter 'd' is never used in function use(int far*,double)\nWarning t.cpp 16: Parameter 'p' is never used in function use(int far*,double)\n*** 9 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/MESSAGES.CPP",
+  "status": 1
+ },
+ "port-OPTMEM-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-Qe",
+   "-Qe-",
+   "-Qe=64",
+   "-Qx",
+   "-Qx-",
+   "-Qx=512,64",
+   "-Ff",
+   "-Ff-",
+   "-Ff=100",
+   "-T/zi",
+   "-T-",
+   "-T/m2",
+   "-lc",
+   "-l-c",
+   "-lx",
+   "-l-",
+   "-LLIB;C:\\LIB",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nError: No file names given",
+  "files": [],
+  "source": "bcc20-port/tests/OPTMEM.C",
+  "status": 1
+ },
+ "port-PRAGOPT-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-O",
+   "-r",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/PRAGOPT.C",
+  "status": 0
+ },
+ "port-PRAGOPT-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-r",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/PRAGOPT.C",
+  "status": 0
+ },
+ "port-RESPONSE-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "@C:\\SRC\\RESPONSE.RSP",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/RESPONSE.C",
+  "status": 0
+ },
+ "port-SIMPLIFY-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-O",
+   "-G",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 20: Code has no effect in function f\nWarning t.c 22: Code has no effect in function f",
+  "files": [
+   "T.ASM"
+  ],
+  "source": "bcc20-port/tests/SIMPLIFY.C",
+  "status": 0
+ },
+ "port-SIMPLIFY-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-G",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nWarning t.c 20: Code has no effect in function f\nWarning t.c 22: Code has no effect in function f",
+  "files": [
+   "T.OBJ"
+  ],
+  "source": "bcc20-port/tests/SIMPLIFY.C",
+  "status": 0
+ },
+ "port-SIMPLIFY-cpp-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-O",
+   "-G",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:\nError t.cpp 37: 'linked(int)' was previously declared with the language 'C++'\n*** 1 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/SIMPLIFY.CPP",
+  "status": 1
+ },
+ "port-SIMPLIFY-cpp-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-O",
+   "-G",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:\nError t.cpp 37: 'linked(int)' was previously declared with the language 'C++'\n*** 1 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/SIMPLIFY.CPP",
+  "status": 1
+ },
+ "port-STARTUP-cpp-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:\nError t.cpp 6: Not an allowed type\nError t.cpp 7: Undefined symbol 'nothing'\n*** 2 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/STARTUP.CPP",
+  "status": 1
+ },
+ "port-STARTUP-cpp-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.CPP"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.cpp:\nError t.cpp 6: Not an allowed type\nError t.cpp 7: Undefined symbol 'nothing'\n*** 2 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/STARTUP.CPP",
+  "status": 1
+ },
+ "port-WINDOWS-S": {
+  "args": [
+   "-S",
+   "-ml",
+   "-W",
+   "-Fc",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError t.c 13: Not an allowed type\n*** 1 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/WINDOWS.C",
+  "status": 1
+ },
+ "port-WINDOWS-c": {
+  "args": [
+   "-c",
+   "-ml",
+   "-W",
+   "-Fc",
+   "-IC:\\SRC;C:\\INCLUDE;C:\\PROJ",
+   "T.C"
+  ],
+  "console": "Borland C++  Version 2.0 Copyright (c) 1991 Borland International\nt.c:\nError t.c 13: Not an allowed type\n*** 1 errors in Compile ***",
+  "files": [],
+  "source": "bcc20-port/tests/WINDOWS.C",
+  "status": 1
+ }
+}

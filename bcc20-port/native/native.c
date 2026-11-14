@@ -13,14 +13,17 @@
    Any other untranslated function reached stops the program with its name (stand_in). */
 #include <dirent.h>
 #include <fcntl.h>
-#include <fnmatch.h>
 #include <setjmp.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#ifdef _WIN32
+#include <process.h>
+#else
 #include <sys/wait.h>
+#endif
 #include <time.h>
 #include <unistd.h>
 #include "port.h"
@@ -48,6 +51,43 @@ u16 DGROUP;
 static u16 env_seg, arg_seg;
 
 #define ERRNO W(DSPTR(0x0000))
+
+#ifndef O_BINARY
+#define O_BINARY 0              /* Windows: files are bytes, never text with CR LF */
+#endif
+
+/* a DOS wildcard pattern (* and ?, any case) against a name; with pathname set, * and ?
+   do not match '/' */
+static int wildcard_match(const char *pattern, const char *name, int pathname)
+{
+    for (;; pattern++, name++) {
+        char p = *pattern, n = *name;
+        if (p == '*') {
+            while (pattern[1] == '*')
+                pattern++;
+            if (!pattern[1])
+                return !pathname || !strchr(name, '/');
+            for (const char *s = name; *s; s++) {
+                if (wildcard_match(pattern + 1, s, pathname))
+                    return 1;
+                if (pathname && *s == '/')
+                    return 0;
+            }
+            return wildcard_match(pattern + 1, name + strlen(name), pathname);
+        }
+        if (!p)
+            return !n;
+        if (!n)
+            return 0;
+        if (p == '?') {
+            if (pathname && n == '/')
+                return 0;
+            continue;
+        }
+        if ((p >= 'a' && p <= 'z' ? p - 32 : p) != (n >= 'a' && n <= 'z' ? n - 32 : n))
+            return 0;
+    }
+}
 
 /* ---- library mode (lib.c, include/bcc20.h): the job's files and everything BCC writes
    are in memory; the console text is kept; other files come from the job's root ---- */
@@ -432,7 +472,7 @@ static int tracing(void)
 
 i16 RTL_OPEN(farptr name, i16 mode)
 {
-    static const int modes[] = {O_RDONLY, O_WRONLY, O_RDWR, O_RDONLY};
+    static const int modes[] = {O_RDONLY | O_BINARY, O_WRONLY | O_BINARY, O_RDWR | O_BINARY, O_RDONLY | O_BINARY};
     if (job) {
         int file = find_mem_file((const char *)at(name));
         if (file >= 0)
@@ -485,7 +525,7 @@ i16 RTL_CREAT(farptr name, i16 attribute)
         mem_files[file].size = 0;
         return dos_result(open_mem_handle(file), 4);
     }
-    return dos_result(open(host_path(name), O_RDWR | O_CREAT | O_TRUNC, 0644), 5);
+    return dos_result(open(host_path(name), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0644), 5);
 }
 
 static MemFile *mem_file_of(i16 handle)
@@ -621,7 +661,7 @@ static i16 find_next_in(unsigned slot, farptr record)
     if (searches[slot].in_memory) {
         while (searches[slot].next < n_mem_files) {
             MemFile *f = &mem_files[searches[slot].next++];
-            if (f->deleted || fnmatch(searches[slot].mem_pattern, f->name, FNM_CASEFOLD | FNM_PATHNAME))
+            if (f->deleted || !wildcard_match(searches[slot].mem_pattern, f->name, 1))
                 continue;
             const char *base = strrchr(f->name, '/');
             found(record, dos_time(clock_now()), (u32)f->size, base ? base + 1 : f->name);
@@ -636,7 +676,7 @@ static i16 find_next_in(unsigned slot, farptr record)
     }
     struct dirent *entry;
     while (searches[slot].dir && (entry = readdir(searches[slot].dir))) {
-        if (fnmatch(searches[slot].pattern, entry->d_name, FNM_CASEFOLD))
+        if (!wildcard_match(searches[slot].pattern, entry->d_name, 0))
             continue;
         char full[1100];
         snprintf(full, sizeof full, "%s%s", searches[slot].directory, entry->d_name);
@@ -872,6 +912,14 @@ i16 RTL_EXEC(farptr path, i8 mode, farptr block)
         argv[argc++] = word;
     argv[argc] = 0;
     fflush(stdout);
+#ifdef _WIN32
+    intptr_t code = _spawnvp(_P_WAIT, runner, (const char *const *)argv);
+    if (code < 0) {
+        ERRNO = 2;
+        return -1;
+    }
+    return (i16)(code & 0xFF);
+#else
     pid_t child = fork();
     if (child < 0) {
         ERRNO = 8;
@@ -887,6 +935,7 @@ i16 RTL_EXEC(farptr path, i8 mode, farptr block)
         return -1;
     }
     return (i16)(WEXITSTATUS(status) & 0xFF);
+#endif
 }
 
 /* the platform's own state, back to its start for a new run */

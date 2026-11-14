@@ -3,7 +3,8 @@
 CC ?= cc
 CFLAGS ?= -std=c11 -O2 -g -fPIC -Wall -Wextra -Wno-missing-field-initializers \
           -Werror=implicit-function-declaration
-CPPFLAGS += -Iinclude -Ireplay
+# _DEFAULT_SOURCE: glibc declares POSIX functions (fork, opendir ...) under -std=c11 only then
+CPPFLAGS += -Iinclude -Ireplay -D_DEFAULT_SOURCE
 
 SRC := $(sort $(wildcard src/*/*.c))
 REPLAY := replay/replay.c replay/functions.c
@@ -12,11 +13,15 @@ OBJ := $(patsubst %.c,build/obj/%.o,$(SRC) $(REPLAY)) build/obj/adapters.o
 build/replay: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
-# the generated adapters (tools/genadapters.py)
-build/adapters.c: tools/genadapters.py tools/record.py $(SRC)
+# the generated adapters (tools/genadapters.py): committed, since making them needs BCC.EXE
+# (for its code addresses); remade when the toolchain is installed for ../bcc20
+ADAPTERS := generated/adapters.c
+ifneq ($(wildcard ../bcc20/toolchain/BC20/BIN/BCC.EXE),)
+$(ADAPTERS): tools/genadapters.py tools/record.py $(SRC)
 	python3 tools/genadapters.py adapters $@
+endif
 
-build/obj/adapters.o: build/adapters.c $(wildcard include/*.h replay/*.h)
+build/obj/adapters.o: $(ADAPTERS) $(wildcard include/*.h replay/*.h)
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
@@ -32,7 +37,7 @@ NATIVE_OBJ := $(patsubst %.c,build/native/%.o,$(SRC) $(NATIVE)) build/native/ada
 build/bcc: $(NATIVE_OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
-build/native/adapters.o: build/adapters.c $(wildcard include/*.h replay/*.h native/*.h)
+build/native/adapters.o: $(ADAPTERS) $(wildcard include/*.h replay/*.h native/*.h)
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE $(CFLAGS) -c -o $@ $<
 
@@ -67,7 +72,8 @@ build/bcc20run: tools/bcc20run.c build/libbcc20.a include/bcc20.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ tools/bcc20run.c build/libbcc20.a
 
 # the same as a shared library, for callers in other languages (Exhume's tools/bcc20.py)
-SHLIB := build/libbcc20$(if $(filter Darwin,$(shell uname -s)),.dylib,.so)
+UNAME := $(shell uname -s)
+SHLIB := build/libbcc20$(if $(filter Darwin,$(UNAME)),.dylib,$(if $(findstring MINGW,$(UNAME)),.dll,.so))
 $(SHLIB): build/libbcc20.a
 	$(CC) -shared -o $@ build/lib/bcc20.o
 
