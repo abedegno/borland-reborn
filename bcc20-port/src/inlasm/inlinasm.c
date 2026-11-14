@@ -20,7 +20,7 @@
    the frame, the operands pushed on the stack and the depth check are where and as they
    were, and the far pointers handed to the C helpers are the original's.  A jump to the
    statement's exit from inside nested routines is a host longjmp. */
-#include <setjmp.h>
+#include "hostjmp.h"
 #include "port.h"
 #include "data.h"
 #include "protos.h"

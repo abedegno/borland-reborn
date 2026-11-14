@@ -6,7 +6,7 @@
 #define PORT_SETJUMP_H
 #include "port.h"
 #ifdef PORT_NATIVE
-#include <setjmp.h>
+#include "hostjmp.h"
 jmp_buf *native_jump_slot(farptr buffer);
 #undef C45_SETJUMP
 #define C45_SETJUMP(buffer) ((i16)setjmp(*native_jump_slot(buffer)))

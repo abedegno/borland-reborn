@@ -14,6 +14,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bcc20.h"
+#ifdef _WIN32
+#include <fcntl.h>
+#include <io.h>
+#endif
 
 static void *read_file(const char *path, size_t *size)
 {
@@ -56,6 +60,9 @@ int main(int argc, char **argv)
     bcc20_file files[64];
     int n_files = 0, repeat = 1, i = 1;
     bcc20_job job = {0};
+#ifdef _WIN32
+    _setmode(_fileno(stdout), _O_BINARY);   /* the console text has BCC's own CR LF */
+#endif
     job.stack_limit = 1;
     for (; i < argc && strcmp(argv[i], "--"); i++) {
         if (!strcmp(argv[i], "--file") && i + 1 < argc && n_files < 64) {

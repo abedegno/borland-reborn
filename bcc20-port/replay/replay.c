@@ -34,7 +34,7 @@
    that loops, often on poison it should never have read).
    Exit status 0 only if every call matched. */
 #define _POSIX_C_SOURCE 200809L
-#include <setjmp.h>
+#include "hostjmp.h"
 #include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>

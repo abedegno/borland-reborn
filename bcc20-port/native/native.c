@@ -13,13 +13,15 @@
    Any other untranslated function reached stops the program with its name (stand_in). */
 #include <dirent.h>
 #include <fcntl.h>
-#include <setjmp.h>
+#include "hostjmp.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include <sys/stat.h>
 #ifdef _WIN32
+#include <io.h>
 #include <process.h>
 #else
 #include <sys/wait.h>
@@ -362,6 +364,9 @@ int native_run(int argc, const char *const *argv)
 #ifndef BCC20_LIBRARY
 int main(int argc, char **argv)
 {
+#ifdef _WIN32
+    _setmode(_fileno(stdout), _O_BINARY);   /* BCC writes its own CR LF */
+#endif
     return native_run(argc, (const char *const *)argv);
 }
 #endif
@@ -445,6 +450,44 @@ static const char *drive_root(void)
     return root && *root ? root : 0;
 }
 
+/* DOS names ignore case and a host's may not (Linux): each part of path that does not exist
+   as written is replaced by the entry of its directory that matches it ignoring case, if
+   there is one; the parts after the first with no match stay as written */
+static void fold_case(char *path)
+{
+    struct stat st;
+    if (stat(path, &st) == 0)
+        return;
+    size_t n = strlen(path);
+    for (size_t start = path[0] == '/' ? 1 : 0; start < n;) {
+        char *slash = strchr(path + start, '/');
+        size_t end = slash ? (size_t)(slash - path) : n;
+        char saved = path[end];
+        path[end] = 0;
+        if (stat(path, &st) != 0) {
+            char directory[1024];
+            snprintf(directory, sizeof directory, "%.*s", start ? (int)start - 1 : 0, path);
+            DIR *dir = opendir(start ? (directory[0] ? directory : "/") : ".");
+            struct dirent *entry;
+            int found = 0;
+            while (dir && (entry = readdir(dir)))
+                if (strlen(entry->d_name) == end - start && !strcasecmp(entry->d_name, path + start)) {
+                    memcpy(path + start, entry->d_name, end - start);
+                    found = 1;
+                    break;
+                }
+            if (dir)
+                closedir(dir);
+            if (!found) {
+                path[end] = saved;
+                return;
+            }
+        }
+        path[end] = saved;
+        start = end + 1;
+    }
+}
+
 /* a DOS path as the host's: '\' as '/', relative to the current directory, or to the drive
    root when it starts at the root */
 static char *host_path(farptr name)
@@ -477,6 +520,7 @@ static char *host_path(farptr name)
         snprintf(rooted, sizeof rooted, "%s/%s", job->root ? job->root : "/nonexistent-bcc20-root", path);
         snprintf(path, sizeof path, "%s", rooted);
     }
+    fold_case(path);
     struct stat st;
     if (stat(path, &st) == 0 || getenv("BCC_EMU2_FIND"))      /* emu2 does not cut names */
         return path;
@@ -507,6 +551,7 @@ static char *host_path(farptr name)
     }
     cut[k] = 0;
     strcpy(path, cut);
+    fold_case(path);
     return path;
 }
 

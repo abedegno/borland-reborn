@@ -14,7 +14,7 @@ $comm	macro	name,dist,size,count
 	endif
 	?debug	S "t.c"
 	?debug	C E90000212803742E63
-	?debug	C E958866C5D0E433A5C50524F4A5C444154412E48
+	?debug	C E9000021280E433A5C50524F4A5C444154412E48
 T_TEXT	segment byte public 'CODE'
 T_TEXT	ends
 DGROUP	group	_DATA,_BSS

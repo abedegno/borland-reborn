@@ -9,7 +9,8 @@ The cases are the port's tests and ../bcc20's own sources that include no <...> 
 project headers they use, ../bcc20/src/include, are in the repository): -c for all, -S too
 for the port's tests; link steps are left out (they need TLINK). Each runs in a fresh
 directory staged as tools/nativetest.py does, with an empty INCLUDE, the source's time
-pinned and the time zone UTC (object files record the file's local time), and
+and its headers' times
+pinned and the time zone UTC (object files record the files' local times), and
 BCC_EMU2_FIND set, as the reference was made in emu2.
 check runs each case in build/bcc and, through the library, twice in one process in
 build/bcc20run, and compares the files written, the exit status and the console text (the
@@ -76,7 +77,11 @@ def stage(d, path):
     shutil.copytree(BCC20 / "src" / "include", d / "PROJ")
     src = d / ("T.CPP" if path.suffix.upper() == ".CPP" else "T.C")
     shutil.copy(path, src)
-    os.utime(src, (STAMP, STAMP))
+    # objects record the time of the source and of every header it reads: pin them all, as a
+    # checkout gives files its own time
+    for f in [src, *d.rglob("*")]:
+        if f.is_file():
+            os.utime(f, (STAMP, STAMP))
     cfg = path.with_suffix(".CFG")
     if path.parent == PORT / "tests" and cfg.exists():
         shutil.copy(cfg, d / "TURBOC.CFG")
