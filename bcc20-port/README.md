@@ -135,7 +135,10 @@ translation keeps on purpose (an original bug the output depends on, for example
      the record's address is formed before or after it (Turbo C forms it after).
    - Calls through BCC's code pointers use `CALL_FAR` / `CALL_NEAR` (`calls.h`), never a C
      function pointer cast.
-   - A local whose address is passed on lives in the scratch area (`scratch_alloc`).
+   - A local whose address is passed on lives in the scratch area (`scratch_alloc`). When
+     several are passed, keep the original frame's layout among them (read it from the
+     pointer arguments of a recorded child): the replay maps a window around each pointer,
+     so a stand-in that reads a neighbouring local finds it where BCC.EXE had it.
    - A function that takes a structure by value is listed in genadapters'
      `STRUCT_ARGUMENTS`: the port passes the structure as its words in the order a pascal
      call pushes them, its last word first (MAKE_MEMBER_NODE(member, word3, line, file)).

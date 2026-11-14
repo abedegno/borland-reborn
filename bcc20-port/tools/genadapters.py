@@ -47,6 +47,10 @@ HEAD = re.compile(r"^(?!extern|typedef|\s)([^;{}()#=\n]*?)\b([A-Za-z_]\w*)\s*\((
 STRUCT_ARGUMENTS = {
     # expr/EXPRPOOL.C MAKE_MEMBER_NODE(member, struct C21Location {file, line, word3})
     "MAKE_MEMBER_NODE": ("u16", ["u16", "u16", "u16", "u16"], False, False),
+    # parser/EXTDECL.C DECLARE_TYPEDEF(type, struct DeclarationAttributes {storage, calling,
+    # qualifier}, name): the 3-byte structure takes 4 bytes; its high word is the qualifier
+    # and a pad byte, which is not compared
+    "DECLARE_TYPEDEF": ("void", ["u16", "u8", "u16", "u16"], False, False),
 }
 RETURN_OVERRIDES = {
     "PARSE_PP_IF_EXPRESSION": "i16",    # CPRAGFN.C: EVAL_EXPRESSION hook, PARSE_CONSTANT_EXPR's AX
