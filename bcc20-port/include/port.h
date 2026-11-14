@@ -26,8 +26,11 @@ typedef u32 __attribute__((aligned(1), may_alias)) u32u;
 typedef i16 __attribute__((aligned(1), may_alias)) i16u;
 typedef i32 __attribute__((aligned(1), may_alias)) i32u;
 
-/* the 8086 address space: 1 MB, plus 64 KB past the end for segment:offset values that run
-   beyond it (BCC never relies on wrapping at 1 MB) */
+/* the 8086 address space: 1 MB, plus 64 KB past the end for a word or longer access that
+   starts just below it.  A segment:offset beyond 1 MB wraps to the start, as on the 8086
+   (and in emu2, the reference): BCC's own paths never need it, but a pointer made from
+   other values can (the direct-call checks of tools/inject.py met FA56:FF50, read at
+   0A4B0) */
 #define MEM_SIZE (0x100000 + 0x10000)
 extern u8 *mem;
 
@@ -36,7 +39,7 @@ typedef u32 farptr;
 #define MK_FP(s, o) (((farptr)(u16)(s) << 16) | (u16)(o))
 #define FP_SEG(p) ((u16)((p) >> 16))
 #define FP_OFF(p) ((u16)(p))
-#define LIN(s, o) (((u32)(u16)(s) << 4) + (u16)(o))
+#define LIN(s, o) ((((u32)(u16)(s) << 4) + (u16)(o)) & 0xFFFFF)
 
 static inline u8 *at(farptr p) { return mem + LIN(FP_SEG(p), FP_OFF(p)); }
 

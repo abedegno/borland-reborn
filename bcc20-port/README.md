@@ -40,23 +40,34 @@ the code passes), the object and assembly writers (`../bcc20/src/output`), the d
 assembler's C side (operands, symbol encoding, the instruction encoder), precompiled headers,
 the diagnostics (message printing, through `include/variadic.h`, and type spelling), the
 80-bit real arithmetic of `../bcc20/src/float` (the assembly modules, in C) and more of the
-run-time library: 1588 functions checked, each matching every call recorded over the whole
+run-time library: 1629 functions checked, each matching every call recorded over the whole
 corpus (at most 200 different calls a function), and the inline assembler's engine
 (`INLINASM.ASM`) in C, matching every recorded statement.
 
-`make check` lists the translated functions that have no recorded call (41), and
-`tools/coverage.py` shows that BCC.EXE itself never runs any of them over the corpus: every
-function BCC.EXE runs is checked. Many are unreachable from BCC 2.0's driver: the C++ front
-end's C mode (BUILD_MEMBER_ACCESS, TYPE_CHECK2, BCC_TYPE_FINISH, C5ARG, C10PROMOTE ...) runs
-only for a C++ compile with option bit 0 clear, which every route to the C++ front end sets;
-HANDLE_NEGATED_FLAG_OPTION is in no option table and PCH_PUSH_BACK_DIRECTIVE_NOW in no
-directive table. Others hang off paths or table entries no input selects: APPLY_BASED_POINTER, APPLY_BASED_POINTER_C, ASM_COLON_LABEL_STUB, ASM_FLUSH_KIND2_STUB, BCC_NODE_CONVERT, BCC_NODE_ERROR, BCC_STRING_CONCAT_NEAR, BCC_TYPE_FINISH, BUILD_MEMBER_ACCESS, C0FINAL, C0RELINK, C10DEFAULTS, C10PROMOTE, C13SPECIAL, C51_EMIT_PATH_CALLBACK, C5ARG, CONTEXT_DIAGNOSTIC, COPY_VECTOR_ELEMENTS, EMIT_COMM_DECLARATION, EMIT_DB_LINE, EMIT_HELPER_CALL_FOR_NODE, EMIT_INSN_NODE_REG, EXPAND_POST_INC_DEC, FIND_BASE_SYMBOL, FLUSH_PENDING_POOL, FOLD_SUB_UNSIGNED, HANDLE_NEGATED_FLAG_OPTION, HIGH_BIT_INDEX, IS_BASED_NEAR_PTR, IS_STRING_LITERAL_STORAGE, LINE_HOOK, MAKE_ADDRESS_OF_TYPED, NO_REAL_FOLD, PARSE_IDENTIFIER, PCH_PUSH_BACK_DIRECTIVE_NOW, REQUIRED_TYPE_TEXT, SET_PREPARED_SYMBOL_FLAGS, STBIN10, STORAGE_IDENTITY, TREE_HAS_SIDE_EFFECTS_ALT, TYPE_CHECK2.
+Every translated function is checked (1629). Those BCC.EXE never calls over the corpus
+get their calls from `tools/inject.py`: BCC.EXE compiles a corpus test in the tracing
+emu2, and at the entry of a function of the same code segment (or anywhere, for a far
+function with an entry in the load module, called through it) the tracer makes the call
+itself, with arguments in the target's calling convention taken from the trigger's own
+(live nodes, symbols and types of the same pools), small constants and random words; the
+call is recorded like any other, children included. A call BCC.EXE does not finish
+sanely is left out, as there is nothing to compare: one cut short with no long jump or
+exit to end it (BCC.EXE crashed), one that ran 0000:0000 (a null pointer), one whose
+stack went below BCC's own limit (8F0Ch, over its data). Such made-up states found one
+real difference, fixed: addresses past 1 MB wrap, as on the 8086 (`include/port.h`).
+Natural inputs were found for some of these functions (`tests/BASED.C`: BCC 2.0's
+undocumented based pointers, `char near * "base" p;`).
 
 The native build (`make native`, `build/bcc`) compiles: with the heap, overlay manager and
-DOS services replaced by `native/`, 1868 of the corpus's 1874 compile steps (`-c`, `-S`,
+DOS services replaced by `native/`, 1872 of the corpus's 1878 compile steps (`-c`, `-S`,
 precompiled headers written and loaded, links, BCC alone) give the same object or assembly
 file, exit status and messages as BCC.EXE (`tools/nativetest.py`).
-The other 6 are listed under "Decisions for the native build".
+The other 6 are accepted known differences (decided 2026-11-14): `mangle10.C` (2 steps)
+and cfront's `sin.C` and `sqrt.C` (4 steps) are compiles that fail in both, and only their
+follow-on error messages differ, because BCC.EXE there reads bytes it never set (a stack
+slot, leftover heap memory) whose contents come from its DOS memory history. No compile
+that succeeds differs, so matching is not affected. Details under "Decisions for the native
+build".
 
 ## How a translation is checked
 
@@ -129,8 +140,16 @@ committed; make them again from your own BCC.EXE.
 `--all` records every translated function in one pass over the corpus (about fifteen
 minutes with 12 cores). A run follows recorded calls 32 deep; a call deeper than that
 leaves the calls around it unrecorded, so a function reached only that deep gets no calls
-from `--all` and must be recorded on its own: after `--all`, record the functions
-`make check` lists as not reached in a second pass (`record.py NAME ...`). `--runs N` samples N compiles, which can miss the functions
+from `--all` and must be recorded on its own. The whole sequence:
+
+```sh
+python3 tools/record.py --all --max 200
+make check > build/check.txt                    # lists the functions not reached
+python3 tools/record.py NAME ... --max 200      # those, each on its own
+make check > build/check.txt
+python3 tools/inject.py NAME ... --variants 120 # those BCC.EXE never calls: made calls
+make check
+``` `--runs N` samples N compiles, which can miss the functions
 only the targeted tests reach.
 
 The native build is self-contained: BCC's initial data (DGROUP), the inline assembler's
@@ -229,6 +248,7 @@ of the definition's.
 | `include/bcc20.h`, `native/lib.c`, `tools/bcc20run.c` | the library interface: one compile in-process, memory to memory |
 | `include/explain.h`, `native/explain.c` | the compiler explaining its choices (register variables and registers, spills, cross-jumps, removed loads) |
 | `tools/coverage.py` | which of the unchecked functions BCC.EXE runs at all over the corpus |
+| `tools/inject.py` | calls of functions BCC.EXE never makes, made by the tracer inside a real compile and recorded |
 
 Each translated file starts with a comment naming the original file and anything the
 translation keeps on purpose (an original bug the output depends on, for example).
