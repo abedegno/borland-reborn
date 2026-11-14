@@ -24,6 +24,7 @@ import hashlib
 import os
 import re
 import shutil
+import threading
 import struct
 import subprocess
 import sys
@@ -138,6 +139,39 @@ def corpus_steps():
     return out
 
 
+def measure_stack(d, offsets, stack):
+    """adds one run's EMU2_RECORD_SP lines to stack: drop[callee][caller] and check[function]
+    count each SP difference seen, root[function] each entry SP with no recorded caller"""
+    names = {}
+    for name, off in offsets.items():
+        names.setdefault(off, name)
+    for f in d.glob("sp.*"):
+        for line in f.read_text().splitlines():
+            w = line.split()
+            if w[0] == "S" and len(w) == 5:
+                callee, caller = names.get(int(w[1], 16)), names.get(int(w[2], 16))
+                if not callee:
+                    continue
+                if caller:
+                    key = stack["drop"].setdefault(callee, {}).setdefault(caller, {})
+                    drop = (int(w[3], 16) - int(w[4], 16)) & 0xFFFF
+                else:
+                    key = stack["root"].setdefault(callee, {})
+                    drop = int(w[4], 16)
+                key[drop] = key.get(drop, 0) + 1
+            elif w[0] == "K" and len(w) == 4:
+                name = names.get(int(w[1], 16))
+                if name:
+                    key = stack["check"].setdefault(name, {})
+                    drop = (int(w[2], 16) - int(w[3], 16)) & 0xFFFF
+                    key[drop] = key.get(drop, 0) + 1
+
+
+def write_stack(path, stack):
+    import json
+    Path(path).write_text(json.dumps(stack, indent=1, sort_keys=True))
+
+
 def stage_config(d, path):
     """A port test NAME.C with a NAME.CFG beside it: that file is BCC's configuration file,
     TURBOC.CFG in the directory BCC runs from."""
@@ -196,6 +230,9 @@ def main():
     ap.add_argument("--jobs", type=int, default=os.cpu_count() or 4)
     ap.add_argument("--only", help="record only the compiles of this corpus test name")
     ap.add_argument("--out", help="write the records here instead of records/")
+    ap.add_argument("--sp", help="also measure BCC.EXE's stack (EMU2_RECORD_SP) into this JSON "
+                    "file: the SP drop from each recorded function to each it calls, and the "
+                    "frame each stack check sees (native/stack.c)")
     args = ap.parse_args()
 
     if args.all:
@@ -236,6 +273,9 @@ def main():
     env_ignore = ignored_code()
     env_unwind = f"{offsets['C45_LONGJUMP']:X}"     # the run-time library's long jump
 
+    stack = {"drop": {}, "check": {}, "root": {}}
+    stack_lock = threading.Lock()
+
     def run(job):
         index, (name, path, opts, modes) = job
         d = WORK / "runs" / f"{index:04d}"
@@ -250,6 +290,8 @@ def main():
                    EMU2_RECORD_UNWIND=env_unwind,
                    EMU2_RECORD_INNER=env_inner, EMU2_RECORD_IGNORE=env_ignore,
                    EMU2_RECORD_MAX=str(args.per_run))
+        if args.sp:
+            env["EMU2_RECORD_SP"] = str(d / "sp")
         for mode in modes:      # in order, in one directory (a precompiled header file)
             try:
                 done = subprocess.run([args.emu2, "BCC.EXE", *modtest.command(mode, opts, src.name)],
@@ -262,6 +304,9 @@ def main():
         # one text per process: each numbers its calls from 0, and children find their
         # parents by those numbers
         texts = [f.read_text() for f in sorted(d.glob("rec.*"))]
+        if args.sp:
+            with stack_lock:
+                measure_stack(d, offsets, stack)
         shutil.rmtree(d)
         return texts
 
@@ -301,6 +346,8 @@ def main():
                         calls[name].add(key)
                         with open(spool / name, "a") as f:
                             f.write(f"CALL {offsets[name]:X} {len(calls[name]) - 1}\n{body}{kids}")
+    if args.sp:
+        write_stack(args.sp, stack)
     for name, found in calls.items():
         target = out / f"{name}.rec"
         target.unlink(missing_ok=True)

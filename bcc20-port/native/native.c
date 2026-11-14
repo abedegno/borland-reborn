@@ -41,7 +41,9 @@ u16 DGROUP;
    segment (port.h) */
 #define PSP_SEG 0x07F0
 #define LOAD_SEG 0x0800
-#define BSS_START 0x5C96            /* src/data/DGROUP.ASM: BSS_START, the end of the data */
+#define BSS_START 0x5C96
+#define EXE_HEADER_SS 0x16B4        /* BCC.EXE's header: the initial stack, SS:SP */
+#define EXE_HEADER_SP 0x1194            /* src/data/DGROUP.ASM: BSS_START, the end of the data */
 #define ENV_PARAS 0x10
 #define ARG_PARAS 0x100
 
@@ -153,6 +155,15 @@ int main(int argc, char **argv)
         text = put_string(text, words[i]);
     }
     D(fp_add(vector, count * 4)) = 0;
+    /* BCC.EXE's SP when C0 calls the compiler (native/stack.c): C0 copies the command tail
+       (DOS's, with its leading blank) below the stack the EXE header gives, rounded down to
+       a word, pushes two words for each argument and seven more, and makes the far call */
+    {
+        i32 dos_length = (i32)length + (argc > 1 ? 1 : 0);
+        i32 top = (i32)EXE_HEADER_SS - DGROUP_PARA;
+        native_stack_set_root((((i32)EXE_HEADER_SP - dos_length - 1) & 0xFFFE) + top * 16
+                              - (4 + 4 * (count - 1) + 4 + 6 + 4));
+    }
     RMAIN13C((i16)count, vector);
     return 0;
 }
@@ -180,6 +191,7 @@ static struct {
     farptr buffer;
     jmp_buf jump;
     u16 scratch, near_scratch;
+    unsigned stack_depth;           /* native/stack.c's shadow stack at the C45_SETJUMP */
 } jumps[8];
 
 jmp_buf *native_jump_slot(farptr buffer)
@@ -194,6 +206,7 @@ jmp_buf *native_jump_slot(farptr buffer)
     jumps[i].buffer = buffer;
     jumps[i].scratch = scratch_mark();
     jumps[i].near_scratch = near_scratch_mark();
+    jumps[i].stack_depth = native_stack_depth();
     return &jumps[i].jump;
 }
 
@@ -203,6 +216,7 @@ void C45_LONGJUMP(farptr buffer, i16 value)
         if (jumps[i].buffer == buffer) {
             scratch_release(jumps[i].scratch);
             near_scratch_release(jumps[i].near_scratch);
+            native_stack_unwind(jumps[i].stack_depth);
             longjmp(jumps[i].jump, value ? value : 1);
         }
     fprintf(stderr, "bcc: long jump to a buffer never set\n");

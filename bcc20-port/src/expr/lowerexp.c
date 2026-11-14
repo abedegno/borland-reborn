@@ -7,8 +7,8 @@
    right before left.
 
    The original gives up with "out of memory" when the 8086 stack pointer drops below
-   8F0Ch (a very deep tree).  The port has no such stack, so that check is left out
-   (README, decisions for the native build). */
+   8F0Ch (a very deep tree); STACK_CHECK does the same with the native build's model of
+   that stack (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -16,6 +16,9 @@
 #include "exprop.h"
 #include "protos.h"
 #include "calls.h"
+#include "msg.h"
+#include "variadic.h"
+#include "stack.h"
 
 #define REAL_ONE_P DSPTR(0x09B7)      /* the 10-byte real 1.0 (symbols.tsv) */
 
@@ -87,6 +90,7 @@ u16 MAKE_STEP_CONSTANT(u16 type)
 
 u16 LOWER_EXPR_TREE(u16 expression)
 {
+    STACK_CHECK(LOWER_EXPR_TREE);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     u16 result = expression;
     if (!result)
         return result;

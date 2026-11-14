@@ -8,4 +8,8 @@ farptr native_item_holder(void);
 /* size bytes of the program file's overlay area at offset into target */
 void native_read_overlay(u32 offset, u8 *target, u16 size);
 
+/* stack.c: the shadow stack of BCC.EXE's 8086 stack */
+unsigned native_stack_depth(void);
+void native_stack_unwind(unsigned to);
+void native_stack_set_root(i32 sp);
 #endif

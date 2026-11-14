@@ -20,7 +20,7 @@
 
    PARSE_INLINE_STATEMENT returns an unset register for a stray "else" or a token that
    cannot start a statement; the port returns 0 there (README, decisions for the native
-   build).  SUBSTITUTE_PARAMETERS' "out of memory" stack check is left out. */
+   build).  SUBSTITUTE_PARAMETERS' "out of memory" stack check is STACK_CHECK (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -29,6 +29,8 @@
 #include "token.h"
 #include "msg.h"
 #include "protos.h"
+#include "variadic.h"
+#include "stack.h"
 
 #define OP(n) EXPR_W((n), EXPR_OP)
 #define LEFT(n) EXPR_W((n), EXPR_LEFT)
@@ -358,6 +360,7 @@ u16 SUBSTITUTE_PARAMETER(u16 node, farptr map)
    through SUBSTITUTE_LVALUE_PARAM */
 u16 SUBSTITUTE_PARAMETERS(u16 node, farptr map)
 {
+    STACK_CHECK(SUBSTITUTE_PARAMETERS);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     if (!node || OP(node) == 0)
         return node;
     if (OP(node) == 1)

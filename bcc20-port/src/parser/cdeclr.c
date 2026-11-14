@@ -14,7 +14,7 @@
    mask) is passed by value as two words, its high word (third and a pad byte) first, as a
    pascal call pushes it (README, structure arguments); BCC_STMT_BEGIN returns it through a
    buffer whose address the caller passes, in the scratch area.  PARSE_DECLARATOR_TREE's
-   "out of memory" stack check is left out (README, decisions for the native build). */
+   "out of memory" stack check is STACK_CHECK (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -23,6 +23,7 @@
 #include "protos.h"
 #include "variadic.h"
 #include "calls.h"
+#include "stack.h"
 
 #define TOKEN_TYPE W(TOKEN_TYPE_P)
 #define TOKEN_CONST_VALUE SD(TOKEN_CONST_VALUE_P)
@@ -145,6 +146,7 @@ static u16 new_node(u16 kind, i32 value, u16 first, u16 second, u8 flags, struct
    be positive constants */
 u16 PARSE_DECLARATOR_TREE(u16 input, i16 level)
 {
+    STACK_CHECK(PARSE_DECLARATOR_TREE);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     struct Flags local;
     u16 node;
     {

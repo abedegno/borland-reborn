@@ -25,6 +25,7 @@
 #include "data.h"
 #include "protos.h"
 #include "calls.h"
+#include "stack.h"
 
 /* ---- the machine ---- */
 static u16 ax, bx, cx, dx, si, di, bp, sp;
@@ -295,7 +296,10 @@ i16 ASM_ASSEMBLE_STATEMENT(farptr text, u16 length, i16 mode)
     push(bp);
     bp = sp;
     sp -= 0x1C0;
-    if (setjmp(statement_exit) == 0) {
+    volatile unsigned stack_depth = STACK_DEPTH();    /* the jump skips the calls' ends */
+    if (setjmp(statement_exit) != 0)
+        STACK_UNWIND(stack_depth);
+    else {
         CALL(asm_init_state);
         BPB(-0x1B) = 1;
         CALL(asm_next_token);

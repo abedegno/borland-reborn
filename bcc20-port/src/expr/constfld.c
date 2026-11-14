@@ -16,7 +16,7 @@
    The original tests the 8086 overflow flag after its long add and subtract and after
    LMUL_WITH_OVERFLOW; the port computes the same signed overflow.  Its long shifts are
    Borland's helpers, whose shift counts the 80186 takes modulo 32.  FOLD_EXPRESSION's
-   "out of memory" stack check is left out (README, decisions for the native build). */
+   "out of memory" stack check is STACK_CHECK (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -28,6 +28,7 @@
 #include "calls.h"
 #include "overflow.h"
 #include "longops.h"
+#include "stack.h"
 
 #define OP(n) EXPR_W((n), EXPR_OP)
 #define KIND(n) EXPR_W((n), EXPR_KIND)
@@ -142,6 +143,7 @@ static i16 log2_of(u16 constant) { return LOG2_POWER_OF_TWO((u32)VALUE(constant)
    unchanged; a bitfield node only folds its object */
 u16 FOLD_EXPRESSION(u16 input)
 {
+    STACK_CHECK(FOLD_EXPRESSION);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     u16 node = input, left, right, temp;
     i16 bit;
     if (!node || KIND(node) == TK_UNDEFINED || OP(node) == 53)

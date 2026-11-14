@@ -14,8 +14,8 @@
    1Bh &, 21h :, 2Ah !, 2Bh ~, 2Ch sizeof, 2Dh ++, 2Eh --, 2Fh ., 30h ->, 31h identifier,
    32h and 65h integer constants, 33h floating constant, 34h string literal, 9 "...".  The
    original is written with register pseudo-variables to keep its register use; here they
-   are ordinary locals.  STEVALN's "out of memory" stack check is left out (README,
-   decisions for the native build). */
+   are ordinary locals.  STEVALN's "out of memory" stack check is STACK_CHECK
+   (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -25,6 +25,7 @@
 #include "protos.h"
 #include "variadic.h"
 #include "calls.h"
+#include "stack.h"
 
 #define OP(n) EXPR_W((n), EXPR_OP)
 #define KIND(n) EXPR_W((n), EXPR_KIND)
@@ -88,6 +89,7 @@ u16 PARSE_EXPRESSION(u16 unary, i16 mode)
    for the "ambiguous operators need parentheses" warning.  0 after a syntax error */
 u16 STEVALN(i16 minimum, u16 unary, i16 mode, i16 previous, u16 context)
 {
+    STACK_CHECK(STEVALN);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     u16 left = STUNARY(unary, context);
     if (!left)
         return 0;

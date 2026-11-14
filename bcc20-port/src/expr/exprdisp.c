@@ -9,8 +9,8 @@
    for a returned structure).
 
    The original stops with "out of memory" when the 8086 stack pointer drops below 8F0Ch
-   (a very deep tree).  The port has no such stack, so that check is left out (README,
-   decisions for the native build). */
+   (a very deep tree); STACK_CHECK does the same with the native build's model of that
+   stack (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -19,6 +19,8 @@
 #include "msg.h"
 #include "protos.h"
 #include "calls.h"
+#include "variadic.h"
+#include "stack.h"
 
 #define TYPE_OF(node) EXPR_W((node), EXPR_TYPE)
 #define KIND_OF(node) TYPE_W(TYPE_OF(node), TYPE_KIND)
@@ -227,6 +229,7 @@ static u16 analyze_sizeof(u16 expression)
    form when they get here */
 u16 ANALYZE_EXPRESSION(u16 expression, u16 type, u16 context)
 {
+    STACK_CHECK(ANALYZE_EXPRESSION);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     if (!expression || ((EXPR_B(expression, EXPR_NODE_FLAGS) & 1) && EXPR_W(expression, EXPR_OP) != EOP_CONST))
         return expression;
     switch (EXPR_W(expression, EXPR_OP)) {

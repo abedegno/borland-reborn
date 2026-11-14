@@ -37,6 +37,12 @@ build/native/adapters.o: build/adapters.c $(wildcard include/*.h replay/*.h nati
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE $(CFLAGS) -c -o $@ $<
 
+# (before the general rule: make 3.81 takes the first that matches) the translations
+# report each call to native/stack.c, which models BCC.EXE's stack
+build/native/src/%.o: src/%.c $(wildcard include/*.h replay/*.h native/*.h)
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE $(CFLAGS) -finstrument-functions -c -o $@ $<
+
 build/native/%.o: %.c $(wildcard include/*.h replay/*.h native/*.h)
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE -DBCC20_EXE_DEFAULT='"$(BCC20_EXE)"' $(CFLAGS) -c -o $@ $<

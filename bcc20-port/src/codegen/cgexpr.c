@@ -16,8 +16,8 @@
    CMP byte/word, 85h/86h TEST byte/word, 4Dh OR word, B5h/B6h load DX:AX / CX:BX, B4h a
    value for the 8087, BEh a far address for a helper, C2h/C3h a helper's result in AX/DX.
    The original checks the stack at the top of GENERATE_EXPRESSION (MSG_OUT_MEMORY below
-   SP 8F0Ch, since the generator is deeply recursive); the port runs on the host stack and
-   has no such check. */
+   SP 8F0Ch, since the generator is deeply recursive); STACK_CHECK does the same with the
+   native build's model of that stack (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -27,6 +27,7 @@
 #include "exprop.h"
 #include "msg.h"
 #include "variadic.h"
+#include "stack.h"
 
 #define HUGE_PTR_AHSHIFT_MODE SB(HUGE_PTR_AHSHIFT_MODE_P)
 
@@ -185,6 +186,7 @@ static u32 generate_long_shift(u16 node, u16 count)
    into x = x op y */
 u32 GENERATE_EXPRESSION(u16 input, u16 mode)
 {
+    STACK_CHECK(GENERATE_EXPRESSION);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     u16 node = input, item, temporary;
     if (KIND(node) == TK_UNDEFINED)
         return 0;

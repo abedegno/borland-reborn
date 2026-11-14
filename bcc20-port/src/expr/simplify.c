@@ -9,8 +9,8 @@
    "possible use before definition").  mode: 0 discarded, 1 used, 2 used as an object (an
    lvalue under &, an assignment's target, a callee).  An operator with an error operand
    becomes the error node.  CONSTANT_TRUTH_VALUE: 0 false, 1 true, 2 unknown.  The long
-   arithmetic is Borland's (longops.h).  SIMPLIFY_NODE's "out of memory" stack check is left
-   out (README, decisions for the native build). */
+   arithmetic is Borland's (longops.h).  SIMPLIFY_NODE's "out of memory" stack check is
+   STACK_CHECK (native/stack.c). */
 #include "port.h"
 #include "data.h"
 #include "pool.h"
@@ -20,6 +20,8 @@
 #include "protos.h"
 #include "calls.h"
 #include "longops.h"
+#include "variadic.h"
+#include "stack.h"
 
 #define OP(n) EXPR_W((n), EXPR_OP)
 #define LEFT(n) EXPR_W((n), EXPR_LEFT)
@@ -1243,6 +1245,7 @@ u16 SIMPLIFY_CONDITIONAL(u16 expr, u16 mode)
    freed and 0 returned */
 u16 SIMPLIFY_NODE(u16 expr, u16 flags, u16 mode)
 {
+    STACK_CHECK(SIMPLIFY_NODE);     /* if(_SP<0x8F0C) REPORT_FATAL(MSG_OUT_MEMORY): native/stack.c */
     if (expr) {
         switch (OP(expr)) {
         case 0x36:

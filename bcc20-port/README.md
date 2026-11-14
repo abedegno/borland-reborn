@@ -58,10 +58,10 @@ corpus (at most 200 different calls a function), and the inline assembler's engi
   precompiled-header directive table) for entries no input selects: APPLY_BASED_POINTER, APPLY_BASED_POINTER_C, ASM_COLON_LABEL_STUB, ASM_FLUSH_KIND2_STUB, BCC_NODE_CONVERT, BCC_NODE_ERROR, BCC_NODE_MODE, BCC_NODE_NORMALIZE, BCC_STRING_CONCAT_NEAR, BCC_TYPE_FINISH, BUILD_MEMBER_ACCESS, C0FINAL, C0RELINK, C10DEFAULTS, C10PROMOTE, C13SPECIAL, C51_EMIT_PATH_CALLBACK, C5ARG, CONTEXT_DIAGNOSTIC, COPY_VECTOR_ELEMENTS, EMIT_COMM_DECLARATION, EMIT_DB_LINE, EMIT_HELPER_CALL_FOR_NODE, EMIT_INSN_NODE_REG, EMIT_INSN_STACK_REG, EXPAND_POST_INC_DEC, FIND_BASE_SYMBOL, FIND_MATCHING_ENDIF, FLUSH_PENDING_POOL, FOLD_DIV_SIGNED, FOLD_MOD_SIGNED, FOLD_MOD_UNSIGNED, FOLD_SUB_SIGNED, FOLD_SUB_UNSIGNED, FOLD_XOR_LONG, HANDLE_NEGATED_FLAG_OPTION, HIGH_BIT_INDEX, HOIST_LVALUE_ADDR_TO_TEMP, INVALIDATE_PCH_ENTRY, IS_BASED_NEAR_PTR, IS_STRING_LITERAL_STORAGE, LINE_HOOK, LINKAGE_NAME, MAKE_ADDRESS_OF_TYPED, NEW_BITFIELD_NODE_ALT, NO_REAL_FOLD, PARSE_IDENTIFIER, PCH_DIRECTIVE_IFNDEF, PCH_PUSH_BACK_DIRECTIVE_NOW, REQUIRED_TYPE_TEXT, SET_PREPARED_SYMBOL_FLAGS, STBIN10, STORAGE_IDENTITY, TEMP_STORAGE_FOR_TYPE, TREE_HAS_SIDE_EFFECTS_ALT, TYPE_CHECK2, WRAP_IN_UNARY_NODE.
 
 The native build (`make native`, `build/bcc`) compiles: with the heap, overlay manager and
-DOS services replaced by `native/`, 1842 of the corpus's 1856 compile steps (`-c`, `-S`,
+DOS services replaced by `native/`, 1861 of the corpus's 1867 compile steps (`-c`, `-S`,
 precompiled headers written and loaded, links, BCC alone) give the same object or assembly
 file, exit status and messages as BCC.EXE (`tools/nativetest.py`).
-The other 14 are listed under "Decisions for the native build".
+The other 6 are listed under "Decisions for the native build".
 
 ## How a translation is checked
 
@@ -143,7 +143,8 @@ python3 tools/nativetest.py [--only TEST]       # build/bcc against BCC.EXE over
 `BCC_TRACE=1` shows each file the native build opens or looks for; `BCC_SCRATCH_FILL=n`
 fills every new translated local with byte n, which finds code whose result depends on a
 local the original never set. `BCC_DOS_RUNNER=emu2` runs the DOS programs BCC calls
-(TLINK for a link, TASM for `-B`) in that emulator.
+(TLINK for a link, TASM for `-B`) in that emulator. `BCC_STACK_LIMIT=0` turns off the model
+of BCC.EXE's stack, so a source nested too deeply for BCC.EXE ("Out of memory") compiles.
 
 The corpus is `../bcc20`'s (tools/modtest.py) and the port's own tests in `tests/`, which
 reach paths the corpus does not (precompiled headers, the memory and linker options, a
@@ -256,12 +257,17 @@ Places where the original's behaviour depends on something a port does not have:
   takes parameters, but on the path where the test fails it returns the symbol anyway (what
   is left in AX), so the test changes nothing. The port reproduces that; a fix would refuse
   such functions.
-- **LOWER_EXPR_TREE** (LOWEREXP.C), **ANALYZE_EXPRESSION** (EXPRDISP.C), **FOLD_EXPRESSION**
-  (CONSTFLD.C), **SUBSTITUTE_PARAMETERS** (INLINEXP.C), **SIMPLIFY_NODE** (SIMPLIFY.C),
-  **STEVALN** (EXPRPARS.C) and **PARSE_DECLARATOR_TREE** (CDECLR.C) stop with "out of memory" when the 8086 stack pointer drops below
-  8F0Ch, which only a very deeply nested expression reaches. The port has no such stack and
-  leaves the check out; the native build could limit the nesting depth instead, if it wants
-  the same error.
+- **The stack checks**: LOWER_EXPR_TREE (LOWEREXP.C), ANALYZE_EXPRESSION (EXPRDISP.C),
+  FOLD_EXPRESSION (CONSTFLD.C), SUBSTITUTE_PARAMETERS (INLINEXP.C), SIMPLIFY_NODE
+  (SIMPLIFY.C), STEVALN (EXPRPARS.C), PARSE_DECLARATOR_TREE (CDECLR.C) and
+  GENERATE_EXPRESSION (CGEXPR.C) stop with "Out of memory" when the 8086 SP is below 8F0Ch,
+  which a deeply nested source reaches. A matcher must not accept a candidate BCC.EXE
+  cannot compile, so the native build models BCC.EXE's stack (`native/stack.c`): each call
+  between translated functions lowers a virtual SP by the drop BCC.EXE showed for that
+  caller and callee (measured over the corpus, `tools/record.py --sp`, generated into
+  `native/stack_table.c` by `tools/genstack.py`), from the SP BCC.EXE's start-up code
+  enters the compiler with (which depends on the command line), and STACK_CHECK compares
+  it at each check. `BCC_STACK_LIMIT=0` turns the checks off.
 - **PARSE_INLINE_STATEMENT** (INLINEXP.C) returns an unset register (the caller's SI) for a
   stray "else" or a token that cannot start a statement in an inline body. The port returns
   0; the native build should do the same, or report the error and stop expanding.
@@ -296,9 +302,6 @@ Places where the original's behaviour depends on something a port does not have:
   port uses 0 (never steps over); the native build should do the same.
 - **The "Available memory" line** BCC prints is computed from its heap; the native heap's
   figure differs (`tools/nativetest.py` leaves the line out).
-- **Running out of memory**: BCC.EXE stops with "Out of memory" when its stack gets too deep
-  (GENERATE_EXPRESSION checks SP against 8F0Ch); the native build runs on the host's stack
-  and does not, so deeply nested torture tests compile (eight compiles of the corpus).
 - **Error cascades** in two cfront sources (`sin.C`, `sqrt.C`, four compiles) lose one
   follow-on message, "Left side must be a structure". After an earlier error a member
   access is left with no left operand (node 0), and CHECK_DOT_MEMBER (EXPRCHK.C) analyses
