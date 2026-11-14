@@ -43,6 +43,7 @@ def run_one(job, emu2, keep):
         (d / "TLINK.EXE").symlink_to(WORK / "TLINK.EXE")    # what BCC runs for `link`
         src = d / modtest.source_name(path)
         shutil.copy2(path, src)
+        record.stage_config(d, path)
         if side == "orig":
             (d / "BCC.EXE").symlink_to(WORK / "BCC.EXE")
         # emu2's find first (native.c); DOS programs the port runs go through emu2

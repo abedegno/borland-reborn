@@ -1,6 +1,7 @@
 /* modtest: -ml */
 /* Borland's __emit__ intrinsic: bytes, words and addresses of locals and globals, and
-   arguments it refuses. */
+   arguments it refuses.  <dos.h> declares it, which makes it the intrinsic. */
+#include <dos.h>
 int global;
 void f(int arg)
 {

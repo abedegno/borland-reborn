@@ -128,7 +128,7 @@ def corpus_steps():
            for modes in steps]
     # the port's own tests (tests/), for paths the corpus does not reach, with modtest's
     # header lines: /* modtest: SWITCHES */ and /* modes: STEP ... */ (default -c, then -S)
-    for path in sorted((PORT / "tests").glob("*.C*")):
+    for path in sorted(p for p in (PORT / "tests").iterdir() if p.suffix.upper() in (".C", ".CPP")):
         head = path.read_bytes()[:1000].decode("latin1")
         found = re.search(r"modtest:\s*([^*\n]*)", head)
         opts = found.group(1).split() if found else ["-ml", "-O", "-G"]
@@ -136,6 +136,14 @@ def corpus_steps():
         steps = [modes.group(1).split()] if modes else [["-c"], ["-S"]]
         out += [(f"port:{path.stem}", path, opts, m) for m in steps]
     return out
+
+
+def stage_config(d, path):
+    """A port test NAME.C with a NAME.CFG beside it: that file is BCC's configuration file,
+    TURBOC.CFG in the directory BCC runs from."""
+    cfg = path.with_suffix(".CFG")
+    if path.parent == PORT / "tests" and cfg.exists():
+        shutil.copy(cfg, d / "TURBOC.CFG")
 
 
 def boundary(functions):
@@ -237,6 +245,7 @@ def main():
         (d / "TLINK.EXE").symlink_to(WORK / "TLINK.EXE")    # what BCC runs for `link`
         src = d / modtest.source_name(path)
         shutil.copy(path, src)
+        stage_config(d, path)
         env = dict(os.environ, EMU2_RECORD=str(d / "rec"), EMU2_RECORD_AT=env_at,
                    EMU2_RECORD_UNWIND=env_unwind,
                    EMU2_RECORD_INNER=env_inner, EMU2_RECORD_IGNORE=env_ignore,

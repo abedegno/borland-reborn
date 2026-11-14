@@ -42,8 +42,20 @@ the diagnostics (message printing, through `include/variadic.h`, and type spelli
 80-bit real arithmetic of `../bcc20/src/float` (the assembly modules, in C) and more of the
 run-time library: 1545 functions checked, each matching every call recorded over the whole
 corpus (at most 200 different calls a function), and the inline assembler's engine
-(`INLINASM.ASM`) in C, matching every recorded statement. A few are never reached by the
-corpus and are not checked yet (`make check` lists them).
+(`INLINASM.ASM`) in C, matching every recorded statement.
+
+`make check` lists the translated functions that have no recorded call (77);
+`tools/coverage.py` tells them apart by whether BCC.EXE runs them at all over the corpus:
+
+- **Run, but never recorded** (20): the calls that enclose a whole compile, whose overlay
+  loads move the memory they then read, and those that end in a long jump or in the
+  program's exit. The native corpus checks them as a whole: BCC_STATEMENT_MAIN, BEGIN_SESSION, C11UNNAMED, C9TYPES, COMPILE_C_SOURCE, COMPILE_FILE_REPORT_ERRORS, COMPILE_ONE_FILE, EXIT, FATAL_EXIT, FILE_FATAL, INIT_PARSER, LG0A1, MODE_FALLBACK, PARSE_ERROR_DIRECTIVE, PARSE_EXTERNAL_DECLARATIONS, PATH_PROCESS, PRINT_USAGE_AND_EXIT, PROCESS_FILE_ARGUMENT, REPORT_FATAL, RMAIN13C.
+- **Never run by BCC.EXE** (57): paths the corpus does not take. Many are unreachable from
+  BCC 2.0's driver: the C++ front end's C mode (BUILD_MEMBER_ACCESS, TYPE_CHECK2,
+  BCC_TYPE_FINISH, C5ARG, C10PROMOTE ...) runs only for a C++ compile with option bit 0
+  clear, which every route to the C++ front end sets; HANDLE_NEGATED_FLAG_OPTION is in no
+  option table. Others hang off function tables in DGROUP (the constant folders, the
+  precompiled-header directive table) for entries no input selects: APPLY_BASED_POINTER, APPLY_BASED_POINTER_C, ASM_COLON_LABEL_STUB, ASM_FLUSH_KIND2_STUB, BCC_NODE_CONVERT, BCC_NODE_ERROR, BCC_NODE_MODE, BCC_NODE_NORMALIZE, BCC_STRING_CONCAT_NEAR, BCC_TYPE_FINISH, BUILD_MEMBER_ACCESS, C0FINAL, C0RELINK, C10DEFAULTS, C10PROMOTE, C13SPECIAL, C51_EMIT_PATH_CALLBACK, C5ARG, CONTEXT_DIAGNOSTIC, COPY_VECTOR_ELEMENTS, EMIT_COMM_DECLARATION, EMIT_DB_LINE, EMIT_HELPER_CALL_FOR_NODE, EMIT_INSN_NODE_REG, EMIT_INSN_STACK_REG, EXPAND_POST_INC_DEC, FIND_BASE_SYMBOL, FIND_MATCHING_ENDIF, FLUSH_PENDING_POOL, FOLD_DIV_SIGNED, FOLD_MOD_SIGNED, FOLD_MOD_UNSIGNED, FOLD_SUB_SIGNED, FOLD_SUB_UNSIGNED, FOLD_XOR_LONG, HANDLE_NEGATED_FLAG_OPTION, HIGH_BIT_INDEX, HOIST_LVALUE_ADDR_TO_TEMP, INVALIDATE_PCH_ENTRY, IS_BASED_NEAR_PTR, IS_STRING_LITERAL_STORAGE, LINE_HOOK, LINKAGE_NAME, MAKE_ADDRESS_OF_TYPED, NEW_BITFIELD_NODE_ALT, NO_REAL_FOLD, PARSE_IDENTIFIER, PCH_DIRECTIVE_IFNDEF, PCH_PUSH_BACK_DIRECTIVE_NOW, REQUIRED_TYPE_TEXT, SET_PREPARED_SYMBOL_FLAGS, STBIN10, STORAGE_IDENTITY, TEMP_STORAGE_FOR_TYPE, TREE_HAS_SIDE_EFFECTS_ALT, TYPE_CHECK2, WRAP_IN_UNARY_NODE.
 
 The native build (`make native`, `build/bcc`) compiles: with the heap, overlay manager and
 DOS services replaced by `native/`, 1842 of the corpus's 1856 compile steps (`-c`, `-S`,
@@ -170,6 +182,7 @@ of the definition's.
 | `native/` | the native build's platform layer: start-up in place of `../bcc20/src/driver/C0.ASM` and DOS (loading the data image, the PSP, argc/argv, the BSS), DOS file and directory services on the host, and a heap with the pools' behaviour in place of the DOS heap and overlay manager |
 | `tests/` | the port's own tests, for paths the corpus does not reach (see "Use") |
 | `tools/nativetest.py` | the native build against BCC.EXE over the corpus |
+| `tools/coverage.py` | which of the unchecked functions BCC.EXE runs at all over the corpus |
 
 Each translated file starts with a comment naming the original file and anything the
 translation keeps on purpose (an original bug the output depends on, for example).
