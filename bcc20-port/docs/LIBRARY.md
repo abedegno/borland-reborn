@@ -40,6 +40,28 @@ from the command line (`--file NAME=PATH`, `--root DIR`, `--time T`, `--repeat N
 `--explain PATH`); `tools/nativetest.py --lib` runs the whole corpus through it, each
 compile twice in one process.
 
+## Server mode, for many compiles at once
+
+`build/bcc20run --serve` keeps a compiler running and takes jobs on stdin, answering each on
+stdout, so a client starts one server per core it wants busy and sends jobs without starting
+a process (the protocol is at the top of [`tools/bcc20run.c`](../tools/bcc20run.c): plain
+length-prefixed records). Files every job needs, a project's headers say, are sent once
+(`KEEP`) and held by the server. One compile at a time per server; a client caps the cores
+it uses by how many servers it starts, and can lower their priority. A server that crashes
+or hangs is killed and started again by the client, and only that job is lost.
+
+Exhume's [`tools/bcc20.py`](../../exhume/tools/bcc20.py) has the client, `bcc20.Pool`:
+
+```python
+with bcc20.Pool(workers=4, root="/path/to/BC20", nice=10, timeout=60) as pool:
+    pool.keep({"PROJ.H": header})                   # held by every server
+    results = pool.map([(["-c", "-ml", "A.C"], {"A.C": a}), (["-c", "-ml", "B.C"], {"B.C": b})])
+```
+
+Its default is one server fewer than the cores (`BCC20_WORKERS` to change it). Exhume's
+build (`[toolchain] native = "bcc20"`) and permuter use it. `tools/golden.py check` runs every
+golden case through one server as well.
+
 ## Explain output
 
 The compiler can explain its choices: the job's `explain` callback (or `BCC_EXPLAIN=1` for

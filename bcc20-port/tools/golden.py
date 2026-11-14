@@ -12,8 +12,8 @@ directory staged as tools/nativetest.py does, with an empty INCLUDE, the source'
 and its headers' times
 pinned and the time zone UTC (object files record the files' local times), and
 BCC_EMU2_FIND set, as the reference was made in emu2.
-check runs each case in build/bcc and, through the library, twice in one process in
-build/bcc20run, and compares the files written, the exit status and the console text (the
+check runs each case in build/bcc, through the library twice in one process in
+build/bcc20run, and as a job sent to one `bcc20run --serve` that serves every case, and compares the files written, the exit status and the console text (the
 "Available memory" line left out).  The golden files are BCC.EXE's output (see ../NOTICE.md).
 """
 import json
@@ -132,25 +132,72 @@ def make():
     print(f"tests/golden: {len(index)} cases")
 
 
+class Server:
+    """one bcc20run --serve for every case (its protocol: tools/bcc20run.c)"""
+
+    def __init__(self, program):
+        self.proc = subprocess.Popen([str(program), "--serve"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+
+    @staticmethod
+    def record(tag, *parts):
+        parts = [p.encode("latin1") if isinstance(p, str) else p for p in parts]
+        return (tag + "".join(f" {len(p)}" for p in parts) + "\n").encode() + b"".join(parts)
+
+    def run(self, args, files, root):
+        job = self.record("ROOT", str(root)) + f"TIME {STAMP}\n".encode() + \
+            b"".join(self.record("ARG", a) for a in args) + \
+            b"".join(self.record("FILE", n, d) for n, d in files.items()) + b"RUN\n"
+        self.proc.stdin.write(job)
+        self.proc.stdin.flush()
+        status, console, outputs, out = None, "", {}, self.proc.stdout
+        while True:
+            words = out.readline().split()
+            if not words:
+                return "server died", -1, {}
+            tag, nums = words[0], [int(w) for w in words[1:]]
+            if tag == b"STATUS":
+                status = nums[0]
+            elif tag == b"CONSOLE":
+                console = out.read(nums[0]).decode("latin1")
+            elif tag == b"OUTPUT":
+                name = out.read(nums[0]).decode("latin1")
+                outputs[name.upper()] = out.read(nums[1])
+            elif tag == b"DONE":
+                return console, status, outputs
+            else:
+                return "server error: " + out.read(nums[0] if nums else 0).decode("latin1"), -1, {}
+
+    def close(self):
+        self.proc.stdin.write(b"QUIT\n")
+        self.proc.stdin.close()
+        self.proc.wait()
+
+
 def check():
     index = json.loads((GOLDEN / "index.json").read_text())
     bcc, run_lib = PORT / "build" / ("bcc.exe" if os.name == "nt" else "bcc"), PORT / "build" / ("bcc20run.exe" if os.name == "nt" else "bcc20run")
     env = dict(os.environ, BCC_EMU2_FIND="1", TZ="UTC0")
     failures = 0
+    server = Server(run_lib)
     for case, want in sorted(index.items()):
         path = PORT.parent / want["source"]
-        for side in ("native", "library"):
+        for side in ("native", "library", "server"):
             with tempfile.TemporaryDirectory() as tmp:
                 d = Path(tmp)
                 src = stage(d, path)
                 before = {p.name for p in d.iterdir()}
-                if side == "native":
-                    cmd = [str(bcc), *want["args"]]
+                if side == "server":
+                    text, status, files = server.run(want["args"], {src.name: src.read_bytes()}, d)
+                    text = console(text)
+                    files = {n: v for n, v in files.items() if n.split(".")[-1] in ("OBJ", "ASM")}
                 else:
-                    cmd = [str(run_lib), "--file", f"{src.name}={src.name}", "--root", ".", "--time", str(STAMP),
-                           "--repeat", "2", "--", *want["args"]]
-                text, status = run(cmd, d, env)
-                files = outputs(d, before)
+                    if side == "native":
+                        cmd = [str(bcc), *want["args"]]
+                    else:
+                        cmd = [str(run_lib), "--file", f"{src.name}={src.name}", "--root", ".", "--time", str(STAMP),
+                               "--repeat", "2", "--", *want["args"]]
+                    text, status = run(cmd, d, env)
+                    files = outputs(d, before)
             problems = []
             if status != want["status"]:
                 problems.append(f"exit status {status}, BCC.EXE {want['status']}")
@@ -165,8 +212,9 @@ def check():
             if problems:
                 failures += 1
                 print(f"{case} ({side}): " + "\n  ".join(problems))
-    total = 2 * len(index)
-    print(f"{total - failures} of {total} runs the same as BCC.EXE ({len(index)} cases, native and library)")
+    server.close()
+    total = 3 * len(index)
+    print(f"{total - failures} of {total} runs the same as BCC.EXE ({len(index)} cases: native, library, server)")
     return 1 if failures else 0
 
 
