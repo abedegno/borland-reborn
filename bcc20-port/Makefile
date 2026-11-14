@@ -28,7 +28,6 @@ build/obj/%.o: %.c $(wildcard include/*.h replay/*.h)
 # the replay harness
 NATIVE := $(sort $(wildcard native/*.c))
 NATIVE_OBJ := $(patsubst %.c,build/native/%.o,$(SRC) $(NATIVE)) build/native/adapters.o
-BCC20_EXE ?= $(abspath ../bcc20/toolchain/BC20/BIN/BCC.EXE)
 
 build/bcc: $(NATIVE_OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
@@ -45,7 +44,7 @@ build/native/src/%.o: src/%.c $(wildcard include/*.h replay/*.h native/*.h)
 
 build/native/%.o: %.c $(wildcard include/*.h replay/*.h native/*.h)
 	@mkdir -p $(dir $@)
-	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE -DBCC20_EXE_DEFAULT='"$(BCC20_EXE)"' $(CFLAGS) -c -o $@ $<
+	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE $(CFLAGS) -c -o $@ $<
 
 .PHONY: native
 native: build/bcc

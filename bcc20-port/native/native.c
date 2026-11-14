@@ -1,11 +1,11 @@
 /* native.c: the native build's start-up and DOS services (README.md, "Plan", step 3).
    main() does what DOS and the start-up code (../bcc20/src/driver/C0.ASM) do for BCC.EXE:
-   it loads the program image into the flat memory at a fixed segment and applies its
-   relocations (the image holds BCC's initial data: DGROUP, the overlay stub headers and
-   the code segments' tables, which translated code reads), builds the PSP, an environment
-   and argc/argv, fills the start-up words at the start of DGROUP, clears the BSS and calls
-   the driver, RMAIN13C, which ends in EXIT.  The image comes from the program file named by
-   BCC20_EXE (default: the toolchain's BCC.EXE); its code is never run.
+   it loads the parts of the program image the translations read (DGROUP's initial data,
+   the inline assembler's tables, the message image's stub header: image.c) into the flat
+   memory at their places in the load module and applies their relocations, builds the
+   PSP, an environment and argc/argv, fills the start-up words at the start of DGROUP,
+   clears the BSS and calls the driver, RMAIN13C, which ends in EXIT.  BCC's code itself is
+   never needed: all of it is translated.
    The DOS services (int 21h) the translated code reaches through the run-time library are
    done with the host's: files by handle (DOS handles are host descriptors), find first and
    next, date and time, console output.  Interrupt vectors are words in the vector table at
@@ -29,71 +29,47 @@
 #include "calls.h"
 #include "replay.h"
 #include "native.h"
+#include "image.h"
 
 u8 *mem;
 u16 DGROUP;
-
-#ifndef BCC20_EXE_DEFAULT
-#define BCC20_EXE_DEFAULT "../bcc20/toolchain/BC20/BIN/BCC.EXE"
-#endif
 
 /* the memory map: PSP, program image, environment, arguments, heap up to the scratch
    segment (port.h) */
 #define PSP_SEG 0x07F0
 #define LOAD_SEG 0x0800
-#define BSS_START 0x5C96
+#define BSS_START 0x5C96            /* src/data/DGROUP.ASM: BSS_START, the end of the data */
 #define EXE_HEADER_SS 0x16B4        /* BCC.EXE's header: the initial stack, SS:SP */
-#define EXE_HEADER_SP 0x1194            /* src/data/DGROUP.ASM: BSS_START, the end of the data */
+#define EXE_HEADER_SP 0x1194
 #define ENV_PARAS 0x10
 #define ARG_PARAS 0x100
 
-static u8 *program;
-static long program_size;
-static u32 overlay_base;            /* the end of the load module in the file */
 static u16 env_seg, arg_seg;
 
 #define ERRNO W(DSPTR(0x0000))
 
 /* ---- the program image ---- */
-static void load_program(const char *path)
+/* the parts of BCC.EXE's image the translations read (image.c, tools/genimage.py), at
+   their places in the load module, their segment words relocated as DOS does */
+static void load_program(void)
 {
-    FILE *f = fopen(path, "rb");
-    if (!f) {
-        fprintf(stderr, "bcc: cannot read the program image %s (set BCC20_EXE)\n", path);
-        exit(4);
+    for (const ImagePart *part = IMAGE_PARTS; part->bytes; part++) {
+        memcpy(mem + LIN(LOAD_SEG + part->para, 0), part->bytes, part->size);
+        for (const u16 *r = part->relocs; *r != 0xFFFF; r++)
+            W(MK_FP(LOAD_SEG + part->para, *r)) += LOAD_SEG;
     }
-    fseek(f, 0, SEEK_END);
-    program_size = ftell(f);
-    fseek(f, 0, SEEK_SET);
-    program = malloc((size_t)program_size);
-    if (fread(program, 1, (size_t)program_size, f) != (size_t)program_size) {
-        fprintf(stderr, "bcc: cannot read %s\n", path);
-        exit(4);
-    }
-    fclose(f);
-#define HDR(o) (program[o] | program[(o) + 1] << 8)
-    u32 header = (u32)HDR(8) * 16;
-    overlay_base = (u32)HDR(4) * 512 - (HDR(2) ? 512 - HDR(2) : 0);
-    memcpy(mem + LIN(LOAD_SEG, 0), program + header, overlay_base - header);
-    /* the overlay area starts with a 16-byte "FBOV" header; stub offsets count after it */
-    if (!memcmp(program + overlay_base, "FBOV", 4))
-        overlay_base += 16;
-    for (u16 i = 0; i < HDR(6); i++) {
-        u32 entry = (u32)HDR(0x18) + i * 4;
-        u16 off = (u16)HDR(entry), seg = (u16)HDR(entry + 2);
-        W(MK_FP(LOAD_SEG + seg, off)) += LOAD_SEG;
-    }
-#undef HDR
 }
 
+/* the bytes of an overlay image (the messages) at offset of the overlay area */
 void native_read_overlay(u32 offset, u8 *target, u16 size)
 {
-    u32 start = overlay_base + offset;
-    if ((long)(start + size) > program_size) {
-        fprintf(stderr, "bcc: overlay image outside the program file\n");
-        exit(4);
-    }
-    memcpy(target, program + start, size);
+    for (const ImageOverlay *o = IMAGE_OVERLAYS; o->bytes; o++)
+        if (o->offset == offset && size <= o->size) {
+            memcpy(target, o->bytes, size);
+            return;
+        }
+    fprintf(stderr, "bcc: no overlay image at %lX (native/image.c)\n", (unsigned long)offset);
+    exit(4);
 }
 
 farptr native_item_holder(void) { return MK_FP(env_seg, 0xF0); }
@@ -110,8 +86,7 @@ static farptr put_string(farptr p, const char *s)
 int main(int argc, char **argv)
 {
     mem = calloc(1, MEM_SIZE);
-    const char *image = getenv("BCC20_EXE");
-    load_program(image ? image : BCC20_EXE_DEFAULT);
+    load_program();
     DGROUP = LOAD_SEG + DGROUP_PARA;
     memset(mem + LIN(DGROUP, BSS_START), 0, 0x10000 - BSS_START);
     env_seg = DGROUP + 0x1000;

@@ -129,10 +129,11 @@ from `--all` and must be recorded on its own: after `--all`, record the function
 `make check` lists as not reached in a second pass (`record.py NAME ...`). `--runs N` samples N compiles, which can miss the functions
 only the targeted tests reach.
 
-The native build reads BCC's initial data from the program file (`BCC20_EXE`, default the
-toolchain's BCC.EXE; its code is never run) and runs like BCC.EXE in a DOS directory: the
-drive's root is the current directory, names are cut to 8.3 when the host has no file
-under the full name, and the command line is cut to DOS's 126 characters.
+The native build is self-contained: BCC's initial data (DGROUP), the inline assembler's
+tables and the message texts are compiled in (`native/image.c`, generated from BCC.EXE by
+`tools/genimage.py`), and BCC.EXE is not needed to run it. It runs like BCC.EXE in a DOS
+directory: the drive's root is the current directory, names are cut to 8.3 when the host
+has no file under the full name, and the command line is cut to DOS's 126 characters.
 
 ```sh
 make native                                     # build/bcc
@@ -183,6 +184,7 @@ of the definition's.
 | `native/` | the native build's platform layer: start-up in place of `../bcc20/src/driver/C0.ASM` and DOS (loading the data image, the PSP, argc/argv, the BSS), DOS file and directory services on the host, and a heap with the pools' behaviour in place of the DOS heap and overlay manager |
 | `tests/` | the port's own tests, for paths the corpus does not reach (see "Use") |
 | `tools/nativetest.py` | the native build against BCC.EXE over the corpus |
+| `native/image.c`, `native/stack_table.c` | generated data: the parts of BCC.EXE's image the translations read (`tools/genimage.py`) and BCC.EXE's stack as measured over the corpus (`tools/genstack.py`) |
 | `tools/coverage.py` | which of the unchecked functions BCC.EXE runs at all over the corpus |
 
 Each translated file starts with a comment naming the original file and anything the
