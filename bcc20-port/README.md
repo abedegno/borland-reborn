@@ -25,7 +25,10 @@ files of `../bcc20/src/expr` (the C++ analyser and its checkers, conversions, ca
 inline expansion, the simplifier, constant folding, lowering for the back end, and the C
 front end's expression parser and node builders), and most of the parser (`../bcc20/src/parser`:
 all of it: both front ends' declarations, declarators, statements and expressions,
-initializers, function definitions, look-ahead and inline asm statements): 618 functions checked, each matching every call
+initializers, function definitions, look-ahead and inline asm statements), and the first C++
+files of `../bcc20/src/cpp` (member pointers, inline bodies, access checks, initializers,
+casts, constructor bodies, C++ expressions, overloading, special and implicit members):
+692 functions checked, each matching every call
 recorded over the whole corpus. A few are never reached by the corpus and are not checked
 yet (`make check` lists them). Nothing compiles yet.
 

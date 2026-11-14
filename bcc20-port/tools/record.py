@@ -97,6 +97,8 @@ INNER_BODIES = {
     "MAKE_VOID_ZERO_NODE": ("SIMPLIFY_BINARY", 0x23F),            # SIMPLIFY.C, after the switch table
     "BEGIN_SOURCE_FILE": ("SCAN_FILE_SYMBOLS_C", 0x258),          # SYMSCANC.C, after the switch table
     "BCC_STMT_CHECK_TYPE_NEAR": ("STCTYPE", 0),                   # CDECL.C, under its row name
+    "CTORBODY": ("C11FIND", 0),                                   # CTORBODY.C, under its row name
+    "IMPLMEMB": ("C12CHECK", 0),                                  # IMPLMEMB.C, under its row name
 }
 
 
