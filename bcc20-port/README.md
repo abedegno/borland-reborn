@@ -145,6 +145,23 @@ build/bcc -c -IC:\\INCLUDE HELLO.C               # as BCC.EXE would, writes hell
 python3 tools/nativetest.py [--only TEST]       # build/bcc against BCC.EXE over the corpus
 ```
 
+The library (`make lib`: `build/libbcc20.a`, `include/bcc20.h`) runs one BCC command line
+in-process from memory to memory: the source and any headers come from the job, every file
+BCC writes comes back in the result, with the console text, and each call starts BCC afresh
+(the whole memory image reloaded), so compiles never share state. Other files are read from
+the job's root directory; the host is never written. `build/bcc20run` drives it from the
+command line, and `tools/nativetest.py --lib` runs the corpus through it, each compile twice
+in one process (1865 of the 1871 compile steps identical to BCC.EXE, link steps left out).
+
+```c
+bcc20_file source = {"T.C", text, length};
+const char *args[] = {"-c", "-ml", "-O", "-IC:\\INCLUDE", "T.C"};
+bcc20_job job = {5, args, &source, 1, "/path/to/BC20", 0, 1};
+bcc20_result result;
+bcc20_compile(&job, &result);     /* result.outputs[0]: T.OBJ */
+bcc20_free(&result);
+```
+
 `BCC_TRACE=1` shows each file the native build opens or looks for; `BCC_SCRATCH_FILL=n`
 fills every new translated local with byte n, which finds code whose result depends on a
 local the original never set. `BCC_DOS_RUNNER=emu2` runs the DOS programs BCC calls
@@ -189,6 +206,7 @@ of the definition's.
 | `tests/` | the port's own tests, for paths the corpus does not reach (see "Use") |
 | `tools/nativetest.py` | the native build against BCC.EXE over the corpus |
 | `native/image.c`, `native/stack_table.c` | generated data: the parts of BCC.EXE's image the translations read (`tools/genimage.py`) and BCC.EXE's stack as measured over the corpus (`tools/genstack.py`) |
+| `include/bcc20.h`, `native/lib.c`, `tools/bcc20run.c` | the library interface: one compile in-process, memory to memory |
 | `tools/coverage.py` | which of the unchecked functions BCC.EXE runs at all over the corpus |
 
 Each translated file starts with a comment naming the original file and anything the
@@ -353,7 +371,8 @@ Places where the original's behaviour depends on something a port does not have:
 5. **The compiler work written in TASM** (done): the 80-bit real arithmetic (`../bcc20/src/float/`)
    and the inline assembler (`INLINASM.ASM`), in C.
 6. **The library interface**: compile from memory to memory, with state reset between
-   compiles; then explanation output; then a permuter in Exhume that uses them.
+   compiles (done: `include/bcc20.h`); then explanation output; then a permuter in Exhume
+   that uses them.
 7. **Restructure**: host data structures in place of the 8086 memory model, under the corpus
    check.
 

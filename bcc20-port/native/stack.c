@@ -57,10 +57,19 @@ __attribute__((no_instrument_function)) static int function_index(void *fn)
     }
 }
 
+static int forced = -1;         /* native_stack_enable */
+
+__attribute__((no_instrument_function)) void native_stack_enable(int on)
+{
+    forced = on;
+    if (enabled >= 0)
+        enabled = on >= 0 ? on : enabled;
+}
+
 __attribute__((no_instrument_function)) static void setup(void)
 {
     const char *e = getenv("BCC_STACK_LIMIT");
-    enabled = !(e && e[0] == '0');
+    enabled = forced >= 0 ? forced : !(e && e[0] == '0');
     for (int i = 0; i < STACK_FUNCTION_COUNT; i++) {
         unsigned h = hash_ptr(STACK_FUNCTIONS[i].fn) & (HASH_SIZE - 1);
         while (by_fn[h].fn)

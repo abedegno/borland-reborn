@@ -49,6 +49,26 @@ build/native/%.o: %.c $(wildcard include/*.h replay/*.h native/*.h)
 .PHONY: native
 native: build/bcc
 
+# the library (include/bcc20.h): the native build's objects, native.c without main
+LIB_OBJ := $(filter-out build/native/native/native.o,$(NATIVE_OBJ)) build/lib/native.o
+
+build/lib/native.o: native/native.c $(wildcard include/*.h replay/*.h native/*.h)
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) -Inative -DPORT_NATIVE -DBCC20_LIBRARY $(CFLAGS) -c -o $@ $<
+
+# one relocatable object first, so that the real definitions win over the generated
+# stand-ins (weak) inside it: an archive would only pull a member for an undefined name
+build/libbcc20.a: $(LIB_OBJ)
+	rm -f $@
+	$(CC) -r -nostdlib -o build/lib/bcc20.o $^
+	ar rcs $@ build/lib/bcc20.o
+
+build/bcc20run: tools/bcc20run.c build/libbcc20.a include/bcc20.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ tools/bcc20run.c build/libbcc20.a
+
+.PHONY: lib
+lib: build/libbcc20.a build/bcc20run
+
 # replay every translated function against its records (tools/record.py makes them)
 .PHONY: check
 check: build/replay

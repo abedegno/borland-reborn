@@ -9,7 +9,13 @@ BCC_EMU2_FIND set, so that like emu2 it neither cuts a name longer than 8.3 when
 file nor finds such a name with find first (DOS cuts it in both).  The console's "Available
 memory" figure comes from the heap and is left out of the comparison.
 
-    python3 tools/nativetest.py [--runs N] [--only NAME] [--jobs J] [--keep]
+    python3 tools/nativetest.py [--runs N] [--only NAME] [--jobs J] [--keep] [--lib]
+
+With --lib the port side runs through the library (include/bcc20.h, build/bcc20run): the
+source is given from memory, the run directory is the job's root for the headers, the
+clock is pinned to the source's time, and each compile runs twice in one process, which
+must give the same output both times.  Link steps are left out there (TLINK, a separate
+program, cannot see files that are only in memory).
 """
 import argparse
 import os
@@ -32,8 +38,10 @@ def console(text):
                      if "Available memory" not in line).strip()
 
 
-def run_one(job, emu2, keep):
+def run_one(job, emu2, keep, lib=False):
     index, (name, path, opts, modes) = job
+    if lib and "link" in modes:
+        return name, " ".join(modes), None
     base = WORK / "runs" / f"{index:04d}"
     results = {}
     for side in ("orig", "port"):
@@ -52,7 +60,13 @@ def run_one(job, emu2, keep):
         steps = []
         for mode in modes:      # in order, in one directory (a precompiled header file)
             args = modtest.command(mode, opts, src.name)
-            cmd = [emu2, "BCC.EXE", *args] if side == "orig" else [str(PORT / "build" / "bcc"), *args]
+            if side == "orig":
+                cmd = [emu2, "BCC.EXE", *args]
+            elif lib:
+                cmd = [str(PORT / "build" / "bcc20run"), "--file", f"{src.name}={src.name}", "--root", ".",
+                       "--time", str(int(src.stat().st_mtime)), "--repeat", "2", "--", *args]
+            else:
+                cmd = [str(PORT / "build" / "bcc"), *args]
             try:
                 # one stream, so that a child program's text keeps its place
                 done = subprocess.run(cmd, cwd=d, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -98,6 +112,7 @@ def main():
     ap.add_argument("--only")
     ap.add_argument("--jobs", type=int, default=os.cpu_count() or 4)
     ap.add_argument("--keep", action="store_true", help="keep the directories of every run")
+    ap.add_argument("--lib", action="store_true", help="the port through the library (build/bcc20run)")
     ap.add_argument("--emu2", default=str(modtest.EXHUME / "tools" / "emu2-trace" / "emu2"))
     args = ap.parse_args()
     jobs = record.corpus_steps()
@@ -110,16 +125,19 @@ def main():
     modtest.headers(WORK)
     shutil.copy(modtest.ORIGINAL, WORK / "BCC.EXE")
     shutil.copy(modtest.ORIGINAL.parent / "TLINK.EXE", WORK / "TLINK.EXE")
-    same = 0
+    same = skipped = 0
     failed = []
     with ThreadPoolExecutor(args.jobs) as pool:
-        for name, mode, problems in pool.map(lambda j: run_one(j, args.emu2, args.keep), enumerate(jobs)):
-            if problems:
+        for name, mode, problems in pool.map(lambda j: run_one(j, args.emu2, args.keep, args.lib), enumerate(jobs)):
+            if problems is None:
+                skipped += 1
+            elif problems:
                 failed.append(name)
                 print(f"{name} {mode}: " + "\n  ".join(problems))
             else:
                 same += 1
-    print(f"{same} of {len(jobs)} compiles the same as BCC.EXE")
+    print(f"{same} of {len(jobs) - skipped} compiles the same as BCC.EXE" +
+          (f" ({skipped} link steps left out)" if skipped else ""))
     if not failed:
         shutil.rmtree(WORK, ignore_errors=True)
     else:

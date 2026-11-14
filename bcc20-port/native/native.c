@@ -30,6 +30,7 @@
 #include "replay.h"
 #include "native.h"
 #include "image.h"
+#include "bcc20.h"
 
 u8 *mem;
 u16 DGROUP;
@@ -47,6 +48,126 @@ u16 DGROUP;
 static u16 env_seg, arg_seg;
 
 #define ERRNO W(DSPTR(0x0000))
+
+/* ---- library mode (lib.c, include/bcc20.h): the job's files and everything BCC writes
+   are in memory; the console text is kept; other files come from the job's root ---- */
+static const bcc20_job *job;
+typedef struct {
+    char name[160];             /* normalised: no drive, '/' separators, upper case */
+    u8 *data;
+    size_t size, capacity;
+    int written, deleted, owned;
+} MemFile;
+static MemFile mem_files[64];
+static int n_mem_files;
+#define MEM_HANDLE 100          /* handles of memory files: MEM_HANDLE + slot */
+static struct { int file; size_t position; int used; } mem_handles[32];
+static char *console_text;
+static size_t console_size, console_capacity;
+
+static void console_put(const char *s, size_t n)
+{
+    if (!job) {
+        fwrite(s, 1, n, stdout);
+        return;
+    }
+    if (console_size + n > console_capacity) {
+        console_capacity = (console_size + n) * 2 + 256;
+        console_text = realloc(console_text, console_capacity);
+    }
+    memcpy(console_text + console_size, s, n);
+    console_size += n;
+}
+
+static void console_printf(const char *format, ...)
+{
+    char text[64];
+    va_list ap;
+    va_start(ap, format);
+    int n = vsnprintf(text, sizeof text, format, ap);
+    va_end(ap);
+    console_put(text, n < 0 ? 0 : (size_t)n);
+}
+
+/* a DOS name as the memory files keep it */
+static void normalise(const char *dos, char *out, size_t size)
+{
+    const char *s = dos;
+    if (((s[0] | 0x20) >= 'a' && (s[0] | 0x20) <= 'z') && s[1] == ':')
+        s += 2;
+    while (*s == '\\' || *s == '/')
+        s++;
+    size_t n = 0;
+    for (; *s && n + 1 < size; s++)
+        out[n++] = *s == '\\' ? '/' : (char)(*s >= 'a' && *s <= 'z' ? *s - 32 : *s);
+    out[n] = 0;
+}
+
+static int find_mem_file(const char *dos)
+{
+    char name[160];
+    normalise(dos, name, sizeof name);
+    for (int i = 0; i < n_mem_files; i++)
+        if (!mem_files[i].deleted && !strcmp(mem_files[i].name, name))
+            return i;
+    return -1;
+}
+
+static int open_mem_handle(int file)
+{
+    for (int h = 0; h < 32; h++)
+        if (!mem_handles[h].used) {
+            mem_handles[h].used = 1;
+            mem_handles[h].file = file;
+            mem_handles[h].position = 0;
+            return MEM_HANDLE + h;
+        }
+    return -1;
+}
+
+static time_t clock_now(void) { return job && job->time ? (time_t)job->time : time(0); }
+
+/* lib.c: the files of a job, before a run */
+void native_job_begin(const bcc20_job *j)
+{
+    job = j;
+    n_mem_files = 0;
+    console_size = 0;
+    for (int i = 0; i < j->n_files && n_mem_files < 64; i++) {
+        MemFile *f = &mem_files[n_mem_files++];
+        memset(f, 0, sizeof *f);
+        normalise(j->files[i].name, f->name, sizeof f->name);
+        f->data = (u8 *)j->files[i].data;
+        f->size = f->capacity = j->files[i].size;
+    }
+}
+
+/* lib.c: what the run wrote, after it */
+void native_job_end(bcc20_result *result)
+{
+    result->console = console_text;
+    result->console_size = console_size;
+    console_text = 0;
+    console_capacity = console_size = 0;
+    result->outputs = 0;
+    result->n_outputs = 0;
+    for (int i = 0; i < n_mem_files; i++) {
+        MemFile *f = &mem_files[i];
+        if (f->written && !f->deleted) {
+            result->outputs = realloc(result->outputs, (size_t)(result->n_outputs + 1) * sizeof *result->outputs);
+            char *name = malloc(strlen(f->name) + 1);
+            strcpy(name, f->name);
+            for (char *c = name; *c; c++)
+                if (*c == '/')
+                    *c = '\\';
+            result->outputs[result->n_outputs++] = (bcc20_file){name, f->data, f->size};
+            f->owned = 0;
+        } else if (f->owned)
+            free(f->data);
+    }
+    n_mem_files = 0;
+    job = 0;
+}
 
 /* ---- the program image ---- */
 /* the parts of BCC.EXE's image the translations read (image.c, tools/genimage.py), at
@@ -83,9 +204,26 @@ static farptr put_string(farptr p, const char *s)
     return fp_add(p, 1);
 }
 
-int main(int argc, char **argv)
+/* ---- one run of BCC: main() for the command line, bcc20_compile (lib.c) for a library
+   call.  Everything is set up afresh, so runs do not share state; BCC's exit (C0_TERMINATE)
+   comes back here with its status ---- */
+static jmp_buf run_exit;
+static int running;
+static void reset_platform(void);
+static void close_searches(void);
+
+int native_run(int argc, const char *const *argv)
 {
-    mem = calloc(1, MEM_SIZE);
+    if (!mem)
+        mem = calloc(1, MEM_SIZE);
+    memset(mem, 0, MEM_SIZE);
+    reset_platform();
+    int status = setjmp(run_exit);
+    if (status) {
+        running = 0;
+        return status - 1;
+    }
+    running = 1;
     load_program();
     DGROUP = LOAD_SEG + DGROUP_PARA;
     memset(mem + LIN(DGROUP, BSS_START), 0, 0x10000 - BSS_START);
@@ -140,8 +278,16 @@ int main(int argc, char **argv)
                               - (4 + 4 * (count - 1) + 4 + 6 + 4));
     }
     RMAIN13C((i16)count, vector);
+    running = 0;
     return 0;
 }
+
+#ifndef BCC20_LIBRARY
+int main(int argc, char **argv)
+{
+    return native_run(argc, (const char *const *)argv);
+}
+#endif
 
 /* ---- untranslated functions ---- */
 u32 stand_in(const char *name, unsigned outs, const StandInArg *args, unsigned n)
@@ -201,6 +347,8 @@ void C45_LONGJUMP(farptr buffer, i16 value)
 void C0_TERMINATE(i16 status)
 {
     fflush(stdout);
+    if (running)
+        longjmp(run_exit, (status & 0xFF) + 1);
     exit(status & 0xFF);
 }
 
@@ -224,6 +372,12 @@ static char *host_path(farptr name)
         strcpy(path, ".");
     /* DOS cuts each name to 8.3 (STRSTREAM.H opens STRSTREA.H); the host's file under the
        full name is used when there is one (emu2 does the same), else the 8.3 one */
+    /* library mode: other files are under the job's root (none without one) */
+    if (job) {
+        char rooted[1024];
+        snprintf(rooted, sizeof rooted, "%s/%s", job->root ? job->root : "/nonexistent-bcc20-root", path);
+        snprintf(path, sizeof path, "%s", rooted);
+    }
     struct stat st;
     if (stat(path, &st) == 0 || getenv("BCC_EMU2_FIND"))      /* emu2 does not cut names */
         return path;
@@ -278,6 +432,32 @@ static int tracing(void)
 i16 RTL_OPEN(farptr name, i16 mode)
 {
     static const int modes[] = {O_RDONLY, O_WRONLY, O_RDWR, O_RDONLY};
+    if (job) {
+        int file = find_mem_file((const char *)at(name));
+        if (file >= 0)
+            return dos_result(open_mem_handle(file), 4);
+        if (mode & 3) {             /* the host is never written in library mode: a root
+                                       file opened for writing is copied into memory first */
+            FILE *host = fopen(host_path(name), "rb");
+            if (!host || n_mem_files == 64) {
+                if (host)
+                    fclose(host);
+                return dos_result(-1, host ? 4 : 2);
+            }
+            MemFile *f = &mem_files[n_mem_files];
+            memset(f, 0, sizeof *f);
+            normalise((const char *)at(name), f->name, sizeof f->name);
+            fseek(host, 0, SEEK_END);
+            f->size = f->capacity = (size_t)ftell(host);
+            fseek(host, 0, SEEK_SET);
+            f->data = malloc(f->size + 1);
+            f->owned = 1;
+            if (fread(f->data, 1, f->size, host) != f->size)
+                f->size = 0;
+            fclose(host);
+            return dos_result(open_mem_handle(n_mem_files++), 4);
+        }
+    }
     i16 result = dos_result(open(host_path(name), modes[mode & 3]), 2);
     if (tracing())
         fprintf(stderr, "open %s -> %d\n", host_path(name), result);
@@ -287,16 +467,76 @@ i16 RTL_OPEN(farptr name, i16 mode)
 i16 RTL_CREAT(farptr name, i16 attribute)
 {
     (void)attribute;
+    if (job) {
+        int file = find_mem_file((const char *)at(name));
+        if (file < 0) {
+            if (n_mem_files == 64)
+                return dos_result(-1, 4);
+            file = n_mem_files++;
+            memset(&mem_files[file], 0, sizeof mem_files[file]);
+            normalise((const char *)at(name), mem_files[file].name, sizeof mem_files[file].name);
+        } else if (!mem_files[file].owned) {
+            mem_files[file].data = 0;   /* a job's file: replaced by a new one of BCC's */
+            mem_files[file].capacity = 0;
+        }
+        mem_files[file].owned = 1;
+        mem_files[file].written = 1;
+        mem_files[file].size = 0;
+        return dos_result(open_mem_handle(file), 4);
+    }
     return dos_result(open(host_path(name), O_RDWR | O_CREAT | O_TRUNC, 0644), 5);
+}
+
+static MemFile *mem_file_of(i16 handle)
+{
+    unsigned h = (unsigned)(handle - MEM_HANDLE);
+    return h < 32 && mem_handles[h].used ? &mem_files[mem_handles[h].file] : 0;
 }
 
 i16 RTL_READ(i16 handle, farptr buffer, u16 count)
 {
+    MemFile *f = mem_file_of(handle);
+    if (f) {
+        size_t *position = &mem_handles[handle - MEM_HANDLE].position;
+        size_t n = *position < f->size ? f->size - *position : 0;
+        if (n > count)
+            n = count;
+        memcpy(at(buffer), f->data + *position, n);
+        *position += n;
+        return (i16)n;
+    }
     return dos_result((int)read(handle, at(buffer), count), 6);
 }
 
 i16 RTL_WRITE(i16 handle, farptr buffer, u16 count)
 {
+    MemFile *f = mem_file_of(handle);
+    if (f) {
+        size_t *position = &mem_handles[handle - MEM_HANDLE].position;
+        if (!f->owned) {            /* a job's file written to: BCC's own copy from now on */
+            u8 *copy = malloc(f->size + 1);
+            memcpy(copy, f->data, f->size);
+            f->data = copy;
+            f->capacity = f->size;
+            f->owned = 1;
+        }
+        if (*position + count > f->capacity) {
+            f->capacity = (*position + count) * 2 + 1024;
+            f->data = realloc(f->data, f->capacity);
+        }
+        if (*position > f->size)
+            memset(f->data + f->size, 0, *position - f->size);
+        memcpy(f->data + *position, at(buffer), count);
+        *position += count;
+        if (*position > f->size)
+            f->size = *position;
+        f->written = 1;
+        return (i16)count;
+    }
+    if (job && (handle == 1 || handle == 2)) {
+        console_put((const char *)at(buffer), count);
+        return (i16)count;
+    }
     if (handle == 1)
         fflush(stdout);
     return dos_result((int)write(handle, at(buffer), count), 6);
@@ -304,6 +544,17 @@ i16 RTL_WRITE(i16 handle, farptr buffer, u16 count)
 
 i32 RTL_LSEEK(i16 handle, i32 position, i16 whence)
 {
+    MemFile *f = mem_file_of(handle);
+    if (f) {
+        size_t *at_pos = &mem_handles[handle - MEM_HANDLE].position;
+        long long to = whence == 0 ? position : whence == 1 ? (long long)*at_pos + position : (long long)f->size + position;
+        if (to < 0) {
+            ERRNO = 6;
+            return -1;
+        }
+        *at_pos = (size_t)to;
+        return (i32)to;
+    }
     off_t result = lseek(handle, position, whence);
     if (result < 0) {
         ERRNO = 6;
@@ -314,11 +565,22 @@ i32 RTL_LSEEK(i16 handle, i32 position, i16 whence)
 
 i16 RTL_CLOSE(i16 handle)
 {
+    if (mem_file_of(handle)) {
+        mem_handles[handle - MEM_HANDLE].used = 0;
+        return 0;
+    }
     return dos_result(close(handle), 6);
 }
 
 i16 DELETE_FILE(farptr path)
 {
+    if (job) {
+        int file = find_mem_file((const char *)at(path));
+        if (file < 0)
+            return dos_result(-1, 2);
+        mem_files[file].deleted = 1;
+        return 0;
+    }
     return dos_result(unlink(host_path(path)), 2);
 }
 
@@ -327,6 +589,9 @@ i16 DELETE_FILE(farptr path)
 static struct {
     DIR *dir;
     char directory[512], pattern[64];
+    int in_memory, next;        /* library mode: searching the memory files, from next */
+    char mem_pattern[160];      /* normalised directory and pattern */
+    char dos_directory[160];    /* the directory as BCC named it, for the memory files */
 } searches[16];
 
 static u32 dos_time(time_t t)
@@ -337,8 +602,37 @@ static u32 dos_time(time_t t)
     return (u32)date << 16 | time;
 }
 
+/* a find record filled in for a file found */
+static void found(farptr record, u32 stamp, u32 size, const char *name)
+{
+    B(fp_add(record, 21)) = 0x20;                   /* ff_attrib: archive */
+    W(fp_add(record, 22)) = (u16)stamp;             /* ff_ftime */
+    W(fp_add(record, 24)) = (u16)(stamp >> 16);     /* ff_fdate */
+    D(fp_add(record, 26)) = size;                   /* ff_fsize */
+    farptr out = fp_add(record, 30);
+    for (const char *c = name; *c; c++, out = fp_add(out, 1))
+        B(out) = (u8)(*c >= 'a' && *c <= 'z' ? *c - 32 : *c);
+    B(out) = 0;
+}
+
 static i16 find_next_in(unsigned slot, farptr record)
 {
+    if (searches[slot].in_memory) {
+        while (searches[slot].next < n_mem_files) {
+            MemFile *f = &mem_files[searches[slot].next++];
+            if (f->deleted || fnmatch(searches[slot].mem_pattern, f->name, FNM_CASEFOLD | FNM_PATHNAME))
+                continue;
+            const char *base = strrchr(f->name, '/');
+            found(record, dos_time(clock_now()), (u32)f->size, base ? base + 1 : f->name);
+            return 0;
+        }
+        /* then the root's files, as on the command line */
+        searches[slot].in_memory = 0;
+        if (!job->root || !searches[slot].dir) {
+            ERRNO = 18;
+            return -1;
+        }
+    }
     struct dirent *entry;
     while (searches[slot].dir && (entry = readdir(searches[slot].dir))) {
         if (fnmatch(searches[slot].pattern, entry->d_name, FNM_CASEFOLD))
@@ -348,15 +642,13 @@ static i16 find_next_in(unsigned slot, farptr record)
         struct stat st;
         if (stat(full, &st) || !S_ISREG(st.st_mode) || strlen(entry->d_name) > 12)
             continue;
-        u32 stamp = dos_time(st.st_mtime);
-        B(fp_add(record, 21)) = 0x20;                   /* ff_attrib: archive */
-        W(fp_add(record, 22)) = (u16)stamp;             /* ff_ftime */
-        W(fp_add(record, 24)) = (u16)(stamp >> 16);     /* ff_fdate */
-        D(fp_add(record, 26)) = (u32)st.st_size;        /* ff_fsize */
-        farptr name = fp_add(record, 30);
-        for (const char *c = entry->d_name; *c; c++, name = fp_add(name, 1))
-            B(name) = (u8)(*c >= 'a' && *c <= 'z' ? *c - 32 : *c);
-        B(name) = 0;
+        if (job) {                  /* a memory file hides the root's file of its name */
+            char dos[1100];
+            snprintf(dos, sizeof dos, "%s%s", searches[slot].dos_directory, entry->d_name);
+            if (find_mem_file(dos) >= 0)
+                continue;
+        }
+        found(record, dos_time(st.st_mtime), (u32)st.st_size, entry->d_name);
         return 0;
     }
     if (searches[slot].dir) {
@@ -402,6 +694,19 @@ i16 FINDFIRST(farptr path, farptr record, i16 attribute)
     }
     searches[slot].dir = opendir(searches[slot].directory[0] ? searches[slot].directory : ".");
     B(record) = (u8)slot;
+    searches[slot].in_memory = 0;
+    if (job) {                      /* the memory files first */
+        searches[slot].in_memory = 1;
+        searches[slot].next = 0;
+        normalise((const char *)at(path), searches[slot].mem_pattern, sizeof searches[slot].mem_pattern);
+        snprintf(searches[slot].dos_directory, sizeof searches[slot].dos_directory, "%s", searches[slot].mem_pattern);
+        char *cut = strrchr(searches[slot].dos_directory, '/');
+        if (cut)
+            cut[1] = 0;
+        else
+            searches[slot].dos_directory[0] = 0;
+        return find_next_in(slot, record);
+    }
     if (!searches[slot].dir) {
         ERRNO = 3;
         return -1;
@@ -417,7 +722,7 @@ i16 FINDNEXT(farptr record)
 /* ---- date, time, vectors, DOS ---- */
 static struct tm *now_tm(void)
 {
-    time_t t = time(0);
+    time_t t = clock_now();
     return localtime(&t);
 }
 
@@ -457,7 +762,7 @@ void RTL_DVPRINTF(farptr format, farptr args)
     for (; SB(format); format = fp_add(format, 1)) {
         char c = (char)SB(format);
         if (c != '%') {
-            putchar(c);
+            console_put(&c, 1);
             continue;
         }
         format = fp_add(format, 1);
@@ -469,10 +774,10 @@ void RTL_DVPRINTF(farptr format, farptr args)
         switch (SB(format)) {
         case 'd':
             if (is_long) {
-                printf("%ld", (long)(i32)D(args));
+                console_printf("%ld", (long)(i32)D(args));
                 args = fp_add(args, 4);
             } else {
-                printf("%d", (int)(i16)W(args));
+                console_printf("%d", (int)(i16)W(args));
                 args = fp_add(args, 2);
             }
             break;
@@ -480,16 +785,16 @@ void RTL_DVPRINTF(farptr format, farptr args)
             u32 value = is_long ? D(args) : W(args);
             args = fp_add(args, is_long ? 4 : 2);
             if (value)
-                printf("%lx", (unsigned long)value);
+                console_printf("%lx", (unsigned long)value);
             break;
         }
         case 'c':
-            putchar((char)W(args));
+            { char ch = (char)W(args); console_put(&ch, 1); }
             args = fp_add(args, 2);
             break;
         case 's':
             for (farptr p = D(args); SB(p); p = fp_add(p, 1))
-                putchar((char)SB(p));
+                { char ch = (char)SB(p); console_put(&ch, 1); }
             args = fp_add(args, 4);
             break;
         default:
@@ -581,4 +886,26 @@ i16 RTL_EXEC(farptr path, i8 mode, farptr block)
         return -1;
     }
     return (i16)(WEXITSTATUS(status) & 0xFF);
+}
+
+/* the platform's own state, back to its start for a new run */
+static void reset_platform(void)
+{
+    close_searches();
+    memset(jumps, 0, sizeof jumps);
+    memset(mem_handles, 0, sizeof mem_handles);
+    native_stack_unwind(0);
+    native_stack_enable(job ? job->stack_limit : -1);
+    scratch_release(0);
+    near_scratch_release(0xFFF0);
+}
+
+static void close_searches(void)
+{
+    for (unsigned i = 0; i < 16; i++) {
+        if (searches[i].dir)
+            closedir(searches[i].dir);
+        searches[i].dir = 0;
+        searches[i].in_memory = 0;
+    }
 }

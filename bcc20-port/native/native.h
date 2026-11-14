@@ -12,4 +12,12 @@ void native_read_overlay(u32 offset, u8 *target, u16 size);
 unsigned native_stack_depth(void);
 void native_stack_unwind(unsigned to);
 void native_stack_set_root(i32 sp);
+/* 1 on, 0 off, -1 as BCC_STACK_LIMIT says (default on) */
+void native_stack_enable(int on);
+
+/* native.c: one run of BCC (its exit status), and the library's job around it (lib.c) */
+#include "bcc20.h"
+int native_run(int argc, const char *const *argv);
+void native_job_begin(const bcc20_job *job);
+void native_job_end(bcc20_result *result);
 #endif
