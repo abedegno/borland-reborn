@@ -100,6 +100,13 @@ def setup_bc20(path, work):
         if h.parent.name.upper() == 'SYS' or h.parent == bc / 'INCLUDE':
             continue
         shutil.move(str(h), bc / 'INCLUDE' / h.name)
+    # INCLUDE.ZIP holds STAT.H, TIMEB.H and TYPES.H at its top level; Borland's INSTALL.EXE
+    # puts them in INCLUDE\SYS (it names \SYS\STAT.H and the others), where
+    # #include <sys\stat.h> finds them
+    (bc / 'INCLUDE' / 'SYS').mkdir(exist_ok=True)
+    for name in ('STAT.H', 'TIMEB.H', 'TYPES.H'):
+        if (bc / 'INCLUDE' / name).exists():
+            shutil.move(str(bc / 'INCLUDE' / name), bc / 'INCLUDE' / 'SYS' / name)
     install_examples(disks, bc)
 
 
