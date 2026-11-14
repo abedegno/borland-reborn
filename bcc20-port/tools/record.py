@@ -118,6 +118,26 @@ def ignored_code():
     return ",".join(ranges)
 
 
+def corpus_steps():
+    """(name, file, switches, modes) for every step of the corpus (../bcc20/tools/modtest.py):
+    the modes of a step run one after the other in one directory, so a later compile sees
+    what an earlier one left (a precompiled header file).  A mode is -c, -S, `link` (BCC
+    runs TLINK, which stops for want of the C libraries) or `alone` (no arguments: the usage
+    text)."""
+    out = [(name, path, opts, modes) for name, path, opts, steps in modtest.corpus()
+           for modes in steps]
+    # the port's own tests (tests/), for paths the corpus does not reach, with modtest's
+    # header lines: /* modtest: SWITCHES */ and /* modes: STEP ... */ (default -c, then -S)
+    for path in sorted((PORT / "tests").glob("*.C*")):
+        head = path.read_bytes()[:1000].decode("latin1")
+        found = re.search(r"modtest:\s*([^*\n]*)", head)
+        opts = found.group(1).split() if found else ["-ml", "-O", "-G"]
+        modes = re.search(r"modes:\s*([^*\n]*)", head)
+        steps = [modes.group(1).split()] if modes else [["-c"], ["-S"]]
+        out += [(f"port:{path.stem}", path, opts, m) for m in steps]
+    return out
+
+
 def boundary(functions):
     """the functions the port does not define that these reach directly or through
     translated functions, and every untranslated function whose address is taken (it may
@@ -193,8 +213,7 @@ def main():
     translated = {offsets[f] for f in genadapters.prototypes() if f in offsets}
     inner = {off: name for off, name in inner.items() if off not in translated}
 
-    jobs = [(name, path, opts, mode) for name, path, opts, steps in modtest.corpus()
-            for modes in steps for mode in modes if mode in ("-c", "-S")]
+    jobs = corpus_steps()
     if args.only:
         jobs = [j for j in jobs if j[0] == args.only]
     if args.runs and args.runs < len(jobs):
@@ -203,34 +222,39 @@ def main():
     WORK.mkdir(parents=True)
     modtest.headers(WORK)
     shutil.copy(modtest.ORIGINAL, WORK / "BCC.EXE")
+    shutil.copy(modtest.ORIGINAL.parent / "TLINK.EXE", WORK / "TLINK.EXE")
     env_at = ",".join(f"{o:X}" for o in wanted)
     env_inner = ",".join(f"{o:X}" for o in inner)
     env_ignore = ignored_code()
     env_unwind = f"{offsets['C45_LONGJUMP']:X}"     # the run-time library's long jump
 
     def run(job):
-        index, (name, path, opts, mode) = job
+        index, (name, path, opts, modes) = job
         d = WORK / "runs" / f"{index:04d}"
         d.mkdir(parents=True)
         modtest.stage(d, path, WORK)
         (d / "BCC.EXE").symlink_to(WORK / "BCC.EXE")
+        (d / "TLINK.EXE").symlink_to(WORK / "TLINK.EXE")    # what BCC runs for `link`
         src = d / modtest.source_name(path)
         shutil.copy(path, src)
         env = dict(os.environ, EMU2_RECORD=str(d / "rec"), EMU2_RECORD_AT=env_at,
                    EMU2_RECORD_UNWIND=env_unwind,
                    EMU2_RECORD_INNER=env_inner, EMU2_RECORD_IGNORE=env_ignore,
                    EMU2_RECORD_MAX=str(args.per_run))
-        try:
-            done = subprocess.run([args.emu2, "BCC.EXE", *modtest.command(mode, opts, src.name)],
-                                  cwd=d, env=env, capture_output=True, timeout=300)
-            # the recorder refuses lists it cannot hold; never take that run as no calls
-            if b"emu2 record:" in done.stderr:
-                raise SystemExit(done.stderr.decode(errors="replace").strip())
-        except subprocess.TimeoutExpired:
-            pass
-        text = "".join(f.read_text() for f in d.glob("rec.*"))
+        for mode in modes:      # in order, in one directory (a precompiled header file)
+            try:
+                done = subprocess.run([args.emu2, "BCC.EXE", *modtest.command(mode, opts, src.name)],
+                                      cwd=d, env=env, capture_output=True, timeout=300)
+                # the recorder refuses lists it cannot hold; never take that run as no calls
+                if b"emu2 record:" in done.stderr:
+                    raise SystemExit(done.stderr.decode(errors="replace").strip())
+            except subprocess.TimeoutExpired:
+                pass
+        # one text per process: each numbers its calls from 0, and children find their
+        # parents by those numbers
+        texts = [f.read_text() for f in sorted(d.glob("rec.*"))]
         shutil.rmtree(d)
-        return text
+        return texts
 
     # only each call's hash stays in memory; the bodies go to one spool file per function
     # (holding them all took several GB once the port had 1500 functions)
@@ -242,7 +266,7 @@ def main():
     for name in args.functions:     # the new records replace them; free the disk first
         (out / f"{name}.rec").unlink(missing_ok=True)
     with ThreadPoolExecutor(args.jobs) as pool:
-        for text in pool.map(run, enumerate(jobs)):
+        for text in (text for texts in pool.map(run, enumerate(jobs)) for text in texts):
             children = {}
             for rec in re.findall(r"^CALL .*?^END\n", text, re.M | re.S):
                 head, body = rec.split("\n", 1)

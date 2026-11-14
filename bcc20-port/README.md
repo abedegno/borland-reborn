@@ -40,14 +40,15 @@ the code passes), the object and assembly writers (`../bcc20/src/output`), the d
 assembler's C side (operands, symbol encoding, the instruction encoder), precompiled headers,
 the diagnostics (message printing, through `include/variadic.h`, and type spelling), the
 80-bit real arithmetic of `../bcc20/src/float` (the assembly modules, in C) and more of the
-run-time library: 1457 functions checked, each matching every call recorded over the whole
+run-time library: 1545 functions checked, each matching every call recorded over the whole
 corpus (at most 200 different calls a function), and the inline assembler's engine
 (`INLINASM.ASM`) in C, matching every recorded statement. A few are never reached by the
 corpus and are not checked yet (`make check` lists them).
 
 The native build (`make native`, `build/bcc`) compiles: with the heap, overlay manager and
-DOS services replaced by `native/`, 1823 of the corpus's 1837 compiles (`-c` and `-S`) give
-the same object or assembly file and the same messages as BCC.EXE (`tools/nativetest.py`).
+DOS services replaced by `native/`, 1842 of the corpus's 1856 compile steps (`-c`, `-S`,
+precompiled headers written and loaded, links, BCC alone) give the same object or assembly
+file, exit status and messages as BCC.EXE (`tools/nativetest.py`).
 The other 14 are listed under "Decisions for the native build".
 
 ## How a translation is checked
@@ -109,10 +110,11 @@ make check                                      # every translated function agai
 or `$EMU2_TRACE_BIN`). Records hold memory of Borland's program, so `records/` is never
 committed; make them again from your own BCC.EXE.
 
-`--all` records every translated function in one pass over the corpus (about five minutes
-with 12 cores). A run follows recorded calls 32 deep; a call deeper than that leaves the
-calls around it unrecorded, so a function reached only that deep gets no calls from `--all`
-and must be recorded on its own. `--runs N` samples N compiles, which can miss the functions
+`--all` records every translated function in one pass over the corpus (about fifteen
+minutes with 12 cores). A run follows recorded calls 32 deep; a call deeper than that
+leaves the calls around it unrecorded, so a function reached only that deep gets no calls
+from `--all` and must be recorded on its own: after `--all`, record the functions
+`make check` lists as not reached in a second pass (`record.py NAME ...`). `--runs N` samples N compiles, which can miss the functions
 only the targeted tests reach.
 
 The native build reads BCC's initial data from the program file (`BCC20_EXE`, default the
@@ -128,7 +130,15 @@ python3 tools/nativetest.py [--only TEST]       # build/bcc against BCC.EXE over
 
 `BCC_TRACE=1` shows each file the native build opens or looks for; `BCC_SCRATCH_FILL=n`
 fills every new translated local with byte n, which finds code whose result depends on a
-local the original never set.
+local the original never set. `BCC_DOS_RUNNER=emu2` runs the DOS programs BCC calls
+(TLINK for a link, TASM for `-B`) in that emulator.
+
+The corpus is `../bcc20`'s (tools/modtest.py) and the port's own tests in `tests/`, which
+reach paths the corpus does not (precompiled headers, the memory and linker options, a
+response file, `__emit__`, Borland's dynamic dispatch numbers ...). A test names its
+switches and steps in its first lines as modtest's do (`/* modtest: -ml -H */`, `/* modes:
+-c -c */`); the modes of a step run in order in one directory, so the second compile of a
+precompiled header test loads what the first saved.
 
 To look into one failing call: `REPLAY_ONLY=N build/replay NAME records/NAME.rec` replays
 only the recorded call N, and `REPLAY_TRACE=1` prints each call the translation makes to a
@@ -157,6 +167,9 @@ of the definition's.
 | `tools/ready.py` | the work queue: untranslated functions whose callees all have prototypes, smallest first |
 | `tools/check.sh` | `make check`: every translated function against its records |
 | `src/rtl/scratch.c` | port material: the scratch area for address-taken locals, and the code-address lookup |
+| `native/` | the native build's platform layer: start-up in place of `../bcc20/src/driver/C0.ASM` and DOS (loading the data image, the PSP, argc/argv, the BSS), DOS file and directory services on the host, and a heap with the pools' behaviour in place of the DOS heap and overlay manager |
+| `tests/` | the port's own tests, for paths the corpus does not reach (see "Use") |
+| `tools/nativetest.py` | the native build against BCC.EXE over the corpus |
 
 Each translated file starts with a comment naming the original file and anything the
 translation keeps on purpose (an original bug the output depends on, for example).
@@ -274,13 +287,26 @@ Places where the original's behaviour depends on something a port does not have:
   (GENERATE_EXPRESSION checks SP against 8F0Ch); the native build runs on the host's stack
   and does not, so deeply nested torture tests compile (eight compiles of the corpus).
 - **Error cascades** in two cfront sources (`sin.C`, `sqrt.C`, four compiles) lose one
-  follow-on message, most likely another local the original never set.
+  follow-on message, "Left side must be a structure". After an earlier error a member
+  access is left with no left operand (node 0), and CHECK_DOT_MEMBER (EXPRCHK.C) analyses
+  node 0: the first bytes of the expression pool, which no record ever uses. In BCC.EXE
+  they hold 0100h, memory left there before the pool's block was allocated and carried
+  along each time the heap moved the block, so node 0 looks like an expression of a type
+  that is not a structure. The native heap's blocks start zeroed, node 0 reads as no
+  expression, and the message is not given. (Every call of the translated functions over
+  these compiles matches its recording.)
 - **Names longer than 8.3**: DOS cuts them; emu2, which runs the reference BCC.EXE for the
   checks, does not cut a name it opens and does not find such a name with find first. The
   native build follows DOS, or emu2 with `BCC_EMU2_FIND` set (which `tools/nativetest.py`
   sets).
-- **DOS programs** (TASM, TLINK) cannot run in the native build: EXEC fails as for a missing
-  file, as it does for BCC.EXE under emu2 without them.
+- **DOS programs** (TASM, TLINK) cannot run natively. With `BCC_DOS_RUNNER` naming a DOS
+  emulator (emu2) the native build runs them there and passes on the exit code
+  (`tools/nativetest.py` sets it, so a link runs Borland's TLINK in both); without it EXEC
+  fails as for a missing file.
+- **A macro called with too few arguments** (COLLECT_MACRO_ARGUMENTS, LEXER.C) is reported
+  and expanded anyway, and the missing argument is read past the end of what was written to
+  POOL_A: memory this compile never wrote, whose contents come from BCC.EXE's DOS heap
+  (a run of "Illegal character" errors follows). The native heap's memory differs there.
 
 ## Plan
 

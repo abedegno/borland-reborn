@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
 #include "port.h"
@@ -549,13 +550,46 @@ farptr RTL_SEARCHPATH(farptr file)
     return 0;
 }
 
-/* a DOS program cannot run in the native build: EXEC fails as for a file that is not
-   there (BCC then reports "Unable to execute command") */
+/* EXEC, mode 0 (run and wait).  A DOS program (TASM, TLINK) cannot run natively: with
+   BCC_DOS_RUNNER naming a DOS emulator (emu2) it runs there, the command tail split into
+   words, and the result is its exit code; without it EXEC fails as for a file that is not
+   there (BCC then reports "Unable to execute command").  block is DOS's parameter block:
+   environment segment, far command tail (length byte, text, CR), two far FCB pointers */
 i16 RTL_EXEC(farptr path, i8 mode, farptr block)
 {
-    (void)path;
-    (void)mode;
-    (void)block;
-    ERRNO = 2;
-    return -1;
+    const char *runner = getenv("BCC_DOS_RUNNER");
+    if (!runner || !*runner || mode != 0) {
+        ERRNO = 2;
+        return -1;
+    }
+    char program[512];
+    snprintf(program, sizeof program, "%s", host_path(path));
+    farptr tail = D(fp_add(block, 2));
+    u8 length = B(tail);
+    char text[130];
+    memcpy(text, at(fp_add(tail, 1)), length);
+    text[length] = 0;
+    char *argv[70];
+    int argc = 0;
+    argv[argc++] = (char *)runner;
+    argv[argc++] = program;
+    for (char *word = strtok(text, " \t\r"); word && argc < 69; word = strtok(0, " \t\r"))
+        argv[argc++] = word;
+    argv[argc] = 0;
+    fflush(stdout);
+    pid_t child = fork();
+    if (child < 0) {
+        ERRNO = 8;
+        return -1;
+    }
+    if (child == 0) {
+        execvp(runner, argv);
+        _exit(127);
+    }
+    int status;
+    if (waitpid(child, &status, 0) < 0 || !WIFEXITED(status) || WEXITSTATUS(status) == 127) {
+        ERRNO = 2;
+        return -1;
+    }
+    return (i16)(WEXITSTATUS(status) & 0xFF);
 }
