@@ -82,6 +82,11 @@ lib: build/libbcc20.a build/bcc20run
 shlib: $(SHLIB)
 
 # replay every translated function against its records (tools/record.py makes them)
+# compiles without BCC.EXE: build/bcc and libbcc20 must write the same object
+.PHONY: smoke
+smoke: build/bcc build/bcc20run
+	@sh tools/smoke.sh
+
 .PHONY: check
 check: build/replay
 	@sh tools/check.sh
