@@ -2,241 +2,313 @@
 #include "replay.h"
 #include "protos.h"
 /* stand-ins for the functions the port does not define (replay.c: stand_in) */
-__attribute__((weak)) farptr HANDLE_ITEM_POINTER(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("HANDLE_ITEM_POINTER", OUT(R_DX) | OUT(R_AX), args, 1); }
-__attribute__((weak)) farptr HEAP_ALLOC_HANDLE(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("HEAP_ALLOC_HANDLE", OUT(R_DX) | OUT(R_AX), args, 1); }
-__attribute__((weak)) farptr HEAP_ALLOC_ITEM(void) { const StandInArg *args = 0; return (farptr)stand_in("HEAP_ALLOC_ITEM", OUT(R_DX) | OUT(R_AX), args, 0); }
-__attribute__((weak)) farptr OVR_ENSURE_IMAGE_LOADED(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (farptr)stand_in("OVR_ENSURE_IMAGE_LOADED", OUT(R_DX) | OUT(R_AX), args, 1); }
-__attribute__((weak)) farptr RTL_GETVECT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("RTL_GETVECT", OUT(R_DX) | OUT(R_AX), args, 1); }
-__attribute__((weak)) farptr RTL_SEARCHPATH(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (farptr)stand_in("RTL_SEARCHPATH", OUT(R_DX) | OUT(R_AX), args, 1); }
-__attribute__((weak)) farptr RTL_STRCHR(farptr a0, i8 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 1, (u32)a1}}; return (farptr)stand_in("RTL_STRCHR", OUT(R_DX) | OUT(R_AX), args, 2); }
-__attribute__((weak)) farptr RVECGET(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("RVECGET", OUT(R_DX) | OUT(R_AX), args, 1); }
-__attribute__((weak)) farptr STRING_APPEND_N(farptr a0, farptr a1, u16 a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (farptr)stand_in("STRING_APPEND_N", OUT(R_DX) | OUT(R_AX), args, 3); }
-__attribute__((weak)) i16 C45_SETJUMP(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("C45_SETJUMP", OUT(R_AX), args, 1); }
-__attribute__((weak)) i16 CLASSIFY_IDENTIFIER_BODY(void) { const StandInArg *args = 0; return (i16)stand_in("CLASSIFY_IDENTIFIER_BODY", OUT(R_AX), args, 0); }
-__attribute__((weak)) i16 DELETE_FILE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("DELETE_FILE", OUT(R_AX), args, 1); }
-__attribute__((weak)) i16 DOS_CALL_AH(i16 a0, i16 a1, i16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("DOS_CALL_AH", OUT(R_AX), args, 3); }
-__attribute__((weak)) i16 FINDFIRST(farptr a0, farptr a1, i16 a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("FINDFIRST", OUT(R_AX), args, 3); }
-__attribute__((weak)) i16 FINDNEXT(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("FINDNEXT", OUT(R_AX), args, 1); }
-__attribute__((weak)) i16 LOG2_POWER_OF_TWO_BODY(u32 a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("LOG2_POWER_OF_TWO_BODY", OUT(R_AX), args, 1); }
-__attribute__((weak)) i16 RETURN_MINUS_ONE_STUB(void) { const StandInArg *args = 0; return (i16)stand_in("RETURN_MINUS_ONE_STUB", OUT(R_AX), args, 0); }
-__attribute__((weak)) i16 RH_DOS_CREATE(farptr a0, u16 a1) { const StandInArg args[] = {{4, 4, 4, (u32)a0}, {2, 2, 2, (u32)a1}}; return (i16)stand_in("RH_DOS_CREATE", OUT(R_AX), args, 2); }
-__attribute__((weak)) i16 RTL_ATOI(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("RTL_ATOI", OUT(R_AX), args, 1); }
-__attribute__((weak)) i16 RTL_CLOSE(i16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (i16)stand_in("RTL_CLOSE", OUT(R_AX), args, 1); }
-__attribute__((weak)) i16 RTL_CREAT(farptr a0, i16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (i16)stand_in("RTL_CREAT", OUT(R_AX), args, 2); }
-__attribute__((weak)) i16 RTL_DOS_CALL_PTR(i16 a0, farptr a1, i16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("RTL_DOS_CALL_PTR", OUT(R_AX), args, 3); }
-__attribute__((weak)) i16 RTL_EXEC(farptr a0, i8 a1, farptr a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {8, 2, 1, (u32)a1}, {4, 4, 4, (u32)a2}}; return (i16)stand_in("RTL_EXEC", OUT(R_AX), args, 3); }
-__attribute__((weak)) i16 RTL_OPEN(farptr a0, i16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (i16)stand_in("RTL_OPEN", OUT(R_AX), args, 2); }
-__attribute__((weak)) i16 RTL_READ(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("RTL_READ", OUT(R_AX), args, 3); }
-__attribute__((weak)) i16 RTL_WRITE(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("RTL_WRITE", OUT(R_AX), args, 3); }
-__attribute__((weak)) i32 GENERATE_INTRINSIC_CALL_STUB(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (i32)stand_in("GENERATE_INTRINSIC_CALL_STUB", OUT(R_DX) | OUT(R_AX), args, 2); }
-__attribute__((weak)) i32 HEAP_SPACE_BELOW_LIMIT(void) { const StandInArg *args = 0; return (i32)stand_in("HEAP_SPACE_BELOW_LIMIT", OUT(R_DX) | OUT(R_AX), args, 0); }
-__attribute__((weak)) i32 INIT_EMS_BANK(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i32)stand_in("INIT_EMS_BANK", OUT(R_DX) | OUT(R_AX), args, 3); }
-__attribute__((weak)) i32 INIT_EXT_BANK(u32 a0, u32 a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; return (i32)stand_in("INIT_EXT_BANK", OUT(R_DX) | OUT(R_AX), args, 2); }
-__attribute__((weak)) i32 RTL_LSEEK(i16 a0, i32 a1, i16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i32)stand_in("RTL_LSEEK", OUT(R_DX) | OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 ACCESS_MODE_VIA_BASES_FAR(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 2, (u32)a3}}; return (u16)stand_in("ACCESS_MODE_VIA_BASES_FAR", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 ALLOCATE_EMS_PAGES(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (u16)stand_in("ALLOCATE_EMS_PAGES", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 ALLOC_BANK0_NODE(u16 a0, farptr a1, u16 a2, i16 a3, u16 a4) { const StandInArg args[] = {{12, 2, 2, (u32)a0}, {8, 4, 4, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 2, (u32)a3}, {2, 2, 2, (u32)a4}}; return (u16)stand_in("ALLOC_BANK0_NODE", OUT(R_AX), args, 5); }
-__attribute__((weak)) u16 ALLOC_BANK5_NODE(farptr a0, u16 a1, farptr a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; return (u16)stand_in("ALLOC_BANK5_NODE", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 ALLOC_FIXED_HIGH(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("ALLOC_FIXED_HIGH", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 ALLOC_FIXED_LOW(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("ALLOC_FIXED_LOW", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 BCC_POOL_RESOLVE_WORD(u16 a0, farptr a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {2, 4, 4, (u32)a1}}; return (u16)stand_in("BCC_POOL_RESOLVE_WORD", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 BCC_READ_STATUS(void) { const StandInArg *args = 0; return (u16)stand_in("BCC_READ_STATUS", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 BCC_RESIDENT_RELEASE_CALLBACK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("BCC_RESIDENT_RELEASE_CALLBACK", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 BCC_TYPE_FINISH_FAR(void) { const StandInArg *args = 0; return (u16)stand_in("BCC_TYPE_FINISH_FAR", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 BUILD_POINTER_TYPE(u16 a0, i8 a1, u16 a2, i8 a3) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 1, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 1, (u32)a3}}; return (u16)stand_in("BUILD_POINTER_TYPE", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 CHANGE_HEAP_NODE_MODE(u16 a0, u16 a1, farptr a2, u16 a3) { const StandInArg args[] = {{12, 2, 2, (u32)a0}, {10, 2, 2, (u32)a1}, {6, 4, 4, (u32)a2}, {4, 2, 2, (u32)a3}}; return (u16)stand_in("CHANGE_HEAP_NODE_MODE", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 CHANGE_TAG_NODES_MODE(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (u16)stand_in("CHANGE_TAG_NODES_MODE", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 CLAIM_EXTENDED_MEMORY(u32 a0, u32 a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; return (u16)stand_in("CLAIM_EXTENDED_MEMORY", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 CONV_FIND_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("CONV_FIND_FREE_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 DETECT_EMS(void) { const StandInArg *args = 0; return (u16)stand_in("DETECT_EMS", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 EMS_FIND_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("EMS_FIND_FREE_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 EXTEND_HEAP(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("EXTEND_HEAP", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 EXT_FIND_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("EXT_FIND_FREE_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 FIND_NAME_IN_LIST_BODY(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("FIND_NAME_IN_LIST_BODY", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 FIX_HEAP_NODE_LOW(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("FIX_HEAP_NODE_LOW", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 FOLD_EXPRESSION_BODY(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("FOLD_EXPRESSION_BODY", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 FREE_HANDLE_BLOCK(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("FREE_HANDLE_BLOCK", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 GATHER_ALL_FREE_SPACE(void) { const StandInArg *args = 0; return (u16)stand_in("GATHER_ALL_FREE_SPACE", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 GATHER_FREE_AT_HIGH_END(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("GATHER_FREE_AT_HIGH_END", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 GATHER_FREE_AT_LOW_END(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("GATHER_FREE_AT_LOW_END", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 GET_HEAP_NODE_FLAGS(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("GET_HEAP_NODE_FLAGS", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 HANDLE_BLOCK_SIZE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("HANDLE_BLOCK_SIZE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 HANDLE_IN_BANK_5(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("HANDLE_IN_BANK_5", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 HEAP_ALLOC_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("HEAP_ALLOC_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 INIT_HEAP(u16 a0, u16 a1, u16 a2, farptr a3, farptr a4) { const StandInArg args[] = {{16, 2, 2, (u32)a0}, {14, 2, 2, (u32)a1}, {12, 2, 2, (u32)a2}, {8, 4, 4, (u32)a3}, {4, 4, 4, (u32)a4}}; return (u16)stand_in("INIT_HEAP", OUT(R_AX), args, 5); }
-__attribute__((weak)) u16 INIT_MAIN_HEAP(u16 a0, u16 a1, i16 a2, u16 a3) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("INIT_MAIN_HEAP", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 INIT_NULL_BANK(void) { const StandInArg *args = 0; return (u16)stand_in("INIT_NULL_BANK", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 INIT_SWAP_BANK(i16 a0, u32 a1, u32 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {2, 4, 4, (u32)a2}}; return (u16)stand_in("INIT_SWAP_BANK", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 NARROW_FAR_POINTER_BODY(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("NARROW_FAR_POINTER_BODY", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 NEW_BANK5_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("NEW_BANK5_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 OVR_IMAGE_SIZE(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; return (u16)stand_in("OVR_IMAGE_SIZE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 OVR_READ_AT_OFFSET(u16 a0, u32 a1, u32 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {2, 4, 4, (u32)a2}}; return (u16)stand_in("OVR_READ_AT_OFFSET", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 PIN_SEGMENT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("PIN_SEGMENT", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 POOL_INIT(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("POOL_INIT", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 RECLAIM_FOR_SPACE(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("RECLAIM_FOR_SPACE", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 REFINE_KIND_10_OPERAND_STUB(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("REFINE_KIND_10_OPERAND_STUB", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 RESIZE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; return (u16)stand_in("RESIZE_NODE", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 RESOLVE_HANDLE_FAR(u16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; return (u16)stand_in("RESOLVE_HANDLE_FAR", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 RHSLICE(u16 a0, u16 a1, u8 a2) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {2, 2, 1, (u32)a2}}; return (u16)stand_in("RHSLICE", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 RH_AVAILABLE_SPACE(void) { const StandInArg *args = 0; return (u16)stand_in("RH_AVAILABLE_SPACE", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 RH_COPY_DESCRIPTOR(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("RH_COPY_DESCRIPTOR", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 RH_DISPATCH_NODE(u16 a0, u16 a1, farptr a2, u16 a3) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("RH_DISPATCH_NODE", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 RH_DOS_DUP(i16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_DOS_DUP", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_DOS_READ(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("RH_DOS_READ", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 RH_DOS_WRITE(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("RH_DOS_WRITE", OUT(R_AX), args, 3); }
-__attribute__((weak)) u16 RH_GROW_DESCRIPTORS(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_GROW_DESCRIPTORS", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_HANDLE_TRY_FLAG20(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("RH_HANDLE_TRY_FLAG20", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_HANDLE_TRY_FLAG40(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("RH_HANDLE_TRY_FLAG40", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_HEAP_DISPATCH(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{2, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {6, 2, 2, (u32)a2}, {8, 2, 2, (u32)a3}}; return (u16)stand_in("RH_HEAP_DISPATCH", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 RH_NEWPAGE(void) { const StandInArg *args = 0; return (u16)stand_in("RH_NEWPAGE", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 RH_PREPARE_DESCRIPTORS(void) { const StandInArg *args = 0; return (u16)stand_in("RH_PREPARE_DESCRIPTORS", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 RH_RECLAIM_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_RECLAIM_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_RELEASE_DESCRIPTOR(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_RELEASE_DESCRIPTOR", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_RELEASE_SPECIAL(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_RELEASE_SPECIAL", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_ROUND_REQUEST(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_ROUND_REQUEST", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_TRY_FLAG20(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_TRY_FLAG20", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RH_TRY_FLAG40(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_TRY_FLAG40", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 RNEWNODE(void) { const StandInArg *args = 0; return (u16)stand_in("RNEWNODE", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 SET_NODE_INFO(farptr a0, farptr a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; return (u16)stand_in("SET_NODE_INFO", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 SET_NODE_REQUEST_SIZE(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("SET_NODE_REQUEST_SIZE", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 SET_PROGRAM_TOP(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("SET_PROGRAM_TOP", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 SHRINK_HEAP_FULLY(void) { const StandInArg *args = 0; return (u16)stand_in("SHRINK_HEAP_FULLY", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 SHRINK_HEAP_TO(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("SHRINK_HEAP_TO", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 SPLIT_NODE_TAIL(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; return (u16)stand_in("SPLIT_NODE_TAIL", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 START_SWAP_BANK(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("START_SWAP_BANK", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 SWAP_EXTEND_FILE(u32 a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; return (u16)stand_in("SWAP_EXTEND_FILE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 SWAP_MAKE_ROOM(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("SWAP_MAKE_ROOM", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 SWAP_PREPARE_FILE(void) { const StandInArg *args = 0; return (u16)stand_in("SWAP_PREPARE_FILE", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 TYPE_CLASSIFY_FAR(void) { const StandInArg *args = 0; return (u16)stand_in("TYPE_CLASSIFY_FAR", OUT(R_AX), args, 0); }
-__attribute__((weak)) u16 TYPE_LOOKUP_FAR(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("TYPE_LOOKUP_FAR", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 TYPE_OFFSET_FAR(u8 a0, u16 a1) { const StandInArg args[] = {{6, 2, 1, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("TYPE_OFFSET_FAR", OUT(R_AX), args, 2); }
-__attribute__((weak)) u16 TYPE_OPERATOR_FAR(u16 a0, u16 a1, farptr a2, farptr a3) { const StandInArg args[] = {{14, 2, 2, (u32)a0}, {12, 2, 2, (u32)a1}, {8, 4, 4, (u32)a2}, {4, 4, 4, (u32)a3}}; return (u16)stand_in("TYPE_OPERATOR_FAR", OUT(R_AX), args, 4); }
-__attribute__((weak)) u16 TYPE_PATH_FAR(u16 a0, u16 a1, farptr a2, farptr a3, farptr a4) { const StandInArg args[] = {{18, 2, 2, (u32)a0}, {16, 2, 2, (u32)a1}, {12, 4, 4, (u32)a2}, {8, 4, 4, (u32)a3}, {4, 4, 4, (u32)a4}}; return (u16)stand_in("TYPE_PATH_FAR", OUT(R_AX), args, 5); }
-__attribute__((weak)) u16 UNFIX_HIGH_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("UNFIX_HIGH_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 UNFIX_LOW_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("UNFIX_LOW_NODE", OUT(R_AX), args, 1); }
-__attribute__((weak)) u16 __OVRINIT(u16 a0, u16 a1, farptr a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; return (u16)stand_in("__OVRINIT", OUT(R_AX), args, 3); }
-__attribute__((weak)) u32 C31_MEMORY_LIMIT(void) { const StandInArg *args = 0; return (u32)stand_in("C31_MEMORY_LIMIT", OUT(R_DX) | OUT(R_AX), args, 0); }
-__attribute__((weak)) u32 C31_SET_MEMORY_LIMIT(u32 a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u32)stand_in("C31_SET_MEMORY_LIMIT", OUT(R_DX) | OUT(R_AX), args, 1); }
-__attribute__((weak)) u32 DETECT_EXTENDED_MEMORY(void) { const StandInArg *args = 0; return (u32)stand_in("DETECT_EXTENDED_MEMORY", OUT(R_DX) | OUT(R_AX), args, 0); }
-__attribute__((weak)) u32 GENERATE_STRUCT_ASSIGN_BODY(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u32)stand_in("GENERATE_STRUCT_ASSIGN_BODY", OUT(R_DX) | OUT(R_AX), args, 2); }
-__attribute__((weak)) u32 RH_DOS_SEEK(i16 a0, u32 a1, i16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u32)stand_in("RH_DOS_SEEK", OUT(R_DX) | OUT(R_AX), args, 3); }
-__attribute__((weak)) u8 BCC_DECL_CASE2(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u8)stand_in("BCC_DECL_CASE2", OUT_AL, args, 1); }
-__attribute__((weak)) u8 BCC_DECL_CASE3(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u8)stand_in("BCC_DECL_CASE3", OUT_AL, args, 1); }
-__attribute__((weak)) u8 REGISTER_FAR_CALLBACK(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; return (u8)stand_in("REGISTER_FAR_CALLBACK", OUT_AL, args, 1); }
-__attribute__((weak)) u8 TOKEN_IS_TYPE_START(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u8)stand_in("TOKEN_IS_TYPE_START", OUT_AL, args, 1); }
-__attribute__((weak)) u8 TYPE_ENUM_FAR(void) { const StandInArg *args = 0; return (u8)stand_in("TYPE_ENUM_FAR", OUT_AL, args, 0); }
-__attribute__((weak)) void ADD_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("ADD_FREE_NODE", 0, args, 1); }
-__attribute__((weak)) void ADOPT_EXTERNAL_REGIONS(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("ADOPT_EXTERNAL_REGIONS", 0, args, 2); }
-__attribute__((weak)) void BANK5_NOOP_NODE_HOOK(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("BANK5_NOOP_NODE_HOOK", 0, args, 2); }
-__attribute__((weak)) void BANK5_NOOP_REQUEST_HOOK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("BANK5_NOOP_REQUEST_HOOK", 0, args, 1); }
-__attribute__((weak)) void BCC_DECL_CASE0(void) { const StandInArg *args = 0; stand_in("BCC_DECL_CASE0", 0, args, 0); }
-__attribute__((weak)) void BCC_DECL_CASE4(void) { const StandInArg *args = 0; stand_in("BCC_DECL_CASE4", 0, args, 0); }
-__attribute__((weak)) void BCC_STMT_ERROR_NEAR(u16 a0, farptr a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}}; stand_in("BCC_STMT_ERROR_NEAR", 0, args, 2); }
-__attribute__((weak)) void C0_TERMINATE(i16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("C0_TERMINATE", 0, args, 1); }
-__attribute__((weak)) void C11_EXPECT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("C11_EXPECT", 0, args, 1); }
-__attribute__((weak)) void C45_LONGJUMP(farptr a0, i16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("C45_LONGJUMP", 0, args, 2); }
-__attribute__((weak)) void CALL_SELF_FOREVER(void) { const StandInArg *args = 0; stand_in("CALL_SELF_FOREVER", 0, args, 0); }
-__attribute__((weak)) void CALL_SELF_FOREVER_RG2BEND(void) { const StandInArg *args = 0; stand_in("CALL_SELF_FOREVER_RG2BEND", 0, args, 0); }
-__attribute__((weak)) void COLLECT_STRING_LITERAL(farptr a0, farptr a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("COLLECT_STRING_LITERAL", 0, args, 2); }
-__attribute__((weak)) void COMMENT_BLOCK_BODY(void) { const StandInArg *args = 0; stand_in("COMMENT_BLOCK_BODY", 0, args, 0); }
-__attribute__((weak)) void COMMENT_LINE_BODY(void) { const StandInArg *args = 0; stand_in("COMMENT_LINE_BODY", 0, args, 0); }
-__attribute__((weak)) void CPP_REGION_START_MARK(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("CPP_REGION_START_MARK", 0, args, 1); }
-__attribute__((weak)) void CREATE_ASM_OUTPUT_FAR(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("CREATE_ASM_OUTPUT_FAR", 0, args, 1); }
-__attribute__((weak)) void CROSS_JUMP_PASS_STUB(void) { const StandInArg *args = 0; stand_in("CROSS_JUMP_PASS_STUB", 0, args, 0); }
-__attribute__((weak)) void DISCARD_SWAP_BANK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("DISCARD_SWAP_BANK", 0, args, 1); }
-__attribute__((weak)) void EMIT_ASM_HEADER_FAR(void) { const StandInArg *args = 0; stand_in("EMIT_ASM_HEADER_FAR", 0, args, 0); }
-__attribute__((weak)) void EMIT_BLOCK_INSTRUCTIONS_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("EMIT_BLOCK_INSTRUCTIONS_ENTRY", 0, args, 1); }
-__attribute__((weak)) void EMIT_EVAL_STACK_INSN_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("EMIT_EVAL_STACK_INSN_ENTRY", 0, args, 1); }
-__attribute__((weak)) void EMIT_HELPER_CALL_FOR_NODE_ENTRY(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMIT_HELPER_CALL_FOR_NODE_ENTRY", 0, args, 2); }
-__attribute__((weak)) void EMIT_INITIALIZER_VALUE_FAR(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("EMIT_INITIALIZER_VALUE_FAR", 0, args, 2); }
-__attribute__((weak)) void EMIT_OPERATOR_HELPER_BODY(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("EMIT_OPERATOR_HELPER_BODY", 0, args, 1); }
-__attribute__((weak)) void EMIT_REGISTER_HISTORY_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("EMIT_REGISTER_HISTORY_ENTRY", 0, args, 1); }
-__attribute__((weak)) void EMIT_REG_ASSIGNED_BINARY_ENTRY(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMIT_REG_ASSIGNED_BINARY_ENTRY", 0, args, 2); }
-__attribute__((weak)) void EMS_MOVE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMS_MOVE_NODE", 0, args, 2); }
-__attribute__((weak)) void EMS_READ_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMS_READ_NODE", 0, args, 2); }
-__attribute__((weak)) void EMS_WRITE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMS_WRITE_NODE", 0, args, 2); }
-__attribute__((weak)) void EXPECT_TOKEN_ELSE_REPORT(u16 a0, u16 a1, farptr a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; stand_in("EXPECT_TOKEN_ELSE_REPORT", 0, args, 3); }
-__attribute__((weak)) void EXT_MOVE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EXT_MOVE_NODE", 0, args, 2); }
-__attribute__((weak)) void EXT_READ_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EXT_READ_NODE", 0, args, 2); }
-__attribute__((weak)) void EXT_WRITE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EXT_WRITE_NODE", 0, args, 2); }
-__attribute__((weak)) void FREE_EMS_HANDLE(void) { const StandInArg *args = 0; stand_in("FREE_EMS_HANDLE", 0, args, 0); }
-__attribute__((weak)) void FREE_TAG_NODES(u8 a0) { const StandInArg args[] = {{4, 2, 1, (u32)a0}}; stand_in("FREE_TAG_NODES", 0, args, 1); }
-__attribute__((weak)) void GROW_HEAP_TO(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("GROW_HEAP_TO", 0, args, 1); }
-__attribute__((weak)) void HEAP_FREE_ITEM(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; stand_in("HEAP_FREE_ITEM", 0, args, 1); }
-__attribute__((weak)) void INIT_BANK(u16 a0, u16 a1, i16 a2, u16 a3, u16 a4) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 2, (u32)a3}, {2, 2, 2, (u32)a4}}; stand_in("INIT_BANK", 0, args, 5); }
-__attribute__((weak)) void INIT_EMS_EXT_BANKS(void) { const StandInArg *args = 0; stand_in("INIT_EMS_EXT_BANKS", 0, args, 0); }
-__attribute__((weak)) void INIT_REGION_START_MARK(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("INIT_REGION_START_MARK", 0, args, 1); }
-__attribute__((weak)) void LEX_NEWLINE_BODY(i8 a0) { const StandInArg args[] = {{4, 2, 1, (u32)a0}}; stand_in("LEX_NEWLINE_BODY", 0, args, 1); }
-__attribute__((weak)) void LEX_SPECIAL_BODY(i8 a0) { const StandInArg args[] = {{4, 2, 1, (u32)a0}}; stand_in("LEX_SPECIAL_BODY", 0, args, 1); }
-__attribute__((weak)) void LOCK_HEAP_NODE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("LOCK_HEAP_NODE", 0, args, 1); }
-__attribute__((weak)) void MOVE_EXTENDED_MEMORY(void) { const StandInArg *args = 0; stand_in("MOVE_EXTENDED_MEMORY", 0, args, 0); }
-__attribute__((weak)) void MOVE_NODE_TO_RING_HEAD(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("MOVE_NODE_TO_RING_HEAD", 0, args, 1); }
-__attribute__((weak)) void OUT_OF_MEMORY_HANDLER(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}}; stand_in("OUT_OF_MEMORY_HANDLER", 0, args, 2); }
-__attribute__((weak)) void OVR_PRELOAD_SEGMENT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("OVR_PRELOAD_SEGMENT", 0, args, 1); }
-__attribute__((weak)) void OVR_RELEASE_EXT_MEMORY(void) { const StandInArg *args = 0; stand_in("OVR_RELEASE_EXT_MEMORY", 0, args, 0); }
-__attribute__((weak)) void OVR_SHUTDOWN(void) { const StandInArg *args = 0; stand_in("OVR_SHUTDOWN", 0, args, 0); }
-__attribute__((weak)) void PARSE_CONSTANT_EXPR_VALUE(u16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("PARSE_CONSTANT_EXPR_VALUE", 0, args, 2); }
-__attribute__((weak)) void POOL_SET_USED(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("POOL_SET_USED", 0, args, 2); }
-__attribute__((weak)) void RCTRL23(void) { const StandInArg *args = 0; stand_in("RCTRL23", 0, args, 0); }
-__attribute__((weak)) void RELEASE_EMS_BANK(void) { const StandInArg *args = 0; stand_in("RELEASE_EMS_BANK", 0, args, 0); }
-__attribute__((weak)) void RESIZE_HANDLE_BLOCK(farptr a0, u16 a1) { const StandInArg args[] = {{4, 4, 4, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RESIZE_HANDLE_BLOCK", 0, args, 2); }
-__attribute__((weak)) void RESIZE_POOL_BLOCK(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("RESIZE_POOL_BLOCK", 0, args, 2); }
-__attribute__((weak)) void RESOLVE_JUMP_TARGETS_STUB(void) { const StandInArg *args = 0; stand_in("RESOLVE_JUMP_TARGETS_STUB", 0, args, 0); }
-__attribute__((weak)) void RESTORE_MEMORY_AFTER_EXEC(void) { const StandInArg *args = 0; stand_in("RESTORE_MEMORY_AFTER_EXEC", 0, args, 0); }
-__attribute__((weak)) void RHCYCLE(void) { const StandInArg *args = 0; stand_in("RHCYCLE", 0, args, 0); }
-__attribute__((weak)) void RHLINK(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RHLINK", 0, args, 2); }
-__attribute__((weak)) void RHSETCUR(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RHSETCUR", 0, args, 1); }
-__attribute__((weak)) void RHSWAP(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RHSWAP", 0, args, 1); }
-__attribute__((weak)) void RHUNLINK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RHUNLINK", 0, args, 1); }
-__attribute__((weak)) void RH_CALL_EXT_RELEASE(void) { const StandInArg *args = 0; stand_in("RH_CALL_EXT_RELEASE", 0, args, 0); }
-__attribute__((weak)) void RH_CLEAR_TAG_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_CLEAR_TAG_ENTRY", 0, args, 1); }
-__attribute__((weak)) void RH_COALESCE_FREE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_COALESCE_FREE", 0, args, 1); }
-__attribute__((weak)) void RH_COPY_BLOCK(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RH_COPY_BLOCK", 0, args, 2); }
-__attribute__((weak)) void RH_DOS_CLOSE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_DOS_CLOSE", 0, args, 1); }
-__attribute__((weak)) void RH_DOS_DELETE(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; stand_in("RH_DOS_DELETE", 0, args, 1); }
-__attribute__((weak)) void RH_MARK_FREE_AND_MERGE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_MARK_FREE_AND_MERGE", 0, args, 1); }
-__attribute__((weak)) void RH_MOVE_BLOCK_DOWN(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RH_MOVE_BLOCK_DOWN", 0, args, 2); }
-__attribute__((weak)) void RH_MOVE_BLOCK_UP(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RH_MOVE_BLOCK_UP", 0, args, 2); }
-__attribute__((weak)) void RH_RELEASE_FLAGGED(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_RELEASE_FLAGGED", 0, args, 1); }
-__attribute__((weak)) void RH_SELF_CALL_AFTER_EMS_BANK(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_AFTER_EMS_BANK", 0, args, 0); }
-__attribute__((weak)) void RH_SELF_CALL_AFTER_OVR_CODE(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_AFTER_OVR_CODE", 0, args, 0); }
-__attribute__((weak)) void RH_SELF_CALL_AFTER_SWAP_BANK(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_AFTER_SWAP_BANK", 0, args, 0); }
-__attribute__((weak)) void RH_SELF_CALL_BEFORE_DOS_IO(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_DOS_IO", 0, args, 0); }
-__attribute__((weak)) void RH_SELF_CALL_BEFORE_INIT(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_INIT", 0, args, 0); }
-__attribute__((weak)) void RH_SELF_CALL_BEFORE_MOVES(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_MOVES", 0, args, 0); }
-__attribute__((weak)) void RH_SELF_CALL_BEFORE_SWAP(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_SWAP", 0, args, 0); }
-__attribute__((weak)) void RH_UPDATE_NODE_ADDRESS(u16 a0, u8 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 1, (u32)a1}}; stand_in("RH_UPDATE_NODE_ADDRESS", 0, args, 2); }
-__attribute__((weak)) void RING_ADVANCE_CURSOR(void) { const StandInArg *args = 0; stand_in("RING_ADVANCE_CURSOR", 0, args, 0); }
-__attribute__((weak)) void RING_PUSH_NODE(u16 a0, u8 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 1, (u32)a1}}; stand_in("RING_PUSH_NODE", 0, args, 2); }
-__attribute__((weak)) void RIRQ1B(void) { const StandInArg *args = 0; stand_in("RIRQ1B", 0, args, 0); }
-__attribute__((weak)) void RRETNDES(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RRETNDES", 0, args, 1); }
-__attribute__((weak)) void RTL_DVPRINTF(farptr a0, farptr a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RTL_DVPRINTF", 0, args, 2); }
-__attribute__((weak)) void RTL_GETDATE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("RTL_GETDATE", 0, args, 1); }
-__attribute__((weak)) void RTL_GETTIME(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("RTL_GETTIME", 0, args, 1); }
-__attribute__((weak)) void RTL_ITOA10(i16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RTL_ITOA10", 0, args, 2); }
-__attribute__((weak)) void RTL_SETVECT(i16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RTL_SETVECT", 0, args, 2); }
-__attribute__((weak)) void RVECSET(u16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RVECSET", 0, args, 2); }
-__attribute__((weak)) void SAVE_MALLOC_POOL_MARK(void) { const StandInArg *args = 0; stand_in("SAVE_MALLOC_POOL_MARK", 0, args, 0); }
-__attribute__((weak)) void SCAN_FINISH(i16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("SCAN_FINISH", 0, args, 1); }
-__attribute__((weak)) void SHRINK_MEMORY_FOR_EXEC(void) { const StandInArg *args = 0; stand_in("SHRINK_MEMORY_FOR_EXEC", 0, args, 0); }
-__attribute__((weak)) void SHRINK_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SHRINK_NODE", 0, args, 2); }
-__attribute__((weak)) void SHUTDOWN_HEAP_BANKS(void) { const StandInArg *args = 0; stand_in("SHUTDOWN_HEAP_BANKS", 0, args, 0); }
-__attribute__((weak)) void SWAP_MOVE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SWAP_MOVE_NODE", 0, args, 2); }
-__attribute__((weak)) void SWAP_READ_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SWAP_READ_NODE", 0, args, 2); }
-__attribute__((weak)) void SWAP_WRITE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SWAP_WRITE_NODE", 0, args, 2); }
-__attribute__((weak)) void TAG_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("TAG_NODE", 0, args, 1); }
-__attribute__((weak)) void TYPE_ATTACH_FAR(u16 a0, u16 a1, i32 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; stand_in("TYPE_ATTACH_FAR", 0, args, 3); }
-__attribute__((weak)) void TYPE_BASE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_BASE_FAR", 0, args, 0); }
-__attribute__((weak)) void TYPE_DECLARE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_DECLARE_FAR", 0, args, 0); }
-__attribute__((weak)) void TYPE_DEFER_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_DEFER_FAR", 0, args, 0); }
-__attribute__((weak)) void TYPE_FINALIZE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_FINALIZE_FAR", 0, args, 0); }
-__attribute__((weak)) void TYPE_RELINK_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_RELINK_FAR", 0, args, 0); }
-__attribute__((weak)) void TYPE_SCOPE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_SCOPE_FAR", 0, args, 0); }
-__attribute__((weak)) void UNLINK_HEAP_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("UNLINK_HEAP_NODE", 0, args, 1); }
-__attribute__((weak)) void UNLOCK_HEAP_NODE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("UNLOCK_HEAP_NODE", 0, args, 1); }
-__attribute__((weak)) void UNPIN_SEGMENT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("UNPIN_SEGMENT", 0, args, 1); }
-__attribute__((weak)) void UNTAG_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("UNTAG_NODE", 0, args, 1); }
-__attribute__((weak)) void _OvrPrepare(void) { const StandInArg *args = 0; stand_in("_OvrPrepare", 0, args, 0); }
+u16 ACCESS_MODE_VIA_BASES_FAR(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 2, (u32)a3}}; return (u16)stand_in("ACCESS_MODE_VIA_BASES_FAR", OUT(R_AX), args, 4); }
+void ADD_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("ADD_FREE_NODE", 0, args, 1); }
+#ifndef PORT_NATIVE
+void ADOPT_EXTERNAL_REGIONS(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("ADOPT_EXTERNAL_REGIONS", 0, args, 2); }
+#endif
+u16 ALLOCATE_EMS_PAGES(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (u16)stand_in("ALLOCATE_EMS_PAGES", OUT(R_AX), args, 3); }
+u16 ALLOC_BANK0_NODE(u16 a0, farptr a1, u16 a2, i16 a3, u16 a4) { const StandInArg args[] = {{12, 2, 2, (u32)a0}, {8, 4, 4, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 2, (u32)a3}, {2, 2, 2, (u32)a4}}; return (u16)stand_in("ALLOC_BANK0_NODE", OUT(R_AX), args, 5); }
+u16 ALLOC_BANK5_NODE(farptr a0, u16 a1, farptr a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; return (u16)stand_in("ALLOC_BANK5_NODE", OUT(R_AX), args, 3); }
+u16 ALLOC_FIXED_HIGH(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("ALLOC_FIXED_HIGH", OUT(R_AX), args, 1); }
+u16 ALLOC_FIXED_LOW(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("ALLOC_FIXED_LOW", OUT(R_AX), args, 1); }
+void BANK5_NOOP_NODE_HOOK(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("BANK5_NOOP_NODE_HOOK", 0, args, 2); }
+void BANK5_NOOP_REQUEST_HOOK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("BANK5_NOOP_REQUEST_HOOK", 0, args, 1); }
+void BCC_DECL_CASE0(void) { const StandInArg *args = 0; stand_in("BCC_DECL_CASE0", 0, args, 0); }
+u8 BCC_DECL_CASE2(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u8)stand_in("BCC_DECL_CASE2", OUT_AL, args, 1); }
+u8 BCC_DECL_CASE3(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u8)stand_in("BCC_DECL_CASE3", OUT_AL, args, 1); }
+void BCC_DECL_CASE4(void) { const StandInArg *args = 0; stand_in("BCC_DECL_CASE4", 0, args, 0); }
+u16 BCC_POOL_RESOLVE_WORD(u16 a0, farptr a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {2, 4, 4, (u32)a1}}; return (u16)stand_in("BCC_POOL_RESOLVE_WORD", OUT(R_AX), args, 2); }
+u16 BCC_READ_STATUS(void) { const StandInArg *args = 0; return (u16)stand_in("BCC_READ_STATUS", OUT(R_AX), args, 0); }
+u16 BCC_RESIDENT_RELEASE_CALLBACK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("BCC_RESIDENT_RELEASE_CALLBACK", OUT(R_AX), args, 1); }
+void BCC_STMT_ERROR_NEAR(u16 a0, farptr a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}}; stand_in("BCC_STMT_ERROR_NEAR", 0, args, 2); }
+u16 BCC_TYPE_FINISH_FAR(void) { const StandInArg *args = 0; return (u16)stand_in("BCC_TYPE_FINISH_FAR", OUT(R_AX), args, 0); }
+u16 BUILD_POINTER_TYPE(u16 a0, i8 a1, u16 a2, i8 a3) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 1, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 1, (u32)a3}}; return (u16)stand_in("BUILD_POINTER_TYPE", OUT(R_AX), args, 4); }
+#ifndef PORT_NATIVE
+void C0_TERMINATE(i16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("C0_TERMINATE", 0, args, 1); }
+#endif
+void C11_EXPECT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("C11_EXPECT", 0, args, 1); }
+#ifndef PORT_NATIVE
+u32 C31_MEMORY_LIMIT(void) { const StandInArg *args = 0; return (u32)stand_in("C31_MEMORY_LIMIT", OUT(R_DX) | OUT(R_AX), args, 0); }
+#endif
+#ifndef PORT_NATIVE
+u32 C31_SET_MEMORY_LIMIT(u32 a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u32)stand_in("C31_SET_MEMORY_LIMIT", OUT(R_DX) | OUT(R_AX), args, 1); }
+#endif
+#ifndef PORT_NATIVE
+void C45_LONGJUMP(farptr a0, i16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("C45_LONGJUMP", 0, args, 2); }
+#endif
+i16 C45_SETJUMP(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("C45_SETJUMP", OUT(R_AX), args, 1); }
+void CALL_SELF_FOREVER(void) { const StandInArg *args = 0; stand_in("CALL_SELF_FOREVER", 0, args, 0); }
+void CALL_SELF_FOREVER_RG2BEND(void) { const StandInArg *args = 0; stand_in("CALL_SELF_FOREVER_RG2BEND", 0, args, 0); }
+u16 CHANGE_HEAP_NODE_MODE(u16 a0, u16 a1, farptr a2, u16 a3) { const StandInArg args[] = {{12, 2, 2, (u32)a0}, {10, 2, 2, (u32)a1}, {6, 4, 4, (u32)a2}, {4, 2, 2, (u32)a3}}; return (u16)stand_in("CHANGE_HEAP_NODE_MODE", OUT(R_AX), args, 4); }
+u16 CHANGE_TAG_NODES_MODE(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (u16)stand_in("CHANGE_TAG_NODES_MODE", OUT(R_AX), args, 3); }
+u16 CLAIM_EXTENDED_MEMORY(u32 a0, u32 a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; return (u16)stand_in("CLAIM_EXTENDED_MEMORY", OUT(R_AX), args, 2); }
+i16 CLASSIFY_IDENTIFIER_BODY(void) { const StandInArg *args = 0; return (i16)stand_in("CLASSIFY_IDENTIFIER_BODY", OUT(R_AX), args, 0); }
+void COLLECT_STRING_LITERAL(farptr a0, farptr a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("COLLECT_STRING_LITERAL", 0, args, 2); }
+void COMMENT_BLOCK_BODY(void) { const StandInArg *args = 0; stand_in("COMMENT_BLOCK_BODY", 0, args, 0); }
+void COMMENT_LINE_BODY(void) { const StandInArg *args = 0; stand_in("COMMENT_LINE_BODY", 0, args, 0); }
+u16 CONV_FIND_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("CONV_FIND_FREE_NODE", OUT(R_AX), args, 1); }
+void CPP_REGION_START_MARK(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("CPP_REGION_START_MARK", 0, args, 1); }
+void CREATE_ASM_OUTPUT_FAR(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("CREATE_ASM_OUTPUT_FAR", 0, args, 1); }
+void CROSS_JUMP_PASS_STUB(void) { const StandInArg *args = 0; stand_in("CROSS_JUMP_PASS_STUB", 0, args, 0); }
+#ifndef PORT_NATIVE
+i16 DELETE_FILE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("DELETE_FILE", OUT(R_AX), args, 1); }
+#endif
+u16 DETECT_EMS(void) { const StandInArg *args = 0; return (u16)stand_in("DETECT_EMS", OUT(R_AX), args, 0); }
+u32 DETECT_EXTENDED_MEMORY(void) { const StandInArg *args = 0; return (u32)stand_in("DETECT_EXTENDED_MEMORY", OUT(R_DX) | OUT(R_AX), args, 0); }
+void DISCARD_SWAP_BANK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("DISCARD_SWAP_BANK", 0, args, 1); }
+#ifndef PORT_NATIVE
+i16 DOS_CALL_AH(i16 a0, i16 a1, i16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("DOS_CALL_AH", OUT(R_AX), args, 3); }
+#endif
+void EMIT_ASM_HEADER_FAR(void) { const StandInArg *args = 0; stand_in("EMIT_ASM_HEADER_FAR", 0, args, 0); }
+void EMIT_BLOCK_INSTRUCTIONS_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("EMIT_BLOCK_INSTRUCTIONS_ENTRY", 0, args, 1); }
+void EMIT_EVAL_STACK_INSN_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("EMIT_EVAL_STACK_INSN_ENTRY", 0, args, 1); }
+void EMIT_HELPER_CALL_FOR_NODE_ENTRY(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMIT_HELPER_CALL_FOR_NODE_ENTRY", 0, args, 2); }
+void EMIT_INITIALIZER_VALUE_FAR(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("EMIT_INITIALIZER_VALUE_FAR", 0, args, 2); }
+void EMIT_OPERATOR_HELPER_BODY(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("EMIT_OPERATOR_HELPER_BODY", 0, args, 1); }
+void EMIT_REGISTER_HISTORY_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("EMIT_REGISTER_HISTORY_ENTRY", 0, args, 1); }
+void EMIT_REG_ASSIGNED_BINARY_ENTRY(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMIT_REG_ASSIGNED_BINARY_ENTRY", 0, args, 2); }
+u16 EMS_FIND_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("EMS_FIND_FREE_NODE", OUT(R_AX), args, 1); }
+void EMS_MOVE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMS_MOVE_NODE", 0, args, 2); }
+void EMS_READ_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMS_READ_NODE", 0, args, 2); }
+void EMS_WRITE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EMS_WRITE_NODE", 0, args, 2); }
+void EXPECT_TOKEN_ELSE_REPORT(u16 a0, u16 a1, farptr a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; stand_in("EXPECT_TOKEN_ELSE_REPORT", 0, args, 3); }
+u16 EXTEND_HEAP(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("EXTEND_HEAP", OUT(R_AX), args, 1); }
+u16 EXT_FIND_FREE_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("EXT_FIND_FREE_NODE", OUT(R_AX), args, 1); }
+void EXT_MOVE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EXT_MOVE_NODE", 0, args, 2); }
+void EXT_READ_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EXT_READ_NODE", 0, args, 2); }
+void EXT_WRITE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("EXT_WRITE_NODE", 0, args, 2); }
+#ifndef PORT_NATIVE
+i16 FINDFIRST(farptr a0, farptr a1, i16 a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("FINDFIRST", OUT(R_AX), args, 3); }
+#endif
+#ifndef PORT_NATIVE
+i16 FINDNEXT(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("FINDNEXT", OUT(R_AX), args, 1); }
+#endif
+u16 FIND_NAME_IN_LIST_BODY(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("FIND_NAME_IN_LIST_BODY", OUT(R_AX), args, 2); }
+#ifndef PORT_NATIVE
+u16 FIX_HEAP_NODE_LOW(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("FIX_HEAP_NODE_LOW", OUT(R_AX), args, 1); }
+#endif
+u16 FOLD_EXPRESSION_BODY(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("FOLD_EXPRESSION_BODY", OUT(R_AX), args, 1); }
+void FREE_EMS_HANDLE(void) { const StandInArg *args = 0; stand_in("FREE_EMS_HANDLE", 0, args, 0); }
+#ifndef PORT_NATIVE
+u16 FREE_HANDLE_BLOCK(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("FREE_HANDLE_BLOCK", OUT(R_AX), args, 1); }
+#endif
+#ifndef PORT_NATIVE
+void FREE_TAG_NODES(u8 a0) { const StandInArg args[] = {{4, 2, 1, (u32)a0}}; stand_in("FREE_TAG_NODES", 0, args, 1); }
+#endif
+u16 GATHER_ALL_FREE_SPACE(void) { const StandInArg *args = 0; return (u16)stand_in("GATHER_ALL_FREE_SPACE", OUT(R_AX), args, 0); }
+u16 GATHER_FREE_AT_HIGH_END(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("GATHER_FREE_AT_HIGH_END", OUT(R_AX), args, 3); }
+u16 GATHER_FREE_AT_LOW_END(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("GATHER_FREE_AT_LOW_END", OUT(R_AX), args, 3); }
+i32 GENERATE_INTRINSIC_CALL_STUB(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (i32)stand_in("GENERATE_INTRINSIC_CALL_STUB", OUT(R_DX) | OUT(R_AX), args, 2); }
+u32 GENERATE_STRUCT_ASSIGN_BODY(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u32)stand_in("GENERATE_STRUCT_ASSIGN_BODY", OUT(R_DX) | OUT(R_AX), args, 2); }
+u16 GET_HEAP_NODE_FLAGS(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("GET_HEAP_NODE_FLAGS", OUT(R_AX), args, 1); }
+void GROW_HEAP_TO(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("GROW_HEAP_TO", 0, args, 1); }
+u16 HANDLE_BLOCK_SIZE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("HANDLE_BLOCK_SIZE", OUT(R_AX), args, 1); }
+u16 HANDLE_IN_BANK_5(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("HANDLE_IN_BANK_5", OUT(R_AX), args, 1); }
+farptr HANDLE_ITEM_POINTER(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("HANDLE_ITEM_POINTER", OUT(R_DX) | OUT(R_AX), args, 1); }
+#ifndef PORT_NATIVE
+farptr HEAP_ALLOC_HANDLE(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("HEAP_ALLOC_HANDLE", OUT(R_DX) | OUT(R_AX), args, 1); }
+#endif
+farptr HEAP_ALLOC_ITEM(void) { const StandInArg *args = 0; return (farptr)stand_in("HEAP_ALLOC_ITEM", OUT(R_DX) | OUT(R_AX), args, 0); }
+u16 HEAP_ALLOC_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("HEAP_ALLOC_NODE", OUT(R_AX), args, 1); }
+void HEAP_FREE_ITEM(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; stand_in("HEAP_FREE_ITEM", 0, args, 1); }
+#ifndef PORT_NATIVE
+i32 HEAP_SPACE_BELOW_LIMIT(void) { const StandInArg *args = 0; return (i32)stand_in("HEAP_SPACE_BELOW_LIMIT", OUT(R_DX) | OUT(R_AX), args, 0); }
+#endif
+void INIT_BANK(u16 a0, u16 a1, i16 a2, u16 a3, u16 a4) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {6, 2, 2, (u32)a2}, {4, 2, 2, (u32)a3}, {2, 2, 2, (u32)a4}}; stand_in("INIT_BANK", 0, args, 5); }
+i32 INIT_EMS_BANK(u16 a0, u16 a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i32)stand_in("INIT_EMS_BANK", OUT(R_DX) | OUT(R_AX), args, 3); }
+#ifndef PORT_NATIVE
+void INIT_EMS_EXT_BANKS(void) { const StandInArg *args = 0; stand_in("INIT_EMS_EXT_BANKS", 0, args, 0); }
+#endif
+i32 INIT_EXT_BANK(u32 a0, u32 a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; return (i32)stand_in("INIT_EXT_BANK", OUT(R_DX) | OUT(R_AX), args, 2); }
+#ifndef PORT_NATIVE
+u16 INIT_HEAP(u16 a0, u16 a1, u16 a2, farptr a3, farptr a4) { const StandInArg args[] = {{16, 2, 2, (u32)a0}, {14, 2, 2, (u32)a1}, {12, 2, 2, (u32)a2}, {8, 4, 4, (u32)a3}, {4, 4, 4, (u32)a4}}; return (u16)stand_in("INIT_HEAP", OUT(R_AX), args, 5); }
+#endif
+u16 INIT_MAIN_HEAP(u16 a0, u16 a1, i16 a2, u16 a3) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("INIT_MAIN_HEAP", OUT(R_AX), args, 4); }
+u16 INIT_NULL_BANK(void) { const StandInArg *args = 0; return (u16)stand_in("INIT_NULL_BANK", OUT(R_AX), args, 0); }
+void INIT_REGION_START_MARK(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("INIT_REGION_START_MARK", 0, args, 1); }
+u16 INIT_SWAP_BANK(i16 a0, u32 a1, u32 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {2, 4, 4, (u32)a2}}; return (u16)stand_in("INIT_SWAP_BANK", OUT(R_AX), args, 3); }
+void LEX_NEWLINE_BODY(i8 a0) { const StandInArg args[] = {{4, 2, 1, (u32)a0}}; stand_in("LEX_NEWLINE_BODY", 0, args, 1); }
+void LEX_SPECIAL_BODY(i8 a0) { const StandInArg args[] = {{4, 2, 1, (u32)a0}}; stand_in("LEX_SPECIAL_BODY", 0, args, 1); }
+void LOCK_HEAP_NODE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("LOCK_HEAP_NODE", 0, args, 1); }
+i16 LOG2_POWER_OF_TWO_BODY(u32 a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("LOG2_POWER_OF_TWO_BODY", OUT(R_AX), args, 1); }
+void MOVE_EXTENDED_MEMORY(void) { const StandInArg *args = 0; stand_in("MOVE_EXTENDED_MEMORY", 0, args, 0); }
+void MOVE_NODE_TO_RING_HEAD(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("MOVE_NODE_TO_RING_HEAD", 0, args, 1); }
+u16 NARROW_FAR_POINTER_BODY(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("NARROW_FAR_POINTER_BODY", OUT(R_AX), args, 1); }
+u16 NEW_BANK5_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("NEW_BANK5_NODE", OUT(R_AX), args, 1); }
+void OUT_OF_MEMORY_HANDLER(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}}; stand_in("OUT_OF_MEMORY_HANDLER", 0, args, 2); }
+#ifndef PORT_NATIVE
+farptr OVR_ENSURE_IMAGE_LOADED(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (farptr)stand_in("OVR_ENSURE_IMAGE_LOADED", OUT(R_DX) | OUT(R_AX), args, 1); }
+#endif
+u16 OVR_IMAGE_SIZE(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; return (u16)stand_in("OVR_IMAGE_SIZE", OUT(R_AX), args, 1); }
+void OVR_PRELOAD_SEGMENT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("OVR_PRELOAD_SEGMENT", 0, args, 1); }
+u16 OVR_READ_AT_OFFSET(u16 a0, u32 a1, u32 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {2, 4, 4, (u32)a2}}; return (u16)stand_in("OVR_READ_AT_OFFSET", OUT(R_AX), args, 3); }
+void OVR_RELEASE_EXT_MEMORY(void) { const StandInArg *args = 0; stand_in("OVR_RELEASE_EXT_MEMORY", 0, args, 0); }
+void OVR_SHUTDOWN(void) { const StandInArg *args = 0; stand_in("OVR_SHUTDOWN", 0, args, 0); }
+void PARSE_CONSTANT_EXPR_VALUE(u16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("PARSE_CONSTANT_EXPR_VALUE", 0, args, 2); }
+u16 PIN_SEGMENT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("PIN_SEGMENT", OUT(R_AX), args, 1); }
+#ifndef PORT_NATIVE
+u16 POOL_INIT(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("POOL_INIT", OUT(R_AX), args, 2); }
+#endif
+void POOL_SET_USED(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("POOL_SET_USED", 0, args, 2); }
+void RCTRL23(void) { const StandInArg *args = 0; stand_in("RCTRL23", 0, args, 0); }
+u16 RECLAIM_FOR_SPACE(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("RECLAIM_FOR_SPACE", OUT(R_AX), args, 4); }
+u16 REFINE_KIND_10_OPERAND_STUB(u16 a0, u16 a1) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("REFINE_KIND_10_OPERAND_STUB", OUT(R_AX), args, 2); }
+u8 REGISTER_FAR_CALLBACK(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; return (u8)stand_in("REGISTER_FAR_CALLBACK", OUT_AL, args, 1); }
+void RELEASE_EMS_BANK(void) { const StandInArg *args = 0; stand_in("RELEASE_EMS_BANK", 0, args, 0); }
+void RESIZE_HANDLE_BLOCK(farptr a0, u16 a1) { const StandInArg args[] = {{4, 4, 4, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RESIZE_HANDLE_BLOCK", 0, args, 2); }
+u16 RESIZE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; return (u16)stand_in("RESIZE_NODE", OUT(R_AX), args, 2); }
+#ifndef PORT_NATIVE
+void RESIZE_POOL_BLOCK(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; stand_in("RESIZE_POOL_BLOCK", 0, args, 2); }
+#endif
+u16 RESOLVE_HANDLE_FAR(u16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; return (u16)stand_in("RESOLVE_HANDLE_FAR", OUT(R_AX), args, 2); }
+void RESOLVE_JUMP_TARGETS_STUB(void) { const StandInArg *args = 0; stand_in("RESOLVE_JUMP_TARGETS_STUB", 0, args, 0); }
+#ifndef PORT_NATIVE
+void RESTORE_MEMORY_AFTER_EXEC(void) { const StandInArg *args = 0; stand_in("RESTORE_MEMORY_AFTER_EXEC", 0, args, 0); }
+#endif
+i16 RETURN_MINUS_ONE_STUB(void) { const StandInArg *args = 0; return (i16)stand_in("RETURN_MINUS_ONE_STUB", OUT(R_AX), args, 0); }
+void RHCYCLE(void) { const StandInArg *args = 0; stand_in("RHCYCLE", 0, args, 0); }
+void RHLINK(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RHLINK", 0, args, 2); }
+void RHSETCUR(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RHSETCUR", 0, args, 1); }
+u16 RHSLICE(u16 a0, u16 a1, u8 a2) { const StandInArg args[] = {{6, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {2, 2, 1, (u32)a2}}; return (u16)stand_in("RHSLICE", OUT(R_AX), args, 3); }
+void RHSWAP(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RHSWAP", 0, args, 1); }
+void RHUNLINK(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RHUNLINK", 0, args, 1); }
+u16 RH_AVAILABLE_SPACE(void) { const StandInArg *args = 0; return (u16)stand_in("RH_AVAILABLE_SPACE", OUT(R_AX), args, 0); }
+void RH_CALL_EXT_RELEASE(void) { const StandInArg *args = 0; stand_in("RH_CALL_EXT_RELEASE", 0, args, 0); }
+void RH_CLEAR_TAG_ENTRY(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_CLEAR_TAG_ENTRY", 0, args, 1); }
+void RH_COALESCE_FREE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_COALESCE_FREE", 0, args, 1); }
+void RH_COPY_BLOCK(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RH_COPY_BLOCK", 0, args, 2); }
+u16 RH_COPY_DESCRIPTOR(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {6, 2, 2, (u32)a1}, {4, 2, 2, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("RH_COPY_DESCRIPTOR", OUT(R_AX), args, 4); }
+u16 RH_DISPATCH_NODE(u16 a0, u16 a1, farptr a2, u16 a3) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}, {2, 2, 2, (u32)a3}}; return (u16)stand_in("RH_DISPATCH_NODE", OUT(R_AX), args, 4); }
+void RH_DOS_CLOSE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_DOS_CLOSE", 0, args, 1); }
+i16 RH_DOS_CREATE(farptr a0, u16 a1) { const StandInArg args[] = {{4, 4, 4, (u32)a0}, {2, 2, 2, (u32)a1}}; return (i16)stand_in("RH_DOS_CREATE", OUT(R_AX), args, 2); }
+void RH_DOS_DELETE(farptr a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; stand_in("RH_DOS_DELETE", 0, args, 1); }
+u16 RH_DOS_DUP(i16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_DOS_DUP", OUT(R_AX), args, 1); }
+u16 RH_DOS_READ(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("RH_DOS_READ", OUT(R_AX), args, 3); }
+u32 RH_DOS_SEEK(i16 a0, u32 a1, i16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u32)stand_in("RH_DOS_SEEK", OUT(R_DX) | OUT(R_AX), args, 3); }
+u16 RH_DOS_WRITE(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}, {2, 2, 2, (u32)a2}}; return (u16)stand_in("RH_DOS_WRITE", OUT(R_AX), args, 3); }
+u16 RH_GROW_DESCRIPTORS(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_GROW_DESCRIPTORS", OUT(R_AX), args, 1); }
+u16 RH_HANDLE_TRY_FLAG20(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("RH_HANDLE_TRY_FLAG20", OUT(R_AX), args, 1); }
+u16 RH_HANDLE_TRY_FLAG40(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("RH_HANDLE_TRY_FLAG40", OUT(R_AX), args, 1); }
+u16 RH_HEAP_DISPATCH(u16 a0, u16 a1, u16 a2, u16 a3) { const StandInArg args[] = {{2, 2, 2, (u32)a0}, {4, 2, 2, (u32)a1}, {6, 2, 2, (u32)a2}, {8, 2, 2, (u32)a3}}; return (u16)stand_in("RH_HEAP_DISPATCH", OUT(R_AX), args, 4); }
+void RH_MARK_FREE_AND_MERGE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_MARK_FREE_AND_MERGE", 0, args, 1); }
+void RH_MOVE_BLOCK_DOWN(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RH_MOVE_BLOCK_DOWN", 0, args, 2); }
+void RH_MOVE_BLOCK_UP(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("RH_MOVE_BLOCK_UP", 0, args, 2); }
+u16 RH_NEWPAGE(void) { const StandInArg *args = 0; return (u16)stand_in("RH_NEWPAGE", OUT(R_AX), args, 0); }
+u16 RH_PREPARE_DESCRIPTORS(void) { const StandInArg *args = 0; return (u16)stand_in("RH_PREPARE_DESCRIPTORS", OUT(R_AX), args, 0); }
+u16 RH_RECLAIM_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_RECLAIM_NODE", OUT(R_AX), args, 1); }
+u16 RH_RELEASE_DESCRIPTOR(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_RELEASE_DESCRIPTOR", OUT(R_AX), args, 1); }
+void RH_RELEASE_FLAGGED(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RH_RELEASE_FLAGGED", 0, args, 1); }
+u16 RH_RELEASE_SPECIAL(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_RELEASE_SPECIAL", OUT(R_AX), args, 1); }
+u16 RH_ROUND_REQUEST(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_ROUND_REQUEST", OUT(R_AX), args, 1); }
+void RH_SELF_CALL_AFTER_EMS_BANK(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_AFTER_EMS_BANK", 0, args, 0); }
+void RH_SELF_CALL_AFTER_OVR_CODE(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_AFTER_OVR_CODE", 0, args, 0); }
+void RH_SELF_CALL_AFTER_SWAP_BANK(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_AFTER_SWAP_BANK", 0, args, 0); }
+void RH_SELF_CALL_BEFORE_DOS_IO(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_DOS_IO", 0, args, 0); }
+void RH_SELF_CALL_BEFORE_INIT(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_INIT", 0, args, 0); }
+void RH_SELF_CALL_BEFORE_MOVES(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_MOVES", 0, args, 0); }
+void RH_SELF_CALL_BEFORE_SWAP(void) { const StandInArg *args = 0; stand_in("RH_SELF_CALL_BEFORE_SWAP", 0, args, 0); }
+u16 RH_TRY_FLAG20(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_TRY_FLAG20", OUT(R_AX), args, 1); }
+u16 RH_TRY_FLAG40(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("RH_TRY_FLAG40", OUT(R_AX), args, 1); }
+void RH_UPDATE_NODE_ADDRESS(u16 a0, u8 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 1, (u32)a1}}; stand_in("RH_UPDATE_NODE_ADDRESS", 0, args, 2); }
+void RING_ADVANCE_CURSOR(void) { const StandInArg *args = 0; stand_in("RING_ADVANCE_CURSOR", 0, args, 0); }
+void RING_PUSH_NODE(u16 a0, u8 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 1, (u32)a1}}; stand_in("RING_PUSH_NODE", 0, args, 2); }
+void RIRQ1B(void) { const StandInArg *args = 0; stand_in("RIRQ1B", 0, args, 0); }
+u16 RNEWNODE(void) { const StandInArg *args = 0; return (u16)stand_in("RNEWNODE", OUT(R_AX), args, 0); }
+void RRETNDES(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("RRETNDES", 0, args, 1); }
+i16 RTL_ATOI(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (i16)stand_in("RTL_ATOI", OUT(R_AX), args, 1); }
+#ifndef PORT_NATIVE
+i16 RTL_CLOSE(i16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (i16)stand_in("RTL_CLOSE", OUT(R_AX), args, 1); }
+#endif
+#ifndef PORT_NATIVE
+i16 RTL_CREAT(farptr a0, i16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (i16)stand_in("RTL_CREAT", OUT(R_AX), args, 2); }
+#endif
+i16 RTL_DOS_CALL_PTR(i16 a0, farptr a1, i16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("RTL_DOS_CALL_PTR", OUT(R_AX), args, 3); }
+#ifndef PORT_NATIVE
+void RTL_DVPRINTF(farptr a0, farptr a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RTL_DVPRINTF", 0, args, 2); }
+#endif
+#ifndef PORT_NATIVE
+i16 RTL_EXEC(farptr a0, i8 a1, farptr a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {8, 2, 1, (u32)a1}, {4, 4, 4, (u32)a2}}; return (i16)stand_in("RTL_EXEC", OUT(R_AX), args, 3); }
+#endif
+#ifndef PORT_NATIVE
+void RTL_GETDATE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("RTL_GETDATE", 0, args, 1); }
+#endif
+#ifndef PORT_NATIVE
+void RTL_GETTIME(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("RTL_GETTIME", 0, args, 1); }
+#endif
+farptr RTL_GETVECT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("RTL_GETVECT", OUT(R_DX) | OUT(R_AX), args, 1); }
+#ifndef PORT_NATIVE
+void RTL_ITOA10(i16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RTL_ITOA10", 0, args, 2); }
+#endif
+#ifndef PORT_NATIVE
+i32 RTL_LSEEK(i16 a0, i32 a1, i16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i32)stand_in("RTL_LSEEK", OUT(R_DX) | OUT(R_AX), args, 3); }
+#endif
+#ifndef PORT_NATIVE
+i16 RTL_OPEN(farptr a0, i16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (i16)stand_in("RTL_OPEN", OUT(R_AX), args, 2); }
+#endif
+#ifndef PORT_NATIVE
+i16 RTL_READ(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("RTL_READ", OUT(R_AX), args, 3); }
+#endif
+#ifndef PORT_NATIVE
+farptr RTL_SEARCHPATH(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (farptr)stand_in("RTL_SEARCHPATH", OUT(R_DX) | OUT(R_AX), args, 1); }
+#endif
+void RTL_SETVECT(i16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RTL_SETVECT", 0, args, 2); }
+farptr RTL_STRCHR(farptr a0, i8 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 1, (u32)a1}}; return (farptr)stand_in("RTL_STRCHR", OUT(R_DX) | OUT(R_AX), args, 2); }
+#ifndef PORT_NATIVE
+i16 RTL_WRITE(i16 a0, farptr a1, u16 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (i16)stand_in("RTL_WRITE", OUT(R_AX), args, 3); }
+#endif
+#ifndef PORT_NATIVE
+farptr RVECGET(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (farptr)stand_in("RVECGET", OUT(R_DX) | OUT(R_AX), args, 1); }
+#endif
+#ifndef PORT_NATIVE
+void RVECSET(u16 a0, farptr a1) { const StandInArg args[] = {{8, 2, 2, (u32)a0}, {4, 4, 4, (u32)a1}}; stand_in("RVECSET", 0, args, 2); }
+#endif
+void SAVE_MALLOC_POOL_MARK(void) { const StandInArg *args = 0; stand_in("SAVE_MALLOC_POOL_MARK", 0, args, 0); }
+void SCAN_FINISH(i16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("SCAN_FINISH", 0, args, 1); }
+u16 SET_NODE_INFO(farptr a0, farptr a1) { const StandInArg args[] = {{8, 4, 4, (u32)a0}, {4, 4, 4, (u32)a1}}; return (u16)stand_in("SET_NODE_INFO", OUT(R_AX), args, 2); }
+u16 SET_NODE_REQUEST_SIZE(farptr a0, u16 a1) { const StandInArg args[] = {{6, 4, 4, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("SET_NODE_REQUEST_SIZE", OUT(R_AX), args, 2); }
+u16 SET_PROGRAM_TOP(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("SET_PROGRAM_TOP", OUT(R_AX), args, 1); }
+u16 SHRINK_HEAP_FULLY(void) { const StandInArg *args = 0; return (u16)stand_in("SHRINK_HEAP_FULLY", OUT(R_AX), args, 0); }
+u16 SHRINK_HEAP_TO(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("SHRINK_HEAP_TO", OUT(R_AX), args, 1); }
+#ifndef PORT_NATIVE
+void SHRINK_MEMORY_FOR_EXEC(void) { const StandInArg *args = 0; stand_in("SHRINK_MEMORY_FOR_EXEC", 0, args, 0); }
+#endif
+void SHRINK_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SHRINK_NODE", 0, args, 2); }
+#ifndef PORT_NATIVE
+void SHUTDOWN_HEAP_BANKS(void) { const StandInArg *args = 0; stand_in("SHUTDOWN_HEAP_BANKS", 0, args, 0); }
+#endif
+u16 SPLIT_NODE_TAIL(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; return (u16)stand_in("SPLIT_NODE_TAIL", OUT(R_AX), args, 2); }
+u16 START_SWAP_BANK(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u16)stand_in("START_SWAP_BANK", OUT(R_AX), args, 1); }
+farptr STRING_APPEND_N(farptr a0, farptr a1, u16 a2) { const StandInArg args[] = {{10, 4, 4, (u32)a0}, {6, 4, 4, (u32)a1}, {4, 2, 2, (u32)a2}}; return (farptr)stand_in("STRING_APPEND_N", OUT(R_DX) | OUT(R_AX), args, 3); }
+u16 SWAP_EXTEND_FILE(u32 a0) { const StandInArg args[] = {{2, 4, 4, (u32)a0}}; return (u16)stand_in("SWAP_EXTEND_FILE", OUT(R_AX), args, 1); }
+u16 SWAP_MAKE_ROOM(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("SWAP_MAKE_ROOM", OUT(R_AX), args, 1); }
+void SWAP_MOVE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SWAP_MOVE_NODE", 0, args, 2); }
+u16 SWAP_PREPARE_FILE(void) { const StandInArg *args = 0; return (u16)stand_in("SWAP_PREPARE_FILE", OUT(R_AX), args, 0); }
+void SWAP_READ_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SWAP_READ_NODE", 0, args, 2); }
+void SWAP_WRITE_NODE(u16 a0, u16 a1) { const StandInArg args[] = {{4, 2, 2, (u32)a0}, {2, 2, 2, (u32)a1}}; stand_in("SWAP_WRITE_NODE", 0, args, 2); }
+void TAG_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("TAG_NODE", 0, args, 1); }
+u8 TOKEN_IS_TYPE_START(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; return (u8)stand_in("TOKEN_IS_TYPE_START", OUT_AL, args, 1); }
+void TYPE_ATTACH_FAR(u16 a0, u16 a1, i32 a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; stand_in("TYPE_ATTACH_FAR", 0, args, 3); }
+void TYPE_BASE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_BASE_FAR", 0, args, 0); }
+u16 TYPE_CLASSIFY_FAR(void) { const StandInArg *args = 0; return (u16)stand_in("TYPE_CLASSIFY_FAR", OUT(R_AX), args, 0); }
+void TYPE_DECLARE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_DECLARE_FAR", 0, args, 0); }
+void TYPE_DEFER_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_DEFER_FAR", 0, args, 0); }
+u8 TYPE_ENUM_FAR(void) { const StandInArg *args = 0; return (u8)stand_in("TYPE_ENUM_FAR", OUT_AL, args, 0); }
+void TYPE_FINALIZE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_FINALIZE_FAR", 0, args, 0); }
+u16 TYPE_LOOKUP_FAR(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; return (u16)stand_in("TYPE_LOOKUP_FAR", OUT(R_AX), args, 1); }
+u16 TYPE_OFFSET_FAR(u8 a0, u16 a1) { const StandInArg args[] = {{6, 2, 1, (u32)a0}, {4, 2, 2, (u32)a1}}; return (u16)stand_in("TYPE_OFFSET_FAR", OUT(R_AX), args, 2); }
+u16 TYPE_OPERATOR_FAR(u16 a0, u16 a1, farptr a2, farptr a3) { const StandInArg args[] = {{14, 2, 2, (u32)a0}, {12, 2, 2, (u32)a1}, {8, 4, 4, (u32)a2}, {4, 4, 4, (u32)a3}}; return (u16)stand_in("TYPE_OPERATOR_FAR", OUT(R_AX), args, 4); }
+u16 TYPE_PATH_FAR(u16 a0, u16 a1, farptr a2, farptr a3, farptr a4) { const StandInArg args[] = {{18, 2, 2, (u32)a0}, {16, 2, 2, (u32)a1}, {12, 4, 4, (u32)a2}, {8, 4, 4, (u32)a3}, {4, 4, 4, (u32)a4}}; return (u16)stand_in("TYPE_PATH_FAR", OUT(R_AX), args, 5); }
+void TYPE_RELINK_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_RELINK_FAR", 0, args, 0); }
+void TYPE_SCOPE_FAR(void) { const StandInArg *args = 0; stand_in("TYPE_SCOPE_FAR", 0, args, 0); }
+u16 UNFIX_HIGH_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("UNFIX_HIGH_NODE", OUT(R_AX), args, 1); }
+u16 UNFIX_LOW_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; return (u16)stand_in("UNFIX_LOW_NODE", OUT(R_AX), args, 1); }
+void UNLINK_HEAP_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("UNLINK_HEAP_NODE", 0, args, 1); }
+void UNLOCK_HEAP_NODE(farptr a0) { const StandInArg args[] = {{4, 4, 4, (u32)a0}}; stand_in("UNLOCK_HEAP_NODE", 0, args, 1); }
+void UNPIN_SEGMENT(u16 a0) { const StandInArg args[] = {{4, 2, 2, (u32)a0}}; stand_in("UNPIN_SEGMENT", 0, args, 1); }
+void UNTAG_NODE(u16 a0) { const StandInArg args[] = {{2, 2, 2, (u32)a0}}; stand_in("UNTAG_NODE", 0, args, 1); }
+void _OvrPrepare(void) { const StandInArg *args = 0; stand_in("_OvrPrepare", 0, args, 0); }
+u16 __OVRINIT(u16 a0, u16 a1, farptr a2) { const StandInArg args[] = {{10, 2, 2, (u32)a0}, {8, 2, 2, (u32)a1}, {4, 4, 4, (u32)a2}}; return (u16)stand_in("__OVRINIT", OUT(R_AX), args, 3); }
 
 
 static void call_ACCEPT_TYPE_WORD(u16 *r) { r[R_AX] = (r[R_AX] & 0xFF00) | (u8)ACCEPT_TYPE_WORD((u16)arg16(r, 10), (farptr)arg32(r, 6), (farptr)arg32(r, 2)); }
