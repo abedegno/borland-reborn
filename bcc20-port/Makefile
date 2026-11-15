@@ -72,8 +72,9 @@ build/bcc20run: tools/bcc20run.c build/libbcc20.a include/bcc20.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ tools/bcc20run.c build/libbcc20.a
 
 # the same as a shared library, for callers in other languages (Exhume's tools/bcc20.py)
-UNAME := $(shell uname -s)
-SHLIB := build/libbcc20$(if $(filter Darwin,$(UNAME)),.dylib,$(if $(findstring MINGW,$(UNAME)),.dll,.so))
+# (the compiler's target, not uname: make's shell on Windows answers "windows32")
+TARGET := $(shell $(CC) -dumpmachine 2>/dev/null)
+SHLIB := build/libbcc20$(if $(findstring darwin,$(TARGET)),.dylib,$(if $(findstring mingw,$(TARGET)),.dll,.so))
 $(SHLIB): build/libbcc20.a
 	$(CC) -shared -o $@ build/lib/bcc20.o
 
@@ -82,6 +83,11 @@ lib: build/libbcc20.a build/bcc20run
 shlib: $(SHLIB)
 
 # replay every translated function against its records (tools/record.py makes them)
+# compiles without BCC.EXE: build/bcc and libbcc20 must write the same object
+.PHONY: smoke
+smoke: build/bcc build/bcc20run
+	@sh tools/smoke.sh
+
 .PHONY: check
 check: build/replay
 	@sh tools/check.sh
