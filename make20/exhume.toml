@@ -1,0 +1,24 @@
+[project]
+name = "Borland C++ 2.0 MAKE.EXE (MAKE 3.5) source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+# The user's own copy, read-only, through the toolchain symlink. C0 starts with
+# mov dx,08A4h (DGROUP); the MZ header is 0x200 bytes.
+exe = "toolchain/BC20/BIN/MAKE.EXE"
+dgroup_para = 0x08A4
+
+[toolchain]
+profile = "borland-bc20"
+home = "toolchain/BC20"
+stage = ["toolchain/BC20/BIN", "toolchain/BC20/INCLUDE"]
+c_opts = "-mc -O -Z"
+asm_opts = "/ml"
+dos = "auto"
