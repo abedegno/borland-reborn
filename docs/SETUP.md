@@ -38,6 +38,7 @@ historic software:
 |---|---|---|---|
 | Borland C++ 2.0 (DOS) | [winworldpc.com/product/borland-c/20](https://winworldpc.com/product/borland-c/20) | **Borland CPP 2.0 (1991) (3.5-720k)**: eleven 3.5" 720 KB floppy images | 12 MB |
 | Borland Turbo C 2.01 | [winworldpc.com/product/borland-turbo-c/2x](https://winworldpc.com/product/borland-turbo-c/2x) | **Borland Turbo C 2.01 (1989) (3.5-720k)**: three 3.5" 720 KB floppy images | 3 MB |
+| Borland Turbo C++ 1.01 (only for the utilities: `touch20`) | [winworldpc.com/product/turbo-c/1x](https://winworldpc.com/product/turbo-c/1x) | **Turbo C++ 1.01 (3.5)**: four 3.5" 720 KB floppy images | 3 MB |
 
 Pick exactly these sets. Other disk sets of the same products exist, and a different release
 (even a 5.25" set) may contain different files. The setup script checks every file it
@@ -47,18 +48,21 @@ so a wrong set is caught at once. WinWorld gives the Turbo C 2.01 set's SHA-1 as
 
 Borland C++ 2.0 provides the compiler `BCC.EXE` that is rebuilt, and the Borland C++ 2.0
 compiler, TASM 2.51 and TLINK 4.0 that rebuild it. Turbo C 2.01 compiled 29 of BCC.EXE's
-run-time library modules, so they are recompiled with it.
+run-time library modules, so they are recompiled with it. Borland built the Borland C++ 2.0
+utilities (TOUCH and the others) with Turbo C++ 1.01, so their directories need that too.
 
 ## 4. Install the toolchains
 
 ```sh
 python3 scripts/setup-toolchains.py \
     --bc20  ~/Downloads/"Borland CPP 2.0 (1991) (3.5-720k).7z" \
-    --tc201 ~/Downloads/"Borland Turbo C 2.01 (1989) (3.5-720k).7z"
+    --tc201 ~/Downloads/"Borland Turbo C 2.01 (1989) (3.5-720k).7z" \
+    --tc101 ~/Downloads/"Borland Turbo C++ 1.01 (3.5).7z"
 ```
 
-This unpacks the floppy images into `toolchains/BC20` and `toolchains/TC201` (git ignores
-both). It also installs the sources of Borland's example programs and container class
+This unpacks the floppy images into `toolchains/BC20`, `toolchains/TC201` and
+`toolchains/TC101` (git ignores all three). `--tc101` is optional, and each product can be
+installed in a run of its own. It also installs the sources of Borland's example programs and container class
 library, which the modding build's tests compile. It verifies every installed file against the manifest, then links each version's
 `toolchain/` folder to them. No DOS installer is run. The command-line tools are in an
 archive that Borland's installer splits across disks 3 and 8; the script joins the two parts.

@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """Install the Borland toolchains this repository needs from the WinWorld downloads.
 
-    python3 scripts/setup-toolchains.py --bc20 PATH --tc201 PATH
+    python3 scripts/setup-toolchains.py --bc20 PATH --tc201 PATH [--tc101 PATH]
 
 PATH is the downloaded .7z archive, or a folder holding its floppy images:
   --bc20   Borland C++ 2.0, the "Borland CPP 2.0 (1991) (3.5-720k)" set (DISK01.IMG ... DISK11.IMG)
            https://winworldpc.com/product/borland-c/20
   --tc201  Borland Turbo C 2.01, 3.5" 720k images (Compiler.img, Header.img, ...)
            https://winworldpc.com/product/borland-turbo-c/2x
-The files are unpacked into toolchains/BC20 and toolchains/TC201 at the repository root, and
-every file is checked against scripts/toolchain-manifest.sha256: the build reproduces
-BCC.EXE byte for byte only with exactly these compilers, assembler, linker and headers.
+  --tc101  Borland Turbo C++ 1.01, the "Borland Turbo C++ 1.01 (3.5)" set (Disk01.img ... Disk04.img)
+           https://winworldpc.com/product/turbo-c/1x
+           Only the Borland C++ 2.0 utilities (touch20 and the others) need it: Borland built
+           them with Turbo C++.
+Each product is unpacked into toolchains/BC20, toolchains/TC201 or toolchains/TC101 at the
+repository root, and every file is checked against scripts/toolchain-manifest.sha256: the
+builds reproduce the originals byte for byte only with exactly these compilers, assemblers,
+linkers, libraries and headers. Products can be installed in separate runs.
 Needs: 7z (p7zip) for .7z archives, mtools (mcopy, mdir) and unzip.
 
 Borland's installer splits some archives across disks (CMDLINE.CA1 on disk 3, CMDLINE.CA2 on
@@ -28,8 +33,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / 'toolchains'
 MANIFEST = Path(__file__).with_name('toolchain-manifest.sha256')
-REQUIRED = {'BC20/BIN/BCC.EXE', 'BC20/BIN/TASM.EXE', 'BC20/BIN/TLINK.EXE',
-            'TC201/BIN/TCC.EXE', 'TC201/BIN/CPP.EXE', 'TC201/BIN/TLINK.EXE'}
+REQUIRED = {'BC20/BIN/BCC.EXE', 'BC20/BIN/TASM.EXE', 'BC20/BIN/TLINK.EXE', 'BC20/LIB/CS.LIB',
+            'TC201/BIN/TCC.EXE', 'TC201/BIN/CPP.EXE', 'TC201/BIN/TLINK.EXE',
+            'TC101/BIN/TCC.EXE', 'TC101/BIN/TLINK.EXE', 'TC101/LIB/CS.LIB', 'TC101/STARTUP/C0.ASM'}
+# which projects need each product
+NEEDED_BY = {'BC20': 'every project', 'TC201': 'bcc20, cpp20', 'TC101': 'the Borland C++ 2.0 utilities (touch20)'}
 
 
 def die(msg):
@@ -81,7 +89,7 @@ def setup_bc20(path, work):
     for img in images(path, work):
         copy_all(img, disks / img.stem.upper())
     bc = DEST / 'BC20'
-    for sub in ('BIN', 'INCLUDE'):
+    for sub in ('BIN', 'INCLUDE', 'LIB', 'STARTUP'):
         (bc / sub).mkdir(parents=True, exist_ok=True)
     # the command-line tools: CMDLINE.CA1 + CMDLINE.CA2, a ZIP split across two disks
     ca1, ca2 = find(disks, 'CMDLINE.CA1'), find(disks, 'CMDLINE.CA2')
@@ -90,7 +98,10 @@ def setup_bc20(path, work):
     joined = work / 'CMDLINE.ZIP'
     joined.write_bytes(ca1.read_bytes()[4:] + ca2.read_bytes()[4:])
     unzip(joined, bc / 'BIN')
-    for name, sub in (('TASM.ZIP', 'BIN'), ('BIN.ZIP', 'BIN'), ('BCC.ZIP', 'BIN'), ('INCLUDE.ZIP', 'INCLUDE')):
+    # the run-time libraries of every memory model, and the startup code's source
+    for name, sub in (('TASM.ZIP', 'BIN'), ('BIN.ZIP', 'BIN'), ('BCC.ZIP', 'BIN'), ('INCLUDE.ZIP', 'INCLUDE'),
+                      ('SLIB.ZIP', 'LIB'), ('CLIB.ZIP', 'LIB'), ('MLIB.ZIP', 'LIB'), ('LLIB.ZIP', 'LIB'),
+                      ('HLIB.ZIP', 'LIB'), ('XLIB.ZIP', 'LIB'), ('STARTUP.ZIP', 'STARTUP')):
         z = find(disks, name)
         if not z:
             die(f'{name} not found on the Borland C++ 2.0 disks')
@@ -154,11 +165,46 @@ def setup_tc201(path, work):
             shutil.copy(h, target)
 
 
+# Turbo C++ 1.01's archives, spread over its four disks: the compiler and tools, headers,
+# startup code and the libraries of every memory model (XLIB: OVERLAY.LIB, the maths
+# emulator, WILDARGS.OBJ). Files go where Turbo C++'s INSTALL puts them.
+TC101_ZIPS = ('TCC', 'BIN1', 'BIN2', 'INCLUDE', 'STARTUP', 'SLIB', 'CLIB', 'MLIB', 'LLIB', 'HLIB', 'XLIB')
+TC101_DIRS = {'.EXE': 'BIN', '.COM': 'BIN', '.H': 'INCLUDE', '.OBJ': 'LIB', '.LIB': 'LIB',
+              '.ASM': 'STARTUP', '.ASI': 'STARTUP', '.BAT': 'STARTUP'}
+
+
+def setup_tc101(path, work):
+    disks = work / 'tc101-disks'
+    for img in images(path, work):
+        copy_all(img, disks / img.stem.upper())
+    files = work / 'tc101-files'
+    for name in TC101_ZIPS:
+        z = find(disks, name + '.ZIP')
+        if not z:
+            die(f'{name}.ZIP not found on the Turbo C++ 1.01 disks')
+        unzip(z, files)
+    tc = DEST / 'TC101'
+    for f in files.rglob('*'):
+        sub = TC101_DIRS.get(f.suffix.upper()) if f.is_file() else None
+        if not sub:
+            continue
+        # <sys\stat.h> and the others live in INCLUDE\SYS
+        if sub == 'INCLUDE' and f.name.upper() in ('STAT.H', 'TIMEB.H', 'TYPES.H'):
+            sub = 'INCLUDE/SYS'
+        (tc / sub).mkdir(parents=True, exist_ok=True)
+        shutil.copy(f, tc / sub / f.name.upper())
+
+
 def verify():
     bad, missing, ok = [], [], 0
+    absent = set()
     for line in MANIFEST.read_text().splitlines():
         sha, rel = line.split(None, 1)
         p = DEST / rel
+        product = rel.split('/')[0]
+        if not (DEST / product).is_dir():
+            absent.add(product)
+            continue
         if not p.exists():
             (bad if rel in REQUIRED else missing).append(rel + ' (missing)')
             continue
@@ -168,6 +214,8 @@ def verify():
             ok += 1
     for m in missing:
         print('note: optional file not installed:', m)
+    for product in sorted(absent):
+        print(f'note: {product} is not installed (needed by {NEEDED_BY.get(product, "?")})')
     if bad:
         die('these files do not match the manifest:\n  ' + '\n  '.join(bad) +
             '\nThe build needs exactly the WinWorld releases named in docs/SETUP.md.')
@@ -178,14 +226,19 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--bc20', help='Borland C++ 2.0 download (.7z) or folder of its floppy images')
     ap.add_argument('--tc201', help='Turbo C 2.01 download (.7z) or folder of its floppy images')
+    ap.add_argument('--tc101', help='Turbo C++ 1.01 download (.7z) or folder of its floppy images')
     ap.add_argument('--verify-only', action='store_true', help='only check an existing toolchains/ folder')
     a = ap.parse_args()
     if not a.verify_only:
-        if not a.bc20 or not a.tc201:
-            ap.error('--bc20 and --tc201 are both needed (or --verify-only)')
+        if not (a.bc20 or a.tc201 or a.tc101):
+            ap.error('name at least one of --bc20, --tc201 and --tc101 (or --verify-only)')
         with tempfile.TemporaryDirectory() as tmp:
-            setup_bc20(a.bc20, Path(tmp))
-            setup_tc201(a.tc201, Path(tmp))
+            if a.bc20:
+                setup_bc20(a.bc20, Path(tmp))
+            if a.tc201:
+                setup_tc201(a.tc201, Path(tmp))
+            if a.tc101:
+                setup_tc101(a.tc101, Path(tmp))
     verify()
     link_projects()
 
