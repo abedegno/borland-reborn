@@ -15,6 +15,7 @@ wrong.
 | [`touch20/`](touch20/) | **Borland C++ 2.0** (1991), `TOUCH.COM` 3.0, sets files' date and time | Complete: rebuilds byte-identical (SHA-256 `8a7077f3...`) |
 | [`tlib20/`](tlib20/) | **Borland C++ 2.0** (1991), `TLIB.EXE` 3.01, the librarian | Complete: rebuilds byte-identical (SHA-256 `b06333a7...`) |
 | [`make20/`](make20/) | **Borland C++ 2.0** (1991), `MAKE.EXE` 3.5, the program maintainer | Complete: rebuilds byte-identical (SHA-256 `cdcc73cc...`) |
+| [`objxref20/`](objxref20/) | **Borland C++ 2.0** (1991), `OBJXREF.COM` 3.0, the cross-reference of object modules | Complete: rebuilds byte-identical (SHA-256 `835a536a...`) |
 | [`interim-rtl/`](interim-rtl/) | the run-time library Borland linked its own 1990-91 utilities with | The modules no released library has, as C (used by `tlib20` and `make20`) |
 | [`bcc20-port/`](bcc20-port/) | `BCC.EXE` as a native compiler and library, for decompiling Borland-built games | Complete: every function checked against BCC.EXE; 1874 of 1880 corpus compiles identical; native binaries and a library |
 

@@ -37,7 +37,7 @@ REQUIRED = {'BC20/BIN/BCC.EXE', 'BC20/BIN/TASM.EXE', 'BC20/BIN/TLINK.EXE', 'BC20
             'TC201/BIN/TCC.EXE', 'TC201/BIN/CPP.EXE', 'TC201/BIN/TLINK.EXE',
             'TC101/BIN/TCC.EXE', 'TC101/BIN/TLINK.EXE', 'TC101/LIB/CS.LIB', 'TC101/STARTUP/C0.ASM'}
 # which projects need each product
-NEEDED_BY = {'BC20': 'every project', 'TC201': 'bcc20, cpp20, tlib20', 'TC101': 'the Borland C++ 2.0 utilities (touch20, tlib20, make20)'}
+NEEDED_BY = {'BC20': 'every project', 'TC201': 'bcc20, cpp20, tlib20, objxref20', 'TC101': 'the Borland C++ 2.0 utilities (touch20, tlib20, make20)'}
 
 
 def die(msg):
@@ -151,13 +151,18 @@ def setup_tc201(path, work):
         if z.suffix.upper() == '.ZIP' and zipfile.is_zipfile(z):
             unzip(z, z.parent)
     tc = DEST / 'TC201'
-    for sub in ('BIN', 'INCLUDE'):
+    for sub in ('BIN', 'INCLUDE', 'LIB'):
         (tc / sub).mkdir(parents=True, exist_ok=True)
     for name in ('TCC.EXE', 'CPP.EXE', 'TLINK.EXE'):
         f = find(disks, name)
         if not f:
             die(f'{name} not found on the Turbo C 2.01 disks')
         shutil.copy(f, tc / 'BIN' / name)
+    # the startup modules and libraries (objxref20 links Turbo C 2.01's own C0C.OBJ and CC.LIB)
+    for f in disks.rglob('*'):
+        n = f.name.upper()
+        if f.is_file() and (n.endswith('.LIB') or (n.startswith('C0') and n.endswith('.OBJ'))):
+            shutil.copy(f, tc / 'LIB' / n)
     for h in disks.rglob('*'):
         if h.suffix.upper() == '.H':
             target = tc / 'INCLUDE' / ('SYS' if h.parent.name.upper() == 'SYS' else '') / h.name.upper()

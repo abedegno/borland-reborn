@@ -1,0 +1,26 @@
+[project]
+name = "Borland C++ 2.0 OBJXREF.COM (object module cross-reference) source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+# OBJXREF.COM is a packed EXE (tools/compack.py); `python3 tools/compack.py unpack
+# toolchain/BC20/BIN/OBJXREF.COM build/OBJXREF.EXE` writes the EXE that Exhume reads.
+# C0 starts with mov dx,0847h (DGROUP); the rebuilt header is 0x90 bytes.
+exe = "build/OBJXREF.EXE"
+dgroup_para = 0x0847
+
+[toolchain]
+profile = "borland-tc101"
+# Turbo C 2.01, compact model, with Turbo C 2.01's own C0C and CC.LIB.
+home = "toolchain/TC201"
+stage = ["toolchain/TC201/BIN", "toolchain/TC201/INCLUDE", "toolchain/BC20/BIN/TASM.EXE"]
+c_opts = "-mc"
+asm_opts = "/ml"
+dos = "auto"
