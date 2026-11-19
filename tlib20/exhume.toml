@@ -1,0 +1,32 @@
+[project]
+name = "Borland C++ 2.0 TLIB.EXE (library manager) source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+# The user's own copy, read-only, through the toolchain symlink.
+exe = "toolchain/BC20/BIN/TLIB.EXE"
+# C0 starts with mov dx,0732h (DGROUP); the MZ header is 0x200 bytes, so DS:0 is file 0x7520
+# ("Not enough memory for command-line buffer" is at DS:00A3, file 0x75C3).
+dgroup_para = 0x0732
+
+[toolchain]
+profile = "borland-tc101"
+# TLIB 3.01 was compiled with Turbo C 2.01 in the compact model, file by file with its own
+# switches. CMDLINE.C and ERROR.C went through assembly (-B: TCC writes assembly and runs TASM
+# on it in one pass), which gives CMDLINE's sign-extended immediates (83 /1, which TCC never
+# writes itself) and its short jumps padded with a nop; ERROR.C has inline asm. The demangler
+# was compiled straight to an object: it keeps redundant ss: prefixes that every TASM and MASM
+# drops. TCC finds TASM.EXE on the path, so it is staged too. TC 2.01 needs CRLF sources, or
+# it writes empty objects without a word.
+home = "toolchain/TC201"
+stage = ["toolchain/TC201/BIN", "toolchain/TC201/INCLUDE", "toolchain/BC20/BIN/TASM.EXE"]
+c_opts = "-mc -Z"
+asm_opts = "/ml"
+dos = "auto"

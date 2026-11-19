@@ -37,7 +37,7 @@ REQUIRED = {'BC20/BIN/BCC.EXE', 'BC20/BIN/TASM.EXE', 'BC20/BIN/TLINK.EXE', 'BC20
             'TC201/BIN/TCC.EXE', 'TC201/BIN/CPP.EXE', 'TC201/BIN/TLINK.EXE',
             'TC101/BIN/TCC.EXE', 'TC101/BIN/TLINK.EXE', 'TC101/LIB/CS.LIB', 'TC101/STARTUP/C0.ASM'}
 # which projects need each product
-NEEDED_BY = {'BC20': 'every project', 'TC201': 'bcc20, cpp20', 'TC101': 'the Borland C++ 2.0 utilities (touch20)'}
+NEEDED_BY = {'BC20': 'every project', 'TC201': 'bcc20, cpp20, tlib20', 'TC101': 'the Borland C++ 2.0 utilities (touch20, tlib20)'}
 
 
 def die(msg):

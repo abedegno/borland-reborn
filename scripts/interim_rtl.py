@@ -13,6 +13,14 @@ the two products' own files:
                       the named modules of a .LIB, written as OBJ files to be linked as
                       objects (each utility's build lists which product's module it takes,
                       in the order of the original).
+    library(tc, model, out, tc101=())
+                      the interim library itself, for a link that searches it: every module
+                      of Borland C++ 2.0's C?.LIB in its own order, with the named modules
+                      taken from Turbo C++ 1.01's library instead, written as OBJ files to
+                      OUT; returns the module names in order, for a TLIB response file.
+                      The modules no released library has are rebuilt from C:
+                      ../interim-rtl/src (INTERIM below gives each one's BCC switches), and
+                      library() leaves them out for the build to compile in their place.
 
 Every function finds the toolchains through toolchains() and stops with a message when a
 file is not the expected one."""
@@ -22,6 +30,10 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 EXHUME = os.path.join(ROOT, 'exhume')
 sys.path.insert(0, os.path.join(EXHUME, 'tools'))
 import omf
+
+RTL_SRC = os.path.join(ROOT, 'interim-rtl', 'src')
+# the interim modules rebuilt from C, with Borland C++ 2.0's BCC (../interim-rtl/README.md)
+INTERIM = {'FFLUSH': '-O -Z', 'FGETS': '-O -Z', 'FREAD': '-B -O -Z', 'GETC': '-B -O -Z -k-'}
 
 # BC 2.0's STARTUP/BUILD-C0.BAT: TASM /M /MX /Q /T /D__TINY__ c0, c0t (and so on per model)
 TASM_C0 = 'TASM /M /MX /Q /T /D__{model}__ C0,{obj}'
@@ -56,3 +68,32 @@ def extract(lib, names, out):
         p = ((end + page - 1) // page) * page
     if got != set(names):
         sys.exit(f'{lib} lacks {sorted(set(names) - got)}')
+
+
+def lib_modules(lib):
+    """(NAME, bytes) for each module of a .LIB, in library order"""
+    d = open(lib, 'rb').read(); page = struct.unpack_from('<H', d, 1)[0] + 3; p = page; out = []
+    while p < len(d) and d[p] == 0x80:
+        r = omf.module_masked(d, p); end = r[4]
+        out.append((r[0].upper(), d[p:end])); p = ((end + page - 1) // page) * page
+    return out
+
+
+def library(tc, model, out, tc101=()):
+    """write the interim library's modules to OUT as NAME.OBJ; return the names in order"""
+    lib = 'C' + model[0].upper() + '.LIB'
+    bc = lib_modules(os.path.join(tc, 'BC20', 'LIB', lib))
+    old = dict(lib_modules(os.path.join(tc, 'TC101', 'LIB', lib)))
+    os.makedirs(out, exist_ok=True); names = []
+    for name, data in bc:
+        if name in tc101:
+            if name not in old:
+                sys.exit(f'Turbo C++ 1.01 {lib} lacks {name}')
+            data = old[name]
+        if name not in INTERIM:
+            open(os.path.join(out, name + '.OBJ'), 'wb').write(data)
+        names.append(name)
+    missing = set(tc101) - set(names)
+    if missing:
+        sys.exit(f'{lib} lacks {sorted(missing)}')
+    return names

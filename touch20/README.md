@@ -31,7 +31,7 @@ The evidence is the bytes of TOUCH.COM. [tools/build.py](tools/build.py) repeats
 
 - **Compiler: Turbo C++ 1.01**, not Borland C++ 2.0: tiny model, `TCC -c -mt -O -Z`. Turbo
   C++ 1.01 compiles the source to the original bytes, and Borland C++ 2.0 compiles it with 8
-  bytes different. Turbo C++ 1.00 was not tried: it is not on WinWorld.
+  bytes different, and Turbo C++ 1.00 with 1 byte different.
 - **Startup code: an interim C0T.** Its code is Borland C++ 2.0's C0T, but its data has
   Turbo C++ 1.01's banner, "Turbo C++ - Copyright 1990". No released C0T.OBJ has that
   combination, and TLIB's C0C has it too. The build assembles Borland C++ 2.0's own `C0.ASM`
