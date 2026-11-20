@@ -12673,7 +12673,8 @@ PREDEFINE_NAMES:	mov	di, 58B6h	;@08333
 	mov	word ptr es:[bx+3], 4F3Ah	;@08370
 	mov	word ptr es:[bx+5], 5956h	;@08376
 	ret	;@0837C
-L0837D:	push	bp	;@0837D
+; DEFINE_EDATA_END: (a phase of LINK) look up `_edata` and `_end` and give them their values.
+DEFINE_EDATA_END:	push	bp	;@0837D
 	mov	bp, sp	;@0837E
 	cmp	byte ptr ds:[3D7h], 1	;@08380
 	jne	@@2	;@08385
@@ -12843,7 +12844,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	stosb	;@08575
 	cmp	byte ptr ds:[17h], 0	;@08576
 	je	@@8	;@0857B
-	call L0BA61	;@0857D
+	call PROCESS_DEF_EXPORTS	;@0857D
 	call EXPORT_NON_PUBLIC	;@08580
 @@8:	call	PROCESS_MODULES	;@08583
 	mov	ax, word ptr ds:[4A0h]	;@08586
@@ -12886,7 +12887,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	jne	@@14	;@085F5
 	call NE_VIRDEF_IMPORT	;@085F7
 @@14:	call	CHECK_STACK	;@085FA
-	call	L0837D	;@085FD
+	call	DEFINE_EDATA_END	;@085FD
 	call	L073AD	;@08600
 	call	L073F3	;@08603
 	call	CHECK_OVERLAY_MANAGER	;@08606
@@ -18283,7 +18284,9 @@ L0B963:	push	bp	;@0B963
 	jmp	short @@22	;@0BA5D
 @@21:	stc	;@0BA5F
 @@22:	ret	;@0BA60
-L0BA61:	push	bp	;@0BA61
+; PROCESS_DEF_EXPORTS: (a phase of LINK) for each export the .DEF file named (list at 76A2h):
+; hash its name and its internal name (6DFh, 6DDh) and enter it, with its ordinal (6E1h).
+PROCESS_DEF_EXPORTS:	push	bp	;@0BA61
 	mov	bp, sp	;@0BA62
 	push	di	;@0BA64
 	push	bx	;@0BA65
