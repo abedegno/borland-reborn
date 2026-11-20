@@ -1,0 +1,49 @@
+# The runtime of TP 3.02A (TURBO.COM 0..2C4Dh) made into EMSTEST.COM's: offset, old bytes, new bytes, why.
+# Applied from the end, so each offset is in 3.02A's runtime.
+1	4a	3c	the jump to the program: it starts 14 bytes earlier
+28	ce	c0	an address after 215h, lowered by 14
+2B	12	04	an address after 215h, lowered by 14
+55	13622f772020	1444656661756c74	display settings (TINST): "Default display mode" and its colours
+64	3830783235	6d6f64	display settings (TINST): "Default display mode" and its colours
+6D	02		display settings (TINST): "Default display mode" and its colours
+6F		00	display settings (TINST): "Default display mode" and its colours
+73	0f7070	0e071f	display settings (TINST): "Default display mode" and its colours
+89	9b	8d	an address after 215h, lowered by 14
+18F	e3	d5	an address after 215h, lowered by 14
+215	2e3a166a01730d2e3a366b017306		the window check of the cursor routine, absent from EMSTEST's runtime
+234	34	42	an address after 215h, lowered by 14 (with its high byte)
+242	26	34	an address after 215h, lowered by 14 (with its high byte)
+268	9f	ad	an address after 215h, lowered by 14 (with its high byte)
+760	08	16	an address after 215h, lowered by 14 (with its high byte)
+7C2	1d	2b	an address after 215h, lowered by 14 (with its high byte)
+8A2	25	17	an address after 215h, lowered by 14
+8A8	e8	f6	an address after 215h, lowered by 14 (with its high byte)
+8B8	e9	db	an address after 215h, lowered by 14
+8E9	0d	ff0718	a table of addresses after 215h, each lowered by 14
+8EB	26	4b	a table of addresses after 215h, each lowered by 14
+8ED	59	e8	a table of addresses after 215h, each lowered by 14
+8EF	f6	f0	a table of addresses after 215h, each lowered by 14
+8F1	fe	f8	a table of addresses after 215h, each lowered by 14
+8F3	060959	4b	a table of addresses after 215h, each lowered by 14
+8F7	26	18	an address after 215h, lowered by 14
+A8F	e3	d5	an address after 215h, lowered by 14
+A9F	a1	93	an address after 215h, lowered by 14
+AB5	81	73	an address after 215h, lowered by 14
+ADB	b1	bf	an address after 215h, lowered by 14 (with its high byte)
+AE9	16	08	an address after 215h, lowered by 14
+AEE	040c	f60b	an address after 215h, lowered by 14 (with its high byte)
+AF8	2c	1e	an address after 215h, lowered by 14
+B73	f9	eb	an address after 215h, lowered by 14
+C67	a0	ae	an address after 215h, lowered by 14 (with its high byte)
+1AD7	ec	de	an address after 215h, lowered by 14
+1B65	a2	94	an address after 215h, lowered by 14
+1C04	3f	31	an address after 215h, lowered by 14
+1CB2	51	43	an address after 215h, lowered by 14
+1DA0	81	73	an address after 215h, lowered by 14
+20A5	d4	c6	an address after 215h, lowered by 14
+2359	89	7b	an address after 215h, lowered by 14
+27D4	e5	d7	an address after 215h, lowered by 14
+27DB	ea	dc	an address after 215h, lowered by 14
+2BEE	4d	3f	an address after 215h, lowered by 14
+2C27	4d	3f	an address after 215h, lowered by 14
+2C3D	81	73	an address after 215h, lowered by 14
