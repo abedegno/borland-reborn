@@ -1,0 +1,23 @@
+[project]
+name = "Borland C++ 2.0 TRIGRAPH.EXE source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+exe = "toolchain/BC20/BIN/TRIGRAPH.EXE"
+# C0 starts with mov dx,0282h (DGROUP); the MZ header is 0x200 bytes
+dgroup_para = 0x0282
+
+[toolchain]
+profile = "borland-bc20"
+home = "toolchain/BC20"
+stage = ["toolchain/BC20/BIN", "toolchain/BC20/INCLUDE"]
+c_opts = "-ms"
+asm_opts = "/ml"
+dos = "auto"
