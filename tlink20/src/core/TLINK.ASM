@@ -1,3 +1,31 @@
+; TLINK.ASM: the core of Turbo Link 4.0 (Borland C++ 2.0's TLINK.EXE), 0000h..BF90h of
+; the image: everything but the C++ name demangler (UNMANGLE.C), the run-time routines and
+; the far-memory heap (heap/).  Hand-written 286 assembler.
+;
+; Recovered from TLINK.EXE: TASM 2.51 assembles this file to the original bytes (tools/
+; asmcheck.py checks it line by line, tools/build.py links the whole program).  It began as
+; a generated draft; labels still named Lnnnnn are the address of the line, and ;@nnnnn
+; gives each line's address in the image.  Named routines have a comment above them.
+;
+; Data: DS is TLINK's tables (TLBSS, 7AC0h bytes, see DATA_SEGMENT), set up by STARTUP and
+; cleared by CLEAR_TABLES; TLDATA holds the messages (MESSAGE_TEXT) and constant tables.
+; Names, segments, modules and the like live in the far heap (POOL_INIT and friends) and are
+; reached through handles.
+;
+; The flow: start -> STARTUP, CHECK_MEMORY, CLEAR_TABLES, RUN (banner, GET_OPTIONS,
+; INIT_MEMORY, LINK), CLOSE_FILES, SHUTDOWN, exit with the code in [10h].  LINK reads every
+; object module twice: pass 1 (PASS1_RECORDS) collects names, segments and groups, the
+; layout is fixed, pass 2 (PASS2_RECORDS) writes the data with its fixups applied
+; (FIXUP_LOCATIONS).  Records are read in the dispatcher at 059CAh; COMENT records go on
+; to the class tables (PASS1_COMENT_CLASSES, PASS2_COMENT_CLASSES).  A Windows or OS/2
+; link reads a module definition file (.DEF) with the lexer at 0A85Ah (DEF_CHAR_CLASSES,
+; DEF_CLASS_HANDLERS) and the section table DEF_SECTIONS.
+;
+; Output (the map file, and the console for the banner and messages) goes through a 2000h
+; byte buffer at 5540h: PUT_CHAR, PUT_INLINE (the counted string after the call), PUT_HEX_*,
+; PUT_DECIMAL, PUT_SYMBOL_NAME (C++ names demangled), FLUSH_OUTPUT.  Messages go through
+; FATAL, ERROR and WARNING with a message number and arguments.
+
 	.286
 	locals
 	extrn	UNMANGLE:far
@@ -28,8 +56,9 @@ _DATA	ends
 CODE0	segment byte public 'CODE'
 	assume	cs:CODE0
 L00000	db	24h, 2Ah, 24h, 2Ah, 24h, 2Ah, 0, 2Eh, 5, 3, 54h, 4Ch, 49h, 4Eh, 4Bh, 0	;@00000
-	dw	seg B117E_START
-L00012:	mov	byte ptr ds:[10h], 0	;@00012
+DATA_SEGMENT	dw	seg B117E_START	; TLINK's tables (TLBSS), loaded into DS
+; SET_DEFAULTS: the option flags' defaults (exit code 0, EMS and extended memory on, ...).
+SET_DEFAULTS:	mov	byte ptr ds:[10h], 0	;@00012
 	mov	byte ptr ds:[11h], 1	;@00017
 	mov	byte ptr ds:[14h], 0	;@0001C
 	mov	byte ptr ds:[15h], 0	;@00021
@@ -45,7 +74,9 @@ L00012:	mov	byte ptr ds:[10h], 0	;@00012
 	mov	word ptr ds:[186h], ax	;@0004B
 	mov	byte ptr ds:[16h], 1	;@0004E
 	ret	;@00053
-L00054:	call	L00012	;@00054
+; RUN: the banner, the options (GET_OPTIONS), the memory set-up, then the link itself
+; (LINK).
+RUN:	call	SET_DEFAULTS	;@00054
 	mov	word ptr ds:[7641h], 5540h	;@00057
 	call CONSOLE_ON	;@0005D
 	call PUT_INLINE	;@00060
@@ -56,7 +87,7 @@ L00054:	call	L00012	;@00054
 	db	') Copyright (c) 1991 Borland International'	;@00082
 	call PUT_NEWLINE	;@000AC
 	call CONSOLE_OFF	;@000AF
-	call L00B15	;@000B2
+	call GET_OPTIONS	;@000B2
 	cmp	byte ptr ds:[129h], 1	;@000B5
 	jne	@@1	;@000BA
 	cmp	byte ptr ds:[124h], 0	;@000BC
@@ -66,7 +97,7 @@ L00054:	call	L00012	;@00054
 	push	ax	;@000CA
 	mov	ax, 41h	;@000CB
 	push	ax	;@000CE
-	call L0BE9B	;@000CF
+	call WARNING	;@000CF
 @@1:	mov	al, byte ptr ds:[124h]	;@000D2
 	mov	byte ptr ds:[14h], al	;@000D5
 	mov	byte ptr ds:[15h], al	;@000D8
@@ -85,7 +116,7 @@ L00054:	call	L00012	;@00054
 	inc	ax	;@000FE
 @@3:	mov	byte ptr ds:[17h], al	;@000FF
 	call L09496	;@00102
-	call	L0017E	;@00105
+	call	INIT_MEMORY	;@00105
 	call L0BC1F	;@00108
 	cmp	byte ptr ds:[129h], 0	;@0010B
 	jne	@@4	;@00110
@@ -98,32 +129,38 @@ L00054:	call	L00012	;@00054
 	cmp	byte ptr ds:[17h], 1	;@00124
 	je	@@6	;@00129
 	mov	byte ptr ds:[126h], 0	;@0012B
-@@6:	call L08408	;@00130
+@@6:	call LINK	;@00130
 	ret	;@00133
-L00134:	cmp	word ptr ds:[1Ch], 1	;@00134
+; SHUTDOWN: give back the EMS and extended memory the heap took.
+SHUTDOWN:	cmp	word ptr ds:[1Ch], 1	;@00134
 	jne	@@1	;@00139
 	call	far ptr SHUTDOWN_HEAP_BANKS	;@0013B
 @@1:	ret	;@00140
-L00141	db	'Not enough memory', 0Dh, 0Ah, 24h	;@00141
-L00155:	push	ax	;@00155
+; MSG_NO_MEMORY: printed with int 21h/09h when DOS cannot give TLINK its 31K of tables.
+MSG_NO_MEMORY	db	'Not enough memory', 0Dh, 0Ah, 24h	;@00141
+; CTRL_BREAK_HANDLER (int 23h): close and delete the output file when it was being
+; written, give back EMS and extended memory, then let DOS end the program.
+CTRL_BREAK_HANDLER:	push	ax	;@00155
 	push	bx	;@00156
 	push	dx	;@00157
 	push	ds	;@00158
-	mov	ds, word ptr cs:L00000+16	;@00159
+	mov	ds, word ptr cs:DATA_SEGMENT	;@00159
 	cmp	byte ptr ds:[11Ch], 0FFh	;@0015E
 	jne	@@1	;@00163
 	mov	bx, word ptr ds:[22h]	;@00165
-	call	L002E6	;@00169
+	call	CLOSE_FILE	;@00169
 	mov	word ptr ds:[22h], 0FFFFh	;@0016C
 	call	L09353	;@00172
-	call	L00134	;@00175
+	call	SHUTDOWN	;@00175
 @@1:	pop	ds	;@00178
 	pop	dx	;@00179
 	pop	bx	;@0017A
 	pop	ax	;@0017B
 	stc	;@0017C
 	retf	;@0017D
-L0017E:	mov	ax, word ptr ds:[0Ch]	;@0017E
+; INIT_MEMORY: start the far-memory heap (INIT_HEAP, with OUT_OF_MEMORY as its hook) on
+; all memory above TLINK's tables, then extended memory (/ye) and EMS (/yx) unless off.
+INIT_MEMORY:	mov	ax, word ptr ds:[0Ch]	;@0017E
 	add	ax, 0Fh	;@00181
 	mov	cl, 4	;@00184
 	shr	ax, cl	;@00186
@@ -137,7 +174,7 @@ L0017E:	mov	ax, word ptr ds:[0Ch]	;@0017E
 	mov	ax, 80h	;@00196
 	push	ax	;@00199
 	push	cs	;@0019A
-	mov	ax, offset L002C0	;@0019B
+	mov	ax, offset OUT_OF_MEMORY	;@0019B
 	push	ax	;@0019E
 	xor	ax, ax	;@0019F
 	push	ax	;@001A1
@@ -145,7 +182,7 @@ L0017E:	mov	ax, word ptr ds:[0Ch]	;@0017E
 	call	far ptr INIT_HEAP	;@001A3
 	and	ax, ax	;@001A8
 	je	@@1	;@001AA
-	jmp L002C0	;@001AC
+	jmp OUT_OF_MEMORY	;@001AC
 @@1:	cmp	byte ptr ds:[8], 1	;@001AF
 	jne	@@2	;@001B4
 	push	ax	;@001B6
@@ -161,12 +198,15 @@ L0017E:	mov	ax, word ptr ds:[0Ch]	;@0017E
 	call	far ptr INIT_EMS_BANK	;@001C9
 @@3:	mov	word ptr ds:[1Ch], 1	;@001CE
 	ret	;@001D4
-L001D5:	xor	ax, ax	;@001D5
+; UNUSED_FATAL_19: nothing calls this (fatal message 19h).
+UNUSED_FATAL_19:	xor	ax, ax	;@001D5
 	push	ax	;@001D7
 	mov	ax, 19h	;@001D8
 	push	ax	;@001DB
-	call	L0BE91	;@001DC
-L001DF:	mov	ax, DGROUP	;@001DF
+	call	FATAL	;@001DC
+; STARTUP: keep the environment segment (DGROUP:0) and the PSP, set DS to TLINK's
+; tables, install CTRL_BREAK_HANDLER.
+STARTUP:	mov	ax, DGROUP	;@001DF
 	mov	ds, ax	;@001E2
 	mov	ax, word ptr es:[2Ch]	;@001E4
 	mov	word ptr ds:[0], ax	;@001E8
@@ -181,7 +221,7 @@ L001DF:	mov	ax, DGROUP	;@001DF
 	push	ds	;@001FF
 	push	cs	;@00200
 	pop	ds	;@00201
-	mov	dx, offset L00155	;@00202
+	mov	dx, offset CTRL_BREAK_HANDLER	;@00202
 	mov	ax, 2523h	;@00205
 	int	21h	;@00208
 	pop	ds	;@0020A
@@ -189,7 +229,9 @@ L001DF:	mov	ax, DGROUP	;@001DF
 	mov	word ptr ds:[2], 80h	;@0020F
 	mov	bx, word ptr es:[2]	;@00215
 	ret	;@0021A
-L0021B:	mov	word ptr ds:[0Ch], 7AC0h	;@0021B
+; CHECK_MEMORY: room for the 7AC0h bytes of tables above DS, else MSG_NO_MEMORY and exit 2;
+; the rest of DOS's block is the heap's.
+CHECK_MEMORY:	mov	word ptr ds:[0Ch], 7AC0h	;@0021B
 	mov	ax, ds	;@00221
 	mov	dx, 7AC0h	;@00223
 	add	dx, 0Fh	;@00226
@@ -200,7 +242,7 @@ L0021B:	mov	word ptr ds:[0Ch], 7AC0h	;@0021B
 	ja	@@1	;@00231
 	push	cs	;@00233
 	pop	ds	;@00234
-	mov	dx, offset L00141	;@00235
+	mov	dx, offset MSG_NO_MEMORY	;@00235
 	mov	ah, 9	;@00238
 	int	21h	;@0023A
 	mov	ax, 4C02h	;@0023C
@@ -214,7 +256,8 @@ L0021B:	mov	word ptr ds:[0Ch], 7AC0h	;@0021B
 @@2:	shl	bx, cl	;@00254
 	mov	word ptr ds:[0Eh], bx	;@00256
 	ret	;@0025A
-L0025B:	push	ds	;@0025B
+; CLEAR_TABLES: fill the tables with FFFFh ("none") and a few with 0.
+CLEAR_TABLES:	push	ds	;@0025B
 	pop	es	;@0025C
 	mov	ax, 0FFFFh	;@0025D
 	mov	di, 1Ch	;@00260
@@ -239,30 +282,35 @@ L0025B:	push	ds	;@0025B
 	shr	cx, 1	;@0028E
 	rep stosw	;@00290
 	ret	;@00292
-L00293:	mov	bx, word ptr ds:[20h]	;@00293
-	call L002E6	;@00297
+; CLOSE_FILES: close the map file and the output file.
+CLOSE_FILES:	mov	bx, word ptr ds:[20h]	;@00293
+	call CLOSE_FILE	;@00297
 	mov	bx, word ptr ds:[22h]	;@0029A
-	call L002E6	;@0029E
+	call CLOSE_FILE	;@0029E
 	ret	;@002A1
 start:	cld	;@002A2
-	call	L001DF	;@002A3
-	call	L0021B	;@002A6
-	call	L0025B	;@002A9
-	call	L00054	;@002AC
-	call	L00293	;@002AF
-	call	L00134	;@002B2
+	call	STARTUP	;@002A3
+	call	CHECK_MEMORY	;@002A6
+	call	CLEAR_TABLES	;@002A9
+	call	RUN	;@002AC
+	call	CLOSE_FILES	;@002AF
+	call	SHUTDOWN	;@002B2
 	mov	al, byte ptr ds:[10h]	;@002B5
 	mov	ah, 4Ch	;@002B8
 	int	21h	;@002BA
-L002BC	db	'.lib'	;@002BC
-L002C0:	mov	ds, word ptr cs:L00000+16	;@002C0
-	call L0555C	;@002C5
+; STR_LIB: the default extension of a library.
+STR_LIB	db	'.lib'	;@002BC
+; OUT_OF_MEMORY: the heap's hook: report what TLINK holds (DATA_OVERFLOW) and stop with
+; fatal message 3.
+OUT_OF_MEMORY:	mov	ds, word ptr cs:DATA_SEGMENT	;@002C0
+	call DATA_OVERFLOW	;@002C5
 	xor	ax, ax	;@002C8
 	push	ax	;@002CA
 	mov	ax, 3	;@002CB
 	push	ax	;@002CE
-	call L0BE91	;@002CF
-L002D2:	push	bx	;@002D2
+	call FATAL	;@002CF
+; DOS_CALL: int 21h; on an error, fatal message 4 (DOS error) with the code.
+DOS_CALL:	push	bx	;@002D2
 	int	21h	;@002D3
 	pop	bx	;@002D5
 	cld	;@002D6
@@ -273,26 +321,31 @@ L002D2:	push	bx	;@002D2
 	push	cx	;@002DE
 	mov	ax, 4	;@002DF
 	push	ax	;@002E2
-	call L0BE91	;@002E3
-L002E6:	or	bx, bx	;@002E6
+	call FATAL	;@002E3
+; CLOSE_FILE: close handle BX unless it is 0 or FFFFh.
+CLOSE_FILE:	or	bx, bx	;@002E6
 	je	@@1	;@002E8
 	cmp	bx, -1	;@002EA
 	je	@@1	;@002ED
 	mov	ah, 3Eh	;@002EF
-	call	L002D2	;@002F1
+	call	DOS_CALL	;@002F1
 @@1:	ret	;@002F4
-L002F5:	cmp	ah, 40h	;@002F5
-	jne	L002D2	;@002F8
-	call	L002D2	;@002FA
+; DOS_CALL_FULL: as DOS_CALL; a write (AH=40h) must write all CX bytes (else fatal 2,
+; disk full).
+DOS_CALL_FULL:	cmp	ah, 40h	;@002F5
+	jne	DOS_CALL	;@002F8
+	call	DOS_CALL	;@002FA
 	cmp	ax, cx	;@002FD
 	je	@@1	;@002FF
 	xor	cx, cx	;@00301
 	push	cx	;@00303
 	mov	ax, 2	;@00304
 	push	ax	;@00307
-	call L0BE91	;@00308
+	call FATAL	;@00308
 @@1:	ret	;@0030B
-L0030C:	push	ax	;@0030C
+; OPEN_FILE: int 21h open/create; when DOS is out of handles (error 4), close a cached
+; input file (CLOSE_CACHED_FILE) and try again; other errors are fatal 1 (can't open).
+OPEN_FILE:	push	ax	;@0030C
 	push	cx	;@0030D
 	push	dx	;@0030E
 	int	21h	;@0030F
@@ -307,20 +360,21 @@ L0030C:	push	ax	;@0030C
 	push	bx	;@0031D
 	push	cx	;@0031E
 	push	ds	;@0031F
-	mov	ds, word ptr cs:L00000+16	;@00320
-	call L0946E	;@00325
+	mov	ds, word ptr cs:DATA_SEGMENT	;@00320
+	call CLOSE_CACHED_FILE	;@00325
 	pop	ds	;@00328
 	pop	cx	;@00329
 	pop	ax	;@0032A
-	jae	L0030C	;@0032B
+	jae	OPEN_FILE	;@0032B
 @@2:	push	ds	;@0032D
 	push	dx	;@0032E
 	mov	ax, 4	;@0032F
 	push	ax	;@00332
 	mov	ax, 1	;@00333
 	push	ax	;@00336
-	call L0BE91	;@00337
-L0033A:	push	bx	;@0033A
+	call FATAL	;@00337
+; FILE_SIZE: the size of file DS:DX (find first) in DX:AX.
+FILE_SIZE:	push	bx	;@0033A
 	push	cx	;@0033B
 	mov	ah, 4Eh	;@0033C
 	xor	cx, cx	;@0033E
@@ -372,7 +426,7 @@ L00360:	cmp	byte ptr ds:[11Ah], 0FFh	;@00360
 	mov	al, byte ptr ds:[118h]	;@003B4
 	jne	@@4	;@003B7
 	mov	word ptr ds:[1Eh], 0FFFFh	;@003B9
-	call	L002E6	;@003BF
+	call	CLOSE_FILE	;@003BF
 	cmp	byte ptr ds:[15Ch], 1	;@003C2
 	jne	@@3	;@003C7
 	dec	byte ptr ds:[15Ch]	;@003C9
@@ -737,12 +791,12 @@ L00433:	push	bx	;@00433
 	push	ax	;@007A8
 	mov	ax, 1Ah	;@007A9
 	push	ax	;@007AC
-	call L0BE91	;@007AD
+	call FATAL	;@007AD
 @@81:	xor	ax, ax	;@007B0
 	push	ax	;@007B2
 	mov	ax, 1Bh	;@007B3
 	push	ax	;@007B6
-	call L0BE91	;@007B7
+	call FATAL	;@007B7
 @@82:	call	L00360	;@007BA
 	cmp	al, 2Dh	;@007BD
 	je	@@84	;@007BF
@@ -853,7 +907,7 @@ L00433:	push	bx	;@00433
 	push	ax	;@008D9
 	mov	ax, 2Bh	;@008DA
 	push	ax	;@008DD
-	call L0BE96	;@008DE
+	call ERROR	;@008DE
 	mov	byte ptr ds:[126h], 0	;@008E1
 	jmp	@@1	;@008E6
 @@105:	pop	cx	;@008E9
@@ -868,7 +922,7 @@ L00433:	push	bx	;@00433
 	push	ax	;@008FF
 	mov	ax, 2Dh	;@00900
 	push	ax	;@00903
-	call L0BE96	;@00904
+	call ERROR	;@00904
 	jmp	@@1	;@00907
 @@107:	jmp	L00BD0	;@0090A
 L0090D	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0	;@0090D
@@ -948,7 +1002,7 @@ L00997:	push	bp	;@00997
 	pop	ds	;@00A2D
 	lea	dx, [bp-8Ah]	;@00A2E
 	mov	ax, 3D00h	;@00A32
-	call	L0030C	;@00A35
+	call	OPEN_FILE	;@00A35
 	pop	ds	;@00A38
 	mov	word ptr ds:[1Eh], ax	;@00A39
 	mov	byte ptr ds:[116h], 0	;@00A3C
@@ -1014,7 +1068,7 @@ L00997:	push	bp	;@00997
 	mov	word ptr ds:[0Ch], bx	;@00AC6
 	lea	dx, [bx+1]	;@00ACA
 	mov	ax, 3D00h	;@00ACD
-	call	L0030C	;@00AD0
+	call	OPEN_FILE	;@00AD0
 	mov	word ptr ds:[1Eh], ax	;@00AD3
 	mov	byte ptr ds:[116h], 0	;@00AD6
 	mov	al, 1	;@00ADB
@@ -1042,7 +1096,8 @@ L00997:	push	bp	;@00997
 	mov	sp, bp	;@00B11
 	pop	bp	;@00B13
 	ret	;@00B14
-L00B15:	mov	di, 11Eh	;@00B15
+; GET_OPTIONS: the option defaults, then the command line (and response files).
+GET_OPTIONS:	mov	di, 11Eh	;@00B15
 	mov	cx, 28h	;@00B18
 	xor	ax, ax	;@00B1B
 	push	ds	;@00B1D
@@ -1177,8 +1232,10 @@ L00BD0:	call CONSOLE_ON	;@00BD0
 	mov	word ptr ds:[7641h], di	;@0108F
 	call CONSOLE_OFF	;@01093
 	call L087D0	;@01096
-L01099	db	'.obj.exe.dll.map.lib.def.com', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	;@01099
-L010C0:	cmp	byte ptr ds:[3D2h], 2	;@010C0
+; EXTENSIONS: the extensions TLINK knows, 4 bytes each.
+EXTENSIONS	db	'.obj.exe.dll.map.lib.def.com', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	;@01099
+; P1_COMENT_E0: pass 1, Borland COMENT class E0h (debug information).
+P1_COMENT_E0:	cmp	byte ptr ds:[3D2h], 2	;@010C0
 	je	@@3	;@010C5
 	sub	bx, bx	;@010C7
 	add	bl, byte ptr [si]	;@010C9
@@ -1201,7 +1258,8 @@ L010C0:	cmp	byte ptr ds:[3D2h], 2	;@010C0
 	pop	di	;@010F1
 	mov	word ptr es:[di-6], bx	;@010F2
 @@3:	ret	;@010F6
-L010F7:	sub	bx, bx	;@010F7
+; P1_COMENT_E1: pass 1, Borland COMENT class E1h (debug information).
+P1_COMENT_E1:	sub	bx, bx	;@010F7
 	add	bl, byte ptr [si]	;@010F9
 	jge	@@1	;@010FB
 	inc	si	;@010FD
@@ -1227,12 +1285,13 @@ L010F7:	sub	bx, bx	;@010F7
 L0112C:	nop	;@0112C
 L0112D:	nop	;@0112D
 L0112E:	call	L0885D	;@0112E
-L01131:	cmp	si, word ptr ds:[3E0h]	;@01131
+; P1_COMENT_E2: pass 1, Borland COMENT class E2h (debug information).
+P1_COMENT_E2:	cmp	si, word ptr ds:[3E0h]	;@01131
 	jb	@@2	;@01135
 	jne	L0112C	;@01137
 	ret	;@01139
 @@1:	add	si, 4	;@0113A
-	jmp	L01131	;@0113D
+	jmp	P1_COMENT_E2	;@0113D
 @@2:	inc	word ptr [di+1Ah]	;@0113F
 	lodsb	;@01142
 	cmp	al, 40h	;@01143
@@ -1244,11 +1303,12 @@ L01131:	cmp	si, word ptr ds:[3E0h]	;@01131
 	add	si, ax	;@0114D
 	cmp	byte ptr [si], 80h	;@0114F
 	sbb	si, -2	;@01152
-	jmp	L01131	;@01155
+	jmp	P1_COMENT_E2	;@01155
 	db	1, 1, 1, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1	;@01157
 	db	1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2
 	db	1, 1, 0, 2, 1, 0, 2, 0, 0, 2, 1, 1
-L0118D:	cmp	byte ptr [si], 80h	;@0118D
+; P1_COMENT_E3: pass 1, Borland COMENT class E3h (debug information).
+P1_COMENT_E3:	cmp	byte ptr [si], 80h	;@0118D
 	sbb	si, -2	;@01190
 	lodsb	;@01193
 	cbw	;@01194
@@ -1266,10 +1326,11 @@ L0118D:	cmp	byte ptr [si], 80h	;@0118D
 	push	ax	;@011AB
 	mov	ax, 1Fh	;@011AC
 	push	ax	;@011AF
-	call	L0BE96	;@011B0
+	call	ERROR	;@011B0
 	or	byte ptr ds:[410h], 4	;@011B3
 	jmp	@@1	;@011B8
-L011BA:	cmp	si, word ptr ds:[3E0h]	;@011BA
+; P1_COMENT_E4: pass 1, Borland COMENT class E4h (debug information).
+P1_COMENT_E4:	cmp	si, word ptr ds:[3E0h]	;@011BA
 	jb	@@2	;@011BE
 	je	@@1	;@011C0
 	jmp	L0112D	;@011C2
@@ -1280,7 +1341,7 @@ L011BA:	cmp	si, word ptr ds:[3E0h]	;@011BA
 	cbw	;@011CB
 	add	si, ax	;@011CC
 	lodsw	;@011CE
-	jmp	L011BA	;@011CF
+	jmp	P1_COMENT_E4	;@011CF
 L011D1:	push	ax	;@011D1
 	push	bx	;@011D2
 	sub	bx, 4001h	;@011D3
@@ -1299,7 +1360,7 @@ L011D1:	push	ax	;@011D1
 	mov	di, 7AAh	;@011F9
 	call	L054ED	;@011FC
 	jae	@@3	;@011FF
-	call	L054E0	;@01201
+	call	TABLE_OVERFLOW	;@01201
 @@3:	push	di	;@01204
 	mov	cx, 11h	;@01205
 	xor	ax, ax	;@01208
@@ -1309,7 +1370,8 @@ L011D1:	push	ax	;@011D1
 @@4:	pop	bx	;@01210
 	pop	ax	;@01211
 	ret	;@01212
-L01213:	inc	word ptr ds:[178h]	;@01213
+; P1_COMENT_E5: pass 1, Borland COMENT class E5h (debug information).
+P1_COMENT_E5:	inc	word ptr ds:[178h]	;@01213
 	mov	ax, word ptr ds:[178h]	;@01217
 	cmp	ax, word ptr ds:[488h]	;@0121A
 	jbe	@@1	;@0121E
@@ -1376,12 +1438,15 @@ L01264:	cmp	si, word ptr ds:[3E0h]	;@01264
 	add	si, ax	;@012BA
 	jmp	L01264	;@012BC
 	db	92h, 82h, 2, 2, 1, 4, 0, 0	;@012BE
-L012C6:	mov	bx, 12BEh	;@012C6
+; P1_COMENT_E6: pass 1, Borland COMENT class E6h (debug information).
+P1_COMENT_E6:	mov	bx, 12BEh	;@012C6
 	call	L01264	;@012C9
 	ret	;@012CC
-L012CD:	dec	word ptr ds:[178h]	;@012CD
+; P1_COMENT_E7: pass 1, Borland COMENT class E7h (debug information).
+P1_COMENT_E7:	dec	word ptr ds:[178h]	;@012CD
 	jmp	L01244	;@012D1
-L012D4:	sub	bx, bx	;@012D4
+; P1_COMENT_E8: pass 1, Borland COMENT class E8h (debug information).
+P1_COMENT_E8:	sub	bx, bx	;@012D4
 	add	bl, byte ptr [si]	;@012D6
 	jge	@@1	;@012D8
 	inc	si	;@012DA
@@ -1395,12 +1460,15 @@ L012D4:	sub	bx, bx	;@012D4
 @@2:	mov	word ptr ds:[39Bh], 1	;@012EA
 	mov	word ptr ds:[17Ah], 0FFFFh	;@012F0
 	ret	;@012F6
-L012F7:	ret	;@012F7
-L012F8:	lodsw	;@012F8
+; P1_COMENT_SKIP: pass 1, a Borland COMENT class TLINK has nothing to do with.
+P1_COMENT_SKIP:	ret	;@012F7
+; P1_COMENT_EA: pass 1, Borland COMENT class EAh (debug information).
+P1_COMENT_EA:	lodsw	;@012F8
 	mov	byte ptr [di+30h], al	;@012F9
 	mov	byte ptr [di+31h], ah	;@012FC
 	ret	;@012FF
-L01300:	cmp	byte ptr ds:[3D2h], 2	;@01300
+; P1_COMENT_EB: pass 1, Borland COMENT class EBh (debug information).
+P1_COMENT_EB:	cmp	byte ptr ds:[3D2h], 2	;@01300
 	je	@@3	;@01305
 	mov	ah, 0	;@01307
 	call	L0910B	;@01309
@@ -1418,7 +1486,8 @@ L01300:	cmp	byte ptr ds:[3D2h], 2	;@01300
 	add	bx, word ptr ds:[38Fh]	;@01322
 @@2:	mov	word ptr es:[di-6], bx	;@01326
 @@3:	ret	;@0132A
-L0132B:	mov	ah, 0	;@0132B
+; P1_COMENT_EC: pass 1, Borland COMENT class ECh (debug information).
+P1_COMENT_EC:	mov	ah, 0	;@0132B
 	call	L0910B	;@0132D
 	mov	di, word ptr es:[bx]	;@01330
 	cmp	di, -1	;@01333
@@ -1445,7 +1514,8 @@ L0132B:	mov	ah, 0	;@0132B
 	lodsb	;@01363
 	or	byte ptr es:[di+0Fh], al	;@01364
 @@3:	ret	;@01368
-L01369:	lodsb	;@01369
+; P1_COMENT_ED: pass 1, Borland COMENT class EDh (debug information).
+P1_COMENT_ED:	lodsb	;@01369
 	and	al, al	;@0136A
 	je	@@2	;@0136C
 	lodsb	;@0136E
@@ -1472,10 +1542,12 @@ L01369:	lodsb	;@01369
 @@3:	add	word ptr [di+2Eh], ax	;@01398
 	inc	word ptr [di+2Ah]	;@0139B
 	ret	;@0139E
-L0139F:	mov	ah, 0	;@0139F
+; P1_COMENT_F8: pass 1, Borland COMENT class F8h (debug information).
+P1_COMENT_F8:	mov	ah, 0	;@0139F
 	call	L0910B	;@013A1
 	ret	;@013A4
-L013A5:	cmp	byte ptr ds:[12Dh], 1	;@013A5
+; P1_COMENT_EE: pass 1, Borland COMENT class EEh (debug information).
+P1_COMENT_EE:	cmp	byte ptr ds:[12Dh], 1	;@013A5
 	je	@@2	;@013AA
 	push	di	;@013AC
 	sub	bx, bx	;@013AD
@@ -1507,10 +1579,10 @@ L013A5:	cmp	byte ptr ds:[12Dh], 1	;@013A5
 	jmp	@@2	;@013ED
 
 ; pass 1: the handlers of the COMENT classes E0h..F8h
-L013EF	dw	L010C0, L010F7, L01131, L0118D, L011BA, L01213, L012C6, L012CD	;@013EF
-	dw	L012D4, L012F7, L012F8, L01300, L0132B, L01369, L013A5, L012F7
-	dw	L012F7, L012F7, L012F7, L012F7, L012F7, L012F7, L012F7, L012F7
-	dw	L0139F
+PASS1_COMENT_CLASSES	dw	P1_COMENT_E0, P1_COMENT_E1, P1_COMENT_E2, P1_COMENT_E3, P1_COMENT_E4, P1_COMENT_E5, P1_COMENT_E6, P1_COMENT_E7	;@013EF
+	dw	P1_COMENT_E8, P1_COMENT_SKIP, P1_COMENT_EA, P1_COMENT_EB, P1_COMENT_EC, P1_COMENT_ED, P1_COMENT_EE, P1_COMENT_SKIP
+	dw	P1_COMENT_SKIP, P1_COMENT_SKIP, P1_COMENT_SKIP, P1_COMENT_SKIP, P1_COMENT_SKIP, P1_COMENT_SKIP, P1_COMENT_SKIP, P1_COMENT_SKIP
+	dw	P1_COMENT_F8
 L01421:	mov	si, 18Ah	;@01421
 	mov	cx, word ptr ds:[54Eh]	;@01424
 	mov	di, word ptr ds:[52Ah]	;@01428
@@ -1537,7 +1609,8 @@ L01452:	mov	al, byte ptr [si]	;@01452
 	mov	ax, word ptr ds:[186h]	;@0145B
 	mov	word ptr [si+1], ax	;@0145E
 	ret	;@01461
-L01462:	cmp	byte ptr ds:[492h], 0	;@01462
+; P1_THEADR: pass 1, THEADR (80h): a new module.
+P1_THEADR:	cmp	byte ptr ds:[492h], 0	;@01462
 	je	@@1	;@01467
 	mov	si, word ptr ds:[3E0h]	;@01469
 	jmp	L059AB	;@0146D
@@ -1637,7 +1710,8 @@ L01462:	cmp	byte ptr ds:[492h], 0	;@01462
 	mov	word ptr ds:[367h], 0	;@01552
 	mov	word ptr ds:[3A8h], 0	;@01558
 	jmp	L059AB	;@0155E
-L01561:	lodsw	;@01561
+; P1_COMENT: pass 1, COMENT (88h): Microsoft and Borland comment classes.
+P1_COMENT:	lodsw	;@01561
 	cmp	byte ptr ds:[3D4h], 0	;@01562
 	jne	@@1	;@01567
 	cmp	byte ptr ds:[17h], 0	;@01569
@@ -1670,7 +1744,7 @@ L01561:	lodsw	;@01561
 	jae	@@3	;@015B3
 	mov	di, 528h	;@015B5
 	shl	bx, 1	;@015B8
-	call	word ptr cs:L013EF[bx]	;@015BA
+	call	word ptr cs:PASS1_COMENT_CLASSES[bx]	;@015BA
 	mov	byte ptr ds:[538h], 4	;@015BF
 @@3:	jmp	@@13	;@015C4
 @@4:	mov	byte ptr ds:[3D7h], 1	;@015C7
@@ -1773,7 +1847,8 @@ L01561:	lodsw	;@01561
 	ret	;@0169A
 @@16:	clc	;@0169B
 	ret	;@0169C
-L0169D:	inc	byte ptr ds:[492h]	;@0169D
+; P1_MODEND: pass 1, MODEND (8Ah): the end of a module, and its start address.
+P1_MODEND:	inc	byte ptr ds:[492h]	;@0169D
 	mov	al, byte ptr [si]	;@016A1
 	cmp	al, 0C1h	;@016A3
 	jne	@@1	;@016A5
@@ -1836,7 +1911,7 @@ L0169D:	inc	byte ptr ds:[492h]	;@0169D
 	call	L05519	;@0174D
 	pop	bx	;@01750
 	jae	@@9	;@01751
-	call	L054E0	;@01753
+	call	TABLE_OVERFLOW	;@01753
 @@8:	xchg	word ptr [bx+2], di	;@01756
 	pop	bx	;@01759
 @@9:	mov	word ptr ds:[184h], di	;@0175A
@@ -1942,7 +2017,7 @@ L0180F:	mov	ax, word ptr es:[bx]	;@0180F
 	mov	di, 782h	;@0184D
 	call	L054ED	;@01850
 	jae	@@3	;@01853
-	call	L054E0	;@01855
+	call	TABLE_OVERFLOW	;@01855
 @@2:	xchg	word ptr ds:[784h], di	;@01858
 @@3:	mov	word ptr ds:[188h], di	;@0185C
 	mov	word ptr es:[di], ax	;@01860
@@ -1962,9 +2037,11 @@ L01864:	mov	bx, word ptr ds:[174h]	;@01864
 	jb	@@1	;@01887
 	mov	word ptr ds:[174h], bx	;@01889
 	jmp	L059AB	;@0188D
-L01890:	mov	dl, 0	;@01890
+; P1_EXTDEF: pass 1, EXTDEF (8Ch): external names.
+P1_EXTDEF:	mov	dl, 0	;@01890
 	jmp	L01864	;@01892
-L01894:	mov	dl, 4	;@01894
+; P1_LEXTDEF: pass 1, LEXTDEF (B4h): module-local external names.
+P1_LEXTDEF:	mov	dl, 4	;@01894
 	jmp	L01864	;@01896
 L01898:	cmp	byte ptr [si], 80h	;@01898
 	sbb	si, -2	;@0189B
@@ -2135,11 +2212,11 @@ L01902:	cmp	word ptr es:[bx], -1	;@01902
 	je	@@12	;@01A30
 	mov	ax, 25h	;@01A32
 	push	ax	;@01A35
-	call	L0BE96	;@01A36
+	call	ERROR	;@01A36
 	jmp	short @@15	;@01A39
 @@12:	mov	ax, 31h	;@01A3B
 	push	ax	;@01A3E
-	call	L0BE9B	;@01A3F
+	call	WARNING	;@01A3F
 	jmp	short @@15	;@01A42
 @@13:	push	ds	;@01A44
 	mov	ax, 26h	;@01A45
@@ -2150,11 +2227,11 @@ L01902:	cmp	word ptr es:[bx], -1	;@01902
 	je	@@14	;@01A52
 	mov	ax, 24h	;@01A54
 	push	ax	;@01A57
-	call	L0BE96	;@01A58
+	call	ERROR	;@01A58
 	jmp	short @@15	;@01A5B
 @@14:	mov	ax, 30h	;@01A5D
 	push	ax	;@01A60
-	call	L0BE9B	;@01A61
+	call	WARNING	;@01A61
 @@15:	pop	dx	;@01A64
 	pop	ax	;@01A65
 	pop	di	;@01A66
@@ -2198,9 +2275,11 @@ L01A6D:	mov	byte ptr ds:[172h], al	;@01A6D
 @@6:	cmp	si, word ptr ds:[3E0h]	;@01ACB
 	jb	@@1	;@01ACF
 	jmp	L059AB	;@01AD1
-L01AD4:	sub	ax, ax	;@01AD4
+; P1_PUBDEF: pass 1, PUBDEF (90h): public names.
+P1_PUBDEF:	sub	ax, ax	;@01AD4
 	jmp	L01A6D	;@01AD6
-L01AD8:	mov	ax, 4	;@01AD8
+; P1_LPUBDEF: pass 1, LPUBDEF (B6h, and 92h): module-local public names.
+P1_LPUBDEF:	mov	ax, 4	;@01AD8
 	jmp	L01A6D	;@01ADB
 L01ADD:	push	si	;@01ADD
 	dec	bx	;@01ADE
@@ -2220,7 +2299,8 @@ L01ADD:	push	si	;@01ADD
 	ret	;@01B04
 @@2:	call	L0885D	;@01B05
 L01B08	db	1, 2, 4, 8, 10h, 20h, 40h, 80h	;@01B08
-L01B10:	cmp	byte ptr [si], 80h	;@01B10
+; P1_LINNUM: pass 1, LINNUM (94h).
+P1_LINNUM:	cmp	byte ptr [si], 80h	;@01B10
 	sbb	si, -2	;@01B13
 	sub	bx, bx	;@01B16
 	add	bl, byte ptr [si]	;@01B18
@@ -2271,7 +2351,8 @@ L01B10:	cmp	byte ptr [si], 80h	;@01B10
 	mov	byte ptr es:[di+10h], 2	;@01BA4
 @@8:	inc	word ptr es:[di+0Ah]	;@01BA9
 	jmp	L059AB	;@01BAD
-L01BB0:	jmp	short @@3	;@01BB0
+; P1_LNAMES: pass 1, LNAMES (96h): segment, class and group names.
+P1_LNAMES:	jmp	short @@3	;@01BB0
 @@1:	mov	ah, 80h	;@01BB2
 	call	L0910B	;@01BB4
 	mov	di, 2	;@01BB7
@@ -2279,7 +2360,7 @@ L01BB0:	jmp	short @@3	;@01BB0
 	mov	di, 78Ah	;@01BBB
 	call	L054ED	;@01BBE
 	jae	@@2	;@01BC1
-	call	L054E0	;@01BC3
+	call	TABLE_OVERFLOW	;@01BC3
 @@2:	mov	word ptr es:[di], bx	;@01BC6
 @@3:	cmp	si, word ptr ds:[3E0h]	;@01BC9
 	jb	@@1	;@01BCD
@@ -2319,7 +2400,8 @@ L01BD2:	mov	word ptr es:[di], bx	;@01BD2
 	mov	word ptr es:[bx], ax	;@01C24
 @@3:	mov	word ptr ds:[3D8h], ax	;@01C27
 	ret	;@01C2A
-L01C2B:	call	L05C16	;@01C2B
+; P1_SEGDEF: pass 1, SEGDEF (98h).
+P1_SEGDEF:	call	L05C16	;@01C2B
 	mov	ax, word ptr ds:[186h]	;@01C2E
 	mov	word ptr es:[di+4], ax	;@01C31
 	lodsb	;@01C35
@@ -2423,7 +2505,7 @@ L01C2B:	call	L05C16	;@01C2B
 	push	ax	;@01D26
 	mov	ax, 6	;@01D27
 	push	ax	;@01D2A
-	call	L0BE91	;@01D2B
+	call	FATAL	;@01D2B
 L01D2E:	or	bx, bx	;@01D2E
 	je	@@2	;@01D30
 	dec	bx	;@01D32
@@ -2451,8 +2533,9 @@ L01D2E:	or	bx, bx	;@01D2E
 	push	cx	;@01D68
 	mov	ax, 7	;@01D69
 	push	ax	;@01D6C
-	call	L0BE91	;@01D6D
-L01D70:	mov	byte ptr ds:[160h], 1	;@01D70
+	call	FATAL	;@01D6D
+; P1_GRPDEF: pass 1, GRPDEF (9Ah).
+P1_GRPDEF:	mov	byte ptr ds:[160h], 1	;@01D70
 	sub	bx, bx	;@01D75
 	add	bl, byte ptr [si]	;@01D77
 	jge	@@1	;@01D79
@@ -2470,7 +2553,7 @@ L01D70:	mov	byte ptr ds:[160h], 1	;@01D70
 	mov	di, 792h	;@01D92
 	call	L054ED	;@01D95
 	jae	@@2	;@01D98
-	call	L054E0	;@01D9A
+	call	TABLE_OVERFLOW	;@01D9A
 @@2:	mov	word ptr es:[di], dx	;@01D9D
 	mov	cx, 0FFFFh	;@01DA0
 	jmp	short @@6	;@01DA3
@@ -2550,8 +2633,9 @@ L01E2F:	xor	ax, ax	;@01E2F
 	push	ax	;@01E31
 	mov	ax, 1Ch	;@01E32
 	push	ax	;@01E35
-	call	L0BE91	;@01E36
-L01E39:	cmp	byte ptr ds:[17h], 0	;@01E39
+	call	FATAL	;@01E36
+; P1_FIXUPP: pass 1, FIXUPP (9Ch).
+P1_FIXUPP:	cmp	byte ptr ds:[17h], 0	;@01E39
 	je	@@1	;@01E3E
 	jmp	L020E7	;@01E40
 @@1:	mov	ax, word ptr ds:[3ECh]	;@01E43
@@ -2822,7 +2906,7 @@ L01F9E:	push	bp	;@01F9E
 	call	L05519	;@020C8
 	pop	bx	;@020CB
 	jae	@@17	;@020CC
-	call	L054E0	;@020CE
+	call	TABLE_OVERFLOW	;@020CE
 @@16:	xchg	word ptr [bx+2], di	;@020D1
 	pop	bx	;@020D4
 @@17:	mov	word ptr es:[di], ax	;@020D5
@@ -2925,7 +3009,8 @@ L020E7:	mov	ax, word ptr ds:[3ECh]	;@020E7
 	mov	es, word ptr ds:[7A6h]	;@021BF
 	add	word ptr es:[bx+0Ah], cx	;@021C3
 @@12:	jmp	L059AB	;@021C7
-L021CA:	sub	bx, bx	;@021CA
+; P1_LEDATA: pass 1, LEDATA (A0h).
+P1_LEDATA:	sub	bx, bx	;@021CA
 	add	bl, byte ptr [si]	;@021CC
 	jge	@@1	;@021CE
 	inc	si	;@021D0
@@ -2955,7 +3040,8 @@ L021CA:	sub	bx, bx	;@021CA
 	mov	bx, 0FFFFh	;@02212
 	jmp	@@3	;@02215
 @@5:	call	L0885D	;@02217
-L0221A:	mov	byte ptr ds:[3F1h], 1	;@0221A
+; P1_LIDATA: pass 1, LIDATA (A2h).
+P1_LIDATA:	mov	byte ptr ds:[3F1h], 1	;@0221A
 	sub	bx, bx	;@0221F
 	add	bl, byte ptr [si]	;@02221
 	jge	@@1	;@02223
@@ -2992,7 +3078,8 @@ L0221A:	mov	byte ptr ds:[3F1h], 1	;@0221A
 @@3:	jmp	L059AB	;@0226C
 @@4:	mov	byte ptr ds:[3F1h], 0FFh	;@0226F
 	jmp	@@3	;@02274
-L02276:	mov	ax, word ptr ds:[3E0h]	;@02276
+; LIBRARY_HEADER: a library's header record (F0h, also A4h), both passes.
+LIBRARY_HEADER:	mov	ax, word ptr ds:[3E0h]	;@02276
 	sub	ax, si	;@02279
 	add	ax, 4	;@0227B
 	mov	di, word ptr ds:[494h]	;@0227E
@@ -3120,7 +3207,7 @@ L022C4:	push	bp	;@022C4
 	mov	di, 7A2h	;@0239E
 	call	L054ED	;@023A1
 	jae	@@17	;@023A4
-	call	L054E0	;@023A6
+	call	TABLE_OVERFLOW	;@023A6
 @@16:	xchg	word ptr ds:[7A4h], di	;@023A9
 @@17:	push	di	;@023AD
 	xor	ax, ax	;@023AE
@@ -3167,7 +3254,7 @@ L022C4:	push	bp	;@022C4
 	mov	di, 782h	;@02416
 	call	L054ED	;@02419
 	jae	@@20	;@0241C
-	call	L054E0	;@0241E
+	call	TABLE_OVERFLOW	;@0241E
 @@19:	xchg	word ptr ds:[784h], di	;@02421
 @@20:	mov	word ptr ds:[188h], di	;@02425
 	mov	word ptr es:[di], ax	;@02429
@@ -3214,7 +3301,7 @@ L022C4:	push	bp	;@022C4
 	mov	si, word ptr es:[si]	;@0249A
 	mov	di, 76h	;@0249D
 	call COPY_NAME	;@024A0
-	mov	ds, word ptr cs:L00000+16	;@024A3
+	mov	ds, word ptr cs:DATA_SEGMENT	;@024A3
 	push	ds	;@024A8
 	mov	ax, 76h	;@024A9
 	push	ax	;@024AC
@@ -3225,13 +3312,15 @@ L022C4:	push	bp	;@022C4
 	push	cx	;@024B5
 	mov	ax, 33h	;@024B6
 	push	ax	;@024B9
-	call L0BE9B	;@024BA
+	call WARNING	;@024BA
 	pop	di	;@024BD
 	pop	si	;@024BE
 	jmp	@@2	;@024BF
-L024C2:	sub	ax, ax	;@024C2
+; P1_COMDEF: pass 1, COMDEF (B0h): communal names.
+P1_COMDEF:	sub	ax, ax	;@024C2
 	jmp	L022C4	;@024C4
-L024C7:	mov	ax, 4	;@024C7
+; P1_LCOMDEF: pass 1, LCOMDEF (B8h).
+P1_LCOMDEF:	mov	ax, 4	;@024C7
 	jmp	L022C4	;@024CA
 	db	0, 0, 0, '%s:%x', 0, '%s:%x%x', 0	;@024CD
 L024DE:	push	bp	;@024DE
@@ -3300,7 +3389,7 @@ L024DE:	push	bp	;@024DE
 	jne	@@3	;@02566
 	pop	si	;@02568
 	pop	es	;@02569
-	mov	ds, word ptr cs:L00000+16	;@0256A
+	mov	ds, word ptr cs:DATA_SEGMENT	;@0256A
 	xor	ax, ax	;@0256F
 	call	L05327	;@02571
 @@5:	mov	di, 2A0h	;@02574
@@ -3361,7 +3450,8 @@ L024DE:	push	bp	;@024DE
 	mov	sp, bp	;@02604
 	pop	bp	;@02606
 	ret	;@02607
-L02608:	cmp	byte ptr ds:[492h], 0	;@02608
+; P2_THEADR: pass 2, THEADR (80h).
+P2_THEADR:	cmp	byte ptr ds:[492h], 0	;@02608
 	je	@@1	;@0260D
 	mov	si, word ptr ds:[3E0h]	;@0260F
 	jmp	L059AB	;@02613
@@ -3468,7 +3558,8 @@ L026CD:	mov	ah, 0	;@026CD
 	ret	;@026FD
 @@1:	xor	ax, ax	;@026FE
 	ret	;@02700
-L02701:	xor	dx, dx	;@02701
+; P2_COMENT_E2: pass 2, Borland COMENT class E2h (debug information).
+P2_COMENT_E2:	xor	dx, dx	;@02701
 L02703:	jmp	short @@6	;@02703
 @@1:	inc	word ptr ds:[4E4h]	;@02705
 	mov	di, 290h	;@02709
@@ -3538,11 +3629,12 @@ L02703:	jmp	short @@6	;@02703
 	cmp	byte ptr [si], 80h	;@02783
 	sbb	si, -2	;@02786
 	jmp	@@4	;@02789
-L0278B:	mov	dx, 1	;@0278B
+; P2_COMENT_E4: pass 2, Borland COMENT class E4h (debug information).
+P2_COMENT_E4:	mov	dx, 1	;@0278B
 	jmp	L02703	;@0278E
 
 ; COMENT subtypes: (type, handler) for 20 types, then the handler for any other
-L02791	db	23h	;@02791
+P2_TYPE_HANDLERS	db	23h	;@02791
 	dw	L02869
 	db	1Eh
 	dw	L02846
@@ -3583,7 +3675,8 @@ L02791	db	23h	;@02791
 	db	1Bh
 	dw	L02828
 	dw	L028BD
-L027CF:	mov	di, 290h	;@027CF
+; P2_COMENT_E3: pass 2, Borland COMENT class E3h (debug information).
+P2_COMENT_E3:	mov	di, 290h	;@027CF
 	xor	ax, ax	;@027D2
 	push	ds	;@027D4
 	pop	es	;@027D5
@@ -3611,7 +3704,7 @@ L027CF:	mov	di, 290h	;@027CF
 	mov	word ptr [bx+3], ax	;@027FE
 	lodsb	;@02801
 	mov	byte ptr [bx], al	;@02802
-	mov	di, offset L02791	;@02804
+	mov	di, offset P2_TYPE_HANDLERS	;@02804
 	push	cs	;@02807
 	pop	es	;@02808
 	mov	cx, 14h	;@02809
@@ -3930,7 +4023,8 @@ L02A54:	mov	es, word ptr ds:[77Eh]	;@02A54
 	inc	ax	;@02AA5
 	mov	word ptr ds:[395h], si	;@02AA6
 	ret	;@02AAA
-L02AAB:	push	bp	;@02AAB
+; P2_COMENT_E5: pass 2, Borland COMENT class E5h (debug information).
+P2_COMENT_E5:	push	bp	;@02AAB
 	mov	bp, sp	;@02AAC
 	sub	sp, 8	;@02AAE
 	push	si	;@02AB1
@@ -4057,7 +4151,8 @@ L02BE2:	dec	bx	;@02BE2
 @@2:	mov	ax, si	;@02C0C
 	mov	bx, 1	;@02C0E
 	jmp	@@1	;@02C11
-L02C13:	cmp	word ptr ds:[230h], 1	;@02C13
+; P2_COMENT_E6: pass 2, Borland COMENT class E6h (debug information).
+P2_COMENT_E6:	cmp	word ptr ds:[230h], 1	;@02C13
 	jne	@@1	;@02C18
 	cmp	word ptr ds:[178h], 0	;@02C1A
 	je	@@1	;@02C1F
@@ -4199,7 +4294,8 @@ L02D7B:	lodsb	;@02D7B
 	jmp	L02D72	;@02D7D
 L02D7F:	mov	si, word ptr ds:[3E0h]	;@02D7F
 	jmp	L02CBC	;@02D83
-L02D86:	push	si	;@02D86
+; P2_COMENT_E7: pass 2, Borland COMENT class E7h (debug information).
+P2_COMENT_E7:	push	si	;@02D86
 	call	L029E2	;@02D87
 	pop	si	;@02D8A
 	cmp	word ptr ds:[230h], 1	;@02D8B
@@ -4258,7 +4354,8 @@ L02E02:	inc	word ptr ds:[4F2h]	;@02E02
 	call	L051DC	;@02E24
 	pop	si	;@02E27
 	ret	;@02E28
-L02E29:	mov	word ptr ds:[17Ah], 0FFFFh	;@02E29
+; P2_COMENT_E8: pass 2, Borland COMENT class E8h (debug information).
+P2_COMENT_E8:	mov	word ptr ds:[17Ah], 0FFFFh	;@02E29
 	sub	bx, bx	;@02E2F
 	add	bl, byte ptr [si]	;@02E31
 	jge	@@1	;@02E33
@@ -4277,9 +4374,11 @@ L02E29:	mov	word ptr ds:[17Ah], 0FFFFh	;@02E29
 	mov	word ptr ds:[39Bh], bx	;@02E51
 	mov	si, word ptr ds:[3E0h]	;@02E55
 @@3:	ret	;@02E59
-L02E5A:	mov	si, word ptr ds:[3E0h]	;@02E5A
+; P2_COMENT_SKIP: pass 2, a Borland COMENT class TLINK has nothing to do with.
+P2_COMENT_SKIP:	mov	si, word ptr ds:[3E0h]	;@02E5A
 	ret	;@02E5E
-L02E5F:	lodsb	;@02E5F
+; P2_COMENT_ED: pass 2, Borland COMENT class EDh (debug information).
+P2_COMENT_ED:	lodsb	;@02E5F
 	and	al, al	;@02E60
 	je	@@4	;@02E62
 	lodsb	;@02E64
@@ -4386,14 +4485,16 @@ L02E5F:	lodsb	;@02E5F
 	pop	si	;@02F32
 @@8:	inc	word ptr ds:[508h]	;@02F33
 	ret	;@02F37
-L02F38:	call	L026CD	;@02F38
+; P2_COMENT_F8: pass 2, Borland COMENT class F8h (debug information).
+P2_COMENT_F8:	call	L026CD	;@02F38
 	and	ax, ax	;@02F3B
 	jne	@@1	;@02F3D
 	mov	ax, 0FFFFh	;@02F3F
 @@1:	mov	es, word ptr ds:[36Dh]	;@02F42
 	mov	word ptr es:[6], ax	;@02F46
 	ret	;@02F4A
-L02F4B:	cmp	byte ptr ds:[12Dh], 1	;@02F4B
+; P2_COMENT_EE: pass 2, Borland COMENT class EEh (debug information).
+P2_COMENT_EE:	cmp	byte ptr ds:[12Dh], 1	;@02F4B
 	je	@@5	;@02F50
 	sub	bx, bx	;@02F52
 	add	bl, byte ptr [si]	;@02F54
@@ -4453,10 +4554,11 @@ L02F4B:	cmp	byte ptr ds:[12Dh], 1	;@02F4B
 	jmp	@@4	;@02FD6
 
 ; pass 2: the handlers of the COMENT classes E2h..F8h
-L02FD8	dw	L02701, L027CF, L0278B, L02AAB, L02C13, L02D86, L02E29, L02E5A	;@02FD8
-	dw	L02E5A, L02E5A, L02E5A, L02E5F, L02F4B, L02E5A, L02E5A, L02E5A
-	dw	L02E5A, L02E5A, L02E5A, L02E5A, L02E5A, L02E5A, L02F38
-L03006:	lodsw	;@03006
+PASS2_COMENT_CLASSES	dw	P2_COMENT_E2, P2_COMENT_E3, P2_COMENT_E4, P2_COMENT_E5, P2_COMENT_E6, P2_COMENT_E7, P2_COMENT_E8, P2_COMENT_SKIP	;@02FD8
+	dw	P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_ED, P2_COMENT_EE, P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_SKIP
+	dw	P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_SKIP, P2_COMENT_F8
+; P2_COMENT: pass 2, COMENT (88h).
+P2_COMENT:	lodsw	;@03006
 	cmp	byte ptr ds:[15h], 0	;@03007
 	je	@@1	;@0300C
 	cmp	byte ptr ds:[3478h], 0	;@0300E
@@ -4468,7 +4570,7 @@ L03006:	lodsw	;@03006
 	cmp	bx, 17h	;@0301F
 	jae	@@1	;@03022
 	shl	bx, 1	;@03024
-	call	word ptr cs:L02FD8[bx]	;@03026
+	call	word ptr cs:PASS2_COMENT_CLASSES[bx]	;@03026
 	cmp	si, word ptr ds:[3E0h]	;@0302B
 	je	@@1	;@0302F
 	call	L0885D	;@03031
@@ -4652,7 +4754,7 @@ L0319D:	mov	di, 3FFh	;@0319D
 	ret	;@031F4
 
 ; the fixup handlers, by frame method
-L031F5	dw	L03261, L03215, L03265, L03247, L03261, L03259, L03261, L03261	;@031F5
+FIXUP_FRAMES	dw	FIX_LOBYTE, FIX_OFFSET, FIX_BASE, FIX_POINTER, FIX_LOBYTE, FIX_LOADER_OFFSET, FIX_LOBYTE, FIX_LOBYTE	;@031F5
 L03205:	push	di	;@03205
 	push	si	;@03206
 	push	ax	;@03207
@@ -4660,11 +4762,12 @@ L03205:	push	di	;@03205
 	and	al, dh	;@0320B
 	shr	ax, 1	;@0320D
 	xchg	ax, di	;@0320F
-	jmp	word ptr cs:L031F5[di]	;@03210
-L03215:	mov	ax, word ptr ds:[450h]	;@03215
+	jmp	word ptr cs:FIXUP_FRAMES[di]	;@03210
+; FIX_OFFSET: the fixup handler for an offset location.
+FIX_OFFSET:	mov	ax, word ptr ds:[450h]	;@03215
 	mov	es, word ptr ds:[776h]	;@03218
 	cmp	ax, word ptr es:[bx+2]	;@0321C
-	je	L03261	;@03220
+	je	FIX_LOBYTE	;@03220
 	mov	di, word ptr ds:[3E6h]	;@03222
 	mov	es, word ptr ds:[77Eh]	;@03226
 	mov	di, word ptr es:[di]	;@0322A
@@ -4672,31 +4775,35 @@ L03215:	mov	ax, word ptr ds:[450h]	;@03215
 	cmp	byte ptr es:[di+1], 1	;@03231
 	je	@@1	;@03236
 	cmp	byte ptr es:[di+1], 3	;@03238
-	jne	L03261	;@0323D
+	jne	FIX_LOBYTE	;@0323D
 @@1:	cmp	bx, word ptr es:[di+4]	;@0323F
-	jne	L03259	;@03243
-	jmp	short L03261	;@03245
-L03247:	mov	ax, word ptr ds:[450h]	;@03247
+	jne	FIX_LOADER_OFFSET	;@03243
+	jmp	short FIX_LOBYTE	;@03245
+; FIX_POINTER: the fixup handler for a far pointer location.
+FIX_POINTER:	mov	ax, word ptr ds:[450h]	;@03247
 	mov	es, word ptr ds:[776h]	;@0324A
 	cmp	ax, word ptr es:[bx+2]	;@0324E
 	je	L03278	;@03252
 	call	L03107	;@03254
-	jb	L03261	;@03257
-L03259:	call	L0319D	;@03259
+	jb	FIX_LOBYTE	;@03257
+; FIX_LOADER_OFFSET: the fixup handler for a loader-resolved offset location.
+FIX_LOADER_OFFSET:	call	L0319D	;@03259
 	cmp	si, -1	;@0325C
 	je	L03282	;@0325F
-L03261:	pop	ax	;@03261
+; FIX_LOBYTE: the fixup handler for a low-byte (also high-byte and unknown) location.
+FIX_LOBYTE:	pop	ax	;@03261
 	pop	si	;@03262
 	pop	di	;@03263
 	ret	;@03264
-L03265:	mov	ax, word ptr ds:[450h]	;@03265
+; FIX_BASE: the fixup handler for a segment (base) location.
+FIX_BASE:	mov	ax, word ptr ds:[450h]	;@03265
 	mov	es, word ptr ds:[776h]	;@03268
 	cmp	ax, word ptr es:[bx+2]	;@0326C
 	jne	L03278	;@03270
 	mov	word ptr ds:[216h], 0FFFFh	;@03272
 L03278:	mov	es, word ptr ds:[77Eh]	;@03278
 	mov	bx, word ptr es:[bx+4]	;@0327C
-	jmp	L03261	;@03280
+	jmp	FIX_LOBYTE	;@03280
 L03282:	push	si	;@03282
 	mov	si, word ptr ds:[3E6h]	;@03283
 	mov	es, word ptr ds:[776h]	;@03287
@@ -4713,7 +4820,7 @@ L03282:	push	si	;@03282
 	pop	ax	;@032A7
 	call	HEX_BYTE	;@032A8
 	mov	byte ptr [di], 0	;@032AB
-	mov	ds, word ptr cs:L00000+16	;@032AE
+	mov	ds, word ptr cs:DATA_SEGMENT	;@032AE
 	mov	word ptr ds:[422h], 1	;@032B3
 	push	ds	;@032B9
 	mov	ax, 76h	;@032BA
@@ -4725,9 +4832,9 @@ L03282:	push	si	;@03282
 	push	cx	;@032C6
 	mov	ax, 34h	;@032C7
 	push	ax	;@032CA
-	call	L0BE9B	;@032CB
+	call	WARNING	;@032CB
 	pop	si	;@032CE
-	jmp	L03261	;@032CF
+	jmp	FIX_LOBYTE	;@032CF
 L032D1:	push	ax	;@032D1
 	push	bx	;@032D2
 	push	si	;@032D3
@@ -5343,7 +5450,7 @@ L0391A:	push	dx	;@0391A
 	push	ds	;@0396F
 	push	ax	;@03970
 	push	cs	;@03971
-	call	L0BDE0	;@03972
+	call	FORMAT	;@03972
 	mov	si, word ptr ds:[218h]	;@03975
 	inc	si	;@03979
 	je	@@3	;@0397A
@@ -5378,7 +5485,7 @@ L0391A:	push	dx	;@0391A
 	mov	ax, 76h	;@039C1
 	push	ax	;@039C4
 	push	cs	;@039C5
-	call	L0BDE0	;@039C6
+	call	FORMAT	;@039C6
 @@6:	mov	ax, 76h	;@039C9
 	push	ds	;@039CC
 	push	ax	;@039CD
@@ -5390,7 +5497,7 @@ L0391A:	push	dx	;@0391A
 	mov	ax, 23h	;@039D7
 	push	ax	;@039DA
 	mov	word ptr ds:[422h], 1	;@039DB
-	call	L0BE96	;@039E1
+	call	ERROR	;@039E1
 	pop	si	;@039E4
 	pop	dx	;@039E5
 	jmp	short L03A32	;@039E6
@@ -5421,7 +5528,7 @@ L039E8:	test	byte ptr es:[bx+0Eh], 40h	;@039E8
 	push	cx	;@03A28
 	mov	ax, 26h	;@03A29
 	push	ax	;@03A2C
-	call	L0BE96	;@03A2D
+	call	ERROR	;@03A2D
 	pop	si	;@03A30
 	pop	bx	;@03A31
 L03A32:	stc	;@03A32
@@ -5627,7 +5734,8 @@ L03A47:	push	bp	;@03A47
 	mov	word ptr ds:[3B2h], 0	;@03C22
 @@18:	pop	bp	;@03C28
 	ret	;@03C29
-L03C2A:	inc	byte ptr ds:[492h]	;@03C2A
+; P2_MODEND: pass 2, MODEND (8Ah).
+P2_MODEND:	inc	byte ptr ds:[492h]	;@03C2A
 	call	L03083	;@03C2E
 	mov	al, byte ptr [si]	;@03C31
 	cmp	al, 0C1h	;@03C33
@@ -5650,7 +5758,7 @@ L03C2A:	inc	byte ptr ds:[492h]	;@03C2A
 	push	cx	;@03C5C
 	mov	ax, 27h	;@03C5D
 	push	ax	;@03C60
-	call	L0BE96	;@03C61
+	call	ERROR	;@03C61
 @@3:	mov	es, word ptr ds:[77Eh]	;@03C64
 	mov	ax, word ptr es:[bx+6]	;@03C68
 	mov	bx, word ptr es:[bx]	;@03C6C
@@ -5683,14 +5791,14 @@ L03CB9:	xor	ax, ax	;@03CB9
 	push	ax	;@03CBB
 	mov	ax, 15h	;@03CBC
 	push	ax	;@03CBF
-	call L0BE91	;@03CC0
+	call FATAL	;@03CC0
 L03CC3:	cmp	word ptr ds:[420h], 0	;@03CC3
 	je	L03CD9	;@03CC8
 	xor	ax, ax	;@03CCA
 	push	ax	;@03CCC
 	mov	ax, 29h	;@03CCD
 	push	ax	;@03CD0
-	call L0BE96	;@03CD1
+	call ERROR	;@03CD1
 	or	byte ptr ds:[410h], 1	;@03CD4
 L03CD9:	cmp	byte ptr ds:[14h], 0	;@03CD9
 	je	L03CE3	;@03CDE
@@ -5822,7 +5930,8 @@ L03D3B:	push	si	;@03D3B
 	call	L051DC	;@03E0C
 	mov	si, word ptr ds:[3E0h]	;@03E0F
 	ret	;@03E13
-L03E14:	cmp	byte ptr ds:[3478h], 0	;@03E14
+; P2_LINNUM: pass 2, LINNUM (94h): line numbers for the map (/l).
+P2_LINNUM:	cmp	byte ptr ds:[3478h], 0	;@03E14
 	jne	@@1	;@03E19
 	cmp	byte ptr ds:[15h], 0	;@03E1B
 	jne	@@2	;@03E20
@@ -6066,7 +6175,7 @@ L0405D:	test	byte ptr ds:[215h], 1	;@0405D
 	push	ax	;@04067
 	mov	ax, 16h	;@04068
 	push	ax	;@0406B
-	call	L0BE91	;@0406C
+	call	FATAL	;@0406C
 @@2:	cmp	byte ptr ds:[129h], 1	;@0406F
 	je	@@1	;@04074
 	inc	word ptr ds:[4A0h]	;@04076
@@ -6088,7 +6197,7 @@ L0405D:	test	byte ptr ds:[215h], 1	;@0405D
 	push	ax	;@0409C
 	mov	ax, 18h	;@0409D
 	push	ax	;@040A0
-	call	L0BE91	;@040A1
+	call	FATAL	;@040A1
 @@3:	add	di, word ptr ds:[3E8h]	;@040A4
 @@4:	mov	word ptr ds:[496h], di	;@040A8
 	mov	di, word ptr ds:[3EEh]	;@040AC
@@ -6108,7 +6217,8 @@ L0405D:	test	byte ptr ds:[215h], 1	;@0405D
 	pop	bx	;@040D2
 	pop	ax	;@040D3
 	ret	;@040D4
-L040D5:	jmp	@@16	;@040D5
+; P2_FIXUPP: pass 2, FIXUPP (9Ch): apply the fixups to the data just read.
+P2_FIXUPP:	jmp	@@16	;@040D5
 @@1:	jmp	L059AB	;@040D8
 @@2:	cbw	;@040DB
 	mov	di, ax	;@040DC
@@ -6302,7 +6412,7 @@ L040D5:	jmp	@@16	;@040D5
 	push	ax	;@042E7
 	mov	ax, 22h	;@042E8
 	push	ax	;@042EB
-	call	L0BE91	;@042EC
+	call	FATAL	;@042EC
 @@35:	pop	si	;@042EF
 	jmp	@@33	;@042F0
 @@36:	call	L03F9B	;@042F2
@@ -6346,7 +6456,8 @@ L042F8:	push	bp	;@042F8
 	mov	sp, bp	;@04358
 	pop	bp	;@0435A
 	ret	;@0435B
-L0435C:	call	L03083	;@0435C
+; P2_LEDATA: pass 2, LEDATA (A0h): data for the output.
+P2_LEDATA:	call	L03083	;@0435C
 	mov	byte ptr ds:[3F1h], 0	;@0435F
 	sub	bx, bx	;@04364
 	add	bl, byte ptr [si]	;@04366
@@ -6381,7 +6492,8 @@ L04379:	sub	bx, 4001h	;@04379
 @@1:	jmp	L059AB	;@043B5
 @@2:	mov	byte ptr ds:[3F1h], 0FFh	;@043B8
 	jmp	@@1	;@043BD
-L043BF:	call	L03083	;@043BF
+; P2_LIDATA: pass 2, LIDATA (A2h): iterated data for the output.
+P2_LIDATA:	call	L03083	;@043BF
 	mov	byte ptr ds:[3F1h], 1	;@043C2
 	sub	bx, bx	;@043C7
 	add	bl, byte ptr [si]	;@043C9
@@ -6466,7 +6578,7 @@ L04466:	mov	word ptr ds:[259h], dx	;@04466
 	mov	cx, word ptr ds:[257h]	;@044AF
 	mov	ax, 4200h	;@044B3
 	mov	bx, word ptr ds:[24h]	;@044B6
-	call	L002D2	;@044BA
+	call	DOS_CALL	;@044BA
 	mov	byte ptr ds:[254h], 1	;@044BD
 	jmp	@@2	;@044C2
 @@4:	mov	ax, word ptr ds:[3458h]	;@044C4
@@ -6478,7 +6590,7 @@ L04466:	mov	word ptr ds:[259h], dx	;@04466
 	mov	bx, word ptr ds:[24h]	;@044D6
 	mov	dx, word ptr ds:[259h]	;@044DA
 	mov	cx, word ptr ds:[25Bh]	;@044DE
-	call	L002D2	;@044E2
+	call	DOS_CALL	;@044E2
 	jb	@@3	;@044E5
 	push	ds	;@044E7
 	mov	ax, 282h	;@044E8
@@ -6498,7 +6610,7 @@ L04466:	mov	word ptr ds:[259h], dx	;@04466
 	mov	cx, word ptr ds:[260h]	;@04513
 	xor	dx, dx	;@04517
 	mov	ds, word ptr ds:[282h]	;@04519
-	call	L002D2	;@0451D
+	call	DOS_CALL	;@0451D
 	pop	ds	;@04520
 	jb	@@7	;@04521
 	cmp	ax, word ptr ds:[260h]	;@04523
@@ -6650,7 +6762,7 @@ L04580:	push	ds	;@04580
 	call	L05519	;@0464D
 	pop	bx	;@04650
 	jae	@@10	;@04651
-	call	L054E0	;@04653
+	call	TABLE_OVERFLOW	;@04653
 @@9:	xchg	word ptr [bx+2], di	;@04656
 	pop	bx	;@04659
 @@10:	mov	si, 528h	;@0465A
@@ -6862,7 +6974,7 @@ L04580:	push	ds	;@04580
 	mov	di, 792h	;@047E7
 	call	L054ED	;@047EA
 	jae	@@29	;@047ED
-	call	L054E0	;@047EF
+	call	TABLE_OVERFLOW	;@047EF
 @@29:	mov	word ptr es:[di], dx	;@047F2
 	mov	cx, 0FFFFh	;@047F5
 	jmp	short @@32	;@047F8
@@ -7015,19 +7127,20 @@ L04580:	push	ds	;@04580
 	db	3, 5, 0, 0E4h, 4, 35h, 3, 0Bh, 0, 8, 5, 39h, 3, 2, 0, 0Ah, 5, 3Dh
 	db	3, 8, 0, 0Eh, 5, 41h, 3, 4, 0, 10h, 5, 45h, 3, 8, 0, 12h, 5, 0BEh
 	db	3, 2, 0, 0CAh, 3, 0BAh, 3, 2, 0, 14h, 5
-L04A2E:	push	ds	;@04A2E
+; POOL_INIT_OR_DIE: POOL_INIT, or OUT_OF_MEMORY.
+POOL_INIT_OR_DIE:	push	ds	;@04A2E
 	push	bx	;@04A2F
 	push	ax	;@04A30
 	call	far ptr POOL_INIT	;@04A31
 	and	ax, ax	;@04A36
 	jne	@@1	;@04A38
 	ret	;@04A3A
-@@1:	jmp	L002C0	;@04A3B
+@@1:	jmp	OUT_OF_MEMORY	;@04A3B
 L04A3E:	xor	ax, ax	;@04A3E
 	push	ax	;@04A40
 	mov	ax, 1Fh	;@04A41
 	push	ax	;@04A44
-	call L0BE91	;@04A45
+	call FATAL	;@04A45
 L04A48:	push	bp	;@04A48
 	mov	bp, sp	;@04A49
 	sub	sp, 0Ah	;@04A4B
@@ -7196,17 +7309,17 @@ L04A48:	push	bp	;@04A48
 	push	ax	;@04C05
 	mov	ax, 0FFFFh	;@04C06
 	mov	bx, 3AAh	;@04C09
-	call	L04A2E	;@04C0C
+	call	POOL_INIT_OR_DIE	;@04C0C
 	pop	ax	;@04C0F
 	sub	ax, 8000h	;@04C10
 	shl	ax, 1	;@04C13
 	mov	bx, 3ACh	;@04C15
-	call	L04A2E	;@04C18
+	call	POOL_INIT_OR_DIE	;@04C18
 	pop	si	;@04C1B
 	jmp	short @@14	;@04C1C
 @@13:	shl	ax, 1	;@04C1E
 	mov	bx, 3AAh	;@04C20
-	call	L04A2E	;@04C23
+	call	POOL_INIT_OR_DIE	;@04C23
 	pop	si	;@04C26
 @@14:	mov	di, si	;@04C27
 	and	di, 3	;@04C29
@@ -7457,31 +7570,31 @@ L04A48:	push	bp	;@04A48
 	mov	word ptr [di+30h], ax	;@04E7A
 	mov	ax, 4000h	;@04E7D
 	mov	bx, 2BAh	;@04E80
-	call	L04A2E	;@04E83
+	call	POOL_INIT_OR_DIE	;@04E83
 	mov	word ptr ds:[2B8h], 0	;@04E86
 	mov	ax, 16h	;@04E8C
 	mul	word ptr ds:[488h]	;@04E8F
 	mov	bx, 36Dh	;@04E93
-	call	L04A2E	;@04E96
+	call	POOL_INIT_OR_DIE	;@04E96
 	mov	ax, 8	;@04E99
 	mul	word ptr ds:[48Ah]	;@04E9C
 	mov	bx, 375h	;@04EA0
-	call	L04A2E	;@04EA3
+	call	POOL_INIT_OR_DIE	;@04EA3
 	mov	ax, word ptr ds:[48Ah]	;@04EA6
 	shl	ax, 1	;@04EA9
 	mov	bx, 379h	;@04EAB
-	call	L04A2E	;@04EAE
+	call	POOL_INIT_OR_DIE	;@04EAE
 	mov	ax, 9	;@04EB1
 	mul	word ptr ds:[48Ch]	;@04EB4
 	mov	bx, 37Dh	;@04EB8
-	call	L04A2E	;@04EBB
+	call	POOL_INIT_OR_DIE	;@04EBB
 	mov	ax, word ptr ds:[48Ch]	;@04EBE
 	shl	ax, 1	;@04EC1
 	mov	bx, 381h	;@04EC3
-	call	L04A2E	;@04EC6
+	call	POOL_INIT_OR_DIE	;@04EC6
 	mov	ax, 7FDh	;@04EC9
 	mov	bx, 349h	;@04ECC
-	call	L04A2E	;@04ECF
+	call	POOL_INIT_OR_DIE	;@04ECF
 	mov	ax, word ptr ds:[3C8h]	;@04ED2
 	shl	ax, 1	;@04ED5
 	mov	bx, word ptr ds:[3C6h]	;@04ED7
@@ -7489,11 +7602,11 @@ L04A48:	push	bp	;@04A48
 	shl	bx, 1	;@04EDD
 	add	ax, bx	;@04EDF
 	mov	bx, 3B4h	;@04EE1
-	call	L04A2E	;@04EE4
+	call	POOL_INIT_OR_DIE	;@04EE4
 	mov	ax, word ptr ds:[3C6h]	;@04EE7
 	shl	ax, 1	;@04EEA
 	mov	bx, 3B8h	;@04EEC
-	call	L04A2E	;@04EEF
+	call	POOL_INIT_OR_DIE	;@04EEF
 	xor	ax, ax	;@04EF2
 	mov	word ptr ds:[36Bh], ax	;@04EF4
 	mov	word ptr ds:[373h], ax	;@04EF7
@@ -7721,7 +7834,7 @@ L050D8:	push	si	;@050D8
 	push	ax	;@0511E
 	push	di	;@0511F
 	mov	bx, 371h	;@05120
-	call	L04A2E	;@05123
+	call	POOL_INIT_OR_DIE	;@05123
 	les	di, dword ptr ds:[36Fh]	;@05126
 	mov	si, 0C4Eh	;@0512A
 	mov	cx, word ptr ds:[4F4h]	;@0512D
@@ -7821,7 +7934,7 @@ L051ED:	push	si	;@051ED
 	push	ds	;@0521C
 	push	bx	;@0521D
 	mov	bp, word ptr [bx+2]	;@0521E
-	mov	ds, word ptr cs:L00000+16	;@05221
+	mov	ds, word ptr cs:DATA_SEGMENT	;@05221
 	mov	word ptr ds:[369h], si	;@05226
 	mov	ds, word ptr [si]	;@0522A
 	lea	si, [bp+6]	;@0522C
@@ -7835,7 +7948,7 @@ L051ED:	push	si	;@051ED
 	jne	@@3	;@0523C
 	mov	ax, word ptr ds:[bp+4]	;@0523E
 	add	sp, 4	;@05242
-	mov	ds, word ptr cs:L00000+16	;@05245
+	mov	ds, word ptr cs:DATA_SEGMENT	;@05245
 	ret	;@0524A
 @@3:	add	sp, 4	;@0524B
 	mov	bx, bp	;@0524E
@@ -7847,7 +7960,7 @@ L051ED:	push	si	;@051ED
 	mov	cx, ax	;@0525B
 	add	ax, 7	;@0525D
 	push	es	;@05260
-	mov	ds, word ptr cs:L00000+16	;@05261
+	mov	ds, word ptr cs:DATA_SEGMENT	;@05261
 @@5:	mov	di, word ptr ds:[35Dh]	;@05266
 	add	di, ax	;@0526A
 	jb	@@6	;@0526C
@@ -7912,7 +8025,7 @@ L051ED:	push	si	;@051ED
 	pop	bx	;@052F3
 	pop	ax	;@052F4
 	jmp	@@5	;@052F5
-@@8:	jmp	L002C0	;@052F8
+@@8:	jmp	OUT_OF_MEMORY	;@052F8
 @@9:	mov	di, word ptr ds:[35Fh]	;@052FB
 	mov	es, word ptr [di]	;@052FF
 	mov	di, word ptr ds:[35Dh]	;@05301
@@ -8115,12 +8228,13 @@ L05457:	mov	ax, 10h	;@05457
 	xor	si, si	;@054CF
 	jmp	@@2	;@054D1
 	db	0Dh dup (0)	;@054D3
-L054E0:	call	L0555C	;@054E0
+; TABLE_OVERFLOW: DATA_OVERFLOW, then fatal message 8.
+TABLE_OVERFLOW:	call	DATA_OVERFLOW	;@054E0
 	xor	ax, ax	;@054E3
 	push	ax	;@054E5
 	mov	ax, 8	;@054E6
 	push	ax	;@054E9
-	call L0BE91	;@054EA
+	call FATAL	;@054EA
 L054ED:	push	bp	;@054ED
 	mov	bp, sp	;@054EE
 	push	si	;@054F0
@@ -8178,7 +8292,8 @@ L05549:	call	PUT_HEX_WORD	;@05549
 	call	PUT_HEX_WORD	;@05555
 	call	PUT_NEWLINE	;@05558
 	ret	;@0555B
-L0555C:	push	ax	;@0555C
+; DATA_OVERFLOW: start the "Internal linker data ..." report of what overflowed.
+DATA_OVERFLOW:	push	ax	;@0555C
 	push	bx	;@0555D
 	push	cx	;@0555E
 	push	dx	;@0555F
@@ -8252,8 +8367,9 @@ L055C4:	push	ax	;@055C4
 	pop	bx	;@05600
 	pop	ax	;@05601
 	ret	;@05602
-@@3:	jmp	L002C0	;@05603
-L05606:	push	cx	;@05606
+@@3:	jmp	OUT_OF_MEMORY	;@05603
+; NEW_POOL: a new 80h-byte pool in the far heap (POOL_INIT) for the list at DI.
+NEW_POOL:	push	cx	;@05606
 	push	di	;@05607
 	mov	word ptr [di+2], 0	;@05608
 	mov	ax, 80h	;@0560D
@@ -8267,7 +8383,7 @@ L05606:	push	cx	;@05606
 	pop	cx	;@0561E
 	ret	;@0561F
 L05620:	mov	di, 712h	;@05620
-@@1:	call	L05606	;@05623
+@@1:	call	NEW_POOL	;@05623
 	and	ax, ax	;@05626
 	je	@@2	;@05628
 	jmp	L056C7	;@0562A
@@ -8299,11 +8415,11 @@ L05620:	mov	di, 712h	;@05620
 	mov	word ptr ds:[748h], 732h	;@056BA
 	mov	word ptr ds:[750h], 732h	;@056C0
 	ret	;@056C6
-L056C7:	jmp	L002C0	;@056C7
+L056C7:	jmp	OUT_OF_MEMORY	;@056C7
 L056CA:	push	cx	;@056CA
 	push	di	;@056CB
 	mov	cx, 4	;@056CC
-@@1:	call	L05606	;@056CF
+@@1:	call	NEW_POOL	;@056CF
 	and	ax, ax	;@056D2
 	jne	L056C7	;@056D4
 	add	di, 8	;@056D6
@@ -8355,7 +8471,7 @@ L05725:	push	si	;@05725
 @@3:	pop	di	;@0574B
 	pop	si	;@0574C
 	ret	;@0574D
-@@4:	jmp	L002C0	;@0574E
+@@4:	jmp	OUT_OF_MEMORY	;@0574E
 L05751:	add	word ptr ds:[714h], 4	;@05751
 	add	word ptr ds:[71Ch], 4	;@05756
 	add	word ptr ds:[724h], 4	;@0575B
@@ -8418,7 +8534,10 @@ L0599F:	call L087E1	;@0599F
 	jmp short L059B4	;@059A2
 L059A4:	call L087E1	;@059A4
 	jmp short L059CA	;@059A7
-L059A9:	nop	;@059A9
+; BAD_RECORD, SKIP_TYPDEF, SKIP_RECORD: entries of the record tables for record types
+; TLINK does not handle: an unknown type is an error, TYPDEF and the obsolete Intel types are
+; skipped.  (The two NOPs are separate entry points.)
+BAD_RECORD:	nop	;@059A9
 L059AA:	nop	;@059AA
 L059AB:	inc word ptr ds:[41Ch]	;@059AB
 	mov	si, word ptr ds:[3E0h]	;@059AF
@@ -8450,7 +8569,7 @@ L059E7:	shl	bx, 1	;@059E7
 L059F0:	call	L0885D	;@059F0
 L059F3:	mov	word ptr ds:[41Eh], 1	;@059F3
 	cmp	bx, 78h	;@059F9
-	je	L05A15	;@059FC
+	je	IGNORE_RECORD	;@059FC
 	cmp	byte ptr ds:[125h], 0	;@059FE
 	jne	L059E7	;@05A03
 	mov	word ptr ds:[422h], 1	;@05A05
@@ -8458,44 +8577,45 @@ L059F3:	mov	word ptr ds:[41Eh], 1	;@059F3
 	push	cx	;@05A0D
 	mov	ax, 1Dh	;@05A0E
 	push	ax	;@05A11
-	call L0BE91	;@05A12
-L05A15:	ret	;@05A15
+	call FATAL	;@05A12
+; IGNORE_RECORD: a record type ignored without a word (A6h..AAh).
+IGNORE_RECORD:	ret	;@05A15
 
 ; the pass-1 handlers of the object records, by record type / 2 (80h THEADR at 40h ...)
-L05A16	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9	;@05A16
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059AB
+PASS1_RECORDS	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD	;@05A16
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, L059AB
 	dw	L059AB, L059AB, L059AB, L059AB, L059AB, L059AB, L059AB, L059AB
-	dw	L01462, L059AB, L059AB, L059AB, L01561, L0169D, L01890, L059AA
-	dw	L01AD4, L01AD8, L01B10, L01BB0, L01C2B, L01D70, L01E39, L059AB
-	dw	L021CA, L0221A, L02276, L05A15, L05A15, L05A15, L059A9, L059A9
-	dw	L024C2, L059A9, L01894, L01AD8, L024C7, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L02276, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
+	dw	P1_THEADR, L059AB, L059AB, L059AB, P1_COMENT, P1_MODEND, P1_EXTDEF, L059AA
+	dw	P1_PUBDEF, P1_LPUBDEF, P1_LINNUM, P1_LNAMES, P1_SEGDEF, P1_GRPDEF, P1_FIXUPP, L059AB
+	dw	P1_LEDATA, P1_LIDATA, LIBRARY_HEADER, IGNORE_RECORD, IGNORE_RECORD, IGNORE_RECORD, BAD_RECORD, BAD_RECORD
+	dw	P1_COMDEF, BAD_RECORD, P1_LEXTDEF, P1_LPUBDEF, P1_LCOMDEF, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	LIBRARY_HEADER, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
 
 ; the pass-2 handlers of the object records
-L05B16	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9	;@05B16
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059AB
+PASS2_RECORDS	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD	;@05B16
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, L059AB
 	dw	L059AB, L059AB, L059AB, L059AB, L059AB, L059AB, L059AB, L059AB
-	dw	L02608, L059AB, L059AB, L059AB, L03006, L03C2A, L059AB, L059AB
-	dw	L059AB, L059AB, L03E14, L059AB, L059AB, L059AB, L040D5, L059AB
-	dw	L0435C, L043BF, L02276, L05A15, L05A15, L05A15, L059A9, L059A9
-	dw	L059AB, L059AB, L059AB, L059AB, L059AB, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
-	dw	L02276, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9, L059A9
+	dw	P2_THEADR, L059AB, L059AB, L059AB, P2_COMENT, P2_MODEND, L059AB, L059AB
+	dw	L059AB, L059AB, P2_LINNUM, L059AB, L059AB, L059AB, P2_FIXUPP, L059AB
+	dw	P2_LEDATA, P2_LIDATA, LIBRARY_HEADER, IGNORE_RECORD, IGNORE_RECORD, IGNORE_RECORD, BAD_RECORD, BAD_RECORD
+	dw	L059AB, L059AB, L059AB, L059AB, L059AB, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
+	dw	LIBRARY_HEADER, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD, BAD_RECORD
 L05C16:	push	cx	;@05C16
 	mov	cx, 0Ah	;@05C17
 	mov	di, cx	;@05C1A
@@ -8503,7 +8623,7 @@ L05C16:	push	cx	;@05C16
 	mov	di, 77Ah	;@05C1D
 	call	L054ED	;@05C20
 	jae	@@1	;@05C23
-	call	L054E0	;@05C25
+	call	TABLE_OVERFLOW	;@05C25
 @@1:	mov	word ptr ds:[0C49h], di	;@05C28
 	push	di	;@05C2C
 	xor	ax, ax	;@05C2D
@@ -8519,7 +8639,7 @@ L05C16:	push	cx	;@05C16
 	mov	di, 772h	;@05C44
 	call	L054ED	;@05C47
 	jae	@@2	;@05C4A
-	call	L054E0	;@05C4C
+	call	TABLE_OVERFLOW	;@05C4C
 @@2:	push	di	;@05C4F
 	xor	ax, ax	;@05C50
 	cld	;@05C52
@@ -8578,7 +8698,7 @@ L05C70:	mov	word ptr ds:[47Ah], 0	;@05C70
 	call	L05519	;@05CEB
 	pop	bx	;@05CEE
 	jae	@@7	;@05CEF
-	call	L054E0	;@05CF1
+	call	TABLE_OVERFLOW	;@05CF1
 @@6:	xchg	word ptr [bx+2], di	;@05CF4
 	pop	bx	;@05CF7
 @@7:	mov	dx, di	;@05CF8
@@ -8931,7 +9051,7 @@ L05E38:	push	bp	;@05E38
 	mov	di, 76h	;@06091
 	call COPY_NAME	;@06094
 	push	bx	;@06097
-	mov	ds, word ptr cs:L00000+16	;@06098
+	mov	ds, word ptr cs:DATA_SEGMENT	;@06098
 	push	ds	;@0609D
 	mov	ax, 76h	;@0609E
 	push	ax	;@060A1
@@ -8981,7 +9101,7 @@ L05E38:	push	bp	;@05E38
 	push	cx	;@060F9
 	mov	ax, 33h	;@060FA
 	push	ax	;@060FD
-	call L0BE9B	;@060FE
+	call WARNING	;@060FE
 	pop	bx	;@06101
 	pop	di	;@06102
 	pop	di	;@06103
@@ -9089,7 +9209,7 @@ L0610A:	push	bp	;@0610A
 	mov	di, 7BAh	;@061FF
 	call	L054ED	;@06202
 	jae	@@9	;@06205
-	call	L054E0	;@06207
+	call	TABLE_OVERFLOW	;@06207
 @@9:	pop	ax	;@0620A
 	mov	word ptr es:[di], ax	;@0620B
 	xchg	ax, di	;@0620E
@@ -9142,7 +9262,7 @@ L0610A:	push	bp	;@0610A
 	push	ax	;@0627D
 	mov	ax, 2Ah	;@0627E
 	push	ax	;@06281
-	call L0BE96	;@06282
+	call ERROR	;@06282
 	pop	di	;@06285
 	pop	si	;@06286
 	pop	dx	;@06287
@@ -9204,7 +9324,7 @@ L0610A:	push	bp	;@0610A
 	mov	di, 7BAh	;@06313
 	call	L054ED	;@06316
 	jae	@@15	;@06319
-	call	L054E0	;@0631B
+	call	TABLE_OVERFLOW	;@0631B
 @@15:	pop	ax	;@0631E
 	mov	word ptr es:[di], ax	;@0631F
 	xchg	ax, di	;@06322
@@ -9417,7 +9537,7 @@ L063C9:	push	si	;@063C9
 	mov	di, 7BAh	;@0651B
 	call	L054ED	;@0651E
 	jae	@@13	;@06521
-	call	L054E0	;@06523
+	call	TABLE_OVERFLOW	;@06523
 @@13:	mov	word ptr es:[di], bx	;@06526
 @@14:	add	bx, 0Ah	;@06529
 	jmp	@@12	;@0652C
@@ -9818,7 +9938,7 @@ L0689A:	push	bp	;@0689A
 	mov	di, 7BAh	;@068FF
 	call	L054ED	;@06902
 	jae	@@4	;@06905
-	call	L054E0	;@06907
+	call	TABLE_OVERFLOW	;@06907
 @@4:	mov	word ptr es:[di], bx	;@0690A
 	mov	es, word ptr ds:[77Eh]	;@0690D
 	mov	di, si	;@06911
@@ -9991,7 +10111,7 @@ L069D0:	push	bp	;@069D0
 	push	cx	;@06AB9
 	mov	ax, 35h	;@06ABA
 	push	ax	;@06ABD
-	call L0BE9B	;@06ABE
+	call WARNING	;@06ABE
 	pop	di	;@06AC1
 	pop	si	;@06AC2
 	pop	bx	;@06AC3
@@ -10006,7 +10126,7 @@ L06ACA:	push	bp	;@06ACA
 	cmp	byte ptr ds:[126h], 1	;@06AD3
 	jne	@@1	;@06AD8
 	mov	di, 7EAh	;@06ADA
-	call	L05606	;@06ADD
+	call	NEW_POOL	;@06ADD
 @@1:	xor	di, di	;@06AE0
 	mov	cx, di	;@06AE2
 	mov	bx, 0FFFFh	;@06AE4
@@ -10050,7 +10170,7 @@ L06ACA:	push	bp	;@06ACA
 	mov	di, 7EAh	;@06B53
 	call	L054ED	;@06B56
 	jae	@@7	;@06B59
-	call	L054E0	;@06B5B
+	call	TABLE_OVERFLOW	;@06B5B
 @@7:	mov	word ptr es:[di], si	;@06B5E
 	mov	ax, word ptr [bp-4]	;@06B61
 	mov	word ptr es:[di+4], ax	;@06B64
@@ -10146,7 +10266,7 @@ L06ACA:	push	bp	;@06ACA
 	push	cx	;@06C50
 	mov	ax, 0Ah	;@06C51
 	push	ax	;@06C54
-	call L0BE96	;@06C55
+	call ERROR	;@06C55
 	or	byte ptr ds:[410h], 4	;@06C58
 	pop	di	;@06C5D
 	pop	si	;@06C5E
@@ -10207,7 +10327,7 @@ L06CB7:	push	cx	;@06CB7
 	mov	di, 7B2h	;@06CDB
 	call	L054ED	;@06CDE
 	jae	@@3	;@06CE1
-	call	L054E0	;@06CE3
+	call	TABLE_OVERFLOW	;@06CE3
 @@3:	mov	word ptr es:[bx], cx	;@06CE6
 	mov	word ptr es:[bx+2], si	;@06CE9
 @@4:	pop	bx	;@06CED
@@ -10247,7 +10367,7 @@ L06D36:	push	ax	;@06D36
 	mov	di, 79Ah	;@06D3E
 	call	L054ED	;@06D41
 	jae	@@1	;@06D44
-	call	L054E0	;@06D46
+	call	TABLE_OVERFLOW	;@06D46
 @@1:	push	di	;@06D49
 	mov	al, 0	;@06D4A
 	cld	;@06D4C
@@ -10398,7 +10518,7 @@ L06DA9:	push	bp	;@06DA9
 	push	cx	;@06EDA
 	mov	ax, 36h	;@06EDB
 	push	ax	;@06EDE
-	call L0BE9B	;@06EDF
+	call WARNING	;@06EDF
 	pop	si	;@06EE2
 @@9:	mov	es, word ptr ds:[77Eh]	;@06EE3
 	mov	ax, word ptr [bp-14h]	;@06EE7
@@ -10629,7 +10749,7 @@ L06DA9:	push	bp	;@06DA9
 	push	cx	;@07175
 	mov	ax, 9	;@07176
 	push	ax	;@07179
-	call L0BE96	;@0717A
+	call ERROR	;@0717A
 	or	byte ptr ds:[410h], 4	;@0717D
 	pop	di	;@07182
 	pop	si	;@07183
@@ -10818,7 +10938,7 @@ L0718B:	push	bp	;@0718B
 	push	ax	;@0736E
 	mov	ax, 13h	;@0736F
 	push	ax	;@07372
-	call L0BE91	;@07373
+	call FATAL	;@07373
 @@26:	push	ax	;@07376
 	push	bx	;@07377
 	push	cx	;@07378
@@ -10829,7 +10949,7 @@ L0718B:	push	bp	;@0718B
 	push	cx	;@0737E
 	mov	ax, 0Bh	;@0737F
 	push	ax	;@07382
-	call L0BE96	;@07383
+	call ERROR	;@07383
 	or	byte ptr ds:[410h], 2	;@07386
 	pop	di	;@0738B
 	pop	si	;@0738C
@@ -10850,7 +10970,7 @@ L0718B:	push	bp	;@0718B
 	push	ax	;@073A5
 	mov	ax, 14h	;@073A6
 	push	ax	;@073A9
-	call L0BE91	;@073AA
+	call FATAL	;@073AA
 L073AD:	push	ax	;@073AD
 	push	bx	;@073AE
 	push	dx	;@073AF
@@ -11072,7 +11192,7 @@ L075D0:	xor	ax, ax	;@075D0
 	push	ax	;@075D2
 	mov	ax, 32h	;@075D3
 	push	ax	;@075D6
-	call L0BE9B	;@075D7
+	call WARNING	;@075D7
 	ret	;@075DA
 L075DB:	mov	ax, word ptr ds:[482h]	;@075DB
 	inc	ax	;@075DE
@@ -11235,7 +11355,7 @@ L077D3:	mov	si, 582Ah	;@077D3
 	mov	ah, 0	;@077D6
 	mov	word ptr ds:[3450h], cs	;@077D8
 	call	L0921C	;@077DC
-	mov	ds, word ptr cs:L00000+16	;@077DF
+	mov	ds, word ptr cs:DATA_SEGMENT	;@077DF
 	jb	@@1	;@077E4
 	push	bx	;@077E6
 	and	bx, 3	;@077E7
@@ -11254,7 +11374,7 @@ L077D3:	mov	si, 582Ah	;@077D3
 	push	cx	;@07811
 	mov	ax, 37h	;@07812
 	push	ax	;@07815
-	call L0BE9B	;@07816
+	call WARNING	;@07816
 @@2:	stc	;@07819
 	ret	;@0781A
 @@3:	mov	ax, word ptr es:[bx+4]	;@0781B
@@ -11825,7 +11945,7 @@ L07D9D:	push	si	;@07D9D
 	mov	di, 7BAh	;@07E06
 	call	L054ED	;@07E09
 	jae	@@5	;@07E0C
-	call	L054E0	;@07E0E
+	call	TABLE_OVERFLOW	;@07E0E
 @@5:	mov	word ptr es:[di], si	;@07E11
 @@6:	pop	bx	;@07E14
 	add	si, word ptr ds:[48Eh]	;@07E15
@@ -12299,7 +12419,7 @@ L08312:	cmp	byte ptr ds:[11h], 1	;@08312
 	add	dx, 2	;@08324
 	mov	ah, 3Ch	;@08327
 	xor	cx, cx	;@08329
-	call	L0030C	;@0832B
+	call	OPEN_FILE	;@0832B
 	pop	ds	;@0832E
 	mov	word ptr ds:[20h], ax	;@0832F
 @@1:	ret	;@08332
@@ -12385,7 +12505,9 @@ L0837D:	push	bp	;@0837D
 	mov	al, 0EFh	;@08401
 	and	byte ptr es:[bx+0Eh], al	;@08403
 	ret	;@08407
-L08408:	mov	word ptr ds:[47Eh], ds	;@08408
+; LINK: the link itself: pass 1 over the objects and libraries, the layout, pass 2,
+; the map and the output file.
+LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	mov	word ptr ds:[480h], cs	;@0840C
 	mov	al, byte ptr ds:[0C32h]	;@08410
 	or	al, byte ptr ds:[14h]	;@08413
@@ -12437,7 +12559,7 @@ L08408:	mov	word ptr ds:[47Eh], ds	;@08408
 	cmp	byte ptr ds:[17h], 1	;@084A2
 	jne	@@3	;@084A7
 	mov	di, 802h	;@084A9
-	call	L05606	;@084AC
+	call	NEW_POOL	;@084AC
 	mov	di, 80Ah	;@084AF
 	call	L056CA	;@084B2
 @@3:	mov	byte ptr ds:[3D4h], 0	;@084B5
@@ -12456,7 +12578,7 @@ L08408:	mov	word ptr ds:[47Eh], ds	;@08408
 @@5:	mov	word ptr ds:[411h], 0	;@084EE
 	call	L08333	;@084F4
 	mov	word ptr ds:[41Ch], 0	;@084F7
-	mov	word ptr ds:[3D0h], offset L05A16	;@084FD
+	mov	word ptr ds:[3D0h], offset PASS1_RECORDS	;@084FD
 	mov	byte ptr ds:[3D5h], 0	;@08503
 	call	L08BBA	;@08508
 	mov	ax, word ptr ds:[3474h]	;@0850B
@@ -12482,7 +12604,7 @@ L08408:	mov	word ptr ds:[47Eh], ds	;@08408
 	call	L05519	;@0854F
 	pop	bx	;@08552
 	jae	@@7	;@08553
-	call	L054E0	;@08555
+	call	TABLE_OVERFLOW	;@08555
 @@6:	xchg	word ptr [bx+2], di	;@08558
 	pop	bx	;@0855B
 @@7:	stosw	;@0855C
@@ -12610,7 +12732,7 @@ L08408:	mov	word ptr ds:[47Eh], ds	;@08408
 	adc	dx, word ptr ds:[3DEh]	;@086D4
 	mov	cx, 0	;@086D8
 	call	L08B1D	;@086DB
-@@24:	mov	word ptr ds:[3D0h], offset L05B16	;@086DE
+@@24:	mov	word ptr ds:[3D0h], offset PASS2_RECORDS	;@086DE
 	mov	word ptr ds:[3E2h], 0	;@086E4
 	mov	byte ptr ds:[3F1h], 0FFh	;@086EA
 	mov	byte ptr ds:[492h], 0	;@086EF
@@ -12657,7 +12779,7 @@ L08408:	mov	word ptr ds:[47Eh], ds	;@08408
 	add	dx, 2	;@08772
 	mov	ax, 3C00h	;@08775
 	xor	cx, cx	;@08778
-	call	L0030C	;@0877A
+	call	OPEN_FILE	;@0877A
 	pop	ds	;@0877D
 	mov	word ptr ds:[22h], ax	;@0877E
 	ret	;@08781
@@ -12728,7 +12850,7 @@ L087E1:	push	ax	;@087E1
 @@2:	mov	ah, 3Fh	;@08836
 	mov	bx, word ptr ds:[24h]	;@08838
 	mov	dx, di	;@0883C
-	call	L002D2	;@0883E
+	call	DOS_CALL	;@0883E
 	or	ax, ax	;@08841
 	je	@@3	;@08843
 	add	word ptr ds:[346Ch], ax	;@08845
@@ -12750,7 +12872,7 @@ L0885D:	push	ds	;@0885D
 	push	ax	;@08865
 	mov	ax, 5	;@08866
 	push	ax	;@08869
-	call L0BE91	;@0886A
+	call FATAL	;@0886A
 L0886D:	xchg	bx, si	;@0886D
 	push	bx	;@0886F
 	push	cx	;@08870
@@ -12765,7 +12887,7 @@ L0886D:	xchg	bx, si	;@0886D
 	xchg	dl, cl	;@0887E
 	mov	bx, word ptr ds:[22h]	;@08880
 	mov	ax, 4200h	;@08884
-	call	L002D2	;@08887
+	call	DOS_CALL	;@08887
 	mov	bx, word ptr ds:[22h]	;@0888A
 	mov	cx, 2000h	;@0888E
 	cmp	si, word ptr ds:[482h]	;@08891
@@ -12774,7 +12896,7 @@ L0886D:	xchg	bx, si	;@0886D
 @@1:	pop	ax	;@0889B
 	xor	dx, dx	;@0889C
 	mov	ds, word ptr [si+832h]	;@0889E
-	call	L002F5	;@088A2
+	call	DOS_CALL_FULL	;@088A2
 	pop	ds	;@088A5
 	pop	dx	;@088A6
 	pop	cx	;@088A7
@@ -12847,13 +12969,13 @@ L088AC:	cmp	word ptr ds:[482h], -1	;@088AC
 	push	ax	;@0893E
 	call	far ptr FREE_HANDLE_BLOCK	;@0893F
 	ret	;@08944
-@@7:	jmp	L002C0	;@08945
+@@7:	jmp	OUT_OF_MEMORY	;@08945
 L08948:	push	bp	;@08948
 	mov	bp, sp	;@08949
 	push	ds	;@0894B
 	push	si	;@0894C
 	push	di	;@0894D
-	mov	ds, word ptr cs:L00000+16	;@0894E
+	mov	ds, word ptr cs:DATA_SEGMENT	;@0894E
 	mov	ax, word ptr [bp+0Ch]	;@08953
 	dec	ax	;@08956
 	je	@@1	;@08957
@@ -12903,7 +13025,7 @@ L089B3:	xor	ax, ax	;@089B3
 	push	ax	;@089B5
 	mov	ax, 17h	;@089B6
 	push	ax	;@089B9
-	call L0BE91	;@089BA
+	call FATAL	;@089BA
 L089BD:	push	ax	;@089BD
 	push	cx	;@089BE
 	push	dx	;@089BF
@@ -12941,7 +13063,7 @@ L089C0:	sub	ax, word ptr ds:[0C33h]	;@089C0
 @@3:	call	L08979	;@08A02
 	mov	es, word ptr [bx+832h]	;@08A05
 	jmp	@@1	;@08A09
-@@4:	jmp	L002C0	;@08A0B
+@@4:	jmp	OUT_OF_MEMORY	;@08A0B
 @@5:	cmp	bx, word ptr ds:[482h]	;@08A0E
 	jle	@@6	;@08A12
 	mov	word ptr ds:[482h], bx	;@08A14
@@ -13107,11 +13229,11 @@ L08B66:	push	di	;@08B66
 	mov	ax, 0FFFFh	;@08B73
 	cmp	byte ptr es:[si], 0	;@08B76
 	je	@@1	;@08B7A
-	mov	ds, word ptr cs:L00000+16	;@08B7C
+	mov	ds, word ptr cs:DATA_SEGMENT	;@08B7C
 	mov	ah, 80h	;@08B81
 	call	L0910F	;@08B83
 	mov	ax, bx	;@08B86
-	mov	es, word ptr cs:L00000+16	;@08B88
+	mov	es, word ptr cs:DATA_SEGMENT	;@08B88
 	lds	bx, dword ptr es:[132h]	;@08B8D
 	mov	ds, word ptr [bx]	;@08B92
 @@1:	pop	dx	;@08B94
@@ -13138,13 +13260,13 @@ L08B9A:	push	di	;@08B9A
 	pop	di	;@08BB8
 	ret	;@08BB9
 L08BBA:	push	ds	;@08BBA
-	mov	ds, word ptr cs:L00000+16	;@08BBB
+	mov	ds, word ptr cs:DATA_SEGMENT	;@08BBB
 	mov	word ptr ds:[41Ah], 0	;@08BC0
 	mov	word ptr ds:[82Ch], 0	;@08BC6
 	pop	ds	;@08BCC
 	ret	;@08BCD
 L08BCE:	push	ds	;@08BCE
-	mov	ds, word ptr cs:L00000+16	;@08BCF
+	mov	ds, word ptr cs:DATA_SEGMENT	;@08BCF
 	xor	di, di	;@08BD4
 	mov	es, word ptr ds:[82Eh]	;@08BD6
 	cmp	di, word ptr ds:[82Ch]	;@08BDA
@@ -13157,7 +13279,7 @@ L08BCE:	push	ds	;@08BCE
 	mov	di, 82Ah	;@08BE9
 	call	L054ED	;@08BEC
 	jae	@@3	;@08BEF
-	call	L054E0	;@08BF1
+	call	TABLE_OVERFLOW	;@08BF1
 @@3:	mov	word ptr es:[di], ax	;@08BF4
 @@4:	pop	ds	;@08BF7
 	ret	;@08BF8
@@ -13175,7 +13297,7 @@ L08BF9:	push	si	;@08BF9
 L08C0F:	push	bx	;@08C0F
 	push	ds	;@08C10
 	push	es	;@08C11
-	mov	es, word ptr cs:L00000+16	;@08C12
+	mov	es, word ptr cs:DATA_SEGMENT	;@08C12
 	lds	bx, dword ptr es:[132h]	;@08C17
 	mov	ds, word ptr [bx]	;@08C1C
 	cmp	byte ptr [si], 0FFh	;@08C1E
@@ -13201,8 +13323,8 @@ L08C0F:	push	bx	;@08C0F
 	push	ax	;@08C55
 	mov	ax, 3Ch	;@08C56
 	push	ax	;@08C59
-	call L0BE9B	;@08C5A
-	mov	es, word ptr cs:L00000+16	;@08C5D
+	call WARNING	;@08C5A
+	mov	es, word ptr cs:DATA_SEGMENT	;@08C5D
 	lds	bx, dword ptr es:[132h]	;@08C62
 	mov	ds, word ptr [bx]	;@08C67
 	pop	si	;@08C69
@@ -13216,9 +13338,9 @@ L08C0F:	push	bx	;@08C0F
 	pop	ds	;@08C81
 	push	si	;@08C82
 	mov	di, 82Ah	;@08C83
-	call	L05606	;@08C86
+	call	NEW_POOL	;@08C86
 	pop	si	;@08C89
-	mov	es, word ptr cs:L00000+16	;@08C8A
+	mov	es, word ptr cs:DATA_SEGMENT	;@08C8A
 	lds	bx, dword ptr es:[132h]	;@08C8F
 	mov	ds, word ptr [bx]	;@08C94
 @@5:	call	L08BF9	;@08C96
@@ -13334,7 +13456,7 @@ L08D03:	push	bp	;@08D03
 	lea	si, [bp-80h]	;@08D91
 	mov	cx, 80h	;@08D94
 	rep movsb	;@08D97
-	mov	ds, word ptr cs:L00000+16	;@08D99
+	mov	ds, word ptr cs:DATA_SEGMENT	;@08D99
 @@4:	xor	dx, dx	;@08D9E
 	mov	word ptr ds:[3468h], dx	;@08DA0
 	mov	word ptr ds:[346Ah], dx	;@08DA4
@@ -13348,12 +13470,12 @@ L08D03:	push	bp	;@08D03
 	cmp	byte ptr ds:[3D5h], 1	;@08DBF
 	jne	@@6	;@08DC4
 	mov	dx, 54BBh	;@08DC6
-	call	L0033A	;@08DC9
+	call	FILE_SIZE	;@08DC9
 	mov	word ptr ds:[250h], ax	;@08DCC
 	mov	word ptr ds:[252h], dx	;@08DCF
 @@6:	mov	ax, 3D00h	;@08DD3
 	mov	dx, 54BBh	;@08DD6
-	call	L0030C	;@08DD9
+	call	OPEN_FILE	;@08DD9
 	pop	ds	;@08DDC
 	cmp	word ptr ds:[345Ah], 0	;@08DDD
 	je	@@7	;@08DE2
@@ -13370,7 +13492,7 @@ L08D03:	push	bp	;@08D03
 	cmp	byte ptr ds:[3D5h], 1	;@08E02
 	jne	@@8	;@08E07
 	mov	cx, 200h	;@08E09
-@@8:	call	L002D2	;@08E0C
+@@8:	call	DOS_CALL	;@08E0C
 	or	ax, ax	;@08E0F
 	je	@@12	;@08E11
 	add	word ptr ds:[346Ch], ax	;@08E13
@@ -13443,19 +13565,19 @@ L08D03:	push	bp	;@08D03
 	xor	cx, cx	;@08EC6
 	mov	dx, cx	;@08EC8
 	mov	ax, 4200h	;@08ECA
-	call	L002D2	;@08ECD
+	call	DOS_CALL	;@08ECD
 	jmp	short @@17	;@08ED0
 @@16:	push	ds	;@08ED2
 	mov	dx, 54BBh	;@08ED3
 	mov	ax, 3D00h	;@08ED6
-	call	L0030C	;@08ED9
+	call	OPEN_FILE	;@08ED9
 	pop	ds	;@08EDC
 	mov	word ptr ds:[24h], ax	;@08EDD
 @@17:	mov	bx, word ptr ds:[24h]	;@08EE0
 	mov	ah, 3Fh	;@08EE4
 	mov	dx, 144Eh	;@08EE6
 	mov	cx, 2000h	;@08EE9
-	call	L002D2	;@08EEC
+	call	DOS_CALL	;@08EEC
 	or	ax, ax	;@08EEF
 	jne	@@18	;@08EF1
 	jmp	@@12	;@08EF3
@@ -13485,7 +13607,7 @@ L08D03:	push	bp	;@08D03
 	pop	bx	;@08F39
 	jmp	short @@22	;@08F3A
 @@21:	mov	word ptr [si], 0	;@08F3C
-	call	L002E6	;@08F40
+	call	CLOSE_FILE	;@08F40
 @@22:	mov	word ptr ds:[24h], 0FFFFh	;@08F43
 	add	word ptr ds:[494h], 0Eh	;@08F49
 	les	si, dword ptr ds:[132h]	;@08F4E
@@ -13552,7 +13674,7 @@ L08F61	dd	L08FDD	;@08F61
 L08FDD:	push	bp	;@08FDD
 	mov	bp, sp	;@08FDE
 	push	ds	;@08FE0
-	mov	ds, word ptr cs:L00000+16	;@08FE1
+	mov	ds, word ptr cs:DATA_SEGMENT	;@08FE1
 	cmp	word ptr [bp+0Ch], 1	;@08FE6
 	jne	@@1	;@08FEA
 	mov	byte ptr ds:[0Ah], 0	;@08FEC
@@ -13618,7 +13740,7 @@ L09003:	mov	dx, word ptr es:[di+0Ch]	;@09003
 	xchg	ax, dx	;@0908A
 	mov	bx, word ptr ds:[24h]	;@0908B
 	mov	ax, 4200h	;@0908F
-	call	L002D2	;@09092
+	call	DOS_CALL	;@09092
 	mov	word ptr ds:[3468h], ax	;@09095
 	mov	word ptr ds:[346Ah], dx	;@09098
 	mov	word ptr ds:[346Ch], ax	;@0909C
@@ -13638,7 +13760,7 @@ L09003:	mov	dx, word ptr es:[di+0Ch]	;@09003
 @@8:	mov	ah, 3Fh	;@090C3
 	mov	bx, word ptr ds:[24h]	;@090C5
 	mov	dx, 144Eh	;@090C9
-	call	L002D2	;@090CC
+	call	DOS_CALL	;@090CC
 	add	word ptr ds:[346Ch], ax	;@090CF
 	adc	word ptr ds:[346Eh], 0	;@090D3
 	add	ax, 144Eh	;@090D8
@@ -13804,7 +13926,7 @@ L0910F:	push	bp	;@0910F
 @@15:	call	L05519	;@09213
 	pop	bx	;@09216
 	jae	@@12	;@09217
-L09219:	call	L054E0	;@09219
+L09219:	call	TABLE_OVERFLOW	;@09219
 L0921C:	call	L0910F	;@0921C
 	cmp	word ptr es:[bx], -1	;@0921F
 	jne	@@2	;@09223
@@ -13946,7 +14068,7 @@ L0933D:	push	cx	;@0933D
 	pop	cx	;@09351
 	ret	;@09352
 L09353:	push	ds	;@09353
-	mov	ds, word ptr cs:L00000+16	;@09354
+	mov	ds, word ptr cs:DATA_SEGMENT	;@09354
 	cmp	byte ptr ds:[152h], 0	;@09359
 	pop	ds	;@0935E
 	je	@@2	;@0935F
@@ -14054,7 +14176,8 @@ L09418:	push	di	;@09418
 	cmp	word ptr es:[di+6], 0	;@09465
 	jne	@@2	;@0946A
 	jmp	@@3	;@0946C
-L0946E:	mov	word ptr ds:[345Ah], 0	;@0946E
+; CLOSE_CACHED_FILE: close one of the input files TLINK keeps open, to free a handle.
+CLOSE_CACHED_FILE:	mov	word ptr ds:[345Ah], 0	;@0946E
 	mov	cx, word ptr ds:[3472h]	;@09474
 	jcxz	@@2	;@09478
 	mov	si, word ptr ds:[3474h]	;@0947A
@@ -14067,7 +14190,7 @@ L0946E:	mov	word ptr ds:[345Ah], 0	;@0946E
 	ret	;@0948A
 @@3:	mov	word ptr [si], 0	;@0948B
 	push	dx	;@0948F
-	call	L002E6	;@09490
+	call	CLOSE_FILE	;@09490
 	pop	dx	;@09493
 	clc	;@09494
 	ret	;@09495
@@ -14096,7 +14219,7 @@ L09496:	xor	dx, dx	;@09496
 	mov	word ptr ds:[17Ch], 20h	;@094D5
 	ret	;@094DB
 @@1:	push	ds	;@094DC
-	mov	es, word ptr cs:L00000+16	;@094DD
+	mov	es, word ptr cs:DATA_SEGMENT	;@094DD
 	lds	bx, dword ptr ds:[132h]	;@094E2
 	mov	ds, word ptr [bx]	;@094E6
 @@2:	mov	bx, word ptr es:[si]	;@094E8
@@ -14118,7 +14241,7 @@ L094FA:	mov	di, word ptr ds:[0Ch]	;@094FA
 	push	ds	;@09509
 	pop	es	;@0950A
 	ret	;@0950B
-@@1:	jmp	L002C0	;@0950C
+@@1:	jmp	OUT_OF_MEMORY	;@0950C
 L0950F:	push	dx	;@0950F
 	mov	ax, 3700h	;@09510
 	int	21h	;@09513
@@ -14210,9 +14333,9 @@ L095A3:	push	bp	;@095A3
 	ret	8	;@095C6
 L095C9:	push	bx	;@095C9
 	mov	bx, word ptr ds:[20h]	;@095CA
-	call	L002E6	;@095CE
+	call	CLOSE_FILE	;@095CE
 	mov	bx, word ptr ds:[22h]	;@095D1
-	call	L002E6	;@095D5
+	call	CLOSE_FILE	;@095D5
 	pop	bx	;@095D8
 	ret	;@095D9
 L095DA:	push	ds	;@095DA
@@ -14243,7 +14366,7 @@ L095DA:	push	ds	;@095DA
 	ret	4	;@0960A
 @@3:	push	bp	;@0960D
 	mov	bp, sp	;@0960E
-	call	L00134	;@09610
+	call	SHUTDOWN	;@09610
 	mov	ax, word ptr [bp+4]	;@09613
 	mov	ah, 4Ch	;@09616
 	int	21h	;@09618
@@ -14254,7 +14377,7 @@ L0961E:	push	ax	;@0961E
 	push	ax	;@09622
 	mov	ax, 1Eh	;@09623
 	push	ax	;@09626
-	call L0BE91	;@09627
+	call FATAL	;@09627
 L0962A:	cmp	byte ptr ds:[11Dh], 1	;@0962A
 	jne	@@1	;@0962F
 	push	di	;@09631
@@ -14407,7 +14530,7 @@ L09751:	cmp	byte ptr ds:[17h], 0	;@09751
 	push	ax	;@09768
 	mov	ax, 2Dh	;@09769
 	push	ax	;@0976C
-	call L0BE96	;@0976D
+	call ERROR	;@0976D
 	jmp	short @@5	;@09770
 @@2:	mov	cx, word ptr ds:[144h]	;@09772
 	jcxz	@@1	;@09776
@@ -14458,12 +14581,12 @@ FLUSH_OUTPUT:	push	ax	;@097B0
 	mov	bx, word ptr ds:[20h]	;@097C8
 	cmp	bx, -1	;@097CC
 	je	@@2	;@097CF
-	call	L002D2	;@097D1
+	call	DOS_CALL	;@097D1
 @@2:	cmp	byte ptr ds:[7645h], 1	;@097D4
 	jne	@@3	;@097D9
 	mov	ah, 40h	;@097DB
 	mov	bx, 1	;@097DD
-	call	L002D2	;@097E0
+	call	DOS_CALL	;@097E0
 @@3:	mov	si, 7540h	;@097E3
 	mov	cx, di	;@097E6
 	mov	di, 5540h	;@097E8
@@ -14489,10 +14612,10 @@ PUT_CHAR:	mov	byte ptr [di], al	;@097FF
 	ret	;@09808
 @@1:	call	FLUSH_OUTPUT	;@09809
 	ret	;@0980C
-L0980D	db	'0123456789ABCDEF'	;@0980D
+HEX_DIGITS	db	'0123456789ABCDEF'	;@0980D
 ; PUT_HEX_DIGIT: the low hex digit of AL to the output buffer.
 PUT_HEX_DIGIT:	push	bx	;@0981D
-	mov	bx, offset L0980D	;@0981E
+	mov	bx, offset HEX_DIGITS	;@0981E
 	and	al, 0Fh	;@09821
 	xlat	byte ptr cs:[bx]	;@09823
 	mov	byte ptr [di], al	;@09825
@@ -14506,7 +14629,7 @@ PUT_HEX_DIGIT:	push	bx	;@0981D
 ; HEX_BYTE: AL as two hex digits at DI (no flush).
 HEX_BYTE:	push	ax	;@09834
 	push	bx	;@09835
-	mov	bx, offset L0980D	;@09836
+	mov	bx, offset HEX_DIGITS	;@09836
 	mov	ah, al	;@09839
 	and	al, 0Fh	;@0983B
 	xlat	byte ptr cs:[bx]	;@0983D
@@ -14582,7 +14705,7 @@ PUT_NAME_STRING:	push	ax	;@098A5
 	jmp	PUT_PSTRING_MASKED	;@098AA
 L098AC:	push	ds	;@098AC
 	push	es	;@098AD
-	mov	es, word ptr cs:L00000+16	;@098AE
+	mov	es, word ptr cs:DATA_SEGMENT	;@098AE
 	cld	;@098B3
 	jmp	short @@2	;@098B4
 @@1:	stosb	;@098B6
@@ -14595,7 +14718,7 @@ L098AC:	push	ds	;@098AC
 	jae	@@3	;@098C2
 	ret	;@098C4
 @@3:	push	ds	;@098C5
-	mov	ds, word ptr cs:L00000+16	;@098C6
+	mov	ds, word ptr cs:DATA_SEGMENT	;@098C6
 	call	FLUSH_OUTPUT	;@098CB
 	pop	ds	;@098CE
 	ret	;@098CF
@@ -14611,7 +14734,7 @@ PUT_INLINE:	pop	si	;@098D0
 ; UNMANGLE (DGROUP's C code) into the output buffer at DI.
 DEMANGLE_NAME:	push	es	;@098D8
 	pop	ds	;@098D9
-	mov	es, word ptr cs:L00000+16	;@098DA
+	mov	es, word ptr cs:DATA_SEGMENT	;@098DA
 	inc	si	;@098DF
 	inc	si	;@098E0
 	push	di	;@098E1
@@ -14658,7 +14781,7 @@ DEMANGLE_NAME:	push	es	;@098D8
 	mov	ax, DGROUP	;@09927
 	mov	ds, ax	;@0992A
 	call	far ptr UNMANGLE	;@0992C
-	mov	ds, word ptr cs:L00000+16	;@09931
+	mov	ds, word ptr cs:DATA_SEGMENT	;@09931
 	push	ds	;@09936
 	pop	es	;@09937
 	ret	;@09938
@@ -14712,7 +14835,7 @@ PUT_SYMBOL_NAME:	push	cx	;@09939
 	jae	@@3	;@0998F
 	ret	;@09991
 @@3:	push	ds	;@09992
-	mov	ds, word ptr cs:L00000+16	;@09993
+	mov	ds, word ptr cs:DATA_SEGMENT	;@09993
 	call	FLUSH_OUTPUT	;@09998
 	pop	ds	;@0999B
 	ret	;@0999C
@@ -14788,7 +14911,7 @@ L09A0A:	push	ds	;@09A0A
 	pop	ds	;@09A13
 	ret	;@09A14
 ; CONSOLE_ON: flush, then copy all further output to the console.
-CONSOLE_ON:	mov	ds, word ptr cs:L00000+16	;@09A15
+CONSOLE_ON:	mov	ds, word ptr cs:DATA_SEGMENT	;@09A15
 	mov	di, word ptr ds:[7641h]	;@09A1A
 	call	FLUSH_OUTPUT	;@09A1E
 	mov	byte ptr ds:[7645h], 1	;@09A21
@@ -14799,7 +14922,7 @@ CONSOLE_OFF:	call	FLUSH_OUTPUT	;@09A27
 	ret	;@09A2F
 ; COPY_NAME: the name of handle SI to ES:DI as an ASCIZ string.
 COPY_NAME:	push	ds	;@09A30
-	mov	es, word ptr cs:L00000+16	;@09A31
+	mov	es, word ptr cs:DATA_SEGMENT	;@09A31
 	push	si	;@09A36
 	and	si, 3	;@09A37
 	shl	si, 1	;@09A3A
@@ -14816,14 +14939,15 @@ COPY_NAME:	push	ds	;@09A30
 	stosb	;@09A50
 	pop	ds	;@09A51
 	ret	;@09A52
-L09A53:	push	bp	;@09A53
+; PUT_FAR_STRING: an ASCIZ far string ([bp+4]) to the output buffer.
+PUT_FAR_STRING:	push	bp	;@09A53
 	mov	bp, sp	;@09A54
 	push	ds	;@09A56
 	push	es	;@09A57
 	push	si	;@09A58
 	push	di	;@09A59
 	lds	si, dword ptr [bp+4]	;@09A5A
-	mov	es, word ptr cs:L00000+16	;@09A5D
+	mov	es, word ptr cs:DATA_SEGMENT	;@09A5D
 	mov	di, word ptr ds:[7641h]	;@09A62
 	cld	;@09A66
 	jmp	short @@2	;@09A67
@@ -14831,7 +14955,7 @@ L09A53:	push	bp	;@09A53
 @@2:	lodsb	;@09A6A
 	cmp	al, 0	;@09A6B
 	jne	@@1	;@09A6D
-	mov	ds, word ptr cs:L00000+16	;@09A6F
+	mov	ds, word ptr cs:DATA_SEGMENT	;@09A6F
 	cmp	di, 7540h	;@09A74
 	jb	@@3	;@09A78
 	call	FLUSH_OUTPUT	;@09A7A
@@ -15049,7 +15173,7 @@ L09BDC:	push	si	;@09BDC
 	push	cx	;@09CB1
 	mov	ax, 39h	;@09CB2
 	push	ax	;@09CB5
-	call	L0BE9B	;@09CB6
+	call	WARNING	;@09CB6
 	pop	di	;@09CB9
 	pop	si	;@09CBA
 	pop	dx	;@09CBB
@@ -15073,7 +15197,7 @@ L09CC5:	push	es	;@09CC5
 	mov	di, 7CAh	;@09CE1
 	call	L054ED	;@09CE4
 	jae	@@3	;@09CE7
-	call	L054E0	;@09CE9
+	call	TABLE_OVERFLOW	;@09CE9
 @@3:	mov	word ptr es:[di], ax	;@09CEC
 	mov	word ptr es:[di+4], cx	;@09CEF
 	inc	word ptr es:[di+4]	;@09CF3
@@ -15103,9 +15227,9 @@ L09D1D:	push	bx	;@09D1D
 	push	di	;@09D21
 	push	es	;@09D22
 	mov	di, 7C2h	;@09D23
-	call	L05606	;@09D26
+	call	NEW_POOL	;@09D26
 	mov	di, 7CAh	;@09D29
-	call	L05606	;@09D2C
+	call	NEW_POOL	;@09D2C
 	xor	si, si	;@09D2F
 	xor	cx, cx	;@09D31
 	jmp	short @@3	;@09D33
@@ -15133,7 +15257,7 @@ L09D1D:	push	bx	;@09D1D
 	mov	di, 7C2h	;@09D63
 	call	L054ED	;@09D66
 	jae	@@5	;@09D69
-	call	L054E0	;@09D6B
+	call	TABLE_OVERFLOW	;@09D6B
 @@5:	mov	bx, di	;@09D6E
 	mov	word ptr es:[bx], cx	;@09D70
 	inc	word ptr es:[bx]	;@09D73
@@ -15168,7 +15292,7 @@ L09DCF:	push	bp	;@09DCF
 	mov	bp, sp	;@09DD0
 	sub	sp, 88h	;@09DD2
 	mov	di, 7FAh	;@09DD6
-	call	L05606	;@09DD9
+	call	NEW_POOL	;@09DD9
 	mov	bx, word ptr ds:[769Ah]	;@09DDC
 	cmp	bx, 0	;@09DE0
 	jne	@@5	;@09DE3
@@ -15186,7 +15310,7 @@ L09DCF:	push	bp	;@09DCF
 	mov	di, 7FAh	;@09E01
 	call	L054ED	;@09E04
 	jae	@@2	;@09E07
-	call	L054E0	;@09E09
+	call	TABLE_OVERFLOW	;@09E09
 @@2:	xor	ax, ax	;@09E0C
 	rep stosb	;@09E0E
 	pop	cx	;@09E10
@@ -15200,7 +15324,7 @@ L09DCF:	push	bp	;@09DCF
 	mov	di, 3Eh	;@09E1E
 	add	di, 0Fh	;@09E21
 	and	di, -10h	;@09E24
-	mov	ds, word ptr cs:L00000+16	;@09E27
+	mov	ds, word ptr cs:DATA_SEGMENT	;@09E27
 	mov	si, 0A46Bh	;@09E2C
 	mov	cx, 44h	;@09E2F
 	cmp	byte ptr ds:[128h], 2	;@09E32
@@ -15210,7 +15334,7 @@ L09DCF:	push	bp	;@09DCF
 @@3:	push	cs	;@09E3F
 	pop	ds	;@09E40
 	rep movsb	;@09E41
-	mov	ds, word ptr cs:L00000+16	;@09E43
+	mov	ds, word ptr cs:DATA_SEGMENT	;@09E43
 	pop	ax	;@09E48
 	jmp	@@11	;@09E49
 @@4:	mov	ax, 26h	;@09E4C
@@ -15273,14 +15397,14 @@ L09DCF:	push	bp	;@09DCF
 	mov	ax, 3D00h	;@09EC1
 	mov	ds, word ptr [bp-6]	;@09EC4
 	mov	dx, word ptr [bp-8]	;@09EC7
-	call	L0030C	;@09ECA
-	mov	ds, word ptr cs:L00000+16	;@09ECD
+	call	OPEN_FILE	;@09ECA
+	mov	ds, word ptr cs:DATA_SEGMENT	;@09ECD
 	mov	word ptr [bp-2], ax	;@09ED2
 	mov	bx, ax	;@09ED5
 	xor	cx, cx	;@09ED7
 	mov	dx, cx	;@09ED9
 	mov	ax, 4202h	;@09EDB
-	call	L002D2	;@09EDE
+	call	DOS_CALL	;@09EDE
 	cmp	dx, 0	;@09EE1
 	jne	@@13	;@09EE4
 	mov	word ptr [bp-4], ax	;@09EE6
@@ -15289,19 +15413,19 @@ L09DCF:	push	bp	;@09DCF
 	mov	di, 7FAh	;@09EEC
 	call	L054ED	;@09EEF
 	jae	@@10	;@09EF2
-	call	L054E0	;@09EF4
+	call	TABLE_OVERFLOW	;@09EF4
 @@10:	mov	bx, word ptr [bp-2]	;@09EF7
 	xor	cx, cx	;@09EFA
 	mov	dx, cx	;@09EFC
 	mov	ax, 4200h	;@09EFE
-	call	L002D2	;@09F01
+	call	DOS_CALL	;@09F01
 	mov	bx, word ptr [bp-2]	;@09F04
 	push	ds	;@09F07
 	mov	ds, word ptr ds:[7FEh]	;@09F08
 	xor	dx, dx	;@09F0C
 	mov	cx, word ptr [bp-4]	;@09F0E
 	mov	ax, 3F00h	;@09F11
-	call	L002D2	;@09F14
+	call	DOS_CALL	;@09F14
 	pop	ds	;@09F17
 	call	@@14	;@09F18
 	mov	ax, word ptr [bp-4]	;@09F1B
@@ -15320,15 +15444,15 @@ L09DCF:	push	bp	;@09DCF
 	push	ax	;@09F39
 	mov	ax, 1	;@09F3A
 	push	ax	;@09F3D
-	call L0BE91	;@09F3E
+	call FATAL	;@09F3E
 @@13:	call	@@14	;@09F41
 	xor	ax, ax	;@09F44
 	push	ax	;@09F46
 	mov	ax, 21h	;@09F47
 	push	ax	;@09F4A
-	call L0BE91	;@09F4B
+	call FATAL	;@09F4B
 @@14:	mov	bx, word ptr [bp-2]	;@09F4E
-	call	L002E6	;@09F51
+	call	CLOSE_FILE	;@09F51
 	ret	;@09F54
 L09F55:	push	ds	;@09F55
 	push	word ptr ds:[7652h]	;@09F56
@@ -15395,13 +15519,13 @@ L09FBD:	mov	word ptr ds:[69Dh], 454Eh	;@09FBD
 	push	cx	;@0A00A
 	mov	ax, 38h	;@0A00B
 	push	ax	;@0A00E
-	call L0BE9B	;@0A00F
+	call WARNING	;@0A00F
 	jmp	short @@7	;@0A012
 @@3:	xor	cx, cx	;@0A014
 	push	cx	;@0A016
 	mov	ax, 2Ch	;@0A017
 	push	ax	;@0A01A
-	call L0BE96	;@0A01B
+	call ERROR	;@0A01B
 	jmp	short @@5	;@0A01E
 @@4:	mov	es, word ptr ds:[79Eh]	;@0A020
 	mov	ax, word ptr es:[bx+6]	;@0A024
@@ -15502,7 +15626,7 @@ L09FBD:	mov	word ptr ds:[69Dh], 454Eh	;@09FBD
 	push	ax	;@0A12F
 	mov	ax, 20h	;@0A130
 	push	ax	;@0A133
-	call L0BE91	;@0A134
+	call FATAL	;@0A134
 L0A137:	mov	ax, word ptr ds:[6B1h]	;@0A137
 	or	ax, word ptr ds:[6B3h]	;@0A13A
 	jne	@@1	;@0A13E
@@ -15512,7 +15636,7 @@ L0A137:	mov	ax, word ptr ds:[6B1h]	;@0A137
 	push	ax	;@0A149
 	mov	ax, 3Bh	;@0A14A
 	push	ax	;@0A14D
-	call L0BE9B	;@0A14E
+	call WARNING	;@0A14E
 @@1:	call	L09F55	;@0A151
 	mov	ax, word ptr ds:[3FEh]	;@0A154
 	call	L074A5	;@0A157
@@ -15642,12 +15766,12 @@ L0A176:	push	bp	;@0A176
 	push	ax	;@0A2A8
 	mov	ax, 11h	;@0A2A9
 	push	ax	;@0A2AC
-	call L0BE91	;@0A2AD
+	call FATAL	;@0A2AD
 @@21:	xor	ax, ax	;@0A2B0
 	push	ax	;@0A2B2
 	mov	ax, 12h	;@0A2B3
 	push	ax	;@0A2B6
-	call L0BE91	;@0A2B7
+	call FATAL	;@0A2B7
 L0A2BA:	mov	ax, word ptr ds:[7652h]	;@0A2BA
 	add	ax, word ptr ds:[6BFh]	;@0A2BD
 	xor	bx, bx	;@0A2C1
@@ -15775,7 +15899,7 @@ L0A3CE:	push	si	;@0A3CE
 	push	ax	;@0A3DB
 	mov	ax, 2Eh	;@0A3DC
 	push	ax	;@0A3DF
-	call L0BE96	;@0A3E0
+	call ERROR	;@0A3E0
 	pop	si	;@0A3E3
 	jmp	short @@3	;@0A3E4
 @@2:	push	bx	;@0A3E6
@@ -15831,7 +15955,7 @@ L0A451	db	4Dh, 5Ah, 0, 0, 0, 0, 0, 0, 4, 0, 0Fh, 0, 0FFh, 0FFh, 0, 0, 0B8h	;@0A4
 	db	0Dh, 0Ah, 24h, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0Ah, 0, 10h, 0
 
 ; module definition keywords: token number and handler
-L0A4F4	dw	25, L0AD8D	;@0A4F4
+DEF_SECTIONS	dw	25, L0AD8D	;@0A4F4
 	dw	20, L0AD60
 	dw	9, L0ADCB
 	dw	14, L0ADD8
@@ -15923,7 +16047,7 @@ L0A592:	push	bx	;@0A592
 	mov	si, di	;@0A5C4
 	push	es	;@0A5C6
 	pop	ds	;@0A5C7
-	mov	es, word ptr cs:L00000+16	;@0A5C8
+	mov	es, word ptr cs:DATA_SEGMENT	;@0A5C8
 	mov	di, 3E7Bh	;@0A5CD
 @@3:	lodsb	;@0A5D0
 	or	al, al	;@0A5D1
@@ -16079,7 +16203,7 @@ L0A706:	push	ds	;@0A706
 	push	es	;@0A714
 	push	cs	;@0A715
 	pop	es	;@0A716
-	mov	di, offset L0A4F4	;@0A717
+	mov	di, offset DEF_SECTIONS	;@0A717
 	mov	cx, 0Eh	;@0A71A
 @@1:	scasw	;@0A71D
 	je	@@2	;@0A71E
@@ -16134,7 +16258,7 @@ L0A797:	mov	dx, 367Ah	;@0A797
 	mov	cx, 800h	;@0A79A
 	mov	bx, word ptr ds:[7684h]	;@0A79D
 	mov	ah, 3Fh	;@0A7A1
-	call	L002D2	;@0A7A3
+	call	DOS_CALL	;@0A7A3
 	cmp	ax, 0FFFFh	;@0A7A6
 	je	@@2	;@0A7A9
 	mov	si, 367Ah	;@0A7AB
@@ -16150,8 +16274,8 @@ L0A797:	mov	dx, 367Ah	;@0A797
 	jmp	L0A72E	;@0A7C5
 
 ; the lexer's handler for each character class (below)
-L0A7C8	dw	L0A87D, L0A894, L0A880, L0A888, L0A8D3, L0A967, L0A896, L0A9A5, L0A8BF	;@0A7C8
-L0A7DA	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 6, 0, 0, 0, 0, 0, 0, 0	;@0A7DA
+DEF_CLASS_HANDLERS	dw	L0A87D, L0A894, L0A880, L0A888, L0A8D3, L0A967, L0A896, L0A9A5, L0A8BF	;@0A7C8
+DEF_CHAR_CLASSES	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 6, 0, 0, 0, 0, 0, 0, 0	;@0A7DA
 	db	0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, 0Ch, 0Eh, 0Ch, 0Ah, 0Ch, 0Ch
 	db	0Eh, 0Ch, 0Ch, 0Ch, 0Ch, 0Ch, 0Ch, 0Ch, 0Ch, 8, 8, 8, 8, 8, 8
 	db	8, 8, 8, 8, 0Ch, 10h, 0Ch, 0Ch, 0Ch, 0Ch, 0Ch, 0Ah, 0Ah, 0Ah, 0Ah
@@ -16169,9 +16293,9 @@ L0A85E:	cmp	si, word ptr ds:[7688h]	;@0A85E
 	mov	bx, ax	;@0A86A
 	jns	@@2	;@0A86C
 	jmp	L0A72B	;@0A86E
-@@2:	mov	bl, byte ptr cs:L0A7DA[bx]	;@0A871
+@@2:	mov	bl, byte ptr cs:DEF_CHAR_CLASSES[bx]	;@0A871
 	xor	bh, bh	;@0A876
-	jmp	word ptr cs:L0A7C8[bx]	;@0A878
+	jmp	word ptr cs:DEF_CLASS_HANDLERS[bx]	;@0A878
 L0A87D:	jmp	L0A72B	;@0A87D
 L0A880:	mov	ax, 0	;@0A880
 	mov	word ptr ds:[7686h], si	;@0A883
@@ -16425,7 +16549,7 @@ L0ACC9:	mov	dx, cx	;@0ACC9
 	mov	di, 7668h	;@0ACD1
 	call	L054ED	;@0ACD4
 	jae	@@1	;@0ACD7
-	call	L054E0	;@0ACD9
+	call	TABLE_OVERFLOW	;@0ACD9
 @@1:	xor	ax, ax	;@0ACDC
 	stosw	;@0ACDE
 	mov	si, bx	;@0ACDF
@@ -16624,7 +16748,7 @@ L0AE84:	call	L0A699	;@0AE84
 	mov	di, 7660h	;@0AE9F
 	call	L054ED	;@0AEA2
 	jae	@@2	;@0AEA5
-	call	L054E0	;@0AEA7
+	call	TABLE_OVERFLOW	;@0AEA7
 @@2:	push	di	;@0AEAA
 	mov	cx, 6	;@0AEAB
 	xor	ax, ax	;@0AEAE
@@ -16750,7 +16874,7 @@ L0AF34:	call	L0A699	;@0AF34
 	mov	di, 7660h	;@0AFDE
 	call	L054ED	;@0AFE1
 	jae	@@9	;@0AFE4
-	call	L054E0	;@0AFE6
+	call	TABLE_OVERFLOW	;@0AFE6
 @@9:	push	di	;@0AFE9
 	mov	cx, 5	;@0AFEA
 	mov	si, 7670h	;@0AFED
@@ -16830,7 +16954,7 @@ L0B019:	call	L0A699	;@0B019
 	mov	di, 7660h	;@0B09C
 	call	L054ED	;@0B09F
 	jae	@@6	;@0B0A2
-	call	L054E0	;@0B0A4
+	call	TABLE_OVERFLOW	;@0B0A4
 @@6:	push	di	;@0B0A7
 	mov	si, 767Ah	;@0B0A8
 	mov	cx, 5	;@0B0AB
@@ -16859,13 +16983,13 @@ L0B0DA:	push	bx	;@0B0DA
 	mov	ds, word ptr [bx]	;@0B0EB
 	push	ds	;@0B0ED
 	push	si	;@0B0EE
-	mov	ds, word ptr cs:L00000+16	;@0B0EF
+	mov	ds, word ptr cs:DATA_SEGMENT	;@0B0EF
 	mov	bx, ax	;@0B0F4
 	mov	ax, 6	;@0B0F6
 	push	ax	;@0B0F9
 	mov	ax, bx	;@0B0FA
 	push	ax	;@0B0FC
-	call	L0BE9B	;@0B0FD
+	call	WARNING	;@0B0FD
 	pop	si	;@0B100
 	pop	bx	;@0B101
 	ret	;@0B102
@@ -16873,7 +16997,7 @@ L0B103:	push	es	;@0B103
 	push	si	;@0B104
 	push	di	;@0B105
 	mov	di, 7DAh	;@0B106
-	call	L05606	;@0B109
+	call	NEW_POOL	;@0B109
 	mov	si, word ptr ds:[768Ch]	;@0B10C
 	xor	cx, cx	;@0B110
 	push	bx	;@0B112
@@ -16912,7 +17036,7 @@ L0B103:	push	es	;@0B103
 	mov	di, 7DAh	;@0B15B
 	call	L054ED	;@0B15E
 	jae	@@5	;@0B161
-	call	L054E0	;@0B163
+	call	TABLE_OVERFLOW	;@0B163
 @@5:	mov	byte ptr es:[di], 0	;@0B166
 	mov	cx, word ptr ds:[7DCh]	;@0B16A
 	pop	di	;@0B16E
@@ -16930,11 +17054,11 @@ L0B172:	push	bp	;@0B172
 	push	dx	;@0B17D
 	mov	byte ptr [bp-14h], 0FFh	;@0B17E
 	mov	di, 7D2h	;@0B182
-	call	L05606	;@0B185
+	call	NEW_POOL	;@0B185
 	cmp	word ptr ds:[7F6h], -1	;@0B188
 	jne	@@1	;@0B18D
 	mov	di, 7F2h	;@0B18F
-	call	L05606	;@0B192
+	call	NEW_POOL	;@0B192
 	jmp	short @@2	;@0B195
 @@1:	mov	word ptr ds:[7F4h], 0	;@0B197
 @@2:	mov	si, word ptr ds:[76A0h]	;@0B19D
@@ -16947,7 +17071,7 @@ L0B172:	push	bp	;@0B172
 	mov	di, 7F2h	;@0B1B2
 	call	L054ED	;@0B1B5
 	jae	@@4	;@0B1B8
-	call	L054E0	;@0B1BA
+	call	TABLE_OVERFLOW	;@0B1BA
 @@4:	mov	word ptr es:[di], si	;@0B1BD
 @@5:	mov	es, word ptr ds:[7664h]	;@0B1C0
 	mov	si, word ptr es:[si]	;@0B1C4
@@ -17126,7 +17250,7 @@ L0B172:	push	bp	;@0B172
 	mov	di, 7D2h	;@0B3B0
 	call	L054ED	;@0B3B3
 	jae	@@34	;@0B3B6
-	call	L054E0	;@0B3B8
+	call	TABLE_OVERFLOW	;@0B3B8
 @@34:	mov	word ptr es:[di], 0	;@0B3BB
 	mov	ax, word ptr ds:[7D4h]	;@0B3C0
 	pop	dx	;@0B3C3
@@ -17173,7 +17297,7 @@ L0B404:	push	di	;@0B404
 	mov	di, 7D2h	;@0B411
 	call	L054ED	;@0B414
 	jae	@@2	;@0B417
-	call	L054E0	;@0B419
+	call	TABLE_OVERFLOW	;@0B419
 @@2:	mov	byte ptr es:[di], 0	;@0B41C
 	mov	word ptr [bp-2], di	;@0B420
 	mov	al, byte ptr [bp-12h]	;@0B423
@@ -17197,7 +17321,7 @@ L0B43E:	push	di	;@0B43E
 	mov	di, 7D2h	;@0B44D
 	call	L054ED	;@0B450
 	jae	@@1	;@0B453
-	call	L054E0	;@0B455
+	call	TABLE_OVERFLOW	;@0B455
 @@1:	mov	byte ptr es:[di], al	;@0B458
 	mov	ax, word ptr [bp-8]	;@0B45B
 	mov	word ptr es:[di+1], ax	;@0B45E
@@ -17222,7 +17346,7 @@ L0B464:	push	di	;@0B464
 	mov	word ptr es:[di+4], ax	;@0B494
 	pop	di	;@0B498
 	ret	;@0B499
-@@1:	call	L054E0	;@0B49A
+@@1:	call	TABLE_OVERFLOW	;@0B49A
 L0B49D:	push	di	;@0B49D
 	mov	byte ptr [bp-14h], 0FFh	;@0B49E
 	mov	di, 2	;@0B4A2
@@ -17230,7 +17354,7 @@ L0B49D:	push	di	;@0B49D
 	mov	di, 7D2h	;@0B4A6
 	call	L054ED	;@0B4A9
 	jae	@@1	;@0B4AC
-	call	L054E0	;@0B4AE
+	call	TABLE_OVERFLOW	;@0B4AE
 @@1:	mov	byte ptr es:[di], cl	;@0B4B1
 	mov	byte ptr es:[di+1], 0	;@0B4B4
 	mov	di, word ptr [bp-10h]	;@0B4B9
@@ -17246,7 +17370,7 @@ L0B4CB:	push	bx	;@0B4CB
 	push	di	;@0B4CD
 	push	es	;@0B4CE
 	mov	di, 7E2h	;@0B4CF
-	call	L05606	;@0B4D2
+	call	NEW_POOL	;@0B4D2
 	mov	si, word ptr ds:[769Ch]	;@0B4D5
 	xor	cx, cx	;@0B4D9
 	push	bx	;@0B4DB
@@ -17285,7 +17409,7 @@ L0B4CB:	push	bx	;@0B4CB
 	mov	di, 7E2h	;@0B524
 	call	L054ED	;@0B527
 	jae	@@4	;@0B52A
-	call	L054E0	;@0B52C
+	call	TABLE_OVERFLOW	;@0B52C
 @@4:	mov	byte ptr es:[di], 0	;@0B52F
 	mov	cx, word ptr ds:[7E4h]	;@0B533
 	pop	es	;@0B537
@@ -17305,7 +17429,7 @@ L0B53C:	push	cx	;@0B53C
 	mov	di, 7DAh	;@0B54A
 	call	L054ED	;@0B54D
 	jae	@@1	;@0B550
-	call	L054E0	;@0B552
+	call	TABLE_OVERFLOW	;@0B552
 @@1:	mov	si, 560h	;@0B555
 	pop	cx	;@0B558
 	rep movsb	;@0B559
@@ -17327,7 +17451,7 @@ L0B563:	push	si	;@0B563
 	mov	di, 7E2h	;@0B571
 	call	L054ED	;@0B574
 	jae	@@1	;@0B577
-	call	L054E0	;@0B579
+	call	TABLE_OVERFLOW	;@0B579
 @@1:	mov	si, 560h	;@0B57C
 	pop	cx	;@0B57F
 	rep movsb	;@0B580
@@ -17591,7 +17715,7 @@ L0B795:	push	bp	;@0B795
 	jne	@@3	;@0B7D3
 	jmp	@@1	;@0B7D5
 @@6:	mov	di, 7F2h	;@0B7D7
-	call	L05606	;@0B7DA
+	call	NEW_POOL	;@0B7DA
 	mov	cx, 1	;@0B7DD
 	mov	si, word ptr ds:[76A0h]	;@0B7E0
 	mov	es, word ptr ds:[7664h]	;@0B7E4
@@ -17617,7 +17741,7 @@ L0B795:	push	bp	;@0B795
 	mov	di, 7F2h	;@0B817
 	call	L054ED	;@0B81A
 	jae	@@10	;@0B81D
-	call	L054E0	;@0B81F
+	call	TABLE_OVERFLOW	;@0B81F
 @@10:	mov	word ptr [bp-2], di	;@0B822
 	xor	al, al	;@0B825
 	cld	;@0B827
@@ -17681,7 +17805,7 @@ L0B8B6:	push	bp	;@0B8B6
 	push	ax	;@0B8C5
 	mov	ax, 3Dh	;@0B8C6
 	push	ax	;@0B8C9
-	call L0BE9B	;@0B8CA
+	call WARNING	;@0B8CA
 	pop	di	;@0B8CD
 	pop	si	;@0B8CE
 	pop	dx	;@0B8CF
@@ -17943,7 +18067,7 @@ L0BAFE:	push	bx	;@0BAFE
 	mov	di, 802h	;@0BB03
 	call	L054ED	;@0BB06
 	jae	@@1	;@0BB09
-	call	L054E0	;@0BB0B
+	call	TABLE_OVERFLOW	;@0BB0B
 @@1:	push	di	;@0BB0E
 	mov	si, 6DDh	;@0BB0F
 	mov	cx, 0Ch	;@0BB12
@@ -18003,7 +18127,7 @@ L0BB94:	push	ax	;@0BB94
 	mov	di, 7660h	;@0BB9B
 	call	L054ED	;@0BB9E
 	jae	@@1	;@0BBA1
-	call	L054E0	;@0BBA3
+	call	TABLE_OVERFLOW	;@0BBA3
 @@1:	push	di	;@0BBA6
 	mov	cx, 5	;@0BBA7
 	xor	ax, ax	;@0BBAA
@@ -18081,7 +18205,7 @@ L0BC1F:	push	ds	;@0BC1F
 	push	ax	;@0BC73
 	mov	ax, 42h	;@0BC74
 	push	ax	;@0BC77
-	call L0BE9B	;@0BC78
+	call WARNING	;@0BC78
 	jmp	short @@4	;@0BC7B
 @@3:	cmp	word ptr ds:[13Eh], 0	;@0BC7D
 	je	@@6	;@0BC82
@@ -18095,7 +18219,7 @@ L0BC1F:	push	ds	;@0BC1F
 	mov	ax, 3D00h	;@0BC99
 	lds	bx, dword ptr ds:[132h]	;@0BC9C
 	mov	ds, word ptr [bx]	;@0BCA0
-	call	L0030C	;@0BCA2
+	call	OPEN_FILE	;@0BCA2
 	pop	ds	;@0BCA5
 	mov	bx, ax	;@0BCA6
 	push	bx	;@0BCA8
@@ -18104,7 +18228,7 @@ L0BC1F:	push	ds	;@0BC1F
 	push	ax	;@0BCAD
 	push	bx	;@0BCAE
 	mov	bx, dx	;@0BCAF
-	call	L002E6	;@0BCB1
+	call	CLOSE_FILE	;@0BCB1
 	pop	bx	;@0BCB4
 	pop	ax	;@0BCB5
 	and	ax, ax	;@0BCB6
@@ -18125,11 +18249,11 @@ L0BC1F:	push	ds	;@0BC1F
 	mov	ds, word ptr [bx]	;@0BCD9
 	push	ds	;@0BCDB
 	push	si	;@0BCDC
-	mov	ds, word ptr cs:L00000+16	;@0BCDD
+	mov	ds, word ptr cs:DATA_SEGMENT	;@0BCDD
 	mov	bx, 6	;@0BCE2
 	push	bx	;@0BCE5
 	push	ax	;@0BCE6
-	call L0BE91	;@0BCE7
+	call FATAL	;@0BCE7
 L0BCEA:	mov	di, word ptr ds:[76A0h]	;@0BCEA
 	mov	es, word ptr ds:[7664h]	;@0BCEE
 	jmp	@@6	;@0BCF2
@@ -18218,7 +18342,7 @@ L0BCEA:	mov	di, word ptr ds:[76A0h]	;@0BCEA
 	push	ax	;@0BDC6
 	mov	ax, 3Ah	;@0BDC7
 	push	ax	;@0BDCA
-	call L0BE9B	;@0BDCB
+	call WARNING	;@0BDCB
 	pop	di	;@0BDCE
 	pop	si	;@0BDCF
 	pop	dx	;@0BDD0
@@ -18228,7 +18352,8 @@ L0BCEA:	mov	di, word ptr ds:[76A0h]	;@0BCEA
 @@9:	mov	es, word ptr ds:[7664h]	;@0BDD4
 	mov	word ptr es:[di+6], 0FFFFh	;@0BDD8
 	jmp	@@5	;@0BDDE
-L0BDE0:	pop	ax	;@0BDE0
+; FORMAT: a small printf: format string and arguments into a buffer.
+FORMAT:	pop	ax	;@0BDE0
 	pop	dx	;@0BDE1
 	push	bp	;@0BDE2
 	mov	bp, sp	;@0BDE3
@@ -18308,7 +18433,8 @@ L0BDE0:	pop	ax	;@0BDE0
 	push	cx	;@0BE71
 	push	bx	;@0BE72
 	retf	;@0BE73
-L0BE74:	push	bp	;@0BE74
+; MESSAGE_TEXT: the far address (DX:AX) of message number [bp+4] in TLDATA's table.
+MESSAGE_TEXT:	push	bp	;@0BE74
 	mov	bp, sp	;@0BE75
 	push	es	;@0BE77
 	push	bx	;@0BE78
@@ -18324,13 +18450,17 @@ L0BE74:	push	bp	;@0BE74
 	pop	es	;@0BE8C
 	pop	bp	;@0BE8D
 	ret	2	;@0BE8E
-L0BE91:	mov	ax, 4	;@0BE91
-	jmp	short L0BEA0	;@0BE94
-L0BE96:	mov	ax, 1	;@0BE96
-	jmp	short L0BEA0	;@0BE99
-L0BE9B:	mov	ax, 0	;@0BE9B
-	jmp	short L0BEA0	;@0BE9E
-L0BEA0:	pop	dx	;@0BEA0
+; FATAL, ERROR, WARNING: report message number [sp+2] (with its arguments after it) as
+; "Fatal:", "Error:" or "Warning:"; an error sets the exit code to 1, and a fatal error
+; ends the link.
+FATAL:	mov	ax, 4	;@0BE91
+	jmp	short REPORT	;@0BE94
+ERROR:	mov	ax, 1	;@0BE96
+	jmp	short REPORT	;@0BE99
+WARNING:	mov	ax, 0	;@0BE9B
+	jmp	short REPORT	;@0BE9E
+; REPORT: the common part of FATAL, ERROR and WARNING (AX: 4, 1 or 0).
+REPORT:	pop	dx	;@0BEA0
 	push	bp	;@0BEA1
 	mov	bp, sp	;@0BEA2
 	sub	sp, 0Ch	;@0BEA4
@@ -18357,7 +18487,7 @@ L0BEA0:	pop	dx	;@0BEA0
 @@3:	mov	word ptr ds:[7641h], di	;@0BEEC
 	mov	ax, word ptr [bp+2]	;@0BEF0
 	push	ax	;@0BEF3
-	call	L0BE74	;@0BEF4
+	call	MESSAGE_TEXT	;@0BEF4
 	mov	word ptr [bp-0Ch], ax	;@0BEF7
 	mov	word ptr [bp-0Ah], dx	;@0BEFA
 	sub	sp, word ptr [bp+4]	;@0BEFD
@@ -18368,18 +18498,18 @@ L0BEA0:	pop	dx	;@0BEA0
 	mov	es, ax	;@0BF09
 	mov	cx, word ptr [bp+4]	;@0BF0B
 	rep movsb	;@0BF0E
-	mov	ds, word ptr cs:L00000+16	;@0BF10
+	mov	ds, word ptr cs:DATA_SEGMENT	;@0BF10
 	push	word ptr [bp-0Ah]	;@0BF15
 	push	word ptr [bp-0Ch]	;@0BF18
 	push	ds	;@0BF1B
 	mov	ax, 76C0h	;@0BF1C
 	push	ax	;@0BF1F
 	push	cs	;@0BF20
-	call	L0BDE0	;@0BF21
+	call	FORMAT	;@0BF21
 	push	ds	;@0BF24
 	mov	ax, 76C0h	;@0BF25
 	push	ax	;@0BF28
-	call	L09A53	;@0BF29
+	call	PUT_FAR_STRING	;@0BF29
 	cmp	word ptr ds:[422h], 1	;@0BF2C
 	jne	@@4	;@0BF31
 	mov	di, word ptr ds:[7641h]	;@0BF33
