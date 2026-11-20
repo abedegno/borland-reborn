@@ -52,9 +52,11 @@ def c0_source(tc):
     """BC 2.0's C0.ASM with Turbo C++ 1.01's banner, as bytes"""
     s = open(os.path.join(tc, 'BC20', 'STARTUP', 'C0.ASM'), 'rb').read()
     old, new = b"'Borland C++ - Copyright 1991 Borland Intl.'", b"'Turbo C++ - Copyright 1990 Borland Intl.'"
-    if s.count(old) != 1:
+    # the exit code's null-pointer check sums the banner's bytes, so its constant changes too
+    oldsum, newsum = b'CheckSum        equ     00D5Ch', b'CheckSum        equ     00CA5h'
+    if s.count(old) != 1 or s.count(oldsum) != 1:
         sys.exit('toolchains/BC20/STARTUP/C0.ASM is not the expected file')
-    return s.replace(old, new)
+    return s.replace(old, new).replace(oldsum, newsum)
 
 
 def extract(lib, names, out):
