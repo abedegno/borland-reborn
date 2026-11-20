@@ -1,0 +1,23 @@
+[project]
+name = "Borland C++ 2.0 TKINST.EXE source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+exe = "toolchain/BC20/BIN/TKINST.EXE"
+# the MZ header is 0xA00 bytes; huge model: C0 sets DS to 05F7h (DGROUP); TKINST.C keeps its data in its own segment (0562h)
+dgroup_para = 0x05F7
+
+[toolchain]
+profile = "borland-bc20"
+home = "toolchain/BC20"
+stage = ["toolchain/BC20/BIN", "toolchain/BC20/INCLUDE"]
+c_opts = "-mh"
+asm_opts = "/ml"
+dos = "auto"
