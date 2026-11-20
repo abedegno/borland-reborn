@@ -97,7 +97,7 @@ RUN:	call	SET_DEFAULTS	;@00054
 	push	ax	;@000CA
 	mov	ax, 41h	;@000CB
 	push	ax	;@000CE
-	call WARNING	;@000CF
+	call WARNING	; "Debug info switch ignored for COM files"	;@000CF
 @@1:	mov	al, byte ptr ds:[124h]	;@000D2
 	mov	byte ptr ds:[14h], al	;@000D5
 	mov	byte ptr ds:[15h], al	;@000D8
@@ -117,7 +117,7 @@ RUN:	call	SET_DEFAULTS	;@00054
 @@3:	mov	byte ptr ds:[17h], al	;@000FF
 	call L09496	;@00102
 	call	INIT_MEMORY	;@00105
-	call L0BC1F	;@00108
+	call DEF_DEFAULTS	;@00108
 	cmp	byte ptr ds:[129h], 0	;@0010B
 	jne	@@4	;@00110
 	mov	byte ptr ds:[129h], 2	;@00112
@@ -203,7 +203,7 @@ UNUSED_FATAL_19:	xor	ax, ax	;@001D5
 	push	ax	;@001D7
 	mov	ax, 19h	;@001D8
 	push	ax	;@001DB
-	call	FATAL	;@001DC
+	call	FATAL	; "Not enough memory"	;@001DC
 ; STARTUP: keep the environment segment (DGROUP:0) and the PSP, set DS to TLINK's
 ; tables, install CTRL_BREAK_HANDLER.
 STARTUP:	mov	ax, DGROUP	;@001DF
@@ -308,7 +308,7 @@ OUT_OF_MEMORY:	mov	ds, word ptr cs:DATA_SEGMENT	;@002C0
 	push	ax	;@002CA
 	mov	ax, 3	;@002CB
 	push	ax	;@002CE
-	call FATAL	;@002CF
+	call FATAL	; "Out of memory"	;@002CF
 ; DOS_CALL: int 21h; on an error, fatal message 4 (DOS error) with the code.
 DOS_CALL:	push	bx	;@002D2
 	int	21h	;@002D3
@@ -321,7 +321,7 @@ DOS_CALL:	push	bx	;@002D2
 	push	cx	;@002DE
 	mov	ax, 4	;@002DF
 	push	ax	;@002E2
-	call FATAL	;@002E3
+	call FATAL	; "DOS error, ax = %d"	;@002E3
 ; CLOSE_FILE: close handle BX unless it is 0 or FFFFh.
 CLOSE_FILE:	or	bx, bx	;@002E6
 	je	@@1	;@002E8
@@ -341,7 +341,7 @@ DOS_CALL_FULL:	cmp	ah, 40h	;@002F5
 	push	cx	;@00303
 	mov	ax, 2	;@00304
 	push	ax	;@00307
-	call FATAL	;@00308
+	call FATAL	; "Write failed, disk full?"	;@00308
 @@1:	ret	;@0030B
 ; OPEN_FILE: int 21h open/create; when DOS is out of handles (error 4), close a cached
 ; input file (CLOSE_CACHED_FILE) and try again; other errors are fatal 1 (can't open).
@@ -372,7 +372,7 @@ OPEN_FILE:	push	ax	;@0030C
 	push	ax	;@00332
 	mov	ax, 1	;@00333
 	push	ax	;@00336
-	call FATAL	;@00337
+	call FATAL	; "Unable to open file '%s'"	;@00337
 ; FILE_SIZE: the size of file DS:DX (find first) in DX:AX.
 FILE_SIZE:	push	bx	;@0033A
 	push	cx	;@0033B
@@ -479,7 +479,8 @@ L003ED:	xor	bx, bx	;@003ED
 @@6:	cmp	bx, 0	;@0042D
 	jne	@@4	;@00430
 @@7:	ret	;@00432
-L00433:	push	bx	;@00433
+; PARSE_OPTION: one command-line option (/m, /s, /x, /P=size, /A=size, ...).
+PARSE_OPTION:	push	bx	;@00433
 @@1:	mov	al, byte ptr ds:[159h]	;@00434
 	mov	byte ptr ds:[158h], al	;@00437
 	mov	byte ptr ds:[159h], 0FFh	;@0043A
@@ -791,12 +792,12 @@ L00433:	push	bx	;@00433
 	push	ax	;@007A8
 	mov	ax, 1Ah	;@007A9
 	push	ax	;@007AC
-	call FATAL	;@007AD
+	call FATAL	; "Unknown option"	;@007AD
 @@81:	xor	ax, ax	;@007B0
 	push	ax	;@007B2
 	mov	ax, 1Bh	;@007B3
 	push	ax	;@007B6
-	call FATAL	;@007B7
+	call FATAL	; "Bad character in parameters"	;@007B7
 @@82:	call	L00360	;@007BA
 	cmp	al, 2Dh	;@007BD
 	je	@@84	;@007BF
@@ -907,7 +908,7 @@ L00433:	push	bx	;@00433
 	push	ax	;@008D9
 	mov	ax, 2Bh	;@008DA
 	push	ax	;@008DD
-	call ERROR	;@008DE
+	call ERROR	; "Invalid size specified for segment packing"	;@008DE
 	mov	byte ptr ds:[126h], 0	;@008E1
 	jmp	@@1	;@008E6
 @@105:	pop	cx	;@008E9
@@ -922,9 +923,9 @@ L00433:	push	bx	;@00433
 	push	ax	;@008FF
 	mov	ax, 2Dh	;@00900
 	push	ax	;@00903
-	call ERROR	;@00904
+	call ERROR	; "Invalid size specified for segment alignment"	;@00904
 	jmp	@@1	;@00907
-@@107:	jmp	L00BD0	;@0090A
+@@107:	jmp	SHOW_SYNTAX	;@0090A
 L0090D	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0	;@0090D
 	db	0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 0, 2, 2, 2, 2, 2, 2, 2
 	db	0, 1, 3, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 0, 0, 0
@@ -1008,7 +1009,7 @@ L00997:	push	bp	;@00997
 	mov	byte ptr ds:[116h], 0	;@00A3C
 	mov	byte ptr ds:[159h], 1	;@00A41
 @@4:	mov	byte ptr ds:[119h], 0	;@00A46
-@@5:	call	L00433	;@00A4B
+@@5:	call	PARSE_OPTION	;@00A4B
 	jb	@@5	;@00A4E
 	lahf	;@00A50
 	je	@@6	;@00A51
@@ -1056,7 +1057,7 @@ L00997:	push	bp	;@00997
 @@11:	mov	word ptr [bp-2], 0	;@00AAA
 @@12:	stosb	;@00AAF
 	push	es	;@00AB0
-	call	L00433	;@00AB1
+	call	PARSE_OPTION	;@00AB1
 	pop	es	;@00AB4
 	je	@@12	;@00AB5
 	xor	al, al	;@00AB7
@@ -1124,7 +1125,7 @@ GET_OPTIONS:	mov	di, 11Eh	;@00B15
 	xor	bx, bx	;@00B67
 	call	L00997	;@00B69
 	cmp	byte ptr ds:[153h], 0	;@00B6C
-	je	L00BD0	;@00B71
+	je	SHOW_SYNTAX	;@00B71
 	mov	byte ptr ds:[15Bh], 0	;@00B73
 	mov	si, 10B1h	;@00B78
 	cmp	byte ptr ds:[129h], 1	;@00B7B
@@ -1153,7 +1154,8 @@ GET_OPTIONS:	mov	di, 11Eh	;@00B15
 	xor	bx, bx	;@00BCA
 	call	L00997	;@00BCC
 	ret	;@00BCF
-L00BD0:	call CONSOLE_ON	;@00BD0
+; SHOW_SYNTAX: TLINK's usage text, when it is run without arguments.
+SHOW_SYNTAX:	call CONSOLE_ON	;@00BD0
 	call PUT_INLINE	;@00BD3
 	db	';Syntax: TLINK objfiles, exefile, mapfile, libfile', 's, deffile'	;@00BD6
 	call PUT_NEWLINE	;@00C12
@@ -1326,7 +1328,7 @@ P1_COMENT_E3:	cmp	byte ptr [si], 80h	;@0118D
 	push	ax	;@011AB
 	mov	ax, 1Fh	;@011AC
 	push	ax	;@011AF
-	call	ERROR	;@011B0
+	call	ERROR	; "Debugging information overflow; try fewer modules with debug info"	;@011B0
 	or	byte ptr ds:[410h], 4	;@011B3
 	jmp	@@1	;@011B8
 ; P1_COMENT_E4: pass 1, Borland COMENT class E4h (debug information).
@@ -2092,7 +2094,9 @@ L018DC:	push	bx	;@018DC
 	pop	si	;@018FC
 	mov	si, word ptr es:[si+2]	;@018FD
 	ret	;@01901
-L01902:	cmp	word ptr es:[bx], -1	;@01902
+; DEFINE_PUBLIC: enter a public name; a second definition is an error (or a warning,
+; for a library module or with /d).
+DEFINE_PUBLIC:	cmp	word ptr es:[bx], -1	;@01902
 	je	@@1	;@01906
 	jmp	@@6	;@01908
 @@1:	call	L017D8	;@0190B
@@ -2212,11 +2216,11 @@ L01902:	cmp	word ptr es:[bx], -1	;@01902
 	je	@@12	;@01A30
 	mov	ax, 25h	;@01A32
 	push	ax	;@01A35
-	call	ERROR	;@01A36
+	call	ERROR	; "%s defined in module %s is duplicated"	;@01A36
 	jmp	short @@15	;@01A39
 @@12:	mov	ax, 31h	;@01A3B
 	push	ax	;@01A3E
-	call	WARNING	;@01A3F
+	call	WARNING	; "%s defined in module %s is duplicated"	;@01A3F
 	jmp	short @@15	;@01A42
 @@13:	push	ds	;@01A44
 	mov	ax, 26h	;@01A45
@@ -2227,11 +2231,11 @@ L01902:	cmp	word ptr es:[bx], -1	;@01902
 	je	@@14	;@01A52
 	mov	ax, 24h	;@01A54
 	push	ax	;@01A57
-	call	ERROR	;@01A58
+	call	ERROR	; "%s is duplicated"	;@01A58
 	jmp	short @@15	;@01A5B
 @@14:	mov	ax, 30h	;@01A5D
 	push	ax	;@01A60
-	call	WARNING	;@01A61
+	call	WARNING	; "%s is duplicated"	;@01A61
 @@15:	pop	dx	;@01A64
 	pop	ax	;@01A65
 	pop	di	;@01A66
@@ -2271,7 +2275,7 @@ L01A6D:	mov	byte ptr ds:[172h], al	;@01A6D
 	pop	bx	;@01AC0
 	cmp	word ptr ds:[16Ch], -1	;@01AC1
 	je	@@6	;@01AC6
-	call	L01902	;@01AC8
+	call	DEFINE_PUBLIC	;@01AC8
 @@6:	cmp	si, word ptr ds:[3E0h]	;@01ACB
 	jb	@@1	;@01ACF
 	jmp	L059AB	;@01AD1
@@ -2505,8 +2509,9 @@ P1_SEGDEF:	call	L05C16	;@01C2B
 	push	ax	;@01D26
 	mov	ax, 6	;@01D27
 	push	ax	;@01D2A
-	call	FATAL	;@01D2B
-L01D2E:	or	bx, bx	;@01D2E
+	call	FATAL	; "Invalid segment definition"	;@01D2B
+; GROUP_ADD_SEGMENT: a GRPDEF member; a bad one is fatal ("Illegal group definition").
+GROUP_ADD_SEGMENT:	or	bx, bx	;@01D2E
 	je	@@2	;@01D30
 	dec	bx	;@01D32
 	xchg	ax, bx	;@01D33
@@ -2533,7 +2538,7 @@ L01D2E:	or	bx, bx	;@01D2E
 	push	cx	;@01D68
 	mov	ax, 7	;@01D69
 	push	ax	;@01D6C
-	call	FATAL	;@01D6D
+	call	FATAL	; "Illegal group definition: %s"	;@01D6D
 ; P1_GRPDEF: pass 1, GRPDEF (9Ah).
 P1_GRPDEF:	mov	byte ptr ds:[160h], 1	;@01D70
 	sub	bx, bx	;@01D75
@@ -2573,7 +2578,7 @@ P1_GRPDEF:	mov	byte ptr ds:[160h], 1	;@01D70
 	cmp	bx, word ptr ds:[164h]	;@01DBF
 	jbe	@@5	;@01DC3
 	mov	word ptr ds:[164h], bx	;@01DC5
-@@5:	call	L01D2E	;@01DC9
+@@5:	call	GROUP_ADD_SEGMENT	;@01DC9
 @@6:	cmp	si, word ptr ds:[3E0h]	;@01DCC
 	jb	@@3	;@01DD0
 	mov	es, word ptr ds:[796h]	;@01DD2
@@ -2618,22 +2623,23 @@ L01DE1:	push	cx	;@01DE1
 	mov	ax, 1	;@01E1A
 @@6:	pop	dx	;@01E1D
 	and	dx, dx	;@01E1E
-	jne	L01E2F	;@01E20
+	jne	COUNT_RELOCATION	;@01E20
 	pop	dx	;@01E22
 	mul	dx	;@01E23
 	and	dx, dx	;@01E25
-	jne	L01E2F	;@01E27
+	jne	COUNT_RELOCATION	;@01E27
 	stc	;@01E29
 	ret	;@01E2A
 @@7:	pop	dx	;@01E2B
 	pop	dx	;@01E2C
 	clc	;@01E2D
 	ret	;@01E2E
-L01E2F:	xor	ax, ax	;@01E2F
+; COUNT_RELOCATION: one more relocation for the EXE header, or "Relocation table overflow".
+COUNT_RELOCATION:	xor	ax, ax	;@01E2F
 	push	ax	;@01E31
 	mov	ax, 1Ch	;@01E32
 	push	ax	;@01E35
-	call	FATAL	;@01E36
+	call	FATAL	; "Relocation table overflow"	;@01E36
 ; P1_FIXUPP: pass 1, FIXUPP (9Ch).
 P1_FIXUPP:	cmp	byte ptr ds:[17h], 0	;@01E39
 	je	@@1	;@01E3E
@@ -2678,7 +2684,7 @@ P1_FIXUPP:	cmp	byte ptr ds:[17h], 0	;@01E39
 	dec	ax	;@01E98
 	add	cx, ax	;@01E99
 	jae	@@8	;@01E9B
-	jmp	L01E2F	;@01E9D
+	jmp	COUNT_RELOCATION	;@01E9D
 @@8:	lodsb	;@01E9F
 	test	al, 80h	;@01EA0
 	jne	@@9	;@01EA2
@@ -2986,7 +2992,7 @@ L020E7:	mov	ax, word ptr ds:[3ECh]	;@020E7
 	dec	ax	;@0217A
 	add	cx, ax	;@0217B
 	jae	@@8	;@0217D
-	jmp	L01E2F	;@0217F
+	jmp	COUNT_RELOCATION	;@0217F
 @@8:	cmp	si, word ptr ds:[3E0h]	;@02182
 	jae	@@9	;@02186
 	jmp	@@7	;@02188
@@ -3106,7 +3112,8 @@ LIBRARY_HEADER:	mov	ax, word ptr ds:[3E0h]	;@02276
 	jb	@@2	;@022BE
 	ret	;@022C0
 @@2:	jmp	L059AB	;@022C1
-L022C4:	push	bp	;@022C4
+; CHECK_CONFLICT_1: warns that a module's name conflicts with another module's.
+CHECK_CONFLICT_1:	push	bp	;@022C4
 	mov	bp, sp	;@022C5
 	sub	sp, 0Ah	;@022C7
 	or	al, 8	;@022CA
@@ -3312,16 +3319,16 @@ L022C4:	push	bp	;@022C4
 	push	cx	;@024B5
 	mov	ax, 33h	;@024B6
 	push	ax	;@024B9
-	call WARNING	;@024BA
+	call WARNING	; "%s conflicts with module %s"	;@024BA
 	pop	di	;@024BD
 	pop	si	;@024BE
 	jmp	@@2	;@024BF
 ; P1_COMDEF: pass 1, COMDEF (B0h): communal names.
 P1_COMDEF:	sub	ax, ax	;@024C2
-	jmp	L022C4	;@024C4
+	jmp	CHECK_CONFLICT_1	;@024C4
 ; P1_LCOMDEF: pass 1, LCOMDEF (B8h).
 P1_LCOMDEF:	mov	ax, 4	;@024C7
-	jmp	L022C4	;@024CA
+	jmp	CHECK_CONFLICT_1	;@024CA
 	db	0, 0, 0, '%s:%x', 0, '%s:%x%x', 0	;@024CD
 L024DE:	push	bp	;@024DE
 	mov	bp, sp	;@024DF
@@ -4789,7 +4796,7 @@ FIX_POINTER:	mov	ax, word ptr ds:[450h]	;@03247
 ; FIX_LOADER_OFFSET: the fixup handler for a loader-resolved offset location.
 FIX_LOADER_OFFSET:	call	L0319D	;@03259
 	cmp	si, -1	;@0325C
-	je	L03282	;@0325F
+	je	FIXUP_OVERLAY_STUB	;@0325F
 ; FIX_LOBYTE: the fixup handler for a low-byte (also high-byte and unknown) location.
 FIX_LOBYTE:	pop	ax	;@03261
 	pop	si	;@03262
@@ -4804,7 +4811,8 @@ FIX_BASE:	mov	ax, word ptr ds:[450h]	;@03265
 L03278:	mov	es, word ptr ds:[77Eh]	;@03278
 	mov	bx, word ptr es:[bx+4]	;@0327C
 	jmp	FIX_LOBYTE	;@03280
-L03282:	push	si	;@03282
+; FIXUP_OVERLAY_STUB: a far fixup into an overlay needs its stub ("No stub for fixup").
+FIXUP_OVERLAY_STUB:	push	si	;@03282
 	mov	si, word ptr ds:[3E6h]	;@03283
 	mov	es, word ptr ds:[776h]	;@03287
 	mov	si, word ptr es:[si]	;@0328B
@@ -4832,7 +4840,7 @@ L03282:	push	si	;@03282
 	push	cx	;@032C6
 	mov	ax, 34h	;@032C7
 	push	ax	;@032CA
-	call	WARNING	;@032CB
+	call	WARNING	; "No stub for fixup at %s:%s"	;@032CB
 	pop	si	;@032CE
 	jmp	FIX_LOBYTE	;@032CF
 L032D1:	push	ax	;@032D1
@@ -4964,7 +4972,7 @@ L032FC:	mov	word ptr ds:[224h], dx	;@032FC
 	jmp	@@20	;@033E5
 @@13:	jmp	@@27	;@033E8
 @@14:	jmp	@@35	;@033EB
-@@15:	jmp	L0391A	;@033EE
+@@15:	jmp	FIXUP_OVERFLOW	;@033EE
 @@16:	cmp	bx, 4000h	;@033F1
 	jle	@@17	;@033F5
 	jmp	@@26	;@033F7
@@ -5056,7 +5064,7 @@ L032FC:	mov	word ptr ds:[224h], dx	;@032FC
 	jmp	@@36	;@034F4
 @@24:	mov	di, word ptr es:[bx+2]	;@034F7
 	jmp	@@21	;@034FB
-@@25:	jmp	L039E8	;@034FD
+@@25:	jmp	UNDEFINED_SYMBOL	;@034FD
 @@26:	sub	bx, 4000h	;@03500
 @@27:	dec	bx	;@03504
 	shl	bx, 1	;@03505
@@ -5164,7 +5172,7 @@ L032FC:	mov	word ptr ds:[224h], dx	;@032FC
 	sbb	word ptr ds:[420h], ax	;@0363B
 	or	byte ptr ds:[215h], 10h	;@0363F
 	jmp	@@59	;@03644
-@@42:	jmp	L0391A	;@03647
+@@42:	jmp	FIXUP_OVERFLOW	;@03647
 @@43:	mov	es, word ptr ds:[77Eh]	;@0364A
 	mov	bx, word ptr es:[bx]	;@0364E
 	jmp	@@53	;@03651
@@ -5249,7 +5257,7 @@ L032FC:	mov	word ptr ds:[224h], dx	;@032FC
 	jmp	short @@57	;@0372F
 @@53:	or	byte ptr ds:[215h], 2	;@03731
 	jmp	short @@59	;@03736
-@@54:	jmp	L039E8	;@03738
+@@54:	jmp	UNDEFINED_SYMBOL	;@03738
 @@55:	mov	bx, di	;@0373B
 	mov	al, byte ptr ds:[215h]	;@0373D
 	test	al, 1	;@03740
@@ -5363,7 +5371,7 @@ L03856:	mov	es, word ptr ds:[77Eh]	;@03856
 	mov	bx, di	;@03887
 	ret	;@03889
 @@1:	pop	di	;@0388A
-L0388B:	jmp	L0391A	;@0388B
+L0388B:	jmp	FIXUP_OVERFLOW	;@0388B
 L0388E:	sub	bp, bp	;@0388E
 	and	al, 3	;@03890
 	cmp	al, 2	;@03892
@@ -5415,7 +5423,8 @@ L038B0:	cmp	byte ptr ds:[17h], 0	;@038B0
 	jb	@@3	;@03912
 	jmp	L037C4	;@03914
 @@3:	jmp	L0388B	;@03917
-L0391A:	push	dx	;@0391A
+; FIXUP_OVERFLOW: report a fixup whose value does not fit ("Fixup overflow at ...").
+FIXUP_OVERFLOW:	push	dx	;@0391A
 	push	si	;@0391B
 	push	di	;@0391C
 	push	cx	;@0391D
@@ -5497,11 +5506,12 @@ L0391A:	push	dx	;@0391A
 	mov	ax, 23h	;@039D7
 	push	ax	;@039DA
 	mov	word ptr ds:[422h], 1	;@039DB
-	call	ERROR	;@039E1
+	call	ERROR	; "Fixup overflow at %s, target = %s"	;@039E1
 	pop	si	;@039E4
 	pop	dx	;@039E5
 	jmp	short L03A32	;@039E6
-L039E8:	test	byte ptr es:[bx+0Eh], 40h	;@039E8
+; UNDEFINED_SYMBOL: report an external no module defines.
+UNDEFINED_SYMBOL:	test	byte ptr es:[bx+0Eh], 40h	;@039E8
 	jne	L03A32	;@039ED
 	or	byte ptr es:[bx+0Eh], 40h	;@039EF
 	mov	bx, word ptr ds:[218h]	;@039F4
@@ -5528,7 +5538,7 @@ L039E8:	test	byte ptr es:[bx+0Eh], 40h	;@039E8
 	push	cx	;@03A28
 	mov	ax, 26h	;@03A29
 	push	ax	;@03A2C
-	call	ERROR	;@03A2D
+	call	ERROR	; "Undefined symbol %s"	;@03A2D
 	pop	si	;@03A30
 	pop	bx	;@03A31
 L03A32:	stc	;@03A32
@@ -5758,7 +5768,7 @@ P2_MODEND:	inc	byte ptr ds:[492h]	;@03C2A
 	push	cx	;@03C5C
 	mov	ax, 27h	;@03C5D
 	push	ax	;@03C60
-	call	ERROR	;@03C61
+	call	ERROR	; "Program entry point may not reside in an overlay"	;@03C61
 @@3:	mov	es, word ptr ds:[77Eh]	;@03C64
 	mov	ax, word ptr es:[bx+6]	;@03C68
 	mov	bx, word ptr es:[bx]	;@03C6C
@@ -5780,25 +5790,27 @@ P2_MODEND:	inc	byte ptr ds:[492h]	;@03C2A
 	mov	word ptr ds:[6B1h], cx	;@03C9B
 	mov	word ptr ds:[6B3h], bx	;@03C9F
 	cmp	byte ptr ds:[129h], 1	;@03CA3
-	jne	L03CC3	;@03CA8
+	jne	BAD_ENTRY_OFFSET	;@03CA8
 	and	bx, bx	;@03CAA
-	jne	L03CB9	;@03CAC
+	jne	COM_BAD_ENTRY	;@03CAC
 	cmp	cx, 100h	;@03CAE
-	je	L03CC3	;@03CB2
+	je	BAD_ENTRY_OFFSET	;@03CB2
 	call	L0937E	;@03CB4
-	jne	L03CC3	;@03CB7
-L03CB9:	xor	ax, ax	;@03CB9
+	jne	BAD_ENTRY_OFFSET	;@03CB7
+; COM_BAD_ENTRY: a COM file's entry point must be 100h in the first segment.
+COM_BAD_ENTRY:	xor	ax, ax	;@03CB9
 	push	ax	;@03CBB
 	mov	ax, 15h	;@03CBC
 	push	ax	;@03CBF
-	call FATAL	;@03CC0
-L03CC3:	cmp	word ptr ds:[420h], 0	;@03CC3
+	call FATAL	; "Cannot generate COM file : invalid initial entry point address"	;@03CC0
+; BAD_ENTRY_OFFSET: the start address is outside its segment.
+BAD_ENTRY_OFFSET:	cmp	word ptr ds:[420h], 0	;@03CC3
 	je	L03CD9	;@03CC8
 	xor	ax, ax	;@03CCA
 	push	ax	;@03CCC
 	mov	ax, 29h	;@03CCD
 	push	ax	;@03CD0
-	call ERROR	;@03CD1
+	call ERROR	; "Invalid entry point offset"	;@03CD1
 	or	byte ptr ds:[410h], 1	;@03CD4
 L03CD9:	cmp	byte ptr ds:[14h], 0	;@03CD9
 	je	L03CE3	;@03CDE
@@ -6168,14 +6180,15 @@ L04001:	push	es	;@04001
 	pop	si	;@0405A
 	pop	es	;@0405B
 	ret	;@0405C
-L0405D:	test	byte ptr ds:[215h], 1	;@0405D
+; ADD_RELOCATION: a segment fixup: an EXE relocation (impossible in a COM file).
+ADD_RELOCATION:	test	byte ptr ds:[215h], 1	;@0405D
 	je	@@2	;@04062
 	ret	;@04064
 @@1:	xor	ax, ax	;@04065
 	push	ax	;@04067
 	mov	ax, 16h	;@04068
 	push	ax	;@0406B
-	call	FATAL	;@0406C
+	call	FATAL	; "Cannot generate COM file : segment-relocatable items present"	;@0406C
 @@2:	cmp	byte ptr ds:[129h], 1	;@0406F
 	je	@@1	;@04074
 	inc	word ptr ds:[4A0h]	;@04076
@@ -6197,7 +6210,7 @@ L0405D:	test	byte ptr ds:[215h], 1	;@0405D
 	push	ax	;@0409C
 	mov	ax, 18h	;@0409D
 	push	ax	;@040A0
-	call	FATAL	;@040A1
+	call	FATAL	; "Relocation offset overflow"	;@040A1
 @@3:	add	di, word ptr ds:[3E8h]	;@040A4
 @@4:	mov	word ptr ds:[496h], di	;@040A8
 	mov	di, word ptr ds:[3EEh]	;@040AC
@@ -6277,7 +6290,7 @@ P2_FIXUPP:	jmp	@@16	;@040D5
 	je	@@12	;@04158
 @@9:	mov	es, word ptr ds:[77Eh]	;@0415A
 	mov	bx, word ptr es:[bx]	;@0415E
-@@10:	call	L09BDC	;@04161
+@@10:	call	NE_BAD_ENTRY	;@04161
 	jmp	short @@16	;@04164
 @@11:	add	word ptr [di+0C4Eh], cx	;@04166
 	mov	ax, word ptr ds:[420h]	;@0416A
@@ -6376,7 +6389,7 @@ P2_FIXUPP:	jmp	@@16	;@040D5
 	cmp	si, word ptr ds:[79Ch]	;@04280
 	jb	@@29	;@04284
 	mov	ax, 1	;@04286
-	call	L0961E	;@04289
+	call	INTERNAL_ERROR	;@04289
 @@30:	mov	bx, word ptr es:[si+6]	;@0428C
 	dec	bx	;@04290
 	shl	bx, 1	;@04291
@@ -6390,7 +6403,7 @@ P2_FIXUPP:	jmp	@@16	;@040D5
 @@31:	test	byte ptr ds:[215h], 8	;@042A3
 	je	@@33	;@042A8
 	jmp	short @@33	;@042AA
-@@32:	mov	word ptr ds:[222h], offset L0405D	;@042AC
+@@32:	mov	word ptr ds:[222h], offset ADD_RELOCATION	;@042AC
 	test	byte ptr ds:[215h], 1	;@042B2
 	jne	@@35	;@042B7
 	cmp	byte ptr es:[si+0Ah], 0	;@042B9
@@ -6412,7 +6425,7 @@ P2_FIXUPP:	jmp	@@16	;@040D5
 	push	ax	;@042E7
 	mov	ax, 22h	;@042E8
 	push	ax	;@042EB
-	call	FATAL	;@042EC
+	call	FATAL	; "Relocation item exceeds 1Meg DOS limit"	;@042EC
 @@35:	pop	si	;@042EF
 	jmp	@@33	;@042F0
 @@36:	call	L03F9B	;@042F2
@@ -6987,7 +7000,7 @@ L04580:	push	ds	;@04580
 	mov	bh, bl	;@04809
 	mov	bl, byte ptr es:[si]	;@0480B
 @@31:	inc	si	;@0480E
-	call	L01D2E	;@0480F
+	call	GROUP_ADD_SEGMENT	;@0480F
 @@32:	dec	ax	;@04812
 	jge	@@30	;@04813
 	mov	es, word ptr ds:[796h]	;@04815
@@ -7102,7 +7115,7 @@ L04580:	push	ds	;@04580
 	shl	bx, 1	;@048EC
 	mov	es, word ptr [bx+716h]	;@048EE
 	pop	bx	;@048F2
-	call	L01902	;@048F3
+	call	DEFINE_PUBLIC	;@048F3
 	push	ds	;@048F6
 	pop	es	;@048F7
 	mov	ds, word ptr ds:[282h]	;@048F8
@@ -7136,11 +7149,12 @@ POOL_INIT_OR_DIE:	push	ds	;@04A2E
 	jne	@@1	;@04A38
 	ret	;@04A3A
 @@1:	jmp	OUT_OF_MEMORY	;@04A3B
-L04A3E:	xor	ax, ax	;@04A3E
+; DEBUG_OVERFLOW: too much debug information ("try fewer modules with debug info").
+DEBUG_OVERFLOW:	xor	ax, ax	;@04A3E
 	push	ax	;@04A40
 	mov	ax, 1Fh	;@04A41
 	push	ax	;@04A44
-	call FATAL	;@04A45
+	call FATAL	; "Debugging information overflow; try fewer modules with debug info"	;@04A45
 L04A48:	push	bp	;@04A48
 	mov	bp, sp	;@04A49
 	sub	sp, 0Ah	;@04A4B
@@ -7905,7 +7919,7 @@ L051CF:	lodsw	;@051CF
 	stosw	;@051D5
 	loop	L051CF	;@051D6
 	ret	;@051D8
-@@1:	jmp	L04A3E	;@051D9
+@@1:	jmp	DEBUG_OVERFLOW	;@051D9
 L051DC:	mov	ax, word ptr [bx]	;@051DC
 	mov	dx, word ptr [bx+2]	;@051DE
 	add	word ptr [bx], cx	;@051E1
@@ -8234,7 +8248,7 @@ TABLE_OVERFLOW:	call	DATA_OVERFLOW	;@054E0
 	push	ax	;@054E5
 	mov	ax, 8	;@054E6
 	push	ax	;@054E9
-	call FATAL	;@054EA
+	call FATAL	; "Table limit exceeded"	;@054EA
 L054ED:	push	bp	;@054ED
 	mov	bp, sp	;@054EE
 	push	si	;@054F0
@@ -8561,13 +8575,14 @@ L059CA:	mov	cx, word ptr ds:[3458h]	;@059CA
 	dec	di	;@059D8
 	mov	word ptr ds:[3E0h], di	;@059D9
 	shr	bx, 1	;@059DD
-	jb	L059F3	;@059DF
+	jb	RECORD_TOO_LONG	;@059DF
 	mov	word ptr ds:[41Eh], 0	;@059E1
 L059E7:	shl	bx, 1	;@059E7
 	add	bx, word ptr ds:[3D0h]	;@059E9
 	jmp	word ptr cs:[bx]	;@059ED
 L059F0:	call	L0885D	;@059F0
-L059F3:	mov	word ptr ds:[41Eh], 1	;@059F3
+; RECORD_TOO_LONG: a record longer than TLINK takes (and 32-bit records) are fatal.
+RECORD_TOO_LONG:	mov	word ptr ds:[41Eh], 1	;@059F3
 	cmp	bx, 78h	;@059F9
 	je	IGNORE_RECORD	;@059FC
 	cmp	byte ptr ds:[125h], 0	;@059FE
@@ -8577,7 +8592,7 @@ L059F3:	mov	word ptr ds:[41Eh], 1	;@059F3
 	push	cx	;@05A0D
 	mov	ax, 1Dh	;@05A0E
 	push	ax	;@05A11
-	call FATAL	;@05A12
+	call FATAL	; "32-bit record encountered"	;@05A12
 ; IGNORE_RECORD: a record type ignored without a word (A6h..AAh).
 IGNORE_RECORD:	ret	;@05A15
 
@@ -8827,7 +8842,8 @@ L05DA7:	push	bp	;@05DA7
 	mov	sp, bp	;@05E32
 	pop	bp	;@05E34
 	ret	4	;@05E35
-L05E38:	push	bp	;@05E38
+; CHECK_CONFLICT: warns that a module's name conflicts with another module's.
+CHECK_CONFLICT:	push	bp	;@05E38
 	mov	bp, sp	;@05E39
 	sub	sp, 90h	;@05E3B
 	push	si	;@05E3F
@@ -9101,7 +9117,7 @@ L05E38:	push	bp	;@05E38
 	push	cx	;@060F9
 	mov	ax, 33h	;@060FA
 	push	ax	;@060FD
-	call WARNING	;@060FE
+	call WARNING	; "%s conflicts with module %s"	;@060FE
 	pop	bx	;@06101
 	pop	di	;@06102
 	pop	di	;@06103
@@ -9111,7 +9127,8 @@ L05E38:	push	bp	;@05E38
 	pop	bx	;@06107
 	pop	ax	;@06108
 	ret	;@06109
-L0610A:	push	bp	;@0610A
+; COMMON_TOO_BIG: a common (communal) segment over 64K.
+COMMON_TOO_BIG:	push	bp	;@0610A
 	mov	bp, sp	;@0610B
 	sub	sp, 0Ah	;@0610D
 	mov	word ptr [bp-0Ah], 0FFFFh	;@06110
@@ -9121,7 +9138,7 @@ L0610A:	push	bp	;@0610A
 	push	dx	;@06118
 	push	si	;@06119
 	push	di	;@0611A
-	call	L05E38	;@0611B
+	call	CHECK_CONFLICT	;@0611B
 	mov	si, di	;@0611E
 	push	si	;@06120
 	and	si, 3	;@06121
@@ -9262,7 +9279,7 @@ L0610A:	push	bp	;@0610A
 	push	ax	;@0627D
 	mov	ax, 2Ah	;@0627E
 	push	ax	;@06281
-	call ERROR	;@06282
+	call ERROR	; "Common segment exceeds 64K"	;@06282
 	pop	di	;@06285
 	pop	si	;@06286
 	pop	dx	;@06287
@@ -9381,7 +9398,7 @@ L0633C:	push	ax	;@0633C
 	jae	@@3	;@06392
 	cmp	byte ptr es:[di+0Eh], 1	;@06394
 	je	@@4	;@06399
-@@3:	call	L0610A	;@0639B
+@@3:	call	COMMON_TOO_BIG	;@0639B
 @@4:	add	di, word ptr ds:[48Eh]	;@0639E
 @@5:	cmp	di, word ptr [bx+2]	;@063A2
 	jb	@@2	;@063A5
@@ -10014,7 +10031,8 @@ L0693A:	push	cx	;@0693A
 	mov	cx, word ptr es:[bx]	;@069C8
 	mov	word ptr es:[si], cx	;@069CB
 	jmp	@@5	;@069CE
-L069D0:	push	bp	;@069D0
+; SEGMENT_IN_TWO_GROUPS: a segment that two groups claim (a warning).
+SEGMENT_IN_TWO_GROUPS:	push	bp	;@069D0
 	mov	bp, sp	;@069D1
 	push	si	;@069D3
 	push	di	;@069D4
@@ -10111,13 +10129,14 @@ L069D0:	push	bp	;@069D0
 	push	cx	;@06AB9
 	mov	ax, 35h	;@06ABA
 	push	ax	;@06ABD
-	call WARNING	;@06ABE
+	call WARNING	; "Segment %s is in two groups: %s"	;@06ABE
 	pop	di	;@06AC1
 	pop	si	;@06AC2
 	pop	bx	;@06AC3
 	mov	es, word ptr ds:[77Eh]	;@06AC4
 	jmp	@@4	;@06AC8
-L06ACA:	push	bp	;@06ACA
+; CHECK_SEGMENT_SIZE: a segment over 64K is an error.
+CHECK_SEGMENT_SIZE:	push	bp	;@06ACA
 	mov	bp, sp	;@06ACB
 	sub	sp, 0Ch	;@06ACD
 	push	dx	;@06AD0
@@ -10266,7 +10285,7 @@ L06ACA:	push	bp	;@06ACA
 	push	cx	;@06C50
 	mov	ax, 0Ah	;@06C51
 	push	ax	;@06C54
-	call ERROR	;@06C55
+	call ERROR	; "Segment %s exceeds 64K"	;@06C55
 	or	byte ptr ds:[410h], 4	;@06C58
 	pop	di	;@06C5D
 	pop	si	;@06C5E
@@ -10345,7 +10364,7 @@ L06CF0:	push	bp	;@06CF0
 	add	di, 4	;@06D07
 	jmp	@@1	;@06D0A
 @@2:	mov	ax, 3	;@06D0C
-	call	L0961E	;@06D0F
+	call	INTERNAL_ERROR	;@06D0F
 @@3:	mov	ax, word ptr es:[di+2]	;@06D12
 	mov	sp, bp	;@06D16
 	pop	bp	;@06D18
@@ -10391,7 +10410,7 @@ L06D62:	push	di	;@06D62
 @@2:	cmp	di, word ptr ds:[7ECh]	;@06D73
 	jb	@@1	;@06D77
 	mov	ax, 4	;@06D79
-	call	L0961E	;@06D7C
+	call	INTERNAL_ERROR	;@06D7C
 @@3:	jmp	short @@5	;@06D7F
 @@4:	cmp	word ptr es:[di+4], 0	;@06D81
 	jne	@@3	;@06D86
@@ -10409,7 +10428,8 @@ L06D62:	push	di	;@06D62
 	jb	@@8	;@06DA5
 @@8:	pop	di	;@06DA7
 	ret	;@06DA8
-L06DA9:	push	bp	;@06DA9
+; CHECK_GROUPS: groups must not overlap or exceed 64K.
+CHECK_GROUPS:	push	bp	;@06DA9
 	mov	bp, sp	;@06DAA
 	sub	sp, 1Ah	;@06DAC
 	push	si	;@06DAF
@@ -10518,7 +10538,7 @@ L06DA9:	push	bp	;@06DA9
 	push	cx	;@06EDA
 	mov	ax, 36h	;@06EDB
 	push	ax	;@06EDE
-	call WARNING	;@06EDF
+	call WARNING	; "Group %s overlaps group %s"	;@06EDF
 	pop	si	;@06EE2
 @@9:	mov	es, word ptr ds:[77Eh]	;@06EE3
 	mov	ax, word ptr [bp-14h]	;@06EE7
@@ -10749,7 +10769,7 @@ L06DA9:	push	bp	;@06DA9
 	push	cx	;@07175
 	mov	ax, 9	;@07176
 	push	ax	;@07179
-	call ERROR	;@0717A
+	call ERROR	; "Group %s exceeds 64K"	;@0717A
 	or	byte ptr ds:[410h], 4	;@0717D
 	pop	di	;@07182
 	pop	si	;@07183
@@ -10758,7 +10778,8 @@ L06DA9:	push	bp	;@06DA9
 	pop	bx	;@07186
 	pop	ax	;@07187
 	jmp	@@36	;@07188
-L0718B:	push	bp	;@0718B
+; CHECK_STACK: the stack segment and the initial SP (and none in a COM file).
+CHECK_STACK:	push	bp	;@0718B
 	mov	bp, sp	;@0718C
 	sub	sp, 6	;@0718E
 	sub	cx, cx	;@07191
@@ -10938,7 +10959,7 @@ L0718B:	push	bp	;@0718B
 	push	ax	;@0736E
 	mov	ax, 13h	;@0736F
 	push	ax	;@07372
-	call FATAL	;@07373
+	call FATAL	; "Cannot generate COM file : stack segment present"	;@07373
 @@26:	push	ax	;@07376
 	push	bx	;@07377
 	push	cx	;@07378
@@ -10949,7 +10970,7 @@ L0718B:	push	bp	;@0718B
 	push	cx	;@0737E
 	mov	ax, 0Bh	;@0737F
 	push	ax	;@07382
-	call ERROR	;@07383
+	call ERROR	; "Invalid initial stack offset"	;@07383
 	or	byte ptr ds:[410h], 2	;@07386
 	pop	di	;@0738B
 	pop	si	;@0738C
@@ -10970,7 +10991,7 @@ L0718B:	push	bp	;@0718B
 	push	ax	;@073A5
 	mov	ax, 14h	;@073A6
 	push	ax	;@073A9
-	call FATAL	;@073AA
+	call FATAL	; "Cannot generate COM file : program exceeds 64K"	;@073AA
 L073AD:	push	ax	;@073AD
 	push	bx	;@073AE
 	push	dx	;@073AF
@@ -11188,13 +11209,15 @@ L074A5:	push	bp	;@074A5
 	mov	sp, bp	;@075CC
 	pop	bp	;@075CE
 	ret	;@075CF
-L075D0:	xor	ax, ax	;@075D0
+; WARN_NO_STACK: an EXE without a stack segment.
+WARN_NO_STACK:	xor	ax, ax	;@075D0
 	push	ax	;@075D2
 	mov	ax, 32h	;@075D3
 	push	ax	;@075D6
-	call WARNING	;@075D7
+	call WARNING	; "No stack"	;@075D7
 	ret	;@075DA
-L075DB:	mov	ax, word ptr ds:[482h]	;@075DB
+; MAP_ENTRY_POINT: "Program entry point at" in the map.
+MAP_ENTRY_POINT:	mov	ax, word ptr ds:[482h]	;@075DB
 	inc	ax	;@075DE
 	jne	@@1	;@075DF
 	mov	ax, 10h	;@075E1
@@ -11276,7 +11299,7 @@ L075DB:	mov	ax, word ptr ds:[482h]	;@075DB
 	je	@@7	;@076E3
 	cmp	byte ptr ds:[12Ah], 1	;@076E5
 	je	@@7	;@076EA
-	call	L075D0	;@076EC
+	call	WARN_NO_STACK	;@076EC
 @@7:	ret	;@076EF
 L076F0:	mov	word ptr ds:[414h], 0	;@076F0
 	mov	word ptr ds:[416h], 0	;@076F6
@@ -11351,7 +11374,8 @@ L076F0:	mov	word ptr ds:[414h], 0	;@076F0
 	pop	di	;@077CD
 	mov	word ptr es:[di+4], dx	;@077CE
 	ret	;@077D2
-L077D3:	mov	si, 582Ah	;@077D3
+; CHECK_OVERLAY_MANAGER: overlays need the overlay manager linked in.
+CHECK_OVERLAY_MANAGER:	mov	si, 582Ah	;@077D3
 	mov	ah, 0	;@077D6
 	mov	word ptr ds:[3450h], cs	;@077D8
 	call	L0921C	;@077DC
@@ -11374,7 +11398,7 @@ L077D3:	mov	si, 582Ah	;@077D3
 	push	cx	;@07811
 	mov	ax, 37h	;@07812
 	push	ax	;@07815
-	call WARNING	;@07816
+	call WARNING	; "Overlays generated and no overlay manager included"	;@07816
 @@2:	stc	;@07819
 	ret	;@0781A
 @@3:	mov	ax, word ptr es:[bx+4]	;@0781B
@@ -11430,7 +11454,8 @@ L07839:	push	cx	;@07839
 @@6:	pop	di	;@078B1
 	pop	cx	;@078B2
 	ret	;@078B3
-L078B4:	push	bp	;@078B4
+; MAP_SEGMENT_LINE: one line of the detailed segment map.
+MAP_SEGMENT_LINE:	push	bp	;@078B4
 	mov	bp, sp	;@078B5
 	sub	sp, 1Ah	;@078B7
 	push	ax	;@078BA
@@ -11593,7 +11618,9 @@ L078B4:	push	bp	;@078B4
 	mov	sp, bp	;@07A8C
 	pop	bp	;@07A8E
 	ret	2	;@07A8F
-L07A92:	push	bp	;@07A92
+; MAP_SEGMENTS: the segment list of the map ("Start Stop Length Name Class", and the
+; detailed map with /s).
+MAP_SEGMENTS:	push	bp	;@07A92
 	mov	bp, sp	;@07A93
 	sub	sp, 2	;@07A95
 	mov	word ptr [bp-2], ax	;@07A98
@@ -11633,7 +11660,7 @@ L07A92:	push	bp	;@07A92
 	cmp	ax, si	;@07B6C
 	jne	@@6	;@07B6E
 @@5:	push	word ptr [bp-2]	;@07B70
-	call	L078B4	;@07B73
+	call	MAP_SEGMENT_LINE	;@07B73
 @@6:	add	di, 2	;@07B76
 	jmp	@@4	;@07B79
 @@7:	pop	di	;@07B7B
@@ -11996,7 +12023,8 @@ L07E30:	xor	ax, ax	;@07E30
 @@4:	mov	dh, 1	;@07E8B
 @@5:	mov	ax, si	;@07E8D
 	jmp	@@3	;@07E8F
-L07E91:	call	L07D9D	;@07E91
+; MAP_PUBLICS: the publics of the map, by name and by value ("idle" for unused ones).
+MAP_PUBLICS:	call	L07D9D	;@07E91
 	mov	di, word ptr ds:[7641h]	;@07E94
 	call PUT_INLINE	;@07E98
 	db	'!  Address         Publics by Name'	;@07E9B
@@ -12566,12 +12594,12 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	mov	byte ptr ds:[492h], 0	;@084BA
 	mov	byte ptr ds:[486h], 0	;@084BF
 	call	L08312	;@084C4
-	call L09751	;@084C7
+	call SET_ALIGNMENT	;@084C7
 	cmp	byte ptr ds:[17h], 0	;@084CA
 	je	@@4	;@084CF
 	mov	word ptr ds:[400h], 8	;@084D1
 	mov	word ptr ds:[402h], 6F1h	;@084D7
-	call L09DCF	;@084DD
+	call READ_STUB	;@084DD
 	jmp	short @@5	;@084E0
 @@4:	mov	word ptr ds:[400h], 2	;@084E2
 	mov	word ptr ds:[402h], 660h	;@084E8
@@ -12625,7 +12653,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	cmp	byte ptr ds:[17h], 0	;@08576
 	je	@@8	;@0857B
 	call L0BA61	;@0857D
-	call L0BCEA	;@08580
+	call EXPORT_NON_PUBLIC	;@08580
 @@8:	call	L0653D	;@08583
 	mov	ax, word ptr ds:[4A0h]	;@08586
 	mov	word ptr ds:[0C47h], ax	;@08589
@@ -12639,17 +12667,17 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 @@10:	cmp	byte ptr ds:[486h], 1	;@0859E
 	jne	@@11	;@085A3
 	call	L065E9	;@085A5
-@@11:	call	L069D0	;@085A8
+@@11:	call	SEGMENT_IN_TWO_GROUPS	;@085A8
 	mov	es, word ptr ds:[7BEh]	;@085AB
 	mov	cx, word ptr ds:[7BCh]	;@085AF
 	mov	bp, offset L0663B	;@085B3
 	call	L09252	;@085B6
-	call	L06ACA	;@085B9
+	call	CHECK_SEGMENT_SIZE	;@085B9
 	cmp	byte ptr ds:[17h], 1	;@085BC
 	jne	@@12	;@085C1
 	call	L06C65	;@085C3
 @@12:	mov	word ptr ds:[6B9h], 0	;@085C6
-	call	L06DA9	;@085CC
+	call	CHECK_GROUPS	;@085CC
 	mov	bx, word ptr ds:[424h]	;@085CF
 	push	bx	;@085D3
 	and	bx, 3	;@085D4
@@ -12665,32 +12693,32 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 @@13:	call	L076F0	;@085ED
 	cmp	byte ptr ds:[17h], 1	;@085F0
 	jne	@@14	;@085F5
-	call L0A3CE	;@085F7
-@@14:	call	L0718B	;@085FA
+	call NE_VIRDEF_IMPORT	;@085F7
+@@14:	call	CHECK_STACK	;@085FA
 	call	L0837D	;@085FD
 	call	L073AD	;@08600
 	call	L073F3	;@08603
-	call	L077D3	;@08606
+	call	CHECK_OVERLAY_MANAGER	;@08606
 	cmp	byte ptr ds:[17h], 0	;@08609
 	jne	@@15	;@0860E
 	call	L07461	;@08610
 @@15:	cmp	byte ptr ds:[11h], 1	;@08613
 	jne	@@17	;@08618
 	xor	ax, ax	;@0861A
-	call	L07A92	;@0861C
+	call	MAP_SEGMENTS	;@0861C
 	mov	di, word ptr ds:[7641h]	;@0861F
 	call PUT_NEWLINE	;@08623
 	mov	word ptr ds:[7641h], di	;@08626
 	cmp	byte ptr ds:[13h], 1	;@0862A
 	jne	@@16	;@0862F
 	mov	ax, 1	;@08631
-	call	L07A92	;@08634
+	call	MAP_SEGMENTS	;@08634
 	mov	di, word ptr ds:[7641h]	;@08637
 	call PUT_NEWLINE	;@0863B
 	mov	word ptr ds:[7641h], di	;@0863E
 @@16:	cmp	byte ptr ds:[12h], 1	;@08642
 	jne	@@17	;@08647
-	call	L07E91	;@08649
+	call	MAP_PUBLICS	;@08649
 	mov	di, word ptr ds:[7641h]	;@0864C
 	mov	word ptr ds:[7641h], di	;@08650
 	cmp	byte ptr ds:[14h], 0	;@08654
@@ -12716,7 +12744,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	je	@@22	;@086A0
 	call L0B698	;@086A2
 	call L0B795	;@086A5
-	call L09FBD	;@086A8
+	call NE_CHECK_DATA	;@086A8
 @@22:	cmp	byte ptr ds:[14h], 0	;@086AB
 	je	@@23	;@086B0
 	call	L04A48	;@086B2
@@ -12760,12 +12788,12 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	je	@@28	;@0873E
 	call	L0937E	;@08740
 	jne	@@28	;@08743
-	jmp	L03CB9	;@08745
+	jmp	COM_BAD_ENTRY	;@08745
 @@26:	cmp	byte ptr ds:[17h], 0	;@08748
 	je	@@27	;@0874D
 	call L0A3B5	;@0874F
 	jmp	short @@28	;@08752
-@@27:	call	L075DB	;@08754
+@@27:	call	MAP_ENTRY_POINT	;@08754
 @@28:	mov	di, word ptr ds:[7641h]	;@08757
 	call PUT_NEWLINE	;@0875B
 	call FLUSH_OUTPUT	;@0875E
@@ -12872,7 +12900,7 @@ L0885D:	push	ds	;@0885D
 	push	ax	;@08865
 	mov	ax, 5	;@08866
 	push	ax	;@08869
-	call FATAL	;@0886A
+	call FATAL	; "Bad object file %s"	;@0886A
 L0886D:	xchg	bx, si	;@0886D
 	push	bx	;@0886F
 	push	cx	;@08870
@@ -13021,17 +13049,18 @@ L0899E:	push	ax	;@0899E
 	add	ax, cx	;@089AD
 	adc	dl, dh	;@089AF
 	jmp	short L089C0	;@089B1
-L089B3:	xor	ax, ax	;@089B3
+; COM_DATA_BELOW_ENTRY: a COM file may have no data below 100h.
+COM_DATA_BELOW_ENTRY:	xor	ax, ax	;@089B3
 	push	ax	;@089B5
 	mov	ax, 17h	;@089B6
 	push	ax	;@089B9
-	call FATAL	;@089BA
+	call FATAL	; "Cannot generate COM file : data below initial CS:IP defined"	;@089BA
 L089BD:	push	ax	;@089BD
 	push	cx	;@089BE
 	push	dx	;@089BF
 L089C0:	sub	ax, word ptr ds:[0C33h]	;@089C0
 	sbb	dx, 0	;@089C4
-	jb	L089B3	;@089C7
+	jb	COM_DATA_BELOW_ENTRY	;@089C7
 	mov	bx, 0E000h	;@089C9
 	and	bx, ax	;@089CC
 	xor	ax, bx	;@089CE
@@ -13294,7 +13323,8 @@ L08BF9:	push	si	;@08BF9
 @@1:	call	L08BCE	;@08C0A
 	pop	si	;@08C0D
 	ret	;@08C0E
-L08C0F:	push	bx	;@08C0F
+; NE_IGNORE_OVERLAYS: overlays mean nothing in a Windows or OS/2 executable.
+NE_IGNORE_OVERLAYS:	push	bx	;@08C0F
 	push	ds	;@08C10
 	push	es	;@08C11
 	mov	es, word ptr cs:DATA_SEGMENT	;@08C12
@@ -13323,7 +13353,7 @@ L08C0F:	push	bx	;@08C0F
 	push	ax	;@08C55
 	mov	ax, 3Ch	;@08C56
 	push	ax	;@08C59
-	call WARNING	;@08C5A
+	call WARNING	; "Overlays ignored in new executable images"	;@08C5A
 	mov	es, word ptr cs:DATA_SEGMENT	;@08C5D
 	lds	bx, dword ptr es:[132h]	;@08C62
 	mov	ds, word ptr [bx]	;@08C67
@@ -13398,7 +13428,7 @@ L08D03:	push	bp	;@08D03
 	jne	@@2	;@08D0C
 	jmp	@@23	;@08D0E
 @@2:	add	si, 2	;@08D11
-	call	L08C0F	;@08D14
+	call	NE_IGNORE_OVERLAYS	;@08D14
 	jb	@@1	;@08D17
 	push	si	;@08D19
 	push	ds	;@08D1A
@@ -14372,12 +14402,13 @@ L095DA:	push	ds	;@095DA
 	int	21h	;@09618
 	pop	bp	;@0961A
 	ret	2	;@0961B
-L0961E:	push	ax	;@0961E
+; INTERNAL_ERROR: "Internal linker error" with a number.
+INTERNAL_ERROR:	push	ax	;@0961E
 	mov	ax, 2	;@0961F
 	push	ax	;@09622
 	mov	ax, 1Eh	;@09623
 	push	ax	;@09626
-	call FATAL	;@09627
+	call FATAL	; "Internal linker error %d"	;@09627
 L0962A:	cmp	byte ptr ds:[11Dh], 1	;@0962A
 	jne	@@1	;@0962F
 	push	di	;@09631
@@ -14521,7 +14552,8 @@ L0971B:	push	bp	;@0971B
 	mov	sp, bp	;@0974B
 	pop	bp	;@0974D
 	ret	4	;@0974E
-L09751:	cmp	byte ptr ds:[17h], 0	;@09751
+; SET_ALIGNMENT: the /A segment alignment factor.
+SET_ALIGNMENT:	cmp	byte ptr ds:[17h], 0	;@09751
 	jne	@@2	;@09756
 	mov	word ptr ds:[6CFh], 4	;@09758
 	mov	word ptr ds:[3FAh], 0Fh	;@0975E
@@ -14530,7 +14562,7 @@ L09751:	cmp	byte ptr ds:[17h], 0	;@09751
 	push	ax	;@09768
 	mov	ax, 2Dh	;@09769
 	push	ax	;@0976C
-	call ERROR	;@0976D
+	call ERROR	; "Invalid size specified for segment alignment"	;@0976D
 	jmp	short @@5	;@09770
 @@2:	mov	cx, word ptr ds:[144h]	;@09772
 	jcxz	@@1	;@09776
@@ -15093,7 +15125,8 @@ L09B96:	push	bx	;@09B96
 	pop	cx	;@09BD9
 	pop	bx	;@09BDA
 	ret	;@09BDB
-L09BDC:	push	si	;@09BDC
+; NE_BAD_ENTRY: an entry the application may not be able to call.
+NE_BAD_ENTRY:	push	si	;@09BDC
 	push	di	;@09BDD
 	push	es	;@09BDE
 	mov	al, dh	;@09BDF
@@ -15173,7 +15206,7 @@ L09BDC:	push	si	;@09BDC
 	push	cx	;@09CB1
 	mov	ax, 39h	;@09CB2
 	push	ax	;@09CB5
-	call	WARNING	;@09CB6
+	call	WARNING	; "Invalid entry at %x:%x; application may not work in real mode"	;@09CB6
 	pop	di	;@09CB9
 	pop	si	;@09CBA
 	pop	dx	;@09CBB
@@ -15288,7 +15321,8 @@ L09D1D:	push	bx	;@09D1D
 	mov	word ptr es:[si+6], ax	;@09DC3
 	jmp	@@2	;@09DC7
 	db	'PATH='	;@09DCA
-L09DCF:	push	bp	;@09DCF
+; READ_STUB: the DOS stub program of a new executable (STUB in the .DEF file).
+READ_STUB:	push	bp	;@09DCF
 	mov	bp, sp	;@09DD0
 	sub	sp, 88h	;@09DD2
 	mov	di, 7FAh	;@09DD6
@@ -15444,13 +15478,13 @@ L09DCF:	push	bp	;@09DCF
 	push	ax	;@09F39
 	mov	ax, 1	;@09F3A
 	push	ax	;@09F3D
-	call FATAL	;@09F3E
+	call FATAL	; "Unable to open file '%s'"	;@09F3E
 @@13:	call	@@14	;@09F41
 	xor	ax, ax	;@09F44
 	push	ax	;@09F46
 	mov	ax, 21h	;@09F47
 	push	ax	;@09F4A
-	call FATAL	;@09F4B
+	call FATAL	; "Stub program exceeds 64K"	;@09F4B
 @@14:	mov	bx, word ptr [bp-2]	;@09F4E
 	call	CLOSE_FILE	;@09F51
 	ret	;@09F54
@@ -15494,7 +15528,8 @@ L09F55:	push	ds	;@09F55
 	mov	bx, 7FEh	;@09FB6
 	call	L08AC5	;@09FB9
 	ret	;@09FBC
-L09FBD:	mov	word ptr ds:[69Dh], 454Eh	;@09FBD
+; NE_CHECK_DATA: the automatic data segment (DGROUP) and the 254-segment limit.
+NE_CHECK_DATA:	mov	word ptr ds:[69Dh], 454Eh	;@09FBD
 	mov	byte ptr ds:[69Fh], 5	;@09FC3
 	mov	byte ptr ds:[6A0h], 0Ah	;@09FC8
 	mov	ax, word ptr ds:[7650h]	;@09FCD
@@ -15519,13 +15554,13 @@ L09FBD:	mov	word ptr ds:[69Dh], 454Eh	;@09FBD
 	push	cx	;@0A00A
 	mov	ax, 38h	;@0A00B
 	push	ax	;@0A00E
-	call WARNING	;@0A00F
+	call WARNING	; "No automatic data segment"	;@0A00F
 	jmp	short @@7	;@0A012
 @@3:	xor	cx, cx	;@0A014
 	push	cx	;@0A016
 	mov	ax, 2Ch	;@0A017
 	push	ax	;@0A01A
-	call ERROR	;@0A01B
+	call ERROR	; "Automatic data segment exceeds 64K"	;@0A01B
 	jmp	short @@5	;@0A01E
 @@4:	mov	es, word ptr ds:[79Eh]	;@0A020
 	mov	ax, word ptr es:[bx+6]	;@0A024
@@ -15551,7 +15586,7 @@ L09FBD:	mov	word ptr ds:[69Dh], 454Eh	;@09FBD
 	jne	@@9	;@0A062
 	cmp	byte ptr ds:[129h], 3	;@0A064
 	je	@@9	;@0A069
-	call	L075D0	;@0A06B
+	call	WARN_NO_STACK	;@0A06B
 @@9:	mov	ax, word ptr ds:[7C4h]	;@0A06E
 	shr	ax, 1	;@0A071
 	mov	word ptr ds:[6BBh], ax	;@0A073
@@ -15626,8 +15661,9 @@ L09FBD:	mov	word ptr ds:[69Dh], 454Eh	;@09FBD
 	push	ax	;@0A12F
 	mov	ax, 20h	;@0A130
 	push	ax	;@0A133
-	call FATAL	;@0A134
-L0A137:	mov	ax, word ptr ds:[6B1h]	;@0A137
+	call FATAL	; "Limit of 254 segments for new executable file exceeded"	;@0A134
+; WARN_NO_START: "No program starting address defined".
+WARN_NO_START:	mov	ax, word ptr ds:[6B1h]	;@0A137
 	or	ax, word ptr ds:[6B3h]	;@0A13A
 	jne	@@1	;@0A13E
 	cmp	byte ptr ds:[129h], 3	;@0A140
@@ -15636,7 +15672,7 @@ L0A137:	mov	ax, word ptr ds:[6B1h]	;@0A137
 	push	ax	;@0A149
 	mov	ax, 3Bh	;@0A14A
 	push	ax	;@0A14D
-	call WARNING	;@0A14E
+	call WARNING	; "No program starting address defined"	;@0A14E
 @@1:	call	L09F55	;@0A151
 	mov	ax, word ptr ds:[3FEh]	;@0A154
 	call	L074A5	;@0A157
@@ -15651,7 +15687,8 @@ L0A137:	mov	ax, word ptr ds:[6B1h]	;@0A137
 	xor	dx, dx	;@0A170
 	call	L08B1D	;@0A172
 	ret	;@0A175
-L0A176:	push	bp	;@0A176
+; NE_ALIGNMENT: the segment alignment shift of a new executable.
+NE_ALIGNMENT:	push	bp	;@0A176
 	mov	bp, sp	;@0A177
 	sub	sp, 0Ah	;@0A179
 	push	ax	;@0A17C
@@ -15766,12 +15803,12 @@ L0A176:	push	bp	;@0A176
 	push	ax	;@0A2A8
 	mov	ax, 11h	;@0A2A9
 	push	ax	;@0A2AC
-	call FATAL	;@0A2AD
+	call FATAL	; "Segment alignment factor too small"	;@0A2AD
 @@21:	xor	ax, ax	;@0A2B0
 	push	ax	;@0A2B2
 	mov	ax, 12h	;@0A2B3
 	push	ax	;@0A2B6
-	call FATAL	;@0A2B7
+	call FATAL	; "Segment too large for segment table"	;@0A2B7
 L0A2BA:	mov	ax, word ptr ds:[7652h]	;@0A2BA
 	add	ax, word ptr ds:[6BFh]	;@0A2BD
 	xor	bx, bx	;@0A2C1
@@ -15783,7 +15820,7 @@ L0A2BA:	mov	ax, word ptr ds:[7652h]	;@0A2BA
 	or	ax, word ptr es:[bx+0Fh]	;@0A2D2
 	pop	ax	;@0A2D6
 	je	@@2	;@0A2D7
-	call	L0A176	;@0A2D9
+	call	NE_ALIGNMENT	;@0A2D9
 	mov	cx, 8	;@0A2DC
 	mov	si, 6E9h	;@0A2DF
 	xor	dx, dx	;@0A2E2
@@ -15879,7 +15916,7 @@ L0A35C:	push	bx	;@0A35C
 	pop	cx	;@0A3B2
 	pop	bx	;@0A3B3
 	ret	;@0A3B4
-L0A3B5:	call	L0A137	;@0A3B5
+L0A3B5:	call	WARN_NO_START	;@0A3B5
 	call	L0A2BA	;@0A3B8
 	call	L0B5D0	;@0A3BB
 	call	L0A2ED	;@0A3BE
@@ -15888,7 +15925,8 @@ L0A3B5:	call	L0A137	;@0A3B5
 	call	L0B5EE	;@0A3C7
 	call	L0A35C	;@0A3CA
 	ret	;@0A3CD
-L0A3CE:	push	si	;@0A3CE
+; NE_VIRDEF_IMPORT: imports referred to from virtual segments are not supported.
+NE_VIRDEF_IMPORT:	push	si	;@0A3CE
 	push	di	;@0A3CF
 	xor	si, si	;@0A3D0
 	push	si	;@0A3D2
@@ -15899,7 +15937,7 @@ L0A3CE:	push	si	;@0A3CE
 	push	ax	;@0A3DB
 	mov	ax, 2Eh	;@0A3DC
 	push	ax	;@0A3DF
-	call ERROR	;@0A3E0
+	call ERROR	; "Imported references from VIRDEFs not supported"	;@0A3E0
 	pop	si	;@0A3E3
 	jmp	short @@3	;@0A3E4
 @@2:	push	bx	;@0A3E6
@@ -17088,9 +17126,9 @@ L0B172:	push	bp	;@0B172
 	mov	word ptr [bp-10h], 1	;@0B1E0
 	jmp	@@19	;@0B1E5
 @@7:	mov	ax, 7	;@0B1E8
-	call	L0961E	;@0B1EB
+	call	INTERNAL_ERROR	;@0B1EB
 @@8:	push	word ptr es:[di+6]	;@0B1EE
-	call	L0B8B6	;@0B1F2
+	call	DUPLICATE_ORDINAL	;@0B1F2
 	jmp	@@18	;@0B1F5
 @@9:	mov	word ptr [bp-0Eh], 1	;@0B1F8
 	mov	es, word ptr ds:[7F6h]	;@0B1FD
@@ -17363,7 +17401,7 @@ L0B49D:	push	di	;@0B49D
 	pop	di	;@0B4C1
 	ret	;@0B4C2
 L0B4C3:	mov	ax, 5	;@0B4C3
-	call	L0961E	;@0B4C6
+	call	INTERNAL_ERROR	;@0B4C6
 L0B4C9:	int	3Fh	;@0B4C9
 L0B4CB:	push	bx	;@0B4CB
 	push	si	;@0B4CC
@@ -17788,11 +17826,12 @@ L0B795:	push	bp	;@0B795
 	jmp	@@1	;@0B8A0
 @@18:	mov	es, word ptr ds:[7664h]	;@0B8A3
 	push	word ptr es:[si+6]	;@0B8A7
-	call	L0B8B6	;@0B8AB
+	call	DUPLICATE_ORDINAL	;@0B8AB
 	jmp	@@12	;@0B8AE
 @@19:	mov	ax, 8	;@0B8B0
-	call	L0961E	;@0B8B3
-L0B8B6:	push	bp	;@0B8B6
+	call	INTERNAL_ERROR	;@0B8B3
+; DUPLICATE_ORDINAL: two exports with one ordinal.
+DUPLICATE_ORDINAL:	push	bp	;@0B8B6
 	mov	bp, sp	;@0B8B7
 	push	ax	;@0B8B9
 	push	bx	;@0B8BA
@@ -17805,7 +17844,7 @@ L0B8B6:	push	bp	;@0B8B6
 	push	ax	;@0B8C5
 	mov	ax, 3Dh	;@0B8C6
 	push	ax	;@0B8C9
-	call WARNING	;@0B8CA
+	call WARNING	; "Duplicate ordinal (%d) in exports"	;@0B8CA
 	pop	di	;@0B8CD
 	pop	si	;@0B8CE
 	pop	dx	;@0B8CF
@@ -18180,7 +18219,8 @@ L0BBFA:	push	bx	;@0BBFA
 @@3:	pop	si	;@0BC1C
 	pop	bx	;@0BC1D
 	ret	;@0BC1E
-L0BC1F:	push	ds	;@0BC1F
+; DEF_DEFAULTS: a Windows link without a .DEF file uses the defaults (a warning).
+DEF_DEFAULTS:	push	ds	;@0BC1F
 	pop	es	;@0BC20
 	mov	di, 768Ah	;@0BC21
 	mov	cx, 21h	;@0BC24
@@ -18205,7 +18245,7 @@ L0BC1F:	push	ds	;@0BC1F
 	push	ax	;@0BC73
 	mov	ax, 42h	;@0BC74
 	push	ax	;@0BC77
-	call WARNING	;@0BC78
+	call WARNING	; "No module definition file specified: using defaults"	;@0BC78
 	jmp	short @@4	;@0BC7B
 @@3:	cmp	word ptr ds:[13Eh], 0	;@0BC7D
 	je	@@6	;@0BC82
@@ -18254,7 +18294,8 @@ L0BC1F:	push	ds	;@0BC1F
 	push	bx	;@0BCE5
 	push	ax	;@0BCE6
 	call FATAL	;@0BCE7
-L0BCEA:	mov	di, word ptr ds:[76A0h]	;@0BCEA
+; EXPORT_NON_PUBLIC: an export of a name that is not public.
+EXPORT_NON_PUBLIC:	mov	di, word ptr ds:[76A0h]	;@0BCEA
 	mov	es, word ptr ds:[7664h]	;@0BCEE
 	jmp	@@6	;@0BCF2
 @@1:	mov	dl, byte ptr es:[di+8]	;@0BCF5
@@ -18342,7 +18383,7 @@ L0BCEA:	mov	di, word ptr ds:[76A0h]	;@0BCEA
 	push	ax	;@0BDC6
 	mov	ax, 3Ah	;@0BDC7
 	push	ax	;@0BDCA
-	call WARNING	;@0BDCB
+	call WARNING	; "Attempt to export non-public symbol %s"	;@0BDCB
 	pop	di	;@0BDCE
 	pop	si	;@0BDCF
 	pop	dx	;@0BDD0
