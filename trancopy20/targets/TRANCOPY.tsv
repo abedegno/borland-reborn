@@ -1,0 +1,12 @@
+# segment TRANCOPY base 0x2B06 size 0x110A org 0x2706
+@Section@$bctr$qn7PrjFilei		0x0	0x199
+@Section@$bdtr$qv		0x199	0x4B
+@Section@read$qv	read	0x1E4	0x90
+@Section@write$qn7PrjFile	write	0x274	0x75
+@TransferSection@$bctr$qn7PrjFile		0x2E9	0x66
+@TransferSection@read$qv	read	0x34F	0x32
+@TransferSection@item$qi	item	0x381	0x37
+@TransferSection@merge$qn15TransferSection	merge	0x3B8	0x32B
+@checkheader$qr7PrjFilenzcui	checkheader	0x6E3	0xF0
+@copy$qnzct1i	copy	0x7D3	0x752
+_main	main	0xF25	0x1E5

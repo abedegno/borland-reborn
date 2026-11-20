@@ -1,0 +1,23 @@
+[project]
+name = "Borland C++ 2.0 TRANCOPY.EXE source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+exe = "toolchain/BC20/BIN/TRANCOPY.EXE"
+# the MZ header is 0x400 bytes; C0 sets DS to 039Ah (DGROUP)
+dgroup_para = 0x039A
+
+[toolchain]
+profile = "borland-bc20"
+home = "toolchain/BC20"
+stage = ["toolchain/BC20/BIN", "toolchain/BC20/INCLUDE"]
+c_opts = "-ml"
+asm_opts = "/ml"
+dos = "auto"
