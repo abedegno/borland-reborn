@@ -1922,7 +1922,7 @@ P1_MODEND:	inc	byte ptr ds:[492h]	;@0169D
 	mov	word ptr ds:[3C6h], ax	;@01730
 @@7:	mov	ax, word ptr ds:[540h]	;@01733
 	add	word ptr ds:[38Fh], ax	;@01736
-	mov	cx, word ptr cs:L05780[bx]	;@0173A
+	mov	cx, word ptr cs:BUILTIN_NAMES[bx]	;@0173A
 	push	bx	;@0173F
 	mov	bx, word ptr ds:[738h]	;@01740
 	les	di, dword ptr [bx+2]	;@01744
@@ -1972,7 +1972,7 @@ P1_MODEND:	inc	byte ptr ds:[492h]	;@0169D
 	sub	cx, si	;@017B5
 	cmp	cx, 2	;@017B7
 	jae	@@12	;@017BA
-	call	L087E1	;@017BC
+	call	REFILL_INPUT	;@017BC
 	jmp	@@11	;@017BF
 @@12:	sub	ax, ax	;@017C1
 	mov	di, si	;@017C3
@@ -3514,7 +3514,7 @@ P2_THEADR:	cmp	byte ptr ds:[492h], 0	;@02608
 	pop	si	;@02630
 	mov	bl, byte ptr es:[si+10h]	;@02631
 	mov	bh, 0	;@02635
-	mov	cx, word ptr cs:L05780[bx]	;@02637
+	mov	cx, word ptr cs:BUILTIN_NAMES[bx]	;@02637
 	mov	ax, 38h	;@0263C
 	sub	ax, cx	;@0263F
 	add	word ptr ds:[3E2h], cx	;@02641
@@ -3551,7 +3551,7 @@ P2_THEADR:	cmp	byte ptr ds:[492h], 0	;@02608
 	sub	cx, si	;@0268B
 	cmp	cx, 3	;@0268D
 	jae	@@5	;@02690
-	call	L087E1	;@02692
+	call	REFILL_INPUT	;@02692
 	jmp	@@4	;@02695
 @@5:	mov	bl, byte ptr [si]	;@02697
 	inc	si	;@02699
@@ -3560,7 +3560,7 @@ P2_THEADR:	cmp	byte ptr ds:[492h], 0	;@02608
 	sub	cx, si	;@0269F
 	cmp	cx, ax	;@026A1
 	jae	@@7	;@026A3
-	call	L087E1	;@026A5
+	call	REFILL_INPUT	;@026A5
 	jmp	@@6	;@026A8
 @@7:	mov	di, si	;@026AA
 	add	di, ax	;@026AC
@@ -5956,7 +5956,7 @@ MODEND_START:	cmp	byte ptr ds:[3D2h], 1	;@03CE3
 	sub	cx, si	;@03D18
 	cmp	cx, 2	;@03D1A
 	jae	@@3	;@03D1D
-	call L087E1	;@03D1F
+	call REFILL_INPUT	;@03D1F
 	jmp	@@2	;@03D22
 @@3:	sub	ax, ax	;@03D24
 	mov	di, si	;@03D26
@@ -7343,7 +7343,7 @@ L04A48:	push	bp	;@04A48
 	and	byte ptr [si+30h], 7Fh	;@04ADE
 @@2:	cmp	si, word ptr es:[184h]	;@04AE2
 	je	@@5	;@04AE7
-	add	si, word ptr cs:L05780[bx]	;@04AE9
+	add	si, word ptr cs:BUILTIN_NAMES[bx]	;@04AE9
 	push	es	;@04AEE
 	pop	ds	;@04AEF
 	push	di	;@04AF0
@@ -7415,7 +7415,7 @@ L04A48:	push	bp	;@04A48
 @@8:	cmp	si, word ptr ds:[184h]	;@04BA4
 	jne	@@9	;@04BA8
 	jmp	@@34	;@04BAA
-@@9:	add	si, word ptr cs:L05780[bx]	;@04BAD
+@@9:	add	si, word ptr cs:BUILTIN_NAMES[bx]	;@04BAD
 	push	di	;@04BB2
 	mov	di, word ptr [bp-8]	;@04BB3
 	cmp	si, word ptr [di+2]	;@04BB6
@@ -7553,7 +7553,7 @@ L04A48:	push	bp	;@04A48
 	pop	ax	;@04CD1
 @@23:	cmp	si, word ptr ds:[184h]	;@04CD2
 	je	@@26	;@04CD6
-	add	si, word ptr cs:L05780[bx]	;@04CD8
+	add	si, word ptr cs:BUILTIN_NAMES[bx]	;@04CD8
 	push	di	;@04CDD
 	mov	di, word ptr [bp-8]	;@04CDE
 	cmp	si, word ptr [di+2]	;@04CE1
@@ -8454,7 +8454,9 @@ L05519:	push	si	;@05519
 	ret	;@05545
 @@5:	stc	;@05546
 	jmp	@@4	;@05547
-L05549:	call	PUT_HEX_WORD	;@05549
+; PRINT_HEX_PAIR: print two hex words separated by ", " and end the line (nothing calls this
+; entry).
+PRINT_HEX_PAIR:	call	PUT_HEX_WORD	;@05549
 	call	PUT_INLINE	;@0554C
 	db	2, 2Ch, 20h	;@0554F
 	pop	dx	;@05552
@@ -8620,14 +8622,15 @@ FREE_LIST_POOLS:	push	cx	;@05713
 	push	di	;@05714
 	mov	cx, 4	;@05715
 @@1:	push	cx	;@05718
-	call	L05725	;@05719
+	call	TRIM_TABLE	;@05719
 	pop	cx	;@0571C
 	add	di, 8	;@0571D
 	loop	@@1	;@05720
 	pop	di	;@05722
 	pop	cx	;@05723
 	ret	;@05724
-L05725:	push	si	;@05725
+; TRIM_TABLE: give back the unused tail of the table whose 8-byte record is at DI.
+TRIM_TABLE:	push	si	;@05725
 	push	di	;@05726
 	cmp	word ptr [di], 0	;@05727
 	je	@@3	;@0572A
@@ -8648,19 +8651,24 @@ L05725:	push	si	;@05725
 	pop	si	;@0574C
 	ret	;@0574D
 @@4:	jmp	OUT_OF_MEMORY	;@0574E
-L05751:	add	word ptr ds:[714h], 4	;@05751
+; TRIM_ALL_TABLES: trim every table (records 712h..7BAh; four of them first keep 4 more bytes)
+; and gather the free space.
+TRIM_ALL_TABLES:	add	word ptr ds:[714h], 4	;@05751
 	add	word ptr ds:[71Ch], 4	;@05756
 	add	word ptr ds:[724h], 4	;@0575B
 	add	word ptr ds:[72Ch], 4	;@05760
 	mov	di, 712h	;@05765
-@@1:	call	L05725	;@05768
+@@1:	call	TRIM_TABLE	;@05768
 	add	di, 8	;@0576B
 	cmp	di, 7BAh	;@0576E
 	jbe	@@1	;@05772
 	call	far ptr GATHER_ALL_FREE_SPACE	;@05774
 	ret	;@05779
 	db	6 dup (0)	;@0577A
-L05780	db	18h, 0, 38h, 0, 38h, 0, ' in module ', 0, ' and ', 0, 6, 'DGROUP'	;@05780
+; BUILTIN_NAMES: the linker's built-in names: message pieces, segment and class names, and the
+; symbols it defines itself (`__SEGTABLE__`, `__EXEDATE__`, `_edata`, the floating-point
+; fixup names).
+BUILTIN_NAMES	db	18h, 0, 38h, 0, 38h, 0, ' in module ', 0, ' and ', 0, 6, 'DGROUP'	;@05780
 	db	7, 'BEGDATA', 7, 'ENDCODE', 3, 'BSS', 7, 'FAR_BSS', 9, '__GHOST__'
 	db	6, 'DEBSYM', 6, 'DEBTYP', 8, '_COMDEF_', 5, 'STACK', 4, 'CODE'
 	db	4, '????', 8, '@OVYDATA', 7, 'STUBSEG', 9, '_EXEINFO_', 7, 'OVRINFO'
@@ -8708,10 +8716,12 @@ READ_MODULE:	mov	byte ptr ds:[3D6h], 0	;@05942
 @@2:	cmp	word ptr es:[di+0Ah], 2	;@05995
 	jae NEXT_RECORD	;@0599A
 	jmp L09003	;@0599C
-L0599F:	call L087E1	;@0599F
+; REFILL_NEXT, REFILL_DISPATCH: refill the record buffer (REFILL_INPUT), then go on to the next
+; record, or dispatch the current one.
+REFILL_NEXT:	call REFILL_INPUT	;@0599F
 	jmp short NEXT_RECORD	;@059A2
-L059A4:	call L087E1	;@059A4
-	jmp short L059CA	;@059A7
+REFILL_DISPATCH:	call REFILL_INPUT	;@059A4
+	jmp short DISPATCH_RECORD	;@059A7
 ; BAD_RECORD, SKIP_TYPDEF, SKIP_RECORD: entries of the record tables for record types
 ; TLINK does not handle: an unknown type is an error, TYPDEF and the obsolete Intel types are
 ; skipped.  (The two NOPs are separate entry points.)
@@ -8725,17 +8735,19 @@ SKIP_RECORD:	inc word ptr ds:[41Ch]	;@059AB
 NEXT_RECORD:	mov	cx, word ptr ds:[3458h]	;@059B4
 	sub	cx, si	;@059B8
 	cmp	cx, 3	;@059BA
-	jb	L0599F	;@059BD
+	jb	REFILL_NEXT	;@059BD
 	mov	bl, byte ptr [si]	;@059BF
 	inc	si	;@059C1
 	sub	bh, bh	;@059C2
 	lodsw	;@059C4
 	cmp	ax, 2300h	;@059C5
-	ja	L059F0	;@059C8
-L059CA:	mov	cx, word ptr ds:[3458h]	;@059CA
+	ja	BAD_RECORD_TYPE	;@059C8
+; DISPATCH_RECORD: the record at SI: refill the buffer if the record is not all in it, mark
+; its end (3E0h), and jump to its handler in the current pass's table (3D0h).
+DISPATCH_RECORD:	mov	cx, word ptr ds:[3458h]	;@059CA
 	sub	cx, si	;@059CE
 	cmp	cx, ax	;@059D0
-	jb	L059A4	;@059D2
+	jb	REFILL_DISPATCH	;@059D2
 	mov	di, si	;@059D4
 	add	di, ax	;@059D6
 	dec	di	;@059D8
@@ -8743,16 +8755,16 @@ L059CA:	mov	cx, word ptr ds:[3458h]	;@059CA
 	shr	bx, 1	;@059DD
 	jb	RECORD_TOO_LONG	;@059DF
 	mov	word ptr ds:[41Eh], 0	;@059E1
-L059E7:	shl	bx, 1	;@059E7
+DISPATCH_HANDLER:	shl	bx, 1	;@059E7
 	add	bx, word ptr ds:[3D0h]	;@059E9
 	jmp	word ptr cs:[bx]	;@059ED
-L059F0:	call	BAD_OBJECT	;@059F0
+BAD_RECORD_TYPE:	call	BAD_OBJECT	;@059F0
 ; RECORD_TOO_LONG: a record longer than TLINK takes (and 32-bit records) are fatal.
 RECORD_TOO_LONG:	mov	word ptr ds:[41Eh], 1	;@059F3
 	cmp	bx, 78h	;@059F9
 	je	IGNORE_RECORD	;@059FC
 	cmp	byte ptr ds:[125h], 0	;@059FE
-	jne	L059E7	;@05A03
+	jne	DISPATCH_HANDLER	;@05A03
 	mov	word ptr ds:[422h], 1	;@05A05
 	xor	cx, cx	;@05A0B
 	push	cx	;@05A0D
@@ -8840,7 +8852,9 @@ ADD_SCALED:	shl	dx, 1	;@05C58
 	mov	dx, 0	;@05C6A
 	adc	dx, dx	;@05C6D
 	ret	;@05C6F
-L05C70:	mov	word ptr ds:[47Ah], 0	;@05C70
+; FIND_SEGTABLE_NAMES: (a phase of LINK) look up `__SEGTABLE__` and `__SEGTABEND__`, keeping their
+; name entries in 458h and 45Ah; bit 0 of 47Ah says the first exists.
+FIND_SEGTABLE_NAMES:	mov	word ptr ds:[47Ah], 0	;@05C70
 	mov	si, 580Fh	;@05C76
 	mov	ah, 0	;@05C79
 	mov	word ptr ds:[3450h], cs	;@05C7B
@@ -8969,7 +8983,7 @@ L05DA7:	push	bp	;@05DA7
 	lea	di, [di+732h]	;@05DCA
 	xor	bx, bx	;@05DCE
 	mov	bl, byte ptr es:[si+10h]	;@05DD0
-	mov	bx, word ptr cs:L05780[bx]	;@05DD4
+	mov	bx, word ptr cs:BUILTIN_NAMES[bx]	;@05DD4
 	add	bx, si	;@05DD9
 	mov	si, word ptr es:[si+8]	;@05DDB
 	cmp	bx, word ptr [di+2]	;@05DDF
@@ -9580,7 +9594,7 @@ L0633C:	push	ax	;@0633C
 @@6:	pop	ax	;@063B5
 	mov	word ptr ds:[7A4h], 0	;@063B6
 	mov	di, 7A2h	;@063BC
-	call	L05725	;@063BF
+	call	TRIM_TABLE	;@063BF
 	pop	di	;@063C2
 	pop	si	;@063C3
 	pop	dx	;@063C4
@@ -9588,7 +9602,8 @@ L0633C:	push	ax	;@0633C
 	pop	bx	;@063C6
 	pop	ax	;@063C7
 	ret	;@063C8
-L063C9:	push	si	;@063C9
+; PROCESS_MODULE: the module entry SI (table at 736h), unless already done (+0Ah is 2 or more).
+PROCESS_MODULE:	push	si	;@063C9
 	and	si, 3	;@063CA
 	shl	si, 1	;@063CD
 	shl	si, 1	;@063CF
@@ -9621,7 +9636,7 @@ L063C9:	push	si	;@063C9
 	jmp	short @@3	;@06415
 @@2:	mov	bl, byte ptr es:[si+10h]	;@06417
 	mov	bh, 0	;@0641B
-	mov	bx, word ptr cs:L05780[bx]	;@0641D
+	mov	bx, word ptr cs:BUILTIN_NAMES[bx]	;@0641D
 	push	si	;@06422
 	add	si, bx	;@06423
 	mov	word ptr [bp-2], si	;@06425
@@ -9677,7 +9692,7 @@ L063C9:	push	si	;@063C9
 	pop	si	;@064AE
 	jmp	@@4	;@064AF
 @@7:	mov	si, word ptr es:[si+2]	;@064B1
-	call	L063C9	;@064B5
+	call	PROCESS_MODULE	;@064B5
 @@8:	add	bx, 2	;@064B8
 	jmp	@@4	;@064BB
 @@9:	pop	si	;@064BE
@@ -9735,7 +9750,9 @@ L063C9:	push	si	;@063C9
 	mov	sp, bp	;@06539
 	pop	bp	;@0653B
 	ret	;@0653C
-L0653D:	xor	ax, ax	;@0653D
+; PROCESS_MODULES: (a phase of LINK) process the start module (3F6h), then every module entry
+; not yet done (+0Ah = 0), up to 184h.
+PROCESS_MODULES:	xor	ax, ax	;@0653D
 	mov	dx, 2	;@0653F
 	mov	si, word ptr ds:[3F6h]	;@06542
 	cmp	si, -1	;@06546
@@ -9751,7 +9768,7 @@ L0653D:	xor	ax, ax	;@0653D
 	pop	si	;@06560
 	cmp	word ptr es:[si+0Ah], 1	;@06561
 	je	@@2	;@06566
-@@1:	call	L063C9	;@06568
+@@1:	call	PROCESS_MODULE	;@06568
 @@2:	push	di	;@0656B
 	xor	si, si	;@0656C
 	push	si	;@0656E
@@ -9765,7 +9782,7 @@ L0653D:	xor	ax, ax	;@0653D
 	pop	si	;@06580
 @@3:	cmp	word ptr es:[si+0Ah], 0	;@06581
 	jne	@@4	;@06586
-	call	L063C9	;@06588
+	call	PROCESS_MODULE	;@06588
 @@4:	cmp	si, word ptr ds:[184h]	;@0658B
 	je	@@7	;@0658F
 	push	si	;@06591
@@ -9777,7 +9794,7 @@ L0653D:	xor	ax, ax	;@0653D
 	pop	si	;@0659F
 	mov	bl, byte ptr es:[si+10h]	;@065A0
 	mov	bh, 0	;@065A4
-	add	si, word ptr cs:L05780[bx]	;@065A6
+	add	si, word ptr cs:BUILTIN_NAMES[bx]	;@065A6
 	cmp	si, word ptr [di+2]	;@065AB
 	jae	@@5	;@065AE
 	push	si	;@065B0
@@ -9805,7 +9822,8 @@ L0653D:	xor	ax, ax	;@0653D
 	mov	word ptr ds:[4A0h], ax	;@065E2
 	call	L0633C	;@065E5
 	ret	;@065E8
-L065E9:	mov	si, 584Eh	;@065E9
+; CHECK_OVR_PREPARE: (a phase of LINK) look up `__OvrPrepare` and check how it is defined.
+CHECK_OVR_PREPARE:	mov	si, 584Eh	;@065E9
 	mov	ah, 0	;@065EC
 	mov	word ptr ds:[3450h], cs	;@065EE
 	call	FIND_NAME	;@065F2
@@ -9832,7 +9850,7 @@ L065E9:	mov	si, 584Eh	;@065E9
 	mov	dx, word ptr ds:[3DAh]	;@06627
 	mov	si, bx	;@0662B
 	xor	ax, ax	;@0662D
-	call	L063C9	;@0662F
+	call	PROCESS_MODULE	;@0662F
 	mov	word ptr ds:[3DAh], dx	;@06632
 	add	word ptr ds:[4A0h], ax	;@06636
 @@1:	ret	;@0663A
@@ -12795,7 +12813,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	mov	byte ptr ds:[254h], 1	;@08530
 	mov	byte ptr ds:[3D5h], 2	;@08535
 	call	@@30	;@0853A
-	call	L05C70	;@0853D
+	call	FIND_SEGTABLE_NAMES	;@0853D
 	push	bx	;@08540
 	mov	bx, word ptr ds:[738h]	;@08541
 	les	di, dword ptr [bx+2]	;@08545
@@ -12827,7 +12845,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	je	@@8	;@0857B
 	call L0BA61	;@0857D
 	call EXPORT_NON_PUBLIC	;@08580
-@@8:	call	L0653D	;@08583
+@@8:	call	PROCESS_MODULES	;@08583
 	mov	ax, word ptr ds:[4A0h]	;@08586
 	mov	word ptr ds:[0C47h], ax	;@08589
 	cmp	byte ptr ds:[17h], 1	;@0858C
@@ -12839,7 +12857,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 @@9:	mov	word ptr ds:[3F8h], ax	;@0859B
 @@10:	cmp	byte ptr ds:[486h], 1	;@0859E
 	jne	@@11	;@085A3
-	call	L065E9	;@085A5
+	call	CHECK_OVR_PREPARE	;@085A5
 @@11:	call	SEGMENT_IN_TWO_GROUPS	;@085A8
 	mov	es, word ptr ds:[7BEh]	;@085AB
 	mov	cx, word ptr ds:[7BCh]	;@085AF
@@ -12912,7 +12930,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 @@21:	mov	byte ptr ds:[0C4Ch], 0	;@0868B
 	call	@@29	;@08690
 	mov	byte ptr ds:[3D4h], 1	;@08693
-	call	L05751	;@08698
+	call	TRIM_ALL_TABLES	;@08698
 	cmp	byte ptr ds:[17h], 0	;@0869B
 	je	@@22	;@086A0
 	call L0B698	;@086A2
@@ -13012,7 +13030,9 @@ FINISH:	mov	di, word ptr ds:[7641h]	;@087D0
 	call	CLOSE_OUTPUT	;@087DA
 	call	TERMINATE	;@087DD
 	ret	;@087E0
-L087E1:	push	ax	;@087E1
+; REFILL_INPUT: move the CX bytes left in the record buffer to its front and read more of the
+; file after them.
+REFILL_INPUT:	push	ax	;@087E1
 	push	bx	;@087E2
 	push	dx	;@087E3
 	push	di	;@087E4
@@ -13904,7 +13924,7 @@ L09003:	mov	dx, word ptr es:[di+0Ch]	;@09003
 	sub	si, 18h	;@0900F
 @@1:	mov	bl, byte ptr es:[di+10h]	;@09012
 	mov	bh, 0	;@09016
-	add	di, word ptr cs:L05780[bx]	;@09018
+	add	di, word ptr cs:BUILTIN_NAMES[bx]	;@09018
 	cmp	di, si	;@0901D
 	jae	@@4	;@0901F
 @@2:	cmp	dx, word ptr es:[di+0Ch]	;@09021
