@@ -8281,7 +8281,7 @@ WRITE_DEBUG_SYMBOL:	push	bx	;@053A0
 	push	word ptr es:[si+0Ch]	;@053B6
 	test	byte ptr es:[si+0Eh], 20h	;@053BA
 	jne	DEBUG_SYMBOL_FLAG20	;@053BF
-	call	L07E30	;@053C1
+	call	PUBLIC_ADDRESS	;@053C1
 	cmp	dh, 1	;@053C4
 	jne	DEBUG_SYMBOL_VALUE	;@053C7
 	mov	dh, byte ptr [di+8]	;@053C9
@@ -9854,7 +9854,9 @@ CHECK_OVR_PREPARE:	mov	si, 584Eh	;@065E9
 	mov	word ptr ds:[3DAh], dx	;@06632
 	add	word ptr ds:[4A0h], ax	;@06636
 @@1:	ret	;@0663A
-L0663B:	push	bx	;@0663B
+; COMPARE_BY_FRAME: the SORT comparison LINK uses on the segment list (7BEh) after the group
+; checks: segments in groups or overlays (flags E0h) by their frame (+2).
+COMPARE_BY_FRAME:	push	bx	;@0663B
 	push	ax	;@0663C
 	mov	es, word ptr ds:[776h]	;@0663D
 	test	byte ptr es:[si+9], 0E0h	;@06641
@@ -10514,7 +10516,9 @@ L06C65:	push	ax	;@06C65
 	pop	bx	;@06CB4
 	pop	ax	;@06CB5
 	ret	;@06CB6
-L06CB7:	push	cx	;@06CB7
+; ADD_PAIR_IF_NEW: add the name at ES:DI to the 4-byte table at 7B6h (count 7B4h) unless it is
+; there.
+ADD_PAIR_IF_NEW:	push	cx	;@06CB7
 	push	bx	;@06CB8
 	mov	cx, word ptr es:[di]	;@06CB9
 	cmp	cx, -1	;@06CBC
@@ -10538,7 +10542,9 @@ L06CB7:	push	cx	;@06CB7
 @@4:	pop	bx	;@06CED
 	pop	cx	;@06CEE
 	ret	;@06CEF
-L06CF0:	push	bp	;@06CF0
+; FIND_PAIR_VALUE: the word stored with name [bp+4] in the table at 7B6h; a name that is not
+; there is internal error 3.
+FIND_PAIR_VALUE:	push	bp	;@06CF0
 	mov	bp, sp	;@06CF1
 	xor	di, di	;@06CF3
 @@1:	cmp	di, word ptr ds:[7B4h]	;@06CF5
@@ -10555,12 +10561,13 @@ L06CF0:	push	bp	;@06CF0
 	mov	sp, bp	;@06D16
 	pop	bp	;@06D18
 	ret	2	;@06D19
-L06D1C:	mov	si, word ptr ds:[7BCh]	;@06D1C
+; ADD_ALL_PAIRS: ADD_PAIR_IF_NEW for every entry of the segment list (7BEh), from the end.
+ADD_ALL_PAIRS:	mov	si, word ptr ds:[7BCh]	;@06D1C
 	jmp	short @@2	;@06D20
 @@1:	mov	es, word ptr ds:[7BEh]	;@06D22
 	mov	di, word ptr es:[si]	;@06D26
 	mov	es, word ptr ds:[77Eh]	;@06D29
-	call	L06CB7	;@06D2D
+	call	ADD_PAIR_IF_NEW	;@06D2D
 @@2:	sub	si, 2	;@06D30
 	jae	@@1	;@06D33
 	ret	;@06D35
@@ -10587,7 +10594,8 @@ ALLOC_GROUP_ENTRY:	push	ax	;@06D36
 	pop	cx	;@06D5F
 	pop	ax	;@06D60
 	ret	;@06D61
-L06D62:	push	di	;@06D62
+; FIND_ENTRY_7EE: the 6-byte entry for SI in the table at 7EEh; missing is internal error 4.
+FIND_ENTRY_7EE:	push	di	;@06D62
 	xor	di, di	;@06D63
 	mov	es, word ptr ds:[7EEh]	;@06D65
 	jmp	short @@2	;@06D69
@@ -10621,7 +10629,7 @@ CHECK_GROUPS:	push	bp	;@06DA9
 	sub	sp, 1Ah	;@06DAC
 	push	si	;@06DAF
 	push	di	;@06DB0
-	call	L06D1C	;@06DB1
+	call	ADD_ALL_PAIRS	;@06DB1
 	mov	ax, 0FFFFh	;@06DB4
 	mov	word ptr [bp-8], ax	;@06DB7
 	mov	word ptr [bp-12h], ax	;@06DBA
@@ -10687,7 +10695,7 @@ CHECK_GROUPS:	push	bp	;@06DA9
 	jne	@@8	;@06E78
 	push	di	;@06E7A
 	push	di	;@06E7B
-	call	L06CF0	;@06E7C
+	call	FIND_PAIR_VALUE	;@06E7C
 	pop	di	;@06E7F
 	mov	word ptr [bp-12h], ax	;@06E80
 	mov	word ptr [bp-14h], di	;@06E83
@@ -10778,7 +10786,7 @@ CHECK_GROUPS:	push	bp	;@06DA9
 	cmp	word ptr [bp-8], -1	;@06F70
 	je	@@18	;@06F74
 	mov	ax, word ptr [bp-0Ah]	;@06F76
-	call	L06D62	;@06F79
+	call	FIND_ENTRY_7EE	;@06F79
 	jb	@@18	;@06F7C
 	mov	bx, word ptr [bp-8]	;@06F7E
 	jmp	@@15	;@06F81
@@ -11862,7 +11870,9 @@ MAP_SEGMENTS:	push	bp	;@07A92
 	mov	sp, bp	;@07B7D
 	pop	bp	;@07B7F
 	ret	;@07B80
-L07B81:	push	si	;@07B81
+; SEGMENT_SORT_KEYS: for the two list entries SI and DI, load their segment records' keys
+; (+4, flags +0Eh) for COMPARE_SEGMENTS.
+SEGMENT_SORT_KEYS:	push	si	;@07B81
 	and	si, 3	;@07B82
 	shl	si, 1	;@07B85
 	shl	si, 1	;@07B87
@@ -11897,13 +11907,15 @@ L07B81:	push	si	;@07B81
 @@2:	mov	di, word ptr es:[di]	;@07BDE
 	mov	es, word ptr ds:[79Eh]	;@07BE1
 @@3:	ret	;@07BE5
-L07BE6:	push	ax	;@07BE6
+; COMPARE_SEGMENTS: the SORT comparison for the final order of the segment list (7BEh): by the
+; segments' flags (202h, 101h) and records (+8).
+COMPARE_SEGMENTS:	push	ax	;@07BE6
 	push	bx	;@07BE7
 	push	cx	;@07BE8
 	push	dx	;@07BE9
 	push	di	;@07BEA
 	push	si	;@07BEB
-	call	L07B81	;@07BEC
+	call	SEGMENT_SORT_KEYS	;@07BEC
 	test	dx, 202h	;@07BEF
 	jne	@@4	;@07BF3
 	mov	si, word ptr es:[si+8]	;@07BF5
@@ -11952,13 +11964,15 @@ L07BE6:	push	ax	;@07BE6
 	push	si	;@07C4B
 	cmp	si, di	;@07C4C
 	jmp	@@3	;@07C4E
-L07C50:	push	ax	;@07C50
+; COMPARE_SEGMENT_SIZES: a SORT comparison for the segment list: by the segments' flags (202h)
+; and then their +6 words (sizes).
+COMPARE_SEGMENT_SIZES:	push	ax	;@07C50
 	push	bx	;@07C51
 	push	cx	;@07C52
 	push	dx	;@07C53
 	push	di	;@07C54
 	push	si	;@07C55
-	call	L07B81	;@07C56
+	call	SEGMENT_SORT_KEYS	;@07C56
 	and	dx, 202h	;@07C59
 	jne	@@3	;@07C5D
 	mov	cx, word ptr es:[si+6]	;@07C5F
@@ -12123,7 +12137,9 @@ L07D22:	push	ax	;@07D22
 	pop	bx	;@07D9A
 	pop	ax	;@07D9B
 	ret	;@07D9C
-L07D9D:	push	si	;@07D9D
+; BUILD_SEGMENT_LIST: clear the segment list (7BCh = 0) and fill it again from the public
+; tables (752h...), for the sorts that follow.
+BUILD_SEGMENT_LIST:	push	si	;@07D9D
 	push	di	;@07D9E
 	mov	word ptr ds:[7BCh], 0	;@07D9F
 	sub	si, si	;@07DA5
@@ -12183,7 +12199,9 @@ L07D9D:	push	si	;@07D9D
 	pop	di	;@07E2D
 	pop	si	;@07E2E
 	ret	;@07E2F
-L07E30:	xor	ax, ax	;@07E30
+; PUBLIC_ADDRESS: the address of the public at ES:SI in BX (offset) and CX (frame), zero for a
+; public flagged 20h.
+PUBLIC_ADDRESS:	xor	ax, ax	;@07E30
 	cwd	;@07E32
 	test	byte ptr es:[si+0Eh], 20h	;@07E33
 	je	@@1	;@07E38
@@ -12218,7 +12236,7 @@ L07E30:	xor	ax, ax	;@07E30
 @@5:	mov	ax, si	;@07E8D
 	jmp	@@3	;@07E8F
 ; MAP_PUBLICS: the publics of the map, by name and by value ("idle" for unused ones).
-MAP_PUBLICS:	call	L07D9D	;@07E91
+MAP_PUBLICS:	call	BUILD_SEGMENT_LIST	;@07E91
 	mov	di, word ptr ds:[7641h]	;@07E94
 	call PUT_INLINE	;@07E98
 	db	'!  Address         Publics by Name'	;@07E9B
@@ -12227,7 +12245,7 @@ MAP_PUBLICS:	call	L07D9D	;@07E91
 	mov	di, word ptr ds:[7641h]	;@07EC3
 	call PUT_INLINE	;@07EC7
 	db	'"  Address         Publics by Value'	;@07ECA
-	mov	bp, offset L07C50	;@07EED
+	mov	bp, offset COMPARE_SEGMENT_SIZES	;@07EED
 	cmp	byte ptr ds:[125h], 0	;@07EF0
 	je	@@1	;@07EF5
 	mov	bp, offset L07C88	;@07EF7
@@ -12255,7 +12273,7 @@ MAP_PUBLICS:	call	L07D9D	;@07E91
 	mov	es, word ptr [si+756h]	;@07F2C
 	pop	si	;@07F30
 	push	word ptr es:[si+0Ch]	;@07F31
-	call	L07E30	;@07F35
+	call	PUBLIC_ADDRESS	;@07F35
 	call PUT_HEX_WORD	;@07F38
 	mov	al, 3Ah	;@07F3B
 	call PUT_CHAR	;@07F3D
@@ -12868,7 +12886,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 @@11:	call	SEGMENT_IN_TWO_GROUPS	;@085A8
 	mov	es, word ptr ds:[7BEh]	;@085AB
 	mov	cx, word ptr ds:[7BCh]	;@085AF
-	mov	bp, offset L0663B	;@085B3
+	mov	bp, offset COMPARE_BY_FRAME	;@085B3
 	call	SORT	;@085B6
 	call	CHECK_SEGMENT_SIZE	;@085B9
 	cmp	byte ptr ds:[17h], 1	;@085BC
@@ -12923,8 +12941,8 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	jne	@@18	;@08659
 @@17:	cmp	byte ptr ds:[14h], 0	;@0865B
 	je	@@19	;@08660
-	call	L07D9D	;@08662
-@@18:	mov	bp, offset L07BE6	;@08665
+	call	BUILD_SEGMENT_LIST	;@08662
+@@18:	mov	bp, offset COMPARE_SEGMENTS	;@08665
 	mov	cx, word ptr ds:[7BCh]	;@08668
 	mov	es, word ptr ds:[7BEh]	;@0866C
 	call	SORT	;@08670
