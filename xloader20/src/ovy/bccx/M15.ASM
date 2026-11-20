@@ -1,5 +1,16 @@
 	.286p
 	locals
+	public	L10418
+	public	L1044C
+	public	L104AE
+	public	L104FF
+	public	L10507
+	public	L10957
+	public	L15C90
+	public	L15CBE
+	public	L179A7
+	public	L179E9
+	public	L181A0
 
 Y0E290	segment para public 'CODE'
 	assume	cs:Y0E290
@@ -31,168 +42,1690 @@ Y0E290	segment para public 'CODE'
 	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
 	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 1, 0, 0, 0, 0, 0, 0, 'friend', 0, 'virtual', 0, 'C++', 0, 43h
-	db	0, 0, 0, 0, 0, 0, 0, 0, 'pointer', 0, 'static variables', 0, 'friend'
-	db	0, 'virtual', 0, 'Goto', 0, 49h, 66h, 0, 'Switch', 0, 'While'
-	db	0, 'Do-while', 0, 'For', 0, 4, 4, 4, 4, 4, 4, 4, 4, 2, 0, 2, 0
-	db	0, 0, 0, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 8, 8, 8
-	db	8, 8, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 4, 0, 0
-	db	1, 0, 4, 4, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 5, 0, 4
-	db	0, 2, 50h, 1Dh, 0, 18h, 10h, 1Ch, 0, 18h, 0, 7, 0, 2, 0, 3, 0
-	db	14h, 40h, 19h, 0, 0, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0
-	db	1Ch, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0, 1Ch, 40h, 1Dh, 40h, 1Dh
-	db	50h, 1Dh, 0, 1Ch, 0, 1Ch, 50h, 1Dh, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0
-	db	1Ch, 0, 18h, 0, 1Bh, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0, 1Ch, 0
-	db	1Ch, 0, 1Ch, 0, 1Ch, 40h, 1Dh, 60h, 1Dh, 40h, 19h, 40h, 1Dh, 40h
-	db	1Dh, 0, 18h, 0, 1Ch, 58h, 19h, 40h, 19h, 40h, 19h, 40h, 19h, 9
-	db	12h, 9, 12h, 9, 12h, 9, 12h, 9, 12h, 0Eh, 1Ah, 0Eh, 1Ah, 0Eh, 1Ah
-	db	0Eh, 1Ah, 0Eh, 1Ah, 0Eh, 1Ah, 0Eh, 1Ah, 0Eh, 1Ah, 0Ah, 1Ah, 0Ah
-	db	1Ah, 0Ah, 1Ah, 0Eh, 1Ah, 10h, 30h, 10h, 30h, 10h, 30h, 0, 30h
-	db	0Ah, 1Ah, 0Ah, 1Ah, 10h, 30h, 10h, 30h, 10h, 30h, 10h, 30h, 10h
-	db	30h, 10h, 30h, 10h, 30h, 10h, 30h, 10h, 30h, 10h, 30h, 10h, 30h
-	db	80h, 3, 80h, 3, 0, 3, 0, 3, 80h, 3, 80h, 3, 80h, 3, 80h, 3, 0
-	db	7, 0, 3, 0, 3, 0, 3, 0, 1, 0, 0, 40h, 19h, 0, 4, 40h, 19h, 0Ah
-	db	1Ah, 40h, 1Dh, 9, 12h, 9, 12h, 40h, 1Dh, 50h, 19h, 9, 12h, 20h
-	db	0, 20h, 0, 20h, 0, 40h, 19h, 9, 12h, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	'att', 1, 'bbf', 0, 'bdf', 1, 'bei', 1, 'scp', 1, 'lin', 1, 'lvc'
-	db	1, 'lvc', 1, 'lvc', 1, 'lvc', 1, 'ret', 1, 'nci', 1, 'inl', 1
-	db	'obi', 1, 'ofp', 1, 'ovl', 1, 'pin', 0, 'omf', 1, 'pad', 0, 'dcl'
-	db	1, 'amb', 0, 'amp', 0, 'par', 1, 'asc', 1, 'asm', 0, 'bgt', 1
-	db	'pro', 0, 'pro', 0, 'cln', 0, 'cpt', 1, 'def', 0, 'rng', 1, 'dup'
-	db	1, 'pia', 1, 'rvl', 1, 'sig', 0, 'nod', 0, 'eff', 1, 'aus', 1
-	db	'ill', 1, 'sus', 1, 'rch', 1, 'rpt', 1, 'stv', 0, 'vrt', 1, 'big'
-	db	1, 'ucp', 0, 'use', 0, 'zdi', 1, 'bcs', 1, 'stu', 1, 'ext', 1
-	db	'bfs', 1, 'dpu', 1, 'fdt', 1, 'eas', 1, 'hid', 1, 'ncf', 1, 'ncf'
-	db	1, 'ias', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 80h, 0FFh, 3Fh, 0, 0, 0, 0, 0, 0, 0, 80h, 0FFh, 0BFh
-	db	1, 21h, 1, 21h, 1, 21h, 1, 21h, 2, 2, 2, 0, 0Ch, 18h, 0Ch, 0Ch
-	db	0, 0, 40h, 40h, 1, 0, 0, 82h, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0
-	db	3, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 6, 0, 0, 0, 7, 0, 0, 0, 8
-	db	0, 0, 0, 9, 0, 0, 0, 0Bh, 0, 0, 0, 0Ch, 0, 0, 0, 0Dh, 0, 0, 0
-	db	0Eh, 0, 0, 0, 0Fh, 0, 0, 0, 10h, 0, 0, 0, 11h, 0, 0, 0, 12h, 0
-	db	0, 0, 13h, 0, 0, 0, 14h, 0, 0, 0, 15h, 0, 0, 0, 16h, 0, 0, 0, 17h
-	db	0, 0, 0, 18h, 0, 0, 0, 19h, 0, 0, 0, 1Ah, 0, 0, 0, 1Bh, 0, 0, 0
-	db	1Ch, 0, 0, 0, 1Dh, 0, 0, 0, 1Eh, 0, 0, 0, 1Fh, 0, 0, 0, 20h, 0
-	db	0, 0, 21h, 0, 0, 0, 22h, 0, 0, 0, 23h, 0, 0, 0, 24h, 0, 0, 0, 25h
-	db	0, 0, 0, 26h, 0, 0, 0, 27h, 0, 0, 0, 28h, 0, 0, 0, 29h, 0, 0, 0
-	db	2Ah, 0, 0, 0, 2Bh, 0, 0, 0, 2Ch, 0, 0, 0, 2Dh, 0, 0, 0, 2Eh, 0
-	db	0, 0, 2Fh, 0, 0, 0, 30h, 0, 0, 0, 35h, 0, 0, 0, 36h, 0, 0, 0, 37h
-	db	0, 0, 0, 38h, 0, 0, 0, 39h, 0, 0, 0, 3Ah, 0, 0, 0, 3Bh, 0, 0, 0
-	db	3Ch, 0, 0, 0, 3Dh, 0, 0, 0, 3Eh, 0, 0, 0, 3Fh, 0, 0, 0, 40h, 0
-	db	0, 0, 41h, 0, 0, 0, 42h, 0, 0, 0, 43h, 0, 0, 0, 44h, 0, 0, 0, 45h
-	db	0, 0, 0, 46h, 0, 0, 0, 47h, 0, 0, 0, 48h, 0, 0, 0, 49h, 0, 0, 0
-	db	4Ah, 0, 0, 0, 4Bh, 0, 0, 0, 4Ch, 0, 0, 0, 4Dh, 0, 0, 0, 4Eh, 0
-	db	0, 0, 4Fh, 0, 0, 0, 50h, 0, 0, 0, 51h, 0, 0, 0, 52h, 0, 0, 0, 53h
-	db	0, 0, 0, 54h, 0, 0, 0, 55h, 0, 0, 0, 56h, 0, 0, 0, 58h, 0, 0, 0
-	db	59h, 0, 0, 0, 5Ah, 0, 0, 0, 5Bh, 0, 0, 0, 5Ch, 0, 0, 0, 5Dh, 0
-	db	0, 0, 5Eh, 0, 0, 0, 5Fh, 0, 0, 0, 60h, 0, 0, 0, 61h, 0, 0, 0, 62h
-	db	0, 0, 0, 63h, 0, 0, 0, 64h, 0, 0, 0, 65h, 0, 0, 0, 66h, 0, 0, 0
-	db	67h, 0, 0, 0, 68h, 0, 0, 0, 69h, 0, 0, 0, 6Ah, 0, 0, 0, 6Bh, 0
-	db	0, 0, 6Ch, 0, 0, 0, 6Dh, 0, 0, 0, 6Eh, 0, 0, 0, 6Fh, 0, 0, 0, 70h
-	db	0, 0, 0, 71h, 0, 0, 0, 72h, 0, 0, 0, 73h, 0, 0B4h, 0Bh, 87h, 0Bh
-	db	0, 2, 8, 4, 0Ah, 4, 0Ah, 6, 0Ch, 0Eh, 0Fh, 10h, 1, 3Fh, 0Ch, 49h
-	db	0Ch, 4Eh, 0Ch, 5Ch, 0Ch, 62h, 0Ch, 71h, 0Ch, 75h, 0Ch, 82h, 0Ch
-	db	87h, 0Ch, 95h, 0Ch, 9Bh, 0Ch, 0A2h, 0Ch, 0AEh, 0Ch, 0B3h, 0Ch
-	db	0B8h, 0Ch, 0BDh, 0Ch, 0C1h, 0Ch, 0C6h, 0Ch, 0CEh, 0Ch, 0E2h, 0Ch
-	db	0EAh, 0Ch, 0F1h, 0Ch, 82h, '123111', 9, 16h, 17h, 18h, 19h, 1Ah
-	db	1Eh, 1Fh, 1Bh, 1Ch, 1Dh, 0Bh, 0Ch, 0Dh, 0Eh, 0Fh, 10h, 14h, 15h
-	db	11h, 12h, 13h, 24h, 25h, 27h, '&)(', 82h, 82h, ' !#"', 82h, 8
-	db	82h, 82h, 82h, 17h, 2Bh, 2Ah, 18h, 1Bh, 82h, 82h, 82h, 82h, 82h
-	db	82h, 82h, 3, '/d0f-.l', 1Bh, 'i,k', 82h, 5, 82h, 16h, 'undefined'
-	db	0, 'char', 0, 'unsigned char', 0, 'short', 0, 'unsigned short'
-	db	0, 'int', 0, 'unsigned int', 0, 'long', 0, 'unsigned long', 0
-	db	'float', 0, 'double', 0, 'long double', 0, 'void', 0, 'near', 0
-	db	'_seg', 0, 'far', 0, 'huge', 0, 'array [', 0, 'function returning'
-	db	9, 0, 'struct ', 0, 'union ', 0, 'enum ', 0, '__emit__', 0, 73h
-	db	40h, 0, 'main', 0, '_setargv__', 0, '__setargv__', 0, '_setenvp__'
-	db	0, '__setenvp__', 0, 'new', 0, '_vector_new_', 0, '_vector_vnew_'
-	db	0, 'delete', 0, '_vector_delete_', 0, '_vector_apply_', 0, '_vector_vapply_'
-	db	0, '_fpure_error_', 0, '_npure_error_', 0, 'far_func', 0, 'near_func'
-	db	0, 'delta', 0, 'vindex', 0, 'offset', 0, 'pad', 0, 0, 0, '_STCON_'
-	db	0, '_STDES_', 0, '$vsf', 0, '$vsn', 0, 4Ah, 0Eh, 87h, 0Bh, 4Ch
-	db	0Eh, 87h, 0Bh, 4Fh, 0Eh, 87h, 0Bh, 52h, 0Eh, 87h, 0Bh, 54h, 0Eh
-	db	87h, 0Bh, 57h, 0Eh, 87h, 0Bh, 59h, 0Eh, 87h, 0Bh, 5Ch, 0Eh, 87h
-	db	0Bh, 5Eh, 0Eh, 87h, 0Bh, 61h, 0Eh, 87h, 0Bh, 63h, 0Eh, 87h, 0Bh
-	db	65h, 0Eh, 87h, 0Bh, 67h, 0Eh, 87h, 0Bh, 4Ah, 0Eh, 87h, 0Bh, 69h
-	db	0Eh, 87h, 0Bh, 4Ah, 0Eh, 87h, 0Bh, 6Ch, 0Eh, 87h, 0Bh, 4Ah, 0Eh
-	db	87h, 0Bh, 4Ah, 0Eh, 87h, 0Bh, 4Ah, 0Eh, 87h, 0Bh, 4Ah, 0Eh, 87h
-	db	0Bh, 4Ah, 0Eh, 87h, 0Bh, 6Fh, 0Eh, 87h, 0Bh, 3Fh, 0, 7Ah, 63h
-	db	0, 75h, 63h, 0, 73h, 0, 75h, 73h, 0, 69h, 0, 75h, 69h, 0, 6Ch
-	db	0, 75h, 6Ch, 0, 66h, 0, 64h, 0, 67h, 0, 76h, 0, 75h, 72h, 0, 75h
-	db	70h, 0, '0123456789abcdefghijklmnopqrstuvwxyz', 0, 'add', 0, 'sub'
-	db	0, 'mul', 0, 'div', 0, 'mod', 0, 'xor', 0, 'and', 0, 'cmp', 0
-	db	'asg', 0, 'lss', 0, 'gtr', 0, 'rplu', 0, 'rmin', 0, 'rmul', 0
-	db	'rdiv', 0, 'rmod', 0, 'rxor', 0, 'rand', 0, 'ror', 0, 'lsh', 0
-	db	'rsh', 0, 'rlsh', 0, 'rrsh', 0, 'eql', 0, 'neq', 0, 'leq', 0, 'geq'
-	db	0, 'land', 0, 'lor', 0, 'call', 0, 'subs', 0, 'new', 0, 'dele'
-	db	0, 'arow', 0, 'coma', 0, 'arwm', 0, 'ind', 0, 'adr', 0, 'not'
-	db	0, 'inc', 0, 'dec', 0, 'ctr', 0, 'dtr', 0, 'zyxwvutsrqponmlkjihgfedcba0123456789ABCDEFGHIJKLMN'
-	db	'OPQRSTUVWXYZ_', 0, 'local destructors', 0, 'Array bounds', 0
-	db	0, 'a member function', 0, 'friend', 0, 'virtual', 0, 'Operator []'
-	db	0, 'Operator', 9, 5Bh, 5Dh, 0, 0, 'reference', 0, 0, 0, 'static'
-	db	0, 0, 20h, 0, 3Fh, 7, 20h, 0, 5Fh, 7, 43h, 0, 5Fh, 7, 34h, 0, 5Fh
-	db	7, 25h, 0, 5Fh, 7, 25h, 0, 3Fh, 7, 48h, 0, 0AFh, 3, 3Eh, 0, 5Fh
-	db	7, 2Fh, 0, 9Fh, 5, 75h, 0, 0AFh, 3, 70h, 0, 0AFh, 3, 3Eh, 0, 0BFh
-	db	7, 2Ah, 0, 8Fh, 5, 2Ah, 0, 3Fh, 4, 20h, 0, 1Fh, 5, 2Ah, 0, 5Fh
-	db	7, 25h, 0, 1Fh, 5, 20h, 0, 2Fh, 7, 20h, 0, 0AFh, 3, 7Ah, 0, 0AFh
-	db	3, 61h, 0, 0AFh, 3, 25h, 0, 8Fh, 5, 6Bh, 0, 0AFh, 3, 43h, 0, 0AFh
-	db	3, 2Ah, 0, 0BFh, 7, 25h, 0, 0BFh, 7, 20h, 0, 0BFh, 7, 2Ah, 0, 0AFh
-	db	3, 2Ah, 0, 3Fh, 7, 20h, 0, 4Fh, 7, 20h, 0, 9Fh, 5, 25h, 0, 9Fh
-	db	5, 39h, 0, 5Fh, 7, 2Fh, 0, 5Fh, 7, 34h, 0, 0AFh, 3, 52h, 0, 0AFh
-	db	3, 66h, 0, 0AFh, 3, 7Fh, 0, 0AFh, 3, 2Fh, 0, 0AFh, 3, 84h, 0, 0AFh
-	db	3, 3Eh, 0, 0AFh, 3, 89h, 0, 0AFh, 3, 25h, 0, 0AFh, 3, 98h, 0, 0AFh
-	db	3, 57h, 0, 0AFh, 3, 39h, 0, 0AFh, 3, 93h, 0, 0AFh, 3, 8Eh, 0, 0AFh
-	db	3, 5Ch, 0, 0AFh, 3, 3Ah, 0, '*** %d errors in Compile ***', 0Ah
-	db	0, 'Fatal', 0, ' in function %s', 0, 'Warning', 0, 'Error', 0
-	db	0, 0, ' %s', 0, ' %ld', 0, 3Ah, 20h, 0, 0Ah, 0, 0, 0, 0, 0, 2Ah
-	db	11h, 87h, 0Bh, 30h, 11h, 87h, 0Bh, 36h, 11h, 87h, 0Bh, 3Ch, 11h
-	db	87h, 0Bh, ' _es ', 0, ' _cs ', 0, ' _ss ', 0, ' _ds ', 0, 'void'
-	db	0, '...', 0, 'const ', 0, 'volatile ', 0, 'enum ', 0, 'enum', 0
-	db	' far ', 0, ' near ', 0, 3Ah, 3Ah, 0, ' pascal', 0, 2Ah, 29h, 0
-	db	' const ', 0, ' volatile ', 0, 'struct', 0, 'union', 0, 'operator '
-	db	0, 28h, 29h, 0, ' const', 0, ' volatile', 0, 'operator=', 0, 'an integral type'
-	db	0, 'a pointer type', 0, 'a scalar type', 0, 'an arithmetic type'
-	db	0, 'a simple type', 0, 'C++', 0, 43h, 0, 'Pascal', 0, 'type conversion'
-	db	0, 7Eh, 4, 78h, 6, 'x~~~(~~&&&&&&&&&&&', 12h, 12h, 10h, 10h, 10h
-	db	1Ah, 1Eh, 1Ch, 14h, 14h, '$*" ', 18h, 18h, 16h, 16h, 16h, 16h
-	db	7Eh, 7Eh, 0Ah, 0Ah, 0Ah, 6, 6, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-	db	0Ah, 0Eh, 7Eh, 0Eh, 7Eh, 7Eh, 0Ah, 7Eh, 7Eh, 0Ah, '~~~~~~~~~~~~~~~~~~~~~~'
-	db	7Fh, 7Ch, 1, 7Ah, 1, 7Fh, 7Fh, 7Fh, 28h, 7Fh, 7Fh, 27h, 27h, 27h
-	db	27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 12h, 12h, 10h, 10h, 10h
-	db	1Ah, 1Eh, 1Ch, 14h, 14h, '+*" ', 18h, 18h, 16h, 16h, 16h, 16h
-	db	0Bh, 0Bh, 0Bh, 0Bh, 0Bh, 6, 6, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh
-	db	7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh
-	db	7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh
-	db	7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 5, 5, 0Bh, 0Bh, 0Bh, 0Bh, 1
-	db	7Ah, 0Bh, 7Fh, 0Bh, 0Eh, 7Fh, 0Eh, 7Fh, 7Fh, 0Bh, 7Fh, 7Fh, 0Ah
-	db	7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh, 7Fh
-	db	7Fh, 7Fh, 7Fh, 7Fh, '~~~~', 7Fh, '~||||~~~|~~|||||||||||', 0Ah
-	db	0Ah, 0Ah, 7Ch, 7Ch, 0Ah, '||||||||||||||', 0Ah, 0Ah, 0Ah, 0Ah
-	db	0Ah, '||~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||', 0Ah, 0Ah
-	db	0Ah, 0Ah, '|||~~|~|~~', 0Ah, 7Eh, 7Eh, 0Ah, '~~~~~~~~~~~~~~~~~~~~~~Subscripting'
-	db	0, 'friend', 0, 'virtual', 0, 0, 0, 36h, 0, 3Ah, 0, 47h, 0, 0
-	db	2Ah, 7, 0, 12h, 13h, 14h, 15h, 16h, 17h, 1Ah, 1Bh, 1Ch, 18h, 19h
-	db	8, 9, 0Ah, 0Bh, 0Ch, 0Fh, 10h, 11h, 0Dh, 0Eh, '%&(', 27h, 1Dh
-	db	1Eh, 20h, 1Fh, '"!0/D?@;=', 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 46h, 0, 0, 0, 0, 3Ch, 0
-	db	3Eh, 0, 0, 43h, 0, 45h, 41h, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49h, 66h, 0, 0, 'a standard conversion'
-	db	0, 1Eh, 0, 1Dh, 0, 22h, 0, 21h, 0, 20h, 0, 1Fh, 0, 2Ah, 0, 4Fh
-	db	6, 20h, 0, 4Fh, 6, 66h, 0, 4Fh, 6, 3Eh, 0, 4Fh, 6, 6Bh, 0, 4Fh
-	db	6, 43h, 0, 4Fh, 6, 5Ch, 0, 4Fh, 6, 39h, 0, 4Fh, 6, 70h, 0, 4Fh
-	db	6, 48h, 0, 4Fh, 6, 2Fh, 0, 4Fh, 6, 25h, 0, 4Fh, 6, 34h, 0, 4Fh
-	db	6, 57h, 0, 4Fh, 6, 4Dh, 0, 4Fh, 6, 65h, 2, 0AFh, 0, 50h, 4, 0AFh
-	db	0, 31h, 2, 0AFh, 0, 4Bh, 2, 0AFh, 0, 52h, 0, 4Fh, 6, 0Fh, 8, 8
-	db	8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0Eh, 0Eh, 0Eh, 0Eh, 10h, 0Eh, 8
-	db	8, 8, 0Ch, 0Ch, 8, 8, 0, 0, 17h, 17h, 0Ch, 0Ch, 0Ch, 0Ch, 0Ch
-	db	0Ch, 12h, 12h, 0Ah, 0Ah, 0Eh, 18h, 10h, 18h, 0Ch, 0Ch, 0, 0, '$*$*$*'
-	db	0Ch, 88h, 0Ah, 3, 'BORLANDC', 0, '.cpp', 0, 1, 0, 1Eh, 1Dh, 2
-	db	0, 1Fh, 1Dh, 3, 0, 21h, 1Dh, 4, 0, 22h, 1Dh, 5, 0, 24h, 1Dh, 6
-	db	0, 26h, 1Dh, 7, 0, 28h, 1Dh, 8, 0, 2Ah, 1Dh, 9, 0, 2Ch, 1Dh, 0Bh
-	db	0, 30h, 1Dh, 0Ch, 0, 32h, 1Dh, 0Dh, 0, 35h, 1Dh, 0Eh, 0, 38h, 1Dh
-	db	0Fh, 0, 3Bh, 1Dh, 10h, 0, 3Eh, 1Dh, 11h, 0, 41h, 1Dh, 12h, 0, 44h
+	db	0
+SWAP_GROW_FILE_ALLOWED:	add	word ptr [bx+si], ax	;@0E8AB
+	add	byte ptr [bx+si], al	;@0E8AD
+	add	byte ptr [bx+si], al	;@0E8AF
+	add	byte ptr [bp+72h], ah	;@0E8B1
+	db	69h, 65h, 6Eh, 64h, 0	; imul sp, word ptr [di+6Eh], 64h	;@0E8B4
+	db	76h, 69h	; jbe @@4	;@0E8B9
+	db	72h, 74h	; jb @@5+1	;@0E8BB
+	db	75h, 61h	; jne @@3	;@0E8BD
+	insb	;@0E8BF
+	add	byte ptr [bp+di+2Bh], al	;@0E8C0
+	sub	ax, word ptr [bx+si]	;@0E8C3
+	inc	bx	;@0E8C5
+	add	byte ptr [bx+si], al	;@0E8C6
+	add	byte ptr [bx+si], al	;@0E8C8
+	add	byte ptr [bx+si], al	;@0E8CA
+	add	byte ptr [bx+si], al	;@0E8CC
+	db	70h, 6Fh	; jo @@6+1	;@0E8CE
+	imul	bp, word ptr [bp+74h], 7265h	;@0E8D0
+	add	byte ptr [bp+di+74h], dh	;@0E8D5
+	popa	;@0E8D8
+	db	74h, 69h	; je @@8	;@0E8D9
+	arpl	word ptr [bx+si], sp	;@0E8DB
+	db	76h, 61h	; jbe @@7	;@0E8DD
+	db	72h, 69h	; jb @@9	;@0E8DF
+	popa	;@0E8E1
+	bound	bp, dword ptr [si+65h]	;@0E8E2
+	jae	@@1	;@0E8E5
+@@1:	db	66h, 72h, 69h	; jb @@10+1	;@0E8E7
+	db	65h, 6Eh	; outs dx, byte ptr gs:[si]	;@0E8EA
+	db	64h, 0, 76h, 69h	; add byte ptr [bp+69h], dh	;@0E8EC
+	db	72h, 74h	; jb @@12	;@0E8F0
+	db	75h, 61h	; jne @@11+1	;@0E8F2
+	insb	;@0E8F4
+	add	byte ptr [bx+6Fh], al	;@0E8F5
+	db	74h, 6Fh	; je @@13	;@0E8F8
+	add	byte ptr [bx+di+66h], cl	;@0E8FA
+	add	byte ptr [bp+di+77h], dl	;@0E8FD
+	db	69h, 74h, 63h, 68h, 0	; imul si, word ptr [si+63h], 68h	;@0E900
+	db	57h	; push di	;@0E905
+	push	6C69h	;@0E906
+	db	65h, 0, 44h, 6Fh	; add byte ptr [si+6Fh], al	;@0E909
+	db	2Dh, 77h, 68h	; sub ax, 6877h	;@0E90D
+	imul	bp, word ptr [si+65h], 4600h	;@0E910
+	outsw	;@0E915
+	jb	@@2	;@0E916
+@@2:	add	al, 4	;@0E918
+	add	al, 4	;@0E91A
+	add	al, 4	;@0E91C
+	add	al, 4	;@0E91E
+@@3:	add	al, byte ptr [bx+si]	;@0E920
+	add	al, byte ptr [bx+si]	;@0E922
+@@4:	add	byte ptr [bx+si], al	;@0E924
+	add	byte ptr [bp+si], al	;@0E926
+	add	al, byte ptr [bp+si]	;@0E928
+	add	word ptr [bx+di], ax	;@0E92A
+	add	word ptr [bx+di], ax	;@0E92C
+	add	word ptr [bx+di], ax	;@0E92E
+@@5:	add	word ptr [bx+di], ax	;@0E930
+	add	word ptr [bx+di], ax	;@0E932
+	add	word ptr [bx+si], cx	;@0E934
+	or	byte ptr [bx+si], cl	;@0E936
+	or	byte ptr [bx+si], cl	;@0E938
+	or	byte ptr [bx+si], al	;@0E93A
+	add	byte ptr [bx+si], al	;@0E93C
+@@6:	add	byte ptr [bx+si], cl	;@0E93E
+@@7:	or	byte ptr [bx+si], al	;@0E940
+	add	byte ptr [bx+si], al	;@0E942
+@@8:	add	byte ptr [bx+si], al	;@0E944
+	add	byte ptr [bx+si], al	;@0E946
+	or	byte ptr [bx+si], al	;@0E948
+@@9:	add	byte ptr [si], al	;@0E94A
+	add	byte ptr [bx+si], al	;@0E94C
+	add	word ptr [bx+si], ax	;@0E94E
+	add	al, 4	;@0E950
+@@10:	add	byte ptr [bx+si], al	;@0E952
+@@11:	add	byte ptr [bx+si], al	;@0E954
+	add	byte ptr [bx+di], al	;@0E956
+	add	word ptr [bx+di], ax	;@0E958
+	add	byte ptr [bx+di], al	;@0E95A
+	add	byte ptr [bx+si], al	;@0E95C
+	add	word ptr [bx+di], ax	;@0E95E
+	add	ax, 400h	;@0E960
+	add	byte ptr [bp+si], al	;@0E963
+	push	ax	;@0E965
+@@12:	sbb	ax, 1800h	;@0E966
+@@13:	adc	byte ptr [si], bl	;@0E969
+	add	byte ptr [bx+si], bl	;@0E96B
+	add	byte ptr [bx], al	;@0E96D
+	add	byte ptr [bp+si], al	;@0E96F
+	add	byte ptr [bp+di], al	;@0E971
+	add	byte ptr [si], dl	;@0E973
+	inc	ax	;@0E975
+	sbb	word ptr [bx+si], ax	;@0E976
+	add	byte ptr [bx+si], al	;@0E978
+	sbb	al, 0	;@0E97A
+	sbb	al, 0	;@0E97C
+	sbb	al, 0	;@0E97E
+	sbb	al, 0	;@0E980
+	sbb	al, 0	;@0E982
+	sbb	al, 0	;@0E984
+	sbb	al, 0	;@0E986
+	sbb	al, 0	;@0E988
+	sbb	al, 0	;@0E98A
+	sbb	al, 0	;@0E98C
+	sbb	al, 40h	;@0E98E
+	sbb	ax, 1D40h	;@0E990
+	push	ax	;@0E993
+	sbb	ax, 1C00h	;@0E994
+	add	byte ptr [si], bl	;@0E997
+	push	ax	;@0E999
+	sbb	ax, 1C00h	;@0E99A
+	add	byte ptr [si], bl	;@0E99D
+	add	byte ptr [si], bl	;@0E99F
+	add	byte ptr [si], bl	;@0E9A1
+	add	byte ptr [bx+si], bl	;@0E9A3
+	add	byte ptr [bp+di], bl	;@0E9A5
+	add	byte ptr [si], bl	;@0E9A7
+	add	byte ptr [si], bl	;@0E9A9
+	add	byte ptr [si], bl	;@0E9AB
+	add	byte ptr [si], bl	;@0E9AD
+	add	byte ptr [si], bl	;@0E9AF
+	add	byte ptr [si], bl	;@0E9B1
+	add	byte ptr [si], bl	;@0E9B3
+	add	byte ptr [si], bl	;@0E9B5
+	inc	ax	;@0E9B7
+	sbb	ax, 1D60h	;@0E9B8
+	inc	ax	;@0E9BB
+	sbb	word ptr [bx+si+1Dh], ax	;@0E9BC
+	inc	ax	;@0E9BF
+	sbb	ax, 1800h	;@0E9C0
+	add	byte ptr [si], bl	;@0E9C3
+	pop	ax	;@0E9C5
+	sbb	word ptr [bx+si+19h], ax	;@0E9C6
+	inc	ax	;@0E9C9
+	sbb	word ptr [bx+si+19h], ax	;@0E9CA
+	or	word ptr [bp+si], dx	;@0E9CD
+	or	word ptr [bp+si], dx	;@0E9CF
+	or	word ptr [bp+si], dx	;@0E9D1
+	or	word ptr [bp+si], dx	;@0E9D3
+	or	word ptr [bp+si], dx	;@0E9D5
+	push	cs	;@0E9D7
+	sbb	cl, byte ptr ds:[0E1Ah]	;@0E9D8
+	sbb	cl, byte ptr ds:[0E1Ah]	;@0E9DC
+	sbb	cl, byte ptr ds:[0E1Ah]	;@0E9E0
+	sbb	cl, byte ptr ds:[0A1Ah]	;@0E9E4
+	sbb	cl, byte ptr [bp+si]	;@0E9E8
+	sbb	cl, byte ptr [bp+si]	;@0E9EA
+	sbb	cl, byte ptr ds:[101Ah]	;@0E9EC
+	xor	byte ptr [bx+si], dl	;@0E9F0
+	xor	byte ptr [bx+si], dl	;@0E9F2
+	xor	byte ptr [bx+si], al	;@0E9F4
+	xor	byte ptr [bp+si], cl	;@0E9F6
+	sbb	cl, byte ptr [bp+si]	;@0E9F8
+	sbb	dl, byte ptr [bx+si]	;@0E9FA
+	xor	byte ptr [bx+si], dl	;@0E9FC
+	xor	byte ptr [bx+si], dl	;@0E9FE
+	xor	byte ptr [bx+si], dl	;@0EA00
+	xor	byte ptr [bx+si], dl	;@0EA02
+	xor	byte ptr [bx+si], dl	;@0EA04
+	xor	byte ptr [bx+si], dl	;@0EA06
+	xor	byte ptr [bx+si], dl	;@0EA08
+	xor	byte ptr [bx+si], dl	;@0EA0A
+	xor	byte ptr [bx+si], dl	;@0EA0C
+	xor	byte ptr [bx+si], dl	;@0EA0E
+	xor	byte ptr [bx+si-7FFDh], al	;@0EA10
+	add	ax, word ptr [bx+si]	;@0EA14
+	add	ax, word ptr [bx+si]	;@0EA16
+	add	ax, word ptr [bx+si-7FFDh]	;@0EA18
+	add	ax, word ptr [bx+si-7FFDh]	;@0EA1C
+	add	ax, word ptr [bx+si]	;@0EA20
+	pop	es	;@0EA22
+	add	byte ptr [bp+di], al	;@0EA23
+	add	byte ptr [bp+di], al	;@0EA25
+	add	byte ptr [bp+di], al	;@0EA27
+	add	byte ptr [bx+di], al	;@0EA29
+	add	byte ptr [bx+si], al	;@0EA2B
+	inc	ax	;@0EA2D
+	sbb	word ptr [bx+si], ax	;@0EA2E
+	add	al, 40h	;@0EA30
+	sbb	word ptr [bp+si], cx	;@0EA32
+	sbb	al, byte ptr [bx+si+1Dh]	;@0EA34
+	or	word ptr [bp+si], dx	;@0EA37
+	or	word ptr [bp+si], dx	;@0EA39
+	inc	ax	;@0EA3B
+	sbb	ax, 1950h	;@0EA3C
+	or	word ptr [bp+si], dx	;@0EA3F
+	and	byte ptr [bx+si], al	;@0EA41
+	and	byte ptr [bx+si], al	;@0EA43
+	and	byte ptr [bx+si], al	;@0EA45
+	inc	ax	;@0EA47
+	sbb	word ptr [bx+di], cx	;@0EA48
+	adc	al, byte ptr [bx+si]	;@0EA4A
+	add	byte ptr [bx+si], al	;@0EA4C
+	add	byte ptr [bx+si], al	;@0EA4E
+	add	byte ptr [bx+si], al	;@0EA50
+	add	byte ptr [bx+si], al	;@0EA52
+	add	byte ptr [bx+si], al	;@0EA54
+	add	byte ptr [bx+si], al	;@0EA56
+	add	byte ptr [bx+si], al	;@0EA58
+	add	byte ptr [bx+si], al	;@0EA5A
+	add	byte ptr [bx+si], al	;@0EA5C
+	add	byte ptr [bx+si], al	;@0EA5E
+	add	byte ptr [bx+si], al	;@0EA60
+	add	byte ptr [bx+si], al	;@0EA62
+	add	byte ptr [bx+si], al	;@0EA64
+	add	byte ptr [bx+si], al	;@0EA66
+	add	byte ptr [bx+di+74h], ah	;@0EA68
+	je	@@14+1	;@0EA6B
+@@14:	bound	sp, dword ptr [bp+si+66h]	;@0EA6D
+	add	byte ptr [bp+si+64h], ah	;@0EA70
+	db	66h, 1, 62h, 65h	; add dword ptr [bp+si+65h], esp	;@0EA73
+	imul	ax, word ptr [bx+di], 6373h	;@0EA77
+	jo	@@15	;@0EA7B
+	insb	;@0EA7D
+@@15:	imul	bp, word ptr [bp+1], 766Ch	;@0EA7E
+	arpl	word ptr [bx+di], ax	;@0EA83
+	insb	;@0EA85
+	db	76h, 63h	; jbe @@22+4	;@0EA86
+	add	word ptr [si+76h], bp	;@0EA88
+	arpl	word ptr [bx+di], ax	;@0EA8B
+	insb	;@0EA8D
+	db	76h, 63h	; jbe @@23	;@0EA8E
+	add	word ptr [bp+si+65h], si	;@0EA90
+	je	@@16	;@0EA93
+	outsb	;@0EA95
+@@16:	arpl	word ptr [bx+di+1], bp	;@0EA96
+	imul	bp, word ptr [bp+6Ch], 6F01h	;@0EA99
+	bound	bp, dword ptr [bx+di+1]	;@0EA9E
+	outsw	;@0EAA1
+	db	66h, 70h, 1	; jo @@17	;@0EAA2
+	db	6Fh	; outsw	;@0EAA5
+@@17:	db	76h, 6Ch	; jbe @@25	;@0EAA6
+	add	word ptr [bx+si+69h], si	;@0EAA8
+	outsb	;@0EAAB
+	add	byte ptr [bx+6Dh], ch	;@0EAAC
+	db	66h, 1, 70h, 61h	; add dword ptr [bx+si+61h], esi	;@0EAAF
+	db	64h, 0, 64h, 63h	; add byte ptr [si+63h], ah	;@0EAB3
+	db	6Ch	; insb	;@0EAB7
+	add	word ptr [bx+di+6Dh], sp	;@0EAB8
+	bound	ax, dword ptr [bx+si]	;@0EABB
+	popa	;@0EABD
+	insw	;@0EABE
+	jo	@@18	;@0EABF
+@@18:	db	70h, 61h	; jo @@28+1	;@0EAC1
+	jb	@@19	;@0EAC3
+	popa	;@0EAC5
+@@19:	db	73h, 63h	; jae @@30	;@0EAC6
+	add	word ptr [bx+di+73h], sp	;@0EAC8
+	insw	;@0EACB
+	add	byte ptr [bp+si+67h], ah	;@0EACC
+	je	@@20+1	;@0EACF
+@@20:	db	70h, 72h	; jo @@34	;@0EAD1
+	outsw	;@0EAD3
+	add	byte ptr [bx+si+72h], dh	;@0EAD4
+	outsw	;@0EAD7
+	add	byte ptr [bp+di+6Ch], ah	;@0EAD8
+	outsb	;@0EADB
+	add	byte ptr [bp+di+70h], ah	;@0EADC
+	je	@@21+1	;@0EADF
+@@21:	db	64h, 65h, 66h, 0, 72h, 6Eh	; add byte ptr [bp+si+6Eh], dh	;@0EAE1
+@@22:	db	67h, 1, 64h, 75h, 70h	; add word ptr [ebp+esi+70h], sp	;@0EAE7
+	add	word ptr [bx+si+69h], si	;@0EAEC
+	popa	;@0EAEF
+	add	word ptr [bp+si+76h], si	;@0EAF0
+@@23:	insb	;@0EAF3
+	add	word ptr [bp+di+69h], si	;@0EAF4
+	db	67h, 0, 6Eh, 6Fh	; add byte ptr [esi+6Fh], ch	;@0EAF7
+	db	64h, 0, 65h, 66h	; add byte ptr [di+66h], ah	;@0EAFB
+	db	66h, 1, 61h, 75h	; add dword ptr [bx+di+75h], esp	;@0EAFF
+	jae	@@24+1	;@0EB03
+@@24:	imul	bp, word ptr [si+6Ch], 7301h	;@0EB05
+	db	75h, 73h	; jne @@37	;@0EB0A
+	add	word ptr [bp+si+63h], si	;@0EB0C
+	push	7201h	;@0EB0F
+	db	70h, 74h	; jo @@38+1	;@0EB12
+@@25:	add	word ptr [bp+di+74h], si	;@0EB14
+	jbe	@@26	;@0EB17
+@@26:	db	76h, 72h	; jbe @@39	;@0EB19
+	je	@@27+1	;@0EB1B
+@@27:	bound	bp, dword ptr [bx+di+67h]	;@0EB1D
+	add	word ptr [di+63h], si	;@0EB20
+@@28:	jo	@@29	;@0EB23
+@@29:	db	75h, 73h	; jne @@40+1	;@0EB25
+	db	65h, 0, 7Ah, 64h	; add byte ptr [bp+si+64h], bh	;@0EB27
+@@30:	db	69h, 1, 62h, 63h	; imul ax, word ptr [bx+di], 6362h	;@0EB2B
+	jae	@@31+1	;@0EB2F
+@@31:	db	73h, 74h	; jae @@41	;@0EB31
+	jne	@@32+1	;@0EB33
+@@32:	db	65h, 78h, 74h	; js @@42+3	;@0EB35
+	db	1, 62h, 66h	; add word ptr [bp+si+66h], sp	;@0EB38
+	jae	@@33+1	;@0EB3B
+@@33:	db	64h, 70h, 75h	; jo @@43	;@0EB3D
+	db	1, 66h, 64h	; add word ptr [bp+64h], sp	;@0EB40
+	je	@@34+1	;@0EB43
+@@34:	db	65h, 61h	; popa	;@0EB45
+	db	73h, 1	; jae @@35+1	;@0EB47
+@@35:	push	6469h	;@0EB49
+	add	word ptr [bp+63h], bp	;@0EB4C
+	db	66h, 1, 6Eh, 63h	; add dword ptr [bp+63h], ebp	;@0EB4F
+	db	66h, 1, 69h, 61h	; add dword ptr [bx+di+61h], ebp	;@0EB53
+	jae	@@36+1	;@0EB57
+@@36:	add	byte ptr [bx+si], al	;@0EB59
+	add	byte ptr [bx+si], al	;@0EB5B
+	add	byte ptr [bx+si], al	;@0EB5D
+	add	byte ptr [bx+si], al	;@0EB5F
+	add	byte ptr [bx+si], al	;@0EB61
+	add	byte ptr [bx+si], al	;@0EB63
+	add	byte ptr [bx+si], al	;@0EB65
+	add	byte ptr [bx+si], al	;@0EB67
+	add	byte ptr [bx+si], al	;@0EB69
+	add	byte ptr [bx+si], al	;@0EB6B
+	add	byte ptr [bx+si+3FFFh], al	;@0EB6D
+	add	byte ptr [bx+si], al	;@0EB71
+	add	byte ptr [bx+si], al	;@0EB73
+	add	byte ptr [bx+si], al	;@0EB75
+	add	byte ptr [bx+si-4001h], al	;@0EB77
+	add	word ptr [bx+di], sp	;@0EB7B
+	add	word ptr [bx+di], sp	;@0EB7D
+@@37:	add	word ptr [bx+di], sp	;@0EB7F
+	add	word ptr [bx+di], sp	;@0EB81
+	add	al, byte ptr [bp+si]	;@0EB83
+	add	al, byte ptr [bx+si]	;@0EB85
+@@38:	or	al, 18h	;@0EB87
+	or	al, 0Ch	;@0EB89
+	add	byte ptr [bx+si], al	;@0EB8B
+@@39:	inc	ax	;@0EB8D
+	inc	ax	;@0EB8E
+	add	word ptr [bx+si], ax	;@0EB8F
+	db	0, 82h, 0, 0	; add byte ptr [bp+si], al	;@0EB91
+	db	0, 1	; add byte ptr [bx+di], al	;@0EB95
+	add	byte ptr [bx+si], al	;@0EB97
+@@40:	add	byte ptr [bp+si], al	;@0EB99
+	add	byte ptr [bx+si], al	;@0EB9B
+	add	byte ptr [bp+di], al	;@0EB9D
+	add	byte ptr [bx+si], al	;@0EB9F
+	add	byte ptr [si], al	;@0EBA1
+	add	byte ptr [bx+si], al	;@0EBA3
+	add	byte ptr [di], al	;@0EBA5
+@@41:	add	byte ptr [bx+si], al	;@0EBA7
+@@42:	add	byte ptr ds:[0], al	;@0EBA9
+	add	byte ptr [bx], al	;@0EBAD
+	add	byte ptr [bx+si], al	;@0EBAF
+	add	byte ptr [bx+si], cl	;@0EBB1
+	add	byte ptr [bx+si], al	;@0EBB3
+@@43:	add	byte ptr [bx+di], cl	;@0EBB5
+	add	byte ptr [bx+si], al	;@0EBB7
+	add	byte ptr [bp+di], cl	;@0EBB9
+	add	byte ptr [bx+si], al	;@0EBBB
+	add	byte ptr [si], cl	;@0EBBD
+	add	byte ptr [bx+si], al	;@0EBBF
+	add	byte ptr [di], cl	;@0EBC1
+	add	byte ptr [bx+si], al	;@0EBC3
+	add	byte ptr ds:[0], cl	;@0EBC5
+	add	byte ptr [bx], cl	;@0EBC9
+	add	byte ptr [bx+si], al	;@0EBCB
+	add	byte ptr [bx+si], dl	;@0EBCD
+	add	byte ptr [bx+si], al	;@0EBCF
+	add	byte ptr [bx+di], dl	;@0EBD1
+	add	byte ptr [bx+si], al	;@0EBD3
+	add	byte ptr [bp+si], dl	;@0EBD5
+	add	byte ptr [bx+si], al	;@0EBD7
+	add	byte ptr [bp+di], dl	;@0EBD9
+	add	byte ptr [bx+si], al	;@0EBDB
+	add	byte ptr [si], dl	;@0EBDD
+	add	byte ptr [bx+si], al	;@0EBDF
+	add	byte ptr [di], dl	;@0EBE1
+	add	byte ptr [bx+si], al	;@0EBE3
+	add	byte ptr ds:[0], dl	;@0EBE5
+	add	byte ptr [bx], dl	;@0EBE9
+	add	byte ptr [bx+si], al	;@0EBEB
+	add	byte ptr [bx+si], bl	;@0EBED
+	add	byte ptr [bx+si], al	;@0EBEF
+	add	byte ptr [bx+di], bl	;@0EBF1
+	add	byte ptr [bx+si], al	;@0EBF3
+	add	byte ptr [bp+si], bl	;@0EBF5
+	add	byte ptr [bx+si], al	;@0EBF7
+	add	byte ptr [bp+di], bl	;@0EBF9
+	add	byte ptr [bx+si], al	;@0EBFB
+	add	byte ptr [si], bl	;@0EBFD
+	add	byte ptr [bx+si], al	;@0EBFF
+	add	byte ptr [di], bl	;@0EC01
+	add	byte ptr [bx+si], al	;@0EC03
+	add	byte ptr ds:[0], bl	;@0EC05
+	add	byte ptr [bx], bl	;@0EC09
+	add	byte ptr [bx+si], al	;@0EC0B
+	add	byte ptr [bx+si], ah	;@0EC0D
+	add	byte ptr [bx+si], al	;@0EC0F
+	add	byte ptr [bx+di], ah	;@0EC11
+	add	byte ptr [bx+si], al	;@0EC13
+	add	byte ptr [bp+si], ah	;@0EC15
+	add	byte ptr [bx+si], al	;@0EC17
+	add	byte ptr [bp+di], ah	;@0EC19
+	add	byte ptr [bx+si], al	;@0EC1B
+	add	byte ptr [si], ah	;@0EC1D
+	add	byte ptr [bx+si], al	;@0EC1F
+	add	byte ptr [di], ah	;@0EC21
+	add	byte ptr [bx+si], al	;@0EC23
+	add	byte ptr ds:[0], ah	;@0EC25
+	add	byte ptr [bx], ah	;@0EC29
+	add	byte ptr [bx+si], al	;@0EC2B
+	add	byte ptr [bx+si], ch	;@0EC2D
+	add	byte ptr [bx+si], al	;@0EC2F
+	add	byte ptr [bx+di], ch	;@0EC31
+	add	byte ptr [bx+si], al	;@0EC33
+	add	byte ptr [bp+si], ch	;@0EC35
+	add	byte ptr [bx+si], al	;@0EC37
+	add	byte ptr [bp+di], ch	;@0EC39
+	add	byte ptr [bx+si], al	;@0EC3B
+	add	byte ptr [si], ch	;@0EC3D
+	add	byte ptr [bx+si], al	;@0EC3F
+	add	byte ptr [di], ch	;@0EC41
+	add	byte ptr [bx+si], al	;@0EC43
+	add	byte ptr ds:[0], ch	;@0EC45
+	add	byte ptr [bx], ch	;@0EC49
+	add	byte ptr [bx+si], al	;@0EC4B
+	add	byte ptr [bx+si], dh	;@0EC4D
+	add	byte ptr [bx+si], al	;@0EC4F
+	add	byte ptr [di], dh	;@0EC51
+	add	byte ptr [bx+si], al	;@0EC53
+	add	byte ptr ds:[0], dh	;@0EC55
+	add	byte ptr [bx], dh	;@0EC59
+	add	byte ptr [bx+si], al	;@0EC5B
+	add	byte ptr [bx+si], bh	;@0EC5D
+	add	byte ptr [bx+si], al	;@0EC5F
+	add	byte ptr [bx+di], bh	;@0EC61
+	add	byte ptr [bx+si], al	;@0EC63
+	add	byte ptr [bp+si], bh	;@0EC65
+	add	byte ptr [bx+si], al	;@0EC67
+	add	byte ptr [bp+di], bh	;@0EC69
+	add	byte ptr [bx+si], al	;@0EC6B
+	add	byte ptr [si], bh	;@0EC6D
+	add	byte ptr [bx+si], al	;@0EC6F
+	add	byte ptr [di], bh	;@0EC71
+	add	byte ptr [bx+si], al	;@0EC73
+	add	byte ptr ds:[0], bh	;@0EC75
+	add	byte ptr [bx], bh	;@0EC79
+	add	byte ptr [bx+si], al	;@0EC7B
+	db	0, 40h, 0	; add byte ptr [bx+si], al	;@0EC7D
+	db	0, 0	; add byte ptr [bx+si], al	;@0EC80
+	inc	cx	;@0EC82
+	add	byte ptr [bx+si], al	;@0EC83
+	db	0, 42h, 0	; add byte ptr [bp+si], al	;@0EC85
+	db	0, 0	; add byte ptr [bx+si], al	;@0EC88
+	inc	bx	;@0EC8A
+	add	byte ptr [bx+si], al	;@0EC8B
+	db	0, 44h, 0	; add byte ptr [si], al	;@0EC8D
+	db	0, 0	; add byte ptr [bx+si], al	;@0EC90
+	inc	bp	;@0EC92
+	add	byte ptr [bx+si], al	;@0EC93
+	add	byte ptr [bp], al	;@0EC95
+	add	byte ptr [bx+si], al	;@0EC98
+	inc	di	;@0EC9A
+	add	byte ptr [bx+si], al	;@0EC9B
+	db	0, 48h, 0	; add byte ptr [bx+si], cl	;@0EC9D
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECA0
+	dec	cx	;@0ECA2
+	add	byte ptr [bx+si], al	;@0ECA3
+	db	0, 4Ah, 0	; add byte ptr [bp+si], cl	;@0ECA5
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECA8
+	dec	bx	;@0ECAA
+	add	byte ptr [bx+si], al	;@0ECAB
+	db	0, 4Ch, 0	; add byte ptr [si], cl	;@0ECAD
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECB0
+	dec	bp	;@0ECB2
+	add	byte ptr [bx+si], al	;@0ECB3
+	add	byte ptr [bp], cl	;@0ECB5
+	add	byte ptr [bx+si], al	;@0ECB8
+	dec	di	;@0ECBA
+	add	byte ptr [bx+si], al	;@0ECBB
+	db	0, 50h, 0	; add byte ptr [bx+si], dl	;@0ECBD
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECC0
+	push	cx	;@0ECC2
+	add	byte ptr [bx+si], al	;@0ECC3
+	db	0, 52h, 0	; add byte ptr [bp+si], dl	;@0ECC5
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECC8
+	push	bx	;@0ECCA
+	add	byte ptr [bx+si], al	;@0ECCB
+	db	0, 54h, 0	; add byte ptr [si], dl	;@0ECCD
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECD0
+	push	bp	;@0ECD2
+	add	byte ptr [bx+si], al	;@0ECD3
+	add	byte ptr [bp], dl	;@0ECD5
+	add	byte ptr [bx+si], al	;@0ECD8
+	pop	ax	;@0ECDA
+	add	byte ptr [bx+si], al	;@0ECDB
+	db	0, 59h, 0	; add byte ptr [bx+di], bl	;@0ECDD
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECE0
+	pop	dx	;@0ECE2
+	add	byte ptr [bx+si], al	;@0ECE3
+	db	0, 5Bh, 0	; add byte ptr [bp+di], bl	;@0ECE5
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECE8
+	pop	sp	;@0ECEA
+	add	byte ptr [bx+si], al	;@0ECEB
+	db	0, 5Dh, 0	; add byte ptr [di], bl	;@0ECED
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECF0
+	pop	si	;@0ECF2
+	add	byte ptr [bx+si], al	;@0ECF3
+	db	0, 5Fh, 0	; add byte ptr [bx], bl	;@0ECF5
+	db	0, 0	; add byte ptr [bx+si], al	;@0ECF8
+	pusha	;@0ECFA
+	add	byte ptr [bx+si], al	;@0ECFB
+	db	0, 61h, 0	; add byte ptr [bx+di], ah	;@0ECFD
+	db	0, 0	; add byte ptr [bx+si], al	;@0ED00
+	bound	ax, dword ptr [bx+si]	;@0ED02
+	add	byte ptr [bx+si], al	;@0ED04
+	arpl	word ptr [bx+si], ax	;@0ED06
+	add	byte ptr [bx+si], al	;@0ED08
+	db	64h, 0, 0	; add byte ptr [bx+si], al	;@0ED0A
+	db	0, 65h, 0	; add byte ptr [di], ah	;@0ED0D
+	add	byte ptr [bx+si], al	;@0ED10
+	db	66h, 0, 0	; add byte ptr [bx+si], al	;@0ED12
+	db	0, 67h, 0	; add byte ptr [bx], ah	;@0ED15
+	add	byte ptr [bx+si], al	;@0ED18
+	db	68h, 0, 0	; push 0	;@0ED1A
+	db	0, 69h, 0	; add byte ptr [bx+di], ch	;@0ED1D
+	add	byte ptr [bx+si], al	;@0ED20
+	push	0	;@0ED22
+	add	byte ptr [bx+si], al	;@0ED24
+	imul	ax, word ptr [bx+si], 0	;@0ED26
+	db	0, 6Ch, 0	; add byte ptr [si], ch	;@0ED29
+	db	0, 0	; add byte ptr [bx+si], al	;@0ED2C
+	insw	;@0ED2E
+	add	byte ptr [bx+si], al	;@0ED2F
+	add	byte ptr [bp], ch	;@0ED31
+	add	byte ptr [bx+si], al	;@0ED34
+	outsw	;@0ED36
+	add	byte ptr [bx+si], al	;@0ED37
+	db	0, 70h, 0	; add byte ptr [bx+si], dh	;@0ED39
+	db	0, 0	; add byte ptr [bx+si], al	;@0ED3C
+	jno	@@44	;@0ED3E
+@@44:	add	byte ptr [bx+si], al	;@0ED40
+	jb	@@45	;@0ED42
+@@45:	add	byte ptr [bx+si], al	;@0ED44
+	jae	@@46	;@0ED46
+@@46:	mov	ah, 0Bh	;@0ED48
+	xchg	word ptr [bp+di], cx	;@0ED4A
+	add	byte ptr [bp+si], al	;@0ED4C
+	or	byte ptr [si], al	;@0ED4E
+	or	al, byte ptr [si]	;@0ED50
+	or	al, byte ptr ds:[0E0Ch]	;@0ED52
+	db	0Fh, 10h, 1	; movups xmm0, [bx+di]	;@0ED56
+	aas	;@0ED59
+	or	al, 49h	;@0ED5A
+	or	al, 4Eh	;@0ED5C
+	or	al, 5Ch	;@0ED5E
+	or	al, 62h	;@0ED60
+	or	al, 71h	;@0ED62
+	or	al, 75h	;@0ED64
+	or	al, 82h	;@0ED66
+	or	al, 87h	;@0ED68
+	or	al, 95h	;@0ED6A
+	or	al, 9Bh	;@0ED6C
+	or	al, 0A2h	;@0ED6E
+	or	al, 0AEh	;@0ED70
+	or	al, 0B3h	;@0ED72
+	or	al, 0B8h	;@0ED74
+	or	al, 0BDh	;@0ED76
+	or	al, 0C1h	;@0ED78
+	or	al, 0C6h	;@0ED7A
+	or	al, 0CEh	;@0ED7C
+	or	al, 0E2h	;@0ED7E
+	or	al, 0EAh	;@0ED80
+	or	al, 0F1h	;@0ED82
+	or	al, 82h	;@0ED84
+	xor	word ptr [bp+si], si	;@0ED86
+	xor	si, word ptr [bx+di]	;@0ED88
+	xor	word ptr [bx+di], si	;@0ED8A
+	or	word ptr ds:[1817h], dx	;@0ED8C
+	sbb	word ptr [bp+si], bx	;@0ED90
+	push	ds	;@0ED92
+	pop	ds	;@0ED93
+	sbb	bx, word ptr [si]	;@0ED94
+	sbb	ax, 0C0Bh	;@0ED96
+	or	ax, 0F0Eh	;@0ED99
+	adc	byte ptr [si], dl	;@0ED9C
+	adc	ax, 1211h	;@0ED9E
+	adc	sp, word ptr [si]	;@0EDA1
+	and	ax, 2627h	;@0EDA3
+	sub	word ptr [bx+si], bp	;@0EDA6
+	db	82h, 82h, 20h, 21h, 23h	; add byte ptr [bp+si+2120h], 23h	;@0EDA8
+	and	al, byte ptr [bp+si-7DF8h]	;@0EDAD
+	db	82h, 82h, 17h, 2Bh, 2Ah	; add byte ptr [bp+si+2B17h], 2Ah	;@0EDB1
+	sbb	byte ptr [bp+di], bl	;@0EDB6
+	db	82h, 82h, 82h, 82h, 82h	; add byte ptr [bp+si-7D7Eh], 82h	;@0EDB8
+	db	82h, 82h, 3, 2Fh, 64h	; add byte ptr [bp+si+2F03h], 64h	;@0EDBD
+	xor	byte ptr [bp+2Dh], ah	;@0EDC2
+	db	2Eh, 6Ch	; insb	;@0EDC5
+	db	1Bh, 69h, 2Ch	; sbb bp, word ptr [bx+di+2Ch]	;@0EDC7
+	imul	ax, word ptr [bp+si-7DFBh], 16h	;@0EDCA
+	db	75h, 6Eh	; jne @@52+2	;@0EDCF
+	db	64h, 65h, 66h, 69h, 6Eh, 65h, 64h, 0, 63h, 68h	; imul ebp, dword ptr [bp+65h], 68630064h	;@0EDD1
+	popa	;@0EDDB
+	jb	@@47	;@0EDDC
+@@47:	db	75h, 6Eh	; jne @@54+3	;@0EDDE
+	db	73h, 69h	; jae @@54	;@0EDE0
+	db	67h, 6Eh	; outsb	;@0EDE2
+	db	65h, 64h, 20h, 63h, 68h	; and byte ptr [bp+di+68h], ah	;@0EDE4
+	popa	;@0EDE9
+	jb	@@48	;@0EDEA
+@@48:	db	73h, 68h	; jae @@56+2	;@0EDEC
+	outsw	;@0EDEE
+	db	72h, 74h	; jb @@58	;@0EDEF
+	add	byte ptr [di+6Eh], dh	;@0EDF1
+	db	73h, 69h	; jae @@57+2	;@0EDF4
+	db	67h, 6Eh	; outsb	;@0EDF6
+	db	65h, 64h, 20h, 73h, 68h	; and byte ptr [bp+di+68h], dh	;@0EDF8
+	outsw	;@0EDFD
+	db	72h, 74h	; jb @@60	;@0EDFE
+	add	byte ptr [bx+di+6Eh], ch	;@0EE00
+	je	@@49	;@0EE03
+@@49:	db	75h, 6Eh	; jne @@60+1	;@0EE05
+	db	73h, 69h	; jae @@59	;@0EE07
+	db	67h, 6Eh	; outsb	;@0EE09
+	db	65h, 64h, 20h, 69h, 6Eh	; and byte ptr [bx+di+6Eh], ch	;@0EE0B
+	je	@@50	;@0EE10
+@@50:	insb	;@0EE12
+	outsw	;@0EE13
+	outsb	;@0EE14
+	db	67h, 0, 75h, 6Eh	; add byte ptr [ebp+6Eh], dh	;@0EE15
+	db	73h, 69h	; jae @@62+1	;@0EE19
+	db	67h, 6Eh	; outsb	;@0EE1B
+	db	65h, 64h, 20h, 6Ch, 6Fh	; and byte ptr [si+6Fh], ch	;@0EE1D
+	outsb	;@0EE22
+	db	67h, 0, 66h, 6Ch	; add byte ptr [esi+6Ch], ah	;@0EE23
+	outsw	;@0EE27
+	popa	;@0EE28
+	je	@@51	;@0EE29
+@@51:	db	64h, 6Fh	; outs dx, word ptr fs:[si]	;@0EE2B
+	db	75h, 62h	; jne @@63+1	;@0EE2D
+	insb	;@0EE2F
+	db	65h, 0, 6Ch, 6Fh	; add byte ptr [si+6Fh], ch	;@0EE30
+	db	6Eh	; outsb	;@0EE34
+	db	67h, 20h, 64h, 6Fh, 75h	; and byte ptr [edi+ebp+75h], ah	;@0EE35
+	bound	bp, dword ptr [si+65h]	;@0EE3A
+@@52:	add	byte ptr [bp+6Fh], dh	;@0EE3D
+	db	69h, 64h, 0, 6Eh, 65h	; imul sp, word ptr [si], 656Eh	;@0EE40
+	db	61h	; popa	;@0EE45
+	jb	@@53	;@0EE46
+@@53:	pop	di	;@0EE48
+	db	73h, 65h	; jae @@64+2	;@0EE49
+@@54:	db	67h, 0, 66h, 61h	; add byte ptr [esi+61h], ah	;@0EE4B
+	jb	@@55	;@0EE4F
+@@55:	push	6775h	;@0EE51
+@@56:	db	65h, 0, 61h, 72h	; add byte ptr [bx+di+72h], ah	;@0EE54
+	db	72h, 61h	; jb @@65+2	;@0EE58
+	db	79h, 20h	; jns @@61	;@0EE5A
+	pop	bx	;@0EE5C
+@@57:	add	byte ptr [bp+75h], ah	;@0EE5D
+	outsb	;@0EE60
+	arpl	word ptr [si+69h], si	;@0EE61
+	outsw	;@0EE64
+@@58:	outsb	;@0EE65
+	and	byte ptr [bp+si+65h], dh	;@0EE66
+	db	74h, 75h	; je @@69+1	;@0EE69
+	db	72h, 6Eh	; jb @@68+2	;@0EE6B
+	db	69h, 6Eh, 67h, 9, 0	; imul bp, word ptr [bp+67h], 9	;@0EE6D
+@@59:	db	73h, 74h	; jae @@70	;@0EE72
+@@60:	db	72h, 75h	; jb @@71	;@0EE74
+	arpl	word ptr [si+20h], si	;@0EE76
+	add	byte ptr [di+6Eh], dh	;@0EE79
+@@61:	db	69h, 6Fh, 6Eh, 20h, 0	; imul bp, word ptr [bx+6Eh], 20h	;@0EE7C
+	db	65h, 6Eh	; outs dx, byte ptr gs:[si]	;@0EE81
+@@62:	db	75h, 6Dh	; jne @@72	;@0EE83
+	and	byte ptr [bx+si], al	;@0EE85
+	pop	di	;@0EE87
+	pop	di	;@0EE88
+	db	65h, 6Dh	; insw	;@0EE89
+	db	69h, 74h, 5Fh, 5Fh, 0	; imul si, word ptr [si+5Fh], 5Fh	;@0EE8B
+@@63:	db	73h, 40h	; jae @@67	;@0EE90
+	add	byte ptr [di+61h], ch	;@0EE92
+	imul	bp, word ptr [bp], 735Fh	;@0EE95
+	db	65h, 74h, 61h	; je @@73	;@0EE9A
+	db	72h, 67h	; jb @@74+1	;@0EE9D
+	db	76h, 5Fh	; jbe @@73+2	;@0EE9F
+	pop	di	;@0EEA1
+	add	byte ptr [bx+5Fh], bl	;@0EEA2
+	db	73h, 65h	; jae @@75+2	;@0EEA5
+	db	74h, 61h	; je @@75	;@0EEA7
+	db	72h, 67h	; jb @@76+1	;@0EEA9
+	db	76h, 5Fh	; jbe @@75+2	;@0EEAB
+	pop	di	;@0EEAD
+@@64:	add	byte ptr [bx+73h], bl	;@0EEAE
+	db	65h, 74h, 65h	; je @@77+1	;@0EEB1
+	db	6Eh	; outsb	;@0EEB4
+	db	76h, 70h	; jbe @@80+1	;@0EEB5
+	pop	di	;@0EEB7
+	pop	di	;@0EEB8
+@@65:	add	byte ptr [bx+5Fh], bl	;@0EEB9
+	db	73h, 65h	; jae @@78+1	;@0EEBC
+	db	74h, 65h	; je @@79	;@0EEBE
+	outsb	;@0EEC0
+	db	76h, 70h	; jbe @@82	;@0EEC1
+	pop	di	;@0EEC3
+	pop	di	;@0EEC4
+	add	byte ptr [bp+65h], ch	;@0EEC5
+	ja	@@66	;@0EEC8
+@@66:	pop	di	;@0EECA
+	db	76h, 65h	; jbe @@81+2	;@0EECB
+	arpl	word ptr [si+6Fh], si	;@0EECD
+	db	72h, 5Fh	; jb @@81+1	;@0EED0
+@@67:	outsb	;@0EED2
+	db	65h, 77h, 5Fh	; ja @@83+1	;@0EED3
+	db	0, 5Fh, 76h	; add byte ptr [bx+76h], bl	;@0EED6
+@@68:	db	65h, 63h, 74h, 6Fh	; arpl word ptr [si+6Fh], si	;@0EED9
+	db	72h, 5Fh	; jb @@84	;@0EEDD
+@@69:	db	76h, 6Eh	; jbe @@86	;@0EEDF
+	db	65h, 77h, 5Fh	; ja @@85	;@0EEE1
+	db	0, 64h, 65h	; add byte ptr [si+65h], ah	;@0EEE4
+	insb	;@0EEE7
+@@70:	db	65h, 74h, 65h	; je @@86+1	;@0EEE8
+@@71:	db	0, 5Fh, 76h	; add byte ptr [bx+76h], bl	;@0EEEB
+	db	65h, 63h, 74h, 6Fh	; arpl word ptr [si+6Fh], si	;@0EEEE
+@@72:	db	72h, 5Fh	; jb @@87	;@0EEF2
+	db	64h, 65h, 6Ch	; insb	;@0EEF4
+	db	65h, 74h, 65h	; je @@89+1	;@0EEF7
+	pop	di	;@0EEFA
+	add	byte ptr [bx+76h], bl	;@0EEFB
+@@73:	db	65h, 63h, 74h, 6Fh	; arpl word ptr [si+6Fh], si	;@0EEFE
+	db	72h, 5Fh	; jb @@90	;@0EF02
+	popa	;@0EF04
+@@74:	db	70h, 70h	; jo @@94	;@0EF05
+	insb	;@0EF07
+	db	79h, 5Fh	; jns @@91	;@0EF08
+@@75:	add	byte ptr [bx+76h], bl	;@0EF0A
+	db	65h, 63h, 74h, 6Fh	; arpl word ptr [si+6Fh], si	;@0EF0D
+@@76:	db	72h, 5Fh	; jb @@92	;@0EF11
+	db	76h, 61h	; jbe @@93+1	;@0EF13
+	db	70h, 70h	; jo @@96	;@0EF15
+	insb	;@0EF17
+@@77:	db	79h, 5Fh	; jns @@94+2	;@0EF18
+	add	byte ptr [bx+66h], bl	;@0EF1A
+	db	70h, 75h	; jo @@97	;@0EF1D
+	db	72h, 65h	; jb @@95	;@0EF1F
+	pop	di	;@0EF21
+@@78:	db	65h, 72h, 72h	; jb @@98	;@0EF22
+@@79:	db	6Fh	; outsw	;@0EF25
+@@80:	db	72h, 5Fh	; jb @@96	;@0EF26
+	add	byte ptr [bx+6Eh], bl	;@0EF28
+	db	70h, 75h	; jo @@100	;@0EF2B
+	db	72h, 65h	; jb @@97	;@0EF2D
+	pop	di	;@0EF2F
+@@81:	db	65h, 72h, 72h	; jb @@101+1	;@0EF30
+@@82:	db	6Fh	; outsw	;@0EF33
+@@83:	db	72h, 5Fh	; jb @@97+1	;@0EF34
+	add	byte ptr [bp+61h], ah	;@0EF36
+	db	72h, 5Fh	; jb @@99	;@0EF39
+	db	66h, 75h, 6Eh	; jne @@102	;@0EF3B
+@@84:	db	63h, 0	; arpl word ptr [bx+si], ax	;@0EF3E
+	outsb	;@0EF40
+	db	65h, 61h	; popa	;@0EF41
+@@85:	db	72h, 5Fh	; jb @@101	;@0EF43
+	db	66h, 75h, 6Eh	; jne @@104	;@0EF45
+	db	63h, 0	; arpl word ptr [bx+si], ax	;@0EF48
+	db	64h, 65h, 6Ch	; insb	;@0EF4A
+	db	74h, 61h	; je @@103	;@0EF4D
+@@86:	add	byte ptr [bp+69h], dh	;@0EF4F
+	outsb	;@0EF52
+@@87:	db	64h, 65h, 78h, 0	; js @@88	;@0EF53
+@@88:	db	6Fh	; outsw	;@0EF57
+	db	66h, 66h, 73h, 65h	; jae @@105+1	;@0EF58
+	db	74h, 0	; je @@89	;@0EF5C
+@@89:	db	70h, 61h	; jo @@105+1	;@0EF5E
+	db	64h, 0, 0	; add byte ptr [bx+si], al	;@0EF60
+@@90:	db	0, 5Fh, 53h	; add byte ptr [bx+53h], bl	;@0EF63
+	push	sp	;@0EF66
+	inc	bx	;@0EF67
+	dec	di	;@0EF68
+@@91:	dec	si	;@0EF69
+	pop	di	;@0EF6A
+	add	byte ptr [bx+53h], bl	;@0EF6B
+	push	sp	;@0EF6E
+	inc	sp	;@0EF6F
+	inc	bp	;@0EF70
+	push	bx	;@0EF71
+@@92:	pop	di	;@0EF72
+	add	byte ptr [si], ah	;@0EF73
+@@93:	db	76h, 73h	; jbe @@106+1	;@0EF75
+@@94:	db	66h, 0, 24h	; add byte ptr [si], ah	;@0EF77
+	db	76h, 73h	; jbe @@107+1	;@0EF7A
+	outsb	;@0EF7C
+	add	byte ptr [bp+si+0Eh], cl	;@0EF7D
+	xchg	word ptr [bp+di], cx	;@0EF80
+	dec	sp	;@0EF82
+	push	cs	;@0EF83
+	xchg	word ptr [bp+di], cx	;@0EF84
+@@95:	dec	di	;@0EF86
+@@96:	push	cs	;@0EF87
+	xchg	word ptr [bp+di], cx	;@0EF88
+	push	dx	;@0EF8A
+	push	cs	;@0EF8B
+	xchg	word ptr [bp+di], cx	;@0EF8C
+	push	sp	;@0EF8E
+	push	cs	;@0EF8F
+	xchg	word ptr [bp+di], cx	;@0EF90
+	push	di	;@0EF92
+	push	cs	;@0EF93
+@@97:	xchg	word ptr [bp+di], cx	;@0EF94
+	pop	cx	;@0EF96
+@@98:	push	cs	;@0EF97
+	xchg	word ptr [bp+di], cx	;@0EF98
+@@99:	pop	sp	;@0EF9A
+	push	cs	;@0EF9B
+	xchg	word ptr [bp+di], cx	;@0EF9C
+	pop	si	;@0EF9E
+	push	cs	;@0EF9F
+	xchg	word ptr [bp+di], cx	;@0EFA0
+@@100:	popa	;@0EFA2
+	push	cs	;@0EFA3
+@@101:	xchg	word ptr [bp+di], cx	;@0EFA4
+	arpl	word ptr ds:[0B87h], cx	;@0EFA6
+	db	65h, 0Eh	; push cs	;@0EFAA
+@@102:	db	87h, 0Bh	; xchg word ptr [bp+di], cx	;@0EFAC
+	db	67h, 0Eh	; push cs	;@0EFAE
+@@103:	db	87h, 0Bh	; xchg word ptr [bp+di], cx	;@0EFB0
+	dec	dx	;@0EFB2
+	push	cs	;@0EFB3
+	xchg	word ptr [bp+di], cx	;@0EFB4
+@@104:	imul	cx, word ptr ds:[0B87h], 0E4Ah	;@0EFB6
+	xchg	word ptr [bp+di], cx	;@0EFBC
+	insb	;@0EFBE
+	push	cs	;@0EFBF
+@@105:	xchg	word ptr [bp+di], cx	;@0EFC0
+	dec	dx	;@0EFC2
+	push	cs	;@0EFC3
+	xchg	word ptr [bp+di], cx	;@0EFC4
+	dec	dx	;@0EFC6
+	push	cs	;@0EFC7
+	xchg	word ptr [bp+di], cx	;@0EFC8
+	dec	dx	;@0EFCA
+	push	cs	;@0EFCB
+	xchg	word ptr [bp+di], cx	;@0EFCC
+	dec	dx	;@0EFCE
+	push	cs	;@0EFCF
+	xchg	word ptr [bp+di], cx	;@0EFD0
+	dec	dx	;@0EFD2
+	push	cs	;@0EFD3
+	xchg	word ptr [bp+di], cx	;@0EFD4
+	outsw	;@0EFD6
+	push	cs	;@0EFD7
+	xchg	word ptr [bp+di], cx	;@0EFD8
+	aas	;@0EFDA
+	add	byte ptr [bp+si+63h], bh	;@0EFDB
+	add	byte ptr [di+63h], dh	;@0EFDE
+	db	0, 73h, 0	; add byte ptr [bp+di], dh	;@0EFE1
+	db	75h, 73h	; jne @@116+2	;@0EFE4
+	db	0, 69h, 0	; add byte ptr [bx+di], ch	;@0EFE6
+@@106:	db	75h, 69h	; jne @@114+1	;@0EFE9
+	db	0, 6Ch, 0	; add byte ptr [si], ch	;@0EFEB
+@@107:	db	75h, 6Ch	; jne @@117	;@0EFEE
+	add	byte ptr [bp], ah	;@0EFF0
+	db	64h, 0, 67h, 0	; add byte ptr [bx], ah	;@0EFF3
+	db	76h, 0	; jbe @@108	;@0EFF7
+@@108:	db	75h, 72h	; jne @@118+1	;@0EFF9
+	add	byte ptr [di+70h], dh	;@0EFFB
+	add	byte ptr [bx+si], dh	;@0EFFE
+	xor	word ptr [bp+si], si	;@0F000
+	xor	si, word ptr [si]	;@0F002
+	xor	ax, 3736h	;@0F004
+	cmp	byte ptr [bx+di], bh	;@0F007
+	popa	;@0F009
+	bound	sp, dword ptr [bp+di+64h]	;@0F00A
+	db	65h, 66h, 67h, 68h, 69h, 6Ah, 6Bh, 6Ch	; push 6C6B6A69h	;@0F00D
+	insw	;@0F015
+	outsb	;@0F016
+	outsw	;@0F017
+	db	70h, 71h	; jo @@121	;@0F018
+	db	72h, 73h	; jb @@122	;@0F01A
+	db	74h, 75h	; je @@124+1	;@0F01C
+	db	76h, 77h	; jbe @@125+2	;@0F01E
+	db	78h, 79h	; js @@127	;@0F020
+	jp	@@109	;@0F022
+@@109:	popa	;@0F024
+	db	64h, 64h, 0, 73h, 75h	; add byte ptr [bp+di+75h], dh	;@0F025
+	db	62h, 0	; bound ax, dword ptr [bx+si]	;@0F02A
+	insw	;@0F02C
+	db	75h, 6Ch	; jne @@127	;@0F02D
+	add	byte ptr [si+69h], ah	;@0F02F
+	jbe	@@110	;@0F032
+@@110:	insw	;@0F034
+	outsw	;@0F035
+	db	64h, 0, 78h, 6Fh	; add byte ptr [bx+si+6Fh], bh	;@0F036
+	db	72h, 0	; jb @@111	;@0F03A
+@@111:	popa	;@0F03C
+	outsb	;@0F03D
+	db	64h, 0, 63h, 6Dh	; add byte ptr [bp+di+6Dh], ah	;@0F03E
+	db	70h, 0	; jo @@112	;@0F042
+@@112:	popa	;@0F044
+	db	73h, 67h	; jae @@129+1	;@0F045
+	add	byte ptr [si+73h], ch	;@0F047
+	jae	@@113	;@0F04A
+@@113:	db	67h, 74h, 72h	; je @@132	;@0F04C
+	db	0, 72h, 70h	; add byte ptr [bp+si+70h], dh	;@0F04F
+	insb	;@0F052
+@@114:	jne	@@115	;@0F053
+@@115:	db	72h, 6Dh	; jb @@133+1	;@0F055
+@@116:	imul	bp, word ptr [bp], 6D72h	;@0F057
+@@117:	db	75h, 6Ch	; jne @@134	;@0F05C
+	add	byte ptr [bp+si+64h], dh	;@0F05E
+	imul	si, word ptr [bp], 6D72h	;@0F061
+	outsw	;@0F066
+	db	64h, 0, 72h, 78h	; add byte ptr [bp+si+78h], dh	;@0F067
+	db	6Fh	; outsw	;@0F06B
+@@118:	jb	@@119	;@0F06C
+@@119:	db	72h, 61h	; jb @@136+1	;@0F06E
+	outsb	;@0F070
+	db	64h, 0, 72h, 6Fh	; add byte ptr [bp+si+6Fh], dh	;@0F071
+	db	72h, 0	; jb @@120	;@0F075
+@@120:	insb	;@0F077
+	db	73h, 68h	; jae @@138	;@0F078
+	add	byte ptr [bp+si+73h], dh	;@0F07A
+	push	7200h	;@0F07D
+	insb	;@0F080
+	db	73h, 68h	; jae @@139+1	;@0F081
+	add	byte ptr [bp+si+72h], dh	;@0F083
+	db	73h, 68h	; jae @@140+1	;@0F086
+	add	byte ptr [di+71h], ah	;@0F088
+@@121:	insb	;@0F08B
+	add	byte ptr [bp+65h], ch	;@0F08C
+@@122:	jno	@@123	;@0F08F
+@@123:	insb	;@0F091
+@@124:	db	65h, 71h, 0	; jno @@125	;@0F092
+@@125:	db	67h, 65h, 71h, 0	; jno @@126	;@0F095
+@@126:	insb	;@0F099
+	popa	;@0F09A
+@@127:	outsb	;@0F09B
+	db	64h, 0, 6Ch, 6Fh	; add byte ptr [si+6Fh], ch	;@0F09C
+	db	72h, 0	; jb @@128	;@0F0A0
+@@128:	arpl	word ptr [bx+di+6Ch], sp	;@0F0A2
+	insb	;@0F0A5
+	add	byte ptr [bp+di+75h], dh	;@0F0A6
+	db	62h, 73h, 0	; bound si, dword ptr [bp+di]	;@0F0A9
+	db	6Eh	; outsb	;@0F0AC
+@@129:	db	65h, 77h, 0	; ja @@130	;@0F0AD
+@@130:	db	64h, 65h, 6Ch	; insb	;@0F0B0
+	db	65h, 0, 61h, 72h	; add byte ptr [bx+di+72h], ah	;@0F0B3
+	db	6Fh	; outsw	;@0F0B7
+	ja	@@131	;@0F0B8
+@@131:	arpl	word ptr [bx+6Dh], bp	;@0F0BA
+	popa	;@0F0BD
+	add	byte ptr [bx+di+72h], ah	;@0F0BE
+@@132:	db	77h, 6Dh	; ja @@141+1	;@0F0C1
+@@133:	add	byte ptr [bx+di+6Eh], ch	;@0F0C3
+	db	64h, 0, 61h, 64h	; add byte ptr [bx+di+64h], ah	;@0F0C6
+@@134:	db	72h, 0	; jb @@135	;@0F0CA
+@@135:	outsb	;@0F0CC
+	outsw	;@0F0CD
+	je	@@136	;@0F0CE
+@@136:	imul	bp, word ptr [bp+63h], 6400h	;@0F0D0
+	db	65h, 63h, 0	; arpl word ptr [bx+si], ax	;@0F0D5
+	db	63h, 74h, 72h	; arpl word ptr [si+72h], si	;@0F0D8
+	add	byte ptr [si+74h], ah	;@0F0DB
+	jb	@@137	;@0F0DE
+@@137:	db	7Ah, 79h	; jp @@144	;@0F0E0
+@@138:	db	78h, 77h	; js @@144	;@0F0E2
+	db	76h, 75h	; jbe @@144	;@0F0E4
+	db	74h, 73h	; je @@144	;@0F0E6
+	db	72h, 71h	; jb @@144	;@0F0E8
+@@139:	db	70h, 6Fh	; jo @@144	;@0F0EA
+	outsb	;@0F0EC
+	insw	;@0F0ED
+	insb	;@0F0EE
+@@140:	imul	bp, word ptr [bp+si+69h], 68h	;@0F0EF
+	db	67h, 66h, 65h, 64h, 63h, 62h, 61h	; arpl word ptr [edx+61h], sp	;@0F0F3
+	xor	byte ptr [bx+di], dh	;@0F0FA
+	xor	dh, byte ptr [bp+di]	;@0F0FC
+	xor	al, 35h	;@0F0FE
+	db	36h, 37h	; aaa	;@0F100
+	db	38h, 39h	; cmp byte ptr [bx+di], bh	;@0F102
+	inc	cx	;@0F104
+	inc	dx	;@0F105
+	inc	bx	;@0F106
+	inc	sp	;@0F107
+	inc	bp	;@0F108
+	inc	si	;@0F109
+	inc	di	;@0F10A
+	dec	ax	;@0F10B
+	dec	cx	;@0F10C
+	dec	dx	;@0F10D
+	dec	bx	;@0F10E
+	dec	sp	;@0F10F
+	dec	bp	;@0F110
+	dec	si	;@0F111
+	dec	di	;@0F112
+	push	ax	;@0F113
+	push	cx	;@0F114
+	push	dx	;@0F115
+	push	bx	;@0F116
+	push	sp	;@0F117
+	push	bp	;@0F118
+	push	si	;@0F119
+	push	di	;@0F11A
+	pop	ax	;@0F11B
+	pop	cx	;@0F11C
+	pop	dx	;@0F11D
+	pop	di	;@0F11E
+	add	byte ptr [si+6Fh], ch	;@0F11F
+	arpl	word ptr [bx+di+6Ch], sp	;@0F122
+	and	byte ptr [si+65h], ah	;@0F125
+	db	73h, 74h	; jae @@148	;@0F128
+	db	72h, 75h	; jb @@149	;@0F12A
+	arpl	word ptr [si+6Fh], si	;@0F12C
+@@141:	db	72h, 73h	; jb @@150+2	;@0F12F
+	add	byte ptr [bx+di+72h], al	;@0F131
+	db	72h, 61h	; jb @@147	;@0F134
+	db	79h, 20h	; jns @@143+4	;@0F136
+	bound	bp, dword ptr [bx+75h]	;@0F138
+	outsb	;@0F13B
+	db	64h, 73h, 0	; jae @@142	;@0F13C
+@@142:	db	0, 61h, 20h	; add byte ptr [bx+di+20h], ah	;@0F13F
+	insw	;@0F142
+	db	65h, 6Dh	; insw	;@0F143
+	db	62h, 65h, 72h	; bound sp, dword ptr [di+72h]	;@0F145
+	and	byte ptr [bp+75h], ah	;@0F148
+	outsb	;@0F14B
+	arpl	word ptr [si+69h], si	;@0F14C
+	outsw	;@0F14F
+	outsb	;@0F150
+	add	byte ptr [bp+72h], ah	;@0F151
+@@143:	db	69h, 65h, 6Eh, 64h, 0	; imul sp, word ptr [di+6Eh], 64h	;@0F154
+	db	76h, 69h	; jbe @@152+1	;@0F159
+@@144:	db	72h, 74h	; jb @@154	;@0F15B
+	db	75h, 61h	; jne @@151+1	;@0F15D
+	insb	;@0F15F
+	add	byte ptr [bx+70h], cl	;@0F160
+	db	65h, 72h, 61h	; jb @@153	;@0F163
+	db	74h, 6Fh	; je @@155+1	;@0F166
+	db	72h, 20h	; jb @@146+1	;@0F168
+	pop	bx	;@0F16A
+	pop	bp	;@0F16B
+	add	byte ptr [bx+70h], cl	;@0F16C
+	db	65h, 72h, 61h	; jb @@154+2	;@0F16F
+	db	74h, 6Fh	; je @@157	;@0F172
+	jb	@@145+3	;@0F174
+	pop	bx	;@0F176
+	pop	bp	;@0F177
+	add	byte ptr [bx+si], al	;@0F178
+	db	72h, 65h	; jb @@156	;@0F17A
+@@145:	db	66h, 65h, 72h, 65h	; jb @@157+2	;@0F17C
+	db	6Eh	; outsb	;@0F180
+	db	63h, 65h, 0	; arpl word ptr [di], sp	;@0F181
+	db	0, 0	; add byte ptr [bx+si], al	;@0F184
+	db	73h, 74h	; jae @@159+1	;@0F186
+	popa	;@0F188
+@@146:	db	74h, 69h	; je @@158+1	;@0F189
+	arpl	word ptr [bx+si], ax	;@0F18B
+	add	byte ptr [bx+si], ah	;@0F18D
+	add	byte ptr [bx], bh	;@0F18F
+	pop	es	;@0F191
+	and	byte ptr [bx+si], al	;@0F192
+	pop	di	;@0F194
+	pop	es	;@0F195
+	inc	bx	;@0F196
+@@147:	add	byte ptr [bx+7], bl	;@0F197
+	xor	al, 0	;@0F19A
+	pop	di	;@0F19C
+	pop	es	;@0F19D
+@@148:	and	ax, 5F00h	;@0F19E
+@@149:	pop	es	;@0F1A1
+@@150:	and	ax, 3F00h	;@0F1A2
+	pop	es	;@0F1A5
+	dec	ax	;@0F1A6
+	add	byte ptr [bx+3E03h], ch	;@0F1A7
+	add	byte ptr [bx+7], bl	;@0F1AB
+	das	;@0F1AE
+	add	byte ptr [bx+7505h], bl	;@0F1AF
+	add	byte ptr [bx+7003h], ch	;@0F1B3
+	add	byte ptr [bx+3E03h], ch	;@0F1B7
+	add	byte ptr [bx+2A07h], bh	;@0F1BB
+@@151:	add	byte ptr [bx+2A05h], cl	;@0F1BF
+@@152:	add	byte ptr [bx], bh	;@0F1C3
+	add	al, 20h	;@0F1C5
+@@153:	add	byte ptr [bx], bl	;@0F1C7
+	add	ax, 2Ah	;@0F1C9
+	pop	di	;@0F1CC
+	pop	es	;@0F1CD
+	and	ax, 1F00h	;@0F1CE
+@@154:	add	ax, 20h	;@0F1D1
+	das	;@0F1D4
+	pop	es	;@0F1D5
+@@155:	and	byte ptr [bx+si], al	;@0F1D6
+	scasw	;@0F1D8
+	db	3, 7Ah, 0	; add di, word ptr [bp+si]	;@0F1D9
+	db	0AFh	; scasw	;@0F1DC
+	db	3, 61h, 0	; add sp, word ptr [bx+di]	;@0F1DD
+	db	0AFh	; scasw	;@0F1E0
+@@156:	add	sp, word ptr [di]	;@0F1E1
+@@157:	add	byte ptr [bx+6B05h], cl	;@0F1E3
+	add	byte ptr [bx+4303h], ch	;@0F1E7
+	add	byte ptr [bx+2A03h], ch	;@0F1EB
+	add	byte ptr [bx+2507h], bh	;@0F1EF
+@@158:	add	byte ptr [bx+2007h], bh	;@0F1F3
+	add	byte ptr [bx+2A07h], bh	;@0F1F7
+@@159:	add	byte ptr [bx+2A03h], ch	;@0F1FB
+	add	byte ptr [bx], bh	;@0F1FF
+	pop	es	;@0F201
+	and	byte ptr [bx+si], al	;@0F202
+	dec	di	;@0F204
+	pop	es	;@0F205
+	and	byte ptr [bx+si], al	;@0F206
+	lahf	;@0F208
+	add	ax, 25h	;@0F209
+	lahf	;@0F20C
+	add	ax, 39h	;@0F20D
+	pop	di	;@0F210
+	pop	es	;@0F211
+	das	;@0F212
+	add	byte ptr [bx+7], bl	;@0F213
+	xor	al, 0	;@0F216
+	scasw	;@0F218
+	db	3, 52h, 0	; add dx, word ptr [bp+si]	;@0F219
+	db	0AFh	; scasw	;@0F21C
+	add	sp, word ptr [bp]	;@0F21D
+	scasw	;@0F220
+	db	3, 7Fh, 0	; add di, word ptr [bx]	;@0F221
+	db	0AFh	; scasw	;@0F224
+	add	bp, word ptr [bx]	;@0F225
+	add	byte ptr [bx-7BFDh], ch	;@0F227
+	add	byte ptr [bx+3E03h], ch	;@0F22B
+	add	byte ptr [bx-76FDh], ch	;@0F22F
+	add	byte ptr [bx+2503h], ch	;@0F233
+	add	byte ptr [bx-67FDh], ch	;@0F237
+	add	byte ptr [bx+5703h], ch	;@0F23B
+	add	byte ptr [bx+3903h], ch	;@0F23F
+	add	byte ptr [bx-6CFDh], ch	;@0F243
+	add	byte ptr [bx-71FDh], ch	;@0F247
+	add	byte ptr [bx+5C03h], ch	;@0F24B
+	add	byte ptr [bx+3A03h], ch	;@0F24F
+	add	byte ptr [bp+si], ch	;@0F253
+	sub	ch, byte ptr [bp+si]	;@0F255
+	and	byte ptr [di], ah	;@0F257
+	db	64h, 20h, 65h, 72h	; and byte ptr [di+72h], ah	;@0F259
+	db	72h, 6Fh	; jb @@163+2	;@0F25D
+	db	72h, 73h	; jb @@165	;@0F25F
+	and	byte ptr [bx+di+6Eh], ch	;@0F261
+	and	byte ptr [bp+di+6Fh], al	;@0F264
+	insw	;@0F267
+	db	70h, 69h	; jo @@164+2	;@0F268
+	insb	;@0F26A
+	db	65h, 20h, 2Ah	; and byte ptr [bp+si], ch	;@0F26B
+	db	2Ah, 2Ah	; sub ch, byte ptr [bp+si]	;@0F26E
+	or	al, byte ptr [bx+si]	;@0F270
+	inc	si	;@0F272
+	popa	;@0F273
+	db	74h, 61h	; je @@165+3	;@0F274
+	insb	;@0F276
+	add	byte ptr [bx+si], ah	;@0F277
+	imul	bp, word ptr [bp+20h], 7566h	;@0F279
+	outsb	;@0F27E
+	arpl	word ptr [si+69h], si	;@0F27F
+	outsw	;@0F282
+	outsb	;@0F283
+	and	byte ptr [di], ah	;@0F284
+	jae	@@160	;@0F286
+@@160:	push	di	;@0F288
+	popa	;@0F289
+	db	72h, 6Eh	; jb @@168	;@0F28A
+	imul	bp, word ptr [bp+67h], 4500h	;@0F28C
+	db	72h, 72h	; jb @@169	;@0F291
+	outsw	;@0F293
+	jb	@@161	;@0F294
+@@161:	add	byte ptr [bx+si], al	;@0F296
+	and	byte ptr [di], ah	;@0F298
+	jae	@@162	;@0F29A
+@@162:	and	byte ptr [di], ah	;@0F29C
+	insb	;@0F29E
+	db	64h, 0, 3Ah	; add byte ptr [bp+si], bh	;@0F29F
+	db	20h, 0	; and byte ptr [bx+si], al	;@0F2A2
+	or	al, byte ptr [bx+si]	;@0F2A4
+	add	byte ptr [bx+si], al	;@0F2A6
+	add	byte ptr [bx+si], al	;@0F2A8
+	sub	dl, byte ptr [bx+di]	;@0F2AA
+	xchg	word ptr [bp+di], cx	;@0F2AC
+	xor	byte ptr [bx+di], dl	;@0F2AE
+	xchg	word ptr [bp+di], cx	;@0F2B0
+	adc	word ptr ss:[bx+3C0Bh], ax	;@0F2B2
+	adc	word ptr [bx+200Bh], ax	;@0F2B7
+	pop	di	;@0F2BB
+	db	65h, 73h, 20h	; jae @@166+1	;@0F2BC
+	db	0, 20h	; add byte ptr [bx+si], ah	;@0F2BF
+	pop	di	;@0F2C1
+	arpl	word ptr [bp+di+20h], si	;@0F2C2
+	add	byte ptr [bx+si], ah	;@0F2C5
+	pop	di	;@0F2C7
+	db	73h, 73h	; jae @@172	;@0F2C8
+	and	byte ptr [bx+si], al	;@0F2CA
+@@163:	and	byte ptr [bx+64h], bl	;@0F2CC
+	db	73h, 20h	; jae @@167+1	;@0F2CF
+@@164:	add	byte ptr [bp+6Fh], dh	;@0F2D1
+@@165:	db	69h, 64h, 0, 2Eh, 2Eh	; imul sp, word ptr [si], 2E2Eh	;@0F2D4
+	db	2Eh, 0, 63h, 6Fh	; add byte ptr cs:[bp+di+6Fh], ah	;@0F2D9
+	outsb	;@0F2DD
+@@166:	db	73h, 74h	; jae @@174+2	;@0F2DE
+	and	byte ptr [bx+si], al	;@0F2E0
+	db	76h, 6Fh	; jbe @@174+1	;@0F2E2
+	insb	;@0F2E4
+	popa	;@0F2E5
+	db	74h, 69h	; je @@173+3	;@0F2E6
+	insb	;@0F2E8
+	db	65h, 20h, 0	; and byte ptr [bx+si], al	;@0F2E9
+	db	65h, 6Eh	; outs dx, byte ptr gs:[si]	;@0F2EC
+	db	75h, 6Dh	; jne @@176+1	;@0F2EE
+@@167:	and	byte ptr [bx+si], al	;@0F2F0
+	db	65h, 6Eh	; outs dx, byte ptr gs:[si]	;@0F2F2
+	db	75h, 6Dh	; jne @@177+2	;@0F2F4
+	add	byte ptr [bx+si], ah	;@0F2F6
+	db	66h, 61h	; popal	;@0F2F8
+@@168:	db	72h, 20h	; jb @@170+2	;@0F2FA
+	add	byte ptr [bx+si], ah	;@0F2FC
+	outsb	;@0F2FE
+	db	65h, 61h	; popa	;@0F2FF
+	db	72h, 20h	; jb @@171+1	;@0F301
+	add	byte ptr [bp+si], bh	;@0F303
+@@169:	cmp	al, byte ptr [bx+si]	;@0F305
+	and	byte ptr [bx+si+61h], dh	;@0F307
+	db	73h, 63h	; jae @@178	;@0F30A
+	popa	;@0F30C
+	insb	;@0F30D
+	add	byte ptr [bp+si], ch	;@0F30E
+	sub	word ptr [bx+si], ax	;@0F310
+	and	byte ptr [bp+di+6Fh], ah	;@0F312
+	outsb	;@0F315
+	db	73h, 74h	; jae @@179+2	;@0F316
+	and	byte ptr [bx+si], al	;@0F318
+@@170:	and	byte ptr [bp+6Fh], dh	;@0F31A
+	insb	;@0F31D
+	popa	;@0F31E
+	db	74h, 69h	; je @@179	;@0F31F
+	insb	;@0F321
+@@171:	db	65h, 20h, 0	; and byte ptr [bx+si], al	;@0F322
+	db	73h, 74h	; jae @@182+1	;@0F325
+	db	72h, 75h	; jb @@183+1	;@0F327
+	db	63h, 74h, 0	; arpl word ptr [si], si	;@0F329
+	db	75h, 6Eh	; jne @@182+2	;@0F32C
+	imul	bp, word ptr [bx+6Eh], 6F00h	;@0F32E
+	db	70h, 65h	; jo @@182	;@0F333
+	db	72h, 61h	; jb @@181	;@0F335
+	db	74h, 6Fh	; je @@185	;@0F337
+	db	72h, 20h	; jb @@175+2	;@0F339
+	add	byte ptr [bx+si], ch	;@0F33B
+@@172:	sub	word ptr [bx+si], ax	;@0F33D
+	and	byte ptr [bp+di+6Fh], ah	;@0F33F
+	outsb	;@0F342
+	db	73h, 74h	; jae @@187+1	;@0F343
+	add	byte ptr [bx+si], ah	;@0F345
+	db	76h, 6Fh	; jbe @@187	;@0F347
+	insb	;@0F349
+	popa	;@0F34A
+	db	74h, 69h	; je @@186+1	;@0F34B
+	insb	;@0F34D
+@@173:	db	65h, 0, 6Fh, 70h	; add byte ptr [bx+70h], ch	;@0F34E
+@@174:	db	65h, 72h, 61h	; jb @@186+1	;@0F352
+	db	74h, 6Fh	; je @@188+4	;@0F355
+	db	72h, 3Dh	; jb @@180	;@0F357
+@@175:	add	byte ptr [bx+di+6Eh], ah	;@0F359
+@@176:	and	byte ptr [bx+di+6Eh], ch	;@0F35C
+	db	74h, 65h	; je @@188+4	;@0F35F
+@@177:	db	67h, 72h, 61h	; jb @@188+3	;@0F361
+	db	6Ch	; insb	;@0F364
+	and	byte ptr [si+79h], dh	;@0F365
+	db	70h, 65h	; jo @@189+1	;@0F368
+	add	byte ptr [bx+di+20h], ah	;@0F36A
+	db	70h, 6Fh	; jo @@190	;@0F36D
+@@178:	imul	bp, word ptr [bp+74h], 7265h	;@0F36F
+	and	byte ptr [si+79h], dh	;@0F374
+	db	70h, 65h	; jo @@190	;@0F377
+	add	byte ptr [bx+di+20h], ah	;@0F379
+	db	73h, 63h	; jae @@191+1	;@0F37C
+	popa	;@0F37E
+	insb	;@0F37F
+	popa	;@0F380
+	jb	@@184+1	;@0F381
+	db	74h, 79h	; je @@194	;@0F383
+	db	70h, 65h	; jo @@192+1	;@0F385
+	add	byte ptr [bx+di+6Eh], ah	;@0F387
+@@179:	and	byte ptr [bx+di+72h], ah	;@0F38A
+	imul	si, word ptr [si+68h], 656Dh	;@0F38D
+	db	74h, 69h	; je @@193+1	;@0F392
+	arpl	word ptr [bx+si], sp	;@0F394
+@@180:	db	74h, 79h	; je @@198+1	;@0F396
+@@181:	db	70h, 65h	; jo @@194+1	;@0F398
+@@182:	add	byte ptr [bx+di+20h], ah	;@0F39A
+@@183:	db	73h, 69h	; jae @@195	;@0F39D
+	insw	;@0F39F
+	db	70h, 6Ch	; jo @@197	;@0F3A0
+@@184:	db	65h, 20h, 74h, 79h	; and byte ptr [si+79h], dh	;@0F3A2
+	db	70h, 65h	; jo @@196+1	;@0F3A6
+@@185:	add	byte ptr [bp+di+2Bh], al	;@0F3A8
+	sub	ax, word ptr [bx+si]	;@0F3AB
+	inc	bx	;@0F3AD
+	add	byte ptr [bx+si+61h], dl	;@0F3AE
+	db	73h, 63h	; jae @@199	;@0F3B1
+	popa	;@0F3B3
+	insb	;@0F3B4
+@@186:	add	byte ptr [si+79h], dh	;@0F3B5
+@@187:	db	70h, 65h	; jo @@200+1	;@0F3B8
+	and	byte ptr [bp+di+6Fh], ah	;@0F3BA
+	outsb	;@0F3BD
+	db	76h, 65h	; jbe @@201+1	;@0F3BE
+	db	72h, 73h	; jb @@203	;@0F3C0
+@@188:	imul	bp, word ptr [bx+6Eh], 7E00h	;@0F3C2
+	add	al, 78h	;@0F3C7
+	push	es	;@0F3C9
+	db	78h, 7Eh	; js @@205+1	;@0F3CA
+	db	7Eh, 7Eh	; jle @@206+1	;@0F3CC
+@@189:	sub	byte ptr [bp+7Eh], bh	;@0F3CE
+	db	26h, 26h, 26h, 26h, 26h, 26h, 26h, 26h, 26h, 26h, 26h, 12h, 12h	; adc dl, byte ptr es:[bp+si]	;@0F3D1
+@@190:	db	10h, 10h	; adc byte ptr [bx+si], dl	;@0F3DE
+@@191:	adc	byte ptr [bp+si], bl	;@0F3E0
+	push	ds	;@0F3E2
+	sbb	al, 14h	;@0F3E3
+	adc	al, 24h	;@0F3E5
+	sub	ah, byte ptr [bp+si]	;@0F3E7
+	and	byte ptr [bx+si], bl	;@0F3E9
+@@192:	sbb	byte ptr ds:[1616h], dl	;@0F3EB
+	push	ss	;@0F3EF
+	jle	@@207+2	;@0F3F0
+	or	cl, byte ptr [bp+si]	;@0F3F2
+	or	al, byte ptr ds:[7E06h]	;@0F3F4
+	jle	@@208+1	;@0F3F8
+	jle	@@208+3	;@0F3FA
+@@193:	jle	@@209+1	;@0F3FC
+@@194:	jle	@@210+1	;@0F3FE
+	jle	@@211+1	;@0F400
+	jle	@@212+1	;@0F402
+	jle	@@213+1	;@0F404
+	jle	@@214+1	;@0F406
+@@195:	jle	@@215+1	;@0F408
+	jle	@@216+1	;@0F40A
+@@196:	jle	@@217+1	;@0F40C
+@@197:	jle	@@218+1	;@0F40E
+@@198:	jle	@@219+1	;@0F410
+	jle	@@220+1	;@0F412
+	jle	@@221+1	;@0F414
+@@199:	jle	@@222+1	;@0F416
+	jle	@@223+1	;@0F418
+	jle	@@224+1	;@0F41A
+	jle	@@225+1	;@0F41C
+@@200:	jle	@@226+1	;@0F41E
+	jle	@@227+1	;@0F420
+	jle	@@228+1	;@0F422
+@@201:	jle	@@229+1	;@0F424
+	jle	@@230	;@0F426
+	jle	@@202+2	;@0F428
+	push	cs	;@0F42A
+	jle	@@204	;@0F42B
+	jle	@@232	;@0F42D
+	or	bh, byte ptr [bp+7Eh]	;@0F42F
+@@202:	or	bh, byte ptr [bp+7Eh]	;@0F432
+@@203:	jle	@@233	;@0F435
+	jle	@@233+2	;@0F437
+	jle	@@234+1	;@0F439
+@@204:	jle	@@235+1	;@0F43B
+	jle	@@236+1	;@0F43D
+	jle	@@237+1	;@0F43F
+	jle	@@238+1	;@0F441
+	jle	@@239+1	;@0F443
+	jle	@@240+1	;@0F445
+	jle	@@241+1	;@0F447
+@@205:	jg	@@241+1	;@0F449
+@@206:	add	word ptr [bp+si+1], di	;@0F44B
+	jg	@@242+1	;@0F44E
+	jg	@@208+3	;@0F450
+	jg	@@243+1	;@0F452
+	daa	;@0F454
+	daa	;@0F455
+	daa	;@0F456
+	daa	;@0F457
+	daa	;@0F458
+	daa	;@0F459
+	daa	;@0F45A
+	daa	;@0F45B
+	daa	;@0F45C
+	daa	;@0F45D
+	daa	;@0F45E
+	adc	dl, byte ptr [bp+si]	;@0F45F
+	adc	byte ptr [bx+si], dl	;@0F461
+	adc	byte ptr [bp+si], bl	;@0F463
+	push	ds	;@0F465
+	sbb	al, 14h	;@0F466
+	adc	al, 2Bh	;@0F468
+	sub	ah, byte ptr [bp+si]	;@0F46A
+	and	byte ptr [bx+si], bl	;@0F46C
+@@207:	sbb	byte ptr ds:[1616h], dl	;@0F46E
+	push	ss	;@0F472
+	or	cx, word ptr [bp+di]	;@0F473
+	or	cx, word ptr [bp+di]	;@0F475
+@@208:	or	ax, word ptr ds:[7F06h]	;@0F477
+@@209:	jg	@@244+2	;@0F47B
+@@210:	jg	@@245+1	;@0F47D
+@@211:	jg	@@246+1	;@0F47F
+@@212:	jg	@@247+1	;@0F481
+@@213:	jg	@@248+1	;@0F483
+@@214:	jg	@@249+1	;@0F485
+@@215:	jg	@@250+1	;@0F487
+@@216:	jg	@@251+1	;@0F489
+@@217:	jg	@@252+1	;@0F48B
+@@218:	jg	@@253+1	;@0F48D
+@@219:	jg	@@254+1	;@0F48F
+@@220:	jg	@@255+1	;@0F491
+@@221:	jg	@@256+1	;@0F493
+@@222:	jg	@@257+1	;@0F495
+@@223:	jg	@@258+1	;@0F497
+@@224:	jg	@@259+1	;@0F499
+@@225:	jg	@@260+1	;@0F49B
+@@226:	jg	@@261+1	;@0F49D
+@@227:	jg	@@262+1	;@0F49F
+@@228:	jg	@@231	;@0F4A1
+@@229:	add	ax, 0B0Bh	;@0F4A3
+@@230:	or	cx, word ptr [bp+di]	;@0F4A6
+@@231:	add	word ptr [bp+si+0Bh], di	;@0F4A8
+	jg	@@234	;@0F4AB
+@@232:	push	cs	;@0F4AD
+	jg	@@237	;@0F4AE
+	jg	@@263	;@0F4B0
+	or	di, word ptr [bx+7Fh]	;@0F4B2
+@@233:	or	bh, byte ptr [bx+7Fh]	;@0F4B5
+@@234:	jg	@@264+1	;@0F4B8
+@@235:	jg	@@265	;@0F4BA
+@@236:	jg	@@266	;@0F4BC
+@@237:	jg	@@267	;@0F4BE
+@@238:	jg	@@268	;@0F4C0
+@@239:	jg	@@269	;@0F4C2
+@@240:	jg	@@270	;@0F4C4
+@@241:	jg	@@270+1	;@0F4C6
+	jle	@@271+1	;@0F4C8
+	jle	@@273	;@0F4CA
+	jle	@@272+1	;@0F4CC
+@@242:	jl	@@273+1	;@0F4CE
+	jl	@@274	;@0F4D0
+@@243:	jle	@@275	;@0F4D2
+	jl	@@276	;@0F4D4
+	jle	@@276	;@0F4D6
+	jl	@@277	;@0F4D8
+	jl	@@278	;@0F4DA
+	jl	@@278+2	;@0F4DC
+	jl	@@278+4	;@0F4DE
+	jl	@@279+1	;@0F4E0
+	or	cl, byte ptr [bp+si]	;@0F4E2
+	or	bh, byte ptr [si+7Ch]	;@0F4E4
+	or	bh, byte ptr [si+7Ch]	;@0F4E7
+	db	7Ch, 7Ch	; jl @@280+1	;@0F4EA
+	db	7Ch, 7Ch	; jl @@281	;@0F4EC
+	db	7Ch, 7Ch	; jl @@282	;@0F4EE
+	db	7Ch, 7Ch	; jl @@282+2	;@0F4F0
+	db	7Ch, 7Ch	; jl @@283	;@0F4F2
+	db	7Ch, 7Ch	; jl @@283+2	;@0F4F4
+	or	cl, byte ptr [bp+si]	;@0F4F6
+	or	cl, byte ptr [bp+si]	;@0F4F8
+@@244:	or	bh, byte ptr [si+7Ch]	;@0F4FA
+@@245:	db	7Eh, 7Eh	; jle @@284	;@0F4FD
+@@246:	db	7Eh, 7Eh	; jle @@285	;@0F4FF
+@@247:	db	7Eh, 7Eh	; jle @@286	;@0F501
+@@248:	db	7Eh, 7Eh	; jle @@287	;@0F503
+@@249:	db	7Eh, 7Eh	; jle @@288	;@0F505
+@@250:	db	7Eh, 7Eh	; jle @@289	;@0F507
+@@251:	db	7Eh, 7Eh	; jle @@289+2	;@0F509
+@@252:	db	7Eh, 7Eh	; jle @@290+1	;@0F50B
+@@253:	db	7Eh, 7Eh	; jle @@291	;@0F50D
+@@254:	db	7Eh, 7Eh	; jle @@291+2	;@0F50F
+@@255:	db	7Eh, 7Eh	; jle @@292+1	;@0F511
+@@256:	db	7Eh, 7Eh	; jle @@293	;@0F513
+@@257:	db	7Eh, 7Eh	; jle @@294+1	;@0F515
+@@258:	db	7Eh, 7Eh	; jle @@295+1	;@0F517
+@@259:	db	7Eh, 7Eh	; jle @@296	;@0F519
+@@260:	db	7Eh, 7Eh	; jle @@297	;@0F51B
+@@261:	db	7Eh, 7Eh	; jle @@298	;@0F51D
+@@262:	db	7Eh, 7Eh	; jle @@299	;@0F51F
+	db	7Eh, 7Eh	; jle @@300	;@0F521
+	db	7Eh, 7Eh	; jle @@301	;@0F523
+	db	7Ch, 7Ch	; jl @@301	;@0F525
+	or	cl, byte ptr [bp+si]	;@0F527
+	or	cl, byte ptr [bp+si]	;@0F529
+	db	7Ch, 7Ch	; jl @@302	;@0F52B
+	db	7Ch, 7Eh	; jl @@303	;@0F52D
+	db	7Eh, 7Ch	; jle @@303	;@0F52F
+@@263:	db	7Eh, 7Ch	; jle @@304	;@0F531
+	db	7Eh, 7Eh	; jle @@305	;@0F533
+	or	bh, byte ptr [bp+7Eh]	;@0F535
+@@264:	or	bh, byte ptr [bp+7Eh]	;@0F538
+@@265:	db	7Eh, 7Eh	; jle @@307	;@0F53B
+@@266:	db	7Eh, 7Eh	; jle @@308	;@0F53D
+@@267:	db	7Eh, 7Eh	; jle @@309	;@0F53F
+@@268:	db	7Eh, 7Eh	; jle @@310	;@0F541
+@@269:	db	7Eh, 7Eh	; jle @@311	;@0F543
+@@270:	db	7Eh, 7Eh	; jle @@312	;@0F545
+@@271:	db	7Eh, 7Eh	; jle @@313	;@0F547
+@@272:	db	7Eh, 7Eh	; jle @@314	;@0F549
+@@273:	db	7Eh, 7Eh	; jle @@315	;@0F54B
+	db	7Eh, 7Eh	; jle @@316+1	;@0F54D
+	push	bx	;@0F54F
+@@274:	db	75h, 62h	; jne @@305+1	;@0F550
+@@275:	db	73h, 63h	; jae @@306	;@0F552
+@@276:	db	72h, 69h	; jb @@309	;@0F554
+@@277:	db	70h, 74h	; jo @@316	;@0F556
+@@278:	imul	bp, word ptr [bp+67h], 6600h	;@0F558
+@@279:	db	72h, 69h	; jb @@313+1	;@0F55D
+	db	65h, 6Eh	; outs dx, byte ptr gs:[si]	;@0F55F
+	db	64h, 0, 76h, 69h	; add byte ptr [bp+69h], dh	;@0F561
+	db	72h, 74h	; jb @@317	;@0F565
+@@280:	db	75h, 61h	; jne @@314+1	;@0F567
+	insb	;@0F569
+@@281:	add	byte ptr [bx+si], al	;@0F56A
+@@282:	add	byte ptr ds:[3A00h], dh	;@0F56C
+@@283:	db	0, 47h, 0	; add byte ptr [bx], al	;@0F570
+	db	0, 2Ah	; add byte ptr [bp+si], ch	;@0F573
+	pop	es	;@0F575
+	add	byte ptr [bp+si], dl	;@0F576
+	adc	dx, word ptr [si]	;@0F578
+	adc	ax, 1716h	;@0F57A
+@@284:	sbb	bl, byte ptr [bp+di]	;@0F57D
+@@285:	sbb	al, 18h	;@0F57F
+@@286:	sbb	word ptr [bx+si], cx	;@0F581
+@@287:	or	word ptr [bp+si], cx	;@0F583
+@@288:	or	cx, word ptr [si]	;@0F585
+@@289:	db	0Fh, 10h, 11h	; movups xmm2, [bx+di]	;@0F587
+@@290:	or	ax, 250Eh	;@0F58A
+@@291:	sub	byte ptr es:[bx], ah	;@0F58D
+@@292:	sbb	ax, 201Eh	;@0F590
+@@293:	pop	ds	;@0F593
+@@294:	and	ah, byte ptr [bx+di]	;@0F594
+@@295:	xor	byte ptr [bx], ch	;@0F596
+	inc	sp	;@0F598
+@@296:	aas	;@0F599
+	inc	ax	;@0F59A
+@@297:	cmp	di, word ptr [di]	;@0F59B
+@@298:	add	word ptr [bp+si], ax	;@0F59D
+@@299:	add	ax, word ptr [bx+si]	;@0F59F
+@@300:	add	byte ptr [bx+si], al	;@0F5A1
+@@301:	add	byte ptr [bx+si], al	;@0F5A3
+	add	byte ptr [bx+si], al	;@0F5A5
+	add	byte ptr [bx+si], al	;@0F5A7
+@@302:	add	byte ptr [bx+si], al	;@0F5A9
+	add	byte ptr [bx+si], al	;@0F5AB
+@@303:	add	byte ptr [bx+si], al	;@0F5AD
+@@304:	add	byte ptr [bx+si], al	;@0F5AF
+	add	byte ptr [bx+si], al	;@0F5B1
+@@305:	add	byte ptr [bx+si], al	;@0F5B3
+	add	byte ptr [bx+si], al	;@0F5B5
+@@306:	add	byte ptr [bx+si], al	;@0F5B7
+	add	byte ptr [bx+si], al	;@0F5B9
+@@307:	add	byte ptr [bx+si], al	;@0F5BB
+@@308:	add	byte ptr [bx+si], al	;@0F5BD
+@@309:	add	byte ptr [bx+si], al	;@0F5BF
+@@310:	add	byte ptr [bx+si], al	;@0F5C1
+@@311:	add	byte ptr [bx+si], al	;@0F5C3
+@@312:	add	byte ptr [bx+si], al	;@0F5C5
+@@313:	add	byte ptr [bx+si], al	;@0F5C7
+@@314:	add	byte ptr [bx+si], al	;@0F5C9
+@@315:	inc	si	;@0F5CB
+@@316:	add	byte ptr [bx+si], al	;@0F5CC
+	add	byte ptr [bx+si], al	;@0F5CE
+	cmp	al, 0	;@0F5D0
+	db	3Eh, 0, 0	; add byte ptr ds:[bx+si], al	;@0F5D2
+	db	43h	; inc bx	;@0F5D5
+	add	byte ptr [di+41h], al	;@0F5D6
+	add	byte ptr [bx+si], al	;@0F5D9
+@@317:	add	byte ptr [bx+si], al	;@0F5DB
+	add	byte ptr [bx+si], al	;@0F5DD
+	add	byte ptr [bx+si], al	;@0F5DF
+	add	byte ptr [bx+si], al	;@0F5E1
+	add	byte ptr [bx+si], al	;@0F5E3
+	add	byte ptr [bx+si], al	;@0F5E5
+	add	byte ptr [bx+si], al	;@0F5E7
+	add	byte ptr [bx+si], al	;@0F5E9
+	add	byte ptr [bx+si], al	;@0F5EB
+	add	byte ptr [bx+si], al	;@0F5ED
+	add	byte ptr [bx+di+66h], cl	;@0F5EF
+	add	byte ptr [bx+si], al	;@0F5F2
+	popa	;@0F5F4
+	and	byte ptr [bp+di+74h], dh	;@0F5F5
+	popa	;@0F5F8
+	outsb	;@0F5F9
+	db	64h, 61h	; popa	;@0F5FA
+	db	72h, 64h	; jb @@319+3	;@0F5FC
+	and	byte ptr [bp+di+6Fh], ah	;@0F5FE
+	outsb	;@0F601
+	db	76h, 65h	; jbe @@320+1	;@0F602
+	db	72h, 73h	; jb @@321+2	;@0F604
+	imul	bp, word ptr [bx+6Eh], 1E00h	;@0F606
+	add	byte ptr [di], bl	;@0F60B
+	add	byte ptr [bp+si], ah	;@0F60D
+	add	byte ptr [bx+di], ah	;@0F60F
+	add	byte ptr [bx+si], ah	;@0F611
+	add	byte ptr [bx], bl	;@0F613
+	add	byte ptr [bp+si], ch	;@0F615
+	add	byte ptr [bx+6], cl	;@0F617
+	and	byte ptr [bx+si], al	;@0F61A
+	dec	di	;@0F61C
+	push	es	;@0F61D
+	db	66h, 0, 4Fh, 6	; add byte ptr [bx+6], cl	;@0F61E
+	db	3Eh, 0, 4Fh, 6	; add byte ptr ds:[bx+6], cl	;@0F622
+	imul	ax, word ptr [bx+si], 4Fh	;@0F626
+	push	es	;@0F629
+	inc	bx	;@0F62A
+	add	byte ptr [bx+6], cl	;@0F62B
+	pop	sp	;@0F62E
+	add	byte ptr [bx+6], cl	;@0F62F
+	cmp	word ptr [bx+si], ax	;@0F632
+	dec	di	;@0F634
+	push	es	;@0F635
+	jo	@@318	;@0F636
+@@318:	dec	di	;@0F638
+	push	es	;@0F639
+	dec	ax	;@0F63A
+	add	byte ptr [bx+6], cl	;@0F63B
+	das	;@0F63E
+	add	byte ptr [bx+6], cl	;@0F63F
+	and	ax, 4F00h	;@0F642
+	push	es	;@0F645
+	xor	al, 0	;@0F646
+	dec	di	;@0F648
+	push	es	;@0F649
+	push	di	;@0F64A
+	add	byte ptr [bx+6], cl	;@0F64B
+	dec	bp	;@0F64E
+	add	byte ptr [bx+6], cl	;@0F64F
+	db	65h, 2, 0AFh, 0, 50h	; add ch, byte ptr [bx+5000h]	;@0F652
+	db	4, 0AFh	; add al, 0AFh	;@0F657
+	add	byte ptr [bx+di], dh	;@0F659
+	add	ch, byte ptr [bx+4B00h]	;@0F65B
+@@319:	add	ch, byte ptr [bx+5200h]	;@0F65F
+	add	byte ptr [bx+6], cl	;@0F663
+	db	0Fh, 8	; invd	;@0F666
+@@320:	or	byte ptr [bx+si], cl	;@0F668
+	or	byte ptr [bx+si], cl	;@0F66A
+	or	byte ptr [bx+si], cl	;@0F66C
+	or	byte ptr [bx+si], cl	;@0F66E
+	or	byte ptr [bx+si], cl	;@0F670
+	or	byte ptr ds:[0E0Eh], cl	;@0F672
+	push	cs	;@0F676
+@@321:	adc	byte ptr ds:[808h], cl	;@0F677
+	or	byte ptr [si], cl	;@0F67B
+	or	al, 8	;@0F67D
+	or	byte ptr [bx+si], al	;@0F67F
+	add	byte ptr [bx], dl	;@0F681
+	pop	ss	;@0F683
+	or	al, 0Ch	;@0F684
+	or	al, 0Ch	;@0F686
+	or	al, 0Ch	;@0F688
+	adc	dl, byte ptr [bp+si]	;@0F68A
+	or	cl, byte ptr [bp+si]	;@0F68C
+	push	cs	;@0F68E
+	sbb	byte ptr [bx+si], dl	;@0F68F
+	sbb	byte ptr [si], cl	;@0F691
+	or	al, 0	;@0F693
+	add	byte ptr [si], ah	;@0F695
+	sub	ah, byte ptr [si]	;@0F697
+	sub	ah, byte ptr [si]	;@0F699
+	sub	cl, byte ptr [si]	;@0F69B
+	mov	byte ptr [bp+si], cl	;@0F69D
+	add	ax, word ptr [bp+si+4Fh]	;@0F69F
+	push	dx	;@0F6A2
+	dec	sp	;@0F6A3
+	inc	cx	;@0F6A4
+	dec	si	;@0F6A5
+	inc	sp	;@0F6A6
+	inc	bx	;@0F6A7
+	add	byte ptr ds:[7063h], ch	;@0F6A8
+	jo	@@322	;@0F6AC
+@@322:	add	word ptr [bx+si], ax	;@0F6AE
+	push	ds	;@0F6B0
+	sbb	ax, 2	;@0F6B1
+	pop	ds	;@0F6B4
+	sbb	ax, 3	;@0F6B5
+	and	word ptr [di], bx	;@0F6B8
+	add	al, 0	;@0F6BA
+	and	bl, byte ptr [di]	;@0F6BC
+	add	ax, 2400h	;@0F6BE
+	sbb	ax, 6	;@0F6C1
+	db	26h, 1Dh, 7, 0	; sbb ax, 7	;@0F6C4
+	db	28h, 1Dh	; sub byte ptr [di], bl	;@0F6C8
+	or	byte ptr [bx+si], al	;@0F6CA
+	sub	bl, byte ptr [di]	;@0F6CC
+	or	word ptr [bx+si], ax	;@0F6CE
+	sub	al, 1Dh	;@0F6D0
+	or	ax, word ptr [bx+si]	;@0F6D2
+	xor	byte ptr [di], bl	;@0F6D4
+	or	al, 0	;@0F6D6
+	xor	bl, byte ptr [di]	;@0F6D8
+	or	ax, 3500h	;@0F6DA
+	sbb	ax, 0Eh	;@0F6DD
+	cmp	byte ptr [di], bl	;@0F6E0
+	db	0Fh, 0, 3Bh, 1Dh, 10h, 0, 3Eh, 1Dh, 11h, 0, 41h, 1Dh, 12h, 0, 44h	;@0F6E2
 	db	1Dh, 13h, 0, 47h, 1Dh, 14h, 0, 4Ah, 1Dh, 15h, 0, 4Eh, 1Dh, 16h
 	db	0, 52h, 1Dh, 17h, 0, 54h, 1Dh, 18h, 0, 56h, 1Dh, 19h, 0, 58h, 1Dh
 	db	1Ah, 0, 5Ah, 1Dh, 1Bh, 0, 5Ch, 1Dh, 1Ch, 0, 5Eh, 1Dh, 1Dh, 0, 60h
@@ -200,13 +1733,32 @@ Y0E290	segment para public 'CODE'
 	db	0, 6Ah, 1Dh, 22h, 0, 6Ch, 1Dh, 23h, 0, 6Fh, 1Dh, 24h, 0, 72h, 1Dh
 	db	25h, 0, 75h, 1Dh, 26h, 0, 63h, 1Dh, 27h, 0, 66h, 1Dh, 28h, 0, 4Bh
 	db	1Dh, 29h, 0, 4Fh, 1Dh, 2Ah, 0, 78h, 1Dh, 2Bh, 0, 7Ah, 1Dh, 2Dh
-	db	0, 7Ch, 1Dh, 2Eh, 0, 7Fh, 1Dh, 2Fh, 0, 2Eh, 1Dh, 30h, 0, 82h, 1Dh
-	db	64h, 0, 85h, 1Dh, 66h, 0, 88h, 1Dh, 67h, 0, 8Ch, 1Dh, 68h, 0, 8Fh
-	db	1Dh, 69h, 0, 95h, 1Dh, 6Ah, 0, 9Ch, 1Dh, 6Bh, 0, 0A3h, 1Dh, 6Ch
-	db	0, 0AAh, 1Dh, 6Dh, 0, 0AEh, 1Dh, 6Eh, 0, 0B7h, 1Dh, 6Fh, 0, 0C0h
-	db	1Dh, 70h, 0, 0C8h, 1Dh, 71h, 0, 0D2h, 1Dh, 72h, 0, 0D9h, 1Dh, 73h
-	db	0, 0DEh, 1Dh, 51h, 0, 0E6h, 1Dh, 52h, 0, 0EAh, 1Dh, 53h, 0, 0EEh
-	db	1Dh, 55h, 0, 0F2h, 1Dh, 54h, 0, 0F7h, 1Dh, 57h, 0, 0FBh, 1Dh, 57h
+	db	0, 7Ch, 1Dh, 2Eh, 0, 7Fh, 1Dh, 2Fh, 0, 2Eh, 1Dh
+L0F762:	xor	byte ptr [bx+si], al	;@0F762
+	db	82h, 1Dh, 64h	; sbb byte ptr [di], 64h	;@0F764
+	add	byte ptr [di+661Dh], al	;@0F767
+	add	byte ptr [bx+si+671Dh], cl	;@0F76B
+	add	byte ptr [si+681Dh], cl	;@0F76F
+	add	byte ptr [bx+691Dh], cl	;@0F773
+	add	byte ptr [di+6A1Dh], dl	;@0F777
+	add	byte ptr [si+6B1Dh], bl	;@0F77B
+	add	byte ptr [bp+di+6C1Dh], ah	;@0F77F
+	add	byte ptr [bp+si+6D1Dh], ch	;@0F783
+	add	byte ptr [bp+6E1Dh], ch	;@0F787
+	add	byte ptr [bx+6F1Dh], dh	;@0F78B
+	db	0, 0C0h	; add al, al	;@0F78F
+	sbb	ax, 70h	;@0F791
+	enter	711Dh, 0	;@0F794
+	rcr	byte ptr [di], cl	;@0F798
+	jb	@@1	;@0F79A
+@@1:	fstp	dword ptr [di]	;@0F79C
+	jae	@@2	;@0F79E
+@@2:	ficomp	word ptr [di]	;@0F7A0
+	push	cx	;@0F7A2
+	db	0, 0E6h	; add dh, ah	;@0F7A3
+	sbb	ax, 52h	;@0F7A5
+	db	0EAh, 1Dh, 53h, 0, 0EEh	; ljmp 0xee00:0x531d	;@0F7A8
+	db	1Dh, 55h, 0, 0F2h, 1Dh, 54h, 0, 0F7h, 1Dh, 57h, 0, 0FBh, 1Dh, 57h	;@0F7AD
 	db	0, 0FFh, 1Dh, 48h, 0, 4, 1Eh, 48h, 0, 0Ah, 1Eh, 4Eh, 0, 11h, 1Eh
 	db	50h, 0, 19h, 1Eh, 50h, 0, 1Dh, 1Eh, 56h, 0, 22h, 1Eh, 56h, 0, 27h
 	db	1Eh, 46h, 0, 2Dh, 1Eh, 46h, 0, 37h, 1Eh, 4Ch, 0, 42h, 1Eh, 4Fh
@@ -388,151 +1940,791 @@ Y0E290	segment para public 'CODE'
 	db	0E6h, 0E6h, 0E6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
 	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
 	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0E6h, 0E4h, 0E6h, 0E6h
-	db	0F6h, 0E6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
-	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
-	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0ECh, 0E6h, 0E6h, 0ECh, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	8, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E5h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E5h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E2h
-	db	0F5h, 0F5h, 0F5h, 0F5h, 0F5h, 0F5h, 0F5h, 0F5h, 0F5h, 0F5h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
-	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
-	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0F6h, 0E6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
-	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
-	db	0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0E6h
-	db	0E6h, 0E6h, 0E6h, 0E6h, 0E6h, 0F7h, 0E6h, 0E6h, 0E6h, 0E6h, 0
-	db	0, 0, 0, 0, 0, 0, 80h, 0FFh, 7Fh, 'STDC__', 0, 'cplusplus', 0
-	db	'FILE__', 0, 'LINE__', 0, 'DATE__', 0, 'TIME__', 0, 'defined'
-	db	0, 0Ah, 1Ah, 0Ah, 0, 22h, 0, '   ;', 9, 0Dh, 0Ah, 0, '   ;', 9
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, '6%>%E%O%>%E%W%_%f%p%x%', 7Fh, 25h
-	db	89h, 25h, 91h, 25h, 98h, 25h, 0A2h, 25h, 0AAh, 25h, 0B1h, 25h
-	db	0BBh, 25h, 0C4h, 25h, 0CDh, 25h, 0D6h, 25h, 0DFh, 25h, 0E8h, 25h
-	db	0F1h, '%>%E%', 0FAh, '%>%E%', 3, '&_%f%', 0Ch, '&x%', 7Fh, 25h
-	db	15h, 26h, 91h, 25h, 98h, 25h, 1Eh, 26h, 0AAh, 25h, 0B1h, 25h, 27h
-	db	26h, 27h, '&1&;&E&O&Y&', 87h, 0Bh, 62h, 26h, 87h, 0Bh, 0, 0, 1
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '``````TC2.0'
-	db	0, 0, 0, 3, 3, 4, 3, 4, 5, 'c0t.obj', 0, 'cs.lib', 0, 'maths.lib'
-	db	0, 'c0s.obj', 0, 'c0m.obj', 0, 'cm.lib', 0, 'mathm.lib', 0, 'c0c.obj'
-	db	0, 'cc.lib', 0, 'mathc.lib', 0, 'c0l.obj', 0, 'cl.lib', 0, 'mathl.lib'
-	db	0, 'c0h.obj', 0, 'ch.lib', 0, 'mathh.lib', 0, 'c0ft.obj', 0, 'c0fs.obj'
-	db	0, 'c0fm.obj', 0, 'c0fc.obj', 0, 'c0fl.obj', 0, 'c0fh.obj', 0
-	db	'c0@t.obj', 0, 'c0@s.obj', 0, 'c0@m.obj', 0, 'c0@c.obj', 0, 'c0@l.obj'
-	db	0, 'c0@h.obj', 0, 'cwins.lib', 0, 'cwinm.lib', 0, 'cwinc.lib'
-	db	0, 'cwinl.lib', 0, 'cwinh.lib', 0, 'tasm.exe', 0, 'turboc.cfg'
-	db	0, 3Ah, 0Dh, 0Ah, 0, '.asm', 0, '.cpp', 0, 2Fh, 6Fh, 0, '/D__TINY__ '
-	db	0, '/D__SMALL__ ', 0, '/D__MEDIUM__ ', 0, '/D__COMPACT__ ', 0
-	db	'/D__LARGE__ ', 0, '/D__HUGE__ ', 0, '/D__PASCAL__ ', 0, '/D__FASTCALL__ '
-	db	0, '/D__CDECL__ ', 0, 2Fh, 65h, 0, 2Fh, 72h, 0, '/zi', 0, '/ml'
-	db	0, 20h, 2Fh, 0, 20h, 2Ch, 0, '  ;', 0, 2Bh, 0Dh, 0Ah, 0, 'turboc.$ln'
-	db	0, '/o-', 0, '/v+', 0, '/v-', 0, '.dll', 0, 2Fh, 79h, 0, '/Twd'
-	db	0, 2Fh, 54h, 0, '/o-+', 0Dh, 0Ah, 0, 'OVERLAY.LIB', 0, 'IMPORT.LIB'
-	db	0, 'EMU.LIB', 0, 'FP87.LIB', 0, '.def', 0, 'tlink.exe', 0, ' @turboc.$ln'
-	db	0, 0, 0, 5, 0, 5, 0, 5, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	db	0, 0, 0, 0, 0, 72h, 28h, 87h, 0Bh, 0, 0, 7Bh, 28h, 87h, 0Bh, 0
-	db	0, 85h, 28h, 87h, 0Bh, 0, 1, 90h, 28h, 87h, 0Bh, 1, 0, 9Ch, 28h
-	db	87h, 0Bh, 1, 1, 0A6h, 28h, 87h, 0Bh, 1, 1, 0AFh, 28h, 0, 0, 6
-	db	0, 0, 0B3h, 28h, 2, 0, 6, 2, 6, 0B7h, 28h, 4, 0, 6, 3, 2, 0BBh
-	db	28h, 6, 0, 6, 1, 4, 0BFh, 28h, 8, 0, 6, 6, 0Ah, 0C3h, 28h, 9, 0
-	db	6, 7, 0Ch, 0C7h, 28h, 0Ah, 0, 6, 5, 8, 0CBh, 28h, 0Bh, 0, 6, 4
-	db	18h, 0CFh, 28h, 0Ch, 0, 6, 10h, 10h, 0D3h, 28h, 0Dh, 0, 6, 13h
-	db	0Eh, 0D7h, 28h, 0Eh, 0, 6, 11h, 14h, 0DBh, 28h, 0Fh, 0, 6, 12h
-	db	1Ah, 0DFh, 28h, 0, 0, 2, 8, 0, 0E3h, 28h, 4, 0, 2, 0Bh, 2, 0E7h
-	db	28h, 6, 0, 2, 9, 4, 0EBh, 28h, 2, 0, 2, 0Ah, 6, 0EFh, 28h, 1, 0
-	db	2, 0Ch, 1, 0F3h, 28h, 5, 0, 2, 0Fh, 3, 0F7h, 28h, 7, 0, 2, 0Dh
-	db	5, 0FBh, 28h, 3, 0, 2, 0Eh, 7, 0FFh, 28h, 0FFh, 0FFh, 6, 0, 16h
-	db	0, 0, 0, 0, 0, 0, 0, '__TINY__', 0, '__SMALL__', 0, '__MEDIUM__'
-	db	0, '__COMPACT__', 0, '__LARGE__', 0, '__HUGE__', 0, '_AX', 0, '_DX'
-	db	0, '_BX', 0, '_CX', 0, '_SI', 0, '_DI', 0, '_BP', 0, '_SP', 0
-	db	'_ES', 0, '_DS', 0, '_CS', 0, '_SS', 0, '_AL', 0, '_BL', 0, '_CL'
-	db	0, '_DL', 0, '_AH', 0, '_BH', 0, '_CH', 0, '_DH', 0, '_FLAGS'
-	db	0, '_TEXT', 0, 'CODE', 0, '_data', 0, 'dgroup', 0, '_bss', 0, 'FAR_DATA'
-	db	0, '_text', 0, 31h, 0FBh, 0, '__MULTI_THREAD__', 0, '__SINGLE_THREAD__'
-	db	0, '__DLL__', 0, '__OS2__', 0, '__MSDOS__', 0, '_Windows', 0, '__TURBOC__'
-	db	0, '0x0297', 0FBh, 0, '__BORLANDC__', 0, '0x0200', 0FBh, 0, '__TCPLUSPLUS__'
-	db	0, '__BCPLUSPLUS__', 0, '__OVERLAY__', 0, '__PASCAL__', 0, '__FASTCALL__'
-	db	0, '__CDECL__', 0, '_FAR', 0, '_INIT_', 0, 'INITDATA', 0, '_EXIT_'
-	db	0, 'EXITDATA', 0, 0FFh, 0FFh, 0Fh, 0, 'TCDEF.SYM', 0, 'command line'
-	db	0, 'configuration file', 0, 59h, 6Fh, 0, 'Yo-', 0, 76h, 0, 76h
-	db	2Dh, 0, 76h, 69h, 0, 'vi-', 0, 0, 9, '?debug', 9, 43h, 20h, 0
-	db	2Bh, 0Dh, 0Ah, 9, '?debug', 9, 43h, 20h, 0, 0Dh, 0Ah, 0, 9, 'extrn'
-	db	9, 0, 'near', 0, 9, 'publicdll', 9, 0, 9, 'public', 9, 0, 9, 'equ'
-	db	9, 's@+', 0, 9, 'equ', 9, 0, 9, '?debug', 9, 46h, 20h, 0, 30h
-	db	35h, 0, 30h, 31h, 0, 64h, 40h, 0, 62h, 40h, 0, 77h, 2Bh, 0, 0
-	db	0, 0, '__turboFloat', 0, 0, 0A6h, 2Eh, 7Ah, 0, 0A8h, 2Eh, 74h
-	db	0, 0ACh, 2Eh, 74h, 0, 0B0h, 2Eh, 74h, 0, 0B4h, 2Eh, 74h, 0, 0B8h
-	db	2Eh, 74h, 0, 0BCh, 2Eh, 74h, 0, 0C0h, 2Eh, 7Ah, 0, 0C3h, 2Eh, 7Ah
-	db	0, 0C6h, 2Eh, 74h, 0, 0CAh, 2Eh, 74h, 0, 0CFh, 2Eh, 7Ah, 0, 0D2h
-	db	2Eh, 7Ah, 0, 0D5h, 2Eh, 7Ah, 0, 0D8h, 2Eh, 74h, 0, 0DEh, 2Eh, 7Ah
-	db	0, 0E1h, 2Eh, 7Ah, 0, 0E4h, 2Eh, 75h, 0, 0E9h, 2Eh, 74h, 0, 0EDh
-	db	2Eh, 7Ah, 0, 0F0h, 2Eh, 7Ah, 0, 0F3h, 2Eh, 74h, 0, 0F7h, 2Eh, 74h
-	db	0, 0FBh, 2Eh, 74h, 0, 0FFh, 2Eh, 74h, 0, 3, 2Fh, 74h, 0, 7, 2Fh
-	db	77h, 0, 0Ch, 2Fh, 77h, 0, 12h, 2Fh, 77h, 0, 18h, 2Fh, 7Ah, 0, 1Bh
-	db	2Fh, 74h, 0, 1Fh, 2Fh, 7Ah, 0, '"/t', 0, '&/t', 0, '*/t', 0, 0BDh
-	db	2Eh, 74h, 0, '-/t', 0, '1/z', 0, '4/z', 0, '7/t', 0, ';/z', 0
-	db	'>/z', 0, 'A/t', 0, 'D/y', 0, 'J/z', 0, 'M/t', 0, 'S/z', 0, 'V/t'
-	db	0, '\/t', 0, 'b/t', 0, 'g/t', 0, 'l/t', 0, 'r/~', 0, 'v/t', 0
-	db	'{/t', 0, 81h, 2Fh, 74h, 0, 86h, 2Fh, 74h, 0, 8Ch, 2Fh, 74h, 0
-	db	91h, 2Fh, 74h, 0, 97h, 2Fh, 74h, 0, 9Eh, 2Fh, 74h, 0, 0A6h, 2Fh
-	db	74h, 0, 0ACh, 2Fh, 74h, 0, 0B1h, 2Fh, 74h, 0, 0B7h, 2Fh, 74h, 0
-	db	0BDh, 2Fh, 74h, 0, 0C4h, 2Fh, 74h, 0, 0C9h, 2Fh, 74h, 0, 0CFh
-	db	2Fh, 74h, 0, 0D5h, 2Fh, 74h, 0, 0DBh, 2Fh, 74h, 0, 0E2h, 2Fh, 74h
-	db	0, 0E8h, 2Fh, 74h, 0, 0EFh, 2Fh, 74h, 0, 0F4h, 2Fh, 74h, 0, 0FAh
-	db	2Fh, 74h, 0, 2, 30h, 74h, 0, 8, 30h, 74h, 0, 0Dh, 30h, 74h, 0
-	db	13h, 30h, 74h, 0, 19h, 30h, 74h, 0, ' 0t', 0, '$0t', 0, ')0t'
-	db	0, '/0t', 0, '60t', 0, '=0t', 0, 'D0t', 0, 'K0t', 0, 'R0t', 0
-	db	'X0t', 0, ']0t', 0, 'b0t', 0, 'h0t', 0, 'o0t', 0, 'v0t', 0, '|0t'
-	db	0, 83h, 30h, 74h, 0, 88h, 30h, 74h, 0, 8Fh, 30h, 74h, 0, 96h, 30h
-	db	74h, 0, 9Eh, 30h, 74h, 0, 0A5h, 30h, 74h, 0, 0ACh, 30h, 74h, 0
-	db	0B2h, 30h, 74h, 0, 0B8h, 30h, 74h, 0, 0C0h, 30h, 74h, 0, 0C7h
-	db	30h, 74h, 0, 0CDh, 30h, 74h, 0, 0D4h, 30h, 74h, 0, 0DAh, 30h, 74h
-	db	0, 0DEh, 30h, 74h, 0, 0E4h, 30h, 74h, 0, 0EBh, 30h, 74h, 0, 0F0h
-	db	30h, 74h, 0, 0F6h, 30h, 74h, 0, 0FBh, 30h, 74h, 0, 1, 31h, 74h
-	db	0, 7, 31h, 74h, 0, 0Eh, 31h, 74h, 0, 13h, 31h, 74h, 0, 19h, 31h
-	db	74h, 0, 1Eh, 31h, 74h, 0, '#1t', 0, '+1t', 0, '11t', 0, '91t'
-	db	0, 0E3h, 2Fh, 74h, 0, 0F5h, 2Fh, 74h, 0, '=1t', 0, '@1t', 0, 'D1w'
-	db	0, 'H1w', 0, 'M1w', 0, 0BCh, 30h, 74h, 0, 'R1t', 0, 'W1t', 0, '\1x'
-	db	5, '_1x', 9, 'c1x', 4, 'f1x', 8, 'j1x', 0Ch, 'm1x', 16h, 'r1x'
-	db	0Ah, 'u1x', 3, 'x1x', 7, '|1x', 2, 7Fh, 31h, 78h, 6, 83h, 31h
-	db	78h, 1, 87h, 31h, 78h, 8, 8Bh, 31h, 78h, 4, 90h, 31h, 78h, 9, 94h
-	db	31h, 78h, 5, 99h, 31h, 78h, 0Dh, 9Dh, 31h, 78h, 0Bh, 0A1h, 31h
-	db	78h, 6, 0A5h, 31h, 78h, 2, 0AAh, 31h, 78h, 7, 0AEh, 31h, 78h, 3
-	db	0B3h, 31h, 78h, 0Fh, 0B7h, 31h, 78h, 13h, 0BBh, 31h, 78h, 11h
-	db	0BFh, 31h, 78h, 0Bh, 0C3h, 31h, 78h, 0Eh, 0C6h, 31h, 78h, 12h
-	db	0C9h, 31h, 78h, 12h, 0CDh, 31h, 78h, 13h, 0D1h, 31h, 78h, 10h
-	db	0D4h, 31h, 78h, 0Ah, 0D7h, 31h, 74h, 0, 0DCh, 31h, 74h, 0, 0E0h
-	db	31h, 74h, 0, 0E4h, 31h, 74h, 0, 0E8h, 31h, 74h, 0, 0EEh, 31h, 74h
-	db	0, 0F2h, 31h, 7Dh, 0, 0F7h, 31h, 77h, 0, 0FCh, 31h, 77h, 0, 2
-	db	32h, 77h, 0, 8, 32h, 78h, 17h, 0Dh, 32h, 78h, 14h, 13h, 32h, 78h
-	db	15h, 1Ah, 32h, 78h, 15h, '!2x', 14h, 27h, 32h, 74h, 0, '+2t', 0
-	db	'/2w', 0, '42w', 0, ':2w', 0, 0F6h, 2Fh, 74h, 0, 40h, 32h, 7Fh
+	db	0F6h, 0E6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h, 0F6h
+L10418:	div	dh	;@10418
+	div	dh	;@1041A
+	div	dh	;@1041C
+	div	dh	;@1041E
+	div	dh	;@10420
+	div	dh	;@10422
+	div	dh	;@10424
+	div	dh	;@10426
+	div	dh	;@10428
+	div	dh	;@1042A
+	out	0E6h, al	;@1042C
+	out	0E6h, al	;@1042E
+	out	0E6h, al	;@10430
+	out	0E6h, al	;@10432
+	out	0E6h, al	;@10434
+	out	0E6h, al	;@10436
+	out	0E6h, al	;@10438
+	out	0E6h, al	;@1043A
+	out	0E6h, al	;@1043C
+	out	0E6h, al	;@1043E
+	out	0E6h, al	;@10440
+	out	0E6h, al	;@10442
+	out	0E6h, al	;@10444
+	out	0E6h, al	;@10446
+	out	0E6h, al	;@10448
+	out	0E6h, al	;@1044A
+L1044C:	out	0E6h, al	;@1044C
+	out	0E6h, al	;@1044E
+	out	0E6h, al	;@10450
+	out	0E6h, al	;@10452
+	out	0E6h, al	;@10454
+	out	0E6h, al	;@10456
+	out	0E6h, al	;@10458
+	out	0E6h, al	;@1045A
+	out	0E6h, al	;@1045C
+	out	0E6h, al	;@1045E
+	out	0E6h, al	;@10460
+	out	0E6h, al	;@10462
+	out	0E6h, al	;@10464
+	out	0E6h, al	;@10466
+	out	0E6h, al	;@10468
+	out	0E6h, al	;@1046A
+	out	0E6h, al	;@1046C
+	out	0E6h, al	;@1046E
+	out	0E6h, al	;@10470
+	out	0E6h, al	;@10472
+	out	0E6h, al	;@10474
+	out	0E6h, al	;@10476
+	out	0E6h, al	;@10478
+	out	0E6h, al	;@1047A
+	out	0E6h, al	;@1047C
+	out	0E6h, al	;@1047E
+	out	0E6h, al	;@10480
+	out	0E6h, al	;@10482
+	out	0E6h, al	;@10484
+	out	0E6h, al	;@10486
+	out	0E6h, al	;@10488
+	out	0E6h, al	;@1048A
+	out	0E6h, al	;@1048C
+	out	0E6h, al	;@1048E
+	out	0E6h, al	;@10490
+	out	0E6h, al	;@10492
+	out	0E6h, al	;@10494
+	out	0E6h, al	;@10496
+	out	0E6h, al	;@10498
+	out	0E6h, al	;@1049A
+	out	0E6h, al	;@1049C
+	out	0E6h, al	;@1049E
+	out	0E6h, al	;@104A0
+	out	0E6h, al	;@104A2
+	out	0E6h, al	;@104A4
+	out	0E6h, al	;@104A6
+	out	0E6h, al	;@104A8
+	out	0E6h, al	;@104AA
+	out	0E6h, al	;@104AC
+L104AE:	out	0E6h, al	;@104AE
+	out	0E6h, al	;@104B0
+	out	0E6h, al	;@104B2
+	out	0E6h, al	;@104B4
+	out	0E6h, al	;@104B6
+	out	0E6h, al	;@104B8
+	out	0ECh, al	;@104BA
+	out	0E6h, al	;@104BC
+	in	al, dx	;@104BE
+	out	0E6h, al	;@104BF
+	out	0E6h, al	;@104C1
+	out	0E6h, al	;@104C3
+	out	0E6h, al	;@104C5
+	out	0E6h, al	;@104C7
+	out	0E6h, al	;@104C9
+	db	8, 0E6h	; or dh, ah	;@104CB
+	out	0E6h, al	;@104CD
+	out	0E6h, al	;@104CF
+	out	0E6h, al	;@104D1
+	in	ax, 0E6h	;@104D3
+	out	0E6h, al	;@104D5
+	out	0E5h, al	;@104D7
+	out	0E6h, al	;@104D9
+	out	0E6h, al	;@104DB
+	out	0E6h, al	;@104DD
+	out	0E2h, al	;@104DF
+	cmc	;@104E1
+	cmc	;@104E2
+	cmc	;@104E3
+	cmc	;@104E4
+	cmc	;@104E5
+	cmc	;@104E6
+	cmc	;@104E7
+	cmc	;@104E8
+	cmc	;@104E9
+	cmc	;@104EA
+	out	0E6h, al	;@104EB
+	out	0E6h, al	;@104ED
+	out	0E6h, al	;@104EF
+	out	0F6h, al	;@104F1
+	div	dh	;@104F3
+	div	dh	;@104F5
+	div	dh	;@104F7
+	div	dh	;@104F9
+	div	dh	;@104FB
+	div	dh	;@104FD
+L104FF:	div	dh	;@104FF
+	div	dh	;@10501
+	div	dh	;@10503
+	div	dh	;@10505
+L10507:	div	dh	;@10507
+	div	dh	;@10509
+	mul	dh	;@1050B
+	out	0E6h, al	;@1050D
+	out	0F6h, al	;@1050F
+	out	0F6h, al	;@10511
+	div	dh	;@10513
+	div	dh	;@10515
+	div	dh	;@10517
+	div	dh	;@10519
+	div	dh	;@1051B
+	div	dh	;@1051D
+	div	dh	;@1051F
+	div	dh	;@10521
+	div	dh	;@10523
+	div	dh	;@10525
+	div	dh	;@10527
+	div	dh	;@10529
+	mul	dh	;@1052B
+	out	0E6h, al	;@1052D
+	out	0E6h, al	;@1052F
+	out	0E6h, al	;@10531
+	out	0E6h, al	;@10533
+	out	0E6h, al	;@10535
+	out	0E6h, al	;@10537
+	out	0E6h, al	;@10539
+	out	0E6h, al	;@1053B
+	out	0E6h, al	;@1053D
+	out	0E6h, al	;@1053F
+	out	0E6h, al	;@10541
+	out	0E6h, al	;@10543
+	out	0E6h, al	;@10545
+	out	0E6h, al	;@10547
+	out	0E6h, al	;@10549
+	out	0E6h, al	;@1054B
+	out	0E6h, al	;@1054D
+	out	0E6h, al	;@1054F
+	out	0E6h, al	;@10551
+	out	0E6h, al	;@10553
+	out	0E6h, al	;@10555
+	out	0E6h, al	;@10557
+	out	0E6h, al	;@10559
+	out	0E6h, al	;@1055B
+	out	0E6h, al	;@1055D
+	out	0E6h, al	;@1055F
+	out	0E6h, al	;@10561
+	out	0E6h, al	;@10563
+	out	0E6h, al	;@10565
+	out	0E6h, al	;@10567
+	out	0E6h, al	;@10569
+	out	0E6h, al	;@1056B
+	out	0E6h, al	;@1056D
+	out	0E6h, al	;@1056F
+	out	0E6h, al	;@10571
+	out	0E6h, al	;@10573
+	out	0E6h, al	;@10575
+	out	0E6h, al	;@10577
+	out	0E6h, al	;@10579
+	out	0E6h, al	;@1057B
+	out	0E6h, al	;@1057D
+	out	0E6h, al	;@1057F
+	out	0E6h, al	;@10581
+	out	0E6h, al	;@10583
+	out	0E6h, al	;@10585
+	out	0E6h, al	;@10587
+	out	0E6h, al	;@10589
+	out	0E6h, al	;@1058B
+	out	0E6h, al	;@1058D
+	out	0E6h, al	;@1058F
+	out	0E6h, al	;@10591
+	out	0E6h, al	;@10593
+	out	0E6h, al	;@10595
+	out	0E6h, al	;@10597
+	out	0E6h, al	;@10599
+	out	0E6h, al	;@1059B
+	out	0E6h, al	;@1059D
+	out	0E6h, al	;@1059F
+	out	0E6h, al	;@105A1
+	out	0E6h, al	;@105A3
+	out	0E6h, al	;@105A5
+	out	0E6h, al	;@105A7
+	out	0E6h, al	;@105A9
+	out	0F7h, al	;@105AB
+	out	0E6h, al	;@105AD
+	out	0E6h, al	;@105AF
+	add	byte ptr [bx+si], al	;@105B1
+	add	byte ptr [bx+si], al	;@105B3
+	add	byte ptr [bx+si], al	;@105B5
+	add	byte ptr [bx+si+7FFFh], al	;@105B7
+	push	bx	;@105BB
+	push	sp	;@105BC
+	inc	sp	;@105BD
+	inc	bx	;@105BE
+	pop	di	;@105BF
+	pop	di	;@105C0
+	add	byte ptr [bp+di+70h], ah	;@105C1
+	insb	;@105C4
+	db	75h, 73h	; jne @@2	;@105C5
+	db	70h, 6Ch	; jo @@1+2	;@105C7
+	db	75h, 73h	; jne @@3+1	;@105C9
+	add	byte ptr [bp+49h], al	;@105CB
+	dec	sp	;@105CE
+	inc	bp	;@105CF
+	pop	di	;@105D0
+	pop	di	;@105D1
+	add	byte ptr [si+49h], cl	;@105D2
+	dec	si	;@105D5
+	inc	bp	;@105D6
+	pop	di	;@105D7
+	pop	di	;@105D8
+	add	byte ptr [si+41h], al	;@105D9
+	push	sp	;@105DC
+	inc	bp	;@105DD
+	pop	di	;@105DE
+	pop	di	;@105DF
+	add	byte ptr [si+49h], dl	;@105E0
+	dec	bp	;@105E3
+	inc	bp	;@105E4
+	pop	di	;@105E5
+	pop	di	;@105E6
+	add	byte ptr [si+65h], ah	;@105E7
+	db	66h, 69h, 6Eh, 65h, 64h, 0, 0Ah, 1Ah	; imul ebp, dword ptr [bp+65h], 1A0A0064h	;@105EA
+	or	al, byte ptr [bx+si]	;@105F2
+	and	al, byte ptr [bx+si]	;@105F4
+	and	byte ptr [bx+si], ah	;@105F6
+	and	byte ptr [bp+di], bh	;@105F8
+	or	word ptr [di], cx	;@105FA
+	or	al, byte ptr [bx+si]	;@105FC
+	and	byte ptr [bx+si], ah	;@105FE
+	and	byte ptr [bp+di], bh	;@10600
+	or	word ptr [bx+si], ax	;@10602
+	add	byte ptr [bx+si], al	;@10604
+	add	byte ptr [bx+si], al	;@10606
+	add	byte ptr [bx+si], al	;@10608
+	add	byte ptr [bx+si], al	;@1060A
+	db	36h, 25h, 3Eh, 25h	; and ax, 253Eh	;@1060C
+	db	45h	; inc bp	;@10610
+	and	ax, 254Fh	;@10611
+	db	3Eh, 25h, 45h, 25h	; and ax, 2545h	;@10614
+	db	57h	; push di	;@10618
+	and	ax, 255Fh	;@10619
+	db	66h, 25h, 70h, 25h, 78h, 25h	; and eax, 25782570h	;@1061C
+	db	7Fh, 25h	; jg @@4+1	;@10622
+	mov	word ptr [di], sp	;@10624
+	xchg	ax, cx	;@10626
+	and	ax, 2598h	;@10627
+	mov	byte ptr ds:[0AA25h], al	;@1062A
+	and	ax, 25B1h	;@1062D
+	mov	bx, 0C425h	;@10630
+@@1:	and	ax, 25CDh	;@10633
+	db	0D6h	; salc	;@10636
+	and	ax, 25DFh	;@10637
+@@2:	call	L0F762	;@1063A
+@@3:	and	ax, 253Eh	;@1063D
+	inc	bp	;@10640
+	and	ax, 25FAh	;@10641
+	db	3Eh, 25h, 45h, 25h	; and ax, 2545h	;@10644
+@@4:	db	3, 26h, 5Fh, 25h	; add sp, word ptr ds:[255Fh]	;@10648
+	db	66h, 25h, 0Ch, 26h, 78h, 25h	; and eax, 2578260Ch	;@1064C
+	db	7Fh, 25h	; jg @@5+1	;@10652
+	adc	ax, 9126h	;@10654
+	and	ax, 2598h	;@10657
+	push	ds	;@1065A
+	db	26h, 0AAh	; stosb	;@1065B
+	db	25h, 0B1h, 25h	; and ax, 25B1h	;@1065D
+	daa	;@10660
+	db	26h, 27h	; daa	;@10661
+	db	26h, 31h, 26h, 3Bh, 26h	; xor word ptr es:[263Bh], sp	;@10663
+	inc	bp	;@10668
+	db	26h, 4Fh	; dec di	;@10669
+	db	26h, 59h	; pop cx	;@1066B
+	xchg	word ptr es:[bp+di], cx	;@1066D
+	bound	sp, dword ptr ds:[0B87h]	;@10670
+	add	byte ptr [bx+si], al	;@10674
+	add	word ptr [bx+si], ax	;@10676
+@@5:	add	byte ptr [bx+si], al	;@10678
+	add	byte ptr [bx+si], al	;@1067A
+	add	byte ptr [bx+si], al	;@1067C
+	add	byte ptr [bx+si], al	;@1067E
+	add	byte ptr [bx+si], al	;@10680
+	add	byte ptr [bx+si], al	;@10682
+	add	byte ptr [bx+si], al	;@10684
+	add	byte ptr [bx+si], al	;@10686
+	add	byte ptr [bx+si], al	;@10688
+	add	byte ptr [bx+di], al	;@1068A
+	add	byte ptr [bx+si], al	;@1068C
+	add	byte ptr [bx+si], al	;@1068E
+	add	byte ptr [bx+si], al	;@10690
+	add	byte ptr [bx+si], al	;@10692
+	add	byte ptr [bx+si], al	;@10694
+	add	byte ptr [bx+si], al	;@10696
+	add	byte ptr [bx+si], al	;@10698
+	add	byte ptr [bx+si], al	;@1069A
+	add	byte ptr [bx+si], al	;@1069C
+	add	byte ptr [bx+si], al	;@1069E
+	add	byte ptr [bx+si], al	;@106A0
+	add	byte ptr [bx+si], al	;@106A2
+	add	byte ptr [bx+si], al	;@106A4
+	add	byte ptr [bx+si], al	;@106A6
+	add	byte ptr [bx+si], al	;@106A8
+	add	byte ptr [bx+si], al	;@106AA
+	add	byte ptr [bx+si], al	;@106AC
+	add	byte ptr [bx+si], al	;@106AE
+	add	byte ptr [bx+si], al	;@106B0
+	pusha	;@106B2
+	pusha	;@106B3
+	pusha	;@106B4
+	pusha	;@106B5
+	pusha	;@106B6
+	pusha	;@106B7
+	push	sp	;@106B8
+	inc	bx	;@106B9
+	xor	ch, byte ptr ds:[30h]	;@106BA
+	add	byte ptr [bx+si], al	;@106BE
+	add	ax, word ptr [bp+di]	;@106C0
+	add	al, 3	;@106C2
+	add	al, 5	;@106C4
+	arpl	word ptr [bx+si], si	;@106C6
+	db	74h, 2Eh	; je @@6	;@106C8
+	outsw	;@106CA
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@106CB
+	db	63h, 73h, 2Eh	; arpl word ptr [bp+di+2Eh], si	;@106CE
+	insb	;@106D1
+	db	69h, 62h, 0, 6Dh, 61h	; imul sp, word ptr [bp+si], 616Dh	;@106D2
+	db	74h, 68h	; je @@9+3	;@106D7
+	db	73h, 2Eh	; jae @@7+1	;@106D9
+	insb	;@106DB
+	db	69h, 62h, 0, 63h, 30h	; imul sp, word ptr [bp+si], 3063h	;@106DC
+	db	73h, 2Eh	; jae @@8	;@106E1
+	outsw	;@106E3
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@106E4
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@106E7
+	insw	;@106E9
+	outs	dx, word ptr cs:[si]	;@106EA
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@106EC
+	db	63h, 6Dh, 2Eh	; arpl word ptr [di+2Eh], bp	;@106EF
+	insb	;@106F2
+	db	69h, 62h, 0, 6Dh, 61h	; imul sp, word ptr [bp+si], 616Dh	;@106F3
+@@6:	db	74h, 68h	; je @@10+1	;@106F8
+	insw	;@106FA
+	db	2Eh, 6Ch	; insb	;@106FB
+	db	69h, 62h, 0, 63h, 30h	; imul sp, word ptr [bp+si], 3063h	;@106FD
+	arpl	word ptr ds:[626Fh], bp	;@10702
+	push	0	;@10706
+@@7:	arpl	word ptr [bp+di+2Eh], sp	;@10708
+	insb	;@1070B
+	db	69h, 62h, 0, 6Dh, 61h	; imul sp, word ptr [bp+si], 616Dh	;@1070C
+@@8:	db	74h, 68h	; je @@11+1	;@10711
+	arpl	word ptr ds:[696Ch], bp	;@10713
+	bound	ax, dword ptr [bx+si]	;@10717
+	arpl	word ptr [bx+si], si	;@10719
+	insb	;@1071B
+	outs	dx, word ptr cs:[si]	;@1071C
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@1071E
+	db	63h, 6Ch, 2Eh	; arpl word ptr [si+2Eh], bp	;@10721
+	insb	;@10724
+	db	69h, 62h, 0, 6Dh, 61h	; imul sp, word ptr [bp+si], 616Dh	;@10725
+	db	74h, 68h	; je @@13+1	;@1072A
+	insb	;@1072C
+	db	2Eh, 6Ch	; insb	;@1072D
+	db	69h, 62h, 0, 63h, 30h	; imul sp, word ptr [bp+si], 3063h	;@1072F
+	push	6F2Eh	;@10734
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@10737
+	db	63h, 68h, 2Eh	; arpl word ptr [bx+si+2Eh], bp	;@1073A
+	insb	;@1073D
+@@9:	db	69h, 62h, 0, 6Dh, 61h	; imul sp, word ptr [bp+si], 616Dh	;@1073E
+	db	74h, 68h	; je @@14+2	;@10743
+	push	6C2Eh	;@10745
+	db	69h, 62h, 0, 63h, 30h	; imul sp, word ptr [bp+si], 3063h	;@10748
+	db	66h, 74h, 2Eh	; je @@11+4	;@1074D
+	outsw	;@10750
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@10751
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@10754
+	db	66h, 73h, 2Eh	; jae @@12	;@10756
+	db	6Fh	; outsw	;@10759
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@1075A
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@1075D
+	db	66h, 6Dh	; insd	;@1075F
+@@10:	outs	dx, word ptr cs:[si]	;@10761
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@10763
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@10766
+	db	66h, 63h, 2Eh, 6Fh, 62h	; arpl word ptr ds:[626Fh], bp	;@10768
+	db	6Ah, 0	; push 0	;@1076D
+	arpl	word ptr [bx+si], si	;@1076F
+	db	66h, 6Ch	; insb	;@10771
+	db	2Eh, 6Fh	; outs dx, word ptr cs:[si]	;@10773
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@10775
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@10778
+@@11:	db	66h, 68h, 2Eh, 6Fh, 62h, 6Ah	; push 6A626F2Eh	;@1077A
+	add	byte ptr [bp+di+30h], ah	;@10780
+	inc	ax	;@10783
+	db	74h, 2Eh	; je @@15	;@10784
+	outsw	;@10786
+@@12:	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@10787
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@1078A
+	inc	ax	;@1078C
+	db	73h, 2Eh	; jae @@16	;@1078D
+	outsw	;@1078F
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@10790
+@@13:	db	63h, 30h	; arpl word ptr [bx+si], si	;@10793
+	inc	ax	;@10795
+	insw	;@10796
+	outs	dx, word ptr cs:[si]	;@10797
+	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@10799
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@1079C
+	inc	ax	;@1079E
+	arpl	word ptr ds:[626Fh], bp	;@1079F
+	push	0	;@107A3
+	arpl	word ptr [bx+si], si	;@107A5
+	inc	ax	;@107A7
+	insb	;@107A8
+	outs	dx, word ptr cs:[si]	;@107A9
+@@14:	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@107AB
+	db	63h, 30h	; arpl word ptr [bx+si], si	;@107AE
+	inc	ax	;@107B0
+	push	6F2Eh	;@107B1
+@@15:	db	62h, 6Ah, 0	; bound bp, dword ptr [bp+si]	;@107B4
+	db	63h, 77h, 69h	; arpl word ptr [bx+69h], si	;@107B7
+	outsb	;@107BA
+	db	73h, 2Eh	; jae @@17	;@107BB
+@@16:	insb	;@107BD
+	db	69h, 62h, 0, 63h, 77h	; imul sp, word ptr [bp+si], 7763h	;@107BE
+	db	69h, 6Eh, 6Dh, 2Eh, 6Ch	; imul bp, word ptr [bp+6Dh], 6C2Eh	;@107C3
+	db	69h, 62h, 0, 63h, 77h	; imul sp, word ptr [bp+si], 7763h	;@107C8
+	db	69h, 6Eh, 63h, 2Eh, 6Ch	; imul bp, word ptr [bp+63h], 6C2Eh	;@107CD
+	db	69h, 62h, 0, 63h, 77h	; imul sp, word ptr [bp+si], 7763h	;@107D2
+	db	69h, 6Eh, 6Ch, 2Eh, 6Ch	; imul bp, word ptr [bp+6Ch], 6C2Eh	;@107D7
+	db	69h, 62h, 0, 63h, 77h	; imul sp, word ptr [bp+si], 7763h	;@107DC
+	db	69h, 6Eh, 68h, 2Eh, 6Ch	; imul bp, word ptr [bp+68h], 6C2Eh	;@107E1
+	db	69h, 62h, 0, 74h, 61h	; imul sp, word ptr [bp+si], 6174h	;@107E6
+@@17:	db	73h, 6Dh	; jae @@21	;@107EB
+	db	2Eh, 65h, 78h, 65h	; js @@19	;@107ED
+	db	0, 74h, 75h	; add byte ptr [si+75h], dh	;@107F1
+	db	72h, 62h	; jb @@20	;@107F4
+	outsw	;@107F6
+	arpl	word ptr ds:[6663h], bp	;@107F7
+	db	67h, 0, 3Ah	; add byte ptr [edx], bh	;@107FB
+	or	ax, 0Ah	;@107FE
+	db	2Eh, 61h	; popa	;@10801
+	db	73h, 6Dh	; jae @@22	;@10803
+	add	byte ptr ds:[7063h], ch	;@10805
+	jo	@@18	;@10809
+@@18:	das	;@1080B
+	outsw	;@1080C
+	add	byte ptr [bx], ch	;@1080D
+	inc	sp	;@1080F
+	pop	di	;@10810
+	pop	di	;@10811
+	push	sp	;@10812
+	dec	cx	;@10813
+	dec	si	;@10814
+	pop	cx	;@10815
+	pop	di	;@10816
+	pop	di	;@10817
+	and	byte ptr [bx+si], al	;@10818
+	das	;@1081A
+	inc	sp	;@1081B
+	pop	di	;@1081C
+	pop	di	;@1081D
+	push	bx	;@1081E
+	dec	bp	;@1081F
+	inc	cx	;@10820
+	dec	sp	;@10821
+	dec	sp	;@10822
+	pop	di	;@10823
+	pop	di	;@10824
+	and	byte ptr [bx+si], al	;@10825
+	das	;@10827
+	inc	sp	;@10828
+	pop	di	;@10829
+	pop	di	;@1082A
+	dec	bp	;@1082B
+	inc	bp	;@1082C
+	inc	sp	;@1082D
+	dec	cx	;@1082E
+	push	bp	;@1082F
+	dec	bp	;@10830
+	pop	di	;@10831
+	pop	di	;@10832
+	and	byte ptr [bx+si], al	;@10833
+	das	;@10835
+	inc	sp	;@10836
+	pop	di	;@10837
+	pop	di	;@10838
+	inc	bx	;@10839
+	dec	di	;@1083A
+	dec	bp	;@1083B
+	push	ax	;@1083C
+	inc	cx	;@1083D
+	inc	bx	;@1083E
+	push	sp	;@1083F
+	pop	di	;@10840
+	pop	di	;@10841
+	and	byte ptr [bx+si], al	;@10842
+	das	;@10844
+	inc	sp	;@10845
+	pop	di	;@10846
+	pop	di	;@10847
+	dec	sp	;@10848
+	inc	cx	;@10849
+	push	dx	;@1084A
+	inc	di	;@1084B
+	inc	bp	;@1084C
+	pop	di	;@1084D
+	pop	di	;@1084E
+	and	byte ptr [bx+si], al	;@1084F
+	das	;@10851
+	inc	sp	;@10852
+	pop	di	;@10853
+	pop	di	;@10854
+	dec	ax	;@10855
+@@19:	push	bp	;@10856
+	inc	di	;@10857
+@@20:	inc	bp	;@10858
+	pop	di	;@10859
+@@21:	pop	di	;@1085A
+	and	byte ptr [bx+si], al	;@1085B
+	das	;@1085D
+	inc	sp	;@1085E
+	pop	di	;@1085F
+	pop	di	;@10860
+	push	ax	;@10861
+	inc	cx	;@10862
+	push	bx	;@10863
+	inc	bx	;@10864
+	inc	cx	;@10865
+	dec	sp	;@10866
+	pop	di	;@10867
+	pop	di	;@10868
+	and	byte ptr [bx+si], al	;@10869
+	das	;@1086B
+	inc	sp	;@1086C
+	pop	di	;@1086D
+	pop	di	;@1086E
+	inc	si	;@1086F
+	inc	cx	;@10870
+	push	bx	;@10871
+@@22:	push	sp	;@10872
+	inc	bx	;@10873
+	inc	cx	;@10874
+	dec	sp	;@10875
+	dec	sp	;@10876
+	pop	di	;@10877
+	pop	di	;@10878
+	and	byte ptr [bx+si], al	;@10879
+	das	;@1087B
+	inc	sp	;@1087C
+	pop	di	;@1087D
+	pop	di	;@1087E
+	inc	bx	;@1087F
+	inc	sp	;@10880
+	inc	bp	;@10881
+	inc	bx	;@10882
+	dec	sp	;@10883
+	pop	di	;@10884
+	pop	di	;@10885
+	and	byte ptr [bx+si], al	;@10886
+	das	;@10888
+	db	65h, 0, 2Fh	; add byte ptr [bx], ch	;@10889
+	db	72h, 0	; jb @@23	;@1088C
+@@23:	das	;@1088E
+	db	7Ah, 69h	; jp @@27+1	;@1088F
+	add	byte ptr [bx], ch	;@10891
+	insw	;@10893
+	insb	;@10894
+	add	byte ptr [bx+si], ah	;@10895
+	das	;@10897
+	add	byte ptr [bx+si], ah	;@10898
+	sub	al, 0	;@1089A
+	and	byte ptr [bx+si], ah	;@1089C
+	cmp	ax, word ptr [bx+si]	;@1089E
+	sub	cx, word ptr [di]	;@108A0
+	or	al, byte ptr [bx+si]	;@108A2
+	db	74h, 75h	; je @@29	;@108A4
+	db	72h, 62h	; jb @@28	;@108A6
+	outsw	;@108A8
+	arpl	word ptr ds:[6C24h], bp	;@108A9
+	outsb	;@108AD
+	add	byte ptr [bx], ch	;@108AE
+	outsw	;@108B0
+	sub	ax, 2F00h	;@108B1
+	db	76h, 2Bh	; jbe @@25	;@108B4
+	add	byte ptr [bx], ch	;@108B6
+	db	76h, 2Dh	; jbe @@26	;@108B8
+	add	byte ptr ds:[6C64h], ch	;@108BA
+	insb	;@108BE
+	add	byte ptr [bx], ch	;@108BF
+	jns	@@24	;@108C1
+@@24:	das	;@108C3
+	push	sp	;@108C4
+	db	77h, 64h	; ja @@30	;@108C5
+	add	byte ptr [bx], ch	;@108C7
+	push	sp	;@108C9
+	add	byte ptr [bx], ch	;@108CA
+	outsw	;@108CC
+	sub	ax, 0D2Bh	;@108CD
+	or	al, byte ptr [bx+si]	;@108D0
+	dec	di	;@108D2
+	push	si	;@108D3
+	inc	bp	;@108D4
+	push	dx	;@108D5
+	dec	sp	;@108D6
+	inc	cx	;@108D7
+	pop	cx	;@108D8
+	db	2Eh, 4Ch	; dec sp	;@108D9
+	db	49h	; dec cx	;@108DB
+	inc	dx	;@108DC
+	add	byte ptr [bx+di+4Dh], cl	;@108DD
+	push	ax	;@108E0
+@@25:	dec	di	;@108E1
+	push	dx	;@108E2
+	push	sp	;@108E3
+	db	2Eh, 4Ch	; dec sp	;@108E4
+	db	49h	; dec cx	;@108E6
+@@26:	inc	dx	;@108E7
+	add	byte ptr [di+4Dh], al	;@108E8
+	push	bp	;@108EB
+	db	2Eh, 4Ch	; dec sp	;@108EC
+	db	49h	; dec cx	;@108EE
+	inc	dx	;@108EF
+	add	byte ptr [bp+50h], al	;@108F0
+	cmp	byte ptr [bx], dh	;@108F3
+	db	2Eh, 4Ch	; dec sp	;@108F5
+	db	49h	; dec cx	;@108F7
+	inc	dx	;@108F8
+@@27:	add	byte ptr ds:[6564h], ch	;@108F9
+	db	66h, 0, 74h, 6Ch	; add byte ptr [si+6Ch], dh	;@108FD
+	db	69h, 6Eh, 6Bh, 2Eh, 65h	; imul bp, word ptr [bp+6Bh], 652Eh	;@10901
+	db	78h, 65h	; js L1096B+2	;@10906
+	add	byte ptr [bx+si], ah	;@10908
+@@28:	inc	ax	;@1090A
+	db	74h, 75h	; je L10980+2	;@1090B
+	db	72h, 62h	; jb L10971	;@1090D
+	outsw	;@1090F
+	arpl	word ptr ds:[6C24h], bp	;@10910
+	outsb	;@10914
+	add	byte ptr [bx+si], al	;@10915
+	add	byte ptr [di], al	;@10917
+	add	byte ptr [di], al	;@10919
+@@29:	add	byte ptr [di], al	;@1091B
+	add	byte ptr ds:[0], al	;@1091D
+	add	byte ptr [bx+si], al	;@10921
+	add	byte ptr [bx+si], al	;@10923
+	add	byte ptr [bx+si], al	;@10925
+	add	byte ptr [bx+si], al	;@10927
+	add	byte ptr [bx+si], al	;@10929
+@@30:	add	byte ptr [bx+si], al	;@1092B
+	add	byte ptr [di], al	;@1092D
+	add	byte ptr [bx+si], al	;@1092F
+	add	byte ptr [bx+si], al	;@10931
+	add	byte ptr [bx+si], al	;@10933
+	add	byte ptr [bx+si], al	;@10935
+	add	byte ptr [bx+si], al	;@10937
+	add	byte ptr [bx+si], al	;@10939
+	add	byte ptr [bx+si], al	;@1093B
+	add	byte ptr [bx+si], al	;@1093D
+	add	byte ptr [bx+si], al	;@1093F
+	add	byte ptr [bx+si], al	;@10941
+	add	byte ptr [bp+si+28h], dh	;@10943
+	xchg	word ptr [bp+di], cx	;@10946
+	add	byte ptr [bx+si], al	;@10948
+	db	7Bh, 28h	; jnp L10974	;@1094A
+	xchg	word ptr [bp+di], cx	;@1094C
+	add	byte ptr [bx+si], al	;@1094E
+	test	word ptr [bx+si], bp	;@10950
+	xchg	word ptr [bp+di], cx	;@10952
+	add	byte ptr [bx+di], al	;@10954
+	nop	;@10956
+L10957:	sub	byte ptr [bx+10Bh], al	;@10957
+	add	byte ptr [si-78D8h], bl	;@1095B
+	or	ax, word ptr [bx+di]	;@1095F
+	add	word ptr [bp-78D8h], sp	;@10961
+	or	ax, word ptr [bx+di]	;@10965
+	db	1, 0AFh, 28h, 0	; add word ptr [bx+28h], bp	;@10967
+L1096B:	db	0, 6, 0, 0	; add byte ptr ds:[0], al	;@1096B
+	mov	bl, 28h	;@1096F
+L10971:	add	al, byte ptr [bx+si]	;@10971
+	push	es	;@10973
+L10974:	add	al, byte ptr ds:[28B7h]	;@10974
+	add	al, 0	;@10978
+	push	es	;@1097A
+	add	ax, word ptr [bp+si]	;@1097B
+	mov	bx, 628h	;@1097D
+L10980:	add	byte ptr ds:[401h], al	;@10980
+	mov	di, 828h	;@10984
+	add	byte ptr ds:[0A06h], al	;@10987
+	ret	;@1098B
+	db	28h, 9, 0, 6, 7, 0Ch, 0C7h, 28h, 0Ah, 0, 6, 5, 8, 0CBh, 28h, 0Bh	;@1098C
+	db	0, 6, 4, 18h, 0CFh, 28h, 0Ch, 0, 6, 10h, 10h, 0D3h, 28h, 0Dh, 0
+	db	6, 13h, 0Eh, 0D7h, 28h, 0Eh, 0, 6, 11h, 14h, 0DBh, 28h, 0Fh, 0
+	db	6, 12h, 1Ah, 0DFh, 28h, 0, 0, 2, 8, 0, 0E3h, 28h, 4, 0, 2, 0Bh
+	db	2, 0E7h, 28h, 6, 0, 2, 9, 4, 0EBh, 28h, 2, 0, 2, 0Ah, 6, 0EFh
+	db	28h, 1, 0, 2, 0Ch, 1, 0F3h, 28h, 5, 0, 2, 0Fh, 3, 0F7h, 28h, 7
+	db	0, 2, 0Dh, 5, 0FBh, 28h, 3, 0, 2, 0Eh, 7, 0FFh, 28h, 0FFh, 0FFh
+	db	6, 0, 16h, 0, 0, 0, 0, 0, 0, 0, '__TINY__', 0, '__SMALL__', 0
+	db	'__MEDIUM__', 0, '__COMPACT__', 0, '__LARGE__', 0, '__HUGE__'
+	db	0, '_AX', 0, '_DX', 0, '_BX', 0, '_CX', 0, '_SI', 0, '_DI', 0
+	db	'_BP', 0, '_SP', 0, '_ES', 0, '_DS', 0, '_CS', 0, '_SS', 0, '_AL'
+	db	0, '_BL', 0, '_CL', 0, '_DL', 0, '_AH', 0, '_BH', 0, '_CH', 0
+	db	'_DH', 0, '_FLAGS', 0, '_TEXT', 0, 'CODE', 0, '_data', 0, 'dgroup'
+	db	0, '_bss', 0, 'FAR_DATA', 0, '_text', 0, 31h, 0FBh, 0, '__MULTI_THREAD__'
+	db	0, '__SINGLE_THREAD__', 0, '__DLL__', 0, '__OS2__', 0, '__MSDOS__'
+	db	0, '_Windows', 0, '__TURBOC__', 0, '0x0297', 0FBh, 0, '__BORLANDC__'
+	db	0, '0x0200', 0FBh, 0, '__TCPLUSPLUS__', 0, '__BCPLUSPLUS__', 0
+	db	'__OVERLAY__', 0, '__PASCAL__', 0, '__FASTCALL__', 0, '__CDECL__'
+	db	0, '_FAR', 0, '_INIT_', 0, 'INITDATA', 0, '_EXIT_', 0, 'EXITDATA'
+	db	0, 0FFh, 0FFh, 0Fh, 0, 'TCDEF.SYM', 0, 'command line', 0, 'configuration file'
+	db	0, 59h, 6Fh, 0, 'Yo-', 0, 76h, 0, 76h, 2Dh, 0, 76h, 69h, 0, 'vi-'
+	db	0, 0, 9, '?debug', 9, 43h, 20h, 0, 2Bh, 0Dh, 0Ah, 9, '?debug'
+	db	9, 43h, 20h, 0, 0Dh, 0Ah, 0, 9, 'extrn', 9, 0, 'near', 0, 9, 'publicdll'
+	db	9, 0, 9, 'public', 9, 0, 9, 'equ', 9, 's@+', 0, 9, 'equ', 9, 0
+	db	9, '?debug', 9, 46h, 20h, 0, 30h, 35h, 0, 30h, 31h, 0, 64h, 40h
+	db	0, 62h, 40h, 0, 77h, 2Bh, 0, 0, 0, 0, '__turboFloat', 0, 0, 0A6h
+	db	2Eh, 7Ah, 0, 0A8h, 2Eh, 74h, 0, 0ACh, 2Eh, 74h, 0, 0B0h, 2Eh, 74h
+	db	0, 0B4h, 2Eh, 74h, 0, 0B8h, 2Eh, 74h, 0, 0BCh, 2Eh, 74h, 0, 0C0h
+	db	2Eh, 7Ah, 0, 0C3h, 2Eh, 7Ah, 0, 0C6h, 2Eh, 74h, 0, 0CAh, 2Eh, 74h
+	db	0, 0CFh, 2Eh, 7Ah, 0, 0D2h, 2Eh, 7Ah, 0, 0D5h, 2Eh, 7Ah, 0, 0D8h
+	db	2Eh, 74h, 0, 0DEh, 2Eh, 7Ah, 0, 0E1h, 2Eh, 7Ah, 0, 0E4h, 2Eh, 75h
+	db	0, 0E9h, 2Eh, 74h, 0, 0EDh, 2Eh, 7Ah, 0, 0F0h, 2Eh, 7Ah, 0, 0F3h
+	db	2Eh, 74h, 0, 0F7h, 2Eh, 74h, 0, 0FBh, 2Eh, 74h, 0, 0FFh, 2Eh, 74h
+	db	0, 3, 2Fh, 74h, 0, 7, 2Fh, 77h, 0, 0Ch, 2Fh, 77h, 0, 12h, 2Fh
+	db	77h, 0, 18h, 2Fh, 7Ah, 0, 1Bh, 2Fh, 74h, 0, 1Fh, 2Fh, 7Ah, 0, '"/t'
+	db	0, '&/t', 0, '*/t', 0, 0BDh, 2Eh, 74h, 0, '-/t', 0, '1/z', 0, '4/z'
+	db	0, '7/t', 0, ';/z', 0, '>/z', 0, 'A/t', 0, 'D/y', 0, 'J/z', 0
+	db	'M/t', 0, 'S/z', 0, 'V/t', 0, '\/t', 0, 'b/t', 0, 'g/t', 0, 'l/t'
+	db	0, 'r/~', 0, 'v/t', 0, '{/t', 0, 81h, 2Fh, 74h, 0, 86h, 2Fh, 74h
+	db	0, 8Ch, 2Fh, 74h, 0, 91h, 2Fh, 74h, 0, 97h, 2Fh, 74h, 0, 9Eh, 2Fh
+	db	74h, 0, 0A6h, 2Fh, 74h, 0, 0ACh, 2Fh, 74h, 0, 0B1h, 2Fh, 74h, 0
+	db	0B7h, 2Fh, 74h, 0, 0BDh, 2Fh, 74h, 0, 0C4h, 2Fh, 74h, 0, 0C9h
+	db	2Fh, 74h, 0, 0CFh, 2Fh, 74h, 0, 0D5h, 2Fh, 74h, 0, 0DBh, 2Fh, 74h
+	db	0, 0E2h, 2Fh, 74h, 0, 0E8h, 2Fh, 74h, 0, 0EFh, 2Fh, 74h, 0, 0F4h
+	db	2Fh, 74h, 0, 0FAh, 2Fh, 74h, 0, 2, 30h, 74h, 0, 8, 30h, 74h, 0
+	db	0Dh, 30h, 74h, 0, 13h, 30h, 74h, 0, 19h, 30h, 74h, 0, ' 0t', 0
+	db	'$0t', 0, ')0t', 0, '/0t', 0, '60t', 0, '=0t', 0, 'D0t', 0, 'K0t'
+	db	0, 'R0t', 0, 'X0t', 0, ']0t', 0, 'b0t', 0, 'h0t', 0, 'o0t', 0
+	db	'v0t', 0, '|0t', 0, 83h, 30h, 74h, 0, 88h, 30h, 74h, 0, 8Fh, 30h
+	db	74h, 0, 96h, 30h, 74h, 0, 9Eh, 30h, 74h, 0, 0A5h, 30h, 74h, 0
+	db	0ACh, 30h, 74h, 0, 0B2h, 30h, 74h, 0, 0B8h, 30h, 74h, 0, 0C0h
+	db	30h, 74h, 0, 0C7h, 30h, 74h, 0, 0CDh, 30h, 74h, 0, 0D4h, 30h, 74h
+	db	0, 0DAh, 30h, 74h, 0, 0DEh, 30h, 74h, 0, 0E4h, 30h, 74h, 0, 0EBh
+	db	30h, 74h, 0, 0F0h, 30h, 74h, 0, 0F6h, 30h, 74h, 0, 0FBh, 30h, 74h
+	db	0, 1, 31h, 74h, 0, 7, 31h, 74h, 0, 0Eh, 31h, 74h, 0, 13h, 31h
+	db	74h, 0, 19h, 31h, 74h, 0, 1Eh, 31h, 74h, 0, '#1t', 0, '+1t', 0
+	db	'11t', 0, '91t', 0, 0E3h, 2Fh, 74h, 0, 0F5h, 2Fh, 74h, 0, '=1t'
+	db	0, '@1t', 0, 'D1w', 0, 'H1w', 0, 'M1w', 0, 0BCh, 30h, 74h, 0, 'R1t'
+	db	0, 'W1t', 0, '\1x', 5, '_1x', 9, 'c1x', 4, 'f1x', 8, 'j1x', 0Ch
+	db	'm1x', 16h, 'r1x', 0Ah, 'u1x', 3, 'x1x', 7, '|1x', 2, 7Fh, 31h
+	db	78h, 6, 83h, 31h, 78h, 1, 87h, 31h, 78h, 8, 8Bh, 31h, 78h, 4, 90h
+	db	31h, 78h, 9, 94h, 31h, 78h, 5, 99h, 31h, 78h, 0Dh, 9Dh, 31h, 78h
+	db	0Bh, 0A1h, 31h, 78h, 6, 0A5h, 31h, 78h, 2, 0AAh, 31h, 78h, 7, 0AEh
+	db	31h, 78h, 3, 0B3h, 31h, 78h, 0Fh, 0B7h, 31h, 78h, 13h, 0BBh, 31h
+	db	78h, 11h, 0BFh, 31h, 78h, 0Bh, 0C3h, 31h, 78h, 0Eh, 0C6h, 31h
+	db	78h, 12h, 0C9h, 31h, 78h, 12h, 0CDh, 31h, 78h, 13h, 0D1h, 31h
+	db	78h, 10h, 0D4h, 31h, 78h, 0Ah, 0D7h, 31h, 74h, 0, 0DCh, 31h, 74h
+	db	0, 0E0h, 31h, 74h, 0, 0E4h, 31h, 74h, 0, 0E8h, 31h, 74h, 0, 0EEh
+	db	31h, 74h, 0, 0F2h, 31h, 7Dh, 0, 0F7h, 31h, 77h, 0, 0FCh, 31h, 77h
+	db	0, 2, 32h, 77h, 0, 8, 32h, 78h, 17h, 0Dh, 32h, 78h, 14h, 13h, 32h
+	db	78h, 15h, 1Ah, 32h, 78h, 15h, '!2x', 14h, 27h, 32h, 74h, 0, '+2t'
+	db	0, '/2w', 0, '42w', 0, ':2w', 0, 0F6h, 2Fh, 74h, 0, 40h, 32h, 7Fh
 	db	0, 'E2t', 0, 84h, 30h, 74h, 0, 'I2t', 0, 0C4h, 30h, 74h, 0, 'M2t'
 	db	0, 'Q2w', 0, 'V2w', 0, '\2w', 0, 'b2t', 0, 'f2t', 0, 'k2t', 0
 	db	70h, 32h, 81h, 0, 't2t', 0, 'y2t', 0, 7Fh, 32h, 74h, 0, 85h, 32h
@@ -1108,7 +3300,2615 @@ Y0E290	ends
 
 Y13F40	segment para public 'CODE'
 	assume	cs:Y13F40
-	db	31B0h dup (0)	;@13F40
+	db	1D50h dup (0)	;@13F40
+L15C90:	add	byte ptr [bx+si], al	;@15C90
+	add	byte ptr [bx+si], al	;@15C92
+	add	byte ptr [bx+si], al	;@15C94
+	add	byte ptr [bx+si], al	;@15C96
+	add	byte ptr [bx+si], al	;@15C98
+	add	byte ptr [bx+si], al	;@15C9A
+	add	byte ptr [bx+si], al	;@15C9C
+	add	byte ptr [bx+si], al	;@15C9E
+	add	byte ptr [bx+si], al	;@15CA0
+	add	byte ptr [bx+si], al	;@15CA2
+	add	byte ptr [bx+si], al	;@15CA4
+	add	byte ptr [bx+si], al	;@15CA6
+	add	byte ptr [bx+si], al	;@15CA8
+	add	byte ptr [bx+si], al	;@15CAA
+	add	byte ptr [bx+si], al	;@15CAC
+	add	byte ptr [bx+si], al	;@15CAE
+	add	byte ptr [bx+si], al	;@15CB0
+	add	byte ptr [bx+si], al	;@15CB2
+	add	byte ptr [bx+si], al	;@15CB4
+	add	byte ptr [bx+si], al	;@15CB6
+	add	byte ptr [bx+si], al	;@15CB8
+	add	byte ptr [bx+si], al	;@15CBA
+	add	byte ptr [bx+si], al	;@15CBC
+L15CBE:	add	byte ptr [bx+si], al	;@15CBE
+	add	byte ptr [bx+si], al	;@15CC0
+	add	byte ptr [bx+si], al	;@15CC2
+	add	byte ptr [bx+si], al	;@15CC4
+	add	byte ptr [bx+si], al	;@15CC6
+	add	byte ptr [bx+si], al	;@15CC8
+	add	byte ptr [bx+si], al	;@15CCA
+	add	byte ptr [bx+si], al	;@15CCC
+	add	byte ptr [bx+si], al	;@15CCE
+	add	byte ptr [bx+si], al	;@15CD0
+	add	byte ptr [bx+si], al	;@15CD2
+	add	byte ptr [bx+si], al	;@15CD4
+	add	byte ptr [bx+si], al	;@15CD6
+	add	byte ptr [bx+si], al	;@15CD8
+	add	byte ptr [bx+si], al	;@15CDA
+	add	byte ptr [bx+si], al	;@15CDC
+	add	byte ptr [bx+si], al	;@15CDE
+	add	byte ptr [bx+si], al	;@15CE0
+	add	byte ptr [bx+si], al	;@15CE2
+	add	byte ptr [bx+si], al	;@15CE4
+	add	byte ptr [bx+si], al	;@15CE6
+	add	byte ptr [bx+si], al	;@15CE8
+	add	byte ptr [bx+si], al	;@15CEA
+	add	byte ptr [bx+si], al	;@15CEC
+	add	byte ptr [bx+si], al	;@15CEE
+	add	byte ptr [bx+si], al	;@15CF0
+	add	byte ptr [bx+si], al	;@15CF2
+	add	byte ptr [bx+si], al	;@15CF4
+	add	byte ptr [bx+si], al	;@15CF6
+	add	byte ptr [bx+si], al	;@15CF8
+	add	byte ptr [bx+si], al	;@15CFA
+	add	byte ptr [bx+si], al	;@15CFC
+	add	byte ptr [bx+si], al	;@15CFE
+	add	byte ptr [bx+si], al	;@15D00
+	add	byte ptr [bx+si], al	;@15D02
+	add	byte ptr [bx+si], al	;@15D04
+	add	byte ptr [bx+si], al	;@15D06
+	add	byte ptr [bx+si], al	;@15D08
+	add	byte ptr [bx+si], al	;@15D0A
+	add	byte ptr [bx+si], al	;@15D0C
+	add	byte ptr [bx+si], al	;@15D0E
+	add	byte ptr [bx+si], al	;@15D10
+	add	byte ptr [bx+si], al	;@15D12
+	add	byte ptr [bx+si], al	;@15D14
+	add	byte ptr [bx+si], al	;@15D16
+	add	byte ptr [bx+si], al	;@15D18
+	add	byte ptr [bx+si], al	;@15D1A
+	add	byte ptr [bx+si], al	;@15D1C
+	add	byte ptr [bx+si], al	;@15D1E
+	add	byte ptr [bx+si], al	;@15D20
+	add	byte ptr [bx+si], al	;@15D22
+	add	byte ptr [bx+si], al	;@15D24
+	add	byte ptr [bx+si], al	;@15D26
+	add	byte ptr [bx+si], al	;@15D28
+	add	byte ptr [bx+si], al	;@15D2A
+	add	byte ptr [bx+si], al	;@15D2C
+	add	byte ptr [bx+si], al	;@15D2E
+	add	byte ptr [bx+si], al	;@15D30
+	add	byte ptr [bx+si], al	;@15D32
+	add	byte ptr [bx+si], al	;@15D34
+	add	byte ptr [bx+si], al	;@15D36
+	add	byte ptr [bx+si], al	;@15D38
+	add	byte ptr [bx+si], al	;@15D3A
+	add	byte ptr [bx+si], al	;@15D3C
+	add	byte ptr [bx+si], al	;@15D3E
+	add	byte ptr [bx+si], al	;@15D40
+	add	byte ptr [bx+si], al	;@15D42
+	add	byte ptr [bx+si], al	;@15D44
+	add	byte ptr [bx+si], al	;@15D46
+	add	byte ptr [bx+si], al	;@15D48
+	add	byte ptr [bx+si], al	;@15D4A
+	add	byte ptr [bx+si], al	;@15D4C
+	add	byte ptr [bx+si], al	;@15D4E
+	add	byte ptr [bx+si], al	;@15D50
+	add	byte ptr [bx+si], al	;@15D52
+	add	byte ptr [bx+si], al	;@15D54
+	add	byte ptr [bx+si], al	;@15D56
+	add	byte ptr [bx+si], al	;@15D58
+	add	byte ptr [bx+si], al	;@15D5A
+	add	byte ptr [bx+si], al	;@15D5C
+	add	byte ptr [bx+si], al	;@15D5E
+	add	byte ptr [bx+si], al	;@15D60
+	add	byte ptr [bx+si], al	;@15D62
+	add	byte ptr [bx+si], al	;@15D64
+	add	byte ptr [bx+si], al	;@15D66
+	add	byte ptr [bx+si], al	;@15D68
+	add	byte ptr [bx+si], al	;@15D6A
+	add	byte ptr [bx+si], al	;@15D6C
+	add	byte ptr [bx+si], al	;@15D6E
+	add	byte ptr [bx+si], al	;@15D70
+	add	byte ptr [bx+si], al	;@15D72
+	add	byte ptr [bx+si], al	;@15D74
+	add	byte ptr [bx+si], al	;@15D76
+	add	byte ptr [bx+si], al	;@15D78
+	add	byte ptr [bx+si], al	;@15D7A
+	add	byte ptr [bx+si], al	;@15D7C
+	add	byte ptr [bx+si], al	;@15D7E
+	add	byte ptr [bx+si], al	;@15D80
+	add	byte ptr [bx+si], al	;@15D82
+	add	byte ptr [bx+si], al	;@15D84
+	add	byte ptr [bx+si], al	;@15D86
+	add	byte ptr [bx+si], al	;@15D88
+	add	byte ptr [bx+si], al	;@15D8A
+	add	byte ptr [bx+si], al	;@15D8C
+	add	byte ptr [bx+si], al	;@15D8E
+	add	byte ptr [bx+si], al	;@15D90
+	add	byte ptr [bx+si], al	;@15D92
+	add	byte ptr [bx+si], al	;@15D94
+	add	byte ptr [bx+si], al	;@15D96
+	add	byte ptr [bx+si], al	;@15D98
+	add	byte ptr [bx+si], al	;@15D9A
+	add	byte ptr [bx+si], al	;@15D9C
+	add	byte ptr [bx+si], al	;@15D9E
+	add	byte ptr [bx+si], al	;@15DA0
+	add	byte ptr [bx+si], al	;@15DA2
+	add	byte ptr [bx+si], al	;@15DA4
+	add	byte ptr [bx+si], al	;@15DA6
+	add	byte ptr [bx+si], al	;@15DA8
+	add	byte ptr [bx+si], al	;@15DAA
+	add	byte ptr [bx+si], al	;@15DAC
+	add	byte ptr [bx+si], al	;@15DAE
+	add	byte ptr [bx+si], al	;@15DB0
+	add	byte ptr [bx+si], al	;@15DB2
+	add	byte ptr [bx+si], al	;@15DB4
+	add	byte ptr [bx+si], al	;@15DB6
+	add	byte ptr [bx+si], al	;@15DB8
+	add	byte ptr [bx+si], al	;@15DBA
+	add	byte ptr [bx+si], al	;@15DBC
+	add	byte ptr [bx+si], al	;@15DBE
+	add	byte ptr [bx+si], al	;@15DC0
+	add	byte ptr [bx+si], al	;@15DC2
+	add	byte ptr [bx+si], al	;@15DC4
+	add	byte ptr [bx+si], al	;@15DC6
+	add	byte ptr [bx+si], al	;@15DC8
+	add	byte ptr [bx+si], al	;@15DCA
+	add	byte ptr [bx+si], al	;@15DCC
+	add	byte ptr [bx+si], al	;@15DCE
+	add	byte ptr [bx+si], al	;@15DD0
+	add	byte ptr [bx+si], al	;@15DD2
+	add	byte ptr [bx+si], al	;@15DD4
+	add	byte ptr [bx+si], al	;@15DD6
+	add	byte ptr [bx+si], al	;@15DD8
+	add	byte ptr [bx+si], al	;@15DDA
+	add	byte ptr [bx+si], al	;@15DDC
+	add	byte ptr [bx+si], al	;@15DDE
+	add	byte ptr [bx+si], al	;@15DE0
+	add	byte ptr [bx+si], al	;@15DE2
+	add	byte ptr [bx+si], al	;@15DE4
+	add	byte ptr [bx+si], al	;@15DE6
+	add	byte ptr [bx+si], al	;@15DE8
+	add	byte ptr [bx+si], al	;@15DEA
+	add	byte ptr [bx+si], al	;@15DEC
+	add	byte ptr [bx+si], al	;@15DEE
+	add	byte ptr [bx+si], al	;@15DF0
+	add	byte ptr [bx+si], al	;@15DF2
+	add	byte ptr [bx+si], al	;@15DF4
+	add	byte ptr [bx+si], al	;@15DF6
+	add	byte ptr [bx+si], al	;@15DF8
+	add	byte ptr [bx+si], al	;@15DFA
+	add	byte ptr [bx+si], al	;@15DFC
+	add	byte ptr [bx+si], al	;@15DFE
+	add	byte ptr [bx+si], al	;@15E00
+	add	byte ptr [bx+si], al	;@15E02
+	add	byte ptr [bx+si], al	;@15E04
+	add	byte ptr [bx+si], al	;@15E06
+	add	byte ptr [bx+si], al	;@15E08
+	add	byte ptr [bx+si], al	;@15E0A
+	add	byte ptr [bx+si], al	;@15E0C
+	add	byte ptr [bx+si], al	;@15E0E
+	add	byte ptr [bx+si], al	;@15E10
+	add	byte ptr [bx+si], al	;@15E12
+	add	byte ptr [bx+si], al	;@15E14
+	add	byte ptr [bx+si], al	;@15E16
+	add	byte ptr [bx+si], al	;@15E18
+	add	byte ptr [bx+si], al	;@15E1A
+	add	byte ptr [bx+si], al	;@15E1C
+	add	byte ptr [bx+si], al	;@15E1E
+	add	byte ptr [bx+si], al	;@15E20
+	add	byte ptr [bx+si], al	;@15E22
+	add	byte ptr [bx+si], al	;@15E24
+	add	byte ptr [bx+si], al	;@15E26
+	add	byte ptr [bx+si], al	;@15E28
+	add	byte ptr [bx+si], al	;@15E2A
+	add	byte ptr [bx+si], al	;@15E2C
+	add	byte ptr [bx+si], al	;@15E2E
+	add	byte ptr [bx+si], al	;@15E30
+	add	byte ptr [bx+si], al	;@15E32
+	add	byte ptr [bx+si], al	;@15E34
+	add	byte ptr [bx+si], al	;@15E36
+	add	byte ptr [bx+si], al	;@15E38
+	add	byte ptr [bx+si], al	;@15E3A
+	add	byte ptr [bx+si], al	;@15E3C
+	add	byte ptr [bx+si], al	;@15E3E
+	add	byte ptr [bx+si], al	;@15E40
+	add	byte ptr [bx+si], al	;@15E42
+	add	byte ptr [bx+si], al	;@15E44
+	add	byte ptr [bx+si], al	;@15E46
+	add	byte ptr [bx+si], al	;@15E48
+	add	byte ptr [bx+si], al	;@15E4A
+	add	byte ptr [bx+si], al	;@15E4C
+	add	byte ptr [bx+si], al	;@15E4E
+	add	byte ptr [bx+si], al	;@15E50
+	add	byte ptr [bx+si], al	;@15E52
+	add	byte ptr [bx+si], al	;@15E54
+	add	byte ptr [bx+si], al	;@15E56
+	add	byte ptr [bx+si], al	;@15E58
+	add	byte ptr [bx+si], al	;@15E5A
+	add	byte ptr [bx+si], al	;@15E5C
+	add	byte ptr [bx+si], al	;@15E5E
+	add	byte ptr [bx+si], al	;@15E60
+	add	byte ptr [bx+si], al	;@15E62
+	add	byte ptr [bx+si], al	;@15E64
+	add	byte ptr [bx+si], al	;@15E66
+	add	byte ptr [bx+si], al	;@15E68
+	add	byte ptr [bx+si], al	;@15E6A
+	add	byte ptr [bx+si], al	;@15E6C
+	add	byte ptr [bx+si], al	;@15E6E
+	add	byte ptr [bx+si], al	;@15E70
+	add	byte ptr [bx+si], al	;@15E72
+	add	byte ptr [bx+si], al	;@15E74
+	add	byte ptr [bx+si], al	;@15E76
+	add	byte ptr [bx+si], al	;@15E78
+	add	byte ptr [bx+si], al	;@15E7A
+	add	byte ptr [bx+si], al	;@15E7C
+	add	byte ptr [bx+si], al	;@15E7E
+	add	byte ptr [bx+si], al	;@15E80
+	add	byte ptr [bx+si], al	;@15E82
+	add	byte ptr [bx+si], al	;@15E84
+	add	byte ptr [bx+si], al	;@15E86
+	add	byte ptr [bx+si], al	;@15E88
+	add	byte ptr [bx+si], al	;@15E8A
+	add	byte ptr [bx+si], al	;@15E8C
+	add	byte ptr [bx+si], al	;@15E8E
+	add	byte ptr [bx+si], al	;@15E90
+	add	byte ptr [bx+si], al	;@15E92
+	add	byte ptr [bx+si], al	;@15E94
+	add	byte ptr [bx+si], al	;@15E96
+	add	byte ptr [bx+si], al	;@15E98
+	add	byte ptr [bx+si], al	;@15E9A
+	add	byte ptr [bx+si], al	;@15E9C
+	add	byte ptr [bx+si], al	;@15E9E
+	add	byte ptr [bx+si], al	;@15EA0
+	add	byte ptr [bx+si], al	;@15EA2
+	add	byte ptr [bx+si], al	;@15EA4
+	add	byte ptr [bx+si], al	;@15EA6
+	add	byte ptr [bx+si], al	;@15EA8
+	add	byte ptr [bx+si], al	;@15EAA
+	add	byte ptr [bx+si], al	;@15EAC
+	add	byte ptr [bx+si], al	;@15EAE
+	add	byte ptr [bx+si], al	;@15EB0
+	add	byte ptr [bx+si], al	;@15EB2
+	add	byte ptr [bx+si], al	;@15EB4
+	add	byte ptr [bx+si], al	;@15EB6
+	add	byte ptr [bx+si], al	;@15EB8
+	add	byte ptr [bx+si], al	;@15EBA
+	add	byte ptr [bx+si], al	;@15EBC
+	add	byte ptr [bx+si], al	;@15EBE
+	add	byte ptr [bx+si], al	;@15EC0
+	add	byte ptr [bx+si], al	;@15EC2
+	add	byte ptr [bx+si], al	;@15EC4
+	add	byte ptr [bx+si], al	;@15EC6
+	add	byte ptr [bx+si], al	;@15EC8
+	add	byte ptr [bx+si], al	;@15ECA
+	add	byte ptr [bx+si], al	;@15ECC
+	add	byte ptr [bx+si], al	;@15ECE
+	add	byte ptr [bx+si], al	;@15ED0
+	add	byte ptr [bx+si], al	;@15ED2
+	add	byte ptr [bx+si], al	;@15ED4
+	add	byte ptr [bx+si], al	;@15ED6
+	add	byte ptr [bx+si], al	;@15ED8
+	add	byte ptr [bx+si], al	;@15EDA
+	add	byte ptr [bx+si], al	;@15EDC
+	add	byte ptr [bx+si], al	;@15EDE
+	add	byte ptr [bx+si], al	;@15EE0
+	add	byte ptr [bx+si], al	;@15EE2
+	add	byte ptr [bx+si], al	;@15EE4
+	add	byte ptr [bx+si], al	;@15EE6
+	add	byte ptr [bx+si], al	;@15EE8
+	add	byte ptr [bx+si], al	;@15EEA
+	add	byte ptr [bx+si], al	;@15EEC
+	add	byte ptr [bx+si], al	;@15EEE
+	add	byte ptr [bx+si], al	;@15EF0
+	add	byte ptr [bx+si], al	;@15EF2
+	add	byte ptr [bx+si], al	;@15EF4
+	add	byte ptr [bx+si], al	;@15EF6
+	add	byte ptr [bx+si], al	;@15EF8
+	add	byte ptr [bx+si], al	;@15EFA
+	add	byte ptr [bx+si], al	;@15EFC
+	add	byte ptr [bx+si], al	;@15EFE
+	add	byte ptr [bx+si], al	;@15F00
+	add	byte ptr [bx+si], al	;@15F02
+	add	byte ptr [bx+si], al	;@15F04
+	add	byte ptr [bx+si], al	;@15F06
+	add	byte ptr [bx+si], al	;@15F08
+	add	byte ptr [bx+si], al	;@15F0A
+	add	byte ptr [bx+si], al	;@15F0C
+	add	byte ptr [bx+si], al	;@15F0E
+	add	byte ptr [bx+si], al	;@15F10
+	add	byte ptr [bx+si], al	;@15F12
+	add	byte ptr [bx+si], al	;@15F14
+	add	byte ptr [bx+si], al	;@15F16
+	add	byte ptr [bx+si], al	;@15F18
+	add	byte ptr [bx+si], al	;@15F1A
+	add	byte ptr [bx+si], al	;@15F1C
+	add	byte ptr [bx+si], al	;@15F1E
+	add	byte ptr [bx+si], al	;@15F20
+	add	byte ptr [bx+si], al	;@15F22
+	add	byte ptr [bx+si], al	;@15F24
+	add	byte ptr [bx+si], al	;@15F26
+	add	byte ptr [bx+si], al	;@15F28
+	add	byte ptr [bx+si], al	;@15F2A
+	add	byte ptr [bx+si], al	;@15F2C
+	add	byte ptr [bx+si], al	;@15F2E
+	add	byte ptr [bx+si], al	;@15F30
+	add	byte ptr [bx+si], al	;@15F32
+	add	byte ptr [bx+si], al	;@15F34
+	add	byte ptr [bx+si], al	;@15F36
+	add	byte ptr [bx+si], al	;@15F38
+	add	byte ptr [bx+si], al	;@15F3A
+	add	byte ptr [bx+si], al	;@15F3C
+	add	byte ptr [bx+si], al	;@15F3E
+	add	byte ptr [bx+si], al	;@15F40
+	add	byte ptr [bx+si], al	;@15F42
+	add	byte ptr [bx+si], al	;@15F44
+	add	byte ptr [bx+si], al	;@15F46
+	add	byte ptr [bx+si], al	;@15F48
+	add	byte ptr [bx+si], al	;@15F4A
+	add	byte ptr [bx+si], al	;@15F4C
+	add	byte ptr [bx+si], al	;@15F4E
+	add	byte ptr [bx+si], al	;@15F50
+	add	byte ptr [bx+si], al	;@15F52
+	add	byte ptr [bx+si], al	;@15F54
+	add	byte ptr [bx+si], al	;@15F56
+	add	byte ptr [bx+si], al	;@15F58
+	add	byte ptr [bx+si], al	;@15F5A
+	add	byte ptr [bx+si], al	;@15F5C
+	add	byte ptr [bx+si], al	;@15F5E
+	add	byte ptr [bx+si], al	;@15F60
+	add	byte ptr [bx+si], al	;@15F62
+	add	byte ptr [bx+si], al	;@15F64
+	add	byte ptr [bx+si], al	;@15F66
+	add	byte ptr [bx+si], al	;@15F68
+	add	byte ptr [bx+si], al	;@15F6A
+	add	byte ptr [bx+si], al	;@15F6C
+	add	byte ptr [bx+si], al	;@15F6E
+	add	byte ptr [bx+si], al	;@15F70
+	add	byte ptr [bx+si], al	;@15F72
+	add	byte ptr [bx+si], al	;@15F74
+	add	byte ptr [bx+si], al	;@15F76
+	add	byte ptr [bx+si], al	;@15F78
+	add	byte ptr [bx+si], al	;@15F7A
+	add	byte ptr [bx+si], al	;@15F7C
+	add	byte ptr [bx+si], al	;@15F7E
+	add	byte ptr [bx+si], al	;@15F80
+	add	byte ptr [bx+si], al	;@15F82
+	add	byte ptr [bx+si], al	;@15F84
+	add	byte ptr [bx+si], al	;@15F86
+	add	byte ptr [bx+si], al	;@15F88
+	add	byte ptr [bx+si], al	;@15F8A
+	add	byte ptr [bx+si], al	;@15F8C
+	add	byte ptr [bx+si], al	;@15F8E
+	add	byte ptr [bx+si], al	;@15F90
+	add	byte ptr [bx+si], al	;@15F92
+	add	byte ptr [bx+si], al	;@15F94
+	add	byte ptr [bx+si], al	;@15F96
+	add	byte ptr [bx+si], al	;@15F98
+	add	byte ptr [bx+si], al	;@15F9A
+	add	byte ptr [bx+si], al	;@15F9C
+	add	byte ptr [bx+si], al	;@15F9E
+	add	byte ptr [bx+si], al	;@15FA0
+	add	byte ptr [bx+si], al	;@15FA2
+	add	byte ptr [bx+si], al	;@15FA4
+	add	byte ptr [bx+si], al	;@15FA6
+	add	byte ptr [bx+si], al	;@15FA8
+	add	byte ptr [bx+si], al	;@15FAA
+	add	byte ptr [bx+si], al	;@15FAC
+	add	byte ptr [bx+si], al	;@15FAE
+	add	byte ptr [bx+si], al	;@15FB0
+	add	byte ptr [bx+si], al	;@15FB2
+	add	byte ptr [bx+si], al	;@15FB4
+	add	byte ptr [bx+si], al	;@15FB6
+	add	byte ptr [bx+si], al	;@15FB8
+	add	byte ptr [bx+si], al	;@15FBA
+	add	byte ptr [bx+si], al	;@15FBC
+	add	byte ptr [bx+si], al	;@15FBE
+	add	byte ptr [bx+si], al	;@15FC0
+	add	byte ptr [bx+si], al	;@15FC2
+	add	byte ptr [bx+si], al	;@15FC4
+	add	byte ptr [bx+si], al	;@15FC6
+	add	byte ptr [bx+si], al	;@15FC8
+	add	byte ptr [bx+si], al	;@15FCA
+	add	byte ptr [bx+si], al	;@15FCC
+	add	byte ptr [bx+si], al	;@15FCE
+	add	byte ptr [bx+si], al	;@15FD0
+	add	byte ptr [bx+si], al	;@15FD2
+	add	byte ptr [bx+si], al	;@15FD4
+	add	byte ptr [bx+si], al	;@15FD6
+	add	byte ptr [bx+si], al	;@15FD8
+	add	byte ptr [bx+si], al	;@15FDA
+	add	byte ptr [bx+si], al	;@15FDC
+	add	byte ptr [bx+si], al	;@15FDE
+	add	byte ptr [bx+si], al	;@15FE0
+	add	byte ptr [bx+si], al	;@15FE2
+	add	byte ptr [bx+si], al	;@15FE4
+	add	byte ptr [bx+si], al	;@15FE6
+	add	byte ptr [bx+si], al	;@15FE8
+	add	byte ptr [bx+si], al	;@15FEA
+	add	byte ptr [bx+si], al	;@15FEC
+	add	byte ptr [bx+si], al	;@15FEE
+	add	byte ptr [bx+si], al	;@15FF0
+	add	byte ptr [bx+si], al	;@15FF2
+	add	byte ptr [bx+si], al	;@15FF4
+	add	byte ptr [bx+si], al	;@15FF6
+	add	byte ptr [bx+si], al	;@15FF8
+	add	byte ptr [bx+si], al	;@15FFA
+	add	byte ptr [bx+si], al	;@15FFC
+	add	byte ptr [bx+si], al	;@15FFE
+	add	byte ptr [bx+si], al	;@16000
+	add	byte ptr [bx+si], al	;@16002
+	add	byte ptr [bx+si], al	;@16004
+	add	byte ptr [bx+si], al	;@16006
+	add	byte ptr [bx+si], al	;@16008
+	add	byte ptr [bx+si], al	;@1600A
+	add	byte ptr [bx+si], al	;@1600C
+	add	byte ptr [bx+si], al	;@1600E
+	add	byte ptr [bx+si], al	;@16010
+	add	byte ptr [bx+si], al	;@16012
+	add	byte ptr [bx+si], al	;@16014
+	add	byte ptr [bx+si], al	;@16016
+	add	byte ptr [bx+si], al	;@16018
+	add	byte ptr [bx+si], al	;@1601A
+	add	byte ptr [bx+si], al	;@1601C
+	add	byte ptr [bx+si], al	;@1601E
+	add	byte ptr [bx+si], al	;@16020
+	add	byte ptr [bx+si], al	;@16022
+	add	byte ptr [bx+si], al	;@16024
+	add	byte ptr [bx+si], al	;@16026
+	add	byte ptr [bx+si], al	;@16028
+	add	byte ptr [bx+si], al	;@1602A
+	add	byte ptr [bx+si], al	;@1602C
+	add	byte ptr [bx+si], al	;@1602E
+	add	byte ptr [bx+si], al	;@16030
+	add	byte ptr [bx+si], al	;@16032
+	add	byte ptr [bx+si], al	;@16034
+	add	byte ptr [bx+si], al	;@16036
+	add	byte ptr [bx+si], al	;@16038
+	add	byte ptr [bx+si], al	;@1603A
+	add	byte ptr [bx+si], al	;@1603C
+	add	byte ptr [bx+si], al	;@1603E
+	add	byte ptr [bx+si], al	;@16040
+	add	byte ptr [bx+si], al	;@16042
+	add	byte ptr [bx+si], al	;@16044
+	add	byte ptr [bx+si], al	;@16046
+	add	byte ptr [bx+si], al	;@16048
+	add	byte ptr [bx+si], al	;@1604A
+	add	byte ptr [bx+si], al	;@1604C
+	add	byte ptr [bx+si], al	;@1604E
+	add	byte ptr [bx+si], al	;@16050
+	add	byte ptr [bx+si], al	;@16052
+	add	byte ptr [bx+si], al	;@16054
+	add	byte ptr [bx+si], al	;@16056
+	add	byte ptr [bx+si], al	;@16058
+	add	byte ptr [bx+si], al	;@1605A
+	add	byte ptr [bx+si], al	;@1605C
+	add	byte ptr [bx+si], al	;@1605E
+	add	byte ptr [bx+si], al	;@16060
+	add	byte ptr [bx+si], al	;@16062
+	add	byte ptr [bx+si], al	;@16064
+	add	byte ptr [bx+si], al	;@16066
+	add	byte ptr [bx+si], al	;@16068
+	add	byte ptr [bx+si], al	;@1606A
+	add	byte ptr [bx+si], al	;@1606C
+	add	byte ptr [bx+si], al	;@1606E
+	add	byte ptr [bx+si], al	;@16070
+	add	byte ptr [bx+si], al	;@16072
+	add	byte ptr [bx+si], al	;@16074
+	add	byte ptr [bx+si], al	;@16076
+	add	byte ptr [bx+si], al	;@16078
+	add	byte ptr [bx+si], al	;@1607A
+	add	byte ptr [bx+si], al	;@1607C
+	add	byte ptr [bx+si], al	;@1607E
+	add	byte ptr [bx+si], al	;@16080
+	add	byte ptr [bx+si], al	;@16082
+	add	byte ptr [bx+si], al	;@16084
+	add	byte ptr [bx+si], al	;@16086
+	add	byte ptr [bx+si], al	;@16088
+	add	byte ptr [bx+si], al	;@1608A
+	add	byte ptr [bx+si], al	;@1608C
+	add	byte ptr [bx+si], al	;@1608E
+	add	byte ptr [bx+si], al	;@16090
+	add	byte ptr [bx+si], al	;@16092
+	add	byte ptr [bx+si], al	;@16094
+	add	byte ptr [bx+si], al	;@16096
+	add	byte ptr [bx+si], al	;@16098
+	add	byte ptr [bx+si], al	;@1609A
+	add	byte ptr [bx+si], al	;@1609C
+	add	byte ptr [bx+si], al	;@1609E
+	add	byte ptr [bx+si], al	;@160A0
+	add	byte ptr [bx+si], al	;@160A2
+	add	byte ptr [bx+si], al	;@160A4
+	add	byte ptr [bx+si], al	;@160A6
+	add	byte ptr [bx+si], al	;@160A8
+	add	byte ptr [bx+si], al	;@160AA
+	add	byte ptr [bx+si], al	;@160AC
+	add	byte ptr [bx+si], al	;@160AE
+	add	byte ptr [bx+si], al	;@160B0
+	add	byte ptr [bx+si], al	;@160B2
+	add	byte ptr [bx+si], al	;@160B4
+	add	byte ptr [bx+si], al	;@160B6
+	add	byte ptr [bx+si], al	;@160B8
+	add	byte ptr [bx+si], al	;@160BA
+	add	byte ptr [bx+si], al	;@160BC
+	add	byte ptr [bx+si], al	;@160BE
+	add	byte ptr [bx+si], al	;@160C0
+	add	byte ptr [bx+si], al	;@160C2
+	add	byte ptr [bx+si], al	;@160C4
+	add	byte ptr [bx+si], al	;@160C6
+	add	byte ptr [bx+si], al	;@160C8
+	add	byte ptr [bx+si], al	;@160CA
+	add	byte ptr [bx+si], al	;@160CC
+	add	byte ptr [bx+si], al	;@160CE
+	add	byte ptr [bx+si], al	;@160D0
+	add	byte ptr [bx+si], al	;@160D2
+	add	byte ptr [bx+si], al	;@160D4
+	add	byte ptr [bx+si], al	;@160D6
+	add	byte ptr [bx+si], al	;@160D8
+	add	byte ptr [bx+si], al	;@160DA
+	add	byte ptr [bx+si], al	;@160DC
+	add	byte ptr [bx+si], al	;@160DE
+	add	byte ptr [bx+si], al	;@160E0
+	add	byte ptr [bx+si], al	;@160E2
+	add	byte ptr [bx+si], al	;@160E4
+	add	byte ptr [bx+si], al	;@160E6
+	add	byte ptr [bx+si], al	;@160E8
+	add	byte ptr [bx+si], al	;@160EA
+	add	byte ptr [bx+si], al	;@160EC
+	add	byte ptr [bx+si], al	;@160EE
+	add	byte ptr [bx+si], al	;@160F0
+	add	byte ptr [bx+si], al	;@160F2
+	add	byte ptr [bx+si], al	;@160F4
+	add	byte ptr [bx+si], al	;@160F6
+	add	byte ptr [bx+si], al	;@160F8
+	add	byte ptr [bx+si], al	;@160FA
+	add	byte ptr [bx+si], al	;@160FC
+	add	byte ptr [bx+si], al	;@160FE
+	add	byte ptr [bx+si], al	;@16100
+	add	byte ptr [bx+si], al	;@16102
+	add	byte ptr [bx+si], al	;@16104
+	add	byte ptr [bx+si], al	;@16106
+	add	byte ptr [bx+si], al	;@16108
+	add	byte ptr [bx+si], al	;@1610A
+	add	byte ptr [bx+si], al	;@1610C
+	add	byte ptr [bx+si], al	;@1610E
+	add	byte ptr [bx+si], al	;@16110
+	add	byte ptr [bx+si], al	;@16112
+	add	byte ptr [bx+si], al	;@16114
+	add	byte ptr [bx+si], al	;@16116
+	add	byte ptr [bx+si], al	;@16118
+	add	byte ptr [bx+si], al	;@1611A
+	add	byte ptr [bx+si], al	;@1611C
+	add	byte ptr [bx+si], al	;@1611E
+	add	byte ptr [bx+si], al	;@16120
+	add	byte ptr [bx+si], al	;@16122
+	add	byte ptr [bx+si], al	;@16124
+	add	byte ptr [bx+si], al	;@16126
+	add	byte ptr [bx+si], al	;@16128
+	add	byte ptr [bx+si], al	;@1612A
+	add	byte ptr [bx+si], al	;@1612C
+	add	byte ptr [bx+si], al	;@1612E
+	add	byte ptr [bx+si], al	;@16130
+	add	byte ptr [bx+si], al	;@16132
+	add	byte ptr [bx+si], al	;@16134
+	add	byte ptr [bx+si], al	;@16136
+	add	byte ptr [bx+si], al	;@16138
+	add	byte ptr [bx+si], al	;@1613A
+	add	byte ptr [bx+si], al	;@1613C
+	add	byte ptr [bx+si], al	;@1613E
+	add	byte ptr [bx+si], al	;@16140
+	add	byte ptr [bx+si], al	;@16142
+	add	byte ptr [bx+si], al	;@16144
+	add	byte ptr [bx+si], al	;@16146
+	add	byte ptr [bx+si], al	;@16148
+	add	byte ptr [bx+si], al	;@1614A
+	add	byte ptr [bx+si], al	;@1614C
+	add	byte ptr [bx+si], al	;@1614E
+	add	byte ptr [bx+si], al	;@16150
+	add	byte ptr [bx+si], al	;@16152
+	add	byte ptr [bx+si], al	;@16154
+	add	byte ptr [bx+si], al	;@16156
+	add	byte ptr [bx+si], al	;@16158
+	add	byte ptr [bx+si], al	;@1615A
+	add	byte ptr [bx+si], al	;@1615C
+	add	byte ptr [bx+si], al	;@1615E
+	add	byte ptr [bx+si], al	;@16160
+	add	byte ptr [bx+si], al	;@16162
+	add	byte ptr [bx+si], al	;@16164
+	add	byte ptr [bx+si], al	;@16166
+	add	byte ptr [bx+si], al	;@16168
+	add	byte ptr [bx+si], al	;@1616A
+	add	byte ptr [bx+si], al	;@1616C
+	add	byte ptr [bx+si], al	;@1616E
+	add	byte ptr [bx+si], al	;@16170
+	add	byte ptr [bx+si], al	;@16172
+	add	byte ptr [bx+si], al	;@16174
+	add	byte ptr [bx+si], al	;@16176
+	add	byte ptr [bx+si], al	;@16178
+	add	byte ptr [bx+si], al	;@1617A
+	add	byte ptr [bx+si], al	;@1617C
+	add	byte ptr [bx+si], al	;@1617E
+	add	byte ptr [bx+si], al	;@16180
+	add	byte ptr [bx+si], al	;@16182
+	add	byte ptr [bx+si], al	;@16184
+	add	byte ptr [bx+si], al	;@16186
+	add	byte ptr [bx+si], al	;@16188
+	add	byte ptr [bx+si], al	;@1618A
+	add	byte ptr [bx+si], al	;@1618C
+	add	byte ptr [bx+si], al	;@1618E
+	add	byte ptr [bx+si], al	;@16190
+	add	byte ptr [bx+si], al	;@16192
+	add	byte ptr [bx+si], al	;@16194
+	add	byte ptr [bx+si], al	;@16196
+	add	byte ptr [bx+si], al	;@16198
+	add	byte ptr [bx+si], al	;@1619A
+	add	byte ptr [bx+si], al	;@1619C
+	add	byte ptr [bx+si], al	;@1619E
+	add	byte ptr [bx+si], al	;@161A0
+	add	byte ptr [bx+si], al	;@161A2
+	add	byte ptr [bx+si], al	;@161A4
+	add	byte ptr [bx+si], al	;@161A6
+	add	byte ptr [bx+si], al	;@161A8
+	add	byte ptr [bx+si], al	;@161AA
+	add	byte ptr [bx+si], al	;@161AC
+	add	byte ptr [bx+si], al	;@161AE
+	add	byte ptr [bx+si], al	;@161B0
+	add	byte ptr [bx+si], al	;@161B2
+	add	byte ptr [bx+si], al	;@161B4
+	add	byte ptr [bx+si], al	;@161B6
+	add	byte ptr [bx+si], al	;@161B8
+	add	byte ptr [bx+si], al	;@161BA
+	add	byte ptr [bx+si], al	;@161BC
+	add	byte ptr [bx+si], al	;@161BE
+	add	byte ptr [bx+si], al	;@161C0
+	add	byte ptr [bx+si], al	;@161C2
+	add	byte ptr [bx+si], al	;@161C4
+	add	byte ptr [bx+si], al	;@161C6
+	add	byte ptr [bx+si], al	;@161C8
+	add	byte ptr [bx+si], al	;@161CA
+	add	byte ptr [bx+si], al	;@161CC
+	add	byte ptr [bx+si], al	;@161CE
+	add	byte ptr [bx+si], al	;@161D0
+	add	byte ptr [bx+si], al	;@161D2
+	add	byte ptr [bx+si], al	;@161D4
+	add	byte ptr [bx+si], al	;@161D6
+	add	byte ptr [bx+si], al	;@161D8
+	add	byte ptr [bx+si], al	;@161DA
+	add	byte ptr [bx+si], al	;@161DC
+	add	byte ptr [bx+si], al	;@161DE
+	add	byte ptr [bx+si], al	;@161E0
+	add	byte ptr [bx+si], al	;@161E2
+	add	byte ptr [bx+si], al	;@161E4
+	add	byte ptr [bx+si], al	;@161E6
+	add	byte ptr [bx+si], al	;@161E8
+	add	byte ptr [bx+si], al	;@161EA
+	add	byte ptr [bx+si], al	;@161EC
+	add	byte ptr [bx+si], al	;@161EE
+	add	byte ptr [bx+si], al	;@161F0
+	add	byte ptr [bx+si], al	;@161F2
+	add	byte ptr [bx+si], al	;@161F4
+	add	byte ptr [bx+si], al	;@161F6
+	add	byte ptr [bx+si], al	;@161F8
+	add	byte ptr [bx+si], al	;@161FA
+	add	byte ptr [bx+si], al	;@161FC
+	add	byte ptr [bx+si], al	;@161FE
+	add	byte ptr [bx+si], al	;@16200
+	add	byte ptr [bx+si], al	;@16202
+	add	byte ptr [bx+si], al	;@16204
+	add	byte ptr [bx+si], al	;@16206
+	add	byte ptr [bx+si], al	;@16208
+	add	byte ptr [bx+si], al	;@1620A
+	add	byte ptr [bx+si], al	;@1620C
+	add	byte ptr [bx+si], al	;@1620E
+	add	byte ptr [bx+si], al	;@16210
+	add	byte ptr [bx+si], al	;@16212
+	add	byte ptr [bx+si], al	;@16214
+	add	byte ptr [bx+si], al	;@16216
+	add	byte ptr [bx+si], al	;@16218
+	add	byte ptr [bx+si], al	;@1621A
+	add	byte ptr [bx+si], al	;@1621C
+	add	byte ptr [bx+si], al	;@1621E
+	add	byte ptr [bx+si], al	;@16220
+	add	byte ptr [bx+si], al	;@16222
+	add	byte ptr [bx+si], al	;@16224
+	add	byte ptr [bx+si], al	;@16226
+	add	byte ptr [bx+si], al	;@16228
+	add	byte ptr [bx+si], al	;@1622A
+	add	byte ptr [bx+si], al	;@1622C
+	add	byte ptr [bx+si], al	;@1622E
+	add	byte ptr [bx+si], al	;@16230
+	add	byte ptr [bx+si], al	;@16232
+	add	byte ptr [bx+si], al	;@16234
+	add	byte ptr [bx+si], al	;@16236
+	add	byte ptr [bx+si], al	;@16238
+	add	byte ptr [bx+si], al	;@1623A
+	add	byte ptr [bx+si], al	;@1623C
+	add	byte ptr [bx+si], al	;@1623E
+	add	byte ptr [bx+si], al	;@16240
+	add	byte ptr [bx+si], al	;@16242
+	add	byte ptr [bx+si], al	;@16244
+	add	byte ptr [bx+si], al	;@16246
+	add	byte ptr [bx+si], al	;@16248
+	add	byte ptr [bx+si], al	;@1624A
+	add	byte ptr [bx+si], al	;@1624C
+	add	byte ptr [bx+si], al	;@1624E
+	add	byte ptr [bx+si], al	;@16250
+	add	byte ptr [bx+si], al	;@16252
+	add	byte ptr [bx+si], al	;@16254
+	add	byte ptr [bx+si], al	;@16256
+	add	byte ptr [bx+si], al	;@16258
+	add	byte ptr [bx+si], al	;@1625A
+	add	byte ptr [bx+si], al	;@1625C
+	add	byte ptr [bx+si], al	;@1625E
+	add	byte ptr [bx+si], al	;@16260
+	add	byte ptr [bx+si], al	;@16262
+	add	byte ptr [bx+si], al	;@16264
+	add	byte ptr [bx+si], al	;@16266
+	add	byte ptr [bx+si], al	;@16268
+	add	byte ptr [bx+si], al	;@1626A
+	add	byte ptr [bx+si], al	;@1626C
+	add	byte ptr [bx+si], al	;@1626E
+	add	byte ptr [bx+si], al	;@16270
+	add	byte ptr [bx+si], al	;@16272
+	add	byte ptr [bx+si], al	;@16274
+	add	byte ptr [bx+si], al	;@16276
+	add	byte ptr [bx+si], al	;@16278
+	add	byte ptr [bx+si], al	;@1627A
+	add	byte ptr [bx+si], al	;@1627C
+	add	byte ptr [bx+si], al	;@1627E
+	add	byte ptr [bx+si], al	;@16280
+	add	byte ptr [bx+si], al	;@16282
+	add	byte ptr [bx+si], al	;@16284
+	add	byte ptr [bx+si], al	;@16286
+	add	byte ptr [bx+si], al	;@16288
+	add	byte ptr [bx+si], al	;@1628A
+	add	byte ptr [bx+si], al	;@1628C
+	add	byte ptr [bx+si], al	;@1628E
+	add	byte ptr [bx+si], al	;@16290
+	add	byte ptr [bx+si], al	;@16292
+	add	byte ptr [bx+si], al	;@16294
+	add	byte ptr [bx+si], al	;@16296
+	add	byte ptr [bx+si], al	;@16298
+	add	byte ptr [bx+si], al	;@1629A
+	add	byte ptr [bx+si], al	;@1629C
+	add	byte ptr [bx+si], al	;@1629E
+	add	byte ptr [bx+si], al	;@162A0
+	add	byte ptr [bx+si], al	;@162A2
+	add	byte ptr [bx+si], al	;@162A4
+	add	byte ptr [bx+si], al	;@162A6
+	add	byte ptr [bx+si], al	;@162A8
+	add	byte ptr [bx+si], al	;@162AA
+	add	byte ptr [bx+si], al	;@162AC
+	add	byte ptr [bx+si], al	;@162AE
+	add	byte ptr [bx+si], al	;@162B0
+	add	byte ptr [bx+si], al	;@162B2
+	add	byte ptr [bx+si], al	;@162B4
+	add	byte ptr [bx+si], al	;@162B6
+	add	byte ptr [bx+si], al	;@162B8
+	add	byte ptr [bx+si], al	;@162BA
+	add	byte ptr [bx+si], al	;@162BC
+	add	byte ptr [bx+si], al	;@162BE
+	add	byte ptr [bx+si], al	;@162C0
+	add	byte ptr [bx+si], al	;@162C2
+	add	byte ptr [bx+si], al	;@162C4
+	add	byte ptr [bx+si], al	;@162C6
+	add	byte ptr [bx+si], al	;@162C8
+	add	byte ptr [bx+si], al	;@162CA
+	add	byte ptr [bx+si], al	;@162CC
+	add	byte ptr [bx+si], al	;@162CE
+	add	byte ptr [bx+si], al	;@162D0
+	add	byte ptr [bx+si], al	;@162D2
+	add	byte ptr [bx+si], al	;@162D4
+	add	byte ptr [bx+si], al	;@162D6
+	add	byte ptr [bx+si], al	;@162D8
+	add	byte ptr [bx+si], al	;@162DA
+	add	byte ptr [bx+si], al	;@162DC
+	add	byte ptr [bx+si], al	;@162DE
+	add	byte ptr [bx+si], al	;@162E0
+	add	byte ptr [bx+si], al	;@162E2
+	add	byte ptr [bx+si], al	;@162E4
+	add	byte ptr [bx+si], al	;@162E6
+	add	byte ptr [bx+si], al	;@162E8
+	add	byte ptr [bx+si], al	;@162EA
+	add	byte ptr [bx+si], al	;@162EC
+	add	byte ptr [bx+si], al	;@162EE
+	add	byte ptr [bx+si], al	;@162F0
+	add	byte ptr [bx+si], al	;@162F2
+	add	byte ptr [bx+si], al	;@162F4
+	add	byte ptr [bx+si], al	;@162F6
+	add	byte ptr [bx+si], al	;@162F8
+	add	byte ptr [bx+si], al	;@162FA
+	add	byte ptr [bx+si], al	;@162FC
+	add	byte ptr [bx+si], al	;@162FE
+	add	byte ptr [bx+si], al	;@16300
+	add	byte ptr [bx+si], al	;@16302
+	add	byte ptr [bx+si], al	;@16304
+	add	byte ptr [bx+si], al	;@16306
+	add	byte ptr [bx+si], al	;@16308
+	add	byte ptr [bx+si], al	;@1630A
+	add	byte ptr [bx+si], al	;@1630C
+	add	byte ptr [bx+si], al	;@1630E
+	add	byte ptr [bx+si], al	;@16310
+	add	byte ptr [bx+si], al	;@16312
+	add	byte ptr [bx+si], al	;@16314
+	add	byte ptr [bx+si], al	;@16316
+	add	byte ptr [bx+si], al	;@16318
+	add	byte ptr [bx+si], al	;@1631A
+	add	byte ptr [bx+si], al	;@1631C
+	add	byte ptr [bx+si], al	;@1631E
+	add	byte ptr [bx+si], al	;@16320
+	add	byte ptr [bx+si], al	;@16322
+	add	byte ptr [bx+si], al	;@16324
+	add	byte ptr [bx+si], al	;@16326
+	add	byte ptr [bx+si], al	;@16328
+	add	byte ptr [bx+si], al	;@1632A
+	add	byte ptr [bx+si], al	;@1632C
+	add	byte ptr [bx+si], al	;@1632E
+	add	byte ptr [bx+si], al	;@16330
+	add	byte ptr [bx+si], al	;@16332
+	add	byte ptr [bx+si], al	;@16334
+	add	byte ptr [bx+si], al	;@16336
+	add	byte ptr [bx+si], al	;@16338
+	add	byte ptr [bx+si], al	;@1633A
+	add	byte ptr [bx+si], al	;@1633C
+	add	byte ptr [bx+si], al	;@1633E
+	add	byte ptr [bx+si], al	;@16340
+	add	byte ptr [bx+si], al	;@16342
+	add	byte ptr [bx+si], al	;@16344
+	add	byte ptr [bx+si], al	;@16346
+	add	byte ptr [bx+si], al	;@16348
+	add	byte ptr [bx+si], al	;@1634A
+	add	byte ptr [bx+si], al	;@1634C
+	add	byte ptr [bx+si], al	;@1634E
+	add	byte ptr [bx+si], al	;@16350
+	add	byte ptr [bx+si], al	;@16352
+	add	byte ptr [bx+si], al	;@16354
+	add	byte ptr [bx+si], al	;@16356
+	add	byte ptr [bx+si], al	;@16358
+	add	byte ptr [bx+si], al	;@1635A
+	add	byte ptr [bx+si], al	;@1635C
+	add	byte ptr [bx+si], al	;@1635E
+	add	byte ptr [bx+si], al	;@16360
+	add	byte ptr [bx+si], al	;@16362
+	add	byte ptr [bx+si], al	;@16364
+	add	byte ptr [bx+si], al	;@16366
+	add	byte ptr [bx+si], al	;@16368
+	add	byte ptr [bx+si], al	;@1636A
+	add	byte ptr [bx+si], al	;@1636C
+	add	byte ptr [bx+si], al	;@1636E
+	add	byte ptr [bx+si], al	;@16370
+	add	byte ptr [bx+si], al	;@16372
+	add	byte ptr [bx+si], al	;@16374
+	add	byte ptr [bx+si], al	;@16376
+	add	byte ptr [bx+si], al	;@16378
+	add	byte ptr [bx+si], al	;@1637A
+	add	byte ptr [bx+si], al	;@1637C
+	add	byte ptr [bx+si], al	;@1637E
+	add	byte ptr [bx+si], al	;@16380
+	add	byte ptr [bx+si], al	;@16382
+	add	byte ptr [bx+si], al	;@16384
+	add	byte ptr [bx+si], al	;@16386
+	add	byte ptr [bx+si], al	;@16388
+	add	byte ptr [bx+si], al	;@1638A
+	add	byte ptr [bx+si], al	;@1638C
+	add	byte ptr [bx+si], al	;@1638E
+	add	byte ptr [bx+si], al	;@16390
+	add	byte ptr [bx+si], al	;@16392
+	add	byte ptr [bx+si], al	;@16394
+	add	byte ptr [bx+si], al	;@16396
+	add	byte ptr [bx+si], al	;@16398
+	add	byte ptr [bx+si], al	;@1639A
+	add	byte ptr [bx+si], al	;@1639C
+	add	byte ptr [bx+si], al	;@1639E
+	add	byte ptr [bx+si], al	;@163A0
+	add	byte ptr [bx+si], al	;@163A2
+	add	byte ptr [bx+si], al	;@163A4
+	add	byte ptr [bx+si], al	;@163A6
+	add	byte ptr [bx+si], al	;@163A8
+	add	byte ptr [bx+si], al	;@163AA
+	add	byte ptr [bx+si], al	;@163AC
+	add	byte ptr [bx+si], al	;@163AE
+	add	byte ptr [bx+si], al	;@163B0
+	add	byte ptr [bx+si], al	;@163B2
+	add	byte ptr [bx+si], al	;@163B4
+	add	byte ptr [bx+si], al	;@163B6
+	add	byte ptr [bx+si], al	;@163B8
+	add	byte ptr [bx+si], al	;@163BA
+	add	byte ptr [bx+si], al	;@163BC
+	add	byte ptr [bx+si], al	;@163BE
+	add	byte ptr [bx+si], al	;@163C0
+	add	byte ptr [bx+si], al	;@163C2
+	add	byte ptr [bx+si], al	;@163C4
+	add	byte ptr [bx+si], al	;@163C6
+	add	byte ptr [bx+si], al	;@163C8
+	add	byte ptr [bx+si], al	;@163CA
+	add	byte ptr [bx+si], al	;@163CC
+	add	byte ptr [bx+si], al	;@163CE
+	add	byte ptr [bx+si], al	;@163D0
+	add	byte ptr [bx+si], al	;@163D2
+	add	byte ptr [bx+si], al	;@163D4
+	add	byte ptr [bx+si], al	;@163D6
+	add	byte ptr [bx+si], al	;@163D8
+	add	byte ptr [bx+si], al	;@163DA
+	add	byte ptr [bx+si], al	;@163DC
+	add	byte ptr [bx+si], al	;@163DE
+	add	byte ptr [bx+si], al	;@163E0
+	add	byte ptr [bx+si], al	;@163E2
+	add	byte ptr [bx+si], al	;@163E4
+	add	byte ptr [bx+si], al	;@163E6
+	add	byte ptr [bx+si], al	;@163E8
+	add	byte ptr [bx+si], al	;@163EA
+	add	byte ptr [bx+si], al	;@163EC
+	add	byte ptr [bx+si], al	;@163EE
+	add	byte ptr [bx+si], al	;@163F0
+	add	byte ptr [bx+si], al	;@163F2
+	add	byte ptr [bx+si], al	;@163F4
+	add	byte ptr [bx+si], al	;@163F6
+	add	byte ptr [bx+si], al	;@163F8
+	add	byte ptr [bx+si], al	;@163FA
+	add	byte ptr [bx+si], al	;@163FC
+	add	byte ptr [bx+si], al	;@163FE
+	add	byte ptr [bx+si], al	;@16400
+	add	byte ptr [bx+si], al	;@16402
+	add	byte ptr [bx+si], al	;@16404
+	add	byte ptr [bx+si], al	;@16406
+	add	byte ptr [bx+si], al	;@16408
+	add	byte ptr [bx+si], al	;@1640A
+	add	byte ptr [bx+si], al	;@1640C
+	add	byte ptr [bx+si], al	;@1640E
+	add	byte ptr [bx+si], al	;@16410
+	add	byte ptr [bx+si], al	;@16412
+	add	byte ptr [bx+si], al	;@16414
+	add	byte ptr [bx+si], al	;@16416
+	add	byte ptr [bx+si], al	;@16418
+	add	byte ptr [bx+si], al	;@1641A
+	add	byte ptr [bx+si], al	;@1641C
+	add	byte ptr [bx+si], al	;@1641E
+	add	byte ptr [bx+si], al	;@16420
+	add	byte ptr [bx+si], al	;@16422
+	add	byte ptr [bx+si], al	;@16424
+	add	byte ptr [bx+si], al	;@16426
+	add	byte ptr [bx+si], al	;@16428
+	add	byte ptr [bx+si], al	;@1642A
+	add	byte ptr [bx+si], al	;@1642C
+	add	byte ptr [bx+si], al	;@1642E
+	add	byte ptr [bx+si], al	;@16430
+	add	byte ptr [bx+si], al	;@16432
+	add	byte ptr [bx+si], al	;@16434
+	add	byte ptr [bx+si], al	;@16436
+	add	byte ptr [bx+si], al	;@16438
+	add	byte ptr [bx+si], al	;@1643A
+	add	byte ptr [bx+si], al	;@1643C
+	add	byte ptr [bx+si], al	;@1643E
+	add	byte ptr [bx+si], al	;@16440
+	add	byte ptr [bx+si], al	;@16442
+	add	byte ptr [bx+si], al	;@16444
+	add	byte ptr [bx+si], al	;@16446
+	add	byte ptr [bx+si], al	;@16448
+	add	byte ptr [bx+si], al	;@1644A
+	add	byte ptr [bx+si], al	;@1644C
+	add	byte ptr [bx+si], al	;@1644E
+	add	byte ptr [bx+si], al	;@16450
+	add	byte ptr [bx+si], al	;@16452
+	add	byte ptr [bx+si], al	;@16454
+	add	byte ptr [bx+si], al	;@16456
+	add	byte ptr [bx+si], al	;@16458
+	add	byte ptr [bx+si], al	;@1645A
+	add	byte ptr [bx+si], al	;@1645C
+	add	byte ptr [bx+si], al	;@1645E
+	add	byte ptr [bx+si], al	;@16460
+	add	byte ptr [bx+si], al	;@16462
+	add	byte ptr [bx+si], al	;@16464
+	add	byte ptr [bx+si], al	;@16466
+	add	byte ptr [bx+si], al	;@16468
+	add	byte ptr [bx+si], al	;@1646A
+	add	byte ptr [bx+si], al	;@1646C
+	add	byte ptr [bx+si], al	;@1646E
+	add	byte ptr [bx+si], al	;@16470
+	add	byte ptr [bx+si], al	;@16472
+	add	byte ptr [bx+si], al	;@16474
+	add	byte ptr [bx+si], al	;@16476
+	add	byte ptr [bx+si], al	;@16478
+	add	byte ptr [bx+si], al	;@1647A
+	add	byte ptr [bx+si], al	;@1647C
+	add	byte ptr [bx+si], al	;@1647E
+	add	byte ptr [bx+si], al	;@16480
+	add	byte ptr [bx+si], al	;@16482
+	add	byte ptr [bx+si], al	;@16484
+	add	byte ptr [bx+si], al	;@16486
+	add	byte ptr [bx+si], al	;@16488
+	add	byte ptr [bx+si], al	;@1648A
+	add	byte ptr [bx+si], al	;@1648C
+	add	byte ptr [bx+si], al	;@1648E
+	add	byte ptr [bx+si], al	;@16490
+	add	byte ptr [bx+si], al	;@16492
+	add	byte ptr [bx+si], al	;@16494
+	add	byte ptr [bx+si], al	;@16496
+	add	byte ptr [bx+si], al	;@16498
+	add	byte ptr [bx+si], al	;@1649A
+	add	byte ptr [bx+si], al	;@1649C
+	add	byte ptr [bx+si], al	;@1649E
+	add	byte ptr [bx+si], al	;@164A0
+	add	byte ptr [bx+si], al	;@164A2
+	add	byte ptr [bx+si], al	;@164A4
+	add	byte ptr [bx+si], al	;@164A6
+	add	byte ptr [bx+si], al	;@164A8
+	add	byte ptr [bx+si], al	;@164AA
+	add	byte ptr [bx+si], al	;@164AC
+	add	byte ptr [bx+si], al	;@164AE
+	add	byte ptr [bx+si], al	;@164B0
+	add	byte ptr [bx+si], al	;@164B2
+	add	byte ptr [bx+si], al	;@164B4
+	add	byte ptr [bx+si], al	;@164B6
+	add	byte ptr [bx+si], al	;@164B8
+	add	byte ptr [bx+si], al	;@164BA
+	add	byte ptr [bx+si], al	;@164BC
+	add	byte ptr [bx+si], al	;@164BE
+	add	byte ptr [bx+si], al	;@164C0
+	add	byte ptr [bx+si], al	;@164C2
+	add	byte ptr [bx+si], al	;@164C4
+	add	byte ptr [bx+si], al	;@164C6
+	add	byte ptr [bx+si], al	;@164C8
+	add	byte ptr [bx+si], al	;@164CA
+	add	byte ptr [bx+si], al	;@164CC
+	add	byte ptr [bx+si], al	;@164CE
+	add	byte ptr [bx+si], al	;@164D0
+	add	byte ptr [bx+si], al	;@164D2
+	add	byte ptr [bx+si], al	;@164D4
+	add	byte ptr [bx+si], al	;@164D6
+	add	byte ptr [bx+si], al	;@164D8
+	add	byte ptr [bx+si], al	;@164DA
+	add	byte ptr [bx+si], al	;@164DC
+	add	byte ptr [bx+si], al	;@164DE
+	add	byte ptr [bx+si], al	;@164E0
+	add	byte ptr [bx+si], al	;@164E2
+	add	byte ptr [bx+si], al	;@164E4
+	add	byte ptr [bx+si], al	;@164E6
+	add	byte ptr [bx+si], al	;@164E8
+	add	byte ptr [bx+si], al	;@164EA
+	add	byte ptr [bx+si], al	;@164EC
+	add	byte ptr [bx+si], al	;@164EE
+	add	byte ptr [bx+si], al	;@164F0
+	add	byte ptr [bx+si], al	;@164F2
+	add	byte ptr [bx+si], al	;@164F4
+	add	byte ptr [bx+si], al	;@164F6
+	add	byte ptr [bx+si], al	;@164F8
+	add	byte ptr [bx+si], al	;@164FA
+	add	byte ptr [bx+si], al	;@164FC
+	add	byte ptr [bx+si], al	;@164FE
+	add	byte ptr [bx+si], al	;@16500
+	add	byte ptr [bx+si], al	;@16502
+	add	byte ptr [bx+si], al	;@16504
+	add	byte ptr [bx+si], al	;@16506
+	add	byte ptr [bx+si], al	;@16508
+	add	byte ptr [bx+si], al	;@1650A
+	add	byte ptr [bx+si], al	;@1650C
+	add	byte ptr [bx+si], al	;@1650E
+	add	byte ptr [bx+si], al	;@16510
+	add	byte ptr [bx+si], al	;@16512
+	add	byte ptr [bx+si], al	;@16514
+	add	byte ptr [bx+si], al	;@16516
+	add	byte ptr [bx+si], al	;@16518
+	add	byte ptr [bx+si], al	;@1651A
+	add	byte ptr [bx+si], al	;@1651C
+	add	byte ptr [bx+si], al	;@1651E
+	add	byte ptr [bx+si], al	;@16520
+	add	byte ptr [bx+si], al	;@16522
+	add	byte ptr [bx+si], al	;@16524
+	add	byte ptr [bx+si], al	;@16526
+	add	byte ptr [bx+si], al	;@16528
+	add	byte ptr [bx+si], al	;@1652A
+	add	byte ptr [bx+si], al	;@1652C
+	add	byte ptr [bx+si], al	;@1652E
+	add	byte ptr [bx+si], al	;@16530
+	add	byte ptr [bx+si], al	;@16532
+	add	byte ptr [bx+si], al	;@16534
+	add	byte ptr [bx+si], al	;@16536
+	add	byte ptr [bx+si], al	;@16538
+	add	byte ptr [bx+si], al	;@1653A
+	add	byte ptr [bx+si], al	;@1653C
+	add	byte ptr [bx+si], al	;@1653E
+	add	byte ptr [bx+si], al	;@16540
+	add	byte ptr [bx+si], al	;@16542
+	add	byte ptr [bx+si], al	;@16544
+	add	byte ptr [bx+si], al	;@16546
+	add	byte ptr [bx+si], al	;@16548
+	add	byte ptr [bx+si], al	;@1654A
+	add	byte ptr [bx+si], al	;@1654C
+	add	byte ptr [bx+si], al	;@1654E
+	add	byte ptr [bx+si], al	;@16550
+	add	byte ptr [bx+si], al	;@16552
+	add	byte ptr [bx+si], al	;@16554
+	add	byte ptr [bx+si], al	;@16556
+	add	byte ptr [bx+si], al	;@16558
+	add	byte ptr [bx+si], al	;@1655A
+	add	byte ptr [bx+si], al	;@1655C
+	add	byte ptr [bx+si], al	;@1655E
+	add	byte ptr [bx+si], al	;@16560
+	add	byte ptr [bx+si], al	;@16562
+	add	byte ptr [bx+si], al	;@16564
+	add	byte ptr [bx+si], al	;@16566
+	add	byte ptr [bx+si], al	;@16568
+	add	byte ptr [bx+si], al	;@1656A
+	add	byte ptr [bx+si], al	;@1656C
+	add	byte ptr [bx+si], al	;@1656E
+	add	byte ptr [bx+si], al	;@16570
+	add	byte ptr [bx+si], al	;@16572
+	add	byte ptr [bx+si], al	;@16574
+	add	byte ptr [bx+si], al	;@16576
+	add	byte ptr [bx+si], al	;@16578
+	add	byte ptr [bx+si], al	;@1657A
+	add	byte ptr [bx+si], al	;@1657C
+	add	byte ptr [bx+si], al	;@1657E
+	add	byte ptr [bx+si], al	;@16580
+	add	byte ptr [bx+si], al	;@16582
+	add	byte ptr [bx+si], al	;@16584
+	add	byte ptr [bx+si], al	;@16586
+	add	byte ptr [bx+si], al	;@16588
+	add	byte ptr [bx+si], al	;@1658A
+	add	byte ptr [bx+si], al	;@1658C
+	add	byte ptr [bx+si], al	;@1658E
+	add	byte ptr [bx+si], al	;@16590
+	add	byte ptr [bx+si], al	;@16592
+	add	byte ptr [bx+si], al	;@16594
+	add	byte ptr [bx+si], al	;@16596
+	add	byte ptr [bx+si], al	;@16598
+	add	byte ptr [bx+si], al	;@1659A
+	add	byte ptr [bx+si], al	;@1659C
+	add	byte ptr [bx+si], al	;@1659E
+	add	byte ptr [bx+si], al	;@165A0
+	add	byte ptr [bx+si], al	;@165A2
+	add	byte ptr [bx+si], al	;@165A4
+	add	byte ptr [bx+si], al	;@165A6
+	add	byte ptr [bx+si], al	;@165A8
+	add	byte ptr [bx+si], al	;@165AA
+	add	byte ptr [bx+si], al	;@165AC
+	add	byte ptr [bx+si], al	;@165AE
+	add	byte ptr [bx+si], al	;@165B0
+	add	byte ptr [bx+si], al	;@165B2
+	add	byte ptr [bx+si], al	;@165B4
+	add	byte ptr [bx+si], al	;@165B6
+	add	byte ptr [bx+si], al	;@165B8
+	add	byte ptr [bx+si], al	;@165BA
+	add	byte ptr [bx+si], al	;@165BC
+	add	byte ptr [bx+si], al	;@165BE
+	add	byte ptr [bx+si], al	;@165C0
+	add	byte ptr [bx+si], al	;@165C2
+	add	byte ptr [bx+si], al	;@165C4
+	add	byte ptr [bx+si], al	;@165C6
+	add	byte ptr [bx+si], al	;@165C8
+	add	byte ptr [bx+si], al	;@165CA
+	add	byte ptr [bx+si], al	;@165CC
+	add	byte ptr [bx+si], al	;@165CE
+	add	byte ptr [bx+si], al	;@165D0
+	add	byte ptr [bx+si], al	;@165D2
+	add	byte ptr [bx+si], al	;@165D4
+	add	byte ptr [bx+si], al	;@165D6
+	add	byte ptr [bx+si], al	;@165D8
+	add	byte ptr [bx+si], al	;@165DA
+	add	byte ptr [bx+si], al	;@165DC
+	add	byte ptr [bx+si], al	;@165DE
+	add	byte ptr [bx+si], al	;@165E0
+	add	byte ptr [bx+si], al	;@165E2
+	add	byte ptr [bx+si], al	;@165E4
+	add	byte ptr [bx+si], al	;@165E6
+	add	byte ptr [bx+si], al	;@165E8
+	add	byte ptr [bx+si], al	;@165EA
+	add	byte ptr [bx+si], al	;@165EC
+	add	byte ptr [bx+si], al	;@165EE
+	add	byte ptr [bx+si], al	;@165F0
+	add	byte ptr [bx+si], al	;@165F2
+	add	byte ptr [bx+si], al	;@165F4
+	add	byte ptr [bx+si], al	;@165F6
+	add	byte ptr [bx+si], al	;@165F8
+	add	byte ptr [bx+si], al	;@165FA
+	add	byte ptr [bx+si], al	;@165FC
+	add	byte ptr [bx+si], al	;@165FE
+	add	byte ptr [bx+si], al	;@16600
+	add	byte ptr [bx+si], al	;@16602
+	add	byte ptr [bx+si], al	;@16604
+	add	byte ptr [bx+si], al	;@16606
+	add	byte ptr [bx+si], al	;@16608
+	add	byte ptr [bx+si], al	;@1660A
+	add	byte ptr [bx+si], al	;@1660C
+	add	byte ptr [bx+si], al	;@1660E
+	add	byte ptr [bx+si], al	;@16610
+	add	byte ptr [bx+si], al	;@16612
+	add	byte ptr [bx+si], al	;@16614
+	add	byte ptr [bx+si], al	;@16616
+	add	byte ptr [bx+si], al	;@16618
+	add	byte ptr [bx+si], al	;@1661A
+	add	byte ptr [bx+si], al	;@1661C
+	add	byte ptr [bx+si], al	;@1661E
+	add	byte ptr [bx+si], al	;@16620
+	add	byte ptr [bx+si], al	;@16622
+	add	byte ptr [bx+si], al	;@16624
+	add	byte ptr [bx+si], al	;@16626
+	add	byte ptr [bx+si], al	;@16628
+	add	byte ptr [bx+si], al	;@1662A
+	add	byte ptr [bx+si], al	;@1662C
+	add	byte ptr [bx+si], al	;@1662E
+	add	byte ptr [bx+si], al	;@16630
+	add	byte ptr [bx+si], al	;@16632
+	add	byte ptr [bx+si], al	;@16634
+	add	byte ptr [bx+si], al	;@16636
+	add	byte ptr [bx+si], al	;@16638
+	add	byte ptr [bx+si], al	;@1663A
+	add	byte ptr [bx+si], al	;@1663C
+	add	byte ptr [bx+si], al	;@1663E
+	add	byte ptr [bx+si], al	;@16640
+	add	byte ptr [bx+si], al	;@16642
+	add	byte ptr [bx+si], al	;@16644
+	add	byte ptr [bx+si], al	;@16646
+	add	byte ptr [bx+si], al	;@16648
+	add	byte ptr [bx+si], al	;@1664A
+	add	byte ptr [bx+si], al	;@1664C
+	add	byte ptr [bx+si], al	;@1664E
+	add	byte ptr [bx+si], al	;@16650
+	add	byte ptr [bx+si], al	;@16652
+	add	byte ptr [bx+si], al	;@16654
+	add	byte ptr [bx+si], al	;@16656
+	add	byte ptr [bx+si], al	;@16658
+	add	byte ptr [bx+si], al	;@1665A
+	add	byte ptr [bx+si], al	;@1665C
+	add	byte ptr [bx+si], al	;@1665E
+	add	byte ptr [bx+si], al	;@16660
+	add	byte ptr [bx+si], al	;@16662
+	add	byte ptr [bx+si], al	;@16664
+	add	byte ptr [bx+si], al	;@16666
+	add	byte ptr [bx+si], al	;@16668
+	add	byte ptr [bx+si], al	;@1666A
+	add	byte ptr [bx+si], al	;@1666C
+	add	byte ptr [bx+si], al	;@1666E
+	add	byte ptr [bx+si], al	;@16670
+	add	byte ptr [bx+si], al	;@16672
+	add	byte ptr [bx+si], al	;@16674
+	add	byte ptr [bx+si], al	;@16676
+	add	byte ptr [bx+si], al	;@16678
+	add	byte ptr [bx+si], al	;@1667A
+	add	byte ptr [bx+si], al	;@1667C
+	add	byte ptr [bx+si], al	;@1667E
+	add	byte ptr [bx+si], al	;@16680
+	add	byte ptr [bx+si], al	;@16682
+	add	byte ptr [bx+si], al	;@16684
+	add	byte ptr [bx+si], al	;@16686
+	add	byte ptr [bx+si], al	;@16688
+	add	byte ptr [bx+si], al	;@1668A
+	add	byte ptr [bx+si], al	;@1668C
+	add	byte ptr [bx+si], al	;@1668E
+	add	byte ptr [bx+si], al	;@16690
+	add	byte ptr [bx+si], al	;@16692
+	add	byte ptr [bx+si], al	;@16694
+	add	byte ptr [bx+si], al	;@16696
+	add	byte ptr [bx+si], al	;@16698
+	add	byte ptr [bx+si], al	;@1669A
+	add	byte ptr [bx+si], al	;@1669C
+	add	byte ptr [bx+si], al	;@1669E
+	add	byte ptr [bx+si], al	;@166A0
+	add	byte ptr [bx+si], al	;@166A2
+	add	byte ptr [bx+si], al	;@166A4
+	add	byte ptr [bx+si], al	;@166A6
+	add	byte ptr [bx+si], al	;@166A8
+	add	byte ptr [bx+si], al	;@166AA
+	add	byte ptr [bx+si], al	;@166AC
+	add	byte ptr [bx+si], al	;@166AE
+	add	byte ptr [bx+si], al	;@166B0
+	add	byte ptr [bx+si], al	;@166B2
+	add	byte ptr [bx+si], al	;@166B4
+	add	byte ptr [bx+si], al	;@166B6
+	add	byte ptr [bx+si], al	;@166B8
+	add	byte ptr [bx+si], al	;@166BA
+	add	byte ptr [bx+si], al	;@166BC
+	add	byte ptr [bx+si], al	;@166BE
+	add	byte ptr [bx+si], al	;@166C0
+	add	byte ptr [bx+si], al	;@166C2
+	add	byte ptr [bx+si], al	;@166C4
+	add	byte ptr [bx+si], al	;@166C6
+	add	byte ptr [bx+si], al	;@166C8
+	add	byte ptr [bx+si], al	;@166CA
+	add	byte ptr [bx+si], al	;@166CC
+	add	byte ptr [bx+si], al	;@166CE
+	add	byte ptr [bx+si], al	;@166D0
+	add	byte ptr [bx+si], al	;@166D2
+	add	byte ptr [bx+si], al	;@166D4
+	add	byte ptr [bx+si], al	;@166D6
+	add	byte ptr [bx+si], al	;@166D8
+	add	byte ptr [bx+si], al	;@166DA
+	add	byte ptr [bx+si], al	;@166DC
+	add	byte ptr [bx+si], al	;@166DE
+	add	byte ptr [bx+si], al	;@166E0
+	add	byte ptr [bx+si], al	;@166E2
+	add	byte ptr [bx+si], al	;@166E4
+	add	byte ptr [bx+si], al	;@166E6
+	add	byte ptr [bx+si], al	;@166E8
+	add	byte ptr [bx+si], al	;@166EA
+	add	byte ptr [bx+si], al	;@166EC
+	add	byte ptr [bx+si], al	;@166EE
+	add	byte ptr [bx+si], al	;@166F0
+	add	byte ptr [bx+si], al	;@166F2
+	add	byte ptr [bx+si], al	;@166F4
+	add	byte ptr [bx+si], al	;@166F6
+	add	byte ptr [bx+si], al	;@166F8
+	add	byte ptr [bx+si], al	;@166FA
+	add	byte ptr [bx+si], al	;@166FC
+	add	byte ptr [bx+si], al	;@166FE
+	add	byte ptr [bx+si], al	;@16700
+	add	byte ptr [bx+si], al	;@16702
+	add	byte ptr [bx+si], al	;@16704
+	add	byte ptr [bx+si], al	;@16706
+	add	byte ptr [bx+si], al	;@16708
+	add	byte ptr [bx+si], al	;@1670A
+	add	byte ptr [bx+si], al	;@1670C
+	add	byte ptr [bx+si], al	;@1670E
+	add	byte ptr [bx+si], al	;@16710
+	add	byte ptr [bx+si], al	;@16712
+	add	byte ptr [bx+si], al	;@16714
+	add	byte ptr [bx+si], al	;@16716
+	add	byte ptr [bx+si], al	;@16718
+	add	byte ptr [bx+si], al	;@1671A
+	add	byte ptr [bx+si], al	;@1671C
+	add	byte ptr [bx+si], al	;@1671E
+	add	byte ptr [bx+si], al	;@16720
+	add	byte ptr [bx+si], al	;@16722
+	add	byte ptr [bx+si], al	;@16724
+	add	byte ptr [bx+si], al	;@16726
+	add	byte ptr [bx+si], al	;@16728
+	add	byte ptr [bx+si], al	;@1672A
+	add	byte ptr [bx+si], al	;@1672C
+	add	byte ptr [bx+si], al	;@1672E
+	add	byte ptr [bx+si], al	;@16730
+	add	byte ptr [bx+si], al	;@16732
+	add	byte ptr [bx+si], al	;@16734
+	add	byte ptr [bx+si], al	;@16736
+	add	byte ptr [bx+si], al	;@16738
+	add	byte ptr [bx+si], al	;@1673A
+	add	byte ptr [bx+si], al	;@1673C
+	add	byte ptr [bx+si], al	;@1673E
+	add	byte ptr [bx+si], al	;@16740
+	add	byte ptr [bx+si], al	;@16742
+	add	byte ptr [bx+si], al	;@16744
+	add	byte ptr [bx+si], al	;@16746
+	add	byte ptr [bx+si], al	;@16748
+	add	byte ptr [bx+si], al	;@1674A
+	add	byte ptr [bx+si], al	;@1674C
+	add	byte ptr [bx+si], al	;@1674E
+	add	byte ptr [bx+si], al	;@16750
+	add	byte ptr [bx+si], al	;@16752
+	add	byte ptr [bx+si], al	;@16754
+	add	byte ptr [bx+si], al	;@16756
+	add	byte ptr [bx+si], al	;@16758
+	add	byte ptr [bx+si], al	;@1675A
+	add	byte ptr [bx+si], al	;@1675C
+	add	byte ptr [bx+si], al	;@1675E
+	add	byte ptr [bx+si], al	;@16760
+	add	byte ptr [bx+si], al	;@16762
+	add	byte ptr [bx+si], al	;@16764
+	add	byte ptr [bx+si], al	;@16766
+	add	byte ptr [bx+si], al	;@16768
+	add	byte ptr [bx+si], al	;@1676A
+	add	byte ptr [bx+si], al	;@1676C
+	add	byte ptr [bx+si], al	;@1676E
+	add	byte ptr [bx+si], al	;@16770
+	add	byte ptr [bx+si], al	;@16772
+	add	byte ptr [bx+si], al	;@16774
+	add	byte ptr [bx+si], al	;@16776
+	add	byte ptr [bx+si], al	;@16778
+	add	byte ptr [bx+si], al	;@1677A
+	add	byte ptr [bx+si], al	;@1677C
+	add	byte ptr [bx+si], al	;@1677E
+	add	byte ptr [bx+si], al	;@16780
+	add	byte ptr [bx+si], al	;@16782
+	add	byte ptr [bx+si], al	;@16784
+	add	byte ptr [bx+si], al	;@16786
+	add	byte ptr [bx+si], al	;@16788
+	add	byte ptr [bx+si], al	;@1678A
+	add	byte ptr [bx+si], al	;@1678C
+	add	byte ptr [bx+si], al	;@1678E
+	add	byte ptr [bx+si], al	;@16790
+	add	byte ptr [bx+si], al	;@16792
+	add	byte ptr [bx+si], al	;@16794
+	add	byte ptr [bx+si], al	;@16796
+	add	byte ptr [bx+si], al	;@16798
+	add	byte ptr [bx+si], al	;@1679A
+	add	byte ptr [bx+si], al	;@1679C
+	add	byte ptr [bx+si], al	;@1679E
+	add	byte ptr [bx+si], al	;@167A0
+	add	byte ptr [bx+si], al	;@167A2
+	add	byte ptr [bx+si], al	;@167A4
+	add	byte ptr [bx+si], al	;@167A6
+	add	byte ptr [bx+si], al	;@167A8
+	add	byte ptr [bx+si], al	;@167AA
+	add	byte ptr [bx+si], al	;@167AC
+	add	byte ptr [bx+si], al	;@167AE
+	add	byte ptr [bx+si], al	;@167B0
+	add	byte ptr [bx+si], al	;@167B2
+	add	byte ptr [bx+si], al	;@167B4
+	add	byte ptr [bx+si], al	;@167B6
+	add	byte ptr [bx+si], al	;@167B8
+	add	byte ptr [bx+si], al	;@167BA
+	add	byte ptr [bx+si], al	;@167BC
+	add	byte ptr [bx+si], al	;@167BE
+	add	byte ptr [bx+si], al	;@167C0
+	add	byte ptr [bx+si], al	;@167C2
+	add	byte ptr [bx+si], al	;@167C4
+	add	byte ptr [bx+si], al	;@167C6
+	add	byte ptr [bx+si], al	;@167C8
+	add	byte ptr [bx+si], al	;@167CA
+	add	byte ptr [bx+si], al	;@167CC
+	add	byte ptr [bx+si], al	;@167CE
+	add	byte ptr [bx+si], al	;@167D0
+	add	byte ptr [bx+si], al	;@167D2
+	add	byte ptr [bx+si], al	;@167D4
+	add	byte ptr [bx+si], al	;@167D6
+	add	byte ptr [bx+si], al	;@167D8
+	add	byte ptr [bx+si], al	;@167DA
+	add	byte ptr [bx+si], al	;@167DC
+	add	byte ptr [bx+si], al	;@167DE
+	add	byte ptr [bx+si], al	;@167E0
+	add	byte ptr [bx+si], al	;@167E2
+	add	byte ptr [bx+si], al	;@167E4
+	add	byte ptr [bx+si], al	;@167E6
+	add	byte ptr [bx+si], al	;@167E8
+	add	byte ptr [bx+si], al	;@167EA
+	add	byte ptr [bx+si], al	;@167EC
+	add	byte ptr [bx+si], al	;@167EE
+	add	byte ptr [bx+si], al	;@167F0
+	add	byte ptr [bx+si], al	;@167F2
+	add	byte ptr [bx+si], al	;@167F4
+	add	byte ptr [bx+si], al	;@167F6
+	add	byte ptr [bx+si], al	;@167F8
+	add	byte ptr [bx+si], al	;@167FA
+	add	byte ptr [bx+si], al	;@167FC
+	add	byte ptr [bx+si], al	;@167FE
+	add	byte ptr [bx+si], al	;@16800
+	add	byte ptr [bx+si], al	;@16802
+	add	byte ptr [bx+si], al	;@16804
+	add	byte ptr [bx+si], al	;@16806
+	add	byte ptr [bx+si], al	;@16808
+	add	byte ptr [bx+si], al	;@1680A
+	add	byte ptr [bx+si], al	;@1680C
+	add	byte ptr [bx+si], al	;@1680E
+	add	byte ptr [bx+si], al	;@16810
+	add	byte ptr [bx+si], al	;@16812
+	add	byte ptr [bx+si], al	;@16814
+	add	byte ptr [bx+si], al	;@16816
+	add	byte ptr [bx+si], al	;@16818
+	add	byte ptr [bx+si], al	;@1681A
+	add	byte ptr [bx+si], al	;@1681C
+	add	byte ptr [bx+si], al	;@1681E
+	add	byte ptr [bx+si], al	;@16820
+	add	byte ptr [bx+si], al	;@16822
+	add	byte ptr [bx+si], al	;@16824
+	add	byte ptr [bx+si], al	;@16826
+	add	byte ptr [bx+si], al	;@16828
+	add	byte ptr [bx+si], al	;@1682A
+	add	byte ptr [bx+si], al	;@1682C
+	add	byte ptr [bx+si], al	;@1682E
+	add	byte ptr [bx+si], al	;@16830
+	add	byte ptr [bx+si], al	;@16832
+	add	byte ptr [bx+si], al	;@16834
+	add	byte ptr [bx+si], al	;@16836
+	add	byte ptr [bx+si], al	;@16838
+	add	byte ptr [bx+si], al	;@1683A
+	add	byte ptr [bx+si], al	;@1683C
+	add	byte ptr [bx+si], al	;@1683E
+	add	byte ptr [bx+si], al	;@16840
+	add	byte ptr [bx+si], al	;@16842
+	add	byte ptr [bx+si], al	;@16844
+	add	byte ptr [bx+si], al	;@16846
+	add	byte ptr [bx+si], al	;@16848
+	add	byte ptr [bx+si], al	;@1684A
+	add	byte ptr [bx+si], al	;@1684C
+	add	byte ptr [bx+si], al	;@1684E
+	add	byte ptr [bx+si], al	;@16850
+	add	byte ptr [bx+si], al	;@16852
+	add	byte ptr [bx+si], al	;@16854
+	add	byte ptr [bx+si], al	;@16856
+	add	byte ptr [bx+si], al	;@16858
+	add	byte ptr [bx+si], al	;@1685A
+	add	byte ptr [bx+si], al	;@1685C
+	add	byte ptr [bx+si], al	;@1685E
+	add	byte ptr [bx+si], al	;@16860
+	add	byte ptr [bx+si], al	;@16862
+	add	byte ptr [bx+si], al	;@16864
+	add	byte ptr [bx+si], al	;@16866
+	add	byte ptr [bx+si], al	;@16868
+	add	byte ptr [bx+si], al	;@1686A
+	add	byte ptr [bx+si], al	;@1686C
+	add	byte ptr [bx+si], al	;@1686E
+	add	byte ptr [bx+si], al	;@16870
+	add	byte ptr [bx+si], al	;@16872
+	add	byte ptr [bx+si], al	;@16874
+	add	byte ptr [bx+si], al	;@16876
+	add	byte ptr [bx+si], al	;@16878
+	add	byte ptr [bx+si], al	;@1687A
+	add	byte ptr [bx+si], al	;@1687C
+	add	byte ptr [bx+si], al	;@1687E
+	add	byte ptr [bx+si], al	;@16880
+	add	byte ptr [bx+si], al	;@16882
+	add	byte ptr [bx+si], al	;@16884
+	add	byte ptr [bx+si], al	;@16886
+	add	byte ptr [bx+si], al	;@16888
+	add	byte ptr [bx+si], al	;@1688A
+	add	byte ptr [bx+si], al	;@1688C
+	add	byte ptr [bx+si], al	;@1688E
+	add	byte ptr [bx+si], al	;@16890
+	add	byte ptr [bx+si], al	;@16892
+	add	byte ptr [bx+si], al	;@16894
+	add	byte ptr [bx+si], al	;@16896
+	add	byte ptr [bx+si], al	;@16898
+	add	byte ptr [bx+si], al	;@1689A
+	add	byte ptr [bx+si], al	;@1689C
+	add	byte ptr [bx+si], al	;@1689E
+	add	byte ptr [bx+si], al	;@168A0
+	add	byte ptr [bx+si], al	;@168A2
+	add	byte ptr [bx+si], al	;@168A4
+	add	byte ptr [bx+si], al	;@168A6
+	add	byte ptr [bx+si], al	;@168A8
+	add	byte ptr [bx+si], al	;@168AA
+	add	byte ptr [bx+si], al	;@168AC
+	add	byte ptr [bx+si], al	;@168AE
+	add	byte ptr [bx+si], al	;@168B0
+	add	byte ptr [bx+si], al	;@168B2
+	add	byte ptr [bx+si], al	;@168B4
+	add	byte ptr [bx+si], al	;@168B6
+	add	byte ptr [bx+si], al	;@168B8
+	add	byte ptr [bx+si], al	;@168BA
+	add	byte ptr [bx+si], al	;@168BC
+	add	byte ptr [bx+si], al	;@168BE
+	add	byte ptr [bx+si], al	;@168C0
+	add	byte ptr [bx+si], al	;@168C2
+	add	byte ptr [bx+si], al	;@168C4
+	add	byte ptr [bx+si], al	;@168C6
+	add	byte ptr [bx+si], al	;@168C8
+	add	byte ptr [bx+si], al	;@168CA
+	add	byte ptr [bx+si], al	;@168CC
+	add	byte ptr [bx+si], al	;@168CE
+	add	byte ptr [bx+si], al	;@168D0
+	add	byte ptr [bx+si], al	;@168D2
+	add	byte ptr [bx+si], al	;@168D4
+	add	byte ptr [bx+si], al	;@168D6
+	add	byte ptr [bx+si], al	;@168D8
+	add	byte ptr [bx+si], al	;@168DA
+	add	byte ptr [bx+si], al	;@168DC
+	add	byte ptr [bx+si], al	;@168DE
+	add	byte ptr [bx+si], al	;@168E0
+	add	byte ptr [bx+si], al	;@168E2
+	add	byte ptr [bx+si], al	;@168E4
+	add	byte ptr [bx+si], al	;@168E6
+	add	byte ptr [bx+si], al	;@168E8
+	add	byte ptr [bx+si], al	;@168EA
+	add	byte ptr [bx+si], al	;@168EC
+	add	byte ptr [bx+si], al	;@168EE
+	add	byte ptr [bx+si], al	;@168F0
+	add	byte ptr [bx+si], al	;@168F2
+	add	byte ptr [bx+si], al	;@168F4
+	add	byte ptr [bx+si], al	;@168F6
+	add	byte ptr [bx+si], al	;@168F8
+	add	byte ptr [bx+si], al	;@168FA
+	add	byte ptr [bx+si], al	;@168FC
+	add	byte ptr [bx+si], al	;@168FE
+	add	byte ptr [bx+si], al	;@16900
+	add	byte ptr [bx+si], al	;@16902
+	add	byte ptr [bx+si], al	;@16904
+	add	byte ptr [bx+si], al	;@16906
+	add	byte ptr [bx+si], al	;@16908
+	add	byte ptr [bx+si], al	;@1690A
+	add	byte ptr [bx+si], al	;@1690C
+	add	byte ptr [bx+si], al	;@1690E
+	add	byte ptr [bx+si], al	;@16910
+	add	byte ptr [bx+si], al	;@16912
+	add	byte ptr [bx+si], al	;@16914
+	add	byte ptr [bx+si], al	;@16916
+	add	byte ptr [bx+si], al	;@16918
+	add	byte ptr [bx+si], al	;@1691A
+	add	byte ptr [bx+si], al	;@1691C
+	add	byte ptr [bx+si], al	;@1691E
+	add	byte ptr [bx+si], al	;@16920
+	add	byte ptr [bx+si], al	;@16922
+	add	byte ptr [bx+si], al	;@16924
+	add	byte ptr [bx+si], al	;@16926
+	add	byte ptr [bx+si], al	;@16928
+	add	byte ptr [bx+si], al	;@1692A
+	add	byte ptr [bx+si], al	;@1692C
+	add	byte ptr [bx+si], al	;@1692E
+	add	byte ptr [bx+si], al	;@16930
+	add	byte ptr [bx+si], al	;@16932
+	add	byte ptr [bx+si], al	;@16934
+	add	byte ptr [bx+si], al	;@16936
+	add	byte ptr [bx+si], al	;@16938
+	add	byte ptr [bx+si], al	;@1693A
+	add	byte ptr [bx+si], al	;@1693C
+	add	byte ptr [bx+si], al	;@1693E
+	add	byte ptr [bx+si], al	;@16940
+	add	byte ptr [bx+si], al	;@16942
+	add	byte ptr [bx+si], al	;@16944
+	add	byte ptr [bx+si], al	;@16946
+	add	byte ptr [bx+si], al	;@16948
+	add	byte ptr [bx+si], al	;@1694A
+	add	byte ptr [bx+si], al	;@1694C
+	add	byte ptr [bx+si], al	;@1694E
+	add	byte ptr [bx+si], al	;@16950
+	add	byte ptr [bx+si], al	;@16952
+	add	byte ptr [bx+si], al	;@16954
+	add	byte ptr [bx+si], al	;@16956
+	add	byte ptr [bx+si], al	;@16958
+	add	byte ptr [bx+si], al	;@1695A
+	add	byte ptr [bx+si], al	;@1695C
+	add	byte ptr [bx+si], al	;@1695E
+	add	byte ptr [bx+si], al	;@16960
+	add	byte ptr [bx+si], al	;@16962
+	add	byte ptr [bx+si], al	;@16964
+	add	byte ptr [bx+si], al	;@16966
+	add	byte ptr [bx+si], al	;@16968
+	add	byte ptr [bx+si], al	;@1696A
+	add	byte ptr [bx+si], al	;@1696C
+	add	byte ptr [bx+si], al	;@1696E
+	add	byte ptr [bx+si], al	;@16970
+	add	byte ptr [bx+si], al	;@16972
+	add	byte ptr [bx+si], al	;@16974
+	add	byte ptr [bx+si], al	;@16976
+	add	byte ptr [bx+si], al	;@16978
+	add	byte ptr [bx+si], al	;@1697A
+	add	byte ptr [bx+si], al	;@1697C
+	add	byte ptr [bx+si], al	;@1697E
+	add	byte ptr [bx+si], al	;@16980
+	add	byte ptr [bx+si], al	;@16982
+	add	byte ptr [bx+si], al	;@16984
+	add	byte ptr [bx+si], al	;@16986
+	add	byte ptr [bx+si], al	;@16988
+	add	byte ptr [bx+si], al	;@1698A
+	add	byte ptr [bx+si], al	;@1698C
+	add	byte ptr [bx+si], al	;@1698E
+	add	byte ptr [bx+si], al	;@16990
+	add	byte ptr [bx+si], al	;@16992
+	add	byte ptr [bx+si], al	;@16994
+	add	byte ptr [bx+si], al	;@16996
+	add	byte ptr [bx+si], al	;@16998
+	add	byte ptr [bx+si], al	;@1699A
+	add	byte ptr [bx+si], al	;@1699C
+	add	byte ptr [bx+si], al	;@1699E
+	add	byte ptr [bx+si], al	;@169A0
+	add	byte ptr [bx+si], al	;@169A2
+	add	byte ptr [bx+si], al	;@169A4
+	add	byte ptr [bx+si], al	;@169A6
+	add	byte ptr [bx+si], al	;@169A8
+	add	byte ptr [bx+si], al	;@169AA
+	add	byte ptr [bx+si], al	;@169AC
+	add	byte ptr [bx+si], al	;@169AE
+	add	byte ptr [bx+si], al	;@169B0
+	add	byte ptr [bx+si], al	;@169B2
+	add	byte ptr [bx+si], al	;@169B4
+	add	byte ptr [bx+si], al	;@169B6
+	add	byte ptr [bx+si], al	;@169B8
+	add	byte ptr [bx+si], al	;@169BA
+	add	byte ptr [bx+si], al	;@169BC
+	add	byte ptr [bx+si], al	;@169BE
+	add	byte ptr [bx+si], al	;@169C0
+	add	byte ptr [bx+si], al	;@169C2
+	add	byte ptr [bx+si], al	;@169C4
+	add	byte ptr [bx+si], al	;@169C6
+	add	byte ptr [bx+si], al	;@169C8
+	add	byte ptr [bx+si], al	;@169CA
+	add	byte ptr [bx+si], al	;@169CC
+	add	byte ptr [bx+si], al	;@169CE
+	add	byte ptr [bx+si], al	;@169D0
+	add	byte ptr [bx+si], al	;@169D2
+	add	byte ptr [bx+si], al	;@169D4
+	add	byte ptr [bx+si], al	;@169D6
+	add	byte ptr [bx+si], al	;@169D8
+	add	byte ptr [bx+si], al	;@169DA
+	add	byte ptr [bx+si], al	;@169DC
+	add	byte ptr [bx+si], al	;@169DE
+	add	byte ptr [bx+si], al	;@169E0
+	add	byte ptr [bx+si], al	;@169E2
+	add	byte ptr [bx+si], al	;@169E4
+	add	byte ptr [bx+si], al	;@169E6
+	add	byte ptr [bx+si], al	;@169E8
+	add	byte ptr [bx+si], al	;@169EA
+	add	byte ptr [bx+si], al	;@169EC
+	add	byte ptr [bx+si], al	;@169EE
+	add	byte ptr [bx+si], al	;@169F0
+	add	byte ptr [bx+si], al	;@169F2
+	add	byte ptr [bx+si], al	;@169F4
+	add	byte ptr [bx+si], al	;@169F6
+	add	byte ptr [bx+si], al	;@169F8
+	add	byte ptr [bx+si], al	;@169FA
+	add	byte ptr [bx+si], al	;@169FC
+	add	byte ptr [bx+si], al	;@169FE
+	add	byte ptr [bx+si], al	;@16A00
+	add	byte ptr [bx+si], al	;@16A02
+	add	byte ptr [bx+si], al	;@16A04
+	add	byte ptr [bx+si], al	;@16A06
+	add	byte ptr [bx+si], al	;@16A08
+	add	byte ptr [bx+si], al	;@16A0A
+	add	byte ptr [bx+si], al	;@16A0C
+	add	byte ptr [bx+si], al	;@16A0E
+	add	byte ptr [bx+si], al	;@16A10
+	add	byte ptr [bx+si], al	;@16A12
+	add	byte ptr [bx+si], al	;@16A14
+	add	byte ptr [bx+si], al	;@16A16
+	add	byte ptr [bx+si], al	;@16A18
+	add	byte ptr [bx+si], al	;@16A1A
+	add	byte ptr [bx+si], al	;@16A1C
+	add	byte ptr [bx+si], al	;@16A1E
+	add	byte ptr [bx+si], al	;@16A20
+	add	byte ptr [bx+si], al	;@16A22
+	add	byte ptr [bx+si], al	;@16A24
+	add	byte ptr [bx+si], al	;@16A26
+	add	byte ptr [bx+si], al	;@16A28
+	add	byte ptr [bx+si], al	;@16A2A
+	add	byte ptr [bx+si], al	;@16A2C
+	add	byte ptr [bx+si], al	;@16A2E
+	add	byte ptr [bx+si], al	;@16A30
+	add	byte ptr [bx+si], al	;@16A32
+	add	byte ptr [bx+si], al	;@16A34
+	add	byte ptr [bx+si], al	;@16A36
+	add	byte ptr [bx+si], al	;@16A38
+	add	byte ptr [bx+si], al	;@16A3A
+	add	byte ptr [bx+si], al	;@16A3C
+	add	byte ptr [bx+si], al	;@16A3E
+	add	byte ptr [bx+si], al	;@16A40
+	add	byte ptr [bx+si], al	;@16A42
+	add	byte ptr [bx+si], al	;@16A44
+	add	byte ptr [bx+si], al	;@16A46
+	add	byte ptr [bx+si], al	;@16A48
+	add	byte ptr [bx+si], al	;@16A4A
+	add	byte ptr [bx+si], al	;@16A4C
+	add	byte ptr [bx+si], al	;@16A4E
+	add	byte ptr [bx+si], al	;@16A50
+	add	byte ptr [bx+si], al	;@16A52
+	add	byte ptr [bx+si], al	;@16A54
+	add	byte ptr [bx+si], al	;@16A56
+	add	byte ptr [bx+si], al	;@16A58
+	add	byte ptr [bx+si], al	;@16A5A
+	add	byte ptr [bx+si], al	;@16A5C
+	add	byte ptr [bx+si], al	;@16A5E
+	add	byte ptr [bx+si], al	;@16A60
+	add	byte ptr [bx+si], al	;@16A62
+	add	byte ptr [bx+si], al	;@16A64
+	add	byte ptr [bx+si], al	;@16A66
+	add	byte ptr [bx+si], al	;@16A68
+	add	byte ptr [bx+si], al	;@16A6A
+	add	byte ptr [bx+si], al	;@16A6C
+	add	byte ptr [bx+si], al	;@16A6E
+	add	byte ptr [bx+si], al	;@16A70
+	add	byte ptr [bx+si], al	;@16A72
+	add	byte ptr [bx+si], al	;@16A74
+	add	byte ptr [bx+si], al	;@16A76
+	add	byte ptr [bx+si], al	;@16A78
+	add	byte ptr [bx+si], al	;@16A7A
+	add	byte ptr [bx+si], al	;@16A7C
+	add	byte ptr [bx+si], al	;@16A7E
+	add	byte ptr [bx+si], al	;@16A80
+	add	byte ptr [bx+si], al	;@16A82
+	add	byte ptr [bx+si], al	;@16A84
+	add	byte ptr [bx+si], al	;@16A86
+	add	byte ptr [bx+si], al	;@16A88
+	add	byte ptr [bx+si], al	;@16A8A
+	add	byte ptr [bx+si], al	;@16A8C
+	add	byte ptr [bx+si], al	;@16A8E
+	add	byte ptr [bx+si], al	;@16A90
+	add	byte ptr [bx+si], al	;@16A92
+	add	byte ptr [bx+si], al	;@16A94
+	add	byte ptr [bx+si], al	;@16A96
+	add	byte ptr [bx+si], al	;@16A98
+	add	byte ptr [bx+si], al	;@16A9A
+	add	byte ptr [bx+si], al	;@16A9C
+	add	byte ptr [bx+si], al	;@16A9E
+	add	byte ptr [bx+si], al	;@16AA0
+	add	byte ptr [bx+si], al	;@16AA2
+	add	byte ptr [bx+si], al	;@16AA4
+	add	byte ptr [bx+si], al	;@16AA6
+	add	byte ptr [bx+si], al	;@16AA8
+	add	byte ptr [bx+si], al	;@16AAA
+	add	byte ptr [bx+si], al	;@16AAC
+	add	byte ptr [bx+si], al	;@16AAE
+	add	byte ptr [bx+si], al	;@16AB0
+	add	byte ptr [bx+si], al	;@16AB2
+	add	byte ptr [bx+si], al	;@16AB4
+	add	byte ptr [bx+si], al	;@16AB6
+	add	byte ptr [bx+si], al	;@16AB8
+	add	byte ptr [bx+si], al	;@16ABA
+	add	byte ptr [bx+si], al	;@16ABC
+	add	byte ptr [bx+si], al	;@16ABE
+	add	byte ptr [bx+si], al	;@16AC0
+	add	byte ptr [bx+si], al	;@16AC2
+	add	byte ptr [bx+si], al	;@16AC4
+	add	byte ptr [bx+si], al	;@16AC6
+	add	byte ptr [bx+si], al	;@16AC8
+	add	byte ptr [bx+si], al	;@16ACA
+	add	byte ptr [bx+si], al	;@16ACC
+	add	byte ptr [bx+si], al	;@16ACE
+	add	byte ptr [bx+si], al	;@16AD0
+	add	byte ptr [bx+si], al	;@16AD2
+	add	byte ptr [bx+si], al	;@16AD4
+	add	byte ptr [bx+si], al	;@16AD6
+	add	byte ptr [bx+si], al	;@16AD8
+	add	byte ptr [bx+si], al	;@16ADA
+	add	byte ptr [bx+si], al	;@16ADC
+	add	byte ptr [bx+si], al	;@16ADE
+	add	byte ptr [bx+si], al	;@16AE0
+	add	byte ptr [bx+si], al	;@16AE2
+	add	byte ptr [bx+si], al	;@16AE4
+	add	byte ptr [bx+si], al	;@16AE6
+	add	byte ptr [bx+si], al	;@16AE8
+	add	byte ptr [bx+si], al	;@16AEA
+	add	byte ptr [bx+si], al	;@16AEC
+	add	byte ptr [bx+si], al	;@16AEE
+	add	byte ptr [bx+si], al	;@16AF0
+	add	byte ptr [bx+si], al	;@16AF2
+	add	byte ptr [bx+si], al	;@16AF4
+	add	byte ptr [bx+si], al	;@16AF6
+	add	byte ptr [bx+si], al	;@16AF8
+	add	byte ptr [bx+si], al	;@16AFA
+	add	byte ptr [bx+si], al	;@16AFC
+	add	byte ptr [bx+si], al	;@16AFE
+	add	byte ptr [bx+si], al	;@16B00
+	add	byte ptr [bx+si], al	;@16B02
+	add	byte ptr [bx+si], al	;@16B04
+	add	byte ptr [bx+si], al	;@16B06
+	add	byte ptr [bx+si], al	;@16B08
+	add	byte ptr [bx+si], al	;@16B0A
+	add	byte ptr [bx+si], al	;@16B0C
+	add	byte ptr [bx+si], al	;@16B0E
+	add	byte ptr [bx+si], al	;@16B10
+	add	byte ptr [bx+si], al	;@16B12
+	add	byte ptr [bx+si], al	;@16B14
+	add	byte ptr [bx+si], al	;@16B16
+	add	byte ptr [bx+si], al	;@16B18
+	add	byte ptr [bx+si], al	;@16B1A
+	add	byte ptr [bx+si], al	;@16B1C
+	add	byte ptr [bx+si], al	;@16B1E
+	add	byte ptr [bx+si], al	;@16B20
+	add	byte ptr [bx+si], al	;@16B22
+	add	byte ptr [bx+si], al	;@16B24
+	add	byte ptr [bx+si], al	;@16B26
+	add	byte ptr [bx+si], al	;@16B28
+	add	byte ptr [bx+si], al	;@16B2A
+	add	byte ptr [bx+si], al	;@16B2C
+	add	byte ptr [bx+si], al	;@16B2E
+	add	byte ptr [bx+si], al	;@16B30
+	add	byte ptr [bx+si], al	;@16B32
+	add	byte ptr [bx+si], al	;@16B34
+	add	byte ptr [bx+si], al	;@16B36
+	add	byte ptr [bx+si], al	;@16B38
+	add	byte ptr [bx+si], al	;@16B3A
+	add	byte ptr [bx+si], al	;@16B3C
+	add	byte ptr [bx+si], al	;@16B3E
+	add	byte ptr [bx+si], al	;@16B40
+	add	byte ptr [bx+si], al	;@16B42
+	add	byte ptr [bx+si], al	;@16B44
+	add	byte ptr [bx+si], al	;@16B46
+	add	byte ptr [bx+si], al	;@16B48
+	add	byte ptr [bx+si], al	;@16B4A
+	add	byte ptr [bx+si], al	;@16B4C
+	add	byte ptr [bx+si], al	;@16B4E
+	add	byte ptr [bx+si], al	;@16B50
+	add	byte ptr [bx+si], al	;@16B52
+	add	byte ptr [bx+si], al	;@16B54
+	add	byte ptr [bx+si], al	;@16B56
+	add	byte ptr [bx+si], al	;@16B58
+	add	byte ptr [bx+si], al	;@16B5A
+	add	byte ptr [bx+si], al	;@16B5C
+	add	byte ptr [bx+si], al	;@16B5E
+	add	byte ptr [bx+si], al	;@16B60
+	add	byte ptr [bx+si], al	;@16B62
+	add	byte ptr [bx+si], al	;@16B64
+	add	byte ptr [bx+si], al	;@16B66
+	add	byte ptr [bx+si], al	;@16B68
+	add	byte ptr [bx+si], al	;@16B6A
+	add	byte ptr [bx+si], al	;@16B6C
+	add	byte ptr [bx+si], al	;@16B6E
+	add	byte ptr [bx+si], al	;@16B70
+	add	byte ptr [bx+si], al	;@16B72
+	add	byte ptr [bx+si], al	;@16B74
+	add	byte ptr [bx+si], al	;@16B76
+	add	byte ptr [bx+si], al	;@16B78
+	add	byte ptr [bx+si], al	;@16B7A
+	add	byte ptr [bx+si], al	;@16B7C
+	add	byte ptr [bx+si], al	;@16B7E
+	add	byte ptr [bx+si], al	;@16B80
+	add	byte ptr [bx+si], al	;@16B82
+	add	byte ptr [bx+si], al	;@16B84
+	add	byte ptr [bx+si], al	;@16B86
+	add	byte ptr [bx+si], al	;@16B88
+	add	byte ptr [bx+si], al	;@16B8A
+	add	byte ptr [bx+si], al	;@16B8C
+	add	byte ptr [bx+si], al	;@16B8E
+	add	byte ptr [bx+si], al	;@16B90
+	add	byte ptr [bx+si], al	;@16B92
+	add	byte ptr [bx+si], al	;@16B94
+	add	byte ptr [bx+si], al	;@16B96
+	add	byte ptr [bx+si], al	;@16B98
+	add	byte ptr [bx+si], al	;@16B9A
+	add	byte ptr [bx+si], al	;@16B9C
+	add	byte ptr [bx+si], al	;@16B9E
+	add	byte ptr [bx+si], al	;@16BA0
+	add	byte ptr [bx+si], al	;@16BA2
+	add	byte ptr [bx+si], al	;@16BA4
+	add	byte ptr [bx+si], al	;@16BA6
+	add	byte ptr [bx+si], al	;@16BA8
+	add	byte ptr [bx+si], al	;@16BAA
+	add	byte ptr [bx+si], al	;@16BAC
+	add	byte ptr [bx+si], al	;@16BAE
+	add	byte ptr [bx+si], al	;@16BB0
+	add	byte ptr [bx+si], al	;@16BB2
+	add	byte ptr [bx+si], al	;@16BB4
+	add	byte ptr [bx+si], al	;@16BB6
+	add	byte ptr [bx+si], al	;@16BB8
+	add	byte ptr [bx+si], al	;@16BBA
+	add	byte ptr [bx+si], al	;@16BBC
+	add	byte ptr [bx+si], al	;@16BBE
+	add	byte ptr [bx+si], al	;@16BC0
+	add	byte ptr [bx+si], al	;@16BC2
+	add	byte ptr [bx+si], al	;@16BC4
+	add	byte ptr [bx+si], al	;@16BC6
+	add	byte ptr [bx+si], al	;@16BC8
+	add	byte ptr [bx+si], al	;@16BCA
+	add	byte ptr [bx+si], al	;@16BCC
+	add	byte ptr [bx+si], al	;@16BCE
+	add	byte ptr [bx+si], al	;@16BD0
+	add	byte ptr [bx+si], al	;@16BD2
+	add	byte ptr [bx+si], al	;@16BD4
+	add	byte ptr [bx+si], al	;@16BD6
+	add	byte ptr [bx+si], al	;@16BD8
+	add	byte ptr [bx+si], al	;@16BDA
+	add	byte ptr [bx+si], al	;@16BDC
+	add	byte ptr [bx+si], al	;@16BDE
+	add	byte ptr [bx+si], al	;@16BE0
+	add	byte ptr [bx+si], al	;@16BE2
+	add	byte ptr [bx+si], al	;@16BE4
+	add	byte ptr [bx+si], al	;@16BE6
+	add	byte ptr [bx+si], al	;@16BE8
+	add	byte ptr [bx+si], al	;@16BEA
+	add	byte ptr [bx+si], al	;@16BEC
+	add	byte ptr [bx+si], al	;@16BEE
+	add	byte ptr [bx+si], al	;@16BF0
+	add	byte ptr [bx+si], al	;@16BF2
+	add	byte ptr [bx+si], al	;@16BF4
+	add	byte ptr [bx+si], al	;@16BF6
+	add	byte ptr [bx+si], al	;@16BF8
+	add	byte ptr [bx+si], al	;@16BFA
+	add	byte ptr [bx+si], al	;@16BFC
+	add	byte ptr [bx+si], al	;@16BFE
+	add	byte ptr [bx+si], al	;@16C00
+	add	byte ptr [bx+si], al	;@16C02
+	add	byte ptr [bx+si], al	;@16C04
+	add	byte ptr [bx+si], al	;@16C06
+	add	byte ptr [bx+si], al	;@16C08
+	add	byte ptr [bx+si], al	;@16C0A
+	add	byte ptr [bx+si], al	;@16C0C
+	add	byte ptr [bx+si], al	;@16C0E
+	add	byte ptr [bx+si], al	;@16C10
+	add	byte ptr [bx+si], al	;@16C12
+	add	byte ptr [bx+si], al	;@16C14
+	add	byte ptr [bx+si], al	;@16C16
+	add	byte ptr [bx+si], al	;@16C18
+	add	byte ptr [bx+si], al	;@16C1A
+	add	byte ptr [bx+si], al	;@16C1C
+	add	byte ptr [bx+si], al	;@16C1E
+	add	byte ptr [bx+si], al	;@16C20
+	add	byte ptr [bx+si], al	;@16C22
+	add	byte ptr [bx+si], al	;@16C24
+	add	byte ptr [bx+si], al	;@16C26
+	add	byte ptr [bx+si], al	;@16C28
+	add	byte ptr [bx+si], al	;@16C2A
+	add	byte ptr [bx+si], al	;@16C2C
+	add	byte ptr [bx+si], al	;@16C2E
+	add	byte ptr [bx+si], al	;@16C30
+	add	byte ptr [bx+si], al	;@16C32
+	add	byte ptr [bx+si], al	;@16C34
+	add	byte ptr [bx+si], al	;@16C36
+	add	byte ptr [bx+si], al	;@16C38
+	add	byte ptr [bx+si], al	;@16C3A
+	add	byte ptr [bx+si], al	;@16C3C
+	add	byte ptr [bx+si], al	;@16C3E
+	add	byte ptr [bx+si], al	;@16C40
+	add	byte ptr [bx+si], al	;@16C42
+	add	byte ptr [bx+si], al	;@16C44
+	add	byte ptr [bx+si], al	;@16C46
+	add	byte ptr [bx+si], al	;@16C48
+	add	byte ptr [bx+si], al	;@16C4A
+	add	byte ptr [bx+si], al	;@16C4C
+	add	byte ptr [bx+si], al	;@16C4E
+	add	byte ptr [bx+si], al	;@16C50
+	add	byte ptr [bx+si], al	;@16C52
+	add	byte ptr [bx+si], al	;@16C54
+	add	byte ptr [bx+si], al	;@16C56
+	add	byte ptr [bx+si], al	;@16C58
+	add	byte ptr [bx+si], al	;@16C5A
+	add	byte ptr [bx+si], al	;@16C5C
+	add	byte ptr [bx+si], al	;@16C5E
+	add	byte ptr [bx+si], al	;@16C60
+	add	byte ptr [bx+si], al	;@16C62
+	add	byte ptr [bx+si], al	;@16C64
+	add	byte ptr [bx+si], al	;@16C66
+	add	byte ptr [bx+si], al	;@16C68
+	add	byte ptr [bx+si], al	;@16C6A
+	add	byte ptr [bx+si], al	;@16C6C
+	add	byte ptr [bx+si], al	;@16C6E
+	add	byte ptr [bx+si], al	;@16C70
+	add	byte ptr [bx+si], al	;@16C72
+	add	byte ptr [bx+si], al	;@16C74
+	add	byte ptr [bx+si], al	;@16C76
+	add	byte ptr [bx+si], al	;@16C78
+	add	byte ptr [bx+si], al	;@16C7A
+	add	byte ptr [bx+si], al	;@16C7C
+	add	byte ptr [bx+si], al	;@16C7E
+	add	byte ptr [bx+si], al	;@16C80
+	add	byte ptr [bx+si], al	;@16C82
+	add	byte ptr [bx+si], al	;@16C84
+	add	byte ptr [bx+si], al	;@16C86
+	add	byte ptr [bx+si], al	;@16C88
+	add	byte ptr [bx+si], al	;@16C8A
+	add	byte ptr [bx+si], al	;@16C8C
+	add	byte ptr [bx+si], al	;@16C8E
+	add	byte ptr [bx+si], al	;@16C90
+	add	byte ptr [bx+si], al	;@16C92
+	add	byte ptr [bx+si], al	;@16C94
+	add	byte ptr [bx+si], al	;@16C96
+	add	byte ptr [bx+si], al	;@16C98
+	add	byte ptr [bx+si], al	;@16C9A
+	add	byte ptr [bx+si], al	;@16C9C
+	add	byte ptr [bx+si], al	;@16C9E
+	add	byte ptr [bx+si], al	;@16CA0
+	add	byte ptr [bx+si], al	;@16CA2
+	add	byte ptr [bx+si], al	;@16CA4
+	add	byte ptr [bx+si], al	;@16CA6
+	add	byte ptr [bx+si], al	;@16CA8
+	add	byte ptr [bx+si], al	;@16CAA
+	add	byte ptr [bx+si], al	;@16CAC
+	add	byte ptr [bx+si], al	;@16CAE
+	add	byte ptr [bx+si], al	;@16CB0
+	add	byte ptr [bx+si], al	;@16CB2
+	add	byte ptr [bx+si], al	;@16CB4
+	add	byte ptr [bx+si], al	;@16CB6
+	add	byte ptr [bx+si], al	;@16CB8
+	add	byte ptr [bx+si], al	;@16CBA
+	add	byte ptr [bx+si], al	;@16CBC
+	add	byte ptr [bx+si], al	;@16CBE
+	add	byte ptr [bx+si], al	;@16CC0
+	add	byte ptr [bx+si], al	;@16CC2
+	add	byte ptr [bx+si], al	;@16CC4
+	add	byte ptr [bx+si], al	;@16CC6
+	add	byte ptr [bx+si], al	;@16CC8
+	add	byte ptr [bx+si], al	;@16CCA
+	add	byte ptr [bx+si], al	;@16CCC
+	add	byte ptr [bx+si], al	;@16CCE
+	add	byte ptr [bx+si], al	;@16CD0
+	add	byte ptr [bx+si], al	;@16CD2
+	add	byte ptr [bx+si], al	;@16CD4
+	add	byte ptr [bx+si], al	;@16CD6
+	add	byte ptr [bx+si], al	;@16CD8
+	add	byte ptr [bx+si], al	;@16CDA
+	add	byte ptr [bx+si], al	;@16CDC
+	add	byte ptr [bx+si], al	;@16CDE
+	add	byte ptr [bx+si], al	;@16CE0
+	add	byte ptr [bx+si], al	;@16CE2
+	add	byte ptr [bx+si], al	;@16CE4
+	add	byte ptr [bx+si], al	;@16CE6
+	add	byte ptr [bx+si], al	;@16CE8
+	add	byte ptr [bx+si], al	;@16CEA
+	add	byte ptr [bx+si], al	;@16CEC
+	add	byte ptr [bx+si], al	;@16CEE
+	add	byte ptr [bx+si], al	;@16CF0
+	add	byte ptr [bx+si], al	;@16CF2
+	add	byte ptr [bx+si], al	;@16CF4
+	add	byte ptr [bx+si], al	;@16CF6
+	add	byte ptr [bx+si], al	;@16CF8
+	add	byte ptr [bx+si], al	;@16CFA
+	add	byte ptr [bx+si], al	;@16CFC
+	add	byte ptr [bx+si], al	;@16CFE
+	add	byte ptr [bx+si], al	;@16D00
+	add	byte ptr [bx+si], al	;@16D02
+	add	byte ptr [bx+si], al	;@16D04
+	add	byte ptr [bx+si], al	;@16D06
+	add	byte ptr [bx+si], al	;@16D08
+	add	byte ptr [bx+si], al	;@16D0A
+	add	byte ptr [bx+si], al	;@16D0C
+	add	byte ptr [bx+si], al	;@16D0E
+	add	byte ptr [bx+si], al	;@16D10
+	add	byte ptr [bx+si], al	;@16D12
+	add	byte ptr [bx+si], al	;@16D14
+	add	byte ptr [bx+si], al	;@16D16
+	add	byte ptr [bx+si], al	;@16D18
+	add	byte ptr [bx+si], al	;@16D1A
+	add	byte ptr [bx+si], al	;@16D1C
+	add	byte ptr [bx+si], al	;@16D1E
+	add	byte ptr [bx+si], al	;@16D20
+	add	byte ptr [bx+si], al	;@16D22
+	add	byte ptr [bx+si], al	;@16D24
+	add	byte ptr [bx+si], al	;@16D26
+	add	byte ptr [bx+si], al	;@16D28
+	add	byte ptr [bx+si], al	;@16D2A
+	add	byte ptr [bx+si], al	;@16D2C
+	add	byte ptr [bx+si], al	;@16D2E
+	add	byte ptr [bx+si], al	;@16D30
+	add	byte ptr [bx+si], al	;@16D32
+	add	byte ptr [bx+si], al	;@16D34
+	add	byte ptr [bx+si], al	;@16D36
+	add	byte ptr [bx+si], al	;@16D38
+	add	byte ptr [bx+si], al	;@16D3A
+	add	byte ptr [bx+si], al	;@16D3C
+	add	byte ptr [bx+si], al	;@16D3E
+	add	byte ptr [bx+si], al	;@16D40
+	add	byte ptr [bx+si], al	;@16D42
+	add	byte ptr [bx+si], al	;@16D44
+	add	byte ptr [bx+si], al	;@16D46
+	add	byte ptr [bx+si], al	;@16D48
+	add	byte ptr [bx+si], al	;@16D4A
+	add	byte ptr [bx+si], al	;@16D4C
+	add	byte ptr [bx+si], al	;@16D4E
+	add	byte ptr [bx+si], al	;@16D50
+	add	byte ptr [bx+si], al	;@16D52
+	add	byte ptr [bx+si], al	;@16D54
+	add	byte ptr [bx+si], al	;@16D56
+	add	byte ptr [bx+si], al	;@16D58
+	add	byte ptr [bx+si], al	;@16D5A
+	add	byte ptr [bx+si], al	;@16D5C
+	add	byte ptr [bx+si], al	;@16D5E
+	add	byte ptr [bx+si], al	;@16D60
+	add	byte ptr [bx+si], al	;@16D62
+	add	byte ptr [bx+si], al	;@16D64
+	add	byte ptr [bx+si], al	;@16D66
+	add	byte ptr [bx+si], al	;@16D68
+	add	byte ptr [bx+si], al	;@16D6A
+	add	byte ptr [bx+si], al	;@16D6C
+	add	byte ptr [bx+si], al	;@16D6E
+	add	byte ptr [bx+si], al	;@16D70
+	add	byte ptr [bx+si], al	;@16D72
+	add	byte ptr [bx+si], al	;@16D74
+	add	byte ptr [bx+si], al	;@16D76
+	add	byte ptr [bx+si], al	;@16D78
+	add	byte ptr [bx+si], al	;@16D7A
+	add	byte ptr [bx+si], al	;@16D7C
+	add	byte ptr [bx+si], al	;@16D7E
+	add	byte ptr [bx+si], al	;@16D80
+	add	byte ptr [bx+si], al	;@16D82
+	add	byte ptr [bx+si], al	;@16D84
+	add	byte ptr [bx+si], al	;@16D86
+	add	byte ptr [bx+si], al	;@16D88
+	add	byte ptr [bx+si], al	;@16D8A
+	add	byte ptr [bx+si], al	;@16D8C
+	add	byte ptr [bx+si], al	;@16D8E
+	add	byte ptr [bx+si], al	;@16D90
+	add	byte ptr [bx+si], al	;@16D92
+	add	byte ptr [bx+si], al	;@16D94
+	add	byte ptr [bx+si], al	;@16D96
+	add	byte ptr [bx+si], al	;@16D98
+	add	byte ptr [bx+si], al	;@16D9A
+	add	byte ptr [bx+si], al	;@16D9C
+	add	byte ptr [bx+si], al	;@16D9E
+	add	byte ptr [bx+si], al	;@16DA0
+	add	byte ptr [bx+si], al	;@16DA2
+	add	byte ptr [bx+si], al	;@16DA4
+	add	byte ptr [bx+si], al	;@16DA6
+	add	byte ptr [bx+si], al	;@16DA8
+	add	byte ptr [bx+si], al	;@16DAA
+	add	byte ptr [bx+si], al	;@16DAC
+	add	byte ptr [bx+si], al	;@16DAE
+	add	byte ptr [bx+si], al	;@16DB0
+	add	byte ptr [bx+si], al	;@16DB2
+	add	byte ptr [bx+si], al	;@16DB4
+	add	byte ptr [bx+si], al	;@16DB6
+	add	byte ptr [bx+si], al	;@16DB8
+	add	byte ptr [bx+si], al	;@16DBA
+	add	byte ptr [bx+si], al	;@16DBC
+	add	byte ptr [bx+si], al	;@16DBE
+	add	byte ptr [bx+si], al	;@16DC0
+	add	byte ptr [bx+si], al	;@16DC2
+	add	byte ptr [bx+si], al	;@16DC4
+	add	byte ptr [bx+si], al	;@16DC6
+	add	byte ptr [bx+si], al	;@16DC8
+	add	byte ptr [bx+si], al	;@16DCA
+	add	byte ptr [bx+si], al	;@16DCC
+	add	byte ptr [bx+si], al	;@16DCE
+	add	byte ptr [bx+si], al	;@16DD0
+	add	byte ptr [bx+si], al	;@16DD2
+	add	byte ptr [bx+si], al	;@16DD4
+	add	byte ptr [bx+si], al	;@16DD6
+	add	byte ptr [bx+si], al	;@16DD8
+	add	byte ptr [bx+si], al	;@16DDA
+	add	byte ptr [bx+si], al	;@16DDC
+	add	byte ptr [bx+si], al	;@16DDE
+	add	byte ptr [bx+si], al	;@16DE0
+	add	byte ptr [bx+si], al	;@16DE2
+	add	byte ptr [bx+si], al	;@16DE4
+	add	byte ptr [bx+si], al	;@16DE6
+	add	byte ptr [bx+si], al	;@16DE8
+	add	byte ptr [bx+si], al	;@16DEA
+	add	byte ptr [bx+si], al	;@16DEC
+	add	byte ptr [bx+si], al	;@16DEE
+	add	byte ptr [bx+si], al	;@16DF0
+	add	byte ptr [bx+si], al	;@16DF2
+	add	byte ptr [bx+si], al	;@16DF4
+	add	byte ptr [bx+si], al	;@16DF6
+	add	byte ptr [bx+si], al	;@16DF8
+	add	byte ptr [bx+si], al	;@16DFA
+	add	byte ptr [bx+si], al	;@16DFC
+	add	byte ptr [bx+si], al	;@16DFE
+	add	byte ptr [bx+si], al	;@16E00
+	add	byte ptr [bx+si], al	;@16E02
+	add	byte ptr [bx+si], al	;@16E04
+	add	byte ptr [bx+si], al	;@16E06
+	add	byte ptr [bx+si], al	;@16E08
+	add	byte ptr [bx+si], al	;@16E0A
+	add	byte ptr [bx+si], al	;@16E0C
+	add	byte ptr [bx+si], al	;@16E0E
+	add	byte ptr [bx+si], al	;@16E10
+	add	byte ptr [bx+si], al	;@16E12
+	add	byte ptr [bx+si], al	;@16E14
+	add	byte ptr [bx+si], al	;@16E16
+	add	byte ptr [bx+si], al	;@16E18
+	add	byte ptr [bx+si], al	;@16E1A
+	add	byte ptr [bx+si], al	;@16E1C
+	add	byte ptr [bx+si], al	;@16E1E
+	add	byte ptr [bx+si], al	;@16E20
+	add	byte ptr [bx+si], al	;@16E22
+	add	byte ptr [bx+si], al	;@16E24
+	add	byte ptr [bx+si], al	;@16E26
+	add	byte ptr [bx+si], al	;@16E28
+	add	byte ptr [bx+si], al	;@16E2A
+	add	byte ptr [bx+si], al	;@16E2C
+	add	byte ptr [bx+si], al	;@16E2E
+	add	byte ptr [bx+si], al	;@16E30
+	add	byte ptr [bx+si], al	;@16E32
+	add	byte ptr [bx+si], al	;@16E34
+	add	byte ptr [bx+si], al	;@16E36
+	add	byte ptr [bx+si], al	;@16E38
+	add	byte ptr [bx+si], al	;@16E3A
+	add	byte ptr [bx+si], al	;@16E3C
+	add	byte ptr [bx+si], al	;@16E3E
+	add	byte ptr [bx+si], al	;@16E40
+	add	byte ptr [bx+si], al	;@16E42
+	add	byte ptr [bx+si], al	;@16E44
+	add	byte ptr [bx+si], al	;@16E46
+	add	byte ptr [bx+si], al	;@16E48
+	add	byte ptr [bx+si], al	;@16E4A
+	add	byte ptr [bx+si], al	;@16E4C
+	add	byte ptr [bx+si], al	;@16E4E
+	add	byte ptr [bx+si], al	;@16E50
+	add	byte ptr [bx+si], al	;@16E52
+	add	byte ptr [bx+si], al	;@16E54
+	add	byte ptr [bx+si], al	;@16E56
+	add	byte ptr [bx+si], al	;@16E58
+	add	byte ptr [bx+si], al	;@16E5A
+	add	byte ptr [bx+si], al	;@16E5C
+	add	byte ptr [bx+si], al	;@16E5E
+	add	byte ptr [bx+si], al	;@16E60
+	add	byte ptr [bx+si], al	;@16E62
+	add	byte ptr [bx+si], al	;@16E64
+	add	byte ptr [bx+si], al	;@16E66
+	add	byte ptr [bx+si], al	;@16E68
+	add	byte ptr [bx+si], al	;@16E6A
+	add	byte ptr [bx+si], al	;@16E6C
+	add	byte ptr [bx+si], al	;@16E6E
+	add	byte ptr [bx+si], al	;@16E70
+	add	byte ptr [bx+si], al	;@16E72
+	add	byte ptr [bx+si], al	;@16E74
+	add	byte ptr [bx+si], al	;@16E76
+	add	byte ptr [bx+si], al	;@16E78
+	add	byte ptr [bx+si], al	;@16E7A
+	add	byte ptr [bx+si], al	;@16E7C
+	add	byte ptr [bx+si], al	;@16E7E
+	add	byte ptr [bx+si], al	;@16E80
+	add	byte ptr [bx+si], al	;@16E82
+	add	byte ptr [bx+si], al	;@16E84
+	add	byte ptr [bx+si], al	;@16E86
+	add	byte ptr [bx+si], al	;@16E88
+	add	byte ptr [bx+si], al	;@16E8A
+	add	byte ptr [bx+si], al	;@16E8C
+	add	byte ptr [bx+si], al	;@16E8E
+	add	byte ptr [bx+si], al	;@16E90
+	add	byte ptr [bx+si], al	;@16E92
+	add	byte ptr [bx+si], al	;@16E94
+	add	byte ptr [bx+si], al	;@16E96
+	add	byte ptr [bx+si], al	;@16E98
+	add	byte ptr [bx+si], al	;@16E9A
+	add	byte ptr [bx+si], al	;@16E9C
+	add	byte ptr [bx+si], al	;@16E9E
+	add	byte ptr [bx+si], al	;@16EA0
+	add	byte ptr [bx+si], al	;@16EA2
+	add	byte ptr [bx+si], al	;@16EA4
+	add	byte ptr [bx+si], al	;@16EA6
+	add	byte ptr [bx+si], al	;@16EA8
+	add	byte ptr [bx+si], al	;@16EAA
+	add	byte ptr [bx+si], al	;@16EAC
+	add	byte ptr [bx+si], al	;@16EAE
+	add	byte ptr [bx+si], al	;@16EB0
+	add	byte ptr [bx+si], al	;@16EB2
+	add	byte ptr [bx+si], al	;@16EB4
+	add	byte ptr [bx+si], al	;@16EB6
+	add	byte ptr [bx+si], al	;@16EB8
+	add	byte ptr [bx+si], al	;@16EBA
+	add	byte ptr [bx+si], al	;@16EBC
+	add	byte ptr [bx+si], al	;@16EBE
+	add	byte ptr [bx+si], al	;@16EC0
+	add	byte ptr [bx+si], al	;@16EC2
+	add	byte ptr [bx+si], al	;@16EC4
+	add	byte ptr [bx+si], al	;@16EC6
+	add	byte ptr [bx+si], al	;@16EC8
+	add	byte ptr [bx+si], al	;@16ECA
+	add	byte ptr [bx+si], al	;@16ECC
+	add	byte ptr [bx+si], al	;@16ECE
+	add	byte ptr [bx+si], al	;@16ED0
+	add	byte ptr [bx+si], al	;@16ED2
+	add	byte ptr [bx+si], al	;@16ED4
+	add	byte ptr [bx+si], al	;@16ED6
+	add	byte ptr [bx+si], al	;@16ED8
+	add	byte ptr [bx+si], al	;@16EDA
+	add	byte ptr [bx+si], al	;@16EDC
+	add	byte ptr [bx+si], al	;@16EDE
+	add	byte ptr [bx+si], al	;@16EE0
+	add	byte ptr [bx+si], al	;@16EE2
+	add	byte ptr [bx+si], al	;@16EE4
+	add	byte ptr [bx+si], al	;@16EE6
+	add	byte ptr [bx+si], al	;@16EE8
+	add	byte ptr [bx+si], al	;@16EEA
+	add	byte ptr [bx+si], al	;@16EEC
+	add	byte ptr [bx+si], al	;@16EEE
+	add	byte ptr [bx+si], al	;@16EF0
+	add	byte ptr [bx+si], al	;@16EF2
+	add	byte ptr [bx+si], al	;@16EF4
+	add	byte ptr [bx+si], al	;@16EF6
+	add	byte ptr [bx+si], al	;@16EF8
+	add	byte ptr [bx+si], al	;@16EFA
+	add	byte ptr [bx+si], al	;@16EFC
+	add	byte ptr [bx+si], al	;@16EFE
+	add	byte ptr [bx+si], al	;@16F00
+	add	byte ptr [bx+si], al	;@16F02
+	add	byte ptr [bx+si], al	;@16F04
+	add	byte ptr [bx+si], al	;@16F06
+	add	byte ptr [bx+si], al	;@16F08
+	add	byte ptr [bx+si], al	;@16F0A
+	add	byte ptr [bx+si], al	;@16F0C
+	add	byte ptr [bx+si], al	;@16F0E
+	add	byte ptr [bx+si], al	;@16F10
+	add	byte ptr [bx+si], al	;@16F12
+	add	byte ptr [bx+si], al	;@16F14
+	add	byte ptr [bx+si], al	;@16F16
+	add	byte ptr [bx+si], al	;@16F18
+	add	byte ptr [bx+si], al	;@16F1A
+	add	byte ptr [bx+si], al	;@16F1C
+	add	byte ptr [bx+si], al	;@16F1E
+	add	byte ptr [bx+si], al	;@16F20
+	add	byte ptr [bx+si], al	;@16F22
+	add	byte ptr [bx+si], al	;@16F24
+	add	byte ptr [bx+si], al	;@16F26
+	add	byte ptr [bx+si], al	;@16F28
+	add	byte ptr [bx+si], al	;@16F2A
+	add	byte ptr [bx+si], al	;@16F2C
+	add	byte ptr [bx+si], al	;@16F2E
+	add	byte ptr [bx+si], al	;@16F30
+	add	byte ptr [bx+si], al	;@16F32
+	add	byte ptr [bx+si], al	;@16F34
+	add	byte ptr [bx+si], al	;@16F36
+	add	byte ptr [bx+si], al	;@16F38
+	add	byte ptr [bx+si], al	;@16F3A
+	add	byte ptr [bx+si], al	;@16F3C
+	add	byte ptr [bx+si], al	;@16F3E
+	add	byte ptr [bx+si], al	;@16F40
+	add	byte ptr [bx+si], al	;@16F42
+	add	byte ptr [bx+si], al	;@16F44
+	add	byte ptr [bx+si], al	;@16F46
+	add	byte ptr [bx+si], al	;@16F48
+	add	byte ptr [bx+si], al	;@16F4A
+	add	byte ptr [bx+si], al	;@16F4C
+	add	byte ptr [bx+si], al	;@16F4E
+	add	byte ptr [bx+si], al	;@16F50
+	add	byte ptr [bx+si], al	;@16F52
+	add	byte ptr [bx+si], al	;@16F54
+	add	byte ptr [bx+si], al	;@16F56
+	add	byte ptr [bx+si], al	;@16F58
+	add	byte ptr [bx+si], al	;@16F5A
+	add	byte ptr [bx+si], al	;@16F5C
+	add	byte ptr [bx+si], al	;@16F5E
+	add	byte ptr [bx+si], al	;@16F60
+	add	byte ptr [bx+si], al	;@16F62
+	add	byte ptr [bx+si], al	;@16F64
+	add	byte ptr [bx+si], al	;@16F66
+	add	byte ptr [bx+si], al	;@16F68
+	add	byte ptr [bx+si], al	;@16F6A
+	add	byte ptr [bx+si], al	;@16F6C
+	add	byte ptr [bx+si], al	;@16F6E
+	add	byte ptr [bx+si], al	;@16F70
+	add	byte ptr [bx+si], al	;@16F72
+	add	byte ptr [bx+si], al	;@16F74
+	add	byte ptr [bx+si], al	;@16F76
+	add	byte ptr [bx+si], al	;@16F78
+	add	byte ptr [bx+si], al	;@16F7A
+	add	byte ptr [bx+si], al	;@16F7C
+	add	byte ptr [bx+si], al	;@16F7E
+	add	byte ptr [bx+si], al	;@16F80
+	add	byte ptr [bx+si], al	;@16F82
+	add	byte ptr [bx+si], al	;@16F84
+	add	byte ptr [bx+si], al	;@16F86
+	add	byte ptr [bx+si], al	;@16F88
+	add	byte ptr [bx+si], al	;@16F8A
+	add	byte ptr [bx+si], al	;@16F8C
+	add	byte ptr [bx+si], al	;@16F8E
+	add	byte ptr [bx+si], al	;@16F90
+	add	byte ptr [bx+si], al	;@16F92
+	add	byte ptr [bx+si], al	;@16F94
+	add	byte ptr [bx+si], al	;@16F96
+	add	byte ptr [bx+si], al	;@16F98
+	add	byte ptr [bx+si], al	;@16F9A
+	add	byte ptr [bx+si], al	;@16F9C
+	add	byte ptr [bx+si], al	;@16F9E
+	add	byte ptr [bx+si], al	;@16FA0
+	add	byte ptr [bx+si], al	;@16FA2
+	add	byte ptr [bx+si], al	;@16FA4
+	add	byte ptr [bx+si], al	;@16FA6
+	add	byte ptr [bx+si], al	;@16FA8
+	add	byte ptr [bx+si], al	;@16FAA
+	add	byte ptr [bx+si], al	;@16FAC
+	add	byte ptr [bx+si], al	;@16FAE
+	add	byte ptr [bx+si], al	;@16FB0
+	add	byte ptr [bx+si], al	;@16FB2
+	add	byte ptr [bx+si], al	;@16FB4
+	add	byte ptr [bx+si], al	;@16FB6
+	add	byte ptr [bx+si], al	;@16FB8
+	add	byte ptr [bx+si], al	;@16FBA
+	add	byte ptr [bx+si], al	;@16FBC
+	add	byte ptr [bx+si], al	;@16FBE
+	add	byte ptr [bx+si], al	;@16FC0
+	add	byte ptr [bx+si], al	;@16FC2
+	add	byte ptr [bx+si], al	;@16FC4
+	add	byte ptr [bx+si], al	;@16FC6
+	add	byte ptr [bx+si], al	;@16FC8
+	add	byte ptr [bx+si], al	;@16FCA
+	add	byte ptr [bx+si], al	;@16FCC
+	add	byte ptr [bx+si], al	;@16FCE
+	add	byte ptr [bx+si], al	;@16FD0
+	add	byte ptr [bx+si], al	;@16FD2
+	add	byte ptr [bx+si], al	;@16FD4
+	add	byte ptr [bx+si], al	;@16FD6
+	add	byte ptr [bx+si], al	;@16FD8
+	add	byte ptr [bx+si], al	;@16FDA
+	add	byte ptr [bx+si], al	;@16FDC
+	add	byte ptr [bx+si], al	;@16FDE
+	add	byte ptr [bx+si], al	;@16FE0
+	add	byte ptr [bx+si], al	;@16FE2
+	add	byte ptr [bx+si], al	;@16FE4
+	add	byte ptr [bx+si], al	;@16FE6
+	add	byte ptr [bx+si], al	;@16FE8
+	add	byte ptr [bx+si], al	;@16FEA
+	add	byte ptr [bx+si], al	;@16FEC
+	add	byte ptr [bx+si], al	;@16FEE
+	add	byte ptr [bx+si], al	;@16FF0
+	add	byte ptr [bx+si], al	;@16FF2
+	add	byte ptr [bx+si], al	;@16FF4
+	add	byte ptr [bx+si], al	;@16FF6
+	add	byte ptr [bx+si], al	;@16FF8
+	add	byte ptr [bx+si], al	;@16FFA
+	add	byte ptr [bx+si], al	;@16FFC
+	add	byte ptr [bx+si], al	;@16FFE
+	add	byte ptr [bx+si], al	;@17000
+	add	byte ptr [bx+si], al	;@17002
+	add	byte ptr [bx+si], al	;@17004
+	add	byte ptr [bx+si], al	;@17006
+	add	byte ptr [bx+si], al	;@17008
+	add	byte ptr [bx+si], al	;@1700A
+	add	byte ptr [bx+si], al	;@1700C
+	add	byte ptr [bx+si], al	;@1700E
+	add	byte ptr [bx+si], al	;@17010
+	add	byte ptr [bx+si], al	;@17012
+	add	byte ptr [bx+si], al	;@17014
+	add	byte ptr [bx+si], al	;@17016
+	add	byte ptr [bx+si], al	;@17018
+	add	byte ptr [bx+si], al	;@1701A
+	add	byte ptr [bx+si], al	;@1701C
+	add	byte ptr [bx+si], al	;@1701E
+	add	byte ptr [bx+si], al	;@17020
+	add	byte ptr [bx+si], al	;@17022
+	add	byte ptr [bx+si], al	;@17024
+	add	byte ptr [bx+si], al	;@17026
+	add	byte ptr [bx+si], al	;@17028
+	add	byte ptr [bx+si], al	;@1702A
+	add	byte ptr [bx+si], al	;@1702C
+	add	byte ptr [bx+si], al	;@1702E
+	add	byte ptr [bx+si], al	;@17030
+	add	byte ptr [bx+si], al	;@17032
+	add	byte ptr [bx+si], al	;@17034
+	add	byte ptr [bx+si], al	;@17036
+	add	byte ptr [bx+si], al	;@17038
+	add	byte ptr [bx+si], al	;@1703A
+	add	byte ptr [bx+si], al	;@1703C
+	add	byte ptr [bx+si], al	;@1703E
+	add	byte ptr [bx+si], al	;@17040
+	add	byte ptr [bx+si], al	;@17042
+	add	byte ptr [bx+si], al	;@17044
+	add	byte ptr [bx+si], al	;@17046
+	add	byte ptr [bx+si], al	;@17048
+	add	byte ptr [bx+si], al	;@1704A
+	add	byte ptr [bx+si], al	;@1704C
+	add	byte ptr [bx+si], al	;@1704E
+	add	byte ptr [bx+si], al	;@17050
+	add	byte ptr [bx+si], al	;@17052
+	add	byte ptr [bx+si], al	;@17054
+	add	byte ptr [bx+si], al	;@17056
+	add	byte ptr [bx+si], al	;@17058
+	add	byte ptr [bx+si], al	;@1705A
+	add	byte ptr [bx+si], al	;@1705C
+	add	byte ptr [bx+si], al	;@1705E
+	add	byte ptr [bx+si], al	;@17060
+	add	byte ptr [bx+si], al	;@17062
+	add	byte ptr [bx+si], al	;@17064
+	add	byte ptr [bx+si], al	;@17066
+	add	byte ptr [bx+si], al	;@17068
+	add	byte ptr [bx+si], al	;@1706A
+	add	byte ptr [bx+si], al	;@1706C
+	add	byte ptr [bx+si], al	;@1706E
+	add	byte ptr [bx+si], al	;@17070
+	add	byte ptr [bx+si], al	;@17072
+	add	byte ptr [bx+si], al	;@17074
+	add	byte ptr [bx+si], al	;@17076
+	add	byte ptr [bx+si], al	;@17078
+	add	byte ptr [bx+si], al	;@1707A
+	add	byte ptr [bx+si], al	;@1707C
+	add	byte ptr [bx+si], al	;@1707E
+	add	byte ptr [bx+si], al	;@17080
+	add	byte ptr [bx+si], al	;@17082
+	add	byte ptr [bx+si], al	;@17084
+	add	byte ptr [bx+si], al	;@17086
+	add	byte ptr [bx+si], al	;@17088
+	add	byte ptr [bx+si], al	;@1708A
+	add	byte ptr [bx+si], al	;@1708C
+	add	byte ptr [bx+si], al	;@1708E
+	add	byte ptr [bx+si], al	;@17090
+	add	byte ptr [bx+si], al	;@17092
+	add	byte ptr [bx+si], al	;@17094
+	add	byte ptr [bx+si], al	;@17096
+	add	byte ptr [bx+si], al	;@17098
+	add	byte ptr [bx+si], al	;@1709A
+	add	byte ptr [bx+si], al	;@1709C
+	add	byte ptr [bx+si], al	;@1709E
+	add	byte ptr [bx+si], al	;@170A0
+	add	byte ptr [bx+si], al	;@170A2
+	add	byte ptr [bx+si], al	;@170A4
+	add	byte ptr [bx+si], al	;@170A6
+	add	byte ptr [bx+si], al	;@170A8
+	add	byte ptr [bx+si], al	;@170AA
+	add	byte ptr [bx+si], al	;@170AC
+	add	byte ptr [bx+si], al	;@170AE
+	add	byte ptr [bx+si], al	;@170B0
+	add	byte ptr [bx+si], al	;@170B2
+	add	byte ptr [bx+si], al	;@170B4
+	add	byte ptr [bx+si], al	;@170B6
+	add	byte ptr [bx+si], al	;@170B8
+	add	byte ptr [bx+si], al	;@170BA
+	add	byte ptr [bx+si], al	;@170BC
+	add	byte ptr [bx+si], al	;@170BE
+	add	byte ptr [bx+si], al	;@170C0
+	add	byte ptr [bx+si], al	;@170C2
+	add	byte ptr [bx+si], al	;@170C4
+	add	byte ptr [bx+si], al	;@170C6
+	add	byte ptr [bx+si], al	;@170C8
+	add	byte ptr [bx+si], al	;@170CA
+	add	byte ptr [bx+si], al	;@170CC
+	add	byte ptr [bx+si], al	;@170CE
+	add	byte ptr [bx+si], al	;@170D0
+	add	byte ptr [bx+si], al	;@170D2
+	add	byte ptr [bx+si], al	;@170D4
+	add	byte ptr [bx+si], al	;@170D6
+	add	byte ptr [bx+si], al	;@170D8
+	add	byte ptr [bx+si], al	;@170DA
+	add	byte ptr [bx+si], al	;@170DC
+	add	byte ptr [bx+si], al	;@170DE
+	add	byte ptr [bx+si], al	;@170E0
+	add	byte ptr [bx+si], al	;@170E2
+	add	byte ptr [bx+si], al	;@170E4
+	add	byte ptr [bx+si], al	;@170E6
+	add	byte ptr [bx+si], al	;@170E8
+	add	byte ptr [bx+si], al	;@170EA
+	add	byte ptr [bx+si], al	;@170EC
+	add	byte ptr [bx+si], al	;@170EE
 Y13F40	ends
 
 Y170F0	segment para public 'CODE'
@@ -1118,11 +5918,1032 @@ Y170F0	ends
 
 Y17100	segment para public 'CODE'
 	assume	cs:Y17100
-	db	10A0h dup (0)	;@17100
+	db	8A7h dup (0)	;@17100
+L179A7:	add	byte ptr [bx+si], al	;@179A7
+	add	byte ptr [bx+si], al	;@179A9
+	add	byte ptr [bx+si], al	;@179AB
+	add	byte ptr [bx+si], al	;@179AD
+	add	byte ptr [bx+si], al	;@179AF
+	add	byte ptr [bx+si], al	;@179B1
+	add	byte ptr [bx+si], al	;@179B3
+	add	byte ptr [bx+si], al	;@179B5
+	add	byte ptr [bx+si], al	;@179B7
+	add	byte ptr [bx+si], al	;@179B9
+	add	byte ptr [bx+si], al	;@179BB
+	add	byte ptr [bx+si], al	;@179BD
+	add	byte ptr [bx+si], al	;@179BF
+	add	byte ptr [bx+si], al	;@179C1
+	add	byte ptr [bx+si], al	;@179C3
+	add	byte ptr [bx+si], al	;@179C5
+	add	byte ptr [bx+si], al	;@179C7
+	add	byte ptr [bx+si], al	;@179C9
+	add	byte ptr [bx+si], al	;@179CB
+	add	byte ptr [bx+si], al	;@179CD
+	add	byte ptr [bx+si], al	;@179CF
+	add	byte ptr [bx+si], al	;@179D1
+	add	byte ptr [bx+si], al	;@179D3
+	add	byte ptr [bx+si], al	;@179D5
+	add	byte ptr [bx+si], al	;@179D7
+	add	byte ptr [bx+si], al	;@179D9
+	add	byte ptr [bx+si], al	;@179DB
+	add	byte ptr [bx+si], al	;@179DD
+	add	byte ptr [bx+si], al	;@179DF
+	add	byte ptr [bx+si], al	;@179E1
+	add	byte ptr [bx+si], al	;@179E3
+	add	byte ptr [bx+si], al	;@179E5
+	add	byte ptr [bx+si], al	;@179E7
+L179E9:	add	byte ptr [bx+si], al	;@179E9
+	add	byte ptr [bx+si], al	;@179EB
+	add	byte ptr [bx+si], al	;@179ED
+	add	byte ptr [bx+si], al	;@179EF
+	add	byte ptr [bx+si], al	;@179F1
+	add	byte ptr [bx+si], al	;@179F3
+	add	byte ptr [bx+si], al	;@179F5
+	add	byte ptr [bx+si], al	;@179F7
+	add	byte ptr [bx+si], al	;@179F9
+	add	byte ptr [bx+si], al	;@179FB
+	add	byte ptr [bx+si], al	;@179FD
+	add	byte ptr [bx+si], al	;@179FF
+	add	byte ptr [bx+si], al	;@17A01
+	add	byte ptr [bx+si], al	;@17A03
+	add	byte ptr [bx+si], al	;@17A05
+	add	byte ptr [bx+si], al	;@17A07
+	add	byte ptr [bx+si], al	;@17A09
+	add	byte ptr [bx+si], al	;@17A0B
+	add	byte ptr [bx+si], al	;@17A0D
+	add	byte ptr [bx+si], al	;@17A0F
+	add	byte ptr [bx+si], al	;@17A11
+	add	byte ptr [bx+si], al	;@17A13
+	add	byte ptr [bx+si], al	;@17A15
+	add	byte ptr [bx+si], al	;@17A17
+	add	byte ptr [bx+si], al	;@17A19
+	add	byte ptr [bx+si], al	;@17A1B
+	add	byte ptr [bx+si], al	;@17A1D
+	add	byte ptr [bx+si], al	;@17A1F
+	add	byte ptr [bx+si], al	;@17A21
+	add	byte ptr [bx+si], al	;@17A23
+	add	byte ptr [bx+si], al	;@17A25
+	add	byte ptr [bx+si], al	;@17A27
+	add	byte ptr [bx+si], al	;@17A29
+	add	byte ptr [bx+si], al	;@17A2B
+	add	byte ptr [bx+si], al	;@17A2D
+	add	byte ptr [bx+si], al	;@17A2F
+	add	byte ptr [bx+si], al	;@17A31
+	add	byte ptr [bx+si], al	;@17A33
+	add	byte ptr [bx+si], al	;@17A35
+	add	byte ptr [bx+si], al	;@17A37
+	add	byte ptr [bx+si], al	;@17A39
+	add	byte ptr [bx+si], al	;@17A3B
+	add	byte ptr [bx+si], al	;@17A3D
+	add	byte ptr [bx+si], al	;@17A3F
+	add	byte ptr [bx+si], al	;@17A41
+	add	byte ptr [bx+si], al	;@17A43
+	add	byte ptr [bx+si], al	;@17A45
+	add	byte ptr [bx+si], al	;@17A47
+	add	byte ptr [bx+si], al	;@17A49
+	add	byte ptr [bx+si], al	;@17A4B
+	add	byte ptr [bx+si], al	;@17A4D
+	add	byte ptr [bx+si], al	;@17A4F
+	add	byte ptr [bx+si], al	;@17A51
+	add	byte ptr [bx+si], al	;@17A53
+	add	byte ptr [bx+si], al	;@17A55
+	add	byte ptr [bx+si], al	;@17A57
+	add	byte ptr [bx+si], al	;@17A59
+	add	byte ptr [bx+si], al	;@17A5B
+	add	byte ptr [bx+si], al	;@17A5D
+	add	byte ptr [bx+si], al	;@17A5F
+	add	byte ptr [bx+si], al	;@17A61
+	add	byte ptr [bx+si], al	;@17A63
+	add	byte ptr [bx+si], al	;@17A65
+	add	byte ptr [bx+si], al	;@17A67
+	add	byte ptr [bx+si], al	;@17A69
+	add	byte ptr [bx+si], al	;@17A6B
+	add	byte ptr [bx+si], al	;@17A6D
+	add	byte ptr [bx+si], al	;@17A6F
+	add	byte ptr [bx+si], al	;@17A71
+	add	byte ptr [bx+si], al	;@17A73
+	add	byte ptr [bx+si], al	;@17A75
+	add	byte ptr [bx+si], al	;@17A77
+	add	byte ptr [bx+si], al	;@17A79
+	add	byte ptr [bx+si], al	;@17A7B
+	add	byte ptr [bx+si], al	;@17A7D
+	add	byte ptr [bx+si], al	;@17A7F
+	add	byte ptr [bx+si], al	;@17A81
+	add	byte ptr [bx+si], al	;@17A83
+	add	byte ptr [bx+si], al	;@17A85
+	add	byte ptr [bx+si], al	;@17A87
+	add	byte ptr [bx+si], al	;@17A89
+	add	byte ptr [bx+si], al	;@17A8B
+	add	byte ptr [bx+si], al	;@17A8D
+	add	byte ptr [bx+si], al	;@17A8F
+	add	byte ptr [bx+si], al	;@17A91
+	add	byte ptr [bx+si], al	;@17A93
+	add	byte ptr [bx+si], al	;@17A95
+	add	byte ptr [bx+si], al	;@17A97
+	add	byte ptr [bx+si], al	;@17A99
+	add	byte ptr [bx+si], al	;@17A9B
+	add	byte ptr [bx+si], al	;@17A9D
+	add	byte ptr [bx+si], al	;@17A9F
+	add	byte ptr [bx+si], al	;@17AA1
+	add	byte ptr [bx+si], al	;@17AA3
+	add	byte ptr [bx+si], al	;@17AA5
+	add	byte ptr [bx+si], al	;@17AA7
+	add	byte ptr [bx+si], al	;@17AA9
+	add	byte ptr [bx+si], al	;@17AAB
+	add	byte ptr [bx+si], al	;@17AAD
+	add	byte ptr [bx+si], al	;@17AAF
+	add	byte ptr [bx+si], al	;@17AB1
+	add	byte ptr [bx+si], al	;@17AB3
+	add	byte ptr [bx+si], al	;@17AB5
+	add	byte ptr [bx+si], al	;@17AB7
+	add	byte ptr [bx+si], al	;@17AB9
+	add	byte ptr [bx+si], al	;@17ABB
+	add	byte ptr [bx+si], al	;@17ABD
+	add	byte ptr [bx+si], al	;@17ABF
+	add	byte ptr [bx+si], al	;@17AC1
+	add	byte ptr [bx+si], al	;@17AC3
+	add	byte ptr [bx+si], al	;@17AC5
+	add	byte ptr [bx+si], al	;@17AC7
+	add	byte ptr [bx+si], al	;@17AC9
+	add	byte ptr [bx+si], al	;@17ACB
+	add	byte ptr [bx+si], al	;@17ACD
+	add	byte ptr [bx+si], al	;@17ACF
+	add	byte ptr [bx+si], al	;@17AD1
+	add	byte ptr [bx+si], al	;@17AD3
+	add	byte ptr [bx+si], al	;@17AD5
+	add	byte ptr [bx+si], al	;@17AD7
+	add	byte ptr [bx+si], al	;@17AD9
+	add	byte ptr [bx+si], al	;@17ADB
+	add	byte ptr [bx+si], al	;@17ADD
+	add	byte ptr [bx+si], al	;@17ADF
+	add	byte ptr [bx+si], al	;@17AE1
+	add	byte ptr [bx+si], al	;@17AE3
+	add	byte ptr [bx+si], al	;@17AE5
+	add	byte ptr [bx+si], al	;@17AE7
+	add	byte ptr [bx+si], al	;@17AE9
+	add	byte ptr [bx+si], al	;@17AEB
+	add	byte ptr [bx+si], al	;@17AED
+	add	byte ptr [bx+si], al	;@17AEF
+	add	byte ptr [bx+si], al	;@17AF1
+	add	byte ptr [bx+si], al	;@17AF3
+	add	byte ptr [bx+si], al	;@17AF5
+	add	byte ptr [bx+si], al	;@17AF7
+	add	byte ptr [bx+si], al	;@17AF9
+	add	byte ptr [bx+si], al	;@17AFB
+	add	byte ptr [bx+si], al	;@17AFD
+	add	byte ptr [bx+si], al	;@17AFF
+	add	byte ptr [bx+si], al	;@17B01
+	add	byte ptr [bx+si], al	;@17B03
+	add	byte ptr [bx+si], al	;@17B05
+	add	byte ptr [bx+si], al	;@17B07
+	add	byte ptr [bx+si], al	;@17B09
+	add	byte ptr [bx+si], al	;@17B0B
+	add	byte ptr [bx+si], al	;@17B0D
+	add	byte ptr [bx+si], al	;@17B0F
+	add	byte ptr [bx+si], al	;@17B11
+	add	byte ptr [bx+si], al	;@17B13
+	add	byte ptr [bx+si], al	;@17B15
+	add	byte ptr [bx+si], al	;@17B17
+	add	byte ptr [bx+si], al	;@17B19
+	add	byte ptr [bx+si], al	;@17B1B
+	add	byte ptr [bx+si], al	;@17B1D
+	add	byte ptr [bx+si], al	;@17B1F
+	add	byte ptr [bx+si], al	;@17B21
+	add	byte ptr [bx+si], al	;@17B23
+	add	byte ptr [bx+si], al	;@17B25
+	add	byte ptr [bx+si], al	;@17B27
+	add	byte ptr [bx+si], al	;@17B29
+	add	byte ptr [bx+si], al	;@17B2B
+	add	byte ptr [bx+si], al	;@17B2D
+	add	byte ptr [bx+si], al	;@17B2F
+	add	byte ptr [bx+si], al	;@17B31
+	add	byte ptr [bx+si], al	;@17B33
+	add	byte ptr [bx+si], al	;@17B35
+	add	byte ptr [bx+si], al	;@17B37
+	add	byte ptr [bx+si], al	;@17B39
+	add	byte ptr [bx+si], al	;@17B3B
+	add	byte ptr [bx+si], al	;@17B3D
+	add	byte ptr [bx+si], al	;@17B3F
+	add	byte ptr [bx+si], al	;@17B41
+	add	byte ptr [bx+si], al	;@17B43
+	add	byte ptr [bx+si], al	;@17B45
+	add	byte ptr [bx+si], al	;@17B47
+	add	byte ptr [bx+si], al	;@17B49
+	add	byte ptr [bx+si], al	;@17B4B
+	add	byte ptr [bx+si], al	;@17B4D
+	add	byte ptr [bx+si], al	;@17B4F
+	add	byte ptr [bx+si], al	;@17B51
+	add	byte ptr [bx+si], al	;@17B53
+	add	byte ptr [bx+si], al	;@17B55
+	add	byte ptr [bx+si], al	;@17B57
+	add	byte ptr [bx+si], al	;@17B59
+	add	byte ptr [bx+si], al	;@17B5B
+	add	byte ptr [bx+si], al	;@17B5D
+	add	byte ptr [bx+si], al	;@17B5F
+	add	byte ptr [bx+si], al	;@17B61
+	add	byte ptr [bx+si], al	;@17B63
+	add	byte ptr [bx+si], al	;@17B65
+	add	byte ptr [bx+si], al	;@17B67
+	add	byte ptr [bx+si], al	;@17B69
+	add	byte ptr [bx+si], al	;@17B6B
+	add	byte ptr [bx+si], al	;@17B6D
+	add	byte ptr [bx+si], al	;@17B6F
+	add	byte ptr [bx+si], al	;@17B71
+	add	byte ptr [bx+si], al	;@17B73
+	add	byte ptr [bx+si], al	;@17B75
+	add	byte ptr [bx+si], al	;@17B77
+	add	byte ptr [bx+si], al	;@17B79
+	add	byte ptr [bx+si], al	;@17B7B
+	add	byte ptr [bx+si], al	;@17B7D
+	add	byte ptr [bx+si], al	;@17B7F
+	add	byte ptr [bx+si], al	;@17B81
+	add	byte ptr [bx+si], al	;@17B83
+	add	byte ptr [bx+si], al	;@17B85
+	add	byte ptr [bx+si], al	;@17B87
+	add	byte ptr [bx+si], al	;@17B89
+	add	byte ptr [bx+si], al	;@17B8B
+	add	byte ptr [bx+si], al	;@17B8D
+	add	byte ptr [bx+si], al	;@17B8F
+	add	byte ptr [bx+si], al	;@17B91
+	add	byte ptr [bx+si], al	;@17B93
+	add	byte ptr [bx+si], al	;@17B95
+	add	byte ptr [bx+si], al	;@17B97
+	add	byte ptr [bx+si], al	;@17B99
+	add	byte ptr [bx+si], al	;@17B9B
+	add	byte ptr [bx+si], al	;@17B9D
+	add	byte ptr [bx+si], al	;@17B9F
+	add	byte ptr [bx+si], al	;@17BA1
+	add	byte ptr [bx+si], al	;@17BA3
+	add	byte ptr [bx+si], al	;@17BA5
+	add	byte ptr [bx+si], al	;@17BA7
+	add	byte ptr [bx+si], al	;@17BA9
+	add	byte ptr [bx+si], al	;@17BAB
+	add	byte ptr [bx+si], al	;@17BAD
+	add	byte ptr [bx+si], al	;@17BAF
+	add	byte ptr [bx+si], al	;@17BB1
+	add	byte ptr [bx+si], al	;@17BB3
+	add	byte ptr [bx+si], al	;@17BB5
+	add	byte ptr [bx+si], al	;@17BB7
+	add	byte ptr [bx+si], al	;@17BB9
+	add	byte ptr [bx+si], al	;@17BBB
+	add	byte ptr [bx+si], al	;@17BBD
+	add	byte ptr [bx+si], al	;@17BBF
+	add	byte ptr [bx+si], al	;@17BC1
+	add	byte ptr [bx+si], al	;@17BC3
+	add	byte ptr [bx+si], al	;@17BC5
+	add	byte ptr [bx+si], al	;@17BC7
+	add	byte ptr [bx+si], al	;@17BC9
+	add	byte ptr [bx+si], al	;@17BCB
+	add	byte ptr [bx+si], al	;@17BCD
+	add	byte ptr [bx+si], al	;@17BCF
+	add	byte ptr [bx+si], al	;@17BD1
+	add	byte ptr [bx+si], al	;@17BD3
+	add	byte ptr [bx+si], al	;@17BD5
+	add	byte ptr [bx+si], al	;@17BD7
+	add	byte ptr [bx+si], al	;@17BD9
+	add	byte ptr [bx+si], al	;@17BDB
+	add	byte ptr [bx+si], al	;@17BDD
+	add	byte ptr [bx+si], al	;@17BDF
+	add	byte ptr [bx+si], al	;@17BE1
+	add	byte ptr [bx+si], al	;@17BE3
+	add	byte ptr [bx+si], al	;@17BE5
+	add	byte ptr [bx+si], al	;@17BE7
+	add	byte ptr [bx+si], al	;@17BE9
+	add	byte ptr [bx+si], al	;@17BEB
+	add	byte ptr [bx+si], al	;@17BED
+	add	byte ptr [bx+si], al	;@17BEF
+	add	byte ptr [bx+si], al	;@17BF1
+	add	byte ptr [bx+si], al	;@17BF3
+	add	byte ptr [bx+si], al	;@17BF5
+	add	byte ptr [bx+si], al	;@17BF7
+	add	byte ptr [bx+si], al	;@17BF9
+	add	byte ptr [bx+si], al	;@17BFB
+	add	byte ptr [bx+si], al	;@17BFD
+	add	byte ptr [bx+si], al	;@17BFF
+	add	byte ptr [bx+si], al	;@17C01
+	add	byte ptr [bx+si], al	;@17C03
+	add	byte ptr [bx+si], al	;@17C05
+	add	byte ptr [bx+si], al	;@17C07
+	add	byte ptr [bx+si], al	;@17C09
+	add	byte ptr [bx+si], al	;@17C0B
+	add	byte ptr [bx+si], al	;@17C0D
+	add	byte ptr [bx+si], al	;@17C0F
+	add	byte ptr [bx+si], al	;@17C11
+	add	byte ptr [bx+si], al	;@17C13
+	add	byte ptr [bx+si], al	;@17C15
+	add	byte ptr [bx+si], al	;@17C17
+	add	byte ptr [bx+si], al	;@17C19
+	add	byte ptr [bx+si], al	;@17C1B
+	add	byte ptr [bx+si], al	;@17C1D
+	add	byte ptr [bx+si], al	;@17C1F
+	add	byte ptr [bx+si], al	;@17C21
+	add	byte ptr [bx+si], al	;@17C23
+	add	byte ptr [bx+si], al	;@17C25
+	add	byte ptr [bx+si], al	;@17C27
+	add	byte ptr [bx+si], al	;@17C29
+	add	byte ptr [bx+si], al	;@17C2B
+	add	byte ptr [bx+si], al	;@17C2D
+	add	byte ptr [bx+si], al	;@17C2F
+	add	byte ptr [bx+si], al	;@17C31
+	add	byte ptr [bx+si], al	;@17C33
+	add	byte ptr [bx+si], al	;@17C35
+	add	byte ptr [bx+si], al	;@17C37
+	add	byte ptr [bx+si], al	;@17C39
+	add	byte ptr [bx+si], al	;@17C3B
+	add	byte ptr [bx+si], al	;@17C3D
+	add	byte ptr [bx+si], al	;@17C3F
+	add	byte ptr [bx+si], al	;@17C41
+	add	byte ptr [bx+si], al	;@17C43
+	add	byte ptr [bx+si], al	;@17C45
+	add	byte ptr [bx+si], al	;@17C47
+	add	byte ptr [bx+si], al	;@17C49
+	add	byte ptr [bx+si], al	;@17C4B
+	add	byte ptr [bx+si], al	;@17C4D
+	add	byte ptr [bx+si], al	;@17C4F
+	add	byte ptr [bx+si], al	;@17C51
+	add	byte ptr [bx+si], al	;@17C53
+	add	byte ptr [bx+si], al	;@17C55
+	add	byte ptr [bx+si], al	;@17C57
+	add	byte ptr [bx+si], al	;@17C59
+	add	byte ptr [bx+si], al	;@17C5B
+	add	byte ptr [bx+si], al	;@17C5D
+	add	byte ptr [bx+si], al	;@17C5F
+	add	byte ptr [bx+si], al	;@17C61
+	add	byte ptr [bx+si], al	;@17C63
+	add	byte ptr [bx+si], al	;@17C65
+	add	byte ptr [bx+si], al	;@17C67
+	add	byte ptr [bx+si], al	;@17C69
+	add	byte ptr [bx+si], al	;@17C6B
+	add	byte ptr [bx+si], al	;@17C6D
+	add	byte ptr [bx+si], al	;@17C6F
+	add	byte ptr [bx+si], al	;@17C71
+	add	byte ptr [bx+si], al	;@17C73
+	add	byte ptr [bx+si], al	;@17C75
+	add	byte ptr [bx+si], al	;@17C77
+	add	byte ptr [bx+si], al	;@17C79
+	add	byte ptr [bx+si], al	;@17C7B
+	add	byte ptr [bx+si], al	;@17C7D
+	add	byte ptr [bx+si], al	;@17C7F
+	add	byte ptr [bx+si], al	;@17C81
+	add	byte ptr [bx+si], al	;@17C83
+	add	byte ptr [bx+si], al	;@17C85
+	add	byte ptr [bx+si], al	;@17C87
+	add	byte ptr [bx+si], al	;@17C89
+	add	byte ptr [bx+si], al	;@17C8B
+	add	byte ptr [bx+si], al	;@17C8D
+	add	byte ptr [bx+si], al	;@17C8F
+	add	byte ptr [bx+si], al	;@17C91
+	add	byte ptr [bx+si], al	;@17C93
+	add	byte ptr [bx+si], al	;@17C95
+	add	byte ptr [bx+si], al	;@17C97
+	add	byte ptr [bx+si], al	;@17C99
+	add	byte ptr [bx+si], al	;@17C9B
+	add	byte ptr [bx+si], al	;@17C9D
+	add	byte ptr [bx+si], al	;@17C9F
+	add	byte ptr [bx+si], al	;@17CA1
+	add	byte ptr [bx+si], al	;@17CA3
+	add	byte ptr [bx+si], al	;@17CA5
+	add	byte ptr [bx+si], al	;@17CA7
+	add	byte ptr [bx+si], al	;@17CA9
+	add	byte ptr [bx+si], al	;@17CAB
+	add	byte ptr [bx+si], al	;@17CAD
+	add	byte ptr [bx+si], al	;@17CAF
+	add	byte ptr [bx+si], al	;@17CB1
+	add	byte ptr [bx+si], al	;@17CB3
+	add	byte ptr [bx+si], al	;@17CB5
+	add	byte ptr [bx+si], al	;@17CB7
+	add	byte ptr [bx+si], al	;@17CB9
+	add	byte ptr [bx+si], al	;@17CBB
+	add	byte ptr [bx+si], al	;@17CBD
+	add	byte ptr [bx+si], al	;@17CBF
+	add	byte ptr [bx+si], al	;@17CC1
+	add	byte ptr [bx+si], al	;@17CC3
+	add	byte ptr [bx+si], al	;@17CC5
+	add	byte ptr [bx+si], al	;@17CC7
+	add	byte ptr [bx+si], al	;@17CC9
+	add	byte ptr [bx+si], al	;@17CCB
+	add	byte ptr [bx+si], al	;@17CCD
+	add	byte ptr [bx+si], al	;@17CCF
+	add	byte ptr [bx+si], al	;@17CD1
+	add	byte ptr [bx+si], al	;@17CD3
+	add	byte ptr [bx+si], al	;@17CD5
+	add	byte ptr [bx+si], al	;@17CD7
+	add	byte ptr [bx+si], al	;@17CD9
+	add	byte ptr [bx+si], al	;@17CDB
+	add	byte ptr [bx+si], al	;@17CDD
+	add	byte ptr [bx+si], al	;@17CDF
+	add	byte ptr [bx+si], al	;@17CE1
+	add	byte ptr [bx+si], al	;@17CE3
+	add	byte ptr [bx+si], al	;@17CE5
+	add	byte ptr [bx+si], al	;@17CE7
+	add	byte ptr [bx+si], al	;@17CE9
+	add	byte ptr [bx+si], al	;@17CEB
+	add	byte ptr [bx+si], al	;@17CED
+	add	byte ptr [bx+si], al	;@17CEF
+	add	byte ptr [bx+si], al	;@17CF1
+	add	byte ptr [bx+si], al	;@17CF3
+	add	byte ptr [bx+si], al	;@17CF5
+	add	byte ptr [bx+si], al	;@17CF7
+	add	byte ptr [bx+si], al	;@17CF9
+	add	byte ptr [bx+si], al	;@17CFB
+	add	byte ptr [bx+si], al	;@17CFD
+	add	byte ptr [bx+si], al	;@17CFF
+	add	byte ptr [bx+si], al	;@17D01
+	add	byte ptr [bx+si], al	;@17D03
+	add	byte ptr [bx+si], al	;@17D05
+	add	byte ptr [bx+si], al	;@17D07
+	add	byte ptr [bx+si], al	;@17D09
+	add	byte ptr [bx+si], al	;@17D0B
+	add	byte ptr [bx+si], al	;@17D0D
+	add	byte ptr [bx+si], al	;@17D0F
+	add	byte ptr [bx+si], al	;@17D11
+	add	byte ptr [bx+si], al	;@17D13
+	add	byte ptr [bx+si], al	;@17D15
+	add	byte ptr [bx+si], al	;@17D17
+	add	byte ptr [bx+si], al	;@17D19
+	add	byte ptr [bx+si], al	;@17D1B
+	add	byte ptr [bx+si], al	;@17D1D
+	add	byte ptr [bx+si], al	;@17D1F
+	add	byte ptr [bx+si], al	;@17D21
+	add	byte ptr [bx+si], al	;@17D23
+	add	byte ptr [bx+si], al	;@17D25
+	add	byte ptr [bx+si], al	;@17D27
+	add	byte ptr [bx+si], al	;@17D29
+	add	byte ptr [bx+si], al	;@17D2B
+	add	byte ptr [bx+si], al	;@17D2D
+	add	byte ptr [bx+si], al	;@17D2F
+	add	byte ptr [bx+si], al	;@17D31
+	add	byte ptr [bx+si], al	;@17D33
+	add	byte ptr [bx+si], al	;@17D35
+	add	byte ptr [bx+si], al	;@17D37
+	add	byte ptr [bx+si], al	;@17D39
+	add	byte ptr [bx+si], al	;@17D3B
+	add	byte ptr [bx+si], al	;@17D3D
+	add	byte ptr [bx+si], al	;@17D3F
+	add	byte ptr [bx+si], al	;@17D41
+	add	byte ptr [bx+si], al	;@17D43
+	add	byte ptr [bx+si], al	;@17D45
+	add	byte ptr [bx+si], al	;@17D47
+	add	byte ptr [bx+si], al	;@17D49
+	add	byte ptr [bx+si], al	;@17D4B
+	add	byte ptr [bx+si], al	;@17D4D
+	add	byte ptr [bx+si], al	;@17D4F
+	add	byte ptr [bx+si], al	;@17D51
+	add	byte ptr [bx+si], al	;@17D53
+	add	byte ptr [bx+si], al	;@17D55
+	add	byte ptr [bx+si], al	;@17D57
+	add	byte ptr [bx+si], al	;@17D59
+	add	byte ptr [bx+si], al	;@17D5B
+	add	byte ptr [bx+si], al	;@17D5D
+	add	byte ptr [bx+si], al	;@17D5F
+	add	byte ptr [bx+si], al	;@17D61
+	add	byte ptr [bx+si], al	;@17D63
+	add	byte ptr [bx+si], al	;@17D65
+	add	byte ptr [bx+si], al	;@17D67
+	add	byte ptr [bx+si], al	;@17D69
+	add	byte ptr [bx+si], al	;@17D6B
+	add	byte ptr [bx+si], al	;@17D6D
+	add	byte ptr [bx+si], al	;@17D6F
+	add	byte ptr [bx+si], al	;@17D71
+	add	byte ptr [bx+si], al	;@17D73
+	add	byte ptr [bx+si], al	;@17D75
+	add	byte ptr [bx+si], al	;@17D77
+	add	byte ptr [bx+si], al	;@17D79
+	add	byte ptr [bx+si], al	;@17D7B
+	add	byte ptr [bx+si], al	;@17D7D
+	add	byte ptr [bx+si], al	;@17D7F
+	add	byte ptr [bx+si], al	;@17D81
+	add	byte ptr [bx+si], al	;@17D83
+	add	byte ptr [bx+si], al	;@17D85
+	add	byte ptr [bx+si], al	;@17D87
+	add	byte ptr [bx+si], al	;@17D89
+	add	byte ptr [bx+si], al	;@17D8B
+	add	byte ptr [bx+si], al	;@17D8D
+	add	byte ptr [bx+si], al	;@17D8F
+	add	byte ptr [bx+si], al	;@17D91
+	add	byte ptr [bx+si], al	;@17D93
+	add	byte ptr [bx+si], al	;@17D95
+	add	byte ptr [bx+si], al	;@17D97
+	add	byte ptr [bx+si], al	;@17D99
+	add	byte ptr [bx+si], al	;@17D9B
+	add	byte ptr [bx+si], al	;@17D9D
+	add	byte ptr [bx+si], al	;@17D9F
+	add	byte ptr [bx+si], al	;@17DA1
+	add	byte ptr [bx+si], al	;@17DA3
+	add	byte ptr [bx+si], al	;@17DA5
+	add	byte ptr [bx+si], al	;@17DA7
+	add	byte ptr [bx+si], al	;@17DA9
+	add	byte ptr [bx+si], al	;@17DAB
+	add	byte ptr [bx+si], al	;@17DAD
+	add	byte ptr [bx+si], al	;@17DAF
+	add	byte ptr [bx+si], al	;@17DB1
+	add	byte ptr [bx+si], al	;@17DB3
+	add	byte ptr [bx+si], al	;@17DB5
+	add	byte ptr [bx+si], al	;@17DB7
+	add	byte ptr [bx+si], al	;@17DB9
+	add	byte ptr [bx+si], al	;@17DBB
+	add	byte ptr [bx+si], al	;@17DBD
+	add	byte ptr [bx+si], al	;@17DBF
+	add	byte ptr [bx+si], al	;@17DC1
+	add	byte ptr [bx+si], al	;@17DC3
+	add	byte ptr [bx+si], al	;@17DC5
+	add	byte ptr [bx+si], al	;@17DC7
+	add	byte ptr [bx+si], al	;@17DC9
+	add	byte ptr [bx+si], al	;@17DCB
+	add	byte ptr [bx+si], al	;@17DCD
+	add	byte ptr [bx+si], al	;@17DCF
+	add	byte ptr [bx+si], al	;@17DD1
+	add	byte ptr [bx+si], al	;@17DD3
+	add	byte ptr [bx+si], al	;@17DD5
+	add	byte ptr [bx+si], al	;@17DD7
+	add	byte ptr [bx+si], al	;@17DD9
+	add	byte ptr [bx+si], al	;@17DDB
+	add	byte ptr [bx+si], al	;@17DDD
+	add	byte ptr [bx+si], al	;@17DDF
+	add	byte ptr [bx+si], al	;@17DE1
+	add	byte ptr [bx+si], al	;@17DE3
+	add	byte ptr [bx+si], al	;@17DE5
+	add	byte ptr [bx+si], al	;@17DE7
+	add	byte ptr [bx+si], al	;@17DE9
+	add	byte ptr [bx+si], al	;@17DEB
+	add	byte ptr [bx+si], al	;@17DED
+	add	byte ptr [bx+si], al	;@17DEF
+	add	byte ptr [bx+si], al	;@17DF1
+	add	byte ptr [bx+si], al	;@17DF3
+	add	byte ptr [bx+si], al	;@17DF5
+	add	byte ptr [bx+si], al	;@17DF7
+	add	byte ptr [bx+si], al	;@17DF9
+	add	byte ptr [bx+si], al	;@17DFB
+	add	byte ptr [bx+si], al	;@17DFD
+	add	byte ptr [bx+si], al	;@17DFF
+	add	byte ptr [bx+si], al	;@17E01
+	add	byte ptr [bx+si], al	;@17E03
+	add	byte ptr [bx+si], al	;@17E05
+	add	byte ptr [bx+si], al	;@17E07
+	add	byte ptr [bx+si], al	;@17E09
+	add	byte ptr [bx+si], al	;@17E0B
+	add	byte ptr [bx+si], al	;@17E0D
+	add	byte ptr [bx+si], al	;@17E0F
+	add	byte ptr [bx+si], al	;@17E11
+	add	byte ptr [bx+si], al	;@17E13
+	add	byte ptr [bx+si], al	;@17E15
+	add	byte ptr [bx+si], al	;@17E17
+	add	byte ptr [bx+si], al	;@17E19
+	add	byte ptr [bx+si], al	;@17E1B
+	add	byte ptr [bx+si], al	;@17E1D
+	add	byte ptr [bx+si], al	;@17E1F
+	add	byte ptr [bx+si], al	;@17E21
+	add	byte ptr [bx+si], al	;@17E23
+	add	byte ptr [bx+si], al	;@17E25
+	add	byte ptr [bx+si], al	;@17E27
+	add	byte ptr [bx+si], al	;@17E29
+	add	byte ptr [bx+si], al	;@17E2B
+	add	byte ptr [bx+si], al	;@17E2D
+	add	byte ptr [bx+si], al	;@17E2F
+	add	byte ptr [bx+si], al	;@17E31
+	add	byte ptr [bx+si], al	;@17E33
+	add	byte ptr [bx+si], al	;@17E35
+	add	byte ptr [bx+si], al	;@17E37
+	add	byte ptr [bx+si], al	;@17E39
+	add	byte ptr [bx+si], al	;@17E3B
+	add	byte ptr [bx+si], al	;@17E3D
+	add	byte ptr [bx+si], al	;@17E3F
+	add	byte ptr [bx+si], al	;@17E41
+	add	byte ptr [bx+si], al	;@17E43
+	add	byte ptr [bx+si], al	;@17E45
+	add	byte ptr [bx+si], al	;@17E47
+	add	byte ptr [bx+si], al	;@17E49
+	add	byte ptr [bx+si], al	;@17E4B
+	add	byte ptr [bx+si], al	;@17E4D
+	add	byte ptr [bx+si], al	;@17E4F
+	add	byte ptr [bx+si], al	;@17E51
+	add	byte ptr [bx+si], al	;@17E53
+	add	byte ptr [bx+si], al	;@17E55
+	add	byte ptr [bx+si], al	;@17E57
+	add	byte ptr [bx+si], al	;@17E59
+	add	byte ptr [bx+si], al	;@17E5B
+	add	byte ptr [bx+si], al	;@17E5D
+	add	byte ptr [bx+si], al	;@17E5F
+	add	byte ptr [bx+si], al	;@17E61
+	add	byte ptr [bx+si], al	;@17E63
+	add	byte ptr [bx+si], al	;@17E65
+	add	byte ptr [bx+si], al	;@17E67
+	add	byte ptr [bx+si], al	;@17E69
+	add	byte ptr [bx+si], al	;@17E6B
+	add	byte ptr [bx+si], al	;@17E6D
+	add	byte ptr [bx+si], al	;@17E6F
+	add	byte ptr [bx+si], al	;@17E71
+	add	byte ptr [bx+si], al	;@17E73
+	add	byte ptr [bx+si], al	;@17E75
+	add	byte ptr [bx+si], al	;@17E77
+	add	byte ptr [bx+si], al	;@17E79
+	add	byte ptr [bx+si], al	;@17E7B
+	add	byte ptr [bx+si], al	;@17E7D
+	add	byte ptr [bx+si], al	;@17E7F
+	add	byte ptr [bx+si], al	;@17E81
+	add	byte ptr [bx+si], al	;@17E83
+	add	byte ptr [bx+si], al	;@17E85
+	add	byte ptr [bx+si], al	;@17E87
+	add	byte ptr [bx+si], al	;@17E89
+	add	byte ptr [bx+si], al	;@17E8B
+	add	byte ptr [bx+si], al	;@17E8D
+	add	byte ptr [bx+si], al	;@17E8F
+	add	byte ptr [bx+si], al	;@17E91
+	add	byte ptr [bx+si], al	;@17E93
+	add	byte ptr [bx+si], al	;@17E95
+	add	byte ptr [bx+si], al	;@17E97
+	add	byte ptr [bx+si], al	;@17E99
+	add	byte ptr [bx+si], al	;@17E9B
+	add	byte ptr [bx+si], al	;@17E9D
+	add	byte ptr [bx+si], al	;@17E9F
+	add	byte ptr [bx+si], al	;@17EA1
+	add	byte ptr [bx+si], al	;@17EA3
+	add	byte ptr [bx+si], al	;@17EA5
+	add	byte ptr [bx+si], al	;@17EA7
+	add	byte ptr [bx+si], al	;@17EA9
+	add	byte ptr [bx+si], al	;@17EAB
+	add	byte ptr [bx+si], al	;@17EAD
+	add	byte ptr [bx+si], al	;@17EAF
+	add	byte ptr [bx+si], al	;@17EB1
+	add	byte ptr [bx+si], al	;@17EB3
+	add	byte ptr [bx+si], al	;@17EB5
+	add	byte ptr [bx+si], al	;@17EB7
+	add	byte ptr [bx+si], al	;@17EB9
+	add	byte ptr [bx+si], al	;@17EBB
+	add	byte ptr [bx+si], al	;@17EBD
+	add	byte ptr [bx+si], al	;@17EBF
+	add	byte ptr [bx+si], al	;@17EC1
+	add	byte ptr [bx+si], al	;@17EC3
+	add	byte ptr [bx+si], al	;@17EC5
+	add	byte ptr [bx+si], al	;@17EC7
+	add	byte ptr [bx+si], al	;@17EC9
+	add	byte ptr [bx+si], al	;@17ECB
+	add	byte ptr [bx+si], al	;@17ECD
+	add	byte ptr [bx+si], al	;@17ECF
+	add	byte ptr [bx+si], al	;@17ED1
+	add	byte ptr [bx+si], al	;@17ED3
+	add	byte ptr [bx+si], al	;@17ED5
+	add	byte ptr [bx+si], al	;@17ED7
+	add	byte ptr [bx+si], al	;@17ED9
+	add	byte ptr [bx+si], al	;@17EDB
+	add	byte ptr [bx+si], al	;@17EDD
+	add	byte ptr [bx+si], al	;@17EDF
+	add	byte ptr [bx+si], al	;@17EE1
+	add	byte ptr [bx+si], al	;@17EE3
+	add	byte ptr [bx+si], al	;@17EE5
+	add	byte ptr [bx+si], al	;@17EE7
+	add	byte ptr [bx+si], al	;@17EE9
+	add	byte ptr [bx+si], al	;@17EEB
+	add	byte ptr [bx+si], al	;@17EED
+	add	byte ptr [bx+si], al	;@17EEF
+	add	byte ptr [bx+si], al	;@17EF1
+	add	byte ptr [bx+si], al	;@17EF3
+	add	byte ptr [bx+si], al	;@17EF5
+	add	byte ptr [bx+si], al	;@17EF7
+	add	byte ptr [bx+si], al	;@17EF9
+	add	byte ptr [bx+si], al	;@17EFB
+	add	byte ptr [bx+si], al	;@17EFD
+	add	byte ptr [bx+si], al	;@17EFF
+	add	byte ptr [bx+si], al	;@17F01
+	add	byte ptr [bx+si], al	;@17F03
+	add	byte ptr [bx+si], al	;@17F05
+	add	byte ptr [bx+si], al	;@17F07
+	add	byte ptr [bx+si], al	;@17F09
+	add	byte ptr [bx+si], al	;@17F0B
+	add	byte ptr [bx+si], al	;@17F0D
+	add	byte ptr [bx+si], al	;@17F0F
+	add	byte ptr [bx+si], al	;@17F11
+	add	byte ptr [bx+si], al	;@17F13
+	add	byte ptr [bx+si], al	;@17F15
+	add	byte ptr [bx+si], al	;@17F17
+	add	byte ptr [bx+si], al	;@17F19
+	add	byte ptr [bx+si], al	;@17F1B
+	add	byte ptr [bx+si], al	;@17F1D
+	add	byte ptr [bx+si], al	;@17F1F
+	add	byte ptr [bx+si], al	;@17F21
+	add	byte ptr [bx+si], al	;@17F23
+	add	byte ptr [bx+si], al	;@17F25
+	add	byte ptr [bx+si], al	;@17F27
+	add	byte ptr [bx+si], al	;@17F29
+	add	byte ptr [bx+si], al	;@17F2B
+	add	byte ptr [bx+si], al	;@17F2D
+	add	byte ptr [bx+si], al	;@17F2F
+	add	byte ptr [bx+si], al	;@17F31
+	add	byte ptr [bx+si], al	;@17F33
+	add	byte ptr [bx+si], al	;@17F35
+	add	byte ptr [bx+si], al	;@17F37
+	add	byte ptr [bx+si], al	;@17F39
+	add	byte ptr [bx+si], al	;@17F3B
+	add	byte ptr [bx+si], al	;@17F3D
+	add	byte ptr [bx+si], al	;@17F3F
+	add	byte ptr [bx+si], al	;@17F41
+	add	byte ptr [bx+si], al	;@17F43
+	add	byte ptr [bx+si], al	;@17F45
+	add	byte ptr [bx+si], al	;@17F47
+	add	byte ptr [bx+si], al	;@17F49
+	add	byte ptr [bx+si], al	;@17F4B
+	add	byte ptr [bx+si], al	;@17F4D
+	add	byte ptr [bx+si], al	;@17F4F
+	add	byte ptr [bx+si], al	;@17F51
+	add	byte ptr [bx+si], al	;@17F53
+	add	byte ptr [bx+si], al	;@17F55
+	add	byte ptr [bx+si], al	;@17F57
+	add	byte ptr [bx+si], al	;@17F59
+	add	byte ptr [bx+si], al	;@17F5B
+	add	byte ptr [bx+si], al	;@17F5D
+	add	byte ptr [bx+si], al	;@17F5F
+	add	byte ptr [bx+si], al	;@17F61
+	add	byte ptr [bx+si], al	;@17F63
+	add	byte ptr [bx+si], al	;@17F65
+	add	byte ptr [bx+si], al	;@17F67
+	add	byte ptr [bx+si], al	;@17F69
+	add	byte ptr [bx+si], al	;@17F6B
+	add	byte ptr [bx+si], al	;@17F6D
+	add	byte ptr [bx+si], al	;@17F6F
+	add	byte ptr [bx+si], al	;@17F71
+	add	byte ptr [bx+si], al	;@17F73
+	add	byte ptr [bx+si], al	;@17F75
+	add	byte ptr [bx+si], al	;@17F77
+	add	byte ptr [bx+si], al	;@17F79
+	add	byte ptr [bx+si], al	;@17F7B
+	add	byte ptr [bx+si], al	;@17F7D
+	add	byte ptr [bx+si], al	;@17F7F
+	add	byte ptr [bx+si], al	;@17F81
+	add	byte ptr [bx+si], al	;@17F83
+	add	byte ptr [bx+si], al	;@17F85
+	add	byte ptr [bx+si], al	;@17F87
+	add	byte ptr [bx+si], al	;@17F89
+	add	byte ptr [bx+si], al	;@17F8B
+	add	byte ptr [bx+si], al	;@17F8D
+	add	byte ptr [bx+si], al	;@17F8F
+	add	byte ptr [bx+si], al	;@17F91
+	add	byte ptr [bx+si], al	;@17F93
+	add	byte ptr [bx+si], al	;@17F95
+	add	byte ptr [bx+si], al	;@17F97
+	add	byte ptr [bx+si], al	;@17F99
+	add	byte ptr [bx+si], al	;@17F9B
+	add	byte ptr [bx+si], al	;@17F9D
+	add	byte ptr [bx+si], al	;@17F9F
+	add	byte ptr [bx+si], al	;@17FA1
+	add	byte ptr [bx+si], al	;@17FA3
+	add	byte ptr [bx+si], al	;@17FA5
+	add	byte ptr [bx+si], al	;@17FA7
+	add	byte ptr [bx+si], al	;@17FA9
+	add	byte ptr [bx+si], al	;@17FAB
+	add	byte ptr [bx+si], al	;@17FAD
+	add	byte ptr [bx+si], al	;@17FAF
+	add	byte ptr [bx+si], al	;@17FB1
+	add	byte ptr [bx+si], al	;@17FB3
+	add	byte ptr [bx+si], al	;@17FB5
+	add	byte ptr [bx+si], al	;@17FB7
+	add	byte ptr [bx+si], al	;@17FB9
+	add	byte ptr [bx+si], al	;@17FBB
+	add	byte ptr [bx+si], al	;@17FBD
+	add	byte ptr [bx+si], al	;@17FBF
+	add	byte ptr [bx+si], al	;@17FC1
+	add	byte ptr [bx+si], al	;@17FC3
+	add	byte ptr [bx+si], al	;@17FC5
+	add	byte ptr [bx+si], al	;@17FC7
+	add	byte ptr [bx+si], al	;@17FC9
+	add	byte ptr [bx+si], al	;@17FCB
+	add	byte ptr [bx+si], al	;@17FCD
+	add	byte ptr [bx+si], al	;@17FCF
+	add	byte ptr [bx+si], al	;@17FD1
+	add	byte ptr [bx+si], al	;@17FD3
+	add	byte ptr [bx+si], al	;@17FD5
+	add	byte ptr [bx+si], al	;@17FD7
+	add	byte ptr [bx+si], al	;@17FD9
+	add	byte ptr [bx+si], al	;@17FDB
+	add	byte ptr [bx+si], al	;@17FDD
+	add	byte ptr [bx+si], al	;@17FDF
+	add	byte ptr [bx+si], al	;@17FE1
+	add	byte ptr [bx+si], al	;@17FE3
+	add	byte ptr [bx+si], al	;@17FE5
+	add	byte ptr [bx+si], al	;@17FE7
+	add	byte ptr [bx+si], al	;@17FE9
+	add	byte ptr [bx+si], al	;@17FEB
+	add	byte ptr [bx+si], al	;@17FED
+	add	byte ptr [bx+si], al	;@17FEF
+	add	byte ptr [bx+si], al	;@17FF1
+	add	byte ptr [bx+si], al	;@17FF3
+	add	byte ptr [bx+si], al	;@17FF5
+	add	byte ptr [bx+si], al	;@17FF7
+	add	byte ptr [bx+si], al	;@17FF9
+	add	byte ptr [bx+si], al	;@17FFB
+	add	byte ptr [bx+si], al	;@17FFD
+	add	byte ptr [bx+si], al	;@17FFF
+	add	byte ptr [bx+si], al	;@18001
+	add	byte ptr [bx+si], al	;@18003
+	add	byte ptr [bx+si], al	;@18005
+	add	byte ptr [bx+si], al	;@18007
+	add	byte ptr [bx+si], al	;@18009
+	add	byte ptr [bx+si], al	;@1800B
+	add	byte ptr [bx+si], al	;@1800D
+	add	byte ptr [bx+si], al	;@1800F
+	add	byte ptr [bx+si], al	;@18011
+	add	byte ptr [bx+si], al	;@18013
+	add	byte ptr [bx+si], al	;@18015
+	add	byte ptr [bx+si], al	;@18017
+	add	byte ptr [bx+si], al	;@18019
+	add	byte ptr [bx+si], al	;@1801B
+	add	byte ptr [bx+si], al	;@1801D
+	add	byte ptr [bx+si], al	;@1801F
+	add	byte ptr [bx+si], al	;@18021
+	add	byte ptr [bx+si], al	;@18023
+	add	byte ptr [bx+si], al	;@18025
+	add	byte ptr [bx+si], al	;@18027
+	add	byte ptr [bx+si], al	;@18029
+	add	byte ptr [bx+si], al	;@1802B
+	add	byte ptr [bx+si], al	;@1802D
+	add	byte ptr [bx+si], al	;@1802F
+	add	byte ptr [bx+si], al	;@18031
+	add	byte ptr [bx+si], al	;@18033
+	add	byte ptr [bx+si], al	;@18035
+	add	byte ptr [bx+si], al	;@18037
+	add	byte ptr [bx+si], al	;@18039
+	add	byte ptr [bx+si], al	;@1803B
+	add	byte ptr [bx+si], al	;@1803D
+	add	byte ptr [bx+si], al	;@1803F
+	add	byte ptr [bx+si], al	;@18041
+	add	byte ptr [bx+si], al	;@18043
+	add	byte ptr [bx+si], al	;@18045
+	add	byte ptr [bx+si], al	;@18047
+	add	byte ptr [bx+si], al	;@18049
+	add	byte ptr [bx+si], al	;@1804B
+	add	byte ptr [bx+si], al	;@1804D
+	add	byte ptr [bx+si], al	;@1804F
+	add	byte ptr [bx+si], al	;@18051
+	add	byte ptr [bx+si], al	;@18053
+	add	byte ptr [bx+si], al	;@18055
+	add	byte ptr [bx+si], al	;@18057
+	add	byte ptr [bx+si], al	;@18059
+	add	byte ptr [bx+si], al	;@1805B
+	add	byte ptr [bx+si], al	;@1805D
+	add	byte ptr [bx+si], al	;@1805F
+	add	byte ptr [bx+si], al	;@18061
+	add	byte ptr [bx+si], al	;@18063
+	add	byte ptr [bx+si], al	;@18065
+	add	byte ptr [bx+si], al	;@18067
+	add	byte ptr [bx+si], al	;@18069
+	add	byte ptr [bx+si], al	;@1806B
+	add	byte ptr [bx+si], al	;@1806D
+	add	byte ptr [bx+si], al	;@1806F
+	add	byte ptr [bx+si], al	;@18071
+	add	byte ptr [bx+si], al	;@18073
+	add	byte ptr [bx+si], al	;@18075
+	add	byte ptr [bx+si], al	;@18077
+	add	byte ptr [bx+si], al	;@18079
+	add	byte ptr [bx+si], al	;@1807B
+	add	byte ptr [bx+si], al	;@1807D
+	add	byte ptr [bx+si], al	;@1807F
+	add	byte ptr [bx+si], al	;@18081
+	add	byte ptr [bx+si], al	;@18083
+	add	byte ptr [bx+si], al	;@18085
+	add	byte ptr [bx+si], al	;@18087
+	add	byte ptr [bx+si], al	;@18089
+	add	byte ptr [bx+si], al	;@1808B
+	add	byte ptr [bx+si], al	;@1808D
+	add	byte ptr [bx+si], al	;@1808F
+	add	byte ptr [bx+si], al	;@18091
+	add	byte ptr [bx+si], al	;@18093
+	add	byte ptr [bx+si], al	;@18095
+	add	byte ptr [bx+si], al	;@18097
+	add	byte ptr [bx+si], al	;@18099
+	add	byte ptr [bx+si], al	;@1809B
+	add	byte ptr [bx+si], al	;@1809D
+	add	byte ptr [bx+si], al	;@1809F
+	add	byte ptr [bx+si], al	;@180A1
+	add	byte ptr [bx+si], al	;@180A3
+	add	byte ptr [bx+si], al	;@180A5
+	add	byte ptr [bx+si], al	;@180A7
+	add	byte ptr [bx+si], al	;@180A9
+	add	byte ptr [bx+si], al	;@180AB
+	add	byte ptr [bx+si], al	;@180AD
+	add	byte ptr [bx+si], al	;@180AF
+	add	byte ptr [bx+si], al	;@180B1
+	add	byte ptr [bx+si], al	;@180B3
+	add	byte ptr [bx+si], al	;@180B5
+	add	byte ptr [bx+si], al	;@180B7
+	add	byte ptr [bx+si], al	;@180B9
+	add	byte ptr [bx+si], al	;@180BB
+	add	byte ptr [bx+si], al	;@180BD
+	add	byte ptr [bx+si], al	;@180BF
+	add	byte ptr [bx+si], al	;@180C1
+	add	byte ptr [bx+si], al	;@180C3
+	add	byte ptr [bx+si], al	;@180C5
+	add	byte ptr [bx+si], al	;@180C7
+	add	byte ptr [bx+si], al	;@180C9
+	add	byte ptr [bx+si], al	;@180CB
+	add	byte ptr [bx+si], al	;@180CD
+	add	byte ptr [bx+si], al	;@180CF
+	add	byte ptr [bx+si], al	;@180D1
+	add	byte ptr [bx+si], al	;@180D3
+	add	byte ptr [bx+si], al	;@180D5
+	add	byte ptr [bx+si], al	;@180D7
+	add	byte ptr [bx+si], al	;@180D9
+	add	byte ptr [bx+si], al	;@180DB
+	add	byte ptr [bx+si], al	;@180DD
+	add	byte ptr [bx+si], al	;@180DF
+	add	byte ptr [bx+si], al	;@180E1
+	add	byte ptr [bx+si], al	;@180E3
+	add	byte ptr [bx+si], al	;@180E5
+	add	byte ptr [bx+si], al	;@180E7
+	add	byte ptr [bx+si], al	;@180E9
+	add	byte ptr [bx+si], al	;@180EB
+	add	byte ptr [bx+si], al	;@180ED
+	add	byte ptr [bx+si], al	;@180EF
+	add	byte ptr [bx+si], al	;@180F1
+	add	byte ptr [bx+si], al	;@180F3
+	add	byte ptr [bx+si], al	;@180F5
+	add	byte ptr [bx+si], al	;@180F7
+	add	byte ptr [bx+si], al	;@180F9
+	add	byte ptr [bx+si], al	;@180FB
+	add	byte ptr [bx+si], al	;@180FD
+	add	byte ptr [bx+si], al	;@180FF
+	add	byte ptr [bx+si], al	;@18101
+	add	byte ptr [bx+si], al	;@18103
+	add	byte ptr [bx+si], al	;@18105
+	add	byte ptr [bx+si], al	;@18107
+	add	byte ptr [bx+si], al	;@18109
+	add	byte ptr [bx+si], al	;@1810B
+	add	byte ptr [bx+si], al	;@1810D
+	add	byte ptr [bx+si], al	;@1810F
+	add	byte ptr [bx+si], al	;@18111
+	add	byte ptr [bx+si], al	;@18113
+	add	byte ptr [bx+si], al	;@18115
+	add	byte ptr [bx+si], al	;@18117
+	add	byte ptr [bx+si], al	;@18119
+	add	byte ptr [bx+si], al	;@1811B
+	add	byte ptr [bx+si], al	;@1811D
+	add	byte ptr [bx+si], al	;@1811F
+	add	byte ptr [bx+si], al	;@18121
+	add	byte ptr [bx+si], al	;@18123
+	add	byte ptr [bx+si], al	;@18125
+	add	byte ptr [bx+si], al	;@18127
+	add	byte ptr [bx+si], al	;@18129
+	add	byte ptr [bx+si], al	;@1812B
+	add	byte ptr [bx+si], al	;@1812D
+	add	byte ptr [bx+si], al	;@1812F
+	add	byte ptr [bx+si], al	;@18131
+	add	byte ptr [bx+si], al	;@18133
+	add	byte ptr [bx+si], al	;@18135
+	add	byte ptr [bx+si], al	;@18137
+	add	byte ptr [bx+si], al	;@18139
+	add	byte ptr [bx+si], al	;@1813B
+	add	byte ptr [bx+si], al	;@1813D
+	add	byte ptr [bx+si], al	;@1813F
+	add	byte ptr [bx+si], al	;@18141
+	add	byte ptr [bx+si], al	;@18143
+	add	byte ptr [bx+si], al	;@18145
+	add	byte ptr [bx+si], al	;@18147
+	add	byte ptr [bx+si], al	;@18149
+	add	byte ptr [bx+si], al	;@1814B
+	add	byte ptr [bx+si], al	;@1814D
+	add	byte ptr [bx+si], al	;@1814F
+	add	byte ptr [bx+si], al	;@18151
+	add	byte ptr [bx+si], al	;@18153
+	add	byte ptr [bx+si], al	;@18155
+	add	byte ptr [bx+si], al	;@18157
+	add	byte ptr [bx+si], al	;@18159
+	add	byte ptr [bx+si], al	;@1815B
+	add	byte ptr [bx+si], al	;@1815D
+	add	byte ptr [bx+si], al	;@1815F
+	add	byte ptr [bx+si], al	;@18161
+	add	byte ptr [bx+si], al	;@18163
+	add	byte ptr [bx+si], al	;@18165
+	add	byte ptr [bx+si], al	;@18167
+	add	byte ptr [bx+si], al	;@18169
+	add	byte ptr [bx+si], al	;@1816B
+	add	byte ptr [bx+si], al	;@1816D
+	add	byte ptr [bx+si], al	;@1816F
+	add	byte ptr [bx+si], al	;@18171
+	add	byte ptr [bx+si], al	;@18173
+	add	byte ptr [bx+si], al	;@18175
+	add	byte ptr [bx+si], al	;@18177
+	add	byte ptr [bx+si], al	;@18179
+	add	byte ptr [bx+si], al	;@1817B
+	add	byte ptr [bx+si], al	;@1817D
+	add	byte ptr [bx+si], al	;@1817F
+	add	byte ptr [bx+si], al	;@18181
+	add	byte ptr [bx+si], al	;@18183
+	add	byte ptr [bx+si], al	;@18185
+	add	byte ptr [bx+si], al	;@18187
+	add	byte ptr [bx+si], al	;@18189
+	add	byte ptr [bx+si], al	;@1818B
+	add	byte ptr [bx+si], al	;@1818D
+	add	byte ptr [bx+si], al	;@1818F
+	add	byte ptr [bx+si], al	;@18191
+	add	byte ptr [bx+si], al	;@18193
+	add	byte ptr [bx+si], al	;@18195
+	add	byte ptr [bx+si], al	;@18197
+	add	byte ptr [bx+si], al	;@18199
+	add	byte ptr [bx+si], al	;@1819B
+	add	byte ptr [bx+si], al	;@1819D
+	db	0	; add byte ptr [bp+42h], al	;@1819F
 Y17100	ends
 
 Y181A0	segment byte public 'OVRDATA'
-	db	'FBOV', 0B0h, 1Dh, 6, 0, 30h, 0C6h, 0, 0, 0BCh, 0, 0, 0, 12h, 3	;@181A0
+L181A0	db	'FBOV', 0B0h, 1Dh, 6, 0, 30h, 0C6h, 0, 0, 0BCh, 0, 0, 0, 12h, 3	;@181A0
 	db	1Ah, 3, 36h, 3, 52h, 3, 71h, 3, 90h, 3, 0B2h, 3, 0C0h, 3, 0DAh
 	db	3, 0EEh, 3, 0Ch, 4, 25h, 4, 4Fh, 4, 64h, 4, 85h, 4, 0A2h, 4, 0BEh
 	db	4, 0DFh, 4, 9, 5, 1Dh, 5, 34h, 5, 48h, 5, 65h, 5, 7Dh, 5, 96h

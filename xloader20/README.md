@@ -80,9 +80,12 @@ The sources are a first draft, thinner than the loaders':
   [../tlink20/](../tlink20/)'s core (tools/gen/ovy_entries.json); 150 of them carry their
   tlink20 names. Its main segment is the TLINK core rebuilt for protected mode, close to
   [../tlink20/](../tlink20/)'s source but not the same bytes.
-- **BCCX.OVY:** still all bytes, in 17 modules, because one file is too big for TASM. Its
-  code is the C compiler, overlaid.
+- **BCCX.OVY:** in 17 modules, because one file is too big for TASM. Its code is the C
+  compiler. 1,150 of [../bcc20/](../bcc20/)'s functions match it exactly once, and the
+  draft is decoded from them and named after them (tools/gen/bccx_entries.json). The
+  overlay block, and code the generator did not reach, are still bytes: about 32,000 of
+  its 51,000 lines.
 - Next: decode both against the real-mode sources they were built from.
 
-[tools/gen/](tools/gen/) has the generator and the specs that produced the draft. The specs
+[tools/gen/](tools/gen/) has the generators (exegen_ovy.py, for the OVY drafts, cuts byte runs at segment ends) and the specs that produced the drafts. The specs
 were run from a scratch directory and name their paths there.
