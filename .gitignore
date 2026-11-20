@@ -1,25 +1,25 @@
 # Borland toolchains: installed locally by scripts/setup-toolchains.py, never committed
 /toolchains/
-*/toolchain
+**/toolchain
 # generated from your own BCC.EXE and toolchain by */scripts/prepare.py
-*/groupobj/
-*/memory_blocks/*.bin
-*/linktest/*.OBJ
-*/linktest/*.LST
-*/linktest/*.LOG
-# generated from your own CPP.EXE by cpp20/scripts/prepare.py
-/cpp20/src/data/
-*/work/
+**/groupobj/
+**/memory_blocks/*.bin
+**/linktest/*.OBJ
+**/linktest/*.LST
+**/linktest/*.LOG
+# generated from your own CPP.EXE by bc20/cpp/scripts/prepare.py
+/bc20/cpp/src/data/
+**/work/
 # build output
-*/build-source
-*/build/
+**/build-source
+**/build/
 # Python and editor clutter
 __pycache__/
 *.pyc
 .venv/
 .DS_Store
 ._*
-bcc20/testsuites
+bc20/bcc/testsuites
 # the port: build output and recorded calls (made from your own BCC.EXE)
-bcc20-port/build/
-bcc20-port/records/
+bc20/port/build/
+bc20/port/records/

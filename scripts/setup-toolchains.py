@@ -10,7 +10,7 @@ PATH is the downloaded .7z archive, or a folder holding its floppy images:
            https://winworldpc.com/product/borland-turbo-c/2x
   --tc101  Borland Turbo C++ 1.01, the "Borland Turbo C++ 1.01 (3.5)" set (Disk01.img ... Disk04.img)
            https://winworldpc.com/product/turbo-c/1x
-           Only the Borland C++ 2.0 utilities (touch20 and the others) need it: Borland built
+           Only the Borland C++ 2.0 utilities (bc20/touch and the others) need it: Borland built
            them with Turbo C++.
 Each product is unpacked into toolchains/BC20, toolchains/TC201 or toolchains/TC101 at the
 repository root, and every file is checked against scripts/toolchain-manifest.sha256: the
@@ -22,6 +22,7 @@ Borland's installer splits some archives across disks (CMDLINE.CA1 on disk 3, CM
 disk 8): each part is a 4-byte header followed by a piece of an ordinary ZIP, so the parts are
 joined without their headers and unzipped; no DOS installer is run."""
 import argparse
+import os
 import hashlib
 import shutil
 import subprocess
@@ -37,7 +38,7 @@ REQUIRED = {'BC20/BIN/BCC.EXE', 'BC20/BIN/TASM.EXE', 'BC20/BIN/TLINK.EXE', 'BC20
             'TC201/BIN/TCC.EXE', 'TC201/BIN/CPP.EXE', 'TC201/BIN/TLINK.EXE',
             'TC101/BIN/TCC.EXE', 'TC101/BIN/TLINK.EXE', 'TC101/LIB/CS.LIB', 'TC101/STARTUP/C0.ASM'}
 # which projects need each product
-NEEDED_BY = {'BC20': 'every project', 'TC201': 'bcc20, cpp20, tlib20, objxref20', 'TC101': 'the Borland C++ 2.0 utilities (touch20, tlib20, make20)'}
+NEEDED_BY = {'BC20': 'every project', 'TC201': 'bc20/bcc, bc20/cpp, bc20/tlib, bc20/objxref', 'TC101': 'the Borland C++ 2.0 utilities (bc20/touch, bc20/tlib, bc20/make)'}
 
 
 def die(msg):
@@ -122,7 +123,7 @@ def setup_bc20(path, work):
 
 
 # Borland's example programs and class library: source the modding build's tests compile
-# (bcc20/tools/modtest.py, bcc20/tests/modbuild/BORLAND.TSV).  Only the C and C++ sources
+# (bc20/bcc/tools/modtest.py, bc20/bcc/tests/modbuild/BORLAND.TSV).  Only the C and C++ sources
 # and headers are installed, where Borland's installer puts them; WINCLUDE.ZIP holds
 # WINDOWS.H, which the Windows examples include.
 EXAMPLES = [('EXAMPLES.ZIP', 'EXAMPLES'), ('WEXAMPLE.ZIP', 'EXAMPLES/WIN'),
@@ -158,7 +159,7 @@ def setup_tc201(path, work):
         if not f:
             die(f'{name} not found on the Turbo C 2.01 disks')
         shutil.copy(f, tc / 'BIN' / name)
-    # the startup modules and libraries (objxref20 links Turbo C 2.01's own C0C.OBJ and CC.LIB)
+    # the startup modules and libraries (bc20/objxref links Turbo C 2.01's own C0C.OBJ and CC.LIB)
     for f in disks.rglob('*'):
         n = f.name.upper()
         if f.is_file() and (n.endswith('.LIB') or (n.startswith('C0') and n.endswith('.OBJ'))):
@@ -251,12 +252,15 @@ def main():
 def link_projects():
     """Each version's directory (one holding an exhume.toml) refers to its toolchain as
     toolchain/: point that at the shared toolchains/ folder."""
-    for cfg in sorted(ROOT.glob('*/exhume.toml')):
+    for cfg in sorted(list(ROOT.glob('*/exhume.toml')) + list(ROOT.glob('*/*/exhume.toml'))):
+        if cfg.parts[len(ROOT.parts)] == 'exhume':
+            continue
         link = cfg.parent / 'toolchain'
         if link.is_symlink() or link.exists():
             continue
-        link.symlink_to(Path('..') / 'toolchains', target_is_directory=True)
-        print(f'linked {link.relative_to(ROOT)} -> ../toolchains')
+        target = Path(os.path.relpath(ROOT / 'toolchains', cfg.parent))
+        link.symlink_to(target, target_is_directory=True)
+        print(f'linked {link.relative_to(ROOT)} -> {target}')
 
 
 if __name__ == '__main__':

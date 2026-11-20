@@ -17,10 +17,10 @@ welcome.
 ## The one rule: the build stays byte-identical
 
 Every change must leave the rebuilt `BCC.EXE` identical to Borland's. Before opening a pull
-request, run in `bcc20/`:
+request, run in `bc20/bcc/`:
 
 ```sh
-../.venv/bin/python ../exhume/tools/gate.py check --all
+../../.venv/bin/python ../../exhume/tools/gate.py check --all
 ```
 
 and include its last lines. Renames, comments and header changes usually cannot change the

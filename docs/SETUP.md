@@ -38,7 +38,7 @@ historic software:
 |---|---|---|---|
 | Borland C++ 2.0 (DOS) | [winworldpc.com/product/borland-c/20](https://winworldpc.com/product/borland-c/20) | **Borland CPP 2.0 (1991) (3.5-720k)**: eleven 3.5" 720 KB floppy images | 12 MB |
 | Borland Turbo C 2.01 | [winworldpc.com/product/borland-turbo-c/2x](https://winworldpc.com/product/borland-turbo-c/2x) | **Borland Turbo C 2.01 (1989) (3.5-720k)**: three 3.5" 720 KB floppy images | 3 MB |
-| Borland Turbo C++ 1.01 (only for the utilities: `touch20`) | [winworldpc.com/product/turbo-c/1x](https://winworldpc.com/product/turbo-c/1x) | **Turbo C++ 1.01 (3.5)**: four 3.5" 720 KB floppy images | 3 MB |
+| Borland Turbo C++ 1.01 (only for the utilities: `bc20/touch`) | [winworldpc.com/product/turbo-c/1x](https://winworldpc.com/product/turbo-c/1x) | **Turbo C++ 1.01 (3.5)**: four 3.5" 720 KB floppy images | 3 MB |
 
 Pick exactly these sets. Other disk sets of the same products exist, and a different release
 (even a 5.25" set) may contain different files. The setup script checks every file it
@@ -71,8 +71,8 @@ You can also pass folders that hold the extracted `.IMG` files.
 ## 5. Generate the link inputs
 
 ```sh
-cd bcc20
-../.venv/bin/python scripts/prepare.py
+cd bc20/bcc
+../../.venv/bin/python scripts/prepare.py
 ```
 
 The exact link needs some inputs that cannot be committed, because they are derived from
@@ -87,7 +87,7 @@ It takes about 10 minutes and checks every object it makes.
 ## 6. Build and verify everything
 
 ```sh
-../.venv/bin/python ../exhume/tools/gate.py check --all
+../../.venv/bin/python ../../exhume/tools/gate.py check --all
 ```
 
 The gate:
@@ -110,7 +110,7 @@ CHECK PASSED
 ```
 
 The rebuilt executable is `build-source/SOURCELINK/run/BCC.EXE`. To see how two executables
-differ, run `../exhume/tools/exediff.py FILE --original toolchain/BC20/BIN/BCC.EXE`.
+differ, run `../../exhume/tools/exediff.py FILE --original toolchain/BC20/BIN/BCC.EXE`.
 
 ## Building with changes
 
@@ -118,41 +118,41 @@ The exact link fixes every address, so it only proves the sources. To change the
 modding build, which lets TLINK lay the program out:
 
 ```sh
-sh ../exhume/tools/setup-emu2.sh                      # once: the DOS emulator the comparison uses
-../.venv/bin/python tools/modlink.py                  # build-source/MODLINK/run/BCC.EXE
-../.venv/bin/python tools/fetch-testsuites.py         # once, optional: GCC's and cfront's tests (git)
-../.venv/bin/python tools/modtest.py                  # 1836 compiles, compared with Borland's BCC.EXE
-sh ../exhume/tools/setup-emu2-trace.sh                # once, optional: the tracing emu2
-../.venv/bin/python tools/modtrace.py                 # which data words are pointers, which code runs
-../.venv/bin/python tools/modedits.py                 # new files and edited context sources, tested
+sh ../../exhume/tools/setup-emu2.sh                      # once: the DOS emulator the comparison uses
+../../.venv/bin/python tools/modlink.py                  # build-source/MODLINK/run/BCC.EXE
+../../.venv/bin/python tools/fetch-testsuites.py         # once, optional: GCC's and cfront's tests (git)
+../../.venv/bin/python tools/modtest.py                  # 1836 compiles, compared with Borland's BCC.EXE
+sh ../../exhume/tools/setup-emu2-trace.sh                # once, optional: the tracing emu2
+../../.venv/bin/python tools/modtrace.py                 # which data words are pointers, which code runs
+../../.venv/bin/python tools/modedits.py                 # new files and edited context sources, tested
 cp -R src ../my-src                                   # edit the copy, then:
-../.venv/bin/python tools/modlink.py --src ../my-src --out build-source/MYBUILD
+../../.venv/bin/python tools/modlink.py --src ../my-src --out build-source/MYBUILD
 ```
 
-It needs the objects that `gate.py check` compiles. [bcc20/docs/MODDING.md](../bcc20/docs/MODDING.md)
+It needs the objects that `gate.py check` compiles. [bc20/bcc/docs/MODDING.md](../bc20/bcc/docs/MODDING.md)
 explains how it works, how it is checked and what cannot be changed yet.
 
 ## The preprocessor, CPP.EXE
 
-`cpp20/` rebuilds Borland C++ 2.0's standalone preprocessor with the same toolchains:
+`bc20/cpp/` rebuilds Borland C++ 2.0's standalone preprocessor with the same toolchains:
 
 ```sh
-cd ../cpp20
-../.venv/bin/python scripts/prepare.py                # its data modules, from your own CPP.EXE
-../.venv/bin/python ../exhume/tools/gate.py check --all
+cd ../cpp
+../../.venv/bin/python scripts/prepare.py                # its data modules, from your own CPP.EXE
+../../.venv/bin/python ../../exhume/tools/gate.py check --all
 sh tools/runcheck.sh                                  # needs emu2 (see above)
 ```
 
 The link is byte-identical to CPP.EXE. One link step restores the original order of one
 object's fixups, which no source given to Borland's tools reproduces; it is explained in
-[cpp20/docs/FINDINGS.md](../cpp20/docs/FINDINGS.md).
+[bc20/cpp/docs/FINDINGS.md](../bc20/cpp/docs/FINDINGS.md).
 
 ## Working on one file
 
 ```sh
-../.venv/bin/python ../exhume/tools/match.py src/codegen/SWITCH.C    # compile and compare one source
-../.venv/bin/python ../exhume/tools/verify.py src/codegen/SWITCH.C   # check its relocations and names
-../.venv/bin/python ../exhume/tools/gate.py check --fast             # every changed source, no link
+../../.venv/bin/python ../../exhume/tools/match.py src/codegen/SWITCH.C    # compile and compare one source
+../../.venv/bin/python ../../exhume/tools/verify.py src/codegen/SWITCH.C   # check its relocations and names
+../../.venv/bin/python ../../exhume/tools/gate.py check --fast             # every changed source, no link
 ```
 
 Each source starts with its build lines: `/* target: */` names the piece of BCC.EXE it

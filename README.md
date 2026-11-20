@@ -8,51 +8,12 @@ with the original Borland toolchain. Then it makes that source readable: real na
 record fields, comments on every file, and notes on what the compiler does and where it goes
 wrong.
 
-| Directory | Program | Status |
+| Directory | Product | Status |
 |---|---|---|
-| [`bcc20/`](bcc20/) | **Borland C++ 2.0** (1991), `BCC.EXE`, the command-line compiler | Complete: rebuilds byte-identical (SHA-256 `dd5744b9...`) |
-| [`cpp20/`](cpp20/) | **Borland C++ 2.0** (1991), `CPP.EXE`, the standalone preprocessor | Complete: rebuilds byte-identical (SHA-256 `39879c60...`) |
-| [`touch20/`](touch20/) | **Borland C++ 2.0** (1991), `TOUCH.COM` 3.0, sets files' date and time | Complete: rebuilds byte-identical (SHA-256 `8a7077f3...`) |
-| [`tlib20/`](tlib20/) | **Borland C++ 2.0** (1991), `TLIB.EXE` 3.01, the librarian | Complete: rebuilds byte-identical (SHA-256 `b06333a7...`) |
-| [`make20/`](make20/) | **Borland C++ 2.0** (1991), `MAKE.EXE` 3.5, the program maintainer | Complete: rebuilds byte-identical (SHA-256 `cdcc73cc...`) |
-| [`objxref20/`](objxref20/) | **Borland C++ 2.0** (1991), `OBJXREF.COM` 3.0, the cross-reference of object modules | Complete: rebuilds byte-identical (SHA-256 `835a536a...`) |
-| [`grep20/`](grep20/) | **Borland C++ 2.0** (1991), `GREP.COM` 3.0, the file searcher (assembler) | Complete: rebuilds byte-identical (SHA-256 `a4c9faa6...`) |
-| [`tcref20/`](tcref20/) | **Borland C++ 2.0** (1991), `TCREF.EXE` 2.0, the cross-reference reporter for TASM (assembler) | Complete: rebuilds byte-identical (SHA-256 `78570a17...`) |
-| [`dpmiload20/`](dpmiload20/) | **Borland C++ 2.0** (1991), `DPMILOAD.EXE` 1.000, the loader of the protected-mode tools (assembler) | Complete: rebuilds byte-identical (SHA-256 `9a84d9da...`) |
-| [`trigraph20/`](trigraph20/) | **Borland C++ 2.0** (1991), `TRIGRAPH.EXE` 1.0, the converter of ANSI trigraphs (C++) | Complete: rebuilds byte-identical (SHA-256 `b9810f09...`) |
-| [`thelp20/`](thelp20/) | **Borland C++ 2.0** (1991), `THELP.COM` 2.0, the help TSR (assembler) | Complete: rebuilds byte-identical (SHA-256 `f2559182...`) |
-| [`trancopy20/`](trancopy20/) | **Borland C++ 2.0** (1991), `TRANCOPY.EXE` 2.0, the copier of the IDE's Transfer menu (C++) | Complete: rebuilds byte-identical (SHA-256 `bb66a1e9...`) |
-| [`tkinst20/`](tkinst20/) | **Borland C++ 2.0** (1991), `TKINST.EXE` 2.0, the installer of the protected-mode kernel (C and assembler) | Complete: rebuilds byte-identical (SHA-256 `6f84a44c...`; header padded after the link) |
-| [`tlink20/`](tlink20/) | **Borland C++ 2.0** (1991), `TLINK.EXE` 4.0, the linker (assembler, C and the far-memory heap) | Rebuilds byte-identical (SHA-256 `81701462...`); the assembler core is decoded and partly named |
-| [`tasm20/`](tasm20/) | **Borland C++ 2.0** (1991), `TASM.EXE` 2.51, the assembler (assembler) | Rebuilds byte-identical (SHA-256 `712e4127...`); the source is still the generated draft (address labels, undecoded code, no comments) |
-| [`tasmx20/`](tasmx20/) | **Borland C++ 2.0** (1991), `TASMX.EXE` 2.51, the protected-mode assembler (assembler, NE) | Rebuilds byte-identical with our NE writer (SHA-256 `d1cf3399...`); the source is the generated draft |
-| [`tkernel20/`](tkernel20/) | **Borland C++ 2.0** (1991), `TKERNEL.EXE`, the protected-mode kernel of BCCX, TLINKX and TASMX (assembler) | Rebuilds byte-identical (SHA-256 `ffe579ec...`); the source is the generated draft |
-| [`emstest20/`](emstest20/) | **Borland C++ 2.0** (1991), `EMSTEST.COM`, the expanded-memory test (Turbo Pascal 3) | Rebuilds byte-identical (SHA-256 `eb811fd7...`) with a patched TP 3.02A; the source is recovered in full |
-| [`xloader20/`](xloader20/) | **Borland C++ 2.0** (1991), `TLINKX.EXE`/`.OVY` and `BCCX.EXE`/`.OVY`, the protected-mode linker and compiler with their loaders (C and assembler) | Both, and TLINKX.OVY and BCCX.OVY (with our YO writer), rebuild byte-identical; the sources are generated drafts, the `.OVY` ones mostly bytes |
-| [`interim-rtl/`](interim-rtl/) | the run-time library Borland linked its own 1990-91 utilities with | The modules no released library has, as C (used by `tlib20` and `make20`) |
-| [`bcc20-port/`](bcc20-port/) | `BCC.EXE` as a native compiler and library, for decompiling Borland-built games | Complete: every function checked against BCC.EXE; 1874 of 1880 corpus compiles identical; native binaries and a library |
+| [`bc20/`](bc20/) | **Borland C++ 2.0** (1991): the compiler `BCC.EXE`, `CPP`, `TLINK`, `TASM`, `TLIB`, `MAKE`, the protected-mode tools (`TKERNEL`, `BCCX`, `TLINKX`, `TASMX`) and the utilities, 22 executables in all; plus its run-time library modules and a native port of the compiler | Every program rebuilds byte-identical; [bc20/README.md](bc20/README.md) lists each one |
 
-More Borland and Turbo versions will join as further top-level directories, sharing the
+More Borland and Turbo versions will join as further top-level directories (`tc201/`, ...), sharing the
 [`scripts/`](scripts/) and the [Exhume](https://github.com/abedegno/Exhume) build tools.
-
-## Borland C++ 2.0 at a glance
-
-- **298 sources** in 15 subsystem directories: 265 C files (Borland C++ 2.0 and Turbo C 2.01)
-  and 33 hand-written TASM modules. The original's own split into compiled C and hand-written
-  assembly is kept: assembly was never forced into C, and compiled code was never left as
-  assembly.
-- **Every name is recovered or descriptive**: about 3,100 functions, globals and labels, 300
-  record fields (`src/include/FIELDS.H`), 40 record layouts (`src/include/RECORDS.H`),
-  message, token, type-kind and operator constants.
-- **Every file is documented**: a role line, an overview and function comments
-  (about 10,000 lines of comments), with [a source map](bcc20/docs/SOURCE-MAP.md) and
-  [how the compiler is organised](bcc20/docs/SUBSYSTEMS.md).
-- **Findings**: likely bugs in the original, duplicated code, dead code, and how Borland's
-  compiler worked inside: [bcc20/docs/FINDINGS.md](bcc20/docs/FINDINGS.md). Some highlights:
-  the parser is hand-written recursive descent with an operator-precedence expression parser
-  (no yacc); the code generator's tail merging shaped how the original source had to be
-  written; `strrchr` reads one byte before an empty string; freed precompiled-header file
-  space is never reused.
 
 ## Rebuild it yourself
 
@@ -66,10 +27,10 @@ cd borland-reborn
 python3 scripts/setup-toolchains.py --bc20 "Borland CPP 2.0 (1991) (3.5-720k).7z" --tc201 "<Turbo C 2.01>.7z"
 # 2. Python packages and the DOS emulator (dosbox-x), node
 python3 -m venv .venv && .venv/bin/pip install -r exhume/tools/requirements.txt
-# 3. generate the link inputs from your own BCC.EXE, then compile, verify and link everything
-cd bcc20
-../.venv/bin/python scripts/prepare.py
-../.venv/bin/python ../exhume/tools/gate.py check --all
+# 3. generate the link inputs from your own BCC.EXE (Borland C++ 2.0's compiler), then compile, verify and link everything
+cd bc20/bcc
+../../.venv/bin/python scripts/prepare.py
+../../.venv/bin/python ../../exhume/tools/gate.py check --all
 ```
 
 The last command compiles all 298 sources in DOS, checks every function against the
@@ -82,7 +43,7 @@ items, and new source files may be added. It is checked by running 1836 compiles
 compilers (Borland's own example programs and old GCC and cfront tests among them) and comparing every output, with the code and the data moved in several ways and
 with new and edited files. A tracing emulator shows which words of the data the compiler
 uses as addresses, and which of its code the tests run: 83%
-([bcc20/docs/COVERAGE.md](bcc20/docs/COVERAGE.md)). See [bcc20/docs/MODDING.md](bcc20/docs/MODDING.md).
+([bc20/bcc/docs/COVERAGE.md](bc20/bcc/docs/COVERAGE.md)). See [bc20/bcc/docs/MODDING.md](bc20/bcc/docs/MODDING.md).
 
 ## How it works
 

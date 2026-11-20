@@ -1,5 +1,5 @@
 # The bcc20 port: build the native compiler and its library on Linux, macOS and Windows,
-# check them against BCC.EXE's golden outputs (bcc20-port/tests/golden, made locally by
+# check them against BCC.EXE's golden outputs (bc20/port/tests/golden, made locally by
 # tools/golden.py make), and on a tag bcc20-vX.Y.Z publish them as a GitHub release.
 # Nothing here needs BCC.EXE or the Borland toolchain.
 name: bcc20-port
@@ -7,9 +7,9 @@ on:
   push:
     branches: [main]
     tags: ["bcc20-v*"]
-    paths: ["bcc20-port/**", "bcc20/src/include/**", ".github/workflows/bcc20-port.yml"]
+    paths: ["bc20/port/**", "bc20/bcc/src/include/**", ".github/workflows/bcc20-port.yml"]
   pull_request:
-    paths: ["bcc20-port/**", "bcc20/src/include/**", ".github/workflows/bcc20-port.yml"]
+    paths: ["bc20/port/**", "bc20/bcc/src/include/**", ".github/workflows/bcc20-port.yml"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -35,23 +35,23 @@ jobs:
           msystem: UCRT64
           install: make zip mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-python
       - name: Build
-        run: make -C bcc20-port -j4 native lib shlib
+        run: make -C bc20/port -j4 native lib shlib
       - name: Check against BCC.EXE's golden outputs
-        run: python3 bcc20-port/tools/golden.py check
+        run: python3 bc20/port/tools/golden.py check
       - name: Package
         run: |
           name=bcc20-${{ matrix.platform }}
           mkdir -p dist/$name/include dist/$name/lib
-          cd bcc20-port/build
+          cd bc20/port/build
           cp bcc bcc.exe bcc20run bcc20run.exe ../../dist/$name/ 2>/dev/null || true
           cp libbcc20.a libbcc20.so libbcc20.dylib libbcc20.dll ../../dist/$name/lib/ 2>/dev/null || true
-          cd ../..
+          cd ../../..
           # the build keeps debug information (-g); the packages do not
           strip dist/$name/bcc* || true
           strip -S dist/$name/lib/* || true
-          cp bcc20-port/include/bcc20.h dist/$name/include/
+          cp bc20/port/include/bcc20.h dist/$name/include/
           cp LICENSE NOTICE.md dist/$name/
-          cp bcc20-port/docs/RELEASE-README.md dist/$name/README.md
+          cp bc20/port/docs/RELEASE-README.md dist/$name/README.md
           cd dist
           if [ "${{ runner.os }}" = Windows ]; then
             (cd $name && zip -qr ../$name.zip .)

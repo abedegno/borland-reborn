@@ -22,6 +22,6 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
-      # bcc20-port/tests/golden/ holds BCC.EXE's object files for sources of this repository,
+      # bc20/port/tests/golden/ holds BCC.EXE's object files for sources of this repository,
       # the reference the port's CI checks its native build against (bcc20-port.yml)
-      - run: python3 exhume/tools/repocheck.py --root . --allow '^exhume/' --allow '^bcc20-port/tests/golden/'
+      - run: python3 exhume/tools/repocheck.py --root . --allow '^exhume/' --allow '^bc20/port/tests/golden/'

@@ -1,4 +1,4 @@
-"""The run-time library Borland linked its Borland C++ 2.0 utilities with (touch20, tlib20).
+"""The run-time library Borland linked its Borland C++ 2.0 utilities with (bc20/touch, bc20/tlib).
 
 Borland built TOUCH, TLIB and the other utilities with Turbo C++ 1.01, but linked them with
 a run-time library that sat between Turbo C++ 1.01's and Borland C++ 2.0's. Neither
@@ -19,7 +19,7 @@ the two products' own files:
                       taken from Turbo C++ 1.01's library instead, written as OBJ files to
                       OUT; returns the module names in order, for a TLIB response file.
                       The modules no released library has are rebuilt from C:
-                      ../interim-rtl/src (INTERIM below gives each one's BCC switches), and
+                      ../bc20/rtl/src (INTERIM below gives each one's BCC switches), and
                       library() leaves them out for the build to compile in their place.
 
 Every function finds the toolchains through toolchains() and stops with a message when a
@@ -31,8 +31,8 @@ EXHUME = os.path.join(ROOT, 'exhume')
 sys.path.insert(0, os.path.join(EXHUME, 'tools'))
 import omf
 
-RTL_SRC = os.path.join(ROOT, 'interim-rtl', 'src')
-# the interim modules rebuilt from C, with Borland C++ 2.0's BCC (../interim-rtl/README.md)
+RTL_SRC = os.path.join(ROOT, 'bc20', 'rtl', 'src')
+# the interim modules rebuilt from C, with Borland C++ 2.0's BCC (../bc20/rtl/README.md)
 INTERIM = {'FFLUSH': '-O -Z', 'FGETS': '-O -Z', 'FREAD': '-B -O -Z', 'GETC': '-B -O -Z -k-'}
 
 # BC 2.0's STARTUP/BUILD-C0.BAT: TASM /M /MX /Q /T /D__TINY__ c0, c0t (and so on per model)

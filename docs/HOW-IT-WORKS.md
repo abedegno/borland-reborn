@@ -70,7 +70,7 @@ full check after each step:
 6. comments on every file and routine, and the findings.
 
 Names were never guessed. Each one records its basis (`descriptive` or `inferred`) and the
-evidence in [`bcc20/map/names.tsv`](../bcc20/map/names.tsv). A name says what the code does,
+evidence in [`bc20/bcc/map/names.tsv`](../bc20/bcc/map/names.tsv). A name says what the code does,
 even where the purpose stayed unclear (`CODEGEN_UNUSED_POOL_ONE`). Comments were checked by
 comparing the token stream with comments stripped, so they cannot change code.
 
