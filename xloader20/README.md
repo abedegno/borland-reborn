@@ -1,10 +1,11 @@
-# xloader20: the loaders of Borland C++ 2.0's TLINKX.EXE and BCCX.EXE, as source
+# xloader20: Borland C++ 2.0's TLINKX and BCCX (loaders and protected-mode images), as source
 
 Borland C++ 2.0 ships protected-mode versions of its linker and compiler for big jobs:
 TLINKX and BCCX. Each one is two files. The `.EXE` is a real-mode DOS program, the loader,
 and the `.OVY` is the protected-mode program it runs on TKERNEL.EXE (see
-[../tkernel20/](../tkernel20/)). This project is the two loaders. Their sources in
-[src/](src/) rebuild both byte for byte with Borland's tools.
+[../tkernel20/](../tkernel20/)). This project is all four files. Their sources in
+[src/](src/) rebuild them byte for byte: the loaders with Borland's tools alone, the `.OVY`
+images with Borland's tools and our own YO writer.
 
 ## Status
 
@@ -13,7 +14,9 @@ and the `.OVY` is the protected-mode program it runs on TKERNEL.EXE (see
 | TLINKX.EXE | 31,568 bytes, SHA-256 `cbe244063f5ca3687b6e0235c7a79b8ed40a755ca995137b4af3dbc67a8c14f6`: **byte-identical** |
 | BCCX.EXE | 32,850 bytes, SHA-256 `f23dd2a18f3273d0470536b2b0cc1d03b255575c621b350dee6742456cce36ac`: **byte-identical** |
 | Source | the generated first draft, five TASM modules per program in [src/tlinkx/](src/tlinkx/) and [src/bccx/](src/bccx/). Labels are addresses, each line carries its image address (`;@nnnnn`), code the generator did not reach is still bytes, and there are no comments. M1 was C in the original and is still assembler here. |
-| The `.OVY` files | not done yet (below) |
+| TLINKX.OVY | 136,772 bytes, SHA-256 `2a7922547c0abdcf82e627cd3728f09ccc3176390bb8014bfcf0b0f1d0563c6b`: **byte-identical**, with our YO writer |
+| BCCX.OVY | 502,676 bytes, SHA-256 `b94b4fae451d17fe8c3895dc3d40277d40b71bb3dcc8815ffb4e43074d2c0429`: **byte-identical**, with our YO writer |
+| The `.OVY` sources | a thinner draft than the loaders' (below): [src/ovy/](src/ovy/) |
 
 ## Building
 
@@ -49,12 +52,36 @@ then run `make check` (or `../.venv/bin/python tools/build.py`). The build uses
 
 ## The `.OVY` files
 
-TLINKX.OVY (136,772 bytes) and BCCX.OVY (502,676 bytes) are protected-mode images in the
-extender's "YO" format. Each is a 64h-byte header; then a table of 60 descriptors, one data
-(F2h) and one code (FAh) descriptor for each of 30 segments; then the segments, one after
-another. TLINKX.OVY's second segment is the TLINK core rebuilt for protected mode: close to
-[../tlink20/](../tlink20/)'s source, but not the same bytes. Rebuilding them needs
-protected-mode versions of those sources and a tool that writes the YO format.
+TLINKX.OVY and BCCX.OVY are protected-mode images in the extender's "YO" format:
+- a 64h-byte header;
+- a table of descriptors, a data (F2h) and a code (FAh) descriptor for each segment (60 in
+  TLINKX.OVY, 378 in BCCX.OVY);
+- the image, its segments one after another, starting with a 100h-byte block;
+- the overlay block that TLINK writes for an overlaid DOS program: `FBOV`, the size of the
+  overlay data, the offset of TLINK's segment table in the image, the number of segments,
+  then the data. It is empty in TLINKX.OVY and 393 KB in BCCX.OVY.
+
+So the images were linked by TLINK as overlaid DOS programs, and then a binding tool turned
+each segment into a pair of descriptors and each relocation into a selector. That tool
+didn't ship.
+
+How they are built:
+- **Assembled and linked:** TASM 2.51 assembles [src/ovy/](src/ovy/), and TLINK 4.0 links it
+  into a DOS program holding the image and the overlay block.
+- **Our YO writer:** [tools/mz2yo.py](tools/mz2yo.py) adds the header and the descriptor table.
+  The descriptors and the header's start-up values are written out in
+  [tools/tlinkx_ovy.py](tools/tlinkx_ovy.py) and [tools/bccx_ovy.py](tools/bccx_ovy.py).
+  This is a native difference: the tool is ours, not Borland's.
+
+The sources are a first draft, thinner than the loaders':
+- The selectors are plain numbers, because the binding tool left no relocation table to show
+  where they are.
+- **TLINKX.OVY:** decoded only as far as the generator traced it from the entry point. Its
+  main segment is the TLINK core rebuilt for protected mode, close to
+  [../tlink20/](../tlink20/)'s source but not the same bytes.
+- **BCCX.OVY:** still all bytes, in 17 modules, because one file is too big for TASM. Its
+  code is the C compiler, overlaid.
+- Next: decode both against the real-mode sources they were built from.
 
 [tools/gen/](tools/gen/) has the generator and the specs that produced the draft. The specs
 were run from a scratch directory and name their paths there.

@@ -90,14 +90,46 @@ def build(prog, cli):
     return False
 
 
+OVY = {'tlinkx.ovy': 'tlinkx', 'bccx.ovy': 'bccx'}
+
+
+def build_ovy(prog):
+    """the protected-mode image: TASM 2.51 assembles src/ovy/<program>/*.ASM, TLINK 4.0 links
+    them as a DOS program (the image, then the overlay block), and tools/mz2yo.py writes the YO
+    file with the descriptors and header values of tools/<program>_ovy.py"""
+    name = OVY[prog]
+    src = os.path.join(R, 'src', 'ovy', name)
+    mods = sorted(f[:-4] for f in os.listdir(src) if f.upper().endswith('.ASM'))
+    w = os.path.join(B, name + '_ovy')
+    args = ['-f', os.path.join(BIN, 'TASM.EXE'), '-f', os.path.join(BIN, 'TLINK.EXE')]
+    for m in mods:
+        args += ['-f', os.path.join(src, m + '.ASM'), '-c', 'TASM /ml %s.ASM' % m]
+    open(os.path.join(B, name + '_ovy.rsp'), 'w', newline='\r\n').write(' +\n'.join(mods) + ',IMAGE,IMAGE\n')
+    args += ['-f', os.path.join(B, name + '_ovy.rsp') + '=IMAGE.RSP', '-c', 'TLINK @IMAGE.RSP', '-o', 'IMAGE.EXE']
+    r, log = run(w, args)
+    exe = os.path.join(w, 'IMAGE.EXE')
+    if not os.path.exists(exe):
+        print(log)
+        sys.exit('xloader20: building %s failed' % prog)
+    out = os.path.join(w, name.upper() + '.OVY')
+    subprocess.run([sys.executable, os.path.join(R, 'tools', 'mz2yo.py'), os.path.join(R, 'tools', name + '_ovy.py'), exe, out], check=True)
+    orig = os.path.join(BIN, name.upper() + '.OVY')
+    if open(out, 'rb').read() == open(orig, 'rb').read():
+        print('%s.OVY: byte-identical to the original (SHA-256 %s)' % (name.upper(), hashlib.sha256(open(out, 'rb').read()).hexdigest()))
+        return True
+    print('%s.OVY: differs from the original (cmp %s %s)' % (name.upper(), out, orig))
+    return False
+
+
 def main():
-    progs = sys.argv[1:] or ['tlinkx', 'bccx']
+    progs = sys.argv[1:] or ['tlinkx', 'bccx', 'tlinkx.ovy', 'bccx.ovy']
     if not os.path.exists(os.path.join(BIN, 'TLINKX.EXE')):
         sys.exit('no toolchains/BC20: run scripts/setup-toolchains.py with --bc20 (docs/SETUP.md)')
     shutil.rmtree(B, ignore_errors=True)
     os.makedirs(B)
-    cli = library()
-    ok = [build(p, cli) for p in progs]
+    cli = library() if any(p in CUTS for p in progs) else None
+    ok = [build(p, cli) for p in progs if p in CUTS]
+    ok += [build_ovy(p) for p in progs if p in OVY]
     return 0 if all(ok) else 1
 
 

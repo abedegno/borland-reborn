@@ -25,8 +25,9 @@ wrong.
 | [`tkinst20/`](tkinst20/) | **Borland C++ 2.0** (1991), `TKINST.EXE` 2.0, the installer of the protected-mode kernel (C and assembler) | Complete: rebuilds byte-identical (SHA-256 `6f84a44c...`; header padded after the link) |
 | [`tlink20/`](tlink20/) | **Borland C++ 2.0** (1991), `TLINK.EXE` 4.0, the linker (assembler, C and the far-memory heap) | Rebuilds byte-identical (SHA-256 `81701462...`); the assembler core is decoded and partly named |
 | [`tasm20/`](tasm20/) | **Borland C++ 2.0** (1991), `TASM.EXE` 2.51, the assembler (assembler) | Rebuilds byte-identical (SHA-256 `712e4127...`); the source is still the generated draft (address labels, undecoded code, no comments) |
+| [`tasmx20/`](tasmx20/) | **Borland C++ 2.0** (1991), `TASMX.EXE` 2.51, the protected-mode assembler (assembler, NE) | Rebuilds byte-identical with our NE writer (SHA-256 `d1cf3399...`); the source is the generated draft |
 | [`tkernel20/`](tkernel20/) | **Borland C++ 2.0** (1991), `TKERNEL.EXE`, the protected-mode kernel of BCCX, TLINKX and TASMX (assembler) | Rebuilds byte-identical (SHA-256 `ffe579ec...`); the source is the generated draft |
-| [`xloader20/`](xloader20/) | **Borland C++ 2.0** (1991), `TLINKX.EXE` and `BCCX.EXE`, the real-mode loaders of the protected-mode linker and compiler (C and assembler) | Both rebuild byte-identical; the source is the generated draft; the `.OVY` images are not done |
+| [`xloader20/`](xloader20/) | **Borland C++ 2.0** (1991), `TLINKX.EXE`/`.OVY` and `BCCX.EXE`/`.OVY`, the protected-mode linker and compiler with their loaders (C and assembler) | Both, and TLINKX.OVY and BCCX.OVY (with our YO writer), rebuild byte-identical; the sources are generated drafts, the `.OVY` ones mostly bytes |
 | [`interim-rtl/`](interim-rtl/) | the run-time library Borland linked its own 1990-91 utilities with | The modules no released library has, as C (used by `tlib20` and `make20`) |
 | [`bcc20-port/`](bcc20-port/) | `BCC.EXE` as a native compiler and library, for decompiling Borland-built games | Complete: every function checked against BCC.EXE; 1874 of 1880 corpus compiles identical; native binaries and a library |
 
