@@ -11179,7 +11179,9 @@ CHECK_STACK:	push	bp	;@0718B
 	mov	ax, 14h	;@073A6
 	push	ax	;@073A9
 	call FATAL	; "Cannot generate COM file : program exceeds 64K"	;@073AA
-L073AD:	push	ax	;@073AD
+; ADD_FRAME_BASES: (a phase of LINK) for each segment in a group or overlay (flags E0h), add
+; its frame's base (+0Bh of the frame record) to the segment's offset (+6, carry into +8).
+ADD_FRAME_BASES:	push	ax	;@073AD
 	push	bx	;@073AE
 	push	dx	;@073AF
 	push	si	;@073B0
@@ -11207,7 +11209,9 @@ L073AD:	push	ax	;@073AD
 	pop	bx	;@073F0
 	pop	ax	;@073F1
 	ret	;@073F2
-L073F3:	push	ax	;@073F3
+; RELOCATE_PUBLICS: (a phase of LINK) add each public's segment offset to its value, except
+; absolute publics (flags 18h) and those flagged 2.
+RELOCATE_PUBLICS:	push	ax	;@073F3
 	push	bx	;@073F4
 	push	dx	;@073F5
 	push	si	;@073F6
@@ -11259,7 +11263,9 @@ L073F3:	push	ax	;@073F3
 	pop	bx	;@0745E
 	pop	ax	;@0745F
 	ret	;@07460
-L07461:	push	bp	;@07461
+; SPLIT_FRAME_BASES: (a phase of LINK) for each frame record of kind FEh, move the paragraph part
+; of its base (+0Bh) into its frame (+8), keeping the low four bits as the offset.
+SPLIT_FRAME_BASES:	push	bp	;@07461
 	mov	bp, sp	;@07462
 	sub	si, si	;@07464
 	jmp	short @@3	;@07466
@@ -12888,12 +12894,12 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	call NE_VIRDEF_IMPORT	;@085F7
 @@14:	call	CHECK_STACK	;@085FA
 	call	DEFINE_EDATA_END	;@085FD
-	call	L073AD	;@08600
-	call	L073F3	;@08603
+	call	ADD_FRAME_BASES	;@08600
+	call	RELOCATE_PUBLICS	;@08603
 	call	CHECK_OVERLAY_MANAGER	;@08606
 	cmp	byte ptr ds:[17h], 0	;@08609
 	jne	@@15	;@0860E
-	call	L07461	;@08610
+	call	SPLIT_FRAME_BASES	;@08610
 @@15:	cmp	byte ptr ds:[11h], 1	;@08613
 	jne	@@17	;@08618
 	xor	ax, ax	;@0861A
@@ -15439,7 +15445,9 @@ NE_BAD_ENTRY:	push	si	;@09BDC
 	pop	cx	;@09CBE
 	mov	es, word ptr ds:[79Eh]	;@09CBF
 	jmp	@@5	;@09CC3
-L09CC5:	push	es	;@09CC5
+; FIND_OR_ADD_NAME_COUNT: find the 6-byte entry for name AX in the table at 7CEh, or add one;
+; its count (+4) goes up by CX + 1 when added.
+FIND_OR_ADD_NAME_COUNT:	push	es	;@09CC5
 	push	si	;@09CC6
 	xor	si, si	;@09CC7
 	mov	es, word ptr ds:[7CEh]	;@09CC9
@@ -15505,7 +15513,7 @@ L09D1D:	push	bx	;@09D1D
 	pop	bx	;@09D50
 	ret	;@09D51
 @@4:	mov	ax, word ptr es:[si+2]	;@09D52
-	call	L09CC5	;@09D56
+	call	FIND_OR_ADD_NAME_COUNT	;@09D56
 	or	ax, ax	;@09D59
 	je	@@6	;@09D5B
 	mov	dx, bx	;@09D5D
@@ -15537,7 +15545,7 @@ L09D1D:	push	bx	;@09D1D
 	or	ax, ax	;@09DAB
 	jne	@@2	;@09DAD
 	mov	ax, word ptr es:[si]	;@09DAF
-	call	L09CC5	;@09DB2
+	call	FIND_OR_ADD_NAME_COUNT	;@09DB2
 	add	cx, ax	;@09DB5
 	mov	es, word ptr ds:[7CEh]	;@09DB7
 	mov	ax, word ptr es:[bx+4]	;@09DBB
@@ -17832,7 +17840,9 @@ L0B608:	push	si	;@0B608
 L0B626:	mov	ax, word ptr ds:[7696h]	;@0B626
 	mov	bx, word ptr ds:[7698h]	;@0B629
 	ret	;@0B62D
-L0B62E:	xor	si, si	;@0B62E
+; FIND_SEGMENT_BY_NAMES: find the segment entry whose name and class entries are BX and CX;
+; carry when there is none.
+FIND_SEGMENT_BY_NAMES:	xor	si, si	;@0B62E
 	mov	es, word ptr ds:[776h]	;@0B630
 	jmp	short @@3	;@0B634
 @@1:	cmp	bx, word ptr es:[si]	;@0B636
@@ -17942,7 +17952,7 @@ L0B698:	push	di	;@0B698
 	call	HASH_NAME	;@0B758
 @@12:	mov	cx, bx	;@0B75B
 	pop	bx	;@0B75D
-	call	L0B62E	;@0B75E
+	call	FIND_SEGMENT_BY_NAMES	;@0B75E
 	pop	dx	;@0B761
 	pop	cx	;@0B762
 	jb	@@13	;@0B763
