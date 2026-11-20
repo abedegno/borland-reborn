@@ -12,7 +12,7 @@ byte with Borland's own tools and a plain TLINK link.
 |---|---|
 | The original | `BIN/TLINK.EXE` of Borland C++ 2.0, 72,585 bytes, SHA-256 `81701462d0c3f59d774dd7b0f193eb9945ef9568dfec14b5abacf5a4d02c837c` |
 | Build | **byte-identical** to the original |
-| The core | [core/TLINK.ASM](src/core/TLINK.ASM) (0000h..BF90h of the image) and its data [core/TLDATA.ASM](src/core/TLDATA.ASM) assemble to the original bytes, but they are still the generated first draft: labels are addresses (`L098D0`), every line carries its address (`;@098D0`), and there are no comments yet. Naming and commenting the core is the work still to do. |
+| The core | [core/TLINK.ASM](src/core/TLINK.ASM) (0000h..BF90h of the image) and its data [core/TLDATA.ASM](src/core/TLDATA.ASM) assemble to the original bytes. All of the core is decoded as instructions and tables (the object-record and COMENT dispatch tables, the fixup methods, the .DEF lexer and keywords); the output routines are named and commented. Most labels are still addresses (`L05606`) and every line carries its address (`;@05606`): naming and commenting the rest of the core is the work still to do. |
 | The rest | written as source: the demangler, the heap, the library routines and the data, with comments |
 
 ## Building
