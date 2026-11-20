@@ -70,17 +70,33 @@ L0007E:	call	L05751	;@0007E
 	dd	L11224
 	db	0C3h, 9Ah
 	dd	L10F01
-	db	0C3h, 80h, 0E3h, 0Fh, 80h, 0FBh, 0Ah, 74h, 0Bh, 32h, 0FFh, 8Ah, 87h, 6, 6, 32h
-	db	0E4h, 33h, 0D2h, 0C3h, 6, 55h, 56h, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	0E8h, 0D8h, 0Ch, 0E8h, 7Fh, 34h, 5Eh, 5Dh, 7, 0C3h, 26h, 8Ah, 5Eh, 7, 80h, 0E3h
-	db	3Fh, 74h, 1Dh, 0F6h, 0C3h, 20h, 75h, 0Dh, 80h, 0FBh, 4, 74h, 8, 33h, 0D2h, 0B8h
-	db	1, 0, 23h, 0C0h, 0C3h, 22h, 0DBh, 26h, 8Bh, 46h, 18h, 26h, 8Bh, 56h, 1Ah, 0C3h
-	db	26h, 80h, 4Eh, 10h, 80h, 22h, 0DBh, 0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 77h
-	db	26h, 8Bh, 4Eh, 1Ch, 26h, 8Ah, 5Eh, 7, 0F6h, 0C3h, 20h, 75h, 51h, 80h, 0E3h, 3Fh
-	db	74h, 64h, 80h, 0FBh, 10h, 74h, 5Fh, 80h, 0FBh, 3, 74h, 39h, 80h, 0FBh, 4, 74h
-	db	0Ah, 80h, 0FBh, 5, 74h, 0Fh, 33h, 0C0h, 33h, 0D2h, 0C3h, 26h, 8Ah, 5Eh, 0Eh, 26h
-	db	8Bh, 4Eh, 1Ch, 0EBh, 29h, 9Ah
+	db	0C3h
+L00094:	and	bl, 0Fh	;@00094
+	cmp	bl, 0Ah	;@00097
+	je	@@1	;@0009A
+	xor	bh, bh	;@0009C
+	mov	al, byte ptr [bx+606h]	;@0009E
+	xor	ah, ah	;@000A2
+	xor	dx, dx	;@000A4
+	ret	;@000A6
+@@1:	push	es	;@000A7
+	push	bp	;@000A8
+	push	si	;@000A9
+	mov	ax, cx	;@000AA
+	call	far ptr L101E0	;@000AC
+	call	L00D8C	;@000B1
+	call	L03536	;@000B4
+	pop	si	;@000B7
+	pop	bp	;@000B8
+	pop	es	;@000B9
+	ret	;@000BA
+	db	26h, 8Ah, 5Eh, 7, 80h, 0E3h, 3Fh, 74h, 1Dh, 0F6h, 0C3h, 20h, 75h, 0Dh, 80h, 0FBh	;@000BB
+	db	4, 74h, 8, 33h, 0D2h, 0B8h, 1, 0, 23h, 0C0h, 0C3h, 22h, 0DBh, 26h, 8Bh, 46h
+	db	18h, 26h, 8Bh, 56h, 1Ah, 0C3h, 26h, 80h, 4Eh, 10h, 80h, 22h, 0DBh, 0C3h, 0F7h, 6
+	db	7Ch, 51h, 0, 10h, 75h, 77h, 26h, 8Bh, 4Eh, 1Ch, 26h, 8Ah, 5Eh, 7, 0F6h, 0C3h
+	db	20h, 75h, 51h, 80h, 0E3h, 3Fh, 74h, 64h, 80h, 0FBh, 10h, 74h, 5Fh, 80h, 0FBh, 3
+	db	74h, 39h, 80h, 0FBh, 4, 74h, 0Ah, 80h, 0FBh, 5, 74h, 0Fh, 33h, 0C0h, 33h, 0D2h
+	db	0C3h, 26h, 8Ah, 5Eh, 0Eh, 26h, 8Bh, 4Eh, 1Ch, 0EBh, 29h, 9Ah
 	dd	L101F7
 	db	3Bh, 6, 7Eh, 51h, 75h, 0Ah, 22h, 0DBh, 0A1h, 70h, 51h, 8Bh, 16h, 72h, 51h, 0C3h
 	db	22h, 0DBh, 26h, 8Bh, 46h, 12h, 26h, 8Bh, 56h, 14h, 0C3h, 9Ah
@@ -113,16 +129,33 @@ L0007E:	call	L05751	;@0007E
 	db	9Ah
 	dd	L101E0
 	db	26h, 8Bh, 46h, 8, 5Dh, 7, 33h, 0D2h, 0EBh, 8, 26h, 8Ah, 46h, 0Eh, 32h, 0E4h
-	db	33h, 0D2h, 32h, 0DBh, 0FEh, 0CBh, 0C3h, 26h, 81h, 4Eh, 8, 0, 40h, 26h, 80h, 4Eh
-	db	7, 80h, 0C3h, 26h, 81h, 4Eh, 8, 0, 20h, 0C3h, 56h, 0E8h, 2Dh, 0, 26h, 8Bh
-	db	6Eh, 8, 81h, 0E5h, 0FFh, 1Fh, 9Ah
-	dd	L12F55
-	db	5Eh, 0C3h, 56h, 0E8h, 1Ah, 0, 26h, 8Bh, 6Eh, 8, 81h, 0E5h, 0FFh, 1Fh, 9Ah
+	db	33h, 0D2h, 32h, 0DBh, 0FEh, 0CBh, 0C3h, 26h, 81h, 4Eh, 8, 0, 40h
+L00286:	or	byte ptr es:[bp+7], 80h	;@00286
+	ret	;@0028B
+L0028C:	or	word ptr es:[bp+8], 2000h	;@0028C
+	ret	;@00292
+L00293:	push	si	;@00293
+	call	@@1	;@00294
+	mov	bp, word ptr es:[bp+8]	;@00297
+	and	bp, 1FFFh	;@0029B
+	call	far ptr L12F55	;@0029F
+	pop	si	;@002A4
+	ret	;@002A5
+	db	56h, 0E8h, 1Ah, 0, 26h, 8Bh, 6Eh, 8, 81h, 0E5h, 0FFh, 1Fh, 9Ah	;@002A6
 	dd	L12F7E
 	db	5Eh, 0C3h, 56h, 0E8h, 7, 0, 9Ah
 	dd	L12F73
-	db	5Eh, 0C3h, 8Bh, 0FAh, 8Bh, 0D3h, 8Bh, 0D9h, 8Bh, 0F0h, 26h, 8Bh, 46h, 4, 26h, 8Ah
-	db	4Eh, 9, 0D0h, 0C1h, 83h, 0E1h, 1, 26h, 2, 4Eh, 6, 0C3h
+	db	5Eh, 0C3h
+@@1:	mov	di, dx	;@002C4
+	mov	dx, bx	;@002C6
+	mov	bx, cx	;@002C8
+	mov	si, ax	;@002CA
+	mov	ax, word ptr es:[bp+4]	;@002CC
+	mov	cl, byte ptr es:[bp+9]	;@002D0
+	rol	cl, 1	;@002D4
+	and	cx, 1	;@002D6
+	add	cl, byte ptr es:[bp+6]	;@002D9
+	ret	;@002DD
 L002DE:	mov	si, 2E4h	;@002DE
 	jmp	L003CD	;@002E1
 	db	9Ah	;@002E4
@@ -347,20 +380,45 @@ L0055C:	call	L00532	;@0055C
 	dd	L101E0
 	db	0E8h, 11h, 7, 0E8h, 30h, 2Fh, 5Eh, 0C3h, 26h, 0F6h, 46h, 7, 3Fh, 75h, 5, 26h
 	db	80h, 4Eh, 10h, 0Ah, 0C3h, 26h, 0F6h, 46h, 7, 3Fh, 75h, 5, 26h, 80h, 4Eh, 10h
-	db	6, 0C3h, 26h, 0F6h, 46h, 7, 3Fh, 75h, 5, 26h, 80h, 4Eh, 10h, 1, 0C3h, 22h
-	db	0E4h, 75h, 1, 0C3h, 6, 55h, 9Ah
+	db	6, 0C3h
+L0069A:	test	byte ptr es:[bp+7], 3Fh	;@0069A
+	jne	@@1	;@0069F
+	or	byte ptr es:[bp+10h], 1	;@006A1
+@@1:	ret	;@006A6
+L006A7:	and	ah, ah	;@006A7
+	jne	@@1	;@006A9
+	ret	;@006AB
+@@1:	push	es	;@006AC
+	push	bp	;@006AD
+	call	far ptr L101E0	;@006AE
+	cmp	byte ptr es:[bp+7], 0Bh	;@006B3
+	pop	bp	;@006B8
+	pop	es	;@006B9
+	ret	;@006BA
+	db	22h, 0E4h, 74h, 0Fh, 6, 55h, 9Ah	;@006BB
 	dd	L101E0
-	db	26h, 80h, 7Eh, 7, 0Bh, 5Dh, 7, 0C3h, 22h, 0E4h, 74h, 0Fh, 6, 55h, 9Ah
-	dd	L101E0
-	db	26h, 80h, 7Eh, 7, 0Bh, 5Dh, 7, 0C3h, 22h, 0C0h, 0C3h, 8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 24h, 3Fh, 3Ch, 1, 74h, 0Ch, 8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 46h, 0Ch, 0C3h, 52h, 0E8h, 0EFh, 15h, 5Ah, 9Ah
-	dd	L101E0
-	db	26h, 83h, 7Eh, 0Ah, 0, 74h, 0E3h, 26h, 8Bh, 46h, 8, 9Ah
-	dd	L1035F
-	db	26h, 8Bh, 15h, 0EBh, 0D5h, 6, 55h, 9Ah
+	db	26h, 80h, 7Eh, 7, 0Bh, 5Dh, 7, 0C3h, 22h, 0C0h, 0C3h
+L006D1:	mov	ax, dx	;@006D1
+	call	far ptr L101E0	;@006D3
+	mov	al, byte ptr es:[bp+7]	;@006D8
+	and	al, 3Fh	;@006DC
+	cmp	al, 1	;@006DE
+	je	@@2	;@006E0
+@@1:	mov	ax, dx	;@006E2
+	call	far ptr L101E0	;@006E4
+	mov	ax, word ptr es:[bp+0Ch]	;@006E9
+	ret	;@006ED
+@@2:	push	dx	;@006EE
+	call	L01CE1	;@006EF
+	pop	dx	;@006F2
+	call	far ptr L101E0	;@006F3
+	cmp	word ptr es:[bp+0Ah], 0	;@006F8
+	je	@@1	;@006FD
+	mov	ax, word ptr es:[bp+8]	;@006FF
+	call	far ptr L1035F	;@00703
+	mov	dx, word ptr es:[di]	;@00708
+	jmp	@@1	;@0070B
+	db	6, 55h, 9Ah	;@0070D
 	dd	L101E0
 	db	26h, 0F6h, 46h, 10h, 80h, 5Dh, 7, 0C3h
 L0071C:	push	ax	;@0071C
@@ -376,14 +434,44 @@ L0071C:	push	ax	;@0071C
 	ret	;@0072F
 L00730:	mov	byte ptr es:[bp+19h], 1	;@00730
 	ret	;@00735
-	db	26h, 80h, 7Eh, 19h, 0, 0C3h, 26h, 8Ah, 46h, 18h, 24h, 0E0h, 3Ch, 20h, 0C3h, 26h	;@00736
-	db	8Ah, 46h, 18h, 24h, 0E0h, 3Ch, 20h, 74h, 2, 3Ch, 40h, 0C3h, 26h, 8Ah, 46h, 18h
-	db	24h, 0E0h, 3Ch, 20h, 74h, 6, 3Ch, 40h, 74h, 2, 3Ch, 0A0h, 0C3h, 26h, 8Ah, 46h
-	db	18h, 24h, 0E0h, 74h, 0Eh, 3Ch, 20h, 74h, 0Ah, 3Ch, 40h, 74h, 6, 3Ch, 0A0h, 74h
-	db	2, 3Ch, 60h, 0C3h, 50h, 6, 55h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 0A8h, 20h, 74h, 4, 0A8h, 10h, 58h, 0C3h
-	db	3Ch, 9, 74h, 4, 32h, 0C0h, 58h, 0C3h, 32h, 0C0h, 0FEh, 0C8h, 58h, 0C3h
+L00736:	cmp	byte ptr es:[bp+19h], 0	;@00736
+	ret	;@0073B
+	db	26h, 8Ah, 46h, 18h, 24h, 0E0h, 3Ch, 20h, 0C3h, 26h, 8Ah, 46h, 18h	;@0073C
+	db	24h, 0E0h, '< t', 2, 3Ch, 40h, 0C3h, 26h, 8Ah, 46h, 18h, 24h, 0E0h
+	db	'< t', 6, '<@t', 2, 3Ch, 0A0h, 0C3h
+L00763:	mov	al, byte ptr es:[bp+18h]	;@00763
+	and	al, 0E0h	;@00767
+	je	@@1	;@00769
+	cmp	al, 20h	;@0076B
+	je	@@1	;@0076D
+	cmp	al, 40h	;@0076F
+	je	@@1	;@00771
+	cmp	al, 0A0h	;@00773
+	je	@@1	;@00775
+	cmp	al, 60h	;@00777
+@@1:	ret	;@00779
+L0077A:	push	ax	;@0077A
+	push	es	;@0077B
+	push	bp	;@0077C
+	call	far ptr L101E0	;@0077D
+	mov	al, byte ptr es:[bp+7]	;@00782
+	pop	bp	;@00786
+	pop	es	;@00787
+	and	al, 3Fh	;@00788
+	test	al, 20h	;@0078A
+	je	@@1	;@0078C
+	test	al, 10h	;@0078E
+	pop	ax	;@00790
+	ret	;@00791
+@@1:	cmp	al, 9	;@00792
+	je	@@2	;@00794
+	xor	al, al	;@00796
+	pop	ax	;@00798
+	ret	;@00799
+@@2:	xor	al, al	;@0079A
+	dec	al	;@0079C
+	pop	ax	;@0079E
+	ret	;@0079F
 L007A0:	push	es	;@007A0
 	push	bp	;@007A1
 	call	far ptr L101E0	;@007A2
@@ -393,12 +481,39 @@ L007A0:	push	es	;@007A0
 	ret	;@007AE
 	db	50h, 6, 55h, 9Ah	;@007AF
 	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 5, 58h, 0C3h, 50h, 6, 55h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 24h, 3Fh, 3Ch, 5, 75h, 22h, 0F7h, 6, 7Ch, 51h, 0, 10h
-	db	74h, 1Eh, 26h, 8Ah, 46h, 18h, 24h, 1Ch, 74h, 4, 3Ch, 18h, 75h, 0Eh, 26h, 8Ah
-	db	46h, 18h, 24h, 0E0h, 74h, 6, 3Ch, 60h, 74h, 2, 3Ch, 80h, 5Dh, 7, 58h, 0C3h
-	db	32h, 0C0h, 0FEh, 0C8h, 5Dh, 7, 58h, 0C3h, 50h, 6, 55h, 9Ah
+	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 5, 58h, 0C3h
+L007C3:	push	ax	;@007C3
+	push	es	;@007C4
+	push	bp	;@007C5
+	call	far ptr L101E0	;@007C6
+	mov	al, byte ptr es:[bp+7]	;@007CB
+	and	al, 3Fh	;@007CF
+	cmp	al, 5	;@007D1
+	jne	@@2	;@007D3
+	test	word ptr ds:[517Ch], 1000h	;@007D5
+	je	@@3	;@007DB
+	mov	al, byte ptr es:[bp+18h]	;@007DD
+	and	al, 1Ch	;@007E1
+	je	@@1	;@007E3
+	cmp	al, 18h	;@007E5
+	jne	@@2	;@007E7
+@@1:	mov	al, byte ptr es:[bp+18h]	;@007E9
+	and	al, 0E0h	;@007ED
+	je	@@2	;@007EF
+	cmp	al, 60h	;@007F1
+	je	@@2	;@007F3
+	cmp	al, 80h	;@007F5
+@@2:	pop	bp	;@007F7
+	pop	es	;@007F8
+	pop	ax	;@007F9
+	ret	;@007FA
+@@3:	xor	al, al	;@007FB
+	dec	al	;@007FD
+	pop	bp	;@007FF
+	pop	es	;@00800
+	pop	ax	;@00801
+	ret	;@00802
+	db	50h, 6, 55h, 9Ah	;@00803
 	dd	L101E0
 	db	26h, 8Ah, 46h, 7, 24h, 3Fh, 0A8h, 20h, 75h, 48h, 3Ch, 0, 74h, 3Dh, 3Ch, 10h
 	db	74h, 3Eh, 3Ch, 0Bh, 74h, 3Ah, 3Ch, 2, 74h, 14h, 3Ch, 7, 74h, 10h, 3Ch, 3
@@ -416,19 +531,49 @@ L00861:	push	es	;@00861
 	ret	;@0086F
 	db	6, 55h, 9Ah	;@00870
 	dd	L101E0
-	db	26h, 0F6h, 46h, 7, 40h, 5Dh, 7, 0C3h, 50h, 6, 55h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 7, 58h, 0C3h, 50h, 6, 55h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 0Dh, 58h, 0C3h, 50h, 6, 55h, 9Ah
+	db	26h, 0F6h, 46h, 7, 40h, 5Dh, 7, 0C3h
+L0087F:	push	ax	;@0087F
+	push	es	;@00880
+	push	bp	;@00881
+	call	far ptr L101E0	;@00882
+	mov	al, byte ptr es:[bp+7]	;@00887
+	pop	bp	;@0088B
+	pop	es	;@0088C
+	and	al, 3Fh	;@0088D
+	cmp	al, 7	;@0088F
+	pop	ax	;@00891
+	ret	;@00892
+L00893:	push	ax	;@00893
+	push	es	;@00894
+	push	bp	;@00895
+	call	far ptr L101E0	;@00896
+	mov	al, byte ptr es:[bp+7]	;@0089B
+	pop	bp	;@0089F
+	pop	es	;@008A0
+	and	al, 3Fh	;@008A1
+	cmp	al, 0Dh	;@008A3
+	pop	ax	;@008A5
+	ret	;@008A6
+	db	50h, 6, 55h, 9Ah	;@008A7
 	dd	L101E0
 	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 1, 74h, 2, 3Ch, 0Eh, 58h, 0C3h
 	db	50h, 6, 55h, 9Ah
 	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 1, 58h, 0C3h, 50h, 6, 55h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 0Dh, 74h, 2, 3Ch, 3, 58h, 0C3h
-	db	50h, 6, 55h, 9Ah
+	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 1, 58h, 0C3h
+L008D3:	push	ax	;@008D3
+	push	es	;@008D4
+	push	bp	;@008D5
+	call	far ptr L101E0	;@008D6
+	mov	al, byte ptr es:[bp+7]	;@008DB
+	pop	bp	;@008DF
+	pop	es	;@008E0
+	and	al, 3Fh	;@008E1
+	cmp	al, 0Dh	;@008E3
+	je	@@1	;@008E5
+	cmp	al, 3	;@008E7
+@@1:	pop	ax	;@008E9
+	ret	;@008EA
+	db	50h, 6, 55h, 9Ah	;@008EB
 	dd	L101E0
 	db	26h, 8Ah, 46h, 7, 5Dh, 7, 24h, 3Fh, 3Ch, 4, 58h, 0C3h, 50h, 6, 55h, 9Ah
 	dd	L101E0
@@ -462,32 +607,100 @@ L00861:	push	es	;@00861
 	db	26h, 89h, 5, 9Ah
 	dd	L101E0
 	db	33h, 0C0h, 26h, 89h, 46h, 6, 26h, 89h, 46h, 0, 26h, 89h, 56h, 2, 26h, 88h
-	db	5Eh, 8, 0C3h, 8Bh, 0FAh, 0B9h, 46h, 10h, 0E9h, 0F3h, 2Ah, 8Bh, 0DEh, 33h, 0C9h, 41h
-	db	0ACh, 3Ch, 0Dh, 74h, 11h, 3Ch, 20h, 76h, 0F6h, 81h, 7Ch, 0FFh, 3Bh, 3Bh, 74h, 6Bh
-	db	41h, 0ACh, 3Ch, 0Dh, 75h, 0FAh, 8Bh, 0C1h, 6, 55h, 9Ah
-	dd	L10215
-	db	8Ah, 0D1h, 41h, 0D1h, 0E9h, 8Bh, 0F3h, 0F3h, 0A5h, 8Bh, 0D8h, 5Dh, 7, 8Bh, 0FDh, 83h
-	db	0C7h, 8, 26h, 8Bh, 0Dh, 0E3h, 15h, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 80h, 7Eh, 2, 4, 75h, 1Ch, 8Bh, 0FDh, 83h, 0C7h, 0, 0EBh, 0E6h, 0E8h, 3
-	db	13h, 26h, 89h, 5, 9Ah
-	dd	L101E0
-	db	33h, 0C0h, 26h, 89h, 46h, 0, 26h, 88h, 46h, 2, 26h, 8Ah, 46h, 2, 0D0h, 0E0h
-	db	26h, 2, 46h, 2, 98h, 5, 4, 0, 26h, 0FEh, 46h, 2, 8Bh, 0F8h, 26h, 89h
-	db	1Bh, 26h, 88h, 53h, 2, 0C3h, 26h, 8Ah, 7Eh, 7, 80h, 0E7h, 3Fh, 74h, 6, 80h
-	db	0FFh, 4, 75h, 6, 0C3h, 0B7h, 1, 0E9h, 0E7h, 29h, 0E9h, 0C6h, 29h, 80h, 0CBh, 20h
-	db	0A1h, 70h, 51h, 8Bh, 16h, 72h, 51h, 26h, 0F6h, 46h, 7, 3Fh, 74h, 2Dh, 0F6h, 6
-	db	0C9h, 38h, 0Ch, 75h, 2Fh, 26h, 3Ah, 5Eh, 0Eh, 75h, 13h, 26h, 3Bh, 4Eh, 1Ch, 75h
-	db	0Dh, 26h, 3Bh, 46h, 10h, 75h, 7, 26h, 3Bh, 56h, 12h, 75h, 1, 0C3h, 0B9h, 17h
-	db	10h, 9Ah
-	dd	L101F7
-	db	8Bh, 0F8h, 0E9h, 1Dh, 2Ah, 26h, 80h, 4Eh, 7, 4, 26h, 88h, 5Eh, 0Eh, 26h, 89h
-	db	4Eh, 1Ch, 26h, 89h, 46h, 10h, 26h, 89h, 56h, 12h, 0C3h, 26h, 8Bh, 46h, 10h, 26h
-	db	8Bh, 56h, 12h, 26h, 8Ah, 5Eh, 0Eh, 26h, 8Bh, 4Eh, 1Ch, 0C3h, 26h, 8Ah, 7Eh, 7
-	db	80h, 0E7h, 3Fh, 74h, 6, 80h, 0FFh, 0Ah, 75h, 6, 0C3h, 0B7h, 1, 0E9h, 6Bh, 29h
-	db	0E9h, 4Ah, 29h, 26h, 0F6h, 46h, 7, 3Fh, 74h, 27h, 0F6h, 6, 0C9h, 38h, 0Ch, 75h
-	db	25h, 26h, 3Ah, 56h, 0Fh, 75h, 0Dh, 26h, 3Ah, 76h, 0Eh, 75h, 7, 26h, 3Bh, 46h
-	db	10h, 75h, 1, 0C3h, 0B9h, 17h, 10h, 9Ah
+	db	5Eh, 8, 0C3h, 8Bh, 0FAh, 0B9h, 46h, 10h, 0E9h, 0F3h, 2Ah
+	mov	bx, si	;@00A39
+	xor	cx, cx	;@00A3B
+@@2:	inc	cx	;@00A3D
+	lodsb	;@00A3E
+	cmp	al, 0Dh	;@00A3F
+	je	@@4	;@00A41
+	cmp	al, 20h	;@00A43
+	jbe	@@2	;@00A45
+	cmp	word ptr [si-1], 3B3Bh	;@00A47
+	je	@@8	;@00A4C
+@@3:	inc	cx	;@00A4E
+	lodsb	;@00A4F
+	cmp	al, 0Dh	;@00A50
+	jne	@@3	;@00A52
+@@4:	mov	ax, cx	;@00A54
+	push	es	;@00A56
+	push	bp	;@00A57
+	call	far ptr L10215	;@00A58
+	mov	dl, cl	;@00A5D
+	inc	cx	;@00A5F
+	shr	cx, 1	;@00A60
+	mov	si, bx	;@00A62
+	rep movsw	;@00A64
+	mov	bx, ax	;@00A66
+	pop	bp	;@00A68
+	pop	es	;@00A69
+	mov	di, bp	;@00A6A
+	add	di, 8	;@00A6C
+@@5:	mov	cx, word ptr es:[di]	;@00A6F
+	jcxz	@@6	;@00A72
+	mov	ax, cx	;@00A74
+	call	far ptr L101E0	;@00A76
+	cmp	byte ptr es:[bp+2], 4	;@00A7B
+	jne	@@7	;@00A80
+	mov	di, bp	;@00A82
+	add	di, 0	;@00A84
+	jmp	@@5	;@00A87
+@@6:	call	L01D8F	;@00A89
+	mov	word ptr es:[di], ax	;@00A8C
+	call	far ptr L101E0	;@00A8F
+	xor	ax, ax	;@00A94
+	mov	word ptr es:[bp], ax	;@00A96
+	mov	byte ptr es:[bp+2], al	;@00A9A
+@@7:	mov	al, byte ptr es:[bp+2]	;@00A9E
+	shl	al, 1	;@00AA2
+	add	al, byte ptr es:[bp+2]	;@00AA4
+	cbw	;@00AA8
+	add	ax, 4	;@00AA9
+	inc	byte ptr es:[bp+2]	;@00AAC
+	mov	di, ax	;@00AB0
+	mov	word ptr es:[bp+di], bx	;@00AB2
+	mov	byte ptr es:[bp+di+2], dl	;@00AB5
+@@8:	ret	;@00AB9
+L00ABA:	mov	bh, byte ptr es:[bp+7]	;@00ABA
+	and	bh, 3Fh	;@00ABE
+	je	@@1	;@00AC1
+	cmp	bh, 4	;@00AC3
+	jne	@@2	;@00AC6
+	ret	;@00AC8
+@@1:	mov	bh, 1	;@00AC9
+	jmp	L034B5	;@00ACB
+@@2:	jmp	L03497	;@00ACE
+L00AD1:	or	bl, 20h	;@00AD1
+	mov	ax, word ptr ds:[5170h]	;@00AD4
+	mov	dx, word ptr ds:[5172h]	;@00AD7
+	test	byte ptr es:[bp+7], 3Fh	;@00ADB
+	je	@@2	;@00AE0
+	test	byte ptr ds:[38C9h], 0Ch	;@00AE2
+	jne	@@3	;@00AE7
+	cmp	bl, byte ptr es:[bp+0Eh]	;@00AE9
+	jne	@@1	;@00AED
+	cmp	cx, word ptr es:[bp+1Ch]	;@00AEF
+	jne	@@1	;@00AF3
+	cmp	ax, word ptr es:[bp+10h]	;@00AF5
+	jne	@@1	;@00AF9
+	cmp	dx, word ptr es:[bp+12h]	;@00AFB
+	jne	@@1	;@00AFF
+	ret	;@00B01
+@@1:	mov	cx, 1017h	;@00B02
+	call	far ptr L101F7	;@00B05
+	mov	di, ax	;@00B0A
+	jmp	L0352C	;@00B0C
+@@2:	or	byte ptr es:[bp+7], 4	;@00B0F
+	mov	byte ptr es:[bp+0Eh], bl	;@00B14
+@@3:	mov	word ptr es:[bp+1Ch], cx	;@00B18
+	mov	word ptr es:[bp+10h], ax	;@00B1C
+	mov	word ptr es:[bp+12h], dx	;@00B20
+	ret	;@00B24
+	db	26h, 8Bh, 46h, 10h, 26h, 8Bh, 56h, 12h, 26h, 8Ah, 5Eh, 0Eh, 26h, 8Bh, 4Eh, 1Ch	;@00B25
+	db	0C3h, 26h, 8Ah, 7Eh, 7, 80h, 0E7h, 3Fh, 74h, 6, 80h, 0FFh, 0Ah, 75h, 6, 0C3h
+	db	0B7h, 1, 0E9h, 6Bh, 29h, 0E9h, 4Ah, 29h, 26h, 0F6h, 46h, 7, 3Fh, 74h, 27h, 0F6h
+	db	6, 0C9h, 38h, 0Ch, 75h, 25h, 26h, 3Ah, 56h, 0Fh, 75h, 0Dh, 26h, 3Ah, 76h, 0Eh
+	db	75h, 7, 26h, 3Bh, 46h, 10h, 75h, 1, 0C3h, 0B9h, 17h, 10h, 9Ah
 	dd	L101F7
 	db	8Bh, 0F8h, 0E9h, 0B1h, 29h, 26h, 80h, 4Eh, 7, 0Ah, 26h, 88h, 56h, 0Fh, 26h, 88h
 	db	76h, 0Eh, 26h, 89h, 46h, 10h, 0C3h, 6, 55h, 26h, 8Bh, 46h, 10h, 9Ah
@@ -498,41 +711,94 @@ L00861:	push	es	;@00861
 	db	7, 3Fh, 75h, 8, 26h, 80h, 4Eh, 7, 0Dh, 0BBh, 0E2h, 1Bh, 0FFh, 0D3h, 9Ah
 	dd	L101E0
 	db	26h, 0F6h, 46h, 6, 1, 75h, 0Ah, 33h, 0C0h, 26h, 89h, 46h, 0Ah, 26h, 89h, 46h
-	db	8, 0C3h, 0E8h, 0D2h, 0FFh, 26h, 80h, 4Eh, 6, 1, 0C3h, 0B3h, 21h, 3Dh, 8, 0
-	db	76h, 9, 0B3h, 22h, 3Dh, 10h, 0, 76h, 2, 0B3h, 23h, 26h, 89h, 46h, 8, 26h
-	db	88h, 5Eh, 0Ch, 0F7h, 6, 0B6h, 38h, 0, 40h, 75h, 1, 0C3h, 0F6h, 6, 0C9h, 38h
-	db	3, 75h, 48h, 26h, 8Bh, 4Eh, 0Ah, 52h, 6, 55h, 0E8h, 3Fh, 0, 9Ah
-	dd	L131E1
-	db	5Dh, 7, 8Bh, 0D3h, 26h, 89h, 56h, 0Eh, 26h, 8Ah, 5Eh, 0Ch, 58h, 9Ah
-	dd	L101E0
-	db	80h, 0E3h, 0DFh, 32h, 0FFh, 8Ah, 9Fh, 6, 6, 56h, 8Bh, 0F3h, 6, 55h, 52h, 0E8h
-	db	80h, 0F8h, 9Ah
-	dd	L10375
-	db	33h, 0FFh, 5Dh, 55h, 9Ah
-	dd	L12BC9
-	db	5Bh, 5Dh, 7, 0E8h, 0B0h, 2Ch, 5Eh, 0C3h, 0E3h, 0FDh, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 4Eh, 0, 6, 55h, 0E8h, 0EEh, 0FFh, 5Dh, 7, 26h, 8Ah, 5Eh, 4, 22h
-	db	0DBh, 74h, 0E3h, 26h, 8Bh, 46h, 2, 9Ah
-	dd	L101E0
-	db	56h, 0E8h, 41h, 0F8h, 9Ah
-	dd	L10375
-	db	8Bh, 2Eh, 16h, 6, 9Ah
-	dd	L12BA1
-	db	5Eh, 0C3h, 0E8h, 3Eh, 10h, 9Ah
+	db	8, 0C3h, 0E8h, 0D2h, 0FFh, 26h, 80h, 4Eh, 6, 1, 0C3h
+	mov	bl, 21h	;@00BF6
+	cmp	ax, 8	;@00BF8
+	jbe	@@4	;@00BFB
+	mov	bl, 22h	;@00BFD
+	cmp	ax, 10h	;@00BFF
+	jbe	@@4	;@00C02
+	mov	bl, 23h	;@00C04
+@@4:	mov	word ptr es:[bp+8], ax	;@00C06
+	mov	byte ptr es:[bp+0Ch], bl	;@00C0A
+	test	word ptr ds:[38B6h], 4000h	;@00C0E
+	jne	@@5	;@00C14
+	ret	;@00C16
+@@5:	test	byte ptr ds:[38C9h], 3	;@00C17
+	jne	@@6	;@00C1C
+	mov	cx, word ptr es:[bp+0Ah]	;@00C1E
+	push	dx	;@00C22
+	push	es	;@00C23
+	push	bp	;@00C24
+	call	@@7	;@00C25
+	call	far ptr L131E1	;@00C28
+	pop	bp	;@00C2D
+	pop	es	;@00C2E
+	mov	dx, bx	;@00C2F
+	mov	word ptr es:[bp+0Eh], dx	;@00C31
+	mov	bl, byte ptr es:[bp+0Ch]	;@00C35
+	pop	ax	;@00C39
+	call	far ptr L101E0	;@00C3A
+	and	bl, 0DFh	;@00C3F
+	xor	bh, bh	;@00C42
+	mov	bl, byte ptr [bx+606h]	;@00C44
+	push	si	;@00C48
+	mov	si, bx	;@00C49
+	push	es	;@00C4B
+	push	bp	;@00C4C
+	push	dx	;@00C4D
+	call	L004D1	;@00C4E
+	call	far ptr L10375	;@00C51
+	xor	di, di	;@00C56
+	pop	bp	;@00C58
+	push	bp	;@00C59
+	call	far ptr L12BC9	;@00C5A
+	pop	bx	;@00C5F
+	pop	bp	;@00C60
+	pop	es	;@00C61
+	call	L03915	;@00C62
+	pop	si	;@00C65
+@@6:	ret	;@00C66
+@@7:	jcxz	@@6	;@00C67
+	mov	ax, cx	;@00C69
+	call	far ptr L101E0	;@00C6B
+	mov	cx, word ptr es:[bp]	;@00C70
+	push	es	;@00C74
+	push	bp	;@00C75
+	call	@@7	;@00C76
+	pop	bp	;@00C79
+	pop	es	;@00C7A
+	mov	bl, byte ptr es:[bp+4]	;@00C7B
+	and	bl, bl	;@00C7F
+	je	@@6	;@00C81
+	mov	ax, word ptr es:[bp+2]	;@00C83
+	call	far ptr L101E0	;@00C87
+	push	si	;@00C8C
+	call	L004D1	;@00C8D
+	call	far ptr L10375	;@00C90
+	mov	bp, word ptr ds:[616h]	;@00C95
+	call	far ptr L12BA1	;@00C99
+	pop	si	;@00C9E
+	ret	;@00C9F
+	db	0E8h, 3Eh, 10h, 9Ah	;@00CA0
 	dd	L101E0
 	db	33h, 0C0h, 33h, 0D2h, 26h, 8Bh, 4Eh, 0Ah, 0E3h, 45h, 50h, 8Bh, 0C1h, 9Ah
 	dd	L101E0
 	db	58h, 33h, 0FFh, 33h, 0C9h, 26h, 8Ah, 5Eh, 4, 22h, 0DBh, 74h, 0Dh, 0D1h, 0E0h, 0D1h
 	db	0D2h, 0F9h, 0D1h, 0D1h, 0D1h, 0D7h, 0FEh, 0CBh, 75h, 0F3h, 26h, 0FFh, 76h, 0, 50h, 52h
 	db	51h, 57h, 56h, 26h, 8Bh, 46h, 6, 26h, 8Bh, 56h, 8, 0FFh, 0D6h, 5Eh, 5Fh, 59h
-	db	23h, 0C8h, 23h, 0FAh, 5Ah, 58h, 0Bh, 0C1h, 0Bh, 0D7h, 59h, 0EBh, 0B9h, 0C3h, 0E8h, 0E6h
-	db	0Fh, 9Ah
-	dd	L101E0
-	db	26h, 0F6h, 46h, 6, 1, 74h, 0Ch, 26h, 8Bh, 46h, 8, 26h, 8Ah, 5Eh, 0Ch, 26h
-	db	8Bh, 6Eh, 0Eh, 0C3h, 26h, 8Ah, 7Eh, 7, 80h, 0E7h, 3Fh, 74h, 6, 80h, 0FFh, 3
-	db	75h, 6, 0C3h, 0B7h, 9, 0E9h, 8Dh, 27h, 0E9h, 6Ch, 27h, 0BBh, 10h, 1Ch, 26h, 0F6h
-	db	46h, 7, 3Fh, 75h, 8, 26h, 80h, 4Eh, 7, 3, 0BBh, 0E2h, 1Bh, 0FFh, 0D3h, 9Ah
+	db	23h, 0C8h, 23h, 0FAh, 5Ah, 58h, 0Bh, 0C1h, 0Bh, 0D7h, 59h, 0EBh, 0B9h, 0C3h
+L00CF8:	call	L01CE1	;@00CF8
+	call	far ptr L101E0	;@00CFB
+	test	byte ptr es:[bp+6], 1	;@00D00
+	je	@@1	;@00D05
+	mov	ax, word ptr es:[bp+8]	;@00D07
+	mov	bl, byte ptr es:[bp+0Ch]	;@00D0B
+	mov	bp, word ptr es:[bp+0Eh]	;@00D0F
+@@1:	ret	;@00D13
+	db	26h, 8Ah, 7Eh, 7, 80h, 0E7h, 3Fh, 74h, 6, 80h, 0FFh, 3, 75h, 6, 0C3h, 0B7h	;@00D14
+	db	9, 0E9h, 8Dh, 27h, 0E9h, 6Ch, 27h, 0BBh, 10h, 1Ch, 26h, 0F6h, 46h, 7, 3Fh, 75h
+	db	8, 26h, 80h, 4Eh, 7, 3, 0BBh, 0E2h, 1Bh, 0FFh, 0D3h, 9Ah
 	dd	L101E0
 	db	26h, 0F6h, 46h, 6, 1, 75h, 0Ah, 33h, 0C0h, 26h, 89h, 46h, 0Ah, 26h, 89h, 46h
 	db	8, 0C3h, 0E8h, 0D2h, 0FFh, 26h, 0F6h, 46h, 6, 1, 74h, 17h, 26h, 8Bh, 46h, 8
@@ -554,26 +820,83 @@ L00D8C:	call	L01CE1	;@00D8C
 	dd	L101E0
 	db	33h, 0C0h, 26h, 89h, 46h, 0, 26h, 89h, 56h, 2, 26h, 88h, 5Eh, 4, 26h, 8Fh
 	db	46h, 8, 26h, 8Fh, 46h, 6, 0C3h, 5Fh, 59h, 26h, 3Bh, 4Eh, 6, 75h, 7, 26h
-	db	3Bh, 7Eh, 8, 75h, 1, 0C3h, 0B9h, 17h, 10h, 0E9h, 35h, 27h, 80h, 0CBh, 20h, 50h
-	db	53h, 52h, 0E8h, 0E1h, 0Eh, 9Ah
-	dd	L101E0
-	db	5Ah, 5Bh, 58h, 52h, 8Bh, 0D0h, 8Bh, 0FDh, 83h, 0C7h, 0Ah, 26h, 8Bh, 0Dh, 0E3h, 14h
-	db	8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 39h, 56h, 2, 74h, 33h, 8Bh, 0FDh, 83h, 0C7h, 0, 0EBh, 0E7h, 0E8h, 63h, 0Fh
-	db	26h, 89h, 5, 9Ah
-	dd	L101E0
-	db	33h, 0C0h, 26h, 89h, 46h, 0, 26h, 89h, 56h, 2, 26h, 88h, 5Eh, 0Ah, 26h, 8Fh
-	db	46h, 8, 0A1h, 70h, 51h, 26h, 89h, 46h, 4, 0A1h, 72h, 51h, 26h, 89h, 46h, 6
-	db	0C3h, 8Bh, 0FAh, 5Ah, 0A1h, 70h, 51h, 26h, 3Bh, 46h, 4, 75h, 16h, 0A1h, 72h, 51h
-	db	26h, 3Bh, 46h, 6, 75h, 0Dh, 26h, 3Ah, 5Eh, 0Ah, 75h, 7, 26h, 3Bh, 56h, 8
-	db	75h, 1, 0C3h, 0B9h, 17h, 10h, 0E9h, 0AFh, 26h, 50h, 0E8h, 60h, 0Eh, 5Fh, 9Ah
-	dd	L101E0
-	db	26h, 0F6h, 46h, 6, 1, 74h, 38h, 26h, 8Bh, 4Eh, 0Ah, 0E3h, 24h, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 4Eh, 0, 26h, 39h, 7Eh, 2, 75h, 0EDh, 26h, 8Ah, 5Eh, 0Ah, 26h, 8Bh
-	db	4Eh, 8, 26h, 8Bh, 46h, 4, 26h, 8Bh, 56h, 6, 23h, 0FFh, 0C3h, 0B9h, 4Ch, 10h
-	db	0E8h, 6Eh, 26h, 0B3h, 20h, 33h, 0C0h, 33h, 0D2h, 22h, 0DBh, 0C3h
+	db	3Bh, 7Eh, 8, 75h, 1, 0C3h, 0B9h, 17h, 10h, 0E9h, 35h, 27h
+L00DF7:	or	bl, 20h	;@00DF7
+	push	ax	;@00DFA
+	push	bx	;@00DFB
+	push	dx	;@00DFC
+	call	L01CE1	;@00DFD
+	call	far ptr L101E0	;@00E00
+	pop	dx	;@00E05
+	pop	bx	;@00E06
+	pop	ax	;@00E07
+	push	dx	;@00E08
+	mov	dx, ax	;@00E09
+	mov	di, bp	;@00E0B
+	add	di, 0Ah	;@00E0D
+@@1:	mov	cx, word ptr es:[di]	;@00E10
+	jcxz	@@2	;@00E13
+	mov	ax, cx	;@00E15
+	call	far ptr L101E0	;@00E17
+	cmp	word ptr es:[bp+2], dx	;@00E1C
+	je	@@3	;@00E20
+	mov	di, bp	;@00E22
+	add	di, 0	;@00E24
+	jmp	@@1	;@00E27
+@@2:	call	L01D8F	;@00E29
+	mov	word ptr es:[di], ax	;@00E2C
+	call	far ptr L101E0	;@00E2F
+	xor	ax, ax	;@00E34
+	mov	word ptr es:[bp], ax	;@00E36
+	mov	word ptr es:[bp+2], dx	;@00E3A
+	mov	byte ptr es:[bp+0Ah], bl	;@00E3E
+	pop	word ptr es:[bp+8]	;@00E42
+	mov	ax, word ptr ds:[5170h]	;@00E46
+	mov	word ptr es:[bp+4], ax	;@00E49
+	mov	ax, word ptr ds:[5172h]	;@00E4D
+	mov	word ptr es:[bp+6], ax	;@00E50
+	ret	;@00E54
+@@3:	mov	di, dx	;@00E55
+	pop	dx	;@00E57
+	mov	ax, word ptr ds:[5170h]	;@00E58
+	cmp	ax, word ptr es:[bp+4]	;@00E5B
+	jne	@@4	;@00E5F
+	mov	ax, word ptr ds:[5172h]	;@00E61
+	cmp	ax, word ptr es:[bp+6]	;@00E64
+	jne	@@4	;@00E68
+	cmp	bl, byte ptr es:[bp+0Ah]	;@00E6A
+	jne	@@4	;@00E6E
+	cmp	dx, word ptr es:[bp+8]	;@00E70
+	jne	@@4	;@00E74
+	ret	;@00E76
+@@4:	mov	cx, 1017h	;@00E77
+	jmp	L0352C	;@00E7A
+L00E7D:	push	ax	;@00E7D
+	call	L01CE1	;@00E7E
+	pop	di	;@00E81
+	call	far ptr L101E0	;@00E82
+	test	byte ptr es:[bp+6], 1	;@00E87
+	je	@@3	;@00E8C
+	mov	cx, word ptr es:[bp+0Ah]	;@00E8E
+@@1:	jcxz	@@2	;@00E92
+	mov	ax, cx	;@00E94
+	call	far ptr L101E0	;@00E96
+	mov	cx, word ptr es:[bp]	;@00E9B
+	cmp	word ptr es:[bp+2], di	;@00E9F
+	jne	@@1	;@00EA3
+	mov	bl, byte ptr es:[bp+0Ah]	;@00EA5
+	mov	cx, word ptr es:[bp+8]	;@00EA9
+	mov	ax, word ptr es:[bp+4]	;@00EAD
+	mov	dx, word ptr es:[bp+6]	;@00EB1
+	and	di, di	;@00EB5
+	ret	;@00EB7
+@@2:	mov	cx, 104Ch	;@00EB8
+	call	L0352C	;@00EBB
+	mov	bl, 20h	;@00EBE
+	xor	ax, ax	;@00EC0
+	xor	dx, dx	;@00EC2
+	and	bl, bl	;@00EC4
+@@3:	ret	;@00EC6
 L00EC7:	call	L01CE1	;@00EC7
 	call	far ptr L101E0	;@00ECA
 	mov	cx, word ptr es:[bp+0Ah]	;@00ECF
@@ -755,13 +1078,28 @@ L010C0:	test	byte ptr ds:[38C9h], 0Fh	;@010C0
 	mov	ax, cx	;@011BC
 	call	far ptr L101E0	;@011BE
 	jmp	@@10	;@011C3
-	db	26h, 8Ah, 7Eh, 7, 80h, 0E7h, 3Fh, 74h, 18h, 26h, 8Bh, 4Eh, 1Ch, 80h, 0CBh, 20h	;@011C5
-	db	3Ah, 0DFh, 75h, 12h, 80h, 0FBh, 2Ah, 75h, 5, 3Bh, 0C1h, 75h, 9, 0C3h, 32h, 0FFh
-	db	0C3h, 0B7h, 1, 0E9h, 0CAh, 22h, 0E9h, 0A9h, 22h, 26h, 89h, 4Eh, 18h, 26h, 89h, 7Eh
-	db	1Ah, 26h, 89h, 46h, 1Ch, 80h, 0CBh, 20h, 26h, 0F6h, 46h, 7, 3Fh, 75h, 62h, 26h
-	db	8, 5Eh, 7, 53h, 52h, 56h, 26h, 8Bh, 46h, 1Ch, 0E8h, 0EFh, 0F2h, 5Fh, 58h, 59h
-	db	6, 55h, 8Bh, 0F0h, 26h, 8Ah, 4Eh, 9, 0D0h, 0C1h, 80h, 0E1h, 1, 26h, 2, 4Eh
-	db	6, 26h, 8Bh, 46h, 4, 53h, 26h, 8Bh, 5Eh, 18h, 26h, 8Bh, 56h, 1Ah, 5Dh, 9Ah
+L011C5:	mov	bh, byte ptr es:[bp+7]	;@011C5
+	and	bh, 3Fh	;@011C9
+	je	@@2	;@011CC
+	mov	cx, word ptr es:[bp+1Ch]	;@011CE
+	or	bl, 20h	;@011D2
+	cmp	bl, bh	;@011D5
+	jne	@@3	;@011D7
+	cmp	bl, 2Ah	;@011D9
+	jne	@@1	;@011DC
+	cmp	ax, cx	;@011DE
+	jne	@@3	;@011E0
+	ret	;@011E2
+@@1:	xor	bh, bh	;@011E3
+	ret	;@011E5
+@@2:	mov	bh, 1	;@011E6
+	jmp	L034B5	;@011E8
+@@3:	jmp	L03497	;@011EB
+	db	26h, 89h, 4Eh, 18h, 26h, 89h, 7Eh, 1Ah, 26h, 89h, 46h, 1Ch, 80h, 0CBh, 20h, 26h	;@011EE
+	db	0F6h, 46h, 7, 3Fh, 75h, 62h, 26h, 8, 5Eh, 7, 53h, 52h, 56h, 26h, 8Bh, 46h
+	db	1Ch, 0E8h, 0EFh, 0F2h, 5Fh, 58h, 59h, 6, 55h, 8Bh, 0F0h, 26h, 8Ah, 4Eh, 9, 0D0h
+	db	0C1h, 80h, 0E1h, 1, 26h, 2, 4Eh, 6, 26h, 8Bh, 46h, 4, 53h, 26h, 8Bh, 5Eh
+	db	18h, 26h, 8Bh, 56h, 1Ah, 5Dh, 9Ah
 	dd	L12F2F
 	db	5Dh, 7, 8Bh, 0Eh, 7Eh, 51h, 23h, 0C9h, 75h, 9, 50h, 9Ah
 	dd	L101F7
@@ -780,21 +1118,74 @@ L010C0:	test	byte ptr ds:[38C9h], 0Fh	;@010C0
 	dd	L101F7
 	db	8Bh, 0C8h, 26h, 3Bh, 4Eh, 0Eh, 75h, 1, 0C3h, 0B9h, 17h, 90h, 9Ah
 	dd	L101F7
-	db	8Bh, 0F8h, 0E9h, 44h, 22h, 26h, 89h, 46h, 1Ch, 80h, 0CBh, 20h, 0A1h, 70h, 51h, 8Bh
-	db	16h, 72h, 51h, 8Bh, 0Eh, 7Eh, 51h, 26h, 0F6h, 46h, 7, 3Fh, 74h, 30h, 0F6h, 6
-	db	0C9h, 38h, 4, 75h, 2Dh, 26h, 3Bh, 46h, 10h, 75h, 0Ch, 26h, 3Bh, 56h, 12h, 75h
-	db	6, 26h, 3Bh, 4Eh, 0Eh, 74h, 5Fh, 0B9h, 17h, 10h, 0F6h, 6, 0C9h, 38h, 8, 74h
-	db	3, 0B9h, 8Eh, 10h, 9Ah
-	dd	L101F7
-	db	8Bh, 0F8h, 0E9h, 0FBh, 21h, 26h, 8, 5Eh, 7, 26h, 89h, 4Eh, 0Eh, 26h, 89h, 46h
-	db	10h, 26h, 89h, 56h, 12h, 33h, 0C0h, 26h, 0C7h, 46h, 18h, 1, 0, 26h, 89h, 46h
-	db	1Ah, 26h, 0C7h, 46h, 14h, 1, 0, 26h, 89h, 46h, 16h, 26h, 8Ah, 5Eh, 7, 80h
-	db	0E3h, 0Fh, 80h, 0FBh, 7, 72h, 16h, 80h, 0FBh, 0Ah, 73h, 11h, 6, 55h, 0E8h, 18h
-	db	44h, 5Dh, 7, 75h, 9, 26h, 89h, 46h, 14h, 26h, 89h, 5Eh, 16h, 0C3h, 26h, 0F6h
-	db	46h, 7, 10h, 75h, 0Ah, 53h, 0B9h, 5Dh, 0, 0E8h, 0A4h, 21h, 5Bh, 0EBh, 0E6h, 33h
-	db	0C0h, 33h, 0DBh, 0EBh, 0E0h, 26h, 8Ah, 5Eh, 7, 80h, 0E3h, 0Fh, 80h, 0FBh, 7, 72h
-	db	5, 80h, 0FBh, 0Ah, 72h, 8, 26h, 89h, 46h, 14h, 26h, 89h, 56h, 16h, 26h, 89h
-	db	4Eh, 18h, 26h, 89h, 7Eh, 1Ah, 0C3h
+	db	8Bh, 0F8h, 0E9h, 44h, 22h
+L012E8:	mov	word ptr es:[bp+1Ch], ax	;@012E8
+	or	bl, 20h	;@012EC
+	mov	ax, word ptr ds:[5170h]	;@012EF
+	mov	dx, word ptr ds:[5172h]	;@012F2
+	mov	cx, word ptr ds:[517Eh]	;@012F6
+	test	byte ptr es:[bp+7], 3Fh	;@012FA
+	je	@@3	;@012FF
+	test	byte ptr ds:[38C9h], 4	;@01301
+	jne	@@4	;@01306
+	cmp	ax, word ptr es:[bp+10h]	;@01308
+	jne	@@1	;@0130C
+	cmp	dx, word ptr es:[bp+12h]	;@0130E
+	jne	@@1	;@01312
+	cmp	cx, word ptr es:[bp+0Eh]	;@01314
+	je	@@6	;@01318
+@@1:	mov	cx, 1017h	;@0131A
+	test	byte ptr ds:[38C9h], 8	;@0131D
+	je	@@2	;@01322
+	mov	cx, 108Eh	;@01324
+@@2:	call	far ptr L101F7	;@01327
+	mov	di, ax	;@0132C
+	jmp	L0352C	;@0132E
+@@3:	or	byte ptr es:[bp+7], bl	;@01331
+@@4:	mov	word ptr es:[bp+0Eh], cx	;@01335
+	mov	word ptr es:[bp+10h], ax	;@01339
+	mov	word ptr es:[bp+12h], dx	;@0133D
+	xor	ax, ax	;@01341
+	mov	word ptr es:[bp+18h], 1	;@01343
+	mov	word ptr es:[bp+1Ah], ax	;@01349
+	mov	word ptr es:[bp+14h], 1	;@0134D
+	mov	word ptr es:[bp+16h], ax	;@01353
+	mov	bl, byte ptr es:[bp+7]	;@01357
+	and	bl, 0Fh	;@0135B
+	cmp	bl, 7	;@0135E
+	jb	@@6	;@01361
+	cmp	bl, 0Ah	;@01363
+	jae	@@6	;@01366
+	push	es	;@01368
+	push	bp	;@01369
+	call	L05785	;@0136A
+	pop	bp	;@0136D
+	pop	es	;@0136E
+	jne	@@7	;@0136F
+@@5:	mov	word ptr es:[bp+14h], ax	;@01371
+	mov	word ptr es:[bp+16h], bx	;@01375
+@@6:	ret	;@01379
+@@7:	test	byte ptr es:[bp+7], 10h	;@0137A
+	jne	@@8	;@0137F
+	push	bx	;@01381
+	mov	cx, 5Dh	;@01382
+	call	L0352C	;@01385
+	pop	bx	;@01388
+	jmp	@@5	;@01389
+@@8:	xor	ax, ax	;@0138B
+	xor	bx, bx	;@0138D
+	jmp	@@5	;@0138F
+L01391:	mov	bl, byte ptr es:[bp+7]	;@01391
+	and	bl, 0Fh	;@01395
+	cmp	bl, 7	;@01398
+	jb	@@1	;@0139B
+	cmp	bl, 0Ah	;@0139D
+	jb	@@2	;@013A0
+@@1:	mov	word ptr es:[bp+14h], ax	;@013A2
+	mov	word ptr es:[bp+16h], dx	;@013A6
+@@2:	mov	word ptr es:[bp+18h], cx	;@013AA
+	mov	word ptr es:[bp+1Ah], di	;@013AE
+	ret	;@013B2
 L013B3:	test	byte ptr es:[bp+7], 10h	;@013B3
 	jne	@@7	;@013B8
 	mov	si, word ptr es:[bp+0Eh]	;@013BA
@@ -907,20 +1298,43 @@ L0144B:	mov	ax, word ptr es:[bp+0Eh]	;@0144B
 	dd	L101E0
 	db	26h, 8Bh, 46h, 0Eh, 56h, 9Ah
 	dd	L13529
-	db	5Eh, 5Dh, 7, 32h, 0C0h, 0FEh, 0C8h, 0C3h, 26h, 8Ah, 46h, 7, 24h, 3Fh, 3Ch, 5
-	db	75h, 9, 26h, 8Bh, 46h, 10h, 23h, 0C0h, 74h, 1, 0C3h, 9Ah
-	dd	L101F7
-	db	0C3h, 26h, 8Ah, 46h, 7, 24h, 3Fh, 3Ch, 5, 75h, 16h, 26h, 0F6h, 46h, 18h, 2
-	db	74h, 0Fh, 26h, 8Bh, 46h, 16h, 23h, 0C0h, 74h, 7, 9Ah
-	dd	L101E0
-	db	0EBh, 0E0h, 9Ah
-	dd	L101F7
-	db	0C3h, 9Ah
-	dd	L101F7
-	db	0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 7, 0F6h, 6, 87h, 51h, 1, 74h, 7, 26h
-	db	8Bh, 4Eh, 10h, 0E3h, 1, 0C3h, 50h, 9Ah
-	dd	L101F7
-	db	8Bh, 0C8h, 58h, 0C3h
+	db	5Eh, 5Dh, 7, 32h, 0C0h, 0FEh, 0C8h, 0C3h
+L01640:	mov	al, byte ptr es:[bp+7]	;@01640
+	and	al, 3Fh	;@01644
+	cmp	al, 5	;@01646
+	jne	@@1	;@01648
+	mov	ax, word ptr es:[bp+10h]	;@0164A
+	and	ax, ax	;@0164E
+	je	@@1	;@01650
+	ret	;@01652
+@@1:	call	far ptr L101F7	;@01653
+	ret	;@01658
+L01659:	mov	al, byte ptr es:[bp+7]	;@01659
+	and	al, 3Fh	;@0165D
+	cmp	al, 5	;@0165F
+	jne	@@1	;@01661
+	test	byte ptr es:[bp+18h], 2	;@01663
+	je	@@1	;@01668
+	mov	ax, word ptr es:[bp+16h]	;@0166A
+	and	ax, ax	;@0166E
+	je	@@1	;@01670
+	call	far ptr L101E0	;@01672
+	jmp	L01659	;@01677
+@@1:	call	far ptr L101F7	;@01679
+	ret	;@0167E
+L0167F:	call	far ptr L101F7	;@0167F
+	test	word ptr ds:[517Ch], 1000h	;@01684
+	jne	@@1	;@0168A
+	test	byte ptr ds:[5187h], 1	;@0168C
+	je	@@2	;@01691
+@@1:	mov	cx, word ptr es:[bp+10h]	;@01693
+	jcxz	@@2	;@01697
+	ret	;@01699
+@@2:	push	ax	;@0169A
+	call	far ptr L101F7	;@0169B
+	mov	cx, ax	;@016A0
+	pop	ax	;@016A2
+	ret	;@016A3
 L016A4:	mov	bx, word ptr es:[bp+10h]	;@016A4
 	mov	cl, byte ptr es:[bp+18h]	;@016A8
 	mov	ax, word ptr es:[bp+16h]	;@016AC
@@ -1338,52 +1752,164 @@ L01CE1:	test	byte ptr ds:[38C9h], 0Fh	;@01CE1
 	pop	bp	;@01D8C
 	pop	es	;@01D8D
 	ret	;@01D8E
-	db	83h, 3Eh, 0C8h, 39h, 0, 75h, 12h, 0B8h, 1, 0, 0B9h, 40h, 0, 9Ah	;@01D8F
-	dd	L100B0
-	db	89h, 0Eh, 0C8h, 39h, 0A3h, 0C6h, 39h, 0A1h, 0C6h, 39h, 83h, 6, 0C6h, 39h, 1, 83h
-	db	2Eh, 0C8h, 39h, 1, 0C3h
+L01D8F:	cmp	word ptr ds:[39C8h], 0	;@01D8F
+	jne	@@1	;@01D94
+	mov	ax, 1	;@01D96
+	mov	cx, 40h	;@01D99
+	call	far ptr L100B0	;@01D9C
+	mov	word ptr ds:[39C8h], cx	;@01DA1
+	mov	word ptr ds:[39C6h], ax	;@01DA5
+@@1:	mov	ax, word ptr ds:[39C6h]	;@01DA8
+	add	word ptr ds:[39C6h], 1	;@01DAB
+	sub	word ptr ds:[39C8h], 1	;@01DB0
+	ret	;@01DB5
 L01DB6:	xor	ax, ax	;@01DB6
 	mov	byte ptr ds:[4E32h], al	;@01DB8
 	mov	word ptr ds:[4E28h], ax	;@01DBB
 	ret	;@01DBE
-	db	0BFh, 26h, 3Eh, 16h, 7, 8Bh, 0C8h, 0B0h, 40h, 0AAh, 0BAh, 10h, 27h, 0B4h, 30h, 0E8h	;@01DBF
-	db	24h, 0, 0BAh, 0E8h, 3, 0E8h, 1Eh, 0, 0BAh, 64h, 0, 0E8h, 18h, 0, 0BAh, 0Ah
-	db	0, 0E8h, 12h, 0, 0BAh, 1, 0, 0B4h, 0FFh, 0E8h, 0Ah, 0, 8Bh, 0CFh, 0BBh, 26h
-	db	3Eh, 2Bh, 0CBh, 0E9h, 1Ah, 0E6h, 0B0h, 2Fh, 0FEh, 0C0h, 2Bh, 0CAh, 73h, 0FAh, 3, 0CAh
-	db	3Ah, 0C4h, 74h, 3, 0AAh, 0B4h, 0FFh, 0C3h, 56h, 0BBh, 40h, 7, 8Bh, 36h, 24h, 3Eh
-	db	8Ah, 4, 0D7h, 0A8h, 2, 74h, 3, 46h, 0EBh, 0F6h, 0A8h, 1, 75h, 12h, 8Bh, 0D6h
-	db	0A8h, 1, 75h, 15h, 8Bh, 0CEh, 46h, 8Ah, 4, 0D7h, 0A8h, 2, 75h, 0F8h, 0EBh, 0F0h
-	db	89h, 36h, 24h, 3Eh, 0B9h, 0, 0, 5Eh, 0C3h, 41h, 89h, 36h, 24h, 3Eh, 5Eh, 8Bh
-	db	0DAh, 2Bh, 0CBh, 32h, 0C0h, 0C3h, 56h, 0BBh, 40h, 7, 8Bh, 36h, 24h, 3Eh, 8Ah, 4
-	db	0D7h, 0A8h, 2, 74h, 3, 46h, 0EBh, 0F6h, 8Bh, 0D6h, 0A8h, 1, 75h, 6, 46h, 8Ah
-	db	4, 0D7h, 0EBh, 0F6h, 80h, 3Ch, 3Bh, 74h, 0F5h, 89h, 36h, 24h, 3Eh, 8Bh, 0CEh, 5Eh
-	db	8Bh, 0DAh, 2Bh, 0CBh, 0C3h, 56h, 0BBh, 40h, 7, 8Bh, 36h, 24h, 3Eh, 0ACh, 0D7h, 0A8h
-	db	2, 75h, 0FAh, 4Eh, 22h, 0C0h, 74h, 1Ch, 8Bh, 0D6h, 80h, 3Ch, 3Ch, 75h, 2Dh, 42h
-	db	46h, 8Ah, 4, 3Ch, 3Eh, 74h, 16h, 0D7h, 0A8h, 1, 74h, 0F4h, 8Bh, 0CEh, 89h, 36h
-	db	24h, 3Eh, 0EBh, 10h, 6, 55h, 0E8h, 5Bh, 0Ah, 5Dh, 7, 0EBh, 0C9h, 8Bh, 0CEh, 46h
-	db	89h, 36h, 24h, 3Eh, 5Eh, 8Bh, 0DAh, 2Bh, 0CBh, 32h, 0C0h, 0C3h, 5Eh, 0FFh, 36h, 24h
-	db	3Eh, 0E8h, 0E3h, 0, 59h, 6, 55h, 75h, 18h, 22h, 0E4h, 74h, 14h, 8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 24h, 3Fh, 75h, 47h, 26h, 80h, 4Eh, 10h, 2, 5Dh, 7, 89h
-	db	0Eh, 24h, 3Eh, 89h, 36h, 28h, 4Eh, 0C6h, 6, 32h, 4Eh, 0, 56h, 8Bh, 0F1h, 0BBh
-	db	40h, 7, 8Ah, 4, 0D7h, 0A8h, 2, 74h, 3, 46h, 0EBh, 0F6h, 80h, 3Ch, 25h, 75h
-	db	1Ch, 46h, 89h, 36h, 24h, 3Eh, 5Eh, 0BFh, 26h, 42h, 57h, 0E8h, 72h, 8, 5Bh, 8Bh
-	db	0CFh, 2Bh, 0CBh, 32h, 0C0h, 89h, 36h, 28h, 4Eh, 0A2h, 32h, 4Eh, 0C3h, 5Eh, 0C3h, 3Ch
-	db	1, 75h, 0BAh, 83h, 0C6h, 2, 0E8h, 0B5h, 0FDh, 9Ah
-	dd	L101E0
-	db	33h, 0C9h, 26h, 0F6h, 46h, 6, 1, 74h, 28h, 26h, 8Bh, 46h, 0Ch, 26h, 8Bh, 4Eh
-	db	0Eh, 9Ah
-	dd	L1035F
-	db	1Eh, 56h, 6, 1Eh, 7, 1Fh, 8Bh, 0F7h, 0BFh, 26h, 42h, 8Bh, 0DFh, 51h, 0D1h, 0E9h
-	db	0F3h, 0A5h, 0D1h, 0D1h, 0F3h, 0A4h, 59h, 5Eh, 1Fh, 32h, 0C0h, 5Dh, 7, 0C3h, 56h, 0BBh
-	db	40h, 7, 8Bh, 36h, 24h, 3Eh, 8Ah, 4, 0D7h, 0A8h, 2, 74h, 3, 46h, 0EBh, 0F6h
-	db	8Bh, 0D6h, 8Ah, 4, 3Ch, 2Ch, 74h, 8, 0D7h, 0A8h, 3, 75h, 3, 46h, 0EBh, 0F2h
-	db	8Bh, 0CEh, 89h, 36h, 24h, 3Eh, 5Eh, 8Bh, 0DAh, 2Bh, 0CBh, 74h, 3, 32h, 0C0h, 0C3h
-	db	32h, 0C0h, 0FEh, 0C8h, 0C3h, 8Bh, 0Eh, 24h, 3Eh, 0C3h, 80h, 0Eh, 0D2h, 39h, 8, 80h
-	db	0Eh, 0D2h, 39h, 2, 80h, 0Eh, 0D2h, 39h, 1, 0E8h, 71h, 9, 0C6h, 6, 0D2h, 39h
-	db	0, 0C3h, 0C6h, 6, 0D2h, 39h, 4, 0E8h, 63h, 9, 0C6h, 6, 0D2h, 39h, 0, 0C3h
-	db	0F6h, 6, 0C9h, 38h, 3, 75h, 0Fh, 0F7h, 6, 0B6h, 38h, 1, 0, 75h, 8, 0F6h
-	db	6, 87h, 51h, 40h, 75h, 1, 0C3h, 22h, 0F6h, 74h, 0FBh, 50h, 8Bh, 0C2h, 9Ah
+	db	0BFh, 26h, 3Eh, 16h, 7, 8Bh, 0C8h, 0B0h, 40h, 0AAh, 0BAh, 10h	;@01DBF
+	db	27h, 0B4h, 30h, 0E8h, 24h, 0, 0BAh, 0E8h, 3, 0E8h, 1Eh, 0, 0BAh
+	db	64h, 0, 0E8h, 18h, 0, 0BAh, 0Ah, 0, 0E8h, 12h, 0, 0BAh, 1, 0, 0B4h
+	db	0FFh, 0E8h, 0Ah, 0, 8Bh, 0CFh, 0BBh, '&>+', 0CBh, 0E9h, 1Ah, 0E6h
+	db	0B0h, 2Fh, 0FEh, 0C0h, 2Bh, 0CAh, 73h, 0FAh, 3, 0CAh, 3Ah, 0C4h
+	db	74h, 3, 0AAh, 0B4h, 0FFh, 0C3h, 56h, 0BBh, 40h, 7, 8Bh, '6$>'
+	db	8Ah, 4, 0D7h, 0A8h, 2, 74h, 3, 46h, 0EBh, 0F6h, 0A8h, 1, 75h, 12h
+	db	8Bh, 0D6h, 0A8h, 1, 75h, 15h, 8Bh, 0CEh, 46h, 8Ah, 4, 0D7h, 0A8h
+	db	2, 75h, 0F8h, 0EBh, 0F0h, 89h, '6$>', 0B9h, 0, 0, 5Eh, 0C3h, 41h
+	db	89h, '6$>^', 8Bh, 0DAh, 2Bh, 0CBh, 32h, 0C0h, 0C3h, 56h, 0BBh
+	db	40h, 7, 8Bh, '6$>', 8Ah, 4, 0D7h, 0A8h, 2, 74h, 3, 46h, 0EBh, 0F6h
+	db	8Bh, 0D6h, 0A8h, 1, 75h, 6, 46h, 8Ah, 4, 0D7h, 0EBh, 0F6h, 80h
+	db	'<;t', 0F5h, 89h, '6$>', 8Bh, 0CEh, 5Eh, 8Bh, 0DAh, 2Bh, 0CBh
+	db	0C3h
+L01E74:	push	si	;@01E74
+@@1:	mov	bx, 740h	;@01E75
+	mov	si, word ptr ds:[3E24h]	;@01E78
+@@2:	lodsb	;@01E7C
+	xlat	;@01E7D
+	test	al, 2	;@01E7E
+	jne	@@2	;@01E80
+	dec	si	;@01E82
+	and	al, al	;@01E83
+	je	@@4	;@01E85
+	mov	dx, si	;@01E87
+	cmp	byte ptr [si], 3Ch	;@01E89
+	jne	@@7	;@01E8C
+	inc	dx	;@01E8E
+@@3:	inc	si	;@01E8F
+	mov	al, byte ptr [si]	;@01E90
+	cmp	al, 3Eh	;@01E92
+	je	@@5	;@01E94
+	xlat	;@01E96
+	test	al, 1	;@01E97
+	je	@@3	;@01E99
+	mov	cx, si	;@01E9B
+	mov	word ptr ds:[3E24h], si	;@01E9D
+	jmp	short @@6	;@01EA1
+@@4:	push	es	;@01EA3
+	push	bp	;@01EA4
+	call	L02903	;@01EA5
+	pop	bp	;@01EA8
+	pop	es	;@01EA9
+	jmp	@@1	;@01EAA
+@@5:	mov	cx, si	;@01EAC
+	inc	si	;@01EAE
+	mov	word ptr ds:[3E24h], si	;@01EAF
+@@6:	pop	si	;@01EB3
+	mov	bx, dx	;@01EB4
+	sub	cx, bx	;@01EB6
+	xor	al, al	;@01EB8
+	ret	;@01EBA
+@@7:	pop	si	;@01EBB
+	push	word ptr ds:[3E24h]	;@01EBC
+	call	L01FA6	;@01EC0
+	pop	cx	;@01EC3
+	push	es	;@01EC4
+	push	bp	;@01EC5
+	jne	@@8	;@01EC6
+	and	ah, ah	;@01EC8
+	je	@@8	;@01ECA
+	mov	ax, dx	;@01ECC
+	call	far ptr L101E0	;@01ECE
+	mov	al, byte ptr es:[bp+7]	;@01ED3
+	and	al, 3Fh	;@01ED7
+	jne	@@12	;@01ED9
+	or	byte ptr es:[bp+10h], 2	;@01EDB
+@@8:	pop	bp	;@01EE0
+	pop	es	;@01EE1
+	mov	word ptr ds:[3E24h], cx	;@01EE2
+	mov	word ptr ds:[4E28h], si	;@01EE6
+	mov	byte ptr ds:[4E32h], 0	;@01EEA
+	push	si	;@01EEF
+	mov	si, cx	;@01EF0
+	mov	bx, 740h	;@01EF2
+@@9:	mov	al, byte ptr [si]	;@01EF5
+	xlat	;@01EF7
+	test	al, 2	;@01EF8
+	je	@@10	;@01EFA
+	inc	si	;@01EFC
+	jmp	@@9	;@01EFD
+@@10:	cmp	byte ptr [si], 25h	;@01EFF
+	jne	@@11	;@01F02
+	inc	si	;@01F04
+	mov	word ptr ds:[3E24h], si	;@01F05
+	pop	si	;@01F09
+	mov	di, 4226h	;@01F0A
+	push	di	;@01F0D
+	call	L02783	;@01F0E
+	pop	bx	;@01F11
+	mov	cx, di	;@01F12
+	sub	cx, bx	;@01F14
+	xor	al, al	;@01F16
+	mov	word ptr ds:[4E28h], si	;@01F18
+	mov	byte ptr ds:[4E32h], al	;@01F1C
+	ret	;@01F1F
+@@11:	pop	si	;@01F20
+	ret	;@01F21
+@@12:	cmp	al, 1	;@01F22
+	jne	@@8	;@01F24
+	add	si, 2	;@01F26
+	call	L01CE1	;@01F29
+	call	far ptr L101E0	;@01F2C
+	xor	cx, cx	;@01F31
+	test	byte ptr es:[bp+6], 1	;@01F33
+	je	@@13	;@01F38
+	mov	ax, word ptr es:[bp+0Ch]	;@01F3A
+	mov	cx, word ptr es:[bp+0Eh]	;@01F3E
+	call	far ptr L1035F	;@01F42
+	push	ds	;@01F47
+	push	si	;@01F48
+	push	es	;@01F49
+	push	ds	;@01F4A
+	pop	es	;@01F4B
+	pop	ds	;@01F4C
+	mov	si, di	;@01F4D
+	mov	di, 4226h	;@01F4F
+	mov	bx, di	;@01F52
+	push	cx	;@01F54
+	shr	cx, 1	;@01F55
+	rep movsw	;@01F57
+	rcl	cx, 1	;@01F59
+	rep movsb	;@01F5B
+	pop	cx	;@01F5D
+	pop	si	;@01F5E
+	pop	ds	;@01F5F
+	xor	al, al	;@01F60
+@@13:	pop	bp	;@01F62
+	pop	es	;@01F63
+	ret	;@01F64
+	db	56h, 0BBh, 40h, 7, 8Bh, '6$>', 8Ah, 4, 0D7h, 0A8h, 2, 74h, 3, 46h	;@01F65
+	db	0EBh, 0F6h, 8Bh, 0D6h, 8Ah, 4, '<,t', 8, 0D7h, 0A8h, 3, 75h, 3
+	db	46h, 0EBh, 0F2h, 8Bh, 0CEh, 89h, '6$>^', 8Bh, 0DAh, 2Bh, 0CBh
+	db	74h, 3, 32h, 0C0h, 0C3h, 32h, 0C0h, 0FEh, 0C8h, 0C3h, 8Bh, 0Eh
+	db	24h, 3Eh, 0C3h, 80h, 0Eh, 0D2h, 39h, 8
+L01FA6:	or	byte ptr ds:[39D2h], 2	;@01FA6
+	or	byte ptr ds:[39D2h], 1	;@01FAB
+	call	L02924	;@01FB0
+	mov	byte ptr ds:[39D2h], 0	;@01FB3
+	ret	;@01FB8
+	db	0C6h, 6, 0D2h, 39h, 4, 0E8h, 63h, 9, 0C6h, 6, 0D2h, 39h, 0, 0C3h, 0F6h, 6	;@01FB9
+	db	0C9h, 38h, 3, 75h, 0Fh, 0F7h, 6, 0B6h, 38h, 1, 0, 75h, 8, 0F6h, 6, 87h
+	db	51h, 40h, 75h, 1, 0C3h, 22h, 0F6h, 74h, 0FBh, 50h, 8Bh, 0C2h, 9Ah
 	dd	L101E0
 	db	58h, 26h, 80h, 7Eh, 7, 0Bh, 74h, 0EBh, 50h, 56h, 8Bh, 0F1h, 0BBh, 40h, 7, 0ACh
 	db	0D7h, 0A8h, 2, 75h, 0FAh, 4Eh, 6, 55h, 26h, 0C4h, 7Eh, 0, 9Ah
@@ -1400,114 +1926,467 @@ L01DB6:	xor	ax, ax	;@01DB6
 	db	58h, 26h, 89h, 46h, 4, 5Dh, 7, 8Bh, 0D3h, 0A1h, 0B6h, 38h, 25h, 3, 0, 3Dh
 	db	3, 0, 74h, 8, 23h, 0C0h, 74h, 12h, 0F3h, 0A4h, 0EBh, 1Eh, 0F6h, 6, 87h, 51h
 	db	40h, 75h, 0F5h, 0F6h, 6, 87h, 51h, 10h, 74h, 0EEh, 0BBh, 40h, 7, 0ACh, 8Ah, 0E0h
-	db	0D7h, 24h, 20h, 2Ah, 0E0h, 8Ah, 0C4h, 0AAh, 0E2h, 0F3h, 5Eh, 58h, 0C3h, 0F6h, 6, 0C9h
-	db	38h, 2, 75h, 0Ch, 0A3h, 24h, 3Eh, 89h, 36h, 28h, 4Eh, 0C6h, 6, 32h, 4Eh, 0
-	db	0C3h, 0E8h, 2, 3, 0E8h, 28h, 3, 0E8h, 0E1h, 3, 0E8h, 0B5h, 3, 9Ah
+	db	0D7h, 24h, 20h, 2Ah, 0E0h, 8Ah, 0C4h, 0AAh, 0E2h, 0F3h, 5Eh, 58h, 0C3h
+L0208D:	test	byte ptr ds:[38C9h], 2	;@0208D
+	jne	@@1	;@02092
+	mov	word ptr ds:[3E24h], ax	;@02094
+	mov	word ptr ds:[4E28h], si	;@02097
+	mov	byte ptr ds:[4E32h], 0	;@0209B
+@@1:	ret	;@020A0
+	db	0E8h, 2, 3, 0E8h, 28h, 3, 0E8h, 0E1h, 3, 0E8h, 0B5h, 3, 9Ah	;@020A1
 	dd	L11CA8
 	db	0C3h, 0E8h, 0F0h, 2, 0C7h, 6, 2Eh, 4Eh, 46h, 26h, 0C7h, 6, 30h, 4Eh, 7Bh, 26h
 	db	0E8h, 0C6h, 3, 9Ah
 	dd	L11CA8
-	db	0C3h, 53h, 52h, 0E8h, 0D6h, 2, 5Ah, 5Bh, 8Bh, 0C3h, 0Bh, 0C2h, 74h, 15h, 53h, 52h
-	db	0E8h, 0F2h, 2, 0E8h, 0ABh, 3, 0E8h, 7Fh, 3, 5Ah, 5Bh, 83h, 0EBh, 1, 83h, 0DAh
-	db	0, 0EBh, 0E5h, 9Ah
-	dd	L11CA8
-	db	0C3h, 56h, 6, 16h, 7, 0BFh, 26h, 42h, 8Bh, 36h, 24h, 3Eh, 0BBh, 40h, 7, 0ACh
-	db	0D7h, 0A8h, 2, 75h, 0FAh, 4Eh, 80h, 3Ch, 3Ch, 75h, 72h, 8Bh, 0D6h, 42h, 0B4h, 1
-	db	46h, 8Ah, 4, 3Ch, 3Ch, 74h, 1Dh, 3Ch, 3Eh, 74h, 42h, 3Ch, 21h, 74h, 19h, 3Ch
-	db	22h, 74h, 1Eh, 3Ch, 27h, 74h, 1Ah, 0D7h, 0A8h, 1, 74h, 0E4h, 8Bh, 0CEh, 89h, 36h
-	db	24h, 3Eh, 0EBh, 34h, 0FEh, 0C4h, 0EBh, 0D8h, 46h, 8Ah, 4, 3Ch, 0Dh, 75h, 0D1h, 0EBh
-	db	0D0h, 8Ah, 0E8h, 46h, 0ACh, 3Ch, 0Dh, 74h, 0Bh, 3Ah, 0C5h, 75h, 0F7h, 38h, 2Ch, 75h
-	db	0C0h, 46h, 0EBh, 0F0h, 4Eh, 8Bh, 0CEh, 89h, 36h, 24h, 3Eh, 0EBh, 0Bh, 0FEh, 0CCh, 75h
-	db	0AFh, 8Bh, 0CEh, 46h, 89h, 36h, 24h, 3Eh, 8Bh, 0DAh, 2Bh, 0CBh, 89h, 0Eh, 26h, 46h
-	db	8Bh, 0F3h, 0D1h, 0E9h, 0F3h, 0A5h, 0D1h, 0D1h, 0F3h, 0A4h, 7, 5Eh, 0C3h, 46h, 33h, 0C9h
-	db	0A8h, 1, 75h, 0Bh, 8Ah, 44h, 0FFh, 0AAh, 41h, 0ACh, 0D7h, 0A8h, 2, 74h, 0F1h, 89h
-	db	0Eh, 26h, 46h, 7, 5Eh, 0C3h, 56h, 6, 16h, 7, 0BFh, 26h, 42h, 8Bh, 36h, 24h
-	db	3Eh, 0BBh, 40h, 7, 0ACh, 0D7h, 0A8h, 2, 75h, 0FAh, 4Eh, 80h, 3Ch, 3Ch, 75h, 41h
-	db	8Bh, 0D6h, 42h, 0B4h, 1, 46h, 8Ah, 4, 3Ch, 3Ch, 74h, 11h, 3Ch, 3Eh, 74h, 11h
-	db	0D7h, 0A8h, 1, 74h, 0F0h, 8Bh, 0CEh, 89h, 36h, 24h, 3Eh, 0EBh, 0Fh, 0FEh, 0C4h, 0EBh
-	db	0E4h, 0FEh, 0CCh, 75h, 0E0h, 8Bh, 0CEh, 46h, 89h, 36h, 24h, 3Eh, 8Bh, 0DAh, 2Bh, 0CBh
-	db	89h, 0Eh, 26h, 46h, 8Bh, 0F3h, 0D1h, 0E9h, 0F3h, 0A5h, 0D1h, 0D1h, 0F3h, 0A4h, 7, 5Eh
-	db	0C3h, 46h, 33h, 0C9h, 0A8h, 1, 75h, 0Bh, 8Ah, 44h, 0FFh, 0AAh, 41h, 0ACh, 0D7h, 0A8h
-	db	2, 74h, 0F1h, 89h, 0Eh, 26h, 46h, 7, 5Eh, 0C3h, 0E8h, 97h, 1, 16h, 7, 0BEh
-	db	26h, 42h, 0BFh, 24h, 3Ah, 8Bh, 0Eh, 26h, 46h, 89h, 3Eh, 24h, 3Eh, 0E3h, 2Dh, 0ACh
-	db	3Ch, 20h, 77h, 0Ah, 0E2h, 0F9h, 0EBh, 24h, 9Ah
+	db	0C3h
+	push	bx	;@020CB
+	push	dx	;@020CC
+	call	@@28	;@020CD
+	pop	dx	;@020D0
+	pop	bx	;@020D1
+@@2:	mov	ax, bx	;@020D2
+	or	ax, dx	;@020D4
+	je	@@3	;@020D6
+	push	bx	;@020D8
+	push	dx	;@020D9
+	call	@@29	;@020DA
+	call	@@40	;@020DD
+	call	@@37	;@020E0
+	pop	dx	;@020E3
+	pop	bx	;@020E4
+	sub	bx, 1	;@020E5
+	sbb	dx, 0	;@020E8
+	jmp	@@2	;@020EB
+@@3:	call	far ptr L11CA8	;@020ED
+	ret	;@020F2
+	db	56h, 6, 16h, 7, 0BFh, 26h, 42h, 8Bh, 36h, 24h, 3Eh, 0BBh, 40h, 7, 0ACh, 0D7h	;@020F3
+	db	0A8h, 2, 75h, 0FAh, 4Eh, 80h, 3Ch, 3Ch, 75h, 72h, 8Bh, 0D6h, 42h, 0B4h, 1, 46h
+	db	8Ah, 4, 3Ch, 3Ch, 74h, 1Dh, 3Ch, 3Eh, 74h, 42h, 3Ch, 21h, 74h, 19h, 3Ch, 22h
+	db	74h, 1Eh, 3Ch, 27h, 74h, 1Ah, 0D7h, 0A8h, 1, 74h, 0E4h, 8Bh, 0CEh, 89h, 36h, 24h
+	db	3Eh, 0EBh, 34h, 0FEh, 0C4h, 0EBh, 0D8h, 46h, 8Ah, 4, 3Ch, 0Dh, 75h, 0D1h, 0EBh, 0D0h
+	db	8Ah, 0E8h, 46h, 0ACh, 3Ch, 0Dh, 74h, 0Bh, 3Ah, 0C5h, 75h, 0F7h, 38h, 2Ch, 75h, 0C0h
+	db	46h, 0EBh, 0F0h, 4Eh, 8Bh, 0CEh, 89h, 36h, 24h, 3Eh, 0EBh, 0Bh, 0FEh, 0CCh, 75h, 0AFh
+	db	8Bh, 0CEh, 46h, 89h, 36h, 24h, 3Eh, 8Bh, 0DAh, 2Bh, 0CBh, 89h, 0Eh, 26h, 46h, 8Bh
+	db	0F3h, 0D1h, 0E9h, 0F3h, 0A5h, 0D1h, 0D1h, 0F3h, 0A4h, 7, 5Eh, 0C3h, 46h, 33h, 0C9h, 0A8h
+	db	1, 75h, 0Bh, 8Ah, 44h, 0FFh, 0AAh, 41h, 0ACh, 0D7h, 0A8h, 2, 74h, 0F1h, 89h, 0Eh
+	db	26h, 46h, 7, 5Eh, 0C3h, 56h, 6, 16h, 7, 0BFh, 26h, 42h, 8Bh, 36h, 24h, 3Eh
+	db	0BBh, 40h, 7, 0ACh, 0D7h, 0A8h, 2, 75h, 0FAh, 4Eh, 80h, 3Ch, 3Ch, 75h, 41h, 8Bh
+	db	0D6h, 42h, 0B4h, 1, 46h, 8Ah, 4, 3Ch, 3Ch, 74h, 11h, 3Ch, 3Eh, 74h, 11h, 0D7h
+	db	0A8h, 1, 74h, 0F0h, 8Bh, 0CEh, 89h, 36h, 24h, 3Eh, 0EBh, 0Fh, 0FEh, 0C4h, 0EBh, 0E4h
+	db	0FEh, 0CCh, 75h, 0E0h, 8Bh, 0CEh, 46h, 89h, 36h, 24h, 3Eh, 8Bh, 0DAh, 2Bh, 0CBh, 89h
+	db	0Eh, 26h, 46h, 8Bh, 0F3h, 0D1h, 0E9h, 0F3h, 0A5h, 0D1h, 0D1h, 0F3h, 0A4h, 7, 5Eh, 0C3h
+	db	46h, 33h, 0C9h, 0A8h, 1, 75h, 0Bh, 8Ah, 44h, 0FFh, 0AAh, 41h, 0ACh, 0D7h, 0A8h, 2
+	db	74h, 0F1h, 89h, 0Eh, 26h, 46h, 7, 5Eh, 0C3h, 0E8h, 97h, 1, 16h, 7, 0BEh, 26h
+	db	42h, 0BFh, 24h, 3Ah, 8Bh, 0Eh, 26h, 46h, 89h, 3Eh, 24h, 3Eh, 0E3h, 2Dh, 0ACh, 3Ch
+	db	20h, 77h, 0Ah, 0E2h, 0F9h, 0EBh, 24h, 9Ah
 	dd	L11CA8
 	db	0C3h, 4Eh, 3Ch, 3Ch, 74h, 14h, 3Ch, 21h, 74h, 10h, 0B0h, 3Ch, 0AAh, 0E8h, 8Dh, 0
 	db	0B0h, 3Eh, 0AAh, 0E3h, 0Ah, 0ACh, 0AAh, 49h, 0EBh, 0D6h, 0E8h, 22h, 0, 0EBh, 0F4h, 0B0h
 	db	0Dh, 0AAh, 8Bh, 36h, 24h, 3Eh, 0BBh, 40h, 7, 0ACh, 0D7h, 0A8h, 2, 75h, 0FAh, 0A8h
 	db	1, 75h, 0C8h, 4Eh, 0E8h, 69h, 1, 0E8h, 22h, 2, 0E8h, 0F6h, 1, 0EBh, 0E3h, 0E3h
-	db	7, 32h, 0D2h, 0E8h, 3, 0, 72h, 0F7h, 0C3h, 22h, 0D2h, 75h, 5, 80h, 3Ch, 2Ch
-	db	74h, 18h, 0ACh, 3Ch, 22h, 74h, 2Ch, 3Ch, 27h, 74h, 28h, 3Ch, 21h, 74h, 0Dh, 3Ch
-	db	3Ch, 74h, 10h, 3Ch, 3Eh, 74h, 10h, 0AAh, 0E2h, 0DFh, 0F8h, 0C3h, 0AAh, 49h, 74h, 0FAh
-	db	0ACh, 0EBh, 0F4h, 0FEh, 0C2h, 0EBh, 0F0h, 22h, 0D2h, 74h, 0ECh, 0FEh, 0CAh, 75h, 0E8h, 0AAh
-	db	49h, 0F9h, 0C3h, 0AAh, 49h, 74h, 0E3h, 8Ah, 0E0h, 0ACh, 3Ah, 0C4h, 74h, 5, 0AAh, 0E2h
-	db	0F8h, 0F8h, 0C3h, 0AAh, 49h, 74h, 0D3h, 38h, 4, 75h, 0AEh, 0EBh, 0ECh, 0E3h, 1Dh, 80h
-	db	3Ch, 2Ch, 74h, 18h, 0ACh, 3Ch, 22h, 74h, 28h, 3Ch, 27h, 74h, 24h, 3Ch, 21h, 74h
-	db	0Ch, 3Ch, 3Ch, 74h, 0Fh, 3Ch, 3Eh, 74h, 1, 0AAh, 0E2h, 0E3h, 0C3h, 0AAh, 49h, 74h
-	db	0FBh, 0ACh, 0EBh, 0F5h, 49h, 0E3h, 0F5h, 0B2h, 1, 0E8h, 7Dh, 0FFh, 73h, 0CFh, 4Fh, 0EBh
-	db	0CCh, 0AAh, 49h, 74h, 0E7h, 8Ah, 0E0h, 0ACh, 3Ah, 0C4h, 74h, 4, 0AAh, 0E2h, 0F8h, 0C3h
-	db	0AAh, 49h, 74h, 0D8h, 38h, 4, 75h, 0B5h, 0EBh, 0EDh, 0E8h, 8Ah, 0, 0BEh, 26h, 42h
-	db	0BFh, 24h, 3Ah, 8Bh, 0Eh, 26h, 46h, 89h, 3Eh, 24h, 3Eh, 0BBh, 40h, 7, 0E3h, 19h
-	db	0ACh, 3Ch, 3Ch, 74h, 11h, 3Ch, 3Eh, 74h, 0Dh, 0C6h, 5, 21h, 88h, 45h, 1, 0C6h
-	db	45h, 2, 2Ch, 83h, 0C7h, 3, 0E2h, 0E8h, 4Fh, 0C6h, 5, 0Dh, 8Bh, 36h, 24h, 3Eh
-	db	0BBh, 40h, 7, 8Ah, 4, 0D7h, 0A8h, 2, 74h, 3, 46h, 0EBh, 0F6h, 0A8h, 1, 75h
-	db	0Bh, 0E8h, 6Ch, 0, 0E8h, 25h, 1, 0E8h, 0F9h, 0, 0EBh, 0E0h, 9Ah
+	db	7, 32h, 0D2h, 0E8h, 3, 0, 72h, 0F7h, 0C3h
+@@4:	and	dl, dl	;@02278
+	jne	@@5	;@0227A
+	cmp	byte ptr [si], 2Ch	;@0227C
+	je	@@7	;@0227F
+@@5:	lodsb	;@02281
+	cmp	al, 22h	;@02282
+	je	@@11	;@02284
+	cmp	al, 27h	;@02286
+	je	@@11	;@02288
+	cmp	al, 21h	;@0228A
+	je	@@8	;@0228C
+	cmp	al, 3Ch	;@0228E
+	je	@@9	;@02290
+	cmp	al, 3Eh	;@02292
+	je	@@10	;@02294
+@@6:	stosb	;@02296
+	loop	@@4	;@02297
+@@7:	clc	;@02299
+	ret	;@0229A
+@@8:	stosb	;@0229B
+	dec	cx	;@0229C
+	je	@@7	;@0229D
+	lodsb	;@0229F
+	jmp	@@6	;@022A0
+@@9:	inc	dl	;@022A2
+	jmp	@@6	;@022A4
+@@10:	and	dl, dl	;@022A6
+	je	@@6	;@022A8
+	dec	dl	;@022AA
+	jne	@@6	;@022AC
+	stosb	;@022AE
+	dec	cx	;@022AF
+	stc	;@022B0
+	ret	;@022B1
+@@11:	stosb	;@022B2
+	dec	cx	;@022B3
+	je	@@7	;@022B4
+	mov	ah, al	;@022B6
+@@12:	lodsb	;@022B8
+	cmp	al, ah	;@022B9
+	je	@@13	;@022BB
+	stosb	;@022BD
+	loop	@@12	;@022BE
+	clc	;@022C0
+	ret	;@022C1
+@@13:	stosb	;@022C2
+	dec	cx	;@022C3
+	je	@@7	;@022C4
+	cmp	byte ptr [si], al	;@022C6
+	jne	@@4	;@022C8
+	jmp	@@12	;@022CA
+@@14:	jcxz	@@18	;@022CC
+@@15:	cmp	byte ptr [si], 2Ch	;@022CE
+	je	@@18	;@022D1
+	lodsb	;@022D3
+	cmp	al, 22h	;@022D4
+	je	@@21	;@022D6
+	cmp	al, 27h	;@022D8
+	je	@@21	;@022DA
+	cmp	al, 21h	;@022DC
+	je	@@19	;@022DE
+	cmp	al, 3Ch	;@022E0
+	je	@@20	;@022E2
+	cmp	al, 3Eh	;@022E4
+	je	@@17	;@022E6
+@@16:	stosb	;@022E8
+@@17:	loop	@@15	;@022E9
+@@18:	ret	;@022EB
+@@19:	stosb	;@022EC
+	dec	cx	;@022ED
+	je	@@18	;@022EE
+	lodsb	;@022F0
+	jmp	@@16	;@022F1
+@@20:	dec	cx	;@022F3
+	jcxz	@@18	;@022F4
+	mov	dl, 1	;@022F6
+	call	@@4	;@022F8
+	jae	@@14	;@022FB
+	dec	di	;@022FD
+	jmp	@@14	;@022FE
+@@21:	stosb	;@02300
+	dec	cx	;@02301
+	je	@@18	;@02302
+	mov	ah, al	;@02304
+@@22:	lodsb	;@02306
+	cmp	al, ah	;@02307
+	je	@@23	;@02309
+	stosb	;@0230B
+	loop	@@22	;@0230C
+	ret	;@0230E
+@@23:	stosb	;@0230F
+	dec	cx	;@02310
+	je	@@18	;@02311
+	cmp	byte ptr [si], al	;@02313
+	jne	@@14	;@02315
+	jmp	@@22	;@02317
+	db	0E8h, 8Ah, 0, 0BEh, 26h, 42h, 0BFh, 24h, 3Ah, 8Bh, 0Eh, 26h, 46h, 89h, 3Eh, 24h	;@02319
+	db	3Eh, 0BBh, 40h, 7, 0E3h, 19h, 0ACh, 3Ch, 3Ch, 74h, 11h, 3Ch, 3Eh, 74h, 0Dh, 0C6h
+	db	5, 21h, 88h, 45h, 1, 0C6h, 45h, 2, 2Ch, 83h, 0C7h, 3, 0E2h, 0E8h, 4Fh, 0C6h
+	db	5, 0Dh, 8Bh, 36h, 24h, 3Eh, 0BBh, 40h, 7, 8Ah, 4, 0D7h, 0A8h, 2, 74h, 3
+	db	46h, 0EBh, 0F6h, 0A8h, 1, 75h, 0Bh, 0E8h, 6Ch, 0, 0E8h, 25h, 1, 0E8h, 0F9h, 0
+	db	0EBh, 0E0h, 9Ah
 	dd	L11CA8
-	db	0C3h, 0BFh, 26h, 42h, 8Bh, 36h, 24h, 3Eh, 0BBh, 40h, 7, 0ACh, 0D7h, 0A8h, 2, 75h
-	db	0FAh, 4Eh, 0E8h, 3Ch, 3, 0BBh, 40h, 7, 0ACh, 0D7h, 0A8h, 2, 75h, 0FAh, 4Eh, 0A8h
-	db	1, 75h, 6, 80h, 3Ch, 2Ch, 75h, 1, 46h, 89h, 36h, 24h, 3Eh, 81h, 0EFh, 26h
-	db	42h, 89h, 3Eh, 26h, 46h, 0C3h, 0C7h, 6, 2Eh, 4Eh, 0F3h, 25h, 0C7h, 6, 30h, 4Eh
-	db	6Dh, 26h, 89h, 2Eh, 2Ah, 4Eh, 8Ch, 6, 2Ch, 4Eh, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 4Eh, 6, 32h, 0EDh, 26h, 0C4h, 7Eh, 0, 9Ah
-	dd	L11BEA
-	db	0C3h, 0C4h, 2Eh, 2Ah, 4Eh, 26h, 8Bh, 4Eh, 0Ah, 0E3h, 59h, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 80h, 7Eh, 8, 0, 74h, 4Ch, 0B8h, 3Fh, 3Fh, 0F7h, 6, 7Ch, 51h, 0, 80h
-	db	74h, 25h, 6, 55h, 50h, 26h, 8Bh, 46h, 2, 9Ah
-	dd	L101E0
-	db	58h, 26h, 80h, 7Eh, 6, 1, 76h, 0Fh, 26h, 0C4h, 7Eh, 0, 8Bh, 0Eh, 80h, 51h
-	db	26h, 3Bh, 0Dh, 75h, 2, 8Bh, 0C1h, 5Dh, 7, 0BFh, 26h, 42h, 89h, 5, 83h, 0C7h
-	db	2, 0A1h, 0AEh, 51h, 0E8h, 78h, 2, 0FFh, 6, 0AEh, 51h, 8Bh, 0CFh, 0BEh, 26h, 42h
-	db	2Bh, 0CEh, 0EBh, 0Fh, 0C3h, 6, 55h, 0E8h, 39h, 0FFh, 5Dh, 7, 8Bh, 0Eh, 26h, 46h
-	db	0BEh, 26h, 42h, 26h, 89h, 4Eh, 6, 0E3h, 14h, 8Bh, 0C1h, 6, 55h, 9Ah
-	dd	L10215
-	db	41h, 0D1h, 0E9h, 0F3h, 0A5h, 5Dh, 7, 26h, 89h, 46h, 4, 26h, 8Bh, 4Eh, 0, 0E9h
-	db	75h, 0FFh, 0C4h, 2Eh, 2Ah, 4Eh, 26h, 8Bh, 4Eh, 0Ah, 0E3h, 1Eh, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 4Eh, 0, 26h, 8Bh, 56h, 6, 23h, 0D2h, 74h, 0EBh, 26h, 8Bh, 46h, 4
-	db	9Ah
-	dd	L102C9
-	db	0EBh, 0E0h, 0C3h, 0C4h, 2Eh, 2Ah, 4Eh, 26h, 8Bh, 4Eh, 8, 0E3h, 43h, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 4Eh, 2, 32h, 0EDh, 8Bh, 0FDh, 83h, 0C7h, 4, 51h, 57h, 6, 55h, 26h
-	db	8Bh, 5, 9Ah
-	dd	L1035F
-	db	6, 1Fh, 8Bh, 0F7h, 16h, 7, 0BFh, 26h, 42h, 0E8h, 1Ah, 0, 16h, 1Fh, 0BBh, 26h
-	db	42h, 9Ah
-	dd	L11C48
-	db	5Dh, 7, 5Fh, 59h, 83h, 0C7h, 3, 0E2h, 0D5h, 26h, 8Bh, 4Eh, 0, 0EBh, 0BBh, 0C3h
-	db	0BBh, 40h, 7, 0ACh, 0AAh, 36h, 0D7h, 0A8h, 2, 75h, 0F8h, 4Fh, 0A8h, 80h, 75h, 35h
-	db	0A8h, 40h, 75h, 4Ah, 0A8h, 10h, 75h, 13h, 0A8h, 4, 75h, 20h, 0A8h, 1, 75h, 60h
-	db	47h, 0EBh, 0E0h, 0ACh, 3Ch, 26h, 75h, 0DCh, 0AAh, 0EBh, 0F8h, 4Eh, 0ACh, 3Ch, 26h, 74h
-	db	0D3h, 0AAh, 36h, 0D7h, 0A8h, 90h, 75h, 0F4h, 4Eh, 4Fh, 0EBh, 0C7h, 36h, 0F7h, 6, 7Ch
-	db	51h, 0, 10h, 75h, 0DBh, 80h, 7Ch, 0FFh, 26h, 74h, 0D8h, 4Eh, 57h, 0E8h, 81h, 0
-	db	58h, 0E3h, 0B0h, 8Bh, 0F8h, 0E8h, 0A0h, 0, 0EBh, 0A9h, 0B0h, 0Dh, 0AAh, 0C3h, 4Eh, 0ACh
-	db	0AAh, 8Ah, 0E0h, 0ACh, 3Ch, 0Dh, 74h, 0F4h, 0AAh, 3Ch, 26h, 74h, 0Ch, 3Ah, 0C4h, 75h
-	db	0F2h, 0ACh, 3Ah, 0C4h, 75h, 8Eh, 0AAh, 0EBh, 0EAh, 50h, 0E8h, 2Bh, 0, 58h, 0EBh, 0E3h
-	db	4Eh, 0ACh, 3Ch, 0Dh, 74h, 0D6h, 0AAh, 0ACh, 3Ch, 3Bh, 74h, 0CEh, 36h, 0F7h, 6, 7Ch
-	db	51h, 0, 10h, 75h, 3, 0E9h, 6Ch, 0FFh, 0AAh, 0ACh, 3Ch, 0Dh, 74h, 0BEh, 0AAh, 3Ch
-	db	26h, 75h, 0F6h, 0E8h, 2, 0, 0EBh, 0F1h, 8Ah, 4, 36h, 0D7h, 0A8h, 80h, 74h, 20h
-	db	57h, 0E8h, 1Dh, 0, 5Ah, 0E3h, 19h, 8Bh, 0FAh, 81h, 0FFh, 26h, 42h, 74h, 8, 26h
-	db	80h, 7Dh, 0FFh, 26h, 75h, 1, 4Fh, 0E8h, 2Eh, 0, 80h, 3Ch, 26h, 75h, 1, 46h
-	db	0C3h, 8Bh, 0EFh, 0ACh, 0AAh, 0ACh, 3Ch, 26h, 74h, 8, 0AAh, 36h, 0D7h, 0A8h, 90h, 75h
-	db	0F4h, 4Fh, 4Eh, 1Eh, 56h, 6, 57h, 8Bh, 0CFh, 8Bh, 0F5h, 2Bh, 0CEh, 16h, 1Fh, 0FFh
-	db	16h, 2Eh, 4Eh, 5Fh, 7, 5Eh, 1Fh, 0C3h, 1Eh, 56h, 6, 57h, 16h, 1Fh, 8Bh, 0C1h
-	db	9Ah
-	dd	L101E0
-	db	0FFh, 16h, 30h, 4Eh, 6, 1Fh, 8Bh, 0F7h, 5Fh, 7, 0D1h, 0E9h, 0F3h, 0A5h, 0D1h, 0D1h
-	db	0F3h, 0A4h, 5Eh, 1Fh, 0C3h, 0C4h, 2Eh, 2Ah, 4Eh, 8Bh, 0D1h, 26h, 8Bh, 4Eh, 0Ah, 0E3h
-	db	46h, 8Bh, 0C1h, 9Ah
+	db	0C3h
+@@24:	mov	di, 4226h	;@02371
+	mov	si, word ptr ds:[3E24h]	;@02374
+	mov	bx, 740h	;@02378
+@@25:	lodsb	;@0237B
+	xlat	;@0237C
+	test	al, 2	;@0237D
+	jne	@@25	;@0237F
+	dec	si	;@02381
+	call	@@72	;@02382
+	mov	bx, 740h	;@02385
+@@26:	lodsb	;@02388
+	xlat	;@02389
+	test	al, 2	;@0238A
+	jne	@@26	;@0238C
+	dec	si	;@0238E
+	test	al, 1	;@0238F
+	jne	@@27	;@02391
+	cmp	byte ptr [si], 2Ch	;@02393
+	jne	@@27	;@02396
+	inc	si	;@02398
+@@27:	mov	word ptr ds:[3E24h], si	;@02399
+	sub	di, 4226h	;@0239D
+	mov	word ptr ds:[4626h], di	;@023A1
+	ret	;@023A5
+@@28:	mov	word ptr ds:[4E2Eh], 25F3h	;@023A6
+	mov	word ptr ds:[4E30h], 266Dh	;@023AC
+	mov	word ptr ds:[4E2Ah], bp	;@023B2
+	mov	word ptr ds:[4E2Ch], es	;@023B6
+	call	far ptr L101E0	;@023BA
+	mov	cl, byte ptr es:[bp+6]	;@023BF
+	xor	ch, ch	;@023C3
+	les	di, dword ptr es:[bp]	;@023C5
+	call	far ptr L11BEA	;@023C9
+	ret	;@023CE
+@@29:	les	bp, dword ptr ds:[4E2Ah]	;@023CF
+	mov	cx, word ptr es:[bp+0Ah]	;@023D3
+@@30:	jcxz	@@33	;@023D7
+	mov	ax, cx	;@023D9
+	call	far ptr L101E0	;@023DB
+	cmp	byte ptr es:[bp+8], 0	;@023E0
+	je	@@34	;@023E5
+	mov	ax, 3F3Fh	;@023E7
+	test	word ptr ds:[517Ch], 8000h	;@023EA
+	je	@@32	;@023F0
+	push	es	;@023F2
+	push	bp	;@023F3
+	push	ax	;@023F4
+	mov	ax, word ptr es:[bp+2]	;@023F5
+	call	far ptr L101E0	;@023F9
+	pop	ax	;@023FE
+	cmp	byte ptr es:[bp+6], 1	;@023FF
+	jbe	@@31	;@02404
+	les	di, dword ptr es:[bp]	;@02406
+	mov	cx, word ptr ds:[5180h]	;@0240A
+	cmp	cx, word ptr es:[di]	;@0240E
+	jne	@@31	;@02411
+	mov	ax, cx	;@02413
+@@31:	pop	bp	;@02415
+	pop	es	;@02416
+@@32:	mov	di, 4226h	;@02417
+	mov	word ptr [di], ax	;@0241A
+	add	di, 2	;@0241C
+	mov	ax, word ptr ds:[51AEh]	;@0241F
+	call	@@68	;@02422
+	inc	word ptr ds:[51AEh]	;@02425
+	mov	cx, di	;@02429
+	mov	si, 4226h	;@0242B
+	sub	cx, si	;@0242E
+	jmp	short @@35	;@02430
+@@33:	ret	;@02432
+@@34:	push	es	;@02433
+	push	bp	;@02434
+	call	@@24	;@02435
+	pop	bp	;@02438
+	pop	es	;@02439
+	mov	cx, word ptr ds:[4626h]	;@0243A
+	mov	si, 4226h	;@0243E
+@@35:	mov	word ptr es:[bp+6], cx	;@02441
+	jcxz	@@36	;@02445
+	mov	ax, cx	;@02447
+	push	es	;@02449
+	push	bp	;@0244A
+	call	far ptr L10215	;@0244B
+	inc	cx	;@02450
+	shr	cx, 1	;@02451
+	rep movsw	;@02453
+	pop	bp	;@02455
+	pop	es	;@02456
+	mov	word ptr es:[bp+4], ax	;@02457
+@@36:	mov	cx, word ptr es:[bp]	;@0245B
+	jmp	@@30	;@0245F
+@@37:	les	bp, dword ptr ds:[4E2Ah]	;@02462
+	mov	cx, word ptr es:[bp+0Ah]	;@02466
+@@38:	jcxz	@@39	;@0246A
+	mov	ax, cx	;@0246C
+	call	far ptr L101E0	;@0246E
+	mov	cx, word ptr es:[bp]	;@02473
+	mov	dx, word ptr es:[bp+6]	;@02477
+	and	dx, dx	;@0247B
+	je	@@38	;@0247D
+	mov	ax, word ptr es:[bp+4]	;@0247F
+	call	far ptr L102C9	;@02483
+	jmp	@@38	;@02488
+@@39:	ret	;@0248A
+@@40:	les	bp, dword ptr ds:[4E2Ah]	;@0248B
+	mov	cx, word ptr es:[bp+8]	;@0248F
+@@41:	jcxz	@@43	;@02493
+	mov	ax, cx	;@02495
+	call	far ptr L101E0	;@02497
+	mov	cl, byte ptr es:[bp+2]	;@0249C
+	xor	ch, ch	;@024A0
+	mov	di, bp	;@024A2
+	add	di, 4	;@024A4
+@@42:	push	cx	;@024A7
+	push	di	;@024A8
+	push	es	;@024A9
+	push	bp	;@024AA
+	mov	ax, word ptr es:[di]	;@024AB
+	call	far ptr L1035F	;@024AE
+	push	es	;@024B3
+	pop	ds	;@024B4
+	mov	si, di	;@024B5
+	push	ss	;@024B7
+	pop	es	;@024B8
+	mov	di, 4226h	;@024B9
+	call	@@44	;@024BC
+	push	ss	;@024BF
+	pop	ds	;@024C0
+	mov	bx, 4226h	;@024C1
+	call	far ptr L11C48	;@024C4
+	pop	bp	;@024C9
+	pop	es	;@024CA
+	pop	di	;@024CB
+	pop	cx	;@024CC
+	add	di, 3	;@024CD
+	loop	@@42	;@024D0
+	mov	cx, word ptr es:[bp]	;@024D2
+	jmp	@@41	;@024D6
+@@43:	ret	;@024D8
+@@44:	mov	bx, 740h	;@024D9
+@@45:	lodsb	;@024DC
+@@46:	stosb	;@024DD
+	xlat	byte ptr ss:[bx]	;@024DE
+	test	al, 2	;@024E0
+	jne	@@45	;@024E2
+	dec	di	;@024E4
+	test	al, 80h	;@024E5
+	jne	@@52	;@024E7
+	test	al, 40h	;@024E9
+	jne	@@55	;@024EB
+	test	al, 10h	;@024ED
+	jne	@@49	;@024EF
+	test	al, 4	;@024F1
+	jne	@@51	;@024F3
+	test	al, 1	;@024F5
+	jne	@@58	;@024F7
+@@47:	inc	di	;@024F9
+	jmp	@@45	;@024FA
+@@48:	lodsb	;@024FC
+	cmp	al, 26h	;@024FD
+	jne	@@46	;@024FF
+	stosb	;@02501
+	jmp	@@48	;@02502
+@@49:	dec	si	;@02504
+@@50:	lodsb	;@02505
+	cmp	al, 26h	;@02506
+	je	@@46	;@02508
+	stosb	;@0250A
+	xlat	byte ptr ss:[bx]	;@0250B
+	test	al, 90h	;@0250D
+	jne	@@50	;@0250F
+	dec	si	;@02511
+	dec	di	;@02512
+	jmp	@@45	;@02513
+@@51:	test	word ptr ss:[517Ch], 1000h	;@02515
+	jne	@@47	;@0251C
+@@52:	cmp	byte ptr [si-1], 26h	;@0251E
+	je	@@48	;@02522
+	dec	si	;@02524
+	push	di	;@02525
+	call	@@64	;@02526
+	pop	ax	;@02529
+	jcxz	@@45	;@0252A
+	mov	di, ax	;@0252C
+	call	@@67	;@0252E
+	jmp	@@45	;@02531
+@@53:	mov	al, 0Dh	;@02533
+@@54:	stosb	;@02535
+	ret	;@02536
+@@55:	dec	si	;@02537
+	lodsb	;@02538
+	stosb	;@02539
+	mov	ah, al	;@0253A
+@@56:	lodsb	;@0253C
+	cmp	al, 0Dh	;@0253D
+	je	@@54	;@0253F
+	stosb	;@02541
+	cmp	al, 26h	;@02542
+	je	@@57	;@02544
+	cmp	al, ah	;@02546
+	jne	@@56	;@02548
+	lodsb	;@0254A
+	cmp	al, ah	;@0254B
+	jne	@@46	;@0254D
+	stosb	;@0254F
+	jmp	@@56	;@02550
+@@57:	push	ax	;@02552
+	call	@@61	;@02553
+	pop	ax	;@02556
+	jmp	@@56	;@02557
+@@58:	dec	si	;@02559
+	lodsb	;@0255A
+	cmp	al, 0Dh	;@0255B
+	je	@@54	;@0255D
+	stosb	;@0255F
+	lodsb	;@02560
+	cmp	al, 3Bh	;@02561
+	je	@@53	;@02563
+	test	word ptr ss:[517Ch], 1000h	;@02565
+	jne	@@59	;@0256C
+	jmp	@@46	;@0256E
+@@59:	stosb	;@02571
+@@60:	lodsb	;@02572
+	cmp	al, 0Dh	;@02573
+	je	@@54	;@02575
+	stosb	;@02577
+	cmp	al, 26h	;@02578
+	jne	@@60	;@0257A
+	call	@@61	;@0257C
+	jmp	@@60	;@0257F
+@@61:	mov	al, byte ptr [si]	;@02581
+	xlat	byte ptr ss:[bx]	;@02583
+	test	al, 80h	;@02585
+	je	@@63	;@02587
+	push	di	;@02589
+	call	@@64	;@0258A
+	pop	dx	;@0258D
+	jcxz	@@63	;@0258E
+	mov	di, dx	;@02590
+	cmp	di, 4226h	;@02592
+	je	@@62	;@02596
+	cmp	byte ptr es:[di-1], 26h	;@02598
+	jne	@@62	;@0259D
+	dec	di	;@0259F
+@@62:	call	@@67	;@025A0
+	cmp	byte ptr [si], 26h	;@025A3
+	jne	@@63	;@025A6
+	inc	si	;@025A8
+@@63:	ret	;@025A9
+@@64:	mov	bp, di	;@025AA
+	lodsb	;@025AC
+	stosb	;@025AD
+@@65:	lodsb	;@025AE
+	cmp	al, 26h	;@025AF
+	je	@@66	;@025B1
+	stosb	;@025B3
+	xlat	byte ptr ss:[bx]	;@025B4
+	test	al, 90h	;@025B6
+	jne	@@65	;@025B8
+	dec	di	;@025BA
+@@66:	dec	si	;@025BB
+	push	ds	;@025BC
+	push	si	;@025BD
+	push	es	;@025BE
+	push	di	;@025BF
+	mov	cx, di	;@025C0
+	mov	si, bp	;@025C2
+	sub	cx, si	;@025C4
+	push	ss	;@025C6
+	pop	ds	;@025C7
+	call	word ptr ds:[4E2Eh]	;@025C8
+	pop	di	;@025CC
+	pop	es	;@025CD
+	pop	si	;@025CE
+	pop	ds	;@025CF
+	ret	;@025D0
+@@67:	push	ds	;@025D1
+	push	si	;@025D2
+	push	es	;@025D3
+	push	di	;@025D4
+	push	ss	;@025D5
+	pop	ds	;@025D6
+	mov	ax, cx	;@025D7
+	call	far ptr L101E0	;@025D9
+	call	word ptr ds:[4E30h]	;@025DE
+	push	es	;@025E2
+	pop	ds	;@025E3
+	mov	si, di	;@025E4
+	pop	di	;@025E6
+	pop	es	;@025E7
+	shr	cx, 1	;@025E8
+	rep movsw	;@025EA
+	rcl	cx, 1	;@025EC
+	rep movsb	;@025EE
+	pop	si	;@025F0
+	pop	ds	;@025F1
+	ret	;@025F2
+	db	0C4h, 2Eh, 2Ah, 4Eh, 8Bh, 0D1h, 26h, 8Bh, 4Eh, 0Ah, 0E3h, 46h, 8Bh, 0C1h, 9Ah	;@025F3
 	dd	L101E0
 	db	26h, 0FFh, 76h, 0, 26h, 8Bh, 46h, 2, 9Ah
 	dd	L101E0
@@ -1524,42 +2403,248 @@ L01DB6:	xor	ax, ax	;@01DB6
 	dd	L101E0
 	db	26h, 0F6h, 46h, 6, 1, 74h, 0Eh, 26h, 8Bh, 46h, 0Ch, 26h, 8Bh, 4Eh, 0Eh, 9Ah
 	dd	L1035F
-	db	0C3h, 33h, 0C9h, 0C3h, 50h, 8Ah, 0C4h, 0E8h, 1, 0, 58h, 8Ah, 0E0h, 0B1h, 4, 0D2h
-	db	0E8h, 0E8h, 4, 0, 8Ah, 0C4h, 24h, 0Fh, 3Ch, 0Ah, 73h, 6, 4, 30h, 88h, 5
-	db	47h, 0C3h, 4, 37h, 88h, 5, 47h, 0C3h, 0E8h, 4Dh, 0, 8Ah, 4, 3Ch, 3Ch, 75h
-	db	0Dh, 46h, 0E8h, 0Ah, 0, 8Ah, 4, 3Ch, 3Eh, 75h, 0EDh, 46h, 0EBh, 0EAh, 0C3h, 8Ah
-	db	4, 3Ch, 3Ch, 74h, 1Fh, 0E8h, 30h, 0, 8Ah, 4, 3Ch, 0Dh, 74h, 29h, 3Ch, 3Eh
-	db	74h, 25h, 3Ch, 21h, 72h, 8, 3Ch, 2Ch, 74h, 4, 3Ch, 3Bh, 75h, 0E1h, 46h, 88h
-	db	5, 47h, 0EBh, 0E4h, 88h, 5, 46h, 47h, 0E8h, 0D4h, 0FFh, 8Ah, 4, 3Ch, 3Eh, 75h
-	db	0CEh, 88h, 5, 47h, 46h, 0EBh, 0C8h, 0C3h, 8Ah, 4, 3Ch, 22h, 74h, 28h, 3Ch, 27h
-	db	74h, 24h, 3Ch, 25h, 74h, 4Dh, 3Ch, 21h, 74h, 3Ch, 3Ch, 3Bh, 74h, 17h, 3Ch, 2Ch
-	db	74h, 13h, 3Ch, 21h, 0F5h, 73h, 0Eh, 3Ch, 3Ch, 74h, 0Ah, 3Ch, 3Eh, 74h, 6, 88h
-	db	5, 47h, 46h, 0EBh, 0D3h, 0C3h, 8Ah, 0E0h, 88h, 5, 47h, 46h, 8Ah, 4, 3Ch, 0Dh
-	db	74h, 0F3h, 46h, 88h, 5, 47h, 3Ah, 0C4h, 75h, 0F2h, 8Ah, 4, 3Ah, 0C4h, 75h, 0B8h
-	db	46h, 88h, 5, 47h, 0EBh, 0E6h, 46h, 8Ah, 4, 3Ch, 0Dh, 74h, 0D8h, 88h, 5, 46h
-	db	47h, 0EBh, 0A5h, 33h, 0C0h, 0A2h, 32h, 4Eh, 0A3h, 28h, 4Eh, 46h, 89h, 36h, 24h, 3Eh
-	db	8Bh, 0F0h, 0E8h, 5, 0, 8Bh, 36h, 24h, 3Eh, 0C3h, 6, 53h, 57h, 0E8h, 1Dh, 0F8h
-	db	75h, 55h, 22h, 0F6h, 74h, 4Ch, 8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 24h, 3Fh, 3Ch, 1, 75h, 3Bh, 83h, 0C6h, 2, 0E8h, 3Bh, 0F5h
-	db	9Ah
-	dd	L101E0
-	db	26h, 8Bh, 46h, 0Ch, 26h, 8Bh, 4Eh, 0Eh, 9Ah
-	dd	L1035F
-	db	0E3h, 36h, 0F7h, 6, 7Ch, 51h, 0, 40h, 74h, 0Ch, 26h, 8Ah, 5, 3Ch, 20h, 77h
-	db	5, 47h, 0E2h, 0F6h, 0EBh, 22h, 5Bh, 26h, 8Ah, 5, 47h, 88h, 7, 43h, 0E2h, 0F7h
-	db	53h, 0EBh, 15h, 0E8h, 0E4h, 83h, 74h, 3, 0E8h, 0B9h, 31h, 0E8h, 14h, 53h, 0C6h, 6
-	db	0CAh, 38h, 0, 5Fh, 0E8h, 28h, 0, 57h, 0E8h, 31h, 1, 5Fh, 5Bh, 7, 56h, 8Bh
-	db	36h, 24h, 3Eh, 3Ch, 21h, 72h, 12h, 4Eh, 8Ah, 4, 3Ch, 21h, 72h, 0Bh, 3Ch, 2Ch
-	db	74h, 7, 3Ch, 3Bh, 74h, 3, 46h, 0EBh, 0EFh, 89h, 36h, 24h, 3Eh, 5Eh, 0C3h, 8Ah
-	db	1Eh, 86h, 51h, 80h, 0E3h, 0Fh, 74h, 20h, 0FEh, 0C3h, 80h, 0FBh, 2, 74h, 0Fh, 80h
-	db	0FBh, 8, 74h, 0Fh, 80h, 0FBh, 0Ah, 74h, 0Fh, 0BBh, 74h, 6, 0EBh, 0Dh, 0BBh, 0C0h
-	db	6, 0EBh, 8, 0BBh, 94h, 6, 0EBh, 3, 0BBh, 4Ch, 6, 32h, 0D2h, 0E8h, 12h, 0
-	db	83h, 0C3h, 4, 83h, 3Fh, 1, 75h, 0F5h, 83h, 7Fh, 2, 0, 75h, 0EFh, 8Ah, 0F0h
-	db	0EBh, 15h, 0B6h, 0FFh, 0FEh, 0C6h, 2Bh, 7, 1Bh, 4Fh, 2, 73h, 0F7h, 3, 7, 13h
-	db	4Fh, 2, 3Ah, 0D6h, 75h, 1, 0C3h, 80h, 0FEh, 0Ah, 73h, 9, 0B2h, 0FFh, 80h, 0C6h
-	db	30h, 88h, 35h, 47h, 0C3h, 22h, 0D2h, 75h, 4, 0C6h, 5, 30h, 47h, 0B2h, 0FFh, 80h
-	db	0C6h, 37h, 88h, 35h, 47h, 0C3h
+	db	0C3h, 33h, 0C9h, 0C3h
+@@68:	push	ax	;@0269D
+	mov	al, ah	;@0269E
+	call	@@69	;@026A0
+	pop	ax	;@026A3
+@@69:	mov	ah, al	;@026A4
+	mov	cl, 4	;@026A6
+	shr	al, cl	;@026A8
+	call	@@70	;@026AA
+	mov	al, ah	;@026AD
+	and	al, 0Fh	;@026AF
+@@70:	cmp	al, 0Ah	;@026B1
+	jae	@@71	;@026B3
+	add	al, 30h	;@026B5
+	mov	byte ptr [di], al	;@026B7
+	inc	di	;@026B9
+	ret	;@026BA
+@@71:	add	al, 37h	;@026BB
+	mov	byte ptr [di], al	;@026BD
+	inc	di	;@026BF
+	ret	;@026C0
+@@72:	call	@@79	;@026C1
+	mov	al, byte ptr [si]	;@026C4
+	cmp	al, 3Ch	;@026C6
+	jne	@@73	;@026C8
+	inc	si	;@026CA
+	call	@@74	;@026CB
+	mov	al, byte ptr [si]	;@026CE
+	cmp	al, 3Eh	;@026D0
+	jne	@@72	;@026D2
+	inc	si	;@026D4
+	jmp	@@72	;@026D5
+@@73:	ret	;@026D7
+@@74:	mov	al, byte ptr [si]	;@026D8
+	cmp	al, 3Ch	;@026DA
+	je	@@77	;@026DC
+	call	@@79	;@026DE
+@@75:	mov	al, byte ptr [si]	;@026E1
+	cmp	al, 0Dh	;@026E3
+	je	@@78	;@026E5
+	cmp	al, 3Eh	;@026E7
+	je	@@78	;@026E9
+	cmp	al, 21h	;@026EB
+	jb	@@76	;@026ED
+	cmp	al, 2Ch	;@026EF
+	je	@@76	;@026F1
+	cmp	al, 3Bh	;@026F3
+	jne	@@74	;@026F5
+@@76:	inc	si	;@026F7
+	mov	byte ptr [di], al	;@026F8
+	inc	di	;@026FA
+	jmp	@@75	;@026FB
+@@77:	mov	byte ptr [di], al	;@026FD
+	inc	si	;@026FF
+	inc	di	;@02700
+	call	@@74	;@02701
+	mov	al, byte ptr [si]	;@02704
+	cmp	al, 3Eh	;@02706
+	jne	@@74	;@02708
+	mov	byte ptr [di], al	;@0270A
+	inc	di	;@0270C
+	inc	si	;@0270D
+	jmp	@@74	;@0270E
+@@78:	ret	;@02710
+@@79:	mov	al, byte ptr [si]	;@02711
+	cmp	al, 22h	;@02713
+	je	@@81	;@02715
+	cmp	al, 27h	;@02717
+	je	@@81	;@02719
+	cmp	al, 25h	;@0271B
+	je	@@84	;@0271D
+	cmp	al, 21h	;@0271F
+	je	@@83	;@02721
+	cmp	al, 3Bh	;@02723
+	je	@@80	;@02725
+	cmp	al, 2Ch	;@02727
+	je	@@80	;@02729
+	cmp	al, 21h	;@0272B
+	cmc	;@0272D
+	jae	@@80	;@0272E
+	cmp	al, 3Ch	;@02730
+	je	@@80	;@02732
+	cmp	al, 3Eh	;@02734
+	je	@@80	;@02736
+	mov	byte ptr [di], al	;@02738
+	inc	di	;@0273A
+	inc	si	;@0273B
+	jmp	@@79	;@0273C
+@@80:	ret	;@0273E
+@@81:	mov	ah, al	;@0273F
+	mov	byte ptr [di], al	;@02741
+	inc	di	;@02743
+	inc	si	;@02744
+@@82:	mov	al, byte ptr [si]	;@02745
+	cmp	al, 0Dh	;@02747
+	je	@@80	;@02749
+	inc	si	;@0274B
+	mov	byte ptr [di], al	;@0274C
+	inc	di	;@0274E
+	cmp	al, ah	;@0274F
+	jne	@@82	;@02751
+	mov	al, byte ptr [si]	;@02753
+	cmp	al, ah	;@02755
+	jne	@@79	;@02757
+	inc	si	;@02759
+	mov	byte ptr [di], al	;@0275A
+	inc	di	;@0275C
+	jmp	@@82	;@0275D
+@@83:	inc	si	;@0275F
+	mov	al, byte ptr [si]	;@02760
+	cmp	al, 0Dh	;@02762
+	je	@@80	;@02764
+	mov	byte ptr [di], al	;@02766
+	inc	si	;@02768
+	inc	di	;@02769
+	jmp	@@79	;@0276A
+@@84:	xor	ax, ax	;@0276C
+	mov	byte ptr ds:[4E32h], al	;@0276E
+	mov	word ptr ds:[4E28h], ax	;@02771
+	inc	si	;@02774
+	mov	word ptr ds:[3E24h], si	;@02775
+	mov	si, ax	;@02779
+	call	L02783	;@0277B
+	mov	si, word ptr ds:[3E24h]	;@0277E
+	ret	;@02782
+L02783:	push	es	;@02783
+	push	bx	;@02784
+	push	di	;@02785
+	call	L01FA6	;@02786
+	jne	@@5	;@02789
+	and	dh, dh	;@0278B
+	je	@@4	;@0278D
+	mov	ax, dx	;@0278F
+	call	far ptr L101E0	;@02791
+	mov	al, byte ptr es:[bp+7]	;@02796
+	and	al, 3Fh	;@0279A
+	cmp	al, 1	;@0279C
+	jne	@@4	;@0279E
+	add	si, 2	;@027A0
+	call	L01CE1	;@027A3
+	call	far ptr L101E0	;@027A6
+	mov	ax, word ptr es:[bp+0Ch]	;@027AB
+	mov	cx, word ptr es:[bp+0Eh]	;@027AF
+	call	far ptr L1035F	;@027B3
+	jcxz	@@7	;@027B8
+	test	word ptr ds:[517Ch], 4000h	;@027BA
+	je	@@2	;@027C0
+@@1:	mov	al, byte ptr es:[di]	;@027C2
+	cmp	al, 20h	;@027C5
+	ja	@@2	;@027C7
+	inc	di	;@027C9
+	loop	@@1	;@027CA
+	jmp	short @@7	;@027CC
+@@2:	pop	bx	;@027CE
+@@3:	mov	al, byte ptr es:[di]	;@027CF
+	inc	di	;@027D2
+	mov	byte ptr [bx], al	;@027D3
+	inc	bx	;@027D5
+	loop	@@3	;@027D6
+	push	bx	;@027D8
+	jmp	short @@7	;@027D9
+@@4:	call	L0ABC2	;@027DB
+	je	@@6	;@027DE
+@@5:	call	L0599C	;@027E0
+@@6:	call	L07AFA	;@027E3
+	mov	byte ptr ds:[38CAh], 0	;@027E6
+	pop	di	;@027EB
+	call	@@10	;@027EC
+	push	di	;@027EF
+@@7:	call	L02924	;@027F0
+	pop	di	;@027F3
+	pop	bx	;@027F4
+	pop	es	;@027F5
+	push	si	;@027F6
+	mov	si, word ptr ds:[3E24h]	;@027F7
+	cmp	al, 21h	;@027FB
+	jb	@@9	;@027FD
+	dec	si	;@027FF
+@@8:	mov	al, byte ptr [si]	;@02800
+	cmp	al, 21h	;@02802
+	jb	@@9	;@02804
+	cmp	al, 2Ch	;@02806
+	je	@@9	;@02808
+	cmp	al, 3Bh	;@0280A
+	je	@@9	;@0280C
+	inc	si	;@0280E
+	jmp	@@8	;@0280F
+@@9:	mov	word ptr ds:[3E24h], si	;@02811
+	pop	si	;@02815
+	ret	;@02816
+@@10:	mov	bl, byte ptr ds:[5186h]	;@02817
+	and	bl, 0Fh	;@0281B
+	je	@@13	;@0281E
+	inc	bl	;@02820
+	cmp	bl, 2	;@02822
+	je	@@11	;@02825
+	cmp	bl, 8	;@02827
+	je	@@12	;@0282A
+	cmp	bl, 0Ah	;@0282C
+	je	@@13	;@0282F
+	mov	bx, 674h	;@02831
+	jmp	short @@14	;@02834
+@@11:	mov	bx, 6C0h	;@02836
+	jmp	short @@14	;@02839
+@@12:	mov	bx, 694h	;@0283B
+	jmp	short @@14	;@0283E
+@@13:	mov	bx, 64Ch	;@02840
+@@14:	xor	dl, dl	;@02843
+@@15:	call	@@16	;@02845
+	add	bx, 4	;@02848
+	cmp	word ptr [bx], 1	;@0284B
+	jne	@@15	;@0284E
+	cmp	word ptr [bx+2], 0	;@02850
+	jne	@@15	;@02854
+	mov	dh, al	;@02856
+	jmp	short @@18	;@02858
+@@16:	mov	dh, 0FFh	;@0285A
+@@17:	inc	dh	;@0285C
+	sub	ax, word ptr [bx]	;@0285E
+	sbb	cx, word ptr [bx+2]	;@02860
+	jae	@@17	;@02863
+	add	ax, word ptr [bx]	;@02865
+	adc	cx, word ptr [bx+2]	;@02867
+	cmp	dl, dh	;@0286A
+	jne	@@18	;@0286C
+	ret	;@0286E
+@@18:	cmp	dh, 0Ah	;@0286F
+	jae	@@19	;@02872
+	mov	dl, 0FFh	;@02874
+	add	dh, 30h	;@02876
+	mov	byte ptr [di], dh	;@02879
+	inc	di	;@0287B
+	ret	;@0287C
+@@19:	and	dl, dl	;@0287D
+	jne	@@20	;@0287F
+	mov	byte ptr [di], 30h	;@02881
+	inc	di	;@02884
+@@20:	mov	dl, 0FFh	;@02885
+	add	dh, 37h	;@02887
+	mov	byte ptr [di], dh	;@0288A
+	inc	di	;@0288C
+	ret	;@0288D
 L0288E:	mov	si, 3A24h	;@0288E
 @@1:	mov	al, byte ptr es:[di]	;@02891
 	mov	byte ptr [si], al	;@02894
@@ -1599,7 +2684,7 @@ L028C8:	cmp	byte ptr ds:[4E32h], 0	;@028C8
 	jne	@@3	;@028E4
 	dec	si	;@028E6
 	push	si	;@028E7
-	call	@@8	;@028E8
+	call	L02903	;@028E8
 	pop	si	;@028EB
 	jmp	@@2	;@028EC
 @@4:	mov	ah, byte ptr [si-1]	;@028EE
@@ -1614,7 +2699,7 @@ L028C8:	cmp	byte ptr ds:[4E32h], 0	;@028C8
 	jne	@@3	;@028FE
 	inc	si	;@02900
 	jmp	@@5	;@02901
-@@8:	mov	di, si	;@02903
+L02903:	mov	di, si	;@02903
 	push	ss	;@02905
 	pop	es	;@02906
 	mov	al, 20h	;@02907
@@ -1625,29 +2710,64 @@ L028C8:	cmp	byte ptr ds:[4E32h], 0	;@028C8
 	call	far ptr L11D52	;@02910
 	pop	bx	;@02915
 	test	byte ptr ds:[38C9h], 1	;@02916
-	jne	@@9	;@0291B
+	jne	@@1	;@0291B
 	ret	;@0291D
-@@9:	call	far ptr L10664	;@0291E
+@@1:	call	far ptr L10664	;@0291E
 	ret	;@02923
-	db	3Bh, 36h, 28h, 4Eh, 73h, 54h, 8Bh, 94h, 28h, 46h, 22h, 0F6h, 74h, 20h, 6, 55h	;@02924
-	db	8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	26h, 8Ah, 46h, 7, 24h, 3Fh, 3Ch, 1, 74h, 11h, 3Ch, 0Eh, 74h, 21h, 26h, 8Bh
-	db	46h, 0Ch, 5Dh, 7, 32h, 0DBh, 0C3h, 8Bh, 0C2h, 0C3h, 90h, 36h, 0F6h, 6, 0D2h, 39h
-	db	2, 75h, 0EBh, 8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	16h, 1Fh, 0E9h, 0EBh, 7, 36h, 0F6h, 6, 0D2h, 39h, 2, 75h, 0D7h, 8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	16h, 1Fh, 0E9h, 0EBh, 7, 80h, 3Eh, 32h, 4Eh, 0, 75h, 0CFh, 8Bh, 0FEh, 8Bh, 36h
-	db	24h, 3Eh, 0ACh, 32h, 0E4h, 8Bh, 0D8h, 0D1h, 0E3h, 0FFh, 0A7h, 40h, 8, 4Eh, 89h, 36h
-	db	24h, 3Eh, 8Bh, 0F7h, 0C6h, 6, 32h, 4Eh, 0FFh, 22h, 0C0h, 0C3h, 90h, 8Bh, 0D0h, 89h
-	db	36h, 24h, 3Eh, 8Bh, 0F7h, 89h, 84h, 28h, 46h, 83h, 6, 28h, 4Eh, 2, 32h, 0DBh
-	db	0C3h, 0F6h, 6, 0D2h, 39h, 8, 75h, 0E5h, 4Eh, 56h, 57h, 6, 55h, 0E8h, 3Ah, 0FFh
-	db	5Dh, 7, 5Fh, 5Eh, 0EBh, 0BCh, 4Eh, 6, 55h, 0BBh, 40h, 7, 0F7h, 6, 7Ch, 51h
-	db	0, 10h, 75h, 60h, 8Ah, 44h, 1, 0D7h, 0A8h, 90h, 74h, 58h, 0A8h, 10h, 74h, 19h
-	db	0F6h, 6, 0D2h, 39h, 4, 74h, 12h, 16h, 7, 0BFh, 26h, 3Eh, 0B1h, 5, 0B8h, 30h
-	db	0, 0AAh, 8Bh, 0E8h, 0B0h, 2Eh, 0E9h, 0C9h, 0, 56h, 0ACh, 0E8h, 0BCh, 5, 5Fh, 0F6h
-	db	6, 0D2h, 39h, 1, 75h, 3Dh, 50h, 8Bh, 0C2h, 9Ah
+L02924:	cmp	si, word ptr ds:[4E28h]	;@02924
+	jae	@@6	;@02928
+	mov	dx, word ptr [si+4628h]	;@0292A
+	and	dh, dh	;@0292E
+	je	@@2	;@02930
+	push	es	;@02932
+	push	bp	;@02933
+	mov	ax, dx	;@02934
+	call	far ptr L101E0	;@02936
+	mov	al, byte ptr es:[bp+7]	;@0293B
+	and	al, 3Fh	;@0293F
+	cmp	al, 1	;@02941
+	je	@@4	;@02943
+	cmp	al, 0Eh	;@02945
+	je	@@5	;@02947
+@@1:	mov	ax, word ptr es:[bp+0Ch]	;@02949
+	pop	bp	;@0294D
+	pop	es	;@0294E
+	xor	bl, bl	;@0294F
+	ret	;@02951
+@@2:	mov	ax, dx	;@02952
+@@3:	ret	;@02954
+	db	90h	;@02955
+@@4:	test	byte ptr ss:[39D2h], 2	;@02956
+	jne	@@1	;@0295C
+	mov	ax, dx	;@0295E
+	call	far ptr L101E0	;@02960
+	push	ss	;@02965
+	pop	ds	;@02966
+	jmp	@@13	;@02967
+@@5:	test	byte ptr ss:[39D2h], 2	;@0296A
+	jne	@@1	;@02970
+	mov	ax, dx	;@02972
+	call	far ptr L101E0	;@02974
+	push	ss	;@02979
+	pop	ds	;@0297A
+	jmp	@@14	;@0297B
+@@6:	cmp	byte ptr ds:[4E32h], 0	;@0297E
+	jne	@@3	;@02983
+	mov	di, si	;@02985
+	mov	si, word ptr ds:[3E24h]	;@02987
+	lodsb	;@0298B
+	xor	ah, ah	;@0298C
+	mov	bx, ax	;@0298E
+	shl	bx, 1	;@02990
+	jmp	word ptr [bx+840h]	;@02992
+	db	4Eh, 89h, 36h, 24h, 3Eh, 8Bh, 0F7h, 0C6h, 6, 32h, 4Eh, 0FFh, 22h, 0C0h, 0C3h, 90h	;@02996
+	db	8Bh, 0D0h, 89h, 36h, 24h, 3Eh, 8Bh, 0F7h, 89h, 84h, 28h, 46h, 83h, 6, 28h, 4Eh
+	db	2, 32h, 0DBh, 0C3h, 0F6h, 6, 0D2h, 39h, 8, 75h, 0E5h, 4Eh, 56h, 57h, 6, 55h
+	db	0E8h, 3Ah, 0FFh, 5Dh, 7, 5Fh, 5Eh, 0EBh, 0BCh, 4Eh, 6, 55h, 0BBh, 40h, 7, 0F7h
+	db	6, 7Ch, 51h, 0, 10h, 75h, 60h, 8Ah, 44h, 1, 0D7h, 0A8h, 90h, 74h, 58h, 0A8h
+	db	10h, 74h, 19h, 0F6h, 6, 0D2h, 39h, 4, 74h, 12h, 16h, 7, 0BFh, 26h, 3Eh, 0B1h
+	db	5, 0B8h, 30h, 0, 0AAh, 8Bh, 0E8h, 0B0h, 2Eh, 0E9h, 0C9h, 0, 56h, 0ACh, 0E8h, 0BCh
+	db	5, 5Fh, 0F6h, 6, 0D2h, 39h, 1, 75h, 3Dh, 50h, 8Bh, 0C2h, 9Ah
 	dd	L101E0
 	db	58h, 26h, 0F6h, 46h, 7, 3Fh, 75h, 2Dh, 26h, 0F6h, 46h, 10h, 40h, 75h, 26h, 9Ah
 	dd	L101E0
@@ -1681,123 +2801,257 @@ L028C8:	cmp	byte ptr ds:[4E32h], 0	;@028C8
 	db	89h, 56h, 0, 26h, 89h, 4Eh, 2, 0FFh, 0Eh, 0BEh, 39h, 74h, 0Eh, 9Ah
 	dd	L101F7
 	db	8Bh, 0D0h, 26h, 89h, 46h, 0Ch, 0E9h, 46h, 5, 0C6h, 6, 0C8h, 38h, 0Bh, 0F9h, 8Bh
-	db	26h, 0ACh, 38h, 0CBh, 0ACh, 8Ah, 0E0h, 0D7h, 0A8h, 90h, 74h, 0Eh, 24h, 20h, 86h, 0C4h
-	db	2Ah, 0C4h, 98h, 0AAh, 0D3h, 0C5h, 33h, 0E8h, 0EBh, 0EAh, 4Eh, 0C3h, 0ACh, 3Ch, 45h, 74h
-	db	6, 3Ch, 65h, 74h, 2, 4Eh, 0C3h, 0B0h, 45h, 0AAh, 0ACh, 3Ch, 2Dh, 74h, 0Dh, 3Ch
-	db	2Bh, 74h, 9, 8Ah, 0E0h, 0D7h, 0A8h, 10h, 86h, 0C4h, 74h, 9, 0AAh, 98h, 0D3h, 0C5h
-	db	33h, 0E8h, 0ACh, 0EBh, 0EEh, 4Eh, 0C3h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 58h, 8Bh
-	db	0CEh, 0ACh, 3Ch, 58h, 74h, 3Ch, 3Ch, 4Ch, 74h, 3Fh, 3Ch, 48h, 74h, 42h, 3Ch, 44h
-	db	74h, 18h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 40h, 3Ch, 78h, 74h, 24h, 3Ch, 6Ch
-	db	74h, 27h, 3Ch, 68h, 74h, 2Ah, 3Ch, 64h, 75h, 30h, 0ACh, 3Ch, 44h, 74h, 0Ch, 0F7h
-	db	6, 0B6h, 38h, 2, 0, 75h, 23h, 3Ch, 64h, 75h, 1Fh, 8Bh, 16h, 8Ch, 56h, 0E9h
-	db	41h, 3, 8Bh, 16h, 4Ah, 56h, 0E9h, 3Ah, 3, 8Bh, 16h, 0Eh, 56h, 0E9h, 33h, 3
-	db	8Bh, 16h, 16h, 56h, 0E9h, 2Ch, 3, 0E9h, 41h, 3, 0E9h, 39h, 3, 0F7h, 6, 0B6h
-	db	38h, 2, 0, 75h, 0F2h, 8Bh, 0CEh, 0ACh, 3Ch, 58h, 74h, 39h, 3Ch, 50h, 74h, 2Eh
-	db	3Ch, 4Ch, 74h, 23h, 3Ch, 48h, 74h, 18h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0DAh
-	db	3Ch, 78h, 74h, 21h, 3Ch, 70h, 74h, 16h, 3Ch, 6Ch, 74h, 0Bh, 3Ch, 68h, 75h, 0CAh
-	db	8Bh, 16h, 1Ch, 56h, 0E9h, 0ECh, 2, 8Bh, 16h, 14h, 56h, 0E9h, 0E5h, 2, 8Bh, 16h
-	db	54h, 56h, 0E9h, 0DEh, 2, 8Bh, 16h, 50h, 56h, 0E9h, 0D7h, 2, 0ACh, 3Ch, 50h, 74h
-	db	0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 7Ah, 3Ch, 70h, 75h, 76h, 8Bh, 16h, 90h
-	db	56h, 0E9h, 0BFh, 2, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 64h, 8Bh, 0CEh, 0ACh, 3Ch
-	db	58h, 74h, 6Ah, 3Ch, 4Ch, 74h, 6Dh, 3Ch, 48h, 74h, 70h, 3Ch, 4Dh, 74h, 0CDh, 3Ch
-	db	53h, 74h, 53h, 3Ch, 41h, 74h, 20h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 44h, 3Ch
-	db	78h, 74h, 4Ah, 3Ch, 6Ch, 74h, 4Dh, 3Ch, 68h, 74h, 50h, 3Ch, 6Dh, 74h, 0ADh, 3Ch
-	db	73h, 74h, 33h, 3Ch, 61h, 75h, 2Ch, 0ACh, 3Ch, 4Ch, 74h, 0Ch, 0F7h, 6, 0B6h, 38h
-	db	2, 0, 75h, 1Fh, 3Ch, 6Ch, 75h, 1Bh, 0ACh, 3Ch, 4Ch, 74h, 0Ch, 0F7h, 6, 0B6h
-	db	38h, 2, 0, 75h, 0Eh, 3Ch, 6Ch, 75h, 0Ah, 8Bh, 16h, 96h, 56h, 0E9h, 53h, 2
-	db	0E9h, 68h, 2, 0E9h, 60h, 2, 8Bh, 16h, 5Ch, 56h, 0E9h, 46h, 2, 8Bh, 16h, 4Ch
-	db	56h, 0E9h, 3Fh, 2, 8Bh, 16h, 10h, 56h, 0E9h, 38h, 2, 8Bh, 16h, 18h, 56h, 0E9h
-	db	31h, 2, 0E9h, 46h, 2, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0F5h, 8Bh, 0CEh, 0ACh
-	db	3Ch, 58h, 74h, 60h, 3Ch, 49h, 74h, 71h, 3Ch, 4Ch, 74h, 5Fh, 3Ch, 48h, 74h, 62h
-	db	3Ch, 53h, 74h, 49h, 3Ch, 57h, 74h, 3Eh, 3Ch, 42h, 74h, 33h, 3Ch, 44h, 74h, 28h
-	db	0F7h, 6, 0B6h, 38h, 2, 0, 75h, 58h, 3Ch, 78h, 74h, 38h, 3Ch, 69h, 74h, 49h
-	db	3Ch, 6Ch, 74h, 37h, 3Ch, 68h, 74h, 3Ah, 3Ch, 73h, 74h, 21h, 3Ch, 77h, 74h, 16h
-	db	3Ch, 62h, 74h, 0Bh, 3Ch, 64h, 75h, 38h, 8Bh, 16h, 36h, 58h, 0E9h, 0D4h, 1, 8Bh
-	db	16h, 32h, 58h, 0E9h, 0CDh, 1, 8Bh, 16h, 34h, 58h, 0E9h, 0C6h, 1, 8Bh, 16h, 60h
-	db	56h, 0E9h, 0BFh, 1, 8Bh, 16h, 4Eh, 56h, 0E9h, 0B8h, 1, 8Bh, 16h, 12h, 56h, 0E9h
-	db	0B1h, 1, 8Bh, 16h, 1Ah, 56h, 0E9h, 0AAh, 1, 8Bh, 16h, 58h, 56h, 0E9h, 0A3h, 1
-	db	0E9h, 0B3h, 1, 0ACh, 3Ch, 58h, 74h, 1Bh, 3Ch, 50h, 74h, 10h, 0F7h, 6, 0B6h, 38h
-	db	2, 0, 75h, 31h, 3Ch, 78h, 74h, 0Bh, 3Ch, 70h, 75h, 29h, 8Bh, 16h, 28h, 56h
-	db	0E9h, 80h, 1, 8Bh, 16h, 24h, 56h, 0E9h, 79h, 1, 0ACh, 3Ch, 58h, 74h, 0Ch, 0F7h
-	db	6, 0B6h, 38h, 2, 0, 75h, 0Eh, 3Ch, 78h, 75h, 0Ah, 8Bh, 16h, 20h, 56h, 0E9h
-	db	61h, 1, 0E9h, 76h, 1, 0E9h, 6Eh, 1, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0F2h
-	db	8Bh, 0CEh, 0ACh, 3Ch, 53h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0E6h, 3Ch
-	db	73h, 75h, 0E2h, 8Bh, 16h, 5Ah, 56h, 0E9h, 39h, 1, 0E9h, 49h, 1, 0E9h, 4Bh, 1
-	db	0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0F5h, 8Bh, 0CEh, 0ACh, 3Ch, 4Dh, 74h, 0Ch, 0F7h
-	db	6, 0B6h, 38h, 2, 0, 75h, 0E3h, 3Ch, 6Dh, 75h, 0DFh, 0ACh, 3Ch, 50h, 74h, 0Ch
-	db	0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0D2h, 3Ch, 70h, 75h, 0CEh, 8Bh, 16h, 94h, 56h
-	db	0E9h, 0, 1, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 2Eh, 8Bh, 0CEh, 0ACh, 3Ch, 4Fh
-	db	74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 1Ch, 3Ch, 6Fh, 75h, 18h, 0ACh, 3Ch
-	db	56h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0Bh, 3Ch, 76h, 75h, 7, 8Bh
-	db	16h, 92h, 56h, 0E9h, 0CDh, 0, 0E9h, 0DDh, 0, 0E9h, 0DFh, 0, 0F7h, 6, 0B6h, 38h
-	db	2, 0, 75h, 36h, 8Bh, 0CEh, 0ACh, 3Ch, 55h, 74h, 32h, 3Ch, 4Fh, 74h, 10h, 0F7h
-	db	6, 0B6h, 38h, 2, 0, 75h, 20h, 3Ch, 75h, 74h, 22h, 3Ch, 6Fh, 75h, 0D7h, 0ACh
-	db	3Ch, 50h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0Bh, 3Ch, 70h, 75h, 7
-	db	8Bh, 16h, 9Ah, 56h, 0E9h, 8Ch, 0, 0E9h, 9Ch, 0, 0E9h, 9Eh, 0, 0ACh, 3Ch, 53h
-	db	74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0EDh, 3Ch, 73h, 75h, 0E9h, 0ACh, 3Ch
-	db	48h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0DCh, 3Ch, 68h, 75h, 0D8h, 8Bh
-	db	16h, 98h, 56h, 0EBh, 5Eh, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 4Eh, 8Bh, 0CEh, 0ACh
-	db	3Ch, 49h, 74h, 3Bh, 3Ch, 50h, 74h, 3Dh, 3Ch, 53h, 74h, 43h, 3Ch, 55h, 74h, 18h
-	db	0F7h, 6, 0B6h, 38h, 2, 0, 75h, 35h, 3Ch, 69h, 74h, 23h, 3Ch, 70h, 74h, 25h
-	db	3Ch, 73h, 74h, 2Bh, 3Ch, 75h, 75h, 25h, 0ACh, 3Ch, 42h, 74h, 0Ch, 0F7h, 6, 0B6h
-	db	38h, 2, 0, 75h, 18h, 3Ch, 62h, 75h, 14h, 8Bh, 16h, 8Eh, 56h, 0EBh, 14h, 8Bh
-	db	16h, 56h, 56h, 0EBh, 0Eh, 8Bh, 16h, 52h, 56h, 0EBh, 8, 0EBh, 1Eh, 0EBh, 17h, 8Bh
-	db	16h, 5Eh, 56h, 0BBh, 40h, 7, 8Ah, 4, 0D7h, 0A8h, 90h, 75h, 9, 6, 55h, 89h
-	db	36h, 24h, 3Eh, 0E9h, 0E8h, 0, 8Bh, 0F1h, 8Ah, 44h, 0FFh, 6, 55h, 32h, 0E4h, 4Eh
-	db	0BBh, 40h, 7, 0D7h, 16h, 7, 0BFh, 26h, 3Eh, 33h, 0EDh, 0B1h, 5, 0B6h, 90h, 0F7h
-	db	6, 0B6h, 38h, 2, 0, 74h, 1Fh, 0ACh, 0AAh, 0D3h, 0C5h, 33h, 0E8h, 8Ah, 4, 0D7h
-	db	84h, 0C6h, 74h, 3Ah, 0ACh, 0AAh, 0D3h, 0C5h, 33h, 0E8h, 8Ah, 4, 0D7h, 84h, 0C6h, 75h
-	db	0E6h, 0EBh, 2Bh, 0E9h, 2Bh, 1, 8Ah, 0D0h, 0ACh, 80h, 0E2h, 20h, 2Ah, 0C2h, 0AAh, 0D3h
-	db	0C5h, 33h, 0E8h, 8Ah, 4, 0D7h, 84h, 0C6h, 74h, 14h, 8Ah, 0D0h, 0ACh, 80h, 0E2h, 20h
-	db	2Ah, 0C2h, 0AAh, 0D3h, 0C5h, 33h, 0E8h, 8Ah, 4, 0D7h, 84h, 0C6h, 75h, 0D8h, 89h, 36h
-	db	24h, 3Eh, 3Bh, 3Eh, 0D0h, 39h, 73h, 0CBh, 0C6h, 5, 0Dh, 0BEh, 26h, 3Eh, 8Bh, 16h
-	db	7Ch, 51h, 81h, 0E2h, 0, 80h, 74h, 10h, 33h, 0D2h, 8Bh, 4, 3Bh, 6, 80h, 51h
-	db	75h, 6, 8Bh, 16h, 78h, 51h, 3, 0EAh, 0D1h, 0E5h, 8Bh, 0C6h, 8Bh, 0DFh, 2Bh, 0D8h
-	db	8Eh, 6, 0B8h, 39h, 23h, 2Eh, 0C0h, 39h, 26h, 8Bh, 4Eh, 0, 0E3h, 2, 0EBh, 3
-	db	0E9h, 7Fh, 0, 51h, 55h, 53h, 8Bh, 0D9h, 0C1h, 0C3h, 4, 8Bh, 0EBh, 83h, 0E5h, 0F0h
-	db	83h, 0E3h, 0Fh, 0D1h, 0E3h, 36h, 8Eh, 87h, 0D2h, 38h, 5Bh, 8Bh, 0CBh, 26h, 3Ah, 4Eh
-	db	6, 75h, 57h, 26h, 3Bh, 56h, 0Ah, 75h, 51h, 26h, 0C4h, 7Eh, 0, 0D1h, 0E9h, 0F3h
-	db	0A7h, 75h, 45h, 8Bh, 0CBh, 83h, 0E1h, 1, 0F3h, 0A6h, 75h, 3Ch, 5Dh, 5Ah, 53h, 8Bh
-	db	0DAh, 0C1h, 0C3h, 4, 8Bh, 0EBh, 83h, 0E5h, 0F0h, 83h, 0E3h, 0Fh, 0D1h, 0E3h, 36h, 8Eh
-	db	87h, 0D2h, 38h, 5Bh, 8Bh, 36h, 28h, 4Eh, 89h, 94h, 28h, 46h, 83h, 6, 28h, 4Eh
-	db	2, 26h, 8Ah, 46h, 7, 24h, 3Fh, 3Ch, 1, 74h, 70h, 3Ch, 0Eh, 74h, 75h, 26h
-	db	8Bh, 46h, 0Ch, 5Dh, 7, 32h, 0DBh, 0C3h, 8Bh, 0F0h, 5Dh, 59h, 83h, 0C5h, 16h, 0E9h
-	db	6Eh, 0FFh, 8Bh, 0FBh, 3, 0F8h, 83h, 3Eh, 0C4h, 39h, 0, 75h, 12h, 0B8h, 2, 0
-	db	0B9h, 0, 2, 9Ah
+	db	26h, 0ACh, 38h, 0CBh
+@@7:	lodsb	;@02BDC
+	mov	ah, al	;@02BDD
+	xlat	;@02BDF
+	test	al, 90h	;@02BE0
+	je	@@8	;@02BE2
+	and	al, 20h	;@02BE4
+	xchg	al, ah	;@02BE6
+	sub	al, ah	;@02BE8
+	cbw	;@02BEA
+	stosb	;@02BEB
+	rol	bp, cl	;@02BEC
+	xor	bp, ax	;@02BEE
+	jmp	@@7	;@02BF0
+@@8:	dec	si	;@02BF2
+	ret	;@02BF3
+	lodsb	;@02BF4
+	cmp	al, 45h	;@02BF5
+	je	@@9	;@02BF7
+	cmp	al, 65h	;@02BF9
+	je	@@9	;@02BFB
+	dec	si	;@02BFD
+	ret	;@02BFE
+@@9:	mov	al, 45h	;@02BFF
+	stosb	;@02C01
+	lodsb	;@02C02
+	cmp	al, 2Dh	;@02C03
+	je	@@11	;@02C05
+	cmp	al, 2Bh	;@02C07
+	je	@@11	;@02C09
+@@10:	mov	ah, al	;@02C0B
+	xlat	;@02C0D
+	test	al, 10h	;@02C0E
+	xchg	al, ah	;@02C10
+	je	@@12	;@02C12
+@@11:	stosb	;@02C14
+	cbw	;@02C15
+	rol	bp, cl	;@02C16
+	xor	bp, ax	;@02C18
+	lodsb	;@02C1A
+	jmp	@@10	;@02C1B
+@@12:	dec	si	;@02C1D
+	ret	;@02C1E
+	db	0F7h, 6, 0B6h, 38h, 2, 0, 75h, 58h, 8Bh, 0CEh, 0ACh, 3Ch, 58h, 74h, 3Ch, 3Ch	;@02C1F
+	db	4Ch, 74h, 3Fh, 3Ch, 48h, 74h, 42h, 3Ch, 44h, 74h, 18h, 0F7h, 6, 0B6h, 38h, 2
+	db	0, 75h, 40h, 3Ch, 78h, 74h, 24h, 3Ch, 6Ch, 74h, 27h, 3Ch, 68h, 74h, 2Ah, 3Ch
+	db	64h, 75h, 30h, 0ACh, 3Ch, 44h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 23h
+	db	3Ch, 64h, 75h, 1Fh, 8Bh, 16h, 8Ch, 56h, 0E9h, 41h, 3, 8Bh, 16h, 4Ah, 56h, 0E9h
+	db	3Ah, 3, 8Bh, 16h, 0Eh, 56h, 0E9h, 33h, 3, 8Bh, 16h, 16h, 56h, 0E9h, 2Ch, 3
+	db	0E9h, 41h, 3, 0E9h, 39h, 3, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0F2h, 8Bh, 0CEh
+	db	0ACh, 3Ch, 58h, 74h, 39h, 3Ch, 50h, 74h, 2Eh, 3Ch, 4Ch, 74h, 23h, 3Ch, 48h, 74h
+	db	18h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0DAh, 3Ch, 78h, 74h, 21h, 3Ch, 70h, 74h
+	db	16h, 3Ch, 6Ch, 74h, 0Bh, 3Ch, 68h, 75h, 0CAh, 8Bh, 16h, 1Ch, 56h, 0E9h, 0ECh, 2
+	db	8Bh, 16h, 14h, 56h, 0E9h, 0E5h, 2, 8Bh, 16h, 54h, 56h, 0E9h, 0DEh, 2, 8Bh, 16h
+	db	50h, 56h, 0E9h, 0D7h, 2, 0ACh, 3Ch, 50h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0
+	db	75h, 7Ah, 3Ch, 70h, 75h, 76h, 8Bh, 16h, 90h, 56h, 0E9h, 0BFh, 2, 0F7h, 6, 0B6h
+	db	38h, 2, 0, 75h, 64h, 8Bh, 0CEh, 0ACh, 3Ch, 58h, 74h, 6Ah, 3Ch, 4Ch, 74h, 6Dh
+	db	3Ch, 48h, 74h, 70h, 3Ch, 4Dh, 74h, 0CDh, 3Ch, 53h, 74h, 53h, 3Ch, 41h, 74h, 20h
+	db	0F7h, 6, 0B6h, 38h, 2, 0, 75h, 44h, 3Ch, 78h, 74h, 4Ah, 3Ch, 6Ch, 74h, 4Dh
+	db	3Ch, 68h, 74h, 50h, 3Ch, 6Dh, 74h, 0ADh, 3Ch, 73h, 74h, 33h, 3Ch, 61h, 75h, 2Ch
+	db	0ACh, 3Ch, 4Ch, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 1Fh, 3Ch, 6Ch, 75h
+	db	1Bh, 0ACh, 3Ch, 4Ch, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0Eh, 3Ch, 6Ch
+	db	75h, 0Ah, 8Bh, 16h, 96h, 56h, 0E9h, 53h, 2, 0E9h, 68h, 2, 0E9h, 60h, 2, 8Bh
+	db	16h, 5Ch, 56h, 0E9h, 46h, 2, 8Bh, 16h, 4Ch, 56h, 0E9h, 3Fh, 2, 8Bh, 16h, 10h
+	db	56h, 0E9h, 38h, 2, 8Bh, 16h, 18h, 56h, 0E9h, 31h, 2, 0E9h, 46h, 2, 0F7h, 6
+	db	0B6h, 38h, 2, 0, 75h, 0F5h, 8Bh, 0CEh, 0ACh, 3Ch, 58h, 74h, 60h, 3Ch, 49h, 74h
+	db	71h, 3Ch, 4Ch, 74h, 5Fh, 3Ch, 48h, 74h, 62h, 3Ch, 53h, 74h, 49h, 3Ch, 57h, 74h
+	db	3Eh, 3Ch, 42h, 74h, 33h, 3Ch, 44h, 74h, 28h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h
+	db	58h, 3Ch, 78h, 74h, 38h, 3Ch, 69h, 74h, 49h, 3Ch, 6Ch, 74h, 37h, 3Ch, 68h, 74h
+	db	3Ah, 3Ch, 73h, 74h, 21h, 3Ch, 77h, 74h, 16h, 3Ch, 62h, 74h, 0Bh, 3Ch, 64h, 75h
+	db	38h, 8Bh, 16h, 36h, 58h, 0E9h, 0D4h, 1, 8Bh, 16h, 32h, 58h, 0E9h, 0CDh, 1, 8Bh
+	db	16h, 34h, 58h, 0E9h, 0C6h, 1, 8Bh, 16h, 60h, 56h, 0E9h, 0BFh, 1, 8Bh, 16h, 4Eh
+	db	56h, 0E9h, 0B8h, 1, 8Bh, 16h, 12h, 56h, 0E9h, 0B1h, 1, 8Bh, 16h, 1Ah, 56h, 0E9h
+	db	0AAh, 1, 8Bh, 16h, 58h, 56h, 0E9h, 0A3h, 1, 0E9h, 0B3h, 1, 0ACh, 3Ch, 58h, 74h
+	db	1Bh, 3Ch, 50h, 74h, 10h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 31h, 3Ch, 78h, 74h
+	db	0Bh, 3Ch, 70h, 75h, 29h, 8Bh, 16h, 28h, 56h, 0E9h, 80h, 1, 8Bh, 16h, 24h, 56h
+	db	0E9h, 79h, 1, 0ACh, 3Ch, 58h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0Eh
+	db	3Ch, 78h, 75h, 0Ah, 8Bh, 16h, 20h, 56h, 0E9h, 61h, 1, 0E9h, 76h, 1, 0E9h, 6Eh
+	db	1, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0F2h, 8Bh, 0CEh, 0ACh, 3Ch, 53h, 74h, 0Ch
+	db	0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0E6h, 3Ch, 73h, 75h, 0E2h, 8Bh, 16h, 5Ah, 56h
+	db	0E9h, 39h, 1, 0E9h, 49h, 1, 0E9h, 4Bh, 1, 0F7h, 6, 0B6h, 38h, 2, 0, 75h
+	db	0F5h, 8Bh, 0CEh, 0ACh, 3Ch, 4Dh, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 0E3h
+	db	3Ch, 6Dh, 75h, 0DFh, 0ACh, 3Ch, 50h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h
+	db	0D2h, 3Ch, 70h, 75h, 0CEh, 8Bh, 16h, 94h, 56h, 0E9h, 0, 1, 0F7h, 6, 0B6h, 38h
+	db	2, 0, 75h, 2Eh, 8Bh, 0CEh, 0ACh, 3Ch, 4Fh, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2
+	db	0, 75h, 1Ch, 3Ch, 6Fh, 75h, 18h, 0ACh, 3Ch, 56h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h
+	db	2, 0, 75h, 0Bh, 3Ch, 76h, 75h, 7, 8Bh, 16h, 92h, 56h, 0E9h, 0CDh, 0, 0E9h
+	db	0DDh, 0, 0E9h, 0DFh, 0, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 36h, 8Bh, 0CEh, 0ACh
+	db	3Ch, 55h, 74h, 32h, 3Ch, 4Fh, 74h, 10h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 20h
+	db	3Ch, 75h, 74h, 22h, 3Ch, 6Fh, 75h, 0D7h, 0ACh, 3Ch, 50h, 74h, 0Ch, 0F7h, 6, 0B6h
+	db	38h, 2, 0, 75h, 0Bh, 3Ch, 70h, 75h, 7, 8Bh, 16h, 9Ah, 56h, 0E9h, 8Ch, 0
+	db	0E9h, 9Ch, 0, 0E9h, 9Eh, 0, 0ACh, 3Ch, 53h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2
+	db	0, 75h, 0EDh, 3Ch, 73h, 75h, 0E9h, 0ACh, 3Ch, 48h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h
+	db	2, 0, 75h, 0DCh, 3Ch, 68h, 75h, 0D8h, 8Bh, 16h, 98h, 56h, 0EBh, 5Eh, 0F7h, 6
+	db	0B6h, 38h, 2, 0, 75h, 4Eh, 8Bh, 0CEh, 0ACh, 3Ch, 49h, 74h, 3Bh, 3Ch, 50h, 74h
+	db	3Dh, 3Ch, 53h, 74h, 43h, 3Ch, 55h, 74h, 18h, 0F7h, 6, 0B6h, 38h, 2, 0, 75h
+	db	35h, 3Ch, 69h, 74h, 23h, 3Ch, 70h, 74h, 25h, 3Ch, 73h, 74h, 2Bh, 3Ch, 75h, 75h
+	db	25h, 0ACh, 3Ch, 42h, 74h, 0Ch, 0F7h, 6, 0B6h, 38h, 2, 0, 75h, 18h, 3Ch, 62h
+	db	75h, 14h, 8Bh, 16h, 8Eh, 56h, 0EBh, 14h, 8Bh, 16h, 56h, 56h, 0EBh, 0Eh, 8Bh, 16h
+	db	52h, 56h, 0EBh, 8, 0EBh, 1Eh, 0EBh, 17h, 8Bh, 16h, 5Eh, 56h, 0BBh, 40h, 7, 8Ah
+	db	4, 0D7h, 0A8h, 90h, 75h, 9, 6, 55h, 89h, 36h, 24h, 3Eh, 0E9h, 0E8h, 0, 8Bh
+	db	0F1h, 8Ah, 44h, 0FFh, 6, 55h, 32h, 0E4h, 4Eh, 0BBh, 40h, 7, 0D7h, 16h, 7, 0BFh
+	db	26h, 3Eh, 33h, 0EDh, 0B1h, 5, 0B6h, 90h, 0F7h, 6, 0B6h, 38h, 2, 0, 74h, 1Fh
+	db	0ACh, 0AAh, 0D3h, 0C5h, 33h, 0E8h, 8Ah, 4, 0D7h, 84h, 0C6h, 74h, 3Ah, 0ACh, 0AAh, 0D3h
+	db	0C5h, 33h, 0E8h, 8Ah, 4, 0D7h, 84h, 0C6h, 75h, 0E6h, 0EBh, 2Bh, 0E9h, 2Bh, 1, 8Ah
+	db	0D0h, 0ACh, 80h, 0E2h, 20h, 2Ah, 0C2h, 0AAh, 0D3h, 0C5h, 33h, 0E8h, 8Ah, 4, 0D7h, 84h
+	db	0C6h, 74h, 14h, 8Ah, 0D0h, 0ACh, 80h, 0E2h, 20h, 2Ah, 0C2h, 0AAh, 0D3h, 0C5h, 33h, 0E8h
+	db	8Ah, 4, 0D7h, 84h, 0C6h, 75h, 0D8h, 89h, 36h, 24h, 3Eh, 3Bh, 3Eh, 0D0h, 39h, 73h
+	db	0CBh, 0C6h, 5, 0Dh, 0BEh, 26h, 3Eh, 8Bh, 16h, 7Ch, 51h, 81h, 0E2h, 0, 80h, 74h
+	db	10h, 33h, 0D2h, 8Bh, 4, 3Bh, 6, 80h, 51h, 75h, 6, 8Bh, 16h, 78h, 51h, 3
+	db	0EAh, 0D1h, 0E5h, 8Bh, 0C6h, 8Bh, 0DFh, 2Bh, 0D8h, 8Eh, 6, 0B8h, 39h, 23h, 2Eh, 0C0h
+	db	39h, 26h, 8Bh, 4Eh, 0, 0E3h, 2, 0EBh, 3, 0E9h, 7Fh, 0, 51h, 55h, 53h, 8Bh
+	db	0D9h, 0C1h, 0C3h, 4, 8Bh, 0EBh, 83h, 0E5h, 0F0h, 83h, 0E3h, 0Fh, 0D1h, 0E3h, 36h, 8Eh
+	db	87h, 0D2h, 38h, 5Bh, 8Bh, 0CBh, 26h, 3Ah, 4Eh, 6, 75h, 57h, 26h, 3Bh, 56h, 0Ah
+	db	75h, 51h, 26h, 0C4h, 7Eh, 0, 0D1h, 0E9h, 0F3h, 0A7h, 75h, 45h, 8Bh, 0CBh, 83h, 0E1h
+	db	1, 0F3h, 0A6h, 75h, 3Ch, 5Dh, 5Ah, 53h, 8Bh, 0DAh, 0C1h, 0C3h, 4, 8Bh, 0EBh, 83h
+	db	0E5h, 0F0h, 83h, 0E3h, 0Fh, 0D1h, 0E3h, 36h, 8Eh, 87h, 0D2h, 38h, 5Bh, 8Bh, 36h, 28h
+	db	4Eh, 89h, 94h, 28h, 46h, 83h, 6, 28h, 4Eh, 2, 26h, 8Ah, 46h, 7, 24h, 3Fh
+	db	3Ch, 1, 74h, 70h, 3Ch, 0Eh, 74h, 75h, 26h, 8Bh, 46h, 0Ch, 5Dh, 7, 32h, 0DBh
+	db	0C3h, 8Bh, 0F0h, 5Dh, 59h, 83h, 0C5h, 16h, 0E9h, 6Eh, 0FFh, 8Bh, 0FBh, 3, 0F8h, 83h
+	db	3Eh, 0C4h, 39h, 0, 75h, 12h, 0B8h, 2, 0, 0B9h, 0, 2, 9Ah
 	dd	L100B0
 	db	89h, 0Eh, 0C4h, 39h, 0A3h, 0C2h, 39h, 0A1h, 0C2h, 39h, 83h, 6, 0C2h, 39h, 2, 83h
 	db	2Eh, 0C4h, 39h, 2, 0E8h, 61h, 2, 8Bh, 36h, 28h, 4Eh, 89h, 94h, 28h, 46h, 83h
 	db	6, 28h, 4Eh, 2, 32h, 0DBh, 5Dh, 7, 0C3h, 0BEh, 26h, 3Eh, 8Bh, 0Eh, 0BAh, 38h
 	db	33h, 0EDh, 51h, 0B1h, 5, 0D3h, 0C5h, 59h, 0ACh, 98h, 33h, 0E8h, 0E2h, 0F4h, 8Bh, 0FEh
 	db	0E9h, 0EDh, 0FEh, 0F6h, 6, 0D2h, 39h, 2, 75h, 8Dh, 0EBh, 9, 0F6h, 6, 0D2h, 39h
-	db	2, 75h, 84h, 0EBh, 14h, 9Ah
-	dd	L101F7
-	db	8Bh, 0D8h, 0E8h, 0E0h, 7, 56h, 0E8h, 2Ch, 0, 5Eh, 5Dh, 7, 0E9h, 0BBh, 0F7h, 9Ah
-	dd	L101F7
-	db	8Bh, 0D8h, 0E8h, 0CCh, 7, 0E8h, 6Bh, 0EBh, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 56h, 8, 8Bh, 0C2h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 46h, 0Ch, 5Dh, 7, 32h, 0DBh, 0C3h, 0F6h, 6, 0C9h, 38h, 2, 74h, 6Fh
-	db	0E8h, 48h, 0EBh, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 46h, 8, 26h, 8Bh, 4Eh, 0Ah, 9Ah
-	dd	L1035F
-	db	81h, 0C6h, 28h, 46h, 6, 57h, 16h, 7, 8Bh, 0C1h, 8Bh, 0Eh, 28h, 4Eh, 81h, 0C1h
-	db	28h, 46h, 2Bh, 0CEh, 0D1h, 0E9h, 49h, 83h, 2Eh, 28h, 4Eh, 2, 0E3h, 20h, 8Bh, 0D1h
-	db	8Bh, 0FEh, 83h, 0C6h, 2, 0F3h, 0A5h, 83h, 0EFh, 2, 8Bh, 0F7h, 3, 0F8h, 81h, 0FFh
-	db	28h, 4Eh, 77h, 1Ch, 8Bh, 0CAh, 0FDh, 0E3h, 5, 0F3h, 0A5h, 83h, 0C6h, 2, 0FCh, 1
-	db	6, 28h, 4Eh, 8Bh, 0FEh, 5Eh, 1Fh, 0D1h, 0E8h, 8Bh, 0C8h, 0F3h, 0A5h, 16h, 1Fh, 0C3h
-	db	5Eh, 1Fh, 16h, 1Fh, 0B9h, 89h, 0, 0E9h, 27h, 3, 8Bh, 0C6h, 5, 2, 0, 3Bh
-	db	6, 28h, 4Eh, 75h, 86h, 89h, 36h, 28h, 4Eh, 0C6h, 6, 32h, 4Eh, 0, 6, 55h
-	db	0E8h, 0C3h, 0EAh, 5Dh, 7, 26h, 8Ah, 4Eh, 6, 32h, 0EDh, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 46h, 0Ch, 26h, 8Bh, 56h, 0Eh, 9Ah
-	dd	L1035F
-	db	6, 57h, 8Bh, 3Eh, 24h, 3Eh, 8Bh, 0F7h, 2Bh, 0F9h, 89h, 3Eh, 24h, 3Eh, 1Eh, 7
-	db	0ACh, 0AAh, 3Ch, 0Dh, 75h, 0FAh, 8Bh, 0C2h, 8Bh, 0D7h, 2Bh, 16h, 24h, 3Eh, 4Fh, 8Bh
-	db	0F7h, 3, 0F8h, 81h, 0FFh, 24h, 3Eh, 77h, 9Ah, 8Bh, 0CAh, 0FDh, 0F3h, 0A4h, 46h, 0FCh
-	db	8Bh, 0FEh, 5Eh, 1Fh, 8Bh, 0C8h, 0F3h, 0A4h, 16h, 1Fh, 0C3h
+	db	2, 75h, 84h, 0EBh, 14h
+@@13:	call	far ptr L101F7	;@03155
+	mov	bx, ax	;@0315A
+	call	L0393F	;@0315C
+	push	si	;@0315F
+	call	@@15	;@03160
+	pop	si	;@03163
+	pop	bp	;@03164
+	pop	es	;@03165
+	jmp	L02924	;@03166
+@@14:	call	far ptr L101F7	;@03169
+	mov	bx, ax	;@0316E
+	call	L0393F	;@03170
+	call	L01CE1	;@03173
+	call	far ptr L101E0	;@03176
+	mov	dx, word ptr es:[bp+8]	;@0317B
+	mov	ax, dx	;@0317F
+	call	far ptr L101E0	;@03181
+	mov	ax, word ptr es:[bp+0Ch]	;@03186
+	pop	bp	;@0318A
+	pop	es	;@0318B
+	xor	bl, bl	;@0318C
+	ret	;@0318E
+@@15:	test	byte ptr ds:[38C9h], 2	;@0318F
+	je	@@19	;@03194
+@@16:	call	L01CE1	;@03196
+	call	far ptr L101E0	;@03199
+	mov	ax, word ptr es:[bp+8]	;@0319E
+	mov	cx, word ptr es:[bp+0Ah]	;@031A2
+	call	far ptr L1035F	;@031A6
+	add	si, 4628h	;@031AB
+	push	es	;@031AF
+	push	di	;@031B0
+	push	ss	;@031B1
+	pop	es	;@031B2
+	mov	ax, cx	;@031B3
+	mov	cx, word ptr ds:[4E28h]	;@031B5
+	add	cx, 4628h	;@031B9
+	sub	cx, si	;@031BD
+	shr	cx, 1	;@031BF
+	dec	cx	;@031C1
+	sub	word ptr ds:[4E28h], 2	;@031C2
+	jcxz	@@17	;@031C7
+	mov	dx, cx	;@031C9
+	mov	di, si	;@031CB
+	add	si, 2	;@031CD
+	rep movsw	;@031D0
+	sub	di, 2	;@031D2
+	mov	si, di	;@031D5
+	add	di, ax	;@031D7
+	cmp	di, 4E28h	;@031D9
+	ja	@@18	;@031DD
+	mov	cx, dx	;@031DF
+	std	;@031E1
+	jcxz	@@17	;@031E2
+	rep movsw	;@031E4
+	add	si, 2	;@031E6
+@@17:	cld	;@031E9
+	add	word ptr ds:[4E28h], ax	;@031EA
+	mov	di, si	;@031EE
+	pop	si	;@031F0
+	pop	ds	;@031F1
+	shr	ax, 1	;@031F2
+	mov	cx, ax	;@031F4
+	rep movsw	;@031F6
+	push	ss	;@031F8
+	pop	ds	;@031F9
+	ret	;@031FA
+@@18:	pop	si	;@031FB
+	pop	ds	;@031FC
+	push	ss	;@031FD
+	pop	ds	;@031FE
+	mov	cx, 89h	;@031FF
+	jmp	L0352C	;@03202
+@@19:	mov	ax, si	;@03205
+	add	ax, 2	;@03207
+	cmp	ax, word ptr ds:[4E28h]	;@0320A
+	jne	@@16	;@0320E
+	mov	word ptr ds:[4E28h], si	;@03210
+	mov	byte ptr ds:[4E32h], 0	;@03214
+	push	es	;@03219
+	push	bp	;@0321A
+	call	L01CE1	;@0321B
+	pop	bp	;@0321E
+	pop	es	;@0321F
+	mov	cl, byte ptr es:[bp+6]	;@03220
+	xor	ch, ch	;@03224
+	call	far ptr L101E0	;@03226
+	mov	ax, word ptr es:[bp+0Ch]	;@0322B
+	mov	dx, word ptr es:[bp+0Eh]	;@0322F
+	call	far ptr L1035F	;@03233
+	push	es	;@03238
+	push	di	;@03239
+	mov	di, word ptr ds:[3E24h]	;@0323A
+	mov	si, di	;@0323E
+	sub	di, cx	;@03240
+	mov	word ptr ds:[3E24h], di	;@03242
+	push	ds	;@03246
+	pop	es	;@03247
+@@20:	lodsb	;@03248
+	stosb	;@03249
+	cmp	al, 0Dh	;@0324A
+	jne	@@20	;@0324C
+	mov	ax, dx	;@0324E
+	mov	dx, di	;@03250
+	sub	dx, word ptr ds:[3E24h]	;@03252
+	dec	di	;@03256
+	mov	si, di	;@03257
+	add	di, ax	;@03259
+	cmp	di, 3E24h	;@0325B
+	ja	@@18	;@0325F
+	mov	cx, dx	;@03261
+	std	;@03263
+	rep movsb	;@03264
+	inc	si	;@03266
+	cld	;@03267
+	mov	di, si	;@03268
+	pop	si	;@0326A
+	pop	ds	;@0326B
+	mov	cx, ax	;@0326C
+	rep movsb	;@0326E
+	push	ss	;@03270
+	pop	ds	;@03271
+	ret	;@03272
 L03273:	and	ax, ax	;@03273
 	jne	@@1	;@03275
 	mov	si, 4628h	;@03277
@@ -2109,9 +3363,10 @@ L0352C:	call	far ptr L126B7	;@0352C
 	ret	;@03531
 L03532:	call	L04EA7	;@03532
 	retf	;@03535
-	db	9Ah	;@03536
-	dd	L101E0
-	db	26h, 8Bh, 46h, 10h, 26h, 8Bh, 56h, 12h, 0C3h
+L03536:	call	far ptr L101E0	;@03536
+	mov	ax, word ptr es:[bp+10h]	;@0353B
+	mov	dx, word ptr es:[bp+12h]	;@0353F
+	ret	;@03543
 L03544:	call	far ptr L101E0	;@03544
 	mov	bx, word ptr es:[bp+14h]	;@03549
 	ret	;@0354D
@@ -2242,16 +3497,27 @@ L03750:	mov	di, word ptr ds:[51B2h]	;@03750
 	call	L03CF3	;@037B9
 	jmp	@@7	;@037BC
 @@8:	ret	;@037BE
-	db	0F6h, 6, 0C9h, 38h, 3, 75h, 8, 0F7h, 6, 0B6h, 38h, 0, 40h, 75h, 1, 0C3h	;@037BF
-	db	56h, 8Bh, 0F0h, 0E3h, 0Fh, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	0E8h, 0F3h, 0CCh, 9Ah
-	dd	L10375
-	db	8Bh, 0FAh, 8Bh, 0EBh, 9Ah
-	dd	L12BB3
-	db	5Eh, 0C3h, 0F6h, 6, 0C9h, 38h, 10h, 75h, 9, 0F7h, 6, 0B6h, 38h, 0, 40h, 75h
-	db	0Ch, 0C3h, 0E8h, 0F8h, 0, 0F6h, 6, 0C9h, 38h, 1, 74h, 0EDh, 0C3h, 0F6h, 6, 0C9h
-	db	38h, 2, 75h, 0F8h, 0E8h, 0B3h, 0CCh, 56h, 8Bh, 0F0h, 52h, 0EBh, 39h
+L037BF:	test	byte ptr ds:[38C9h], 3	;@037BF
+	jne	@@1	;@037C4
+	test	word ptr ds:[38B6h], 4000h	;@037C6
+	jne	@@2	;@037CC
+@@1:	ret	;@037CE
+@@2:	push	si	;@037CF
+	mov	si, ax	;@037D0
+	jcxz	@@3	;@037D2
+	mov	ax, cx	;@037D4
+	call	far ptr L101E0	;@037D6
+	call	L004D1	;@037DB
+	call	far ptr L10375	;@037DE
+@@3:	mov	di, dx	;@037E3
+	mov	bp, bx	;@037E5
+	call	far ptr L12BB3	;@037E7
+	pop	si	;@037EC
+	ret	;@037ED
+	db	0F6h, 6, 0C9h, 38h, 10h, 75h, 9, 0F7h, 6, 0B6h, 38h, 0, 40h, 75h	;@037EE
+	db	0Ch, 0C3h, 0E8h, 0F8h, 0, 0F6h, 6, 0C9h, 38h, 1, 74h, 0EDh, 0C3h
+	db	0F6h, 6, 0C9h, 38h, 2, 75h, 0F8h, 0E8h, 0B3h, 0CCh, 56h, 8Bh, 0F0h
+	db	52h, 0EBh, 39h
 L03819:	test	byte ptr ds:[38C9h], 10h	;@03819
 	jne	@@2	;@0381E
 @@1:	test	word ptr ds:[38B6h], 4000h	;@03820
@@ -2353,13 +3619,38 @@ L03915:	call	far ptr L101F7	;@03915
 	mov	bp, bx	;@03937
 	call	far ptr L12FBD	;@03939
 	ret	;@0393E
-	db	0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 56h, 6, 55h, 53h, 52h, 9Ah	;@0393F
-	dd	L10813
-	db	5Ah, 5Bh, 5Dh, 7, 5Eh, 0C3h, 0F6h, 6, 0C9h, 38h, 1, 75h, 8, 0F7h, 6, 0B6h
-	db	38h, 0, 40h, 75h, 1, 0C3h, 56h, 8Bh, 0F0h, 8Bh, 0FAh, 87h, 0DDh, 0E8h, 36h, 15h
-	db	8Bh, 0C3h, 8Bh, 0D1h, 8Bh, 0DDh, 9Ah
-	dd	L13183
-	db	5Eh, 0C3h, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 56h, 6, 55h, 0B0h, 3Dh, 9Ah
+L0393F:	test	byte ptr ds:[38C9h], 10h	;@0393F
+	jne	@@1	;@03944
+	ret	;@03946
+@@1:	push	si	;@03947
+	push	es	;@03948
+	push	bp	;@03949
+	push	bx	;@0394A
+	push	dx	;@0394B
+	call	far ptr L10813	;@0394C
+	pop	dx	;@03951
+	pop	bx	;@03952
+	pop	bp	;@03953
+	pop	es	;@03954
+	pop	si	;@03955
+	ret	;@03956
+L03957:	test	byte ptr ds:[38C9h], 1	;@03957
+	jne	@@1	;@0395C
+	test	word ptr ds:[38B6h], 4000h	;@0395E
+	jne	@@2	;@03964
+@@1:	ret	;@03966
+@@2:	push	si	;@03967
+	mov	si, ax	;@03968
+	mov	di, dx	;@0396A
+	xchg	bx, bp	;@0396C
+	call	L04EA7	;@0396E
+	mov	ax, bx	;@03971
+	mov	dx, cx	;@03973
+	mov	bx, bp	;@03975
+	call	far ptr L13183	;@03977
+	pop	si	;@0397C
+	ret	;@0397D
+	db	0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 56h, 6, 55h, 0B0h, 3Dh, 9Ah	;@0397E
 	dd	L10775
 	db	0B0h, 20h, 9Ah
 	dd	L10775
@@ -2370,70 +3661,94 @@ L03915:	call	far ptr L101F7	;@03915
 	dd	L10775
 	db	59h, 5Fh, 57h, 51h, 16h, 7, 9Ah
 	dd	L10782
-	db	59h, 5Bh, 5Dh, 7, 5Eh, 0C3h, 8Bh, 0Eh, 64h, 50h, 0E3h, 18h, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 4Eh, 0, 23h, 0C9h, 75h, 0F1h, 26h, 8Bh, 46h, 4, 26h, 8Bh, 56h, 6
-	db	0C3h, 0A1h, 70h, 51h, 8Bh, 16h, 72h, 51h, 0C3h
+	db	59h, 5Bh, 5Dh, 7, 5Eh, 0C3h
+L039CA:	mov	cx, word ptr ds:[5064h]	;@039CA
+	jcxz	@@2	;@039CE
+@@1:	mov	ax, cx	;@039D0
+	call	far ptr L101E0	;@039D2
+	mov	cx, word ptr es:[bp]	;@039D7
+	and	cx, cx	;@039DB
+	jne	@@1	;@039DD
+	mov	ax, word ptr es:[bp+4]	;@039DF
+	mov	dx, word ptr es:[bp+6]	;@039E3
+	ret	;@039E7
+@@2:	mov	ax, word ptr ds:[5170h]	;@039E8
+	mov	dx, word ptr ds:[5172h]	;@039EB
+	ret	;@039EF
 L039F0:	xor	ax, ax	;@039F0
 	mov	byte ptr ds:[516Ch], al	;@039F2
 	mov	word ptr ds:[506Ah], ax	;@039F5
 	ret	;@039F8
-	db	0A1h, 70h, 51h, 8Bh, 16h, 72h, 51h, 3, 6, 6Ah, 50h, 83h, 0D2h	;@039F9
-	db	0, 0C3h, 8Bh, 0Eh, 6Ah, 50h, 0E3h, 77h, 0A1h, 0A4h, 51h, 23h, 0C0h
-	db	74h, 7Ch, 0F6h, 6, 0C9h, 38h, 10h, 'tJP', 0E8h, 1Ah, 0Ch, 58h
-	db	0F6h, 6, 0C9h, 38h, 1, 75h, 54h, 0EBh, 3Ch
+L039F9:	mov	ax, word ptr ds:[5170h]	;@039F9
+	mov	dx, word ptr ds:[5172h]	;@039FC
+	add	ax, word ptr ds:[506Ah]	;@03A00
+	adc	dx, 0	;@03A04
+	ret	;@03A07
+L03A08:	mov	cx, word ptr ds:[506Ah]	;@03A08
+	jcxz	L03A85	;@03A0C
+	mov	ax, word ptr ds:[51A4h]	;@03A0E
+	and	ax, ax	;@03A11
+	je	L03A91	;@03A13
+	test	byte ptr ds:[38C9h], 10h	;@03A15
+	je	L03A66	;@03A1A
+	push	ax	;@03A1C
+	call	L0463A	;@03A1D
+	pop	ax	;@03A20
+	test	byte ptr ds:[38C9h], 1	;@03A21
+	jne	L03A7C	;@03A26
+	jmp	short L03A66	;@03A28
 L03A2A:	mov	cx, word ptr ds:[506Ah]	;@03A2A
-	jcxz	@@4	;@03A2E
+	jcxz	L03A85	;@03A2E
 	cmp	word ptr ds:[51B0h], 0	;@03A30
-	jne	@@5	;@03A35
+	jne	L03A86	;@03A35
 	mov	ax, word ptr ds:[51A4h]	;@03A37
 	and	ax, ax	;@03A3A
-	je	@@6	;@03A3C
+	je	L03A91	;@03A3C
 	test	byte ptr ds:[38C9h], 10h	;@03A3E
 	je	@@1	;@03A43
 	push	ax	;@03A45
 	call	L0463A	;@03A46
 	pop	ax	;@03A49
 	test	byte ptr ds:[38C9h], 1	;@03A4A
-	jne	@@3	;@03A4F
+	jne	L03A7C	;@03A4F
 @@1:	push	ax	;@03A51
 	mov	ax, word ptr ds:[517Eh]	;@03A52
 	call	far ptr L101E0	;@03A55
 	pop	ax	;@03A5A
 	call	L00730	;@03A5B
 	test	word ptr ds:[38B6h], 8	;@03A5E
-	jne	@@9	;@03A64
-@@2:	push	si	;@03A66
+	jne	L03AA5	;@03A64
+L03A66:	push	si	;@03A66
 	mov	si, 506Ch	;@03A67
 	mov	cx, word ptr ds:[506Ah]	;@03A6A
 	mov	bx, word ptr ds:[5170h]	;@03A6E
 	mov	dx, word ptr ds:[5172h]	;@03A72
 	call	far ptr L13292	;@03A76
 	pop	si	;@03A7B
-@@3:	mov	ax, word ptr ds:[506Ah]	;@03A7C
+L03A7C:	mov	ax, word ptr ds:[506Ah]	;@03A7C
 	add	word ptr ds:[5170h], ax	;@03A7F
-	jb	@@7	;@03A83
-@@4:	ret	;@03A85
-@@5:	and	byte ptr ds:[38CAh], 0FEh	;@03A86
+	jb	L03A97	;@03A83
+L03A85:	ret	;@03A85
+L03A86:	and	byte ptr ds:[38CAh], 0FEh	;@03A86
 	mov	cx, 49h	;@03A8B
 	jmp	L0352C	;@03A8E
-@@6:	mov	cx, 30h	;@03A91
+L03A91:	mov	cx, 30h	;@03A91
 	jmp	L0352C	;@03A94
-@@7:	inc	word ptr ds:[5172h]	;@03A97
-	je	@@8	;@03A9B
+L03A97:	inc	word ptr ds:[5172h]	;@03A97
+	je	@@1	;@03A9B
 	call	L04677	;@03A9D
-	jne	@@4	;@03AA0
-@@8:	jmp	L0468D	;@03AA2
-@@9:	test	byte ptr ds:[38C9h], 3	;@03AA5
-	jne	@@2	;@03AAA
+	jne	L03A85	;@03AA0
+@@1:	jmp	L0468D	;@03AA2
+L03AA5:	test	byte ptr ds:[38C9h], 3	;@03AA5
+	jne	L03A66	;@03AAA
 	xor	cx, cx	;@03AAC
 	cmp	word ptr ds:[51B0h], cx	;@03AAE
-	jne	@@2	;@03AB2
+	jne	L03A66	;@03AB2
 	cmp	word ptr ds:[5064h], cx	;@03AB4
-	jne	@@2	;@03AB8
+	jne	L03A66	;@03AB8
 	cmp	byte ptr ds:[51C5h], cl	;@03ABA
 	mov	byte ptr ds:[51C5h], cl	;@03ABE
-	jne	@@2	;@03AC2
+	jne	L03A66	;@03AC2
 	mov	dx, word ptr ds:[517Ah]	;@03AC4
 	mov	ax, word ptr ds:[516Eh]	;@03AC8
 	push	si	;@03ACB
@@ -2454,7 +3769,7 @@ L03A2A:	mov	cx, word ptr ds:[506Ah]	;@03A2A
 	call	far ptr L12BF5	;@03AF0
 	pop	si	;@03AF5
 	mov	ax, word ptr ds:[51A4h]	;@03AF6
-	jmp	@@2	;@03AF9
+	jmp	L03A66	;@03AF9
 L03AFC:	mov	ax, word ptr ds:[51A4h]	;@03AFC
 	and	ax, ax	;@03AFF
 	je	@@1	;@03B01
@@ -2481,21 +3796,72 @@ L03AFC:	mov	ax, word ptr ds:[51A4h]	;@03AFC
 	dd	L101E0
 	db	0E8h, 7Dh, 0DFh, 8Bh, 0F8h, 0B0h, 0C1h, 9Ah
 	dd	L12FCB
-	db	59h, 5Eh, 0C3h, 0F6h, 6, 0C9h, 38h, 1, 75h, 0Ch, 51h, 56h, 0B1h, 44h, 8Bh, 0F0h
-	db	8Bh, 0F8h, 32h, 0EDh, 0EBh, 41h, 0C3h, 0F6h, 6, 0C9h, 38h, 10h, 75h, 5Eh, 51h, 56h
-	db	8Ah, 0C8h, 8Bh, 0C3h, 9Ah
-	dd	L101E0
-	db	0E8h, 48h, 0DFh, 8Bh, 0F0h, 8Bh, 0C7h, 9Ah
-	dd	L101E0
-	db	0E8h, 3Ch, 0DFh, 8Bh, 0F8h, 32h, 0EDh, 8Bh, 0D9h, 0D1h, 0E3h, 80h, 0FEh, 2, 74h, 0Eh
-	db	83h, 0C3h, 40h, 0F7h, 6, 0B6h, 38h, 0, 1, 74h, 3, 83h, 0C3h, 40h, 8Bh, 8Fh
-	db	0D4h, 1Ah, 33h, 0C0h, 8Bh, 1Eh, 70h, 51h, 8Bh, 16h, 72h, 51h, 3, 1Eh, 6Ah, 50h
-	db	13h, 0D0h, 2, 0DDh, 12h, 0F8h, 13h, 0D0h, 0A1h, 0A4h, 51h, 23h, 0C0h, 74h, 23h, 9Ah
-	dd	L13464
-	db	5Eh, 59h, 0C3h, 50h, 24h, 7, 0A2h, 6Ch, 51h, 8Bh, 0C7h, 0E8h, 24h, 0CBh, 58h, 74h
-	db	5, 80h, 0Eh, 6Ch, 51h, 8, 0F6h, 6, 0C9h, 38h, 1, 74h, 88h, 0C3h, 0B9h, 30h
-	db	0, 0E8h, 0C0h, 0F8h, 5Eh, 59h, 0C3h, 56h, 53h, 0A1h, 0A4h, 51h, 8Bh, 1Eh, 70h, 51h
-	db	8Bh, 16h, 72h, 51h, 9Ah
+	db	59h, 5Eh, 0C3h
+L03BD2:	test	byte ptr ds:[38C9h], 1	;@03BD2
+	jne	@@1	;@03BD7
+	push	cx	;@03BD9
+	push	si	;@03BDA
+	mov	cl, 44h	;@03BDB
+	mov	si, ax	;@03BDD
+	mov	di, ax	;@03BDF
+	xor	ch, ch	;@03BE1
+	jmp	short L03C26	;@03BE3
+@@1:	ret	;@03BE5
+L03BE6:	test	byte ptr ds:[38C9h], 10h	;@03BE6
+	jne	L03C4B	;@03BEB
+L03BED:	push	cx	;@03BED
+	push	si	;@03BEE
+	mov	cl, al	;@03BEF
+	mov	ax, bx	;@03BF1
+	call	far ptr L101E0	;@03BF3
+	call	L01B43	;@03BF8
+	mov	si, ax	;@03BFB
+	mov	ax, di	;@03BFD
+	call	far ptr L101E0	;@03BFF
+	call	L01B43	;@03C04
+	mov	di, ax	;@03C07
+	xor	ch, ch	;@03C09
+	mov	bx, cx	;@03C0B
+	shl	bx, 1	;@03C0D
+	cmp	dh, 2	;@03C0F
+	je	@@1	;@03C12
+	add	bx, 40h	;@03C14
+	test	word ptr ds:[38B6h], 100h	;@03C17
+	je	@@1	;@03C1D
+	add	bx, 40h	;@03C1F
+@@1:	mov	cx, word ptr [bx+1AD4h]	;@03C22
+L03C26:	xor	ax, ax	;@03C26
+	mov	bx, word ptr ds:[5170h]	;@03C28
+	mov	dx, word ptr ds:[5172h]	;@03C2C
+	add	bx, word ptr ds:[506Ah]	;@03C30
+	adc	dx, ax	;@03C34
+	add	bl, ch	;@03C36
+	adc	bh, al	;@03C38
+	adc	dx, ax	;@03C3A
+	mov	ax, word ptr ds:[51A4h]	;@03C3C
+	and	ax, ax	;@03C3F
+	je	L03C66	;@03C41
+	call	far ptr L13464	;@03C43
+	pop	si	;@03C48
+	pop	cx	;@03C49
+	ret	;@03C4A
+L03C4B:	push	ax	;@03C4B
+	and	al, 7	;@03C4C
+	mov	byte ptr ds:[516Ch], al	;@03C4E
+	mov	ax, di	;@03C51
+	call	L0077A	;@03C53
+	pop	ax	;@03C56
+	je	@@1	;@03C57
+	or	byte ptr ds:[516Ch], 8	;@03C59
+@@1:	test	byte ptr ds:[38C9h], 1	;@03C5E
+	je	L03BED	;@03C63
+	ret	;@03C65
+L03C66:	mov	cx, 30h	;@03C66
+	call	L0352C	;@03C69
+	pop	si	;@03C6C
+	pop	cx	;@03C6D
+	ret	;@03C6E
+	db	56h, 53h, 0A1h, 0A4h, 51h, 8Bh, 1Eh, 70h, 51h, 8Bh, 16h, 72h, 51h, 9Ah	;@03C6F
 	dd	L13124
 	db	5Bh, 5Eh, 56h, 8Bh, 0D0h, 0B8h, 1, 0, 8Bh, 0C8h, 9Ah
 	dd	L100B0
@@ -2609,7 +3975,7 @@ L03CF3:	mov	cx, word ptr ds:[5068h]	;@03CF3
 	call	far ptr L101F7	;@03E20
 	mov	dx, 1	;@03E25
 	call	far ptr L1015C	;@03E28
-	mov	ax, word ptr ds:[5170h]	;@03E2D
+L03E2D:	mov	ax, word ptr ds:[5170h]	;@03E2D
 	mov	dx, word ptr ds:[5172h]	;@03E30
 	sub	ax, word ptr ds:[51A6h]	;@03E34
 	sbb	dx, word ptr ds:[51A8h]	;@03E38
@@ -2617,13 +3983,13 @@ L03CF3:	mov	cx, word ptr ds:[5068h]	;@03CF3
 	sub	cx, ax	;@03E40
 	mov	cx, word ptr ds:[51ACh]	;@03E42
 	sbb	cx, dx	;@03E46
-	jae	@@10	;@03E48
+	jae	@@1	;@03E48
 	mov	word ptr ds:[51AAh], ax	;@03E4A
 	mov	word ptr ds:[51ACh], dx	;@03E4D
-@@10:	cmp	byte ptr ds:[51BDh], 0	;@03E51
-	jne	@@11	;@03E56
+@@1:	cmp	byte ptr ds:[51BDh], 0	;@03E51
+	jne	@@2	;@03E56
 	ret	;@03E58
-@@11:	mov	ax, word ptr ds:[51A6h]	;@03E59
+@@2:	mov	ax, word ptr ds:[51A6h]	;@03E59
 	mov	dx, word ptr ds:[51A8h]	;@03E5C
 	mov	bx, word ptr ds:[5170h]	;@03E60
 	mov	dx, word ptr ds:[5172h]	;@03E64
@@ -2674,38 +4040,126 @@ L03F61:	test	byte ptr ds:[38C9h], 3	;@03F61
 	call	far ptr L12EA9	;@03F69
 	pop	si	;@03F6E
 @@1:	ret	;@03F6F
-	db	56h, 8Bh, 0F0h, 8Bh, 0F9h, 8Bh, 1Eh, 70h, 51h, 8Bh, 16h, 72h, 51h, 0A1h, 0A4h, 51h	;@03F70
-	db	23h, 0C0h, 75h, 8, 0B9h, 30h, 0, 0E8h, 0A2h, 0F5h, 0EBh, 77h, 56h, 57h, 0F6h, 6
-	db	0C9h, 38h, 10h, 74h, 22h, 50h, 53h, 52h, 56h, 57h, 0E8h, 9Dh, 6, 5Ah, 58h, 50h
-	db	52h, 9Ah
-	dd	L107CC
-	db	5Fh, 5Eh, 5Ah, 5Bh, 59h, 0B8h, 0FFh, 0FFh, 0F6h, 6, 0C9h, 38h, 1, 75h, 7, 8Bh
-	db	0C1h, 9Ah
-	dd	L13095
-	db	5Fh, 5Eh, 8Bh, 0D8h, 0B8h, 1, 0, 8Bh, 0C8h, 9Ah
-	dd	L100B0
-	db	9Ah
-	dd	L101E0
-	db	8Bh, 0Eh, 64h, 50h, 26h, 89h, 4Eh, 0, 0A3h, 64h, 50h, 26h, 89h, 76h, 8, 26h
-	db	89h, 7Eh, 0Ah, 0A1h, 0A4h, 51h, 26h, 89h, 46h, 2, 0A1h, 70h, 51h, 26h, 89h, 46h
-	db	4, 0A1h, 72h, 51h, 26h, 89h, 46h, 6, 89h, 1Eh, 0A4h, 51h, 33h, 0C0h, 0A3h, 70h
-	db	51h, 0A3h, 72h, 51h, 5Eh, 0C3h, 56h, 83h, 3Eh, 0A4h, 51h, 0, 75h, 8, 0B9h, 30h
-	db	0, 0E8h, 19h, 0F5h, 5Eh, 0C3h, 0F6h, 6, 0C9h, 38h, 10h, 74h, 5, 9Ah
-	dd	L107EA
-	db	8Bh, 0Eh, 64h, 50h, 0E3h, 71h, 8Bh, 0C1h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 46h, 0, 0A3h, 64h, 50h, 26h, 8Bh, 46h, 2, 0A3h, 0A4h, 51h, 26h, 8Bh
-	db	5Eh, 8, 26h, 8Bh, 4Eh, 0Ah, 8Bh, 36h, 70h, 51h, 8Bh, 3Eh, 72h, 51h, 55h, 0E8h
-	db	57h, 0Eh, 5Dh, 72h, 16h, 23h, 0C9h, 75h, 1Bh, 26h, 3, 5Eh, 4, 26h, 8Bh, 4Eh
-	db	6, 73h, 20h, 41h, 74h, 5, 0E8h, 10h, 6, 75h, 18h, 53h, 51h, 0E8h, 1Fh, 6
-	db	59h, 5Bh, 0EBh, 0Fh, 26h, 3, 5Eh, 4, 26h, 13h, 4Eh, 6, 72h, 0EDh, 0E8h, 0F8h
-	db	5, 74h, 0E8h, 89h, 1Eh, 70h, 51h, 89h, 0Eh, 72h, 51h, 9Ah
-	dd	L101F7
-	db	0BAh, 1, 0, 9Ah
-	dd	L1015C
-	db	0EBh, 0Bh, 8Bh, 0C1h, 0A3h, 70h, 51h, 0A3h, 72h, 51h, 0A3h, 0A4h, 51h, 5Eh, 0C3h, 8Bh
-	db	0D8h, 0A1h, 7Ah, 51h, 0A3h, 88h, 51h, 0A1h, 6Eh, 51h, 0A3h, 8Ah, 51h, 8Bh, 0Eh, 0B2h
-	db	51h, 0E3h, 64h, 0B8h, 2, 0, 8Bh, 0C8h, 9Ah
+L03F70:	push	si	;@03F70
+	mov	si, ax	;@03F71
+	mov	di, cx	;@03F73
+	mov	bx, word ptr ds:[5170h]	;@03F75
+	mov	dx, word ptr ds:[5172h]	;@03F79
+	mov	ax, word ptr ds:[51A4h]	;@03F7D
+	and	ax, ax	;@03F80
+	jne	@@1	;@03F82
+	mov	cx, 30h	;@03F84
+	call	L0352C	;@03F87
+	jmp	short @@4	;@03F8A
+@@1:	push	si	;@03F8C
+	push	di	;@03F8D
+	test	byte ptr ds:[38C9h], 10h	;@03F8E
+	je	@@2	;@03F93
+	push	ax	;@03F95
+	push	bx	;@03F96
+	push	dx	;@03F97
+	push	si	;@03F98
+	push	di	;@03F99
+	call	L0463A	;@03F9A
+	pop	dx	;@03F9D
+	pop	ax	;@03F9E
+	push	ax	;@03F9F
+	push	dx	;@03FA0
+	call	far ptr L107CC	;@03FA1
+	pop	di	;@03FA6
+	pop	si	;@03FA7
+	pop	dx	;@03FA8
+	pop	bx	;@03FA9
+	pop	cx	;@03FAA
+	mov	ax, 0FFFFh	;@03FAB
+	test	byte ptr ds:[38C9h], 1	;@03FAE
+	jne	@@3	;@03FB3
+	mov	ax, cx	;@03FB5
+@@2:	call	far ptr L13095	;@03FB7
+@@3:	pop	di	;@03FBC
+	pop	si	;@03FBD
+	mov	bx, ax	;@03FBE
+	mov	ax, 1	;@03FC0
+	mov	cx, ax	;@03FC3
+	call	far ptr L100B0	;@03FC5
+	call	far ptr L101E0	;@03FCA
+	mov	cx, word ptr ds:[5064h]	;@03FCF
+	mov	word ptr es:[bp], cx	;@03FD3
+	mov	word ptr ds:[5064h], ax	;@03FD7
+	mov	word ptr es:[bp+8], si	;@03FDA
+	mov	word ptr es:[bp+0Ah], di	;@03FDE
+	mov	ax, word ptr ds:[51A4h]	;@03FE2
+	mov	word ptr es:[bp+2], ax	;@03FE5
+	mov	ax, word ptr ds:[5170h]	;@03FE9
+	mov	word ptr es:[bp+4], ax	;@03FEC
+	mov	ax, word ptr ds:[5172h]	;@03FF0
+	mov	word ptr es:[bp+6], ax	;@03FF3
+	mov	word ptr ds:[51A4h], bx	;@03FF7
+	xor	ax, ax	;@03FFB
+	mov	word ptr ds:[5170h], ax	;@03FFD
+	mov	word ptr ds:[5172h], ax	;@04000
+@@4:	pop	si	;@04003
+	ret	;@04004
+L04005:	push	si	;@04005
+	cmp	word ptr ds:[51A4h], 0	;@04006
+	jne	@@1	;@0400B
+	mov	cx, 30h	;@0400D
+	call	L0352C	;@04010
+	pop	si	;@04013
+	ret	;@04014
+@@1:	test	byte ptr ds:[38C9h], 10h	;@04015
+	je	@@2	;@0401A
+	call	far ptr L107EA	;@0401C
+@@2:	mov	cx, word ptr ds:[5064h]	;@04021
+	jcxz	@@6	;@04025
+	mov	ax, cx	;@04027
+	call	far ptr L101E0	;@04029
+	mov	ax, word ptr es:[bp]	;@0402E
+	mov	word ptr ds:[5064h], ax	;@04032
+	mov	ax, word ptr es:[bp+2]	;@04035
+	mov	word ptr ds:[51A4h], ax	;@04039
+	mov	bx, word ptr es:[bp+8]	;@0403C
+	mov	cx, word ptr es:[bp+0Ah]	;@04040
+	mov	si, word ptr ds:[5170h]	;@04044
+	mov	di, word ptr ds:[5172h]	;@04048
+	push	bp	;@0404C
+	call	L04EA7	;@0404D
+	pop	bp	;@04050
+	jb	@@3	;@04051
+	and	cx, cx	;@04053
+	jne	@@4	;@04055
+	add	bx, word ptr es:[bp+4]	;@04057
+	mov	cx, word ptr es:[bp+6]	;@0405B
+	jae	@@5	;@0405F
+	inc	cx	;@04061
+	je	@@3	;@04062
+	call	L04677	;@04064
+	jne	@@5	;@04067
+@@3:	push	bx	;@04069
+	push	cx	;@0406A
+	call	L0468D	;@0406B
+	pop	cx	;@0406E
+	pop	bx	;@0406F
+	jmp	short @@5	;@04070
+@@4:	add	bx, word ptr es:[bp+4]	;@04072
+	adc	cx, word ptr es:[bp+6]	;@04076
+	jb	@@3	;@0407A
+	call	L04677	;@0407C
+	je	@@3	;@0407F
+@@5:	mov	word ptr ds:[5170h], bx	;@04081
+	mov	word ptr ds:[5172h], cx	;@04085
+	call	far ptr L101F7	;@04089
+	mov	dx, 1	;@0408E
+	call	far ptr L1015C	;@04091
+	jmp	short @@7	;@04096
+@@6:	mov	ax, cx	;@04098
+	mov	word ptr ds:[5170h], ax	;@0409A
+	mov	word ptr ds:[5172h], ax	;@0409D
+	mov	word ptr ds:[51A4h], ax	;@040A0
+@@7:	pop	si	;@040A3
+	ret	;@040A4
+	db	8Bh, 0D8h, 0A1h, 7Ah, 51h, 0A3h, 88h, 51h, 0A1h, 6Eh, 51h, 0A3h, 8Ah, 51h, 8Bh, 0Eh	;@040A5
+	db	0B2h, 51h, 0E3h, 64h, 0B8h, 2, 0, 8Bh, 0C8h, 9Ah
 	dd	L100B0
 	db	9Ah
 	dd	L101E0
@@ -2930,19 +4384,48 @@ L043D0:	mov	cx, word ptr ds:[517Eh]	;@043D0
 	ret	;@04465
 @@7:	mov	cx, 30h	;@04466
 	jmp	L0352C	;@04469
-	db	8Bh, 1Eh, 6Ah, 50h, 88h, 87h, 6Ch, 50h, 0FFh, 6, 6Ah, 50h, 0F6h, 6, 0C9h, 38h	;@0446C
+L0446C:	mov	bx, word ptr ds:[506Ah]	;@0446C
+	mov	byte ptr [bx+506Ch], al	;@04470
+	inc	word ptr ds:[506Ah]	;@04474
+	test	byte ptr ds:[38C9h], 10h	;@04478
+	jne	@@1	;@0447D
+	ret	;@0447F
+@@1:	push	es	;@04480
+	push	bp	;@04481
+	push	si	;@04482
+	push	cx	;@04483
+	mov	al, byte ptr [bx+506Ch]	;@04484
+	mov	byte ptr ds:[516Ch], 0	;@04488
+	call	far ptr L10727	;@0448D
+	pop	cx	;@04492
+	pop	si	;@04493
+	pop	bp	;@04494
+	pop	es	;@04495
+	ret	;@04496
+	db	8Bh, 1Eh, 6Ah, 50h, 88h, 87h, 6Ch, 50h, 0FFh, 6, 6Ah, 50h, 0F6h, 6, 0C9h, 38h	;@04497
 	db	10h, 75h, 1, 0C3h, 6, 55h, 56h, 51h, 8Ah, 87h, 6Ch, 50h, 0C6h, 6, 6Ch, 51h
 	db	0, 9Ah
-	dd	L10727
-	db	59h, 5Eh, 5Dh, 7, 0C3h, 8Bh, 1Eh, 6Ah, 50h, 88h, 87h, 6Ch, 50h, 0FFh, 6, 6Ah
-	db	50h, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 6, 55h, 56h, 51h, 8Ah, 87h, 6Ch
-	db	50h, 0C6h, 6, 6Ch, 51h, 0, 9Ah
 	dd	L1075B
-	db	59h, 5Eh, 5Dh, 7, 0C3h, 8Bh, 1Eh, 6Ah, 50h, 88h, 87h, 6Ch, 50h, 0FFh, 6, 6Ah
-	db	50h, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 6, 55h, 56h, 51h, 8Ah, 87h, 6Ch
-	db	50h, 0C6h, 6, 6Ch, 51h, 0, 9Ah
-	dd	L10741
-	db	59h, 5Eh, 5Dh, 7, 0C3h, 90h
+	db	59h, 5Eh, 5Dh, 7, 0C3h
+L044C2:	mov	bx, word ptr ds:[506Ah]	;@044C2
+	mov	byte ptr [bx+506Ch], al	;@044C6
+	inc	word ptr ds:[506Ah]	;@044CA
+	test	byte ptr ds:[38C9h], 10h	;@044CE
+	jne	@@1	;@044D3
+	ret	;@044D5
+@@1:	push	es	;@044D6
+	push	bp	;@044D7
+	push	si	;@044D8
+	push	cx	;@044D9
+	mov	al, byte ptr [bx+506Ch]	;@044DA
+	mov	byte ptr ds:[516Ch], 0	;@044DE
+	call	far ptr L10741	;@044E3
+	pop	cx	;@044E8
+	pop	si	;@044E9
+	pop	bp	;@044EA
+	pop	es	;@044EB
+	ret	;@044EC
+	db	90h	;@044ED
 L044EE:	mov	bx, word ptr ds:[506Ah]	;@044EE
 	mov	byte ptr [bx+506Ch], al	;@044F2
 	inc	word ptr ds:[506Ah]	;@044F6
@@ -2954,23 +4437,46 @@ L044EE:	mov	bx, word ptr ds:[506Ah]	;@044EE
 	call	L04658	;@04506
 	pop	ax	;@04509
 	ret	;@0450A
-	db	90h, 8Bh, 1Eh, 6Ah, 50h, 89h, 87h, 6Ch, 50h, 83h, 6, 6Ah, 50h, 2, 0F6h, 6	;@0450B
-	db	0C9h, 38h, 10h, 75h, 1, 0C3h, 0B8h, 2, 0, 0E9h, 31h, 1, 90h, 8Bh, 1Eh, 6Ah
-	db	50h, 89h, 87h, 6Ch, 50h, 89h, 8Fh, 6Eh, 50h, 83h, 6, 6Ah, 50h, 4, 0F6h, 6
-	db	0C9h, 38h, 10h, 75h, 1, 0C3h, 0B8h, 4, 0, 0E9h, 11h, 1, 8Bh, 1Eh, 6Ah, 50h
-	db	89h, 87h, 6Ch, 50h, 89h, 8Fh, 6Eh, 50h, 89h, 0BFh, 70h, 50h, 83h, 6, 6Ah, 50h
-	db	6, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 0B8h, 6, 0, 0E9h, 0EEh, 0, 6
-	db	16h, 7, 0BFh, 6Ch, 50h, 3, 3Eh, 6Ah, 50h, 1, 0Eh, 6Ah, 50h, 8Bh, 0C1h, 56h
-	db	8Bh, 0F3h, 0F3h, 0A4h, 5Eh, 7, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 8Bh, 0DFh
-	db	2Bh, 0D8h, 0E9h, 0CCh, 0, 6, 16h, 7, 0BFh, 6Ch, 50h, 3, 3Eh, 6Ah, 50h, 1
-	db	0Eh, 6Ah, 50h, 89h, 5, 89h, 5Dh, 2, 8Bh, 0D1h, 83h, 0C7h, 4, 83h, 0E9h, 4
-	db	74h, 5, 8Ah, 0C6h, 0AAh, 0E2h, 0FDh, 7, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h
-	db	8Bh, 0C2h, 8Bh, 0DFh, 2Bh, 0D8h, 0E9h, 98h, 0, 6, 16h, 7, 0BFh, 6Ch, 50h, 3
-	db	3Eh, 6Ah, 50h, 1, 0Eh, 6Ah, 50h, 8Bh, 0D1h, 0AAh, 0E2h, 0FDh, 7, 0F6h, 6, 0C9h
-	db	38h, 10h, 75h, 1, 0C3h, 8Bh, 0C2h, 8Bh, 0DFh, 2Bh, 0D8h, 0EBh, 74h, 8Bh, 0C8h, 8Bh
-	db	1Eh, 70h, 51h, 8Bh, 16h, 72h, 51h, 0A1h, 0A4h, 51h, 23h, 0C0h, 75h, 6, 0B9h, 30h
-	db	0, 0E9h, 2Dh, 0EFh, 51h, 56h, 0F6h, 6, 0C9h, 38h, 10h, 74h, 17h, 50h, 53h, 51h
-	db	52h, 9Ah
+	db	90h	;@0450B
+L0450C:	mov	bx, word ptr ds:[506Ah]	;@0450C
+	mov	word ptr [bx+506Ch], ax	;@04510
+	add	word ptr ds:[506Ah], 2	;@04514
+	test	byte ptr ds:[38C9h], 10h	;@04519
+	jne	@@1	;@0451E
+	ret	;@04520
+@@1:	mov	ax, 2	;@04521
+	jmp	L04658	;@04524
+	db	90h	;@04527
+L04528:	mov	bx, word ptr ds:[506Ah]	;@04528
+	mov	word ptr [bx+506Ch], ax	;@0452C
+	mov	word ptr [bx+506Eh], cx	;@04530
+	add	word ptr ds:[506Ah], 4	;@04534
+	test	byte ptr ds:[38C9h], 10h	;@04539
+	jne	@@1	;@0453E
+	ret	;@04540
+@@1:	mov	ax, 4	;@04541
+	jmp	L04658	;@04544
+L04547:	mov	bx, word ptr ds:[506Ah]	;@04547
+	mov	word ptr [bx+506Ch], ax	;@0454B
+	mov	word ptr [bx+506Eh], cx	;@0454F
+	mov	word ptr [bx+5070h], di	;@04553
+	add	word ptr ds:[506Ah], 6	;@04557
+	test	byte ptr ds:[38C9h], 10h	;@0455C
+	jne	@@1	;@04561
+	ret	;@04563
+@@1:	mov	ax, 6	;@04564
+	jmp	L04658	;@04567
+	db	6, 16h, 7, 0BFh, 6Ch, 50h, 3, 3Eh, 6Ah, 50h, 1, 0Eh, 6Ah, 50h, 8Bh, 0C1h	;@0456A
+	db	56h, 8Bh, 0F3h, 0F3h, 0A4h, 5Eh, 7, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1, 0C3h, 8Bh
+	db	0DFh, 2Bh, 0D8h, 0E9h, 0CCh, 0, 6, 16h, 7, 0BFh, 6Ch, 50h, 3, 3Eh, 6Ah, 50h
+	db	1, 0Eh, 6Ah, 50h, 89h, 5, 89h, 5Dh, 2, 8Bh, 0D1h, 83h, 0C7h, 4, 83h, 0E9h
+	db	4, 74h, 5, 8Ah, 0C6h, 0AAh, 0E2h, 0FDh, 7, 0F6h, 6, 0C9h, 38h, 10h, 75h, 1
+	db	0C3h, 8Bh, 0C2h, 8Bh, 0DFh, 2Bh, 0D8h, 0E9h, 98h, 0, 6, 16h, 7, 0BFh, 6Ch, 50h
+	db	3, 3Eh, 6Ah, 50h, 1, 0Eh, 6Ah, 50h, 8Bh, 0D1h, 0AAh, 0E2h, 0FDh, 7, 0F6h, 6
+	db	0C9h, 38h, 10h, 75h, 1, 0C3h, 8Bh, 0C2h, 8Bh, 0DFh, 2Bh, 0D8h, 0EBh, 74h, 8Bh, 0C8h
+	db	8Bh, 1Eh, 70h, 51h, 8Bh, 16h, 72h, 51h, 0A1h, 0A4h, 51h, 23h, 0C0h, 75h, 6, 0B9h
+	db	30h, 0, 0E9h, 2Dh, 0EFh, 51h, 56h, 0F6h, 6, 0C9h, 38h, 10h, 74h, 17h, 50h, 53h
+	db	51h, 52h, 9Ah
 	dd	L10715
 	db	0E8h, 26h, 0, 5Ah, 59h, 5Bh, 58h, 0F6h, 6, 0C9h, 38h, 1, 75h, 5, 9Ah
 	dd	L131EB
@@ -3517,34 +5023,44 @@ L04BCE:	push	ds	;@04BCE
 	db	'I<Bu', 5, 0E8h, 54h, 6, 0EBh, '1<Qt', 4, '<Ou', 5, 0E8h, 18h
 	db	6, 0EBh, '$<Du', 5, 0E8h, 81h, 5, 0EBh, 1Bh, '<Hu', 5, 0E8h, 37h
 	db	5, 0EBh, 12h, '<Ru', 5, 0E8h, 1Fh, 5, 0EBh, 9, 41h, 0E8h, 0F1h
-	db	6, 75h, 0E3h, 0E8h, 0ABh, 5, 0BBh, 0DEh, 53h, 0C3h, 88h, 26h, 0EDh
-	db	55h, 26h, 8Ah, 5, '<0r', 4, '<:r', 5, 0E8h, 2Eh, 6, 0EBh, 3, 0E8h
-	db	0CDh, 1, 0BBh, 0DEh, 53h, 0C3h, 88h, 26h, 0EDh, 55h, 26h, 8Ah
-	db	5, '<0r', 4, '<:r', 0Ah, 0E8h, 6Ch, 6, 83h, 0F9h, 1, 74h, 8, 0EBh
-	db	1Bh, 0E8h, 0ADh, 1, 0B9h, 1, 0, 0A0h, 0E2h, 53h, 98h, 3Bh, 6, 0E0h
-	db	53h, 75h, 6, 3Ah, 6, 0DFh, 53h, 74h, 5, 51h, 0E8h, 0A3h, 6, 59h
-	db	0BBh, 0DEh, 53h, 0C3h, 8Bh, 0C3h, 81h, 0C3h, 0DEh, 54h, 3, 0C1h
-	db	3Dh, 0, 1, 72h, 0Ah, 53h, 0B9h, 7Bh, 0, 0E8h, 78h, 0E7h, 5Bh, 0EBh
-	db	0Bh, 0E3h, 9, 26h, 8Ah, 5, 88h, 7, 43h, 47h, 0E2h, 0F7h, 8Bh, 0CBh
-	db	0BBh, 0DEh, 54h, 2Bh, 0CBh, 0C3h, 22h, 0FFh, 74h, 1Ah, 0F7h, 0D0h
-	db	0F7h, 0D2h, 5, 1, 0, 83h, 0D2h, 0, 22h, 0DBh, 74h, 1Ah, 0F7h, 0D1h
-	db	0F7h, 0D7h, 83h, 0C1h, 1, 83h, 0D7h, 0, 0EBh, 17h, 22h, 0DBh, 74h
-	db	13h, 0F7h, 0D1h, 0F7h, 0D7h, 83h, 0C1h, 1, 83h, 0D7h, 0, 0E8h
-	db	6, 0, 53h, 0E8h, 17h, 7, 5Bh, 0C3h, 0E8h, 70h, 8, 0A3h, 0DEh, 53h
-	db	33h, 0D2h, 89h, 16h, 0E0h, 53h, 88h, 16h, 0E2h, 53h, 0BBh, 0DEh
-	db	53h, 0C3h, 22h, 0FFh, 74h, 1Ah, 0F7h, 0D0h, 0F7h, 0D2h, 5, 1, 0
-	db	83h, 0D2h, 0, 22h, 0DBh, 74h, 1Ah, 0F7h, 0D1h, 0F7h, 0D7h, 83h
+	db	6, 75h, 0E3h, 0E8h, 0ABh, 5, 0BBh, 0DEh, 53h, 0C3h
+L04D4D:	mov	byte ptr ds:[55EDh], ah	;@04D4D
+	mov	al, byte ptr es:[di]	;@04D51
+	cmp	al, 30h	;@04D54
+	jb	@@1	;@04D56
+	cmp	al, 3Ah	;@04D58
+	jb	@@2	;@04D5A
+@@1:	call	L0538D	;@04D5C
+	jmp	short @@3	;@04D5F
+@@2:	call	L04F31	;@04D61
+@@3:	mov	bx, 53DEh	;@04D64
+	ret	;@04D67
+	db	88h, 26h, 0EDh, 55h, 26h, 8Ah, 5, '<0r', 4, '<:r', 0Ah, 0E8h, 6Ch	;@04D68
+	db	6, 83h, 0F9h, 1, 74h, 8, 0EBh, 1Bh, 0E8h, 0ADh, 1, 0B9h, 1, 0
+	db	0A0h, 0E2h, 53h, 98h, 3Bh, 6, 0E0h, 53h, 75h, 6, 3Ah, 6, 0DFh
+	db	53h, 74h, 5, 51h, 0E8h, 0A3h, 6, 59h, 0BBh, 0DEh, 53h, 0C3h, 8Bh
+	db	0C3h, 81h, 0C3h, 0DEh, 54h, 3, 0C1h, 3Dh, 0, 1, 72h, 0Ah, 53h
+	db	0B9h, 7Bh, 0, 0E8h, 78h, 0E7h, 5Bh, 0EBh, 0Bh, 0E3h, 9, 26h, 8Ah
+	db	5, 88h, 7, 43h, 47h, 0E2h, 0F7h, 8Bh, 0CBh, 0BBh, 0DEh, 54h, 2Bh
+	db	0CBh, 0C3h, 22h, 0FFh, 74h, 1Ah, 0F7h, 0D0h, 0F7h, 0D2h, 5, 1
+	db	0, 83h, 0D2h, 0, 22h, 0DBh, 74h, 1Ah, 0F7h, 0D1h, 0F7h, 0D7h, 83h
 	db	0C1h, 1, 83h, 0D7h, 0, 0EBh, 17h, 22h, 0DBh, 74h, 13h, 0F7h, 0D1h
 	db	0F7h, 0D7h, 83h, 0C1h, 1, 83h, 0D7h, 0, 0E8h, 6, 0, 53h, 0E8h
-	db	0CEh, 6, 5Bh, 0C3h, 0E8h, 27h, 8, 8Bh, 0C2h, 0A3h, 0DEh, 53h, 33h
-	db	0D2h, 89h, 16h, 0E0h, 53h, 88h, 16h, 0E2h, 53h, 0BBh, 0DEh, 53h
-	db	0C3h, 22h, 0FFh, 74h, 1Ah, 0F7h, 0D0h, 0F7h, 0D2h, 5, 1, 0, 83h
-	db	0D2h, 0, 22h, 0DBh, 74h, 1Ah, 0F7h, 0D1h, 0F7h, 0D7h, 83h, 0C1h
-	db	1, 83h, 0D7h, 0, 0EBh, 17h, 22h, 0DBh, 74h, 13h, 0F7h, 0D1h, 0F7h
-	db	0D7h, 83h, 0C1h, 1, 83h, 0D7h, 0, 0E8h, 6, 0, 53h, 0E8h, 83h, 6
-	db	5Bh, 0C3h, 56h, 8Bh, 0F1h, 8Bh, 0D8h, 8Bh, 0CAh, 0E8h, 5Ch, 0
-	db	73h, 3, 0E8h, 9Ch, 5, 0BBh, 0DEh, 53h, 5Eh, 0C3h
-L04EA7:	call	@@2	;@04EA7
+	db	17h, 7, 5Bh, 0C3h, 0E8h, 70h, 8, 0A3h, 0DEh, 53h, 33h, 0D2h, 89h
+	db	16h, 0E0h, 53h, 88h, 16h, 0E2h, 53h, 0BBh, 0DEh, 53h, 0C3h, 22h
+	db	0FFh, 74h, 1Ah, 0F7h, 0D0h, 0F7h, 0D2h, 5, 1, 0, 83h, 0D2h, 0
+	db	22h, 0DBh, 74h, 1Ah, 0F7h, 0D1h, 0F7h, 0D7h, 83h, 0C1h, 1, 83h
+	db	0D7h, 0, 0EBh, 17h, 22h, 0DBh, 74h, 13h, 0F7h, 0D1h, 0F7h, 0D7h
+	db	83h, 0C1h, 1, 83h, 0D7h, 0, 0E8h, 6, 0, 53h, 0E8h, 0CEh, 6, 5Bh
+	db	0C3h, 0E8h, 27h, 8, 8Bh, 0C2h, 0A3h, 0DEh, 53h, 33h, 0D2h, 89h
+	db	16h, 0E0h, 53h, 88h, 16h, 0E2h, 53h, 0BBh, 0DEh, 53h, 0C3h, 22h
+	db	0FFh, 74h, 1Ah, 0F7h, 0D0h, 0F7h, 0D2h, 5, 1, 0, 83h, 0D2h, 0
+	db	22h, 0DBh, 74h, 1Ah, 0F7h, 0D1h, 0F7h, 0D7h, 83h, 0C1h, 1, 83h
+	db	0D7h, 0, 0EBh, 17h, 22h, 0DBh, 74h, 13h, 0F7h, 0D1h, 0F7h, 0D7h
+	db	83h, 0C1h, 1, 83h, 0D7h, 0, 0E8h, 6, 0, 53h, 0E8h, 83h, 6, 5Bh
+	db	0C3h, 56h, 8Bh, 0F1h, 8Bh, 0D8h, 8Bh, 0CAh, 0E8h, 5Ch, 0, 73h
+	db	3, 0E8h, 9Ch, 5, 0BBh, 0DEh, 53h, 5Eh, 0C3h
+L04EA7:	call	@@4	;@04EA7
 	jb	@@1	;@04EAA
 	mov	bx, word ptr ds:[53DEh]	;@04EAC
 	mov	cx, word ptr ds:[53E0h]	;@04EB0
@@ -3557,151 +5073,786 @@ L04EA7:	call	@@2	;@04EA7
 	db	8Ah, 0C4h, 24h, 0Fh, 3Ch, 0Ah, 73h, 4, 4, 30h, 0AAh, 0C3h, 4, 37h, 0AAh, 0C3h
 	db	6, 57h, 9Ah
 	dd	L101E0
-	db	0E8h, 0ECh, 0B5h, 6, 1Fh, 8Bh, 0F7h, 5Fh, 7, 0F3h, 0A4h, 16h, 1Fh, 0C3h, 0ACh, 22h
-	db	0C0h, 74h, 3, 0AAh, 0EBh, 0F8h, 0C3h
-@@2:	mov	ax, bx	;@04EF9
+	db	0E8h, 0ECh, 0B5h, 6, 1Fh, 8Bh, 0F7h, 5Fh, 7, 0F3h, 0A4h, 16h, 1Fh, 0C3h
+@@2:	lodsb	;@04EF0
+	and	al, al	;@04EF1
+	je	@@3	;@04EF3
+	stosb	;@04EF5
+	jmp	@@2	;@04EF6
+@@3:	ret	;@04EF8
+@@4:	mov	ax, bx	;@04EF9
 	mul	si	;@04EFB
 	mov	word ptr ds:[53DEh], ax	;@04EFD
 	mov	word ptr ds:[53E0h], dx	;@04F00
 	mov	byte ptr ds:[53E2h], 0	;@04F04
-	jcxz	@@4	;@04F09
+	jcxz	@@6	;@04F09
 	and	di, di	;@04F0B
-	je	@@5	;@04F0D
-@@3:	stc	;@04F0F
+	je	@@7	;@04F0D
+@@5:	stc	;@04F0F
 	ret	;@04F10
-@@4:	mov	ax, bx	;@04F11
+@@6:	mov	ax, bx	;@04F11
 	mul	di	;@04F13
 	add	word ptr ds:[53E0h], ax	;@04F15
 	adc	dx, 0	;@04F19
 	and	dx, dx	;@04F1C
-	jne	@@3	;@04F1E
+	jne	@@5	;@04F1E
 	ret	;@04F20
-@@5:	mov	ax, cx	;@04F21
+@@7:	mov	ax, cx	;@04F21
 	mul	si	;@04F23
 	add	word ptr ds:[53E0h], ax	;@04F25
 	adc	dx, 0	;@04F29
 	and	dx, dx	;@04F2C
-	jne	@@3	;@04F2E
+	jne	@@5	;@04F2E
 	ret	;@04F30
-	db	3, 0F9h, 26h, 8Ah, 45h, 0FFh, 2Bh, 0F9h, 49h, 3Ch, 42h, 75h, 5, 0E8h, 29h, 4	;@04F31
-	db	0EBh, 40h, 3Ch, 51h, 74h, 4, 3Ch, 4Fh, 75h, 5, 0E8h, 0EDh, 3, 0EBh, 33h, 3Ch
-	db	44h, 75h, 5, 0E8h, 56h, 3, 0EBh, 2Ah, 3Ch, 48h, 75h, 5, 0E8h, 0Ch, 3, 0EBh
-	db	21h, 3Ch, 52h, 75h, 5, 0E8h, 0DDh, 4, 0EBh, 18h, 41h, 0A0h, 86h, 51h, 24h, 0Fh
-	db	74h, 0E1h, 0FEh, 0C0h, 3Ch, 2, 74h, 0C5h, 3Ch, 8, 74h, 0CEh, 3Ch, 10h, 74h, 0DCh
-	db	0EBh, 0D1h, 0C3h, 26h, 8Ah, 5, 3Ch, 30h, 75h, 2, 0FEh, 0C3h, 3Ah, 0CBh, 75h, 41h
-	db	0BBh, 0DEh, 53h, 0E8h, 3, 5, 26h, 8Ah, 5, 2Ch, 30h, 72h, 34h, 3Ch, 0Ah, 72h
-	db	0Ch, 4, 30h, 2Ch, 41h, 72h, 2Ah, 4, 0Ah, 3Ch, 10h, 73h, 24h, 0BBh, 0DEh, 53h
-	db	0E8h, 18h, 5, 72h, 19h, 0E8h, 13h, 5, 72h, 14h, 0E8h, 0Eh, 5, 72h, 0Fh, 0E8h
-	db	9, 5, 72h, 0Ah, 0, 6, 0DEh, 53h, 47h, 0E2h, 0CBh, 0E9h, 0ADh, 4, 0E9h, 6Fh
-	db	4, 0E9h, 74h, 4, 0BBh, 0DEh, 53h, 0E8h, 0BFh, 4, 26h, 8Ah, 5, 2Ch, 30h, 72h
-	db	3Dh, 3Ch, 0Ah, 73h, 39h, 50h, 0BBh, 0DEh, 53h, 0B8h, 0E2h, 55h, 0E8h, 0C7h, 4, 0E8h
-	db	0D9h, 4, 72h, 26h, 0E8h, 0D4h, 4, 72h, 21h, 8Bh, 0C3h, 0BBh, 0E2h, 55h, 0E8h, 0D8h
-	db	4, 72h, 17h, 0BBh, 0DEh, 53h, 0E8h, 0C2h, 4, 72h, 0Fh, 58h, 0BBh, 0DEh, 53h, 0E8h
-	db	0DBh, 4, 72h, 7, 47h, 0E2h, 0C3h, 0E9h, 61h, 4, 58h, 0E9h, 22h, 4, 0E9h, 27h
-	db	4, 0BBh, 0DEh, 53h, 0E8h, 72h, 4, 26h, 8Ah, 5, 2Ch, 30h, 72h, 28h, 3Ch, 0Ah
-	db	73h, 24h, 0BBh, 0DEh, 53h, 0E8h, 93h, 4, 72h, 19h, 0E8h, 8Eh, 4, 72h, 14h, 0E8h
-	db	89h, 4, 72h, 0Fh, 0E8h, 84h, 4, 72h, 0Ah, 0, 6, 0DEh, 53h, 47h, 0E2h, 0D7h
-	db	0E9h, 15h, 4, 0E9h, 0EAh, 3, 0E9h, 0EFh, 3, 0BBh, 0DEh, 53h, 0E8h, 3Ah, 4, 26h
-	db	8Ah, 5, 2Ch, 30h, 72h, 23h, 3Ch, 8, 73h, 1Fh, 0BBh, 0DEh, 53h, 0E8h, 5Bh, 4
-	db	72h, 14h, 0E8h, 56h, 4, 72h, 0Fh, 0E8h, 51h, 4, 72h, 0Ah, 0, 6, 0DEh, 53h
-	db	47h, 0E2h, 0DCh, 0E9h, 0F5h, 3, 0E9h, 0B7h, 3, 0E9h, 0BCh, 3, 0BBh, 0DEh, 53h, 0E8h
-	db	7, 4, 26h, 8Ah, 5, 2Ch, 30h, 72h, 19h, 3Ch, 2, 73h, 15h, 0BBh, 0DEh, 53h
-	db	0E8h, 28h, 4, 72h, 0Ah, 0, 6, 0DEh, 53h, 47h, 0E2h, 0E6h, 0E9h, 0CCh, 3, 0E9h
-	db	8Eh, 3, 0E9h, 93h, 3, 0E8h, 65h, 0, 56h, 8Bh, 0F3h, 0B9h, 4, 0, 0B8h, 0
-	db	2, 0E8h, 3Ah, 5, 5Eh, 8Bh, 47h, 1, 89h, 7, 8Bh, 47h, 3, 89h, 47h, 2
-	db	8Bh, 47h, 5, 89h, 47h, 4, 8Ah, 47h, 7, 88h, 47h, 6, 0B9h, 3, 0, 0D0h
-	db	6Fh, 6, 0D1h, 5Fh, 4, 0D1h, 5Fh, 2, 0D1h, 1Fh, 0E2h, 0F3h, 83h, 67h, 6, 0Fh
-	db	8Bh, 47h, 8, 25h, 0FFh, 7Fh, 74h, 11h, 2Dh, 0FFh, 3Fh, 5, 0FFh, 3, 0F6h, 0C4h
-	db	0F8h, 74h, 6, 0BAh, 8, 0, 0E9h, 37h, 3, 0D1h, 0E0h, 0D1h, 0E0h, 0D1h, 0E0h, 0D1h
-	db	0E0h, 9, 47h, 6, 8Ah, 47h, 9, 24h, 80h, 8, 47h, 7, 0C3h, 0BAh, 4, 0
-	db	0BBh, 0DEh, 53h, 0E8h, 73h, 3, 0C7h, 6, 0E6h, 53h, 3Eh, 40h, 33h, 0D2h, 26h, 8Ah
-	db	5, 3Ch, 45h, 74h, 6Dh, 3Ch, 2Eh, 75h, 4, 0B2h, 0FFh, 0EBh, 53h, 2Ch, 30h, 72h
-	db	5Eh, 3Ch, 0Ah, 73h, 5Ah, 22h, 0D2h, 74h, 4, 0FFh, 0Eh, 0E6h, 53h, 22h, 0F6h, 75h
-	db	48h, 52h, 50h, 0BBh, 0DEh, 53h, 0B8h, 0E2h, 55h, 0BAh, 4, 0, 0E8h, 57h, 3, 0BBh
-	db	0E2h, 55h, 0E8h, 66h, 3, 72h, 2Eh, 0E8h, 61h, 3, 72h, 29h, 8Bh, 0C3h, 0BBh, 0DEh
-	db	53h, 0E8h, 65h, 3, 72h, 1Fh, 0BBh, 0E2h, 55h, 0E8h, 4Fh, 3, 72h, 17h, 58h, 50h
-	db	0E8h, 6Ah, 3, 72h, 10h, 0B8h, 0DEh, 53h, 0BBh, 0E2h, 55h, 0E8h, 28h, 3, 58h, 5Ah
-	db	47h, 0E2h, 9Bh, 0EBh, 5Dh, 58h, 5Ah, 0B6h, 0FFh, 0FFh, 6, 0E6h, 53h, 0EBh, 0F1h, 0E9h
-	db	82h, 0, 47h, 49h, 74h, 4Ch, 26h, 8Ah, 5, 3Ch, 2Dh, 0B2h, 0FFh, 74h, 6, 32h
-	db	0D2h, 3Ch, 2Bh, 75h, 4, 47h, 49h, 74h, 39h, 33h, 0DBh, 26h, 8Ah, 5, 2Ch, 30h
-	db	72h, 62h, 3Ch, 0Ah, 73h, 5Eh, 8Bh, 0EBh, 0D1h, 0E3h, 72h, 52h, 0D1h, 0E3h, 72h, 4Eh
-	db	3, 0DDh, 72h, 4Ah, 0D1h, 0E3h, 72h, 46h, 32h, 0E4h, 3, 0D8h, 72h, 40h, 47h, 0E2h
-	db	0DAh, 22h, 0D2h, 74h, 2, 0F7h, 0DBh, 1, 1Eh, 0E6h, 53h, 0F6h, 6, 0E7h, 53h, 80h
-	db	75h, 2Ch, 8Bh, 16h, 0E6h, 53h, 81h, 0EAh, 3Eh, 40h, 52h, 0BBh, 0DEh, 53h, 0E8h, 75h
-	db	3, 5Ah, 72h, 1Ah, 80h, 3Eh, 0EDh, 55h, 0, 74h, 5, 80h, 0Eh, 0E7h, 53h, 80h
-	db	56h, 0BBh, 0DEh, 53h, 0E8h, 18h, 3, 5Eh, 72h, 4, 0BBh, 0DEh, 53h, 0C3h, 0BAh, 5
-	db	0, 0E9h, 1Ch, 2, 0BAh, 5, 0, 0E9h, 1Eh, 2, 0BBh, 0DEh, 53h, 0E8h, 69h, 2
-	db	26h, 8Ah, 25h, 47h, 49h, 0E3h, 1Ah, 26h, 8Ah, 5, 47h, 49h, 3Ah, 0C4h, 75h, 4
-	db	0E3h, 17h, 47h, 49h, 0BBh, 0DEh, 53h, 0E8h, 5Fh, 2, 22h, 0C0h, 74h, 0E7h, 0E9h, 0EFh
-	db	1, 0B9h, 62h, 80h, 52h, 0E8h, 0D3h, 0E2h, 5Ah, 0E9h, 0Ch, 2, 0B3h, 8, 26h, 8Ah
-	db	5, 3Ch, 30h, 75h, 2, 0FEh, 0C3h, 3Ah, 0CBh, 75h, 3Eh, 33h, 0D2h, 33h, 0DBh, 26h
-	db	8Ah, 5, 2Ch, 30h, 72h, 33h, 3Ch, 0Ah, 72h, 0Ch, 4, 30h, 2Ch, 41h, 72h, 29h
-	db	4, 0Ah, 3Ch, 10h, 73h, 23h, 0D1h, 0E3h, 0D1h, 0D2h, 72h, 1Ah, 0D1h, 0E3h, 0D1h, 0D2h
-	db	72h, 14h, 0D1h, 0E3h, 0D1h, 0D2h, 72h, 0Eh, 0D1h, 0E3h, 0D1h, 0D2h, 72h, 8, 2, 0D8h
-	db	47h, 0E2h, 0CCh, 0E9h, 59h, 2, 0E9h, 94h, 1, 0E9h, 99h, 1, 33h, 0DBh, 33h, 0D2h
-	db	26h, 8Ah, 5, 2Ch, 30h, 72h, 39h, 3Ch, 0Ah, 73h, 35h, 0D1h, 0E3h, 0D1h, 0D2h, 72h
-	db	2Ch, 89h, 1Eh, 0DEh, 53h, 89h, 16h, 0E0h, 53h, 0D1h, 0E3h, 0D1h, 0D2h, 72h, 1Eh, 0D1h
-	db	0E3h, 0D1h, 0D2h, 72h, 18h, 3, 1Eh, 0DEh, 53h, 13h, 16h, 0E0h, 53h, 72h, 0Eh, 98h
-	db	3, 0D8h, 83h, 0D2h, 0, 72h, 6, 47h, 0E2h, 0C6h, 0E9h, 12h, 2, 0E9h, 4Dh, 1
-	db	0E9h, 52h, 1, 0E8h, 27h, 0FEh, 56h, 8Bh, 0F3h, 83h, 0C6h, 4, 0B9h, 2, 0, 0B8h
-	db	80h, 0, 0E8h, 0F9h, 2, 5Eh, 8Bh, 47h, 6, 89h, 47h, 1, 8Ah, 47h, 5, 88h
-	db	7, 83h, 67h, 2, 7Fh, 8Bh, 47h, 8, 25h, 0FFh, 7Fh, 74h, 0Dh, 2Dh, 0FFh, 3Fh
-	db	5, 7Fh, 0, 22h, 0E4h, 74h, 3, 0E9h, 13h, 1, 0B1h, 7, 0D3h, 0E0h, 9, 47h
-	db	2, 8Ah, 47h, 9, 24h, 80h, 8, 47h, 3, 0C3h, 33h, 0DBh, 33h, 0D2h, 26h, 8Ah
-	db	5, 2Ch, 30h, 72h, 21h, 3Ch, 8, 73h, 1Dh, 0D1h, 0E3h, 0D1h, 0D2h, 72h, 14h, 0D1h
-	db	0E3h, 0D1h, 0D2h, 72h, 0Eh, 0D1h, 0E3h, 0D1h, 0D2h, 72h, 8, 2, 0D8h, 47h, 0E2h, 0DEh
-	db	0E9h, 9Ch, 1, 0E9h, 0D7h, 0, 0E9h, 0DCh, 0, 33h, 0DBh, 33h, 0D2h, 26h, 8Ah, 5
-	db	2Ch, 30h, 72h, 15h, 3Ch, 2, 73h, 11h, 0D1h, 0E3h, 0D1h, 0D2h, 72h, 8, 2, 0D8h
-	db	47h, 0E2h, 0EAh, 0E9h, 79h, 1, 0E9h, 0B4h, 0, 0E9h, 0B9h, 0, 33h, 0D2h, 89h, 16h
-	db	0DEh, 53h, 89h, 16h, 0E0h, 53h, 88h, 16h, 0E2h, 53h, 26h, 8Ah, 25h, 47h, 49h, 0E3h
-	db	28h, 26h, 8Ah, 5, 47h, 49h, 3Ah, 0C4h, 75h, 4, 0E3h, 25h, 47h, 49h, 80h, 3Eh
-	db	0DFh, 53h, 0, 75h, 1Fh, 8Bh, 1Eh, 0DFh, 53h, 89h, 1Eh, 0E0h, 53h, 8Ah, 0D8h, 8Ah
-	db	3Eh, 0DEh, 53h, 89h, 1Eh, 0DEh, 53h, 0EBh, 0D6h, 52h, 0B9h, 62h, 80h, 0E8h, 5Bh, 0E1h
-	db	5Ah, 0E9h, 38h, 1, 0F7h, 6, 7Ch, 51h, 8, 10h, 74h, 61h, 80h, 3Eh, 0E1h, 53h
-	db	0, 74h, 0D2h, 0EBh, 58h, 33h, 0D2h, 89h, 16h, 0DEh, 53h, 89h, 16h, 0E0h, 53h, 88h
-	db	16h, 0E2h, 53h, 26h, 8Ah, 25h, 33h, 0DBh, 49h, 47h, 0E3h, 14h, 26h, 8Ah, 5, 47h
-	db	49h, 3Ah, 0C4h, 75h, 4, 0E3h, 11h, 47h, 49h, 88h, 87h, 0DEh, 53h, 43h, 0EBh, 0EAh
-	db	53h, 0B9h, 62h, 80h, 0E8h, 14h, 0E1h, 5Bh, 8Bh, 0CBh, 80h, 3Eh, 0EDh, 55h, 0, 74h
-	db	12h, 83h, 0F9h, 5, 72h, 7, 0E8h, 14h, 0, 0B9h, 1, 0, 0C3h, 0E8h, 0DCh, 0
-	db	0B9h, 1, 0, 0C3h, 57h, 51h, 0B0h, 2Eh, 0F2h, 0AEh, 59h, 5Fh, 0C3h, 0BAh, 2, 0
-	db	0B9h, 14h, 0, 0EBh, 6, 0BAh, 2, 0, 0B9h, 4, 0, 0BBh, 0DEh, 53h, 0E8h, 48h
-	db	0, 80h, 3Eh, 0CBh, 38h, 0, 75h, 0Ah, 80h, 3Eh, 0CCh, 38h, 0, 75h, 8, 0E9h
-	db	0C9h, 0E0h, 0F9h, 8Bh, 26h, 0AEh, 38h, 0C3h, 80h, 3Eh, 0EDh, 55h, 0, 74h, 0Bh, 0BBh
-	db	0DEh, 53h, 3, 0DAh, 3, 0DAh, 80h, 77h, 0FFh, 80h, 0C3h, 80h, 3Eh, 0EDh, 55h, 0
-	db	74h, 16h, 0BBh, 0DEh, 53h, 51h, 8Bh, 0CAh, 0F9h, 8Bh, 7, 0F7h, 0D0h, 15h, 0, 0
-	db	89h, 7, 83h, 0C3h, 2, 0E2h, 0F2h, 59h, 0C3h, 51h, 8Bh, 0CAh, 33h, 0C0h, 89h, 7
-	db	83h, 0C3h, 2, 0E2h, 0F9h, 88h, 7, 59h, 0C3h, 51h, 8Bh, 0CAh, 86h, 7, 43h, 86h
-	db	7, 43h, 0E2h, 0F8h, 59h, 0C3h, 6, 56h, 57h, 51h, 8Bh, 0F3h, 8Bh, 0F8h, 8Bh, 0CAh
-	db	8Ch, 0D0h, 8Eh, 0C0h, 0F3h, 0A5h, 59h, 5Fh, 5Eh, 7, 0C3h, 51h, 53h, 8Bh, 0CAh, 0F8h
-	db	0D1h, 17h, 43h, 43h, 0E2h, 0FAh, 5Bh, 59h, 0C3h, 51h, 57h, 8Bh, 0CAh, 8Bh, 0F8h, 0F8h
-	db	8Bh, 7, 11h, 5, 43h, 43h, 47h, 47h, 0E2h, 0F6h, 5Fh, 59h, 0C3h, 51h, 8Bh, 0CAh
-	db	98h, 0F8h, 11h, 7, 73h, 7, 43h, 43h, 0B8h, 0, 0, 0E2h, 0F5h, 59h, 0C3h, 89h
-	db	1Eh, 0DEh, 53h, 89h, 16h, 0E0h, 53h, 0C6h, 6, 0E2h, 53h, 0, 80h, 3Eh, 0EDh, 55h
-	db	0, 74h, 1Bh, 0F7h, 16h, 0DEh, 53h, 0F7h, 16h, 0E0h, 53h, 0F6h, 16h, 0E2h, 53h, 83h
-	db	6, 0DEh, 53h, 1, 83h, 16h, 0E0h, 53h, 0, 80h, 16h, 0E2h, 53h, 0, 0C3h, 0F6h
-	db	0C6h, 80h, 74h, 10h, 0F7h, 0DAh, 0BEh, 94h, 1Bh, 0B9h, 0Dh, 0, 81h, 0FAh, 0, 40h
-	db	72h, 10h, 0F9h, 0C3h, 0BEh, 16h, 1Ch, 0B9h, 0Eh, 0, 81h, 0FAh, 0, 80h, 72h, 2
-	db	0F9h, 0C3h, 0D1h, 0EAh, 73h, 19h, 0B8h, 0E2h, 55h, 52h, 53h, 0BAh, 5, 0, 0E8h, 55h
-	db	0FFh, 5Fh, 0BBh, 0E2h, 55h, 51h, 0E8h, 30h, 0, 59h, 5Ah, 8Bh, 0DFh, 72h, 6, 83h
-	db	0C6h, 0Ah, 0E2h, 0DEh, 0F8h, 0C3h, 0BAh, 4, 0, 0B9h, 40h, 0, 0F6h, 47h, 7, 80h
-	db	75h, 0Fh, 0E8h, 46h, 0FFh, 0FFh, 4Fh, 8, 0E2h, 0F2h, 0C7h, 47h, 8, 0, 0, 0F8h
-	db	0C3h, 0F6h, 47h, 9, 80h, 74h, 1, 0F9h, 0C3h, 53h, 56h, 57h, 0B9h, 4, 0, 0E8h
-	db	7Eh, 0, 5Fh, 5Eh, 5Bh, 8Bh, 47h, 8, 25h, 0FFh, 7Fh, 8Bh, 54h, 8, 81h, 0E2h
-	db	0FFh, 7Fh, 3, 0C2h, 2Dh, 0FEh, 3Fh, 53h, 56h, 57h, 50h, 8Bh, 0F7h, 0F6h, 44h, 0Fh
-	db	80h, 75h, 0Eh, 8Bh, 0DEh, 83h, 0C3h, 6, 0BAh, 5, 0, 0E8h, 0FDh, 0FEh, 58h, 48h
-	db	50h, 8Bh, 0C6h, 8Bh, 0DEh, 83h, 0C3h, 8, 0BAh, 4, 0, 0E8h, 0D8h, 0FEh, 58h, 5Fh
-	db	5Eh, 5Bh, 89h, 45h, 8, 53h, 56h, 57h, 8Bh, 0DFh, 0E8h, 89h, 0FFh, 5Fh, 5Eh, 5Bh
-	db	72h, 0Bh, 8Ah, 47h, 9, 32h, 44h, 9, 24h, 80h, 8, 45h, 9, 0C3h, 1, 4
-	db	73h, 1Dh, 49h, 0E3h, 8, 83h, 0C6h, 2, 83h, 4, 1, 0EBh, 0F3h, 0D1h, 6Fh, 6
-	db	0D1h, 5Fh, 4, 0D1h, 5Fh, 2, 0D1h, 1Fh, 80h, 4Fh, 7, 80h, 0FFh, 47h, 8, 0C3h
-	db	8Bh, 0D1h, 57h, 33h, 0C0h, 89h, 5, 83h, 0C7h, 2, 89h, 5, 83h, 0C7h, 2, 0E2h
-	db	0F4h, 5Fh, 8Bh, 0CAh, 52h, 51h, 53h, 57h, 8Bh, 0CAh, 8Bh, 4, 8Bh, 17h, 23h, 0C0h
-	db	74h, 1Ah, 23h, 0D2h, 74h, 16h, 0F7h, 0E2h, 57h, 83h, 0C7h, 2, 1, 45h, 0FEh, 11h
-	db	15h, 73h, 8, 83h, 0C7h, 2, 83h, 5, 1, 72h, 0F8h, 5Fh, 83h, 0C3h, 2, 83h
-	db	0C7h, 2, 0E2h, 0D6h, 5Fh, 5Bh, 59h, 5Ah, 83h, 0C6h, 2, 83h, 0C7h, 2, 0E2h, 0C4h
-	db	0C3h, 23h, 0FFh, 75h, 12h, 33h, 0F9h, 0C6h, 6, 0ECh, 55h, 0, 0F7h, 0F1h, 90h, 90h
-	db	0D0h, 26h, 0ECh, 55h, 72h, 1, 0C3h, 33h, 0C0h, 0B9h, 76h, 0, 0E8h, 9Ch, 0DEh, 8Bh
-	db	0D0h, 0C3h, 1Eh, 0B8h
+L04F31:	add	di, cx	;@04F31
+	mov	al, byte ptr es:[di-1]	;@04F33
+	sub	di, cx	;@04F37
+	dec	cx	;@04F39
+	cmp	al, 42h	;@04F3A
+	jne	@@2	;@04F3C
+@@1:	call	@@57	;@04F3E
+	jmp	short @@10	;@04F41
+@@2:	cmp	al, 51h	;@04F43
+	je	@@3	;@04F45
+	cmp	al, 4Fh	;@04F47
+	jne	@@4	;@04F49
+@@3:	call	@@53	;@04F4B
+	jmp	short @@10	;@04F4E
+@@4:	cmp	al, 44h	;@04F50
+	jne	@@6	;@04F52
+@@5:	call	@@48	;@04F54
+	jmp	short @@10	;@04F57
+@@6:	cmp	al, 48h	;@04F59
+	jne	@@8	;@04F5B
+@@7:	call	@@43	;@04F5D
+	jmp	short @@10	;@04F60
+@@8:	cmp	al, 52h	;@04F62
+	jne	@@9	;@04F64
+	call	L05446	;@04F66
+	jmp	short @@10	;@04F69
+@@9:	inc	cx	;@04F6B
+	mov	al, byte ptr ds:[5186h]	;@04F6C
+	and	al, 0Fh	;@04F6F
+	je	@@5	;@04F71
+	inc	al	;@04F73
+	cmp	al, 2	;@04F75
+	je	@@1	;@04F77
+	cmp	al, 8	;@04F79
+	je	@@3	;@04F7B
+	cmp	al, 10h	;@04F7D
+	je	@@7	;@04F7F
+	jmp	@@5	;@04F81
+@@10:	ret	;@04F83
+	mov	al, byte ptr es:[di]	;@04F84
+	cmp	al, 30h	;@04F87
+	jne	@@11	;@04F89
+	inc	bl	;@04F8B
+@@11:	cmp	cl, bl	;@04F8D
+	jne	@@15	;@04F8F
+	mov	bx, 53DEh	;@04F91
+	call	L0549A	;@04F94
+@@12:	mov	al, byte ptr es:[di]	;@04F97
+	sub	al, 30h	;@04F9A
+	jb	@@15	;@04F9C
+	cmp	al, 0Ah	;@04F9E
+	jb	@@13	;@04FA0
+	add	al, 30h	;@04FA2
+	sub	al, 41h	;@04FA4
+	jb	@@15	;@04FA6
+	add	al, 0Ah	;@04FA8
+	cmp	al, 10h	;@04FAA
+	jae	@@15	;@04FAC
+@@13:	mov	bx, 53DEh	;@04FAE
+	call	L054CC	;@04FB1
+	jb	@@14	;@04FB4
+	call	L054CC	;@04FB6
+	jb	@@14	;@04FB9
+	call	L054CC	;@04FBB
+	jb	@@14	;@04FBE
+	call	L054CC	;@04FC0
+	jb	@@14	;@04FC3
+	add	byte ptr ds:[53DEh], al	;@04FC5
+	inc	di	;@04FC9
+	loop	@@12	;@04FCA
+	jmp	L0547C	;@04FCC
+@@14:	jmp	L05441	;@04FCF
+@@15:	jmp	L05449	;@04FD2
+	db	0BBh, 0DEh	;@04FD5
+	push	bx	;@04FD7
+	call	L0549A	;@04FD8
+@@16:	mov	al, byte ptr es:[di]	;@04FDB
+	sub	al, 30h	;@04FDE
+	jb	@@19	;@04FE0
+	cmp	al, 0Ah	;@04FE2
+	jae	@@19	;@04FE4
+	push	ax	;@04FE6
+	mov	bx, 53DEh	;@04FE7
+	mov	ax, 55E2h	;@04FEA
+	call	L054B7	;@04FED
+	call	L054CC	;@04FF0
+	jb	@@17	;@04FF3
+	call	L054CC	;@04FF5
+	jb	@@17	;@04FF8
+	mov	ax, bx	;@04FFA
+	mov	bx, 55E2h	;@04FFC
+	call	L054DA	;@04FFF
+	jb	@@17	;@05002
+	mov	bx, 53DEh	;@05004
+	call	L054CC	;@05007
+	jb	@@17	;@0500A
+	pop	ax	;@0500C
+	mov	bx, 53DEh	;@0500D
+	call	L054EE	;@05010
+	jb	@@18	;@05013
+	inc	di	;@05015
+	loop	@@16	;@05016
+	jmp	L0547C	;@05018
+@@17:	pop	ax	;@0501B
+@@18:	jmp	L05441	;@0501C
+@@19:	jmp	L05449	;@0501F
+	db	0BBh, 0DEh, 53h, 0E8h, 72h, 4, 26h, 8Ah, 5, ',0r(<', 0Ah, 73h	;@05022
+	db	24h, 0BBh, 0DEh, 53h, 0E8h, 93h, 4, 72h, 19h, 0E8h, 8Eh, 4, 72h
+	db	14h, 0E8h, 89h, 4, 72h, 0Fh, 0E8h, 84h, 4, 72h, 0Ah, 0, 6, 0DEh
+	db	53h, 47h, 0E2h, 0D7h, 0E9h, 15h, 4, 0E9h, 0EAh, 3, 0E9h, 0EFh
+	db	3, 0BBh, 0DEh
+	push	bx	;@0505C
+	call	L0549A	;@0505D
+@@20:	mov	al, byte ptr es:[di]	;@05060
+	sub	al, 30h	;@05063
+	jb	@@22	;@05065
+	cmp	al, 8	;@05067
+	jae	@@22	;@05069
+	mov	bx, 53DEh	;@0506B
+	call	L054CC	;@0506E
+	jb	@@21	;@05071
+	call	L054CC	;@05073
+	jb	@@21	;@05076
+	call	L054CC	;@05078
+	jb	@@21	;@0507B
+	add	byte ptr ds:[53DEh], al	;@0507D
+	inc	di	;@05081
+	loop	@@20	;@05082
+	jmp	L0547C	;@05084
+@@21:	jmp	L05441	;@05087
+@@22:	jmp	L05449	;@0508A
+	db	0BBh, 0DEh, 53h, 0E8h, 7, 4, 26h, 8Ah, 5, ',0r', 19h, 3Ch, 2, 73h	;@0508D
+	db	15h, 0BBh, 0DEh, 53h, 0E8h, 28h, 4, 72h, 0Ah, 0, 6, 0DEh, 53h
+	db	47h, 0E2h, 0E6h, 0E9h, 0CCh, 3, 0E9h, 8Eh, 3, 0E9h, 93h, 3
+	call	@@25	;@050B6
+	push	si	;@050B9
+	mov	si, bx	;@050BA
+	mov	cx, 4	;@050BC
+	mov	ax, 200h	;@050BF
+	call	L055FF	;@050C2
+	pop	si	;@050C5
+	mov	ax, word ptr [bx+1]	;@050C6
+	mov	word ptr [bx], ax	;@050C9
+	mov	ax, word ptr [bx+3]	;@050CB
+	mov	word ptr [bx+2], ax	;@050CE
+	mov	ax, word ptr [bx+5]	;@050D1
+	mov	word ptr [bx+4], ax	;@050D4
+	mov	al, byte ptr [bx+7]	;@050D7
+	mov	byte ptr [bx+6], al	;@050DA
+	mov	cx, 3	;@050DD
+@@23:	shr	byte ptr [bx+6], 1	;@050E0
+	rcr	word ptr [bx+4], 1	;@050E3
+	rcr	word ptr [bx+2], 1	;@050E6
+	rcr	word ptr [bx], 1	;@050E9
+	loop	@@23	;@050EB
+	and	word ptr [bx+6], 0Fh	;@050ED
+	mov	ax, word ptr [bx+8]	;@050F1
+	and	ax, 7FFFh	;@050F4
+	je	@@24	;@050F7
+	sub	ax, 3FFFh	;@050F9
+	add	ax, 3FFh	;@050FC
+	test	ah, 0F8h	;@050FF
+	je	@@24	;@05102
+	mov	dx, 8	;@05104
+	jmp	L05441	;@05107
+@@24:	shl	ax, 1	;@0510A
+	shl	ax, 1	;@0510C
+	shl	ax, 1	;@0510E
+	shl	ax, 1	;@05110
+	or	word ptr [bx+6], ax	;@05112
+	mov	al, byte ptr [bx+9]	;@05115
+	and	al, 80h	;@05118
+	or	byte ptr [bx+7], al	;@0511A
+	ret	;@0511D
+@@25:	mov	dx, 4	;@0511E
+	mov	bx, 53DEh	;@05121
+	call	L0549A	;@05124
+	mov	word ptr ds:[53E6h], 403Eh	;@05127
+	xor	dx, dx	;@0512D
+@@26:	mov	al, byte ptr es:[di]	;@0512F
+	cmp	al, 45h	;@05132
+	je	@@33	;@05134
+	cmp	al, 2Eh	;@05136
+	jne	@@27	;@05138
+	mov	dl, 0FFh	;@0513A
+	jmp	short @@29	;@0513C
+@@27:	sub	al, 30h	;@0513E
+	jb	@@32	;@05140
+	cmp	al, 0Ah	;@05142
+	jae	@@32	;@05144
+	and	dl, dl	;@05146
+	je	@@28	;@05148
+	dec	word ptr ds:[53E6h]	;@0514A
+@@28:	and	dh, dh	;@0514E
+	jne	@@31	;@05150
+	push	dx	;@05152
+	push	ax	;@05153
+	mov	bx, 53DEh	;@05154
+	mov	ax, 55E2h	;@05157
+	mov	dx, 4	;@0515A
+	call	L054B7	;@0515D
+	mov	bx, 55E2h	;@05160
+	call	L054CC	;@05163
+	jb	@@30	;@05166
+	call	L054CC	;@05168
+	jb	@@30	;@0516B
+	mov	ax, bx	;@0516D
+	mov	bx, 53DEh	;@0516F
+	call	L054DA	;@05172
+	jb	@@30	;@05175
+	mov	bx, 55E2h	;@05177
+	call	L054CC	;@0517A
+	jb	@@30	;@0517D
+	pop	ax	;@0517F
+	push	ax	;@05180
+	call	L054EE	;@05181
+	jb	@@30	;@05184
+	mov	ax, 53DEh	;@05186
+	mov	bx, 55E2h	;@05189
+	call	L054B7	;@0518C
+	pop	ax	;@0518F
+	pop	dx	;@05190
+@@29:	inc	di	;@05191
+	loop	@@26	;@05192
+	jmp	short @@38	;@05194
+@@30:	pop	ax	;@05196
+	pop	dx	;@05197
+	mov	dh, 0FFh	;@05198
+@@31:	inc	word ptr ds:[53E6h]	;@0519A
+	jmp	@@29	;@0519E
+@@32:	jmp	@@41	;@051A0
+@@33:	inc	di	;@051A3
+	dec	cx	;@051A4
+	je	@@38	;@051A5
+	mov	al, byte ptr es:[di]	;@051A7
+	cmp	al, 2Dh	;@051AA
+	mov	dl, 0FFh	;@051AC
+	je	@@34	;@051AE
+	xor	dl, dl	;@051B0
+	cmp	al, 2Bh	;@051B2
+	jne	@@35	;@051B4
+@@34:	inc	di	;@051B6
+	dec	cx	;@051B7
+	je	@@38	;@051B8
+@@35:	xor	bx, bx	;@051BA
+@@36:	mov	al, byte ptr es:[di]	;@051BC
+	sub	al, 30h	;@051BF
+	jb	@@41	;@051C1
+	cmp	al, 0Ah	;@051C3
+	jae	@@41	;@051C5
+	mov	bp, bx	;@051C7
+	shl	bx, 1	;@051C9
+	jb	@@40	;@051CB
+	shl	bx, 1	;@051CD
+	jb	@@40	;@051CF
+	add	bx, bp	;@051D1
+	jb	@@40	;@051D3
+	shl	bx, 1	;@051D5
+	jb	@@40	;@051D7
+	xor	ah, ah	;@051D9
+	add	bx, ax	;@051DB
+	jb	@@40	;@051DD
+	inc	di	;@051DF
+	loop	@@36	;@051E0
+	and	dl, dl	;@051E2
+	je	@@37	;@051E4
+	neg	bx	;@051E6
+@@37:	add	word ptr ds:[53E6h], bx	;@051E8
+	test	byte ptr ds:[53E7h], 80h	;@051EC
+	jne	@@40	;@051F1
+@@38:	mov	dx, word ptr ds:[53E6h]	;@051F3
+	sub	dx, 403Eh	;@051F7
+	push	dx	;@051FB
+	mov	bx, 53DEh	;@051FC
+	call	L05577	;@051FF
+	pop	dx	;@05202
+	jb	@@40	;@05203
+	cmp	byte ptr ds:[55EDh], 0	;@05205
+	je	@@39	;@0520A
+	or	byte ptr ds:[53E7h], 80h	;@0520C
+@@39:	push	si	;@05211
+	mov	bx, 53DEh	;@05212
+	call	L05530	;@05215
+	pop	si	;@05218
+	jb	@@40	;@05219
+	mov	bx, 53DEh	;@0521B
+	ret	;@0521E
+@@40:	mov	dx, 5	;@0521F
+	jmp	L05441	;@05222
+@@41:	mov	dx, 5	;@05225
+	jmp	L05449	;@05228
+	db	0BBh, 0DEh, 53h, 0E8h, 69h, 2, 26h, 8Ah, '%GI', 0E3h, 1Ah, 26h	;@0522B
+	db	8Ah, 5, 'GI:', 0C4h, 75h, 4, 0E3h, 17h, 47h, 49h, 0BBh, 0DEh, 53h
+	db	0E8h, 5Fh, 2, 22h, 0C0h, 74h, 0E7h, 0E9h, 0EFh, 1, 0B9h, 62h, 80h
+	db	52h, 0E8h, 0D3h, 0E2h, 5Ah, 0E9h, 0Ch, 2
+	mov	bl, 8	;@0525D
+	mov	al, byte ptr es:[di]	;@0525F
+	cmp	al, 30h	;@05262
+	jne	@@42	;@05264
+	inc	bl	;@05266
+@@42:	cmp	cl, bl	;@05268
+	jne	@@47	;@0526A
+@@43:	xor	dx, dx	;@0526C
+	xor	bx, bx	;@0526E
+@@44:	mov	al, byte ptr es:[di]	;@05270
+	sub	al, 30h	;@05273
+	jb	@@47	;@05275
+	cmp	al, 0Ah	;@05277
+	jb	@@45	;@05279
+	add	al, 30h	;@0527B
+	sub	al, 41h	;@0527D
+	jb	@@47	;@0527F
+	add	al, 0Ah	;@05281
+	cmp	al, 10h	;@05283
+	jae	@@47	;@05285
+@@45:	shl	bx, 1	;@05287
+	rcl	dx, 1	;@05289
+	jb	@@46	;@0528B
+	shl	bx, 1	;@0528D
+	rcl	dx, 1	;@0528F
+	jb	@@46	;@05291
+	shl	bx, 1	;@05293
+	rcl	dx, 1	;@05295
+	jb	@@46	;@05297
+	shl	bx, 1	;@05299
+	rcl	dx, 1	;@0529B
+	jb	@@46	;@0529D
+	add	bl, al	;@0529F
+	inc	di	;@052A1
+	loop	@@44	;@052A2
+	jmp	L05500	;@052A4
+@@46:	jmp	L0543E	;@052A7
+@@47:	jmp	L05446	;@052AA
+@@48:	xor	bx, bx	;@052AD
+	xor	dx, dx	;@052AF
+@@49:	mov	al, byte ptr es:[di]	;@052B1
+	sub	al, 30h	;@052B4
+	jb	@@51	;@052B6
+	cmp	al, 0Ah	;@052B8
+	jae	@@51	;@052BA
+	shl	bx, 1	;@052BC
+	rcl	dx, 1	;@052BE
+	jb	@@50	;@052C0
+	mov	word ptr ds:[53DEh], bx	;@052C2
+	mov	word ptr ds:[53E0h], dx	;@052C6
+	shl	bx, 1	;@052CA
+	rcl	dx, 1	;@052CC
+	jb	@@50	;@052CE
+	shl	bx, 1	;@052D0
+	rcl	dx, 1	;@052D2
+	jb	@@50	;@052D4
+	add	bx, word ptr ds:[53DEh]	;@052D6
+	adc	dx, word ptr ds:[53E0h]	;@052DA
+	jb	@@50	;@052DE
+	cbw	;@052E0
+	add	bx, ax	;@052E1
+	adc	dx, 0	;@052E3
+	jb	@@50	;@052E6
+	inc	di	;@052E8
+	loop	@@49	;@052E9
+	jmp	L05500	;@052EB
+@@50:	jmp	L0543E	;@052EE
+@@51:	jmp	L05446	;@052F1
+	call	@@25	;@052F4
+	push	si	;@052F7
+	mov	si, bx	;@052F8
+	add	si, 4	;@052FA
+	mov	cx, 2	;@052FD
+	mov	ax, 80h	;@05300
+	call	L055FF	;@05303
+	pop	si	;@05306
+	mov	ax, word ptr [bx+6]	;@05307
+	mov	word ptr [bx+1], ax	;@0530A
+	mov	al, byte ptr [bx+5]	;@0530D
+	mov	byte ptr [bx], al	;@05310
+	and	word ptr [bx+2], 7Fh	;@05312
+	mov	ax, word ptr [bx+8]	;@05316
+	and	ax, 7FFFh	;@05319
+	je	@@52	;@0531C
+	sub	ax, 3FFFh	;@0531E
+	add	ax, 7Fh	;@05321
+	and	ah, ah	;@05324
+	je	@@52	;@05326
+	jmp	L0543E	;@05328
+@@52:	mov	cl, 7	;@0532B
+	shl	ax, cl	;@0532D
+	or	word ptr [bx+2], ax	;@0532F
+	mov	al, byte ptr [bx+9]	;@05332
+	and	al, 80h	;@05335
+	or	byte ptr [bx+3], al	;@05337
+	ret	;@0533A
+@@53:	xor	bx, bx	;@0533B
+	xor	dx, dx	;@0533D
+@@54:	mov	al, byte ptr es:[di]	;@0533F
+	sub	al, 30h	;@05342
+	jb	@@56	;@05344
+	cmp	al, 8	;@05346
+	jae	@@56	;@05348
+	shl	bx, 1	;@0534A
+	rcl	dx, 1	;@0534C
+	jb	@@55	;@0534E
+	shl	bx, 1	;@05350
+	rcl	dx, 1	;@05352
+	jb	@@55	;@05354
+	shl	bx, 1	;@05356
+	rcl	dx, 1	;@05358
+	jb	@@55	;@0535A
+	add	bl, al	;@0535C
+	inc	di	;@0535E
+	loop	@@54	;@0535F
+	jmp	L05500	;@05361
+@@55:	jmp	L0543E	;@05364
+@@56:	jmp	L05446	;@05367
+@@57:	xor	bx, bx	;@0536A
+	xor	dx, dx	;@0536C
+@@58:	mov	al, byte ptr es:[di]	;@0536E
+	sub	al, 30h	;@05371
+	jb	@@60	;@05373
+	cmp	al, 2	;@05375
+	jae	@@60	;@05377
+	shl	bx, 1	;@05379
+	rcl	dx, 1	;@0537B
+	jb	@@59	;@0537D
+	add	bl, al	;@0537F
+	inc	di	;@05381
+	loop	@@58	;@05382
+	jmp	L05500	;@05384
+@@59:	jmp	L0543E	;@05387
+@@60:	jmp	L05446	;@0538A
+L0538D:	xor	dx, dx	;@0538D
+	mov	word ptr ds:[53DEh], dx	;@0538F
+	mov	word ptr ds:[53E0h], dx	;@05393
+	mov	byte ptr ds:[53E2h], dl	;@05397
+	mov	ah, byte ptr es:[di]	;@0539B
+	inc	di	;@0539E
+	dec	cx	;@0539F
+@@1:	jcxz	@@4	;@053A0
+	mov	al, byte ptr es:[di]	;@053A2
+	inc	di	;@053A5
+	dec	cx	;@053A6
+	cmp	al, ah	;@053A7
+	jne	@@2	;@053A9
+	jcxz	@@5	;@053AB
+	inc	di	;@053AD
+	dec	cx	;@053AE
+@@2:	cmp	byte ptr ds:[53DFh], 0	;@053AF
+	jne	@@6	;@053B4
+@@3:	mov	bx, word ptr ds:[53DFh]	;@053B6
+	mov	word ptr ds:[53E0h], bx	;@053BA
+	mov	bl, al	;@053BE
+	mov	bh, byte ptr ds:[53DEh]	;@053C0
+	mov	word ptr ds:[53DEh], bx	;@053C4
+	jmp	@@1	;@053C8
+@@4:	push	dx	;@053CA
+	mov	cx, 8062h	;@053CB
+	call	L0352C	;@053CE
+	pop	dx	;@053D1
+@@5:	jmp	L0550D	;@053D2
+@@6:	test	word ptr ds:[517Ch], 1008h	;@053D5
+	je	L0543E	;@053DB
+	cmp	byte ptr ds:[53E1h], 0	;@053DD
+	je	@@3	;@053E2
+	jmp	short L0543E	;@053E4
+	db	33h, 0D2h, 89h, 16h, 0DEh, 53h, 89h, 16h, 0E0h, 53h, 88h, 16h	;@053E6
+	db	0E2h, 53h, 26h, 8Ah, 25h, 33h, 0DBh, 49h, 47h, 0E3h, 14h, 26h
+	db	8Ah, 5, 'GI:', 0C4h, 75h, 4, 0E3h, 11h, 47h, 49h, 88h, 87h, 0DEh
+	db	53h, 43h, 0EBh, 0EAh, 53h, 0B9h, 62h, 80h, 0E8h, 14h, 0E1h, 5Bh
+	db	8Bh, 0CBh, 80h, 3Eh, 0EDh, 55h, 0, 74h, 12h, 83h, 0F9h, 5, 72h
+	db	7, 0E8h, 14h, 0, 0B9h, 1, 0, 0C3h, 0E8h, 0DCh, 0, 0B9h, 1, 0, 0C3h
+	push	di	;@05435
+	push	cx	;@05436
+	mov	al, 2Eh	;@05437
+	repne scasb	;@05439
+	pop	cx	;@0543B
+	pop	di	;@0543C
+	ret	;@0543D
+L0543E:	mov	dx, 2	;@0543E
+L05441:	mov	cx, 14h	;@05441
+	jmp	short L0544C	;@05444
+L05446:	mov	dx, 2	;@05446
+L05449:	mov	cx, 4	;@05449
+L0544C:	mov	bx, 53DEh	;@0544C
+	call	L0549A	;@0544F
+	cmp	byte ptr ds:[38CBh], 0	;@05452
+	jne	@@1	;@05457
+	cmp	byte ptr ds:[38CCh], 0	;@05459
+	jne	@@2	;@0545E
+	jmp	L0352C	;@05460
+@@1:	stc	;@05463
+	mov	sp, word ptr ds:[38AEh]	;@05464
+@@2:	ret	;@05468
+	db	80h, 3Eh, 0EDh, 55h, 0, 74h, 0Bh, 0BBh, 0DEh, 53h, 3, 0DAh, 3	;@05469
+	db	0DAh, 80h, 77h, 0FFh, 80h, 0C3h
+L0547C:	cmp	byte ptr ds:[55EDh], 0	;@0547C
+	je	@@2	;@05481
+	mov	bx, 53DEh	;@05483
+	push	cx	;@05486
+	mov	cx, dx	;@05487
+	stc	;@05489
+@@1:	mov	ax, word ptr [bx]	;@0548A
+	not	ax	;@0548C
+	adc	ax, 0	;@0548E
+	mov	word ptr [bx], ax	;@05491
+	add	bx, 2	;@05493
+	loop	@@1	;@05496
+	pop	cx	;@05498
+@@2:	ret	;@05499
+L0549A:	push	cx	;@0549A
+	mov	cx, dx	;@0549B
+	xor	ax, ax	;@0549D
+@@1:	mov	word ptr [bx], ax	;@0549F
+	add	bx, 2	;@054A1
+	loop	@@1	;@054A4
+	mov	byte ptr [bx], al	;@054A6
+	pop	cx	;@054A8
+	ret	;@054A9
+	push	cx	;@054AA
+	mov	cx, dx	;@054AB
+@@2:	xchg	byte ptr [bx], al	;@054AD
+	inc	bx	;@054AF
+	xchg	byte ptr [bx], al	;@054B0
+	inc	bx	;@054B2
+	loop	@@2	;@054B3
+	pop	cx	;@054B5
+	ret	;@054B6
+L054B7:	push	es	;@054B7
+	push	si	;@054B8
+	push	di	;@054B9
+	push	cx	;@054BA
+	mov	si, bx	;@054BB
+	mov	di, ax	;@054BD
+	mov	cx, dx	;@054BF
+	mov	ax, ss	;@054C1
+	mov	es, ax	;@054C3
+	rep movsw	;@054C5
+	pop	cx	;@054C7
+	pop	di	;@054C8
+	pop	si	;@054C9
+	pop	es	;@054CA
+	ret	;@054CB
+L054CC:	push	cx	;@054CC
+	push	bx	;@054CD
+	mov	cx, dx	;@054CE
+	clc	;@054D0
+@@1:	rcl	word ptr [bx], 1	;@054D1
+	inc	bx	;@054D3
+	inc	bx	;@054D4
+	loop	@@1	;@054D5
+	pop	bx	;@054D7
+	pop	cx	;@054D8
+	ret	;@054D9
+L054DA:	push	cx	;@054DA
+	push	di	;@054DB
+	mov	cx, dx	;@054DC
+	mov	di, ax	;@054DE
+	clc	;@054E0
+@@1:	mov	ax, word ptr [bx]	;@054E1
+	adc	word ptr [di], ax	;@054E3
+	inc	bx	;@054E5
+	inc	bx	;@054E6
+	inc	di	;@054E7
+	inc	di	;@054E8
+	loop	@@1	;@054E9
+	pop	di	;@054EB
+	pop	cx	;@054EC
+	ret	;@054ED
+L054EE:	push	cx	;@054EE
+	mov	cx, dx	;@054EF
+	cbw	;@054F1
+	clc	;@054F2
+@@1:	adc	word ptr [bx], ax	;@054F3
+	jae	@@2	;@054F5
+	inc	bx	;@054F7
+	inc	bx	;@054F8
+	mov	ax, 0	;@054F9
+	loop	@@1	;@054FC
+@@2:	pop	cx	;@054FE
+	ret	;@054FF
+L05500:	mov	word ptr ds:[53DEh], bx	;@05500
+	mov	word ptr ds:[53E0h], dx	;@05504
+	mov	byte ptr ds:[53E2h], 0	;@05508
+L0550D:	cmp	byte ptr ds:[55EDh], 0	;@0550D
+	je	@@1	;@05512
+	not	word ptr ds:[53DEh]	;@05514
+	not	word ptr ds:[53E0h]	;@05518
+	not	byte ptr ds:[53E2h]	;@0551C
+	add	word ptr ds:[53DEh], 1	;@05520
+	adc	word ptr ds:[53E0h], 0	;@05525
+	adc	byte ptr ds:[53E2h], 0	;@0552A
+@@1:	ret	;@0552F
+L05530:	test	dh, 80h	;@05530
+	je	@@1	;@05533
+	neg	dx	;@05535
+	mov	si, 1B94h	;@05537
+	mov	cx, 0Dh	;@0553A
+	cmp	dx, 4000h	;@0553D
+	jb	@@2	;@05541
+	stc	;@05543
+	ret	;@05544
+@@1:	mov	si, 1C16h	;@05545
+	mov	cx, 0Eh	;@05548
+	cmp	dx, 8000h	;@0554B
+	jb	@@2	;@0554F
+	stc	;@05551
+	ret	;@05552
+@@2:	shr	dx, 1	;@05553
+	jae	@@3	;@05555
+	mov	ax, 55E2h	;@05557
+	push	dx	;@0555A
+	push	bx	;@0555B
+	mov	dx, 5	;@0555C
+	call	L054B7	;@0555F
+	pop	di	;@05562
+	mov	bx, 55E2h	;@05563
+	push	cx	;@05566
+	call	L0559A	;@05567
+	pop	cx	;@0556A
+	pop	dx	;@0556B
+	mov	bx, di	;@0556C
+	jb	@@4	;@0556E
+@@3:	add	si, 0Ah	;@05570
+	loop	@@2	;@05573
+	clc	;@05575
+@@4:	ret	;@05576
+L05577:	mov	dx, 4	;@05577
+	mov	cx, 40h	;@0557A
+@@1:	test	byte ptr [bx+7], 80h	;@0557D
+	jne	@@2	;@05581
+	call	L054CC	;@05583
+	dec	word ptr [bx+8]	;@05586
+	loop	@@1	;@05589
+	mov	word ptr [bx+8], 0	;@0558B
+	clc	;@05590
+	ret	;@05591
+@@2:	test	byte ptr [bx+9], 80h	;@05592
+	je	@@3	;@05596
+	stc	;@05598
+@@3:	ret	;@05599
+L0559A:	push	bx	;@0559A
+	push	si	;@0559B
+	push	di	;@0559C
+	mov	cx, 4	;@0559D
+	call	L05621	;@055A0
+	pop	di	;@055A3
+	pop	si	;@055A4
+	pop	bx	;@055A5
+	mov	ax, word ptr [bx+8]	;@055A6
+	and	ax, 7FFFh	;@055A9
+	mov	dx, word ptr [si+8]	;@055AC
+	and	dx, 7FFFh	;@055AF
+	add	ax, dx	;@055B3
+	sub	ax, 3FFEh	;@055B5
+	push	bx	;@055B8
+	push	si	;@055B9
+	push	di	;@055BA
+	push	ax	;@055BB
+	mov	si, di	;@055BC
+	test	byte ptr [si+0Fh], 80h	;@055BE
+	jne	@@1	;@055C2
+	mov	bx, si	;@055C4
+	add	bx, 6	;@055C6
+	mov	dx, 5	;@055C9
+	call	L054CC	;@055CC
+	pop	ax	;@055CF
+	dec	ax	;@055D0
+	push	ax	;@055D1
+@@1:	mov	ax, si	;@055D2
+	mov	bx, si	;@055D4
+	add	bx, 8	;@055D6
+	mov	dx, 4	;@055D9
+	call	L054B7	;@055DC
+	pop	ax	;@055DF
+	pop	di	;@055E0
+	pop	si	;@055E1
+	pop	bx	;@055E2
+	mov	word ptr [di+8], ax	;@055E3
+	push	bx	;@055E6
+	push	si	;@055E7
+	push	di	;@055E8
+	mov	bx, di	;@055E9
+	call	L05577	;@055EB
+	pop	di	;@055EE
+	pop	si	;@055EF
+	pop	bx	;@055F0
+	jb	@@2	;@055F1
+	mov	al, byte ptr [bx+9]	;@055F3
+	xor	al, byte ptr [si+9]	;@055F6
+	and	al, 80h	;@055F9
+	or	byte ptr [di+9], al	;@055FB
+@@2:	ret	;@055FE
+L055FF:	add	word ptr [si], ax	;@055FF
+@@1:	jae	@@3	;@05601
+	dec	cx	;@05603
+	jcxz	@@2	;@05604
+	add	si, 2	;@05606
+	add	word ptr [si], 1	;@05609
+	jmp	@@1	;@0560C
+@@2:	shr	word ptr [bx+6], 1	;@0560E
+	rcr	word ptr [bx+4], 1	;@05611
+	rcr	word ptr [bx+2], 1	;@05614
+	rcr	word ptr [bx], 1	;@05617
+	or	byte ptr [bx+7], 80h	;@05619
+	inc	word ptr [bx+8]	;@0561D
+@@3:	ret	;@05620
+L05621:	mov	dx, cx	;@05621
+	push	di	;@05623
+	xor	ax, ax	;@05624
+@@1:	mov	word ptr [di], ax	;@05626
+	add	di, 2	;@05628
+	mov	word ptr [di], ax	;@0562B
+	add	di, 2	;@0562D
+	loop	@@1	;@05630
+	pop	di	;@05632
+	mov	cx, dx	;@05633
+@@2:	push	dx	;@05635
+	push	cx	;@05636
+	push	bx	;@05637
+	push	di	;@05638
+	mov	cx, dx	;@05639
+@@3:	mov	ax, word ptr [si]	;@0563B
+	mov	dx, word ptr [bx]	;@0563D
+	and	ax, ax	;@0563F
+	je	@@6	;@05641
+	and	dx, dx	;@05643
+	je	@@6	;@05645
+	mul	dx	;@05647
+	push	di	;@05649
+	add	di, 2	;@0564A
+	add	word ptr [di-2], ax	;@0564D
+	adc	word ptr [di], dx	;@05650
+	jae	@@5	;@05652
+@@4:	add	di, 2	;@05654
+	add	word ptr [di], 1	;@05657
+	jb	@@4	;@0565A
+@@5:	pop	di	;@0565C
+@@6:	add	bx, 2	;@0565D
+	add	di, 2	;@05660
+	loop	@@3	;@05663
+	pop	di	;@05665
+	pop	bx	;@05666
+	pop	cx	;@05667
+	pop	dx	;@05668
+	add	si, 2	;@05669
+	add	di, 2	;@0566C
+	loop	@@2	;@0566F
+	ret	;@05671
+	db	23h, 0FFh, 75h, 12h, 33h, 0F9h, 0C6h, 6, 0ECh, 55h, 0, 0F7h, 0F1h, 90h, 90h, 0D0h	;@05672
+	db	26h, 0ECh, 55h, 72h, 1, 0C3h, 33h, 0C0h, 0B9h, 76h, 0, 0E8h, 9Ch, 0DEh, 8Bh, 0D0h
+	db	0C3h, 1Eh, 0B8h
 	dw	SEG5
 	db	8Eh, 0D8h, 0C6h, 6, 0ECh, 55h, 0FFh, 1Fh, 0FBh, 58h, 5, 2, 0, 50h, 0CFh
 L056A6:	xor	ax, ax	;@056A6
@@ -3797,18 +5948,45 @@ L05751:	mov	cx, word ptr ds:[5606h]	;@05751
 	mov	dx, word ptr es:[bp+2]	;@0577A
 	call	far ptr L1015C	;@0577E
 	jmp	L05751	;@05783
-	db	0A1h, 5Ch, 56h, 9Ah	;@05785
-	dd	L101E0
-	db	0E8h, 0F4h, 0C2h, 9Ah
-	dd	L101E0
-	db	26h, 0F6h, 46h, 4, 4, 74h, 4Ch, 26h, 8Ah, 46h, 1, 3Ch, 4, 75h, 44h, 0F7h
-	db	6, 7Ch, 51h, 0, 10h, 75h, 31h, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 2Ch, 26h, 3Bh
-	db	46h, 1Ah, 74h, 26h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 96h, 0BEh, 5Dh, 7, 26h, 3Bh, 46h, 1Ah, 74h, 14h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 6Bh, 0BEh, 5Dh, 7, 26h, 3Bh, 46h, 1Ah, 0EBh, 2, 32h, 0C0h, 26h, 8Bh, 46h
-	db	1Ah, 26h, 8Bh, 5Eh, 16h, 0C3h, 0A1h, 7Eh, 51h, 33h, 0DBh, 0C3h
+L05785:	mov	ax, word ptr ds:[565Ch]	;@05785
+	call	far ptr L101E0	;@05788
+	call	L01A84	;@0578D
+	call	far ptr L101E0	;@05790
+	test	byte ptr es:[bp+4], 4	;@05795
+	je	@@3	;@0579A
+	mov	al, byte ptr es:[bp+1]	;@0579C
+	cmp	al, 4	;@057A0
+	jne	@@3	;@057A2
+	test	word ptr ds:[517Ch], 1000h	;@057A4
+	jne	@@1	;@057AA
+	mov	ax, word ptr ds:[517Eh]	;@057AC
+	and	ax, ax	;@057AF
+	je	@@2	;@057B1
+	cmp	ax, word ptr es:[bp+1Ah]	;@057B3
+	je	@@2	;@057B7
+	push	es	;@057B9
+	push	bp	;@057BA
+	call	far ptr L101E0	;@057BB
+	call	L01659	;@057C0
+	pop	bp	;@057C3
+	pop	es	;@057C4
+	cmp	ax, word ptr es:[bp+1Ah]	;@057C5
+	je	@@2	;@057C9
+	push	es	;@057CB
+	push	bp	;@057CC
+	call	far ptr L101E0	;@057CD
+	call	L01640	;@057D2
+	pop	bp	;@057D5
+	pop	es	;@057D6
+	cmp	ax, word ptr es:[bp+1Ah]	;@057D7
+	jmp	short @@2	;@057DB
+@@1:	xor	al, al	;@057DD
+@@2:	mov	ax, word ptr es:[bp+1Ah]	;@057DF
+	mov	bx, word ptr es:[bp+16h]	;@057E3
+	ret	;@057E7
+@@3:	mov	ax, word ptr ds:[517Eh]	;@057E8
+	xor	bx, bx	;@057EB
+	ret	;@057ED
 L057EE:	test	byte ptr es:[bp+5], 10h	;@057EE
 	je	@@1	;@057F3
 	push	es	;@057F5
@@ -3892,19 +6070,19 @@ L057EE:	test	byte ptr es:[bp+5], 10h	;@057EE
 	db	5Dh, 7, 0C3h, 0A1h, 5Ah, 56h, 0A3h, 0FCh, 55h, 0C3h, 0A1h, 60h, 56h, 0A3h, 0FCh, 55h
 	db	0C3h
 L0599C:	cmp	word ptr ds:[560Ah], 0	;@0599C
-	je	@@2	;@059A1
-@@1:	mov	ax, word ptr ds:[5608h]	;@059A3
+	je	L059C5	;@059A1
+L059A3:	mov	ax, word ptr ds:[5608h]	;@059A3
 	call	far ptr L101E0	;@059A6
 	mov	ax, 3	;@059AB
 	add	word ptr ds:[5608h], ax	;@059AE
 	sub	word ptr ds:[560Ah], ax	;@059B2
-	xor	ax, ax	;@059B6
+L059B6:	xor	ax, ax	;@059B6
 	mov	di, bp	;@059B8
 	mov	cx, 14h	;@059BA
 	rep stosw	;@059BD
 	mov	byte ptr es:[bp+10h], 1	;@059BF
 	ret	;@059C4
-@@2:	mov	ax, 61h	;@059C5
+L059C5:	mov	ax, 61h	;@059C5
 	mov	cx, ax	;@059C8
 	call	far ptr L100B0	;@059CA
 	call	far ptr L101E0	;@059CF
@@ -3916,9 +6094,13 @@ L0599C:	cmp	word ptr ds:[560Ah], 0	;@0599C
 	mov	word ptr ds:[5606h], ax	;@059E5
 	inc	ax	;@059E8
 	mov	word ptr ds:[5608h], ax	;@059E9
-	jmp	@@1	;@059EC
-	db	0E8h, 0ABh, 0FFh, 0E8h, 0A2h, 17h, 0E8h, 2Eh, 18h, 32h, 0C0h, 0C3h	;@059EE
-	db	8Bh, 0D8h, 0E8h, 9Dh, 0FFh, 26h, 89h, 5Eh, 0Ah, 26h, 89h, 56h
+	jmp	L059A3	;@059EC
+L059EE:	call	L0599C	;@059EE
+	call	L07196	;@059F1
+	call	L07225	;@059F4
+	xor	al, al	;@059F7
+	ret	;@059F9
+	db	8Bh, 0D8h, 0E8h, 9Dh, 0FFh, 26h, 89h, 5Eh, 0Ah, 26h, 89h, 56h	;@059FA
 	db	0Ch, 0C3h
 L05A08:	mov	dx, si	;@05A08
 	push	es	;@05A0A
@@ -3983,10 +6165,19 @@ L05A81:	mov	dx, si	;@05A81
 	db	26h, 80h, 3Dh, 0, 74h, 5, 26h, 8Bh, 45h, 6, 0C3h, 6, 55h, 26h, 8Bh, 45h	;@05A98
 	db	2, 9Ah
 	dd	L101E0
-	db	26h, 8Bh, 46h, 6, 5Dh, 7, 0C3h, 26h, 80h, 3Dh, 0, 74h, 7, 26h, 0C7h, 45h
-	db	6, 0, 0, 0C3h, 6, 55h, 26h, 8Bh, 45h, 2, 9Ah
-	dd	L101E0
-	db	26h, 0C7h, 46h, 6, 0, 0, 5Dh, 7, 0C3h
+	db	26h, 8Bh, 46h, 6, 5Dh, 7, 0C3h
+	cmp	byte ptr es:[di], 0	;@05AB5
+	je	@@1	;@05AB9
+	mov	word ptr es:[di+6], 0	;@05ABB
+	ret	;@05AC1
+@@1:	push	es	;@05AC2
+	push	bp	;@05AC3
+	mov	ax, word ptr es:[di+2]	;@05AC4
+	call	far ptr L101E0	;@05AC8
+	mov	word ptr es:[bp+6], 0	;@05ACD
+	pop	bp	;@05AD3
+	pop	es	;@05AD4
+	ret	;@05AD5
 L05AD6:	push	es	;@05AD6
 	call	far ptr L101E0	;@05AD7
 	push	es	;@05ADC
@@ -4083,259 +6274,939 @@ L05BA0:	sub	ax, word ptr ds:[55FEh]	;@05BA0
 	jae	@@1	;@05BC2
 @@3:	clc	;@05BC4
 	ret	;@05BC5
-	db	0E8h, 6Bh, 4Fh, 26h, 0F6h, 46h, 4, 0C0h, 0C3h, 26h, 83h, 7Eh, 6, 0, 75h, 1	;@05BC6
-	db	0C3h, 0E9h, 1Fh, 17h, 0FFh, 0FFh, 0FEh, 0E8h, 0C5h, 14h, 0E8h, 0B3h, 15h, 0E8h, 3Fh, 16h
-	db	26h, 8Ah, 5Eh, 0, 26h, 8Bh, 4Eh, 2, 80h, 0FBh, 80h, 75h, 15h, 26h, 0F6h, 46h
-	db	5, 40h, 74h, 0Eh, 26h, 8Ah, 5Eh, 25h, 80h, 0E3h, 7Fh, 80h, 0CBh, 20h, 26h, 8Bh
-	db	4Eh, 1Ch, 80h, 0EBh, 60h, 80h, 0FBh, 27h, 72h, 21h, 80h, 0FBh, 2Ah, 73h, 1Ch, 80h
-	db	0EBh, 27h, 32h, 0FFh, 2Eh, 8Ah, 87h, 0DAh, 5Bh, 98h, 99h, 26h, 89h, 46h, 0Ah, 26h
-	db	89h, 56h, 0Ch, 26h, 88h, 66h, 24h, 33h, 0C0h, 0EBh, 11h, 0E8h, 60h, 0A4h, 26h, 89h
-	db	46h, 0Ah, 26h, 89h, 56h, 0Ch, 33h, 0C0h, 26h, 88h, 46h, 24h, 26h, 0C6h, 46h, 0
-	db	0, 26h, 89h, 46h, 4, 26h, 89h, 46h, 2, 26h, 89h, 46h, 18h, 26h, 89h, 46h
-	db	1Ah, 26h, 88h, 46h, 1, 26h, 89h, 46h, 14h, 26h, 88h, 46h, 25h, 26h, 89h, 46h
-	db	1Ch, 0E9h, 46h, 14h, 26h, 80h, 4Eh, 5, 80h, 32h, 0C0h, 0C3h, 26h, 8Ah, 46h, 5
-	db	0A8h, 10h, 75h, 34h, 0A8h, 20h, 75h, 48h, 26h, 8Bh, 46h, 4, 25h, 40h, 80h, 3Dh
-	db	40h, 80h, 75h, 21h, 0E8h, 4Ch, 0, 26h, 0F6h, 46h, 5, 40h, 74h, 19h, 26h, 80h
-	db	66h, 5, 0BFh, 26h, 8Ah, 46h, 25h, 24h, 7Fh, 26h, 88h, 46h, 0, 26h, 8Bh, 46h
-	db	1Ch, 26h, 89h, 46h, 2, 32h, 0C0h, 0C3h, 0E8h, 63h, 0Dh, 33h, 0C0h, 26h, 89h, 46h
-	db	1Ch, 26h, 88h, 46h, 25h, 26h, 8Bh, 46h, 4, 26h, 80h, 66h, 5, 2Fh, 0EBh, 0BCh
-	db	0E8h, 0C5h, 17h, 0EBh, 0B3h, 26h, 0F6h, 46h, 5, 20h, 75h, 1, 0C3h, 0E8h, 0B8h, 17h
-	db	32h, 0C0h, 0C3h, 0E8h, 0C9h, 13h, 0E8h, 0B7h, 14h, 0E8h, 43h, 15h, 0E8h, 3, 0, 0E9h
-	db	0C8h, 13h, 26h, 80h, 66h, 0, 7Fh, 26h, 80h, 4Eh, 4, 80h, 26h, 8Ah, 46h, 5
-	db	24h, 3, 0D0h, 0E0h, 0D0h, 0E0h, 26h, 80h, 66h, 5, 0F0h, 26h, 8, 46h, 5, 0C3h
-	db	26h, 0F6h, 46h, 5, 80h, 74h, 3, 0E8h, 0C9h, 0FFh, 26h, 80h, 66h, 5, 0FCh, 26h
-	db	80h, 4Eh, 5, 1, 32h, 0C0h, 0C3h, 26h, 0F6h, 46h, 5, 80h, 74h, 3, 0E8h, 0B2h
-	db	0FFh, 26h, 80h, 66h, 5, 0FCh, 26h, 80h, 4Eh, 5, 2, 32h, 0C0h, 0C3h, 0E8h, 6Eh
-	db	13h, 26h, 0C6h, 46h, 0, 87h, 0E9h, 71h, 13h, 0E8h, 63h, 13h, 26h, 0F6h, 46h, 0
-	db	80h, 75h, 15h, 26h, 0F6h, 46h, 4, 40h, 74h, 44h, 26h, 0F6h, 46h, 5, 80h, 74h
-	db	3Dh, 26h, 0F6h, 46h, 4, 4, 74h, 36h, 26h, 0F6h, 46h, 5, 40h, 74h, 2Fh, 0E8h
-	db	2Eh, 14h, 0E8h, 0BAh, 14h, 26h, 0F6h, 46h, 5, 40h, 74h, 22h, 26h, 8Ah, 46h, 25h
-	db	26h, 8Bh, 7Eh, 1Ch, 0E8h, 1Ah, 0, 26h, 88h, 46h, 0, 26h, 89h, 7Eh, 2, 33h
-	db	0C0h, 26h, 89h, 46h, 1Ch, 26h, 88h, 46h, 25h, 26h, 80h, 66h, 5, 0BFh, 0E9h, 19h
-	db	13h, 3Ch, 8Ah, 75h, 28h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 20h, 53h, 8Ah, 0D8h
-	db	8Bh, 0CFh, 53h, 57h, 0E8h, 0E7h, 0A2h, 5Fh, 5Bh, 23h, 0D2h, 75h, 0Eh, 0E8h, 15h, 4Ch
-	db	5Bh, 22h, 0C0h, 74h, 6, 0Ch, 80h, 33h, 0FFh, 0EBh, 2, 0B0h, 8Ah, 0C3h, 80h, 3Eh
-	db	0CBh, 38h, 0, 74h, 0Eh, 0F7h, 6, 7Ch, 51h, 0, 20h, 75h, 6, 0F9h, 8Bh, 26h
-	db	0AEh, 38h, 0C3h, 0E8h, 0DBh, 12h, 26h, 80h, 66h, 5, 0EFh, 26h, 0F6h, 46h, 0, 80h
-	db	75h, 37h, 0E8h, 6Ah, 16h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Bh, 4Eh, 4, 81h, 0E1h, 40h
-	db	80h, 83h, 0F9h, 40h, 74h, 20h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 0Ah, 0E8h, 0C4h
-	db	4Bh, 0Ch, 80h, 0C4h, 2Eh, 0F6h, 55h, 26h, 80h, 4Eh, 5, 40h, 26h, 88h, 46h, 25h
-	db	26h, 0C7h, 46h, 1Ch, 0, 0, 0E9h, 0CFh, 12h, 26h, 0F6h, 46h, 5, 20h, 74h, 2Fh
-	db	26h, 8Ah, 46h, 0, 3Ch, 87h, 72h, 27h, 3Ch, 8Ah, 73h, 23h, 0C4h, 2Eh, 0EEh, 55h
-	db	26h, 0F7h, 46h, 0Ah, 0, 80h, 0C4h, 2Eh, 0F6h, 55h, 75h, 13h, 26h, 80h, 66h, 5
-	db	0DFh, 33h, 0C0h, 26h, 89h, 46h, 22h, 26h, 89h, 46h, 1Eh, 26h, 89h, 46h, 20h, 0E8h
-	db	0FDh, 15h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 0Ah, 0E8h, 68h, 4Bh, 0Ch, 80h, 0C4h
-	db	2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 33h, 0C0h, 26h, 88h, 46h, 25h, 26h, 89h, 46h
-	db	1Ch, 26h, 89h, 46h, 2, 26h, 80h, 66h, 5, 0BFh, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h
-	db	46h, 0, 80h, 75h, 3, 0E9h, 60h, 12h, 26h, 8Bh, 46h, 14h, 26h, 8Bh, 4Eh, 18h
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 89h, 46h, 14h, 26h, 89h, 4Eh, 18h, 0E9h, 49h, 12h, 0E8h
-	db	0Fh, 12h, 0E8h, 0EBh, 12h, 0E8h, 77h, 13h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 0
-	db	26h, 8Bh, 4Eh, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 26h, 89h, 4Eh, 2
-	db	33h, 0C0h, 26h, 88h, 46h, 25h, 26h, 89h, 46h, 1Ch, 0E9h, 1Bh, 12h, 0E8h, 0E1h, 11h
-	db	0E8h, 0FBh, 12h, 0E8h, 49h, 13h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0F1h, 12h, 0C4h, 2Eh, 0EEh
-	db	55h, 26h, 8Ah, 5Eh, 0, 80h, 0EBh, 80h, 26h, 8Bh, 4Eh, 2, 0E8h, 9Fh, 0A1h, 50h
-	db	52h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Ah, 5Eh, 0, 80h, 0EBh, 80h, 26h, 8Bh, 4Eh, 2
-	db	0E8h, 8Bh, 0A1h, 59h, 5Bh, 2Bh, 0C3h, 1Bh, 0D1h, 72h, 10h, 26h, 1, 46h, 0Ah, 26h
-	db	11h, 56h, 0Ch, 26h, 80h, 56h, 24h, 0, 0E8h, 0F6h, 4Bh, 0EBh, 8Bh, 0E8h, 91h, 11h
-	db	0E8h, 0ABh, 12h, 0E8h, 0F9h, 12h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0A1h, 12h, 0E9h, 78h, 0FFh
-	db	0B3h, 80h, 0EBh, 39h, 0B3h, 81h, 0EBh, 35h, 0F6h, 6, 87h, 51h, 2, 75h, 0Dh, 0EBh
-	db	7, 0F6h, 6, 87h, 51h, 8, 75h, 4, 0B3h, 82h, 0EBh, 21h, 0B3h, 83h, 0EBh, 1Dh
-	db	0B3h, 84h, 0EBh, 19h, 0B3h, 85h, 0EBh, 15h, 0B3h, 86h, 0EBh, 11h, 0B3h, 87h, 0EBh, 0Dh
-	db	0F6h, 6, 87h, 51h, 2, 75h, 4, 0B3h, 88h, 0EBh, 2, 0B3h, 89h, 0E8h, 26h, 0FAh
-	db	26h, 88h, 5Eh, 0, 32h, 0C0h, 0C3h, 50h, 0E8h, 1Bh, 0FAh, 58h, 26h, 0C6h, 46h, 0
-	db	8Ah, 26h, 89h, 46h, 2, 8Bh, 0D8h, 0E8h, 0AFh, 0D9h, 32h, 0C0h, 0C3h, 9Ah
-	dd	L101E0
-	db	0E8h, 5Dh, 0ADh, 53h, 0E8h, 0FDh, 0F9h, 5Bh, 80h, 0EBh, 0A0h, 26h, 88h, 5Eh, 0, 32h
-	db	0C0h, 0C3h, 8Bh, 0D8h, 0E8h, 0EDh, 0F9h, 26h, 89h, 5Eh, 6, 0F6h, 6, 0C9h, 38h, 0Bh
-	db	75h, 5, 80h, 0Eh, 0CAh, 38h, 1, 32h, 0C0h, 0C3h, 0A3h, 0F2h, 55h, 0E8h, 0DDh, 10h
-	db	0E8h, 0ECh, 11h, 0E8h, 57h, 12h, 26h, 80h, 7Eh, 0, 8Ah, 75h, 2Bh, 26h, 8Bh, 46h
-	db	2, 9Ah
-	dd	L101E0
-	db	0A1h, 0F2h, 55h, 0E8h, 99h, 0AEh, 74h, 1Dh, 0C4h, 2Eh, 0EEh, 55h, 80h, 0EBh, 0A0h, 26h
-	db	88h, 5Eh, 0, 26h, 89h, 4Eh, 2, 26h, 1, 46h, 0Ah, 26h, 11h, 56h, 0Ch, 0E8h
-	db	17h, 4Bh, 0E9h, 0ADh, 10h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 2, 26h, 89h, 46h
-	db	6, 0E8h, 0E7h, 12h, 0E9h, 9Bh, 10h, 80h, 3Eh, 0CBh, 38h, 0, 74h, 0Eh, 0F7h, 6
-	db	7Ch, 51h, 0, 20h, 75h, 6, 0F9h, 8Bh, 26h, 0AEh, 38h, 0C3h, 0E8h, 8Ah, 10h, 26h
-	db	0F6h, 46h, 5, 10h, 74h, 8, 0E8h, 0DDh, 9, 26h, 80h, 66h, 5, 0EFh, 0C4h, 2Eh
-	db	0EEh, 55h, 0E8h, 0AEh, 11h, 0E8h, 75h, 12h, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h, 0
-	db	80h, 75h, 2Fh, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 27h, 26h, 0F6h, 46h, 4, 4
-	db	75h, 20h, 0E8h, 1Dh, 0, 26h, 80h, 66h, 4, 0FBh, 26h, 80h, 66h, 0, 7Fh, 33h
-	db	0C0h, 26h, 89h, 46h, 14h, 26h, 89h, 46h, 18h, 26h, 89h, 46h, 1Ah, 26h, 88h, 46h
-	db	1, 0C3h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 4, 0A8h, 4, 74h, 0Eh, 0A8h, 40h
-	db	75h, 27h, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 4, 75h, 1Dh, 0C4h, 2Eh, 0F6h, 55h
-	db	26h, 0F6h, 46h, 4, 4, 74h, 18h, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 4, 72h
-	db	0Eh, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 31h, 0B9h, 69h, 0, 0E8h, 0DBh, 49h, 0C4h
-	db	2Eh, 0F6h, 55h, 0E8h, 0D2h, 10h, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h, 4, 40h, 74h
-	db	1Ch, 26h, 8Bh, 46h, 0Eh, 0E8h, 0A9h, 0A7h, 74h, 1Fh, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C7h
-	db	46h, 14h, 0, 0, 0B9h, 1Fh, 0, 0E8h, 71h, 14h, 0E9h, 3, 10h, 0C4h, 2Eh, 0F6h
-	db	55h, 26h, 0C7h, 46h, 14h, 0, 0, 0EBh, 75h, 0C4h, 2Eh, 0F6h, 55h, 26h, 89h, 46h
-	db	14h, 26h, 89h, 46h, 1Eh, 9Ah
-	dd	L101E0
-	db	0E8h, 79h, 0B9h, 9Ah
-	dd	L101E0
-	db	8Bh, 0FDh, 6, 1Fh, 36h, 0C4h, 2Eh, 0EEh, 55h, 8Bh, 45h, 6, 26h, 89h, 46h, 6
-	db	23h, 0C0h, 74h, 9, 1Eh, 57h, 16h, 1Fh, 0E8h, 0CEh, 11h, 5Fh, 1Fh, 8Bh, 45h, 0Ah
-	db	26h, 1, 46h, 0Ah, 8Bh, 45h, 0Ch, 26h, 11h, 46h, 0Ch, 8Ah, 45h, 24h, 26h, 10h
-	db	46h, 24h, 8Ah, 45h, 4, 24h, 4, 26h, 8, 46h, 4, 8Ah, 45h, 1, 26h, 88h
-	db	46h, 1, 8Bh, 45h, 26h, 26h, 89h, 46h, 26h, 8Bh, 45h, 18h, 26h, 89h, 46h, 18h
-	db	8Bh, 45h, 1Ah, 26h, 89h, 46h, 1Ah, 16h, 1Fh, 0E8h, 0ABh, 49h, 8Bh, 3Eh, 0EEh, 55h
-	db	0A1h, 0F0h, 55h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 5Eh, 13h, 0E8h, 71h, 48h, 0E9h, 6Eh, 0Fh
-	db	0E8h, 22h, 0Fh, 26h, 0FFh, 76h, 6, 0E8h, 10h, 0, 26h, 8Fh, 46h, 6, 0E9h, 1Fh
-	db	0Fh, 0E8h, 11h, 0Fh, 0E8h, 3, 0, 0E9h, 16h, 0Fh, 32h, 0C9h, 26h, 83h, 7Eh, 6
-	db	0, 75h, 77h, 26h, 0F6h, 46h, 4, 4, 74h, 0Ch, 26h, 8Bh, 46h, 1Ah, 0E8h, 0C9h
-	db	0A5h, 74h, 3, 80h, 0C9h, 80h, 26h, 8Ah, 46h, 0, 0A8h, 80h, 74h, 2Fh, 3Ch, 87h
-	db	72h, 13h, 3Ch, 8Ah, 73h, 0Fh, 26h, 0F6h, 46h, 5, 10h, 74h, 3, 80h, 0C9h, 4
-	db	80h, 0C9h, 21h, 0EBh, 45h, 26h, 0F6h, 46h, 4, 40h, 75h, 1Bh, 26h, 0F6h, 46h, 5
-	db	10h, 75h, 5, 80h, 0C9h, 2Ah, 0EBh, 32h, 80h, 0C9h, 26h, 0EBh, 2Dh, 26h, 8Ah, 46h
-	db	1, 24h, 7, 3Ch, 4, 75h, 5, 80h, 0C9h, 20h, 0EBh, 1Eh, 26h, 0F6h, 46h, 4
-	db	40h, 75h, 0Ch, 26h, 0F6h, 46h, 4, 4, 75h, 10h, 80h, 0C9h, 24h, 0EBh, 0Bh, 26h
-	db	0F7h, 46h, 4, 80h, 80h, 75h, 0E0h, 80h, 0C9h, 30h, 51h, 0E8h, 98h, 0F7h, 59h, 26h
-	db	88h, 4Eh, 0Ah, 0E9h, 8Ah, 0Eh, 0E8h, 0CCh, 0Eh, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h
-	db	0Ah, 26h, 8Bh, 5Eh, 0Ch, 26h, 8Ah, 56h, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 9, 46h
-	db	0Ah, 26h, 9, 5Eh, 0Ch, 26h, 8, 56h, 24h, 0E9h, 9Fh, 0Eh, 0E8h, 0A6h, 0Eh, 0C4h
-	db	2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch, 26h, 8Ah, 56h, 24h, 0C4h
-	db	2Eh, 0F6h, 55h, 26h, 31h, 46h, 0Ah, 26h, 31h, 5Eh, 0Ch, 26h, 30h, 56h, 24h, 0E9h
-	db	79h, 0Eh, 0E8h, 80h, 0Eh, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh
-	db	0Ch, 26h, 8Ah, 56h, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 21h, 46h, 0Ah, 26h, 21h, 5Eh
-	db	0Ch, 26h, 20h, 56h, 24h, 0E9h, 53h, 0Eh, 0E8h, 0Ah, 0Eh, 0E8h, 53h, 0Fh, 0E8h, 9Dh
-	db	32h, 0E8h, 13h, 3Bh, 26h, 0F7h, 56h, 0Ah, 26h, 0F7h, 56h, 0Ch, 26h, 0F6h, 56h, 24h
-	db	0E9h, 0FDh, 0Dh, 0E8h, 0B3h, 1, 0E8h, 76h, 0Eh, 0E8h, 72h, 0, 0B8h, 0FFh, 0FFh, 74h
-	db	2, 33h, 0C0h, 0EBh, 5Ah, 0E8h, 0A1h, 1, 0E8h, 64h, 0Eh, 0E8h, 60h, 0, 0B8h, 0FFh
-	db	0FFh, 75h, 2, 33h, 0C0h, 0EBh, 48h, 0E8h, 8Fh, 1, 0E8h, 42h, 0Eh, 0E8h, 4Eh, 0
-	db	0B8h, 0FFh, 0FFh, 72h, 2, 33h, 0C0h, 0EBh, 36h, 0E8h, 7Dh, 1, 0E8h, 40h, 0Eh, 0E8h
-	db	3Ch, 0, 0B8h, 0FFh, 0FFh, 76h, 2, 33h, 0C0h, 0EBh, 24h, 0E8h, 6Bh, 1, 0E8h, 1Eh
-	db	0Eh, 0E8h, 2Ah, 0, 0B8h, 0FFh, 0FFh, 77h, 2, 33h, 0C0h, 0EBh, 12h, 0E8h, 59h, 1
-	db	0E8h, 1Ch, 0Eh, 0E8h, 18h, 0, 0B8h, 0FFh, 0FFh, 73h, 2, 33h, 0C0h, 0EBh, 0, 26h
-	db	89h, 46h, 0Ah, 26h, 89h, 46h, 0Ch, 26h, 88h, 46h, 24h, 0E9h, 82h, 0Dh, 26h, 8Bh
-	db	46h, 0Ah, 0F7h, 6, 7Ch, 51h, 8, 10h, 75h, 4, 23h, 0C0h, 0EBh, 4, 26h, 0Bh
-	db	46h, 0Ch, 74h, 7, 26h, 8Ah, 46h, 24h, 0D0h, 0D8h, 0C3h, 26h, 8Ah, 46h, 4, 26h
-	db	80h, 66h, 4, 8Fh, 0A8h, 20h, 75h, 16h, 0A8h, 40h, 74h, 12h, 0A8h, 10h, 74h, 0Ah
-	db	26h, 8Bh, 46h, 0Eh, 26h, 3Bh, 46h, 12h, 0F8h, 0C3h, 32h, 0C0h, 0FEh, 0C8h, 0F8h, 0C3h
-	db	0E8h, 44h, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h, 0, 80h, 75h, 1Ch, 0E8h, 70h
-	db	0Eh, 0E8h, 24h, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h, 0, 80h, 75h, 49h, 0E8h
-	db	5Fh, 0Eh, 0E8h, 13h, 0Fh, 0E8h, 0E1h, 36h, 0EBh, 41h, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h
-	db	46h, 0, 80h, 75h, 29h, 0E8h, 49h, 0Eh, 0E8h, 93h, 31h, 0E8h, 0FAh, 0Eh, 0C4h, 2Eh
-	db	0EEh, 55h, 26h, 8Ah, 46h, 0, 26h, 8Bh, 56h, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h
-	db	46h, 0, 26h, 89h, 56h, 2, 0E8h, 98h, 10h, 0E8h, 64h, 10h, 0EBh, 13h, 0F7h, 6
-	db	7Ch, 51h, 0, 10h, 75h, 0CFh, 0EBh, 3, 0E8h, 0CDh, 0Eh, 0E8h, 77h, 10h, 0E8h, 3Ch
-	db	10h, 0E8h, 59h, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h, 4, 4, 0C4h, 2Eh, 0EEh
-	db	55h, 74h, 0Dh, 26h, 0F6h, 46h, 4, 4, 74h, 6, 0B9h, 6Ah, 0, 0E8h, 98h, 46h
-	db	0C4h, 2Eh, 0F6h, 55h, 0C5h, 3Eh, 0EEh, 55h, 0F6h, 45h, 4, 4, 74h, 28h, 26h, 80h
-	db	4Eh, 4, 4, 8Ah, 45h, 1, 26h, 88h, 46h, 1, 8Bh, 45h, 26h, 26h, 89h, 46h
-	db	26h, 8Bh, 45h, 18h, 26h, 89h, 46h, 18h, 8Bh, 45h, 1Ah, 26h, 89h, 46h, 1Ah, 8Bh
-	db	45h, 16h, 26h, 89h, 46h, 16h, 8Bh, 45h, 14h, 23h, 0C0h, 74h, 4, 26h, 89h, 46h
-	db	14h, 8Bh, 45h, 0Ah, 26h, 1, 46h, 0Ah, 8Bh, 45h, 0Ch, 26h, 11h, 46h, 0Ch, 8Ah
-	db	45h, 24h, 26h, 10h, 46h, 24h, 8Ah, 45h, 5, 24h, 3, 26h, 8, 46h, 5, 8Ch
-	db	0D0h, 8Eh, 0D8h, 0E8h, 0B1h, 46h, 0E9h, 85h, 0Ch, 0E8h, 4Bh, 0Ch, 0C4h, 2Eh, 0EEh, 55h
-	db	26h, 0F6h, 46h, 0, 80h, 75h, 3Bh, 0E8h, 77h, 0Dh, 0E8h, 0C1h, 30h, 0E8h, 28h, 0Eh
-	db	0E8h, 0D2h, 0Fh, 0E8h, 97h, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0F7h, 6, 7Ch, 51h, 0, 10h
-	db	75h, 7, 26h, 0F6h, 46h, 0, 80h, 75h, 6Fh, 0E8h, 55h, 0Dh, 0E8h, 9Fh, 30h, 0E8h
-	db	6, 0Eh, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 6, 0E8h, 32h, 39h, 0E8h, 0C9h, 35h
-	db	0EBh, 72h, 0E8h, 0F3h, 0Dh, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h, 0, 80h, 75h, 31h
-	db	0E8h, 2Eh, 0Dh, 0E8h, 78h, 30h, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 3, 0E8h, 0Eh
-	db	39h, 0E8h, 8Dh, 0Fh, 0E8h, 59h, 0Fh, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 0, 26h
-	db	8Bh, 56h, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 26h, 89h, 56h, 2, 0EBh
-	db	33h, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 0Fh, 26h, 8Ah, 46h, 0, 0C4h, 2Eh, 0F6h
-	db	55h, 26h, 88h, 46h, 0, 0E8h, 0D6h, 37h, 26h, 80h, 66h, 5, 0DFh, 33h, 0C0h, 26h
-	db	89h, 46h, 22h, 26h, 89h, 46h, 20h, 26h, 89h, 46h, 1Eh, 26h, 89h, 46h, 2, 26h
-	db	0C6h, 46h, 0, 0, 0E8h, 16h, 0Eh, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Ah, 46h, 1, 24h
-	db	7, 74h, 66h, 26h, 83h, 7Eh, 6, 0, 75h, 51h, 26h, 8Bh, 5Eh, 1Ah, 26h, 8Bh
-	db	4Eh, 18h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 66h, 1, 80h, 0E4h, 7, 74h, 3Eh, 26h
-	db	3Bh, 4Eh, 18h, 75h, 38h, 26h, 3Bh, 5Eh, 1Ah, 75h, 70h, 0F7h, 6, 7Ch, 51h, 0
-	db	10h, 74h, 28h, 3Ah, 0C4h, 74h, 24h, 80h, 0FCh, 3, 75h, 21h, 3Ch, 1, 75h, 1Dh
-	db	0E8h, 0FCh, 0, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0F5h, 0, 26h, 80h, 66h, 1, 0F8h, 26h
-	db	80h, 4Eh, 1, 2, 8Eh, 1Eh, 0EEh, 55h, 0E9h, 0A5h, 0, 0EBh, 6Fh, 0C4h, 2Eh, 0F6h
-	db	55h, 0B9h, 6Bh, 0, 0E8h, 1, 45h, 0EBh, 72h, 0C5h, 3Eh, 0EEh, 55h, 8Ah, 45h, 4
-	db	24h, 4, 26h, 8, 46h, 4, 8Ah, 45h, 1, 26h, 88h, 46h, 1, 8Bh, 45h, 26h
-	db	26h, 89h, 46h, 26h, 8Bh, 45h, 1Ah, 26h, 89h, 46h, 1Ah, 8Bh, 45h, 18h, 26h, 89h
-	db	46h, 18h, 8Bh, 45h, 16h, 26h, 89h, 46h, 16h, 0EBh, 65h, 3Ah, 0C4h, 75h, 0BEh, 8Bh
-	db	0C3h, 0E8h, 0A6h, 0A1h, 75h, 0B7h, 26h, 8Bh, 46h, 1Ah, 0E8h, 9Dh, 0A1h, 74h, 0AEh, 0C4h
-	db	2Eh, 0F6h, 55h, 26h, 89h, 46h, 18h, 26h, 89h, 46h, 1Ah, 26h, 0C6h, 46h, 0, 0
-	db	26h, 0C7h, 46h, 2, 0, 0, 0C5h, 3Eh, 0EEh, 55h, 0EBh, 34h, 0C4h, 2Eh, 0F6h, 55h
-	db	26h, 0C6h, 46h, 0, 0, 26h, 0C7h, 46h, 2, 0, 0, 0C4h, 2Eh, 0EEh, 55h, 0E8h
-	db	5Dh, 0, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 56h, 0, 33h, 0C0h, 26h, 80h, 66h, 4, 0FBh
-	db	26h, 88h, 46h, 1, 26h, 89h, 46h, 18h, 26h, 89h, 46h, 1Ah, 0C5h, 3Eh, 0EEh, 55h
-	db	8Bh, 45h, 14h, 23h, 0C0h, 74h, 4, 26h, 89h, 46h, 14h, 8Bh, 45h, 0Ah, 26h, 2Bh
-	db	46h, 0Ah, 26h, 89h, 46h, 0Ah, 8Bh, 45h, 0Ch, 26h, 1Bh, 46h, 0Ch, 26h, 89h, 46h
-	db	0Ch, 8Ah, 45h, 24h, 26h, 1Ah, 46h, 24h, 26h, 88h, 46h, 24h, 8Ah, 45h, 5, 24h
-	db	3, 26h, 8, 46h, 5, 8Ch, 0D0h, 8Eh, 0D8h, 0E8h, 0ABh, 44h, 0E9h, 7Fh, 0Ah, 26h
-	db	8Bh, 46h, 16h, 99h, 8Ah, 0CAh, 0D1h, 0E0h, 0D1h, 0D2h, 0D1h, 0E0h, 0D1h, 0D2h, 0D1h, 0E0h
-	db	0D1h, 0D2h, 0D1h, 0E0h, 0D1h, 0D2h, 26h, 1, 46h, 0Ah, 26h, 11h, 56h, 0Ch, 26h, 10h
-	db	4Eh, 24h, 26h, 0C7h, 46h, 16h, 0, 0, 0E9h, 7Ch, 44h, 0E8h, 19h, 0Ah, 0E8h, 0B4h
-	db	0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 49h, 0Bh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 42h, 0Bh, 0E8h
-	db	0C7h, 33h, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h, 4, 40h, 74h, 0Dh, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 0F3h, 36h, 0C4h, 2Eh, 0EEh, 55h, 0EBh, 7, 0E8h, 0EAh, 36h, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 9Ah, 0Bh, 0F7h, 6, 7Ch, 51h, 8, 10h, 75h, 39h, 0C4h, 2Eh, 0F6h, 55h
-	db	0E8h, 0DAh, 43h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0D3h, 43h, 0C4h, 2Eh, 0F6h, 55h, 0C5h, 3Eh
-	db	0EEh, 55h, 0F6h, 45h, 4, 40h, 74h, 2Dh, 8Bh, 45h, 0Eh, 26h, 89h, 46h, 0Eh, 26h
-	db	80h, 4Eh, 4, 40h, 8Bh, 45h, 10h, 26h, 8Bh, 4Eh, 0Ah, 26h, 8Bh, 7Eh, 0Ch, 26h
-	db	8Ah, 5Eh, 24h, 0EBh, 24h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0B4h, 43h, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 0ADh, 43h, 0EBh, 0C5h, 26h, 0F6h, 46h, 4, 40h, 74h, 49h, 26h, 8Bh, 46h, 10h
-	db	8Bh, 4Dh, 0Ah, 8Bh, 7Dh, 0Ch, 8Ah, 5Dh, 24h, 99h, 8Ah, 0FAh, 16h, 1Fh, 26h, 0F6h
-	db	46h, 5, 80h, 75h, 1Eh, 0E8h, 16h, 0E7h, 8Ah, 47h, 4, 98h, 3Bh, 47h, 2, 75h
-	db	9, 32h, 47h, 1, 24h, 80h, 8Bh, 7, 74h, 9, 0B9h, 2Ch, 0, 0E8h, 0F9h, 0Dh
-	db	0B8h, 1, 0, 26h, 89h, 46h, 10h, 3Dh, 1, 0, 74h, 5, 26h, 80h, 4Eh, 4
-	db	20h, 0C5h, 3Eh, 0EEh, 55h, 8Ah, 45h, 5, 24h, 3, 26h, 8, 46h, 5, 8Bh, 45h
-	db	0Ah, 8Bh, 55h, 0Ch, 8Ah, 7Dh, 24h, 26h, 8Bh, 4Eh, 0Ah, 26h, 8Bh, 7Eh, 0Ch, 26h
-	db	8Ah, 5Eh, 24h, 16h, 1Fh, 0E8h, 0C6h, 0E6h, 0EBh, 62h, 0E8h, 58h, 9, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 2Ch, 43h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 25h, 43h, 26h, 8Bh, 46h, 0Ah, 26h
-	db	8Bh, 56h, 0Ch, 26h, 8Ah, 7Eh, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Bh, 4Eh, 0Ah, 26h
-	db	8Bh, 7Eh, 0Ch, 26h, 8Ah, 5Eh, 24h, 0E8h, 0, 0E6h, 0EBh, 30h, 0E8h, 26h, 9, 0C4h
-	db	2Eh, 0F6h, 55h, 0E8h, 0FAh, 42h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0F3h, 42h, 26h, 8Bh, 46h
-	db	0Ah, 26h, 8Bh, 56h, 0Ch, 26h, 8Ah, 7Eh, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Bh, 4Eh
-	db	0Ah, 26h, 8Bh, 7Eh, 0Ch, 26h, 8Ah, 5Eh, 24h, 0E8h, 17h, 0E6h, 0C4h, 2Eh, 0F6h, 55h
-	db	8Bh, 7, 26h, 89h, 46h, 0Ah, 8Bh, 47h, 2, 26h, 89h, 46h, 0Ch, 8Ah, 47h, 4
-	db	26h, 88h, 46h, 24h, 0E8h, 0, 43h, 0E9h, 0D1h, 8, 0E8h, 0D8h, 8, 0C4h, 2Eh, 0F6h
-	db	55h, 26h, 0F6h, 46h, 24h, 1, 74h, 19h, 33h, 0C0h, 26h, 0F7h, 56h, 0Ah, 26h, 0F7h
-	db	56h, 0Ch, 26h, 83h, 46h, 0Ah, 1, 26h, 11h, 46h, 0Ch, 26h, 10h, 46h, 24h, 0EBh
-	db	75h, 26h, 83h, 7Eh, 0Ch, 0, 75h, 24h, 26h, 8Bh, 4Eh, 0Ah, 83h, 0F9h, 20h, 73h
-	db	1Bh, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch, 0E3h, 19h, 26h
-	db	8Ah, 76h, 24h, 0D0h, 0EEh, 0D1h, 0DBh, 0D1h, 0D8h, 49h, 0EBh, 0F1h, 0C4h, 2Eh, 0EEh, 55h
-	db	26h, 8Ah, 46h, 24h, 8Ah, 0E0h, 8Bh, 0D8h, 26h, 8Ah, 4Eh, 24h, 0C4h, 2Eh, 0F6h, 55h
-	db	26h, 89h, 46h, 0Ah, 26h, 89h, 5Eh, 0Ch, 26h, 88h, 4Eh, 24h, 0E9h, 5Ch, 8, 0E8h
-	db	63h, 8, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h, 24h, 1, 74h, 19h, 33h, 0C0h, 26h
-	db	0F7h, 56h, 0Ah, 26h, 0F7h, 56h, 0Ch, 26h, 83h, 46h, 0Ah, 1, 26h, 11h, 46h, 0Ch
-	db	26h, 10h, 46h, 24h, 0EBh, 8Bh, 26h, 83h, 7Eh, 0Ch, 0, 75h, 1Eh, 26h, 8Bh, 4Eh
-	db	0Ah, 83h, 0F9h, 20h, 73h, 15h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh
-	db	5Eh, 0Ch, 0E3h, 13h, 0D1h, 0E0h, 0D1h, 0D3h, 49h, 0EBh, 0F7h, 0C4h, 2Eh, 0EEh, 55h, 33h
-	db	0C0h, 8Bh, 0D8h, 26h, 88h, 46h, 24h, 0F7h, 6, 7Ch, 51h, 8, 10h, 75h, 4, 26h
-	db	8Bh, 5Eh, 0Ch, 26h, 8Ah, 4Eh, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 89h, 46h, 0Ah, 0F7h
-	db	6, 7Ch, 51h, 0, 20h, 75h, 0Ch, 32h, 0C9h, 0F7h, 6, 7Ch, 51h, 8, 0, 75h
-	db	2, 33h, 0DBh, 26h, 89h, 5Eh, 0Ch, 26h, 88h, 4Eh, 24h, 0E9h, 0CDh, 7, 89h, 2Eh
-	db	0EEh, 55h, 8Ch, 6, 0F0h, 55h, 0E8h, 0C8h, 8, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h
-	db	8, 0E8h, 83h, 34h, 26h, 0C6h, 46h, 0, 0, 26h, 0F6h, 46h, 4, 1, 74h, 8
-	db	26h, 80h, 76h, 4, 2, 0E9h, 68h, 7, 26h, 0F7h, 56h, 0Ah, 26h, 0F7h, 56h, 0Ch
-	db	26h, 83h, 46h, 0Ah, 1, 26h, 83h, 56h, 0Ch, 0, 26h, 0F6h, 56h, 24h, 0E8h, 0B6h
-	db	41h, 0E9h, 4Ch, 7, 0E8h, 0ADh, 0, 0E8h, 0DDh, 7, 26h, 0F6h, 46h, 4, 4, 74h
-	db	2Eh, 26h, 8Bh, 46h, 0Ah, 26h, 0Ah, 46h, 24h, 26h, 0Bh, 46h, 0Ch, 74h, 6, 0B9h
-	db	23h, 0, 0E8h, 81h, 41h, 26h, 80h, 46h, 1, 5, 0F6h, 6, 86h, 51h, 80h, 74h
-	db	0Eh, 0F7h, 6, 82h, 51h, 0, 40h, 74h, 6, 0B9h, 7Fh, 80h, 0E8h, 0BAh, 0Bh, 26h
-	db	8Ah, 46h, 0Bh, 32h, 0E4h, 26h, 89h, 46h, 0Ah, 33h, 0C0h, 26h, 89h, 46h, 0Ch, 26h
-	db	88h, 66h, 24h, 0E9h, 0FAh, 6, 0E8h, 5Bh, 0, 0E8h, 8Bh, 7, 26h, 0F6h, 46h, 4
-	db	4, 74h, 1Ah, 26h, 80h, 46h, 1, 4, 0F6h, 6, 86h, 51h, 80h, 74h, 0Eh, 0F7h
-	db	6, 82h, 51h, 0, 40h, 74h, 6, 0B9h, 7Fh, 80h, 0E8h, 7Ch, 0Bh, 33h, 0C0h, 26h
-	db	88h, 46h, 0Bh, 26h, 89h, 46h, 0Ch, 26h, 88h, 46h, 24h, 0E9h, 0C2h, 6, 0E8h, 7Fh
-	db	7, 0E8h, 70h, 0, 0E9h, 0B9h, 6, 26h, 80h, 4Eh, 5, 10h, 80h, 3Eh, 0CBh, 38h
-	db	0, 74h, 0Eh, 0F7h, 6, 7Ch, 51h, 0, 20h, 75h, 6, 0F9h, 8Bh, 26h, 0AEh, 38h
-	db	0C3h, 32h, 0C0h, 0C3h, 26h, 0F6h, 46h, 0, 80h, 75h, 29h, 26h, 8Ah, 46h, 1, 24h
-	db	7, 3Ch, 4, 75h, 1Eh, 26h, 8Bh, 46h, 18h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 4Ch, 0ACh, 5Dh, 7, 26h, 89h, 4Eh, 18h, 26h, 80h, 66h, 1, 0F8h, 26h, 80h
-	db	4Eh, 1, 1, 0C3h, 26h, 8Ah, 46h, 0, 26h, 8Bh, 4Eh, 2, 26h, 88h, 46h, 25h
-	db	26h, 89h, 4Eh, 1Ch, 26h, 80h, 4Eh, 5, 40h, 26h, 0C6h, 46h, 0, 0, 26h, 0C7h
-	db	46h, 2, 0, 0, 26h, 80h, 66h, 5, 0DFh, 33h, 0C0h, 26h, 89h, 46h, 22h, 26h
-	db	89h, 46h, 1Eh, 26h, 89h, 46h, 20h, 26h, 0F6h, 46h, 4, 4, 74h, 25h, 3Ch, 2
-	db	75h, 15h, 26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h, 46h, 1, 26h, 89h, 46h
-	db	18h, 26h, 89h, 46h, 1Ah, 0EBh, 0Ch, 3Ch, 3, 75h, 8, 26h, 80h, 6Eh, 1, 2
-	db	0E8h, 4Bh, 3Fh, 33h, 0C0h, 26h, 89h, 46h, 14h, 26h, 89h, 46h, 16h, 0C3h, 26h, 0F6h
-	db	46h, 4, 4, 74h, 0Bh, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 4, 75h, 1, 0C3h
-	db	0E8h, 0ADh, 6, 26h, 0F6h, 46h, 4, 4, 74h, 0Ah, 26h, 80h, 66h, 1, 0F8h, 26h
-	db	80h, 4Eh, 1, 4, 26h, 8Bh, 46h, 16h, 99h, 26h, 89h, 46h, 0Ah, 26h, 89h, 56h
-	db	0Ch, 26h, 88h, 56h, 24h, 33h, 0C0h, 26h, 89h, 46h, 14h, 26h, 89h, 46h, 16h, 26h
-	db	80h, 66h, 4, 8Fh, 26h, 80h, 66h, 5, 9Ch, 26h, 80h, 4Eh, 5, 1, 26h, 89h
-	db	46h, 22h, 26h, 89h, 46h, 1Eh, 26h, 89h, 46h, 20h, 26h, 89h, 46h, 0Eh, 26h, 89h
-	db	46h, 12h, 26h, 0C7h, 46h, 10h, 1, 0, 26h, 88h, 46h, 25h, 26h, 89h, 46h, 1Ch
-	db	0E9h, 8Dh, 5, 8Bh, 0D8h, 0E8h, 74h, 0EEh, 0E8h, 14h, 0CEh, 6, 55h, 8Bh, 0C3h, 9Ah
+	db	0E8h, 'kO&', 0F6h, 46h, 4, 0C0h, 0C3h, 26h, 83h, 7Eh, 6, 0, 75h	;@05BC6
+	db	1, 0C3h, 0E9h, 1Fh, 17h, 0FFh, 0FFh, 0FEh, 0E8h, 0C5h, 14h, 0E8h
+	db	0B3h, 15h, 0E8h, 3Fh, 16h, 26h, 8Ah, 5Eh, 0, 26h, 8Bh, 4Eh, 2
+	db	80h, 0FBh, 80h, 75h, 15h, 26h, 0F6h, 46h, 5, 40h, 74h, 0Eh, 26h
+	db	8Ah, 5Eh, 25h, 80h, 0E3h, 7Fh, 80h, 0CBh, 20h, 26h, 8Bh, 4Eh, 1Ch
+	db	80h, 0EBh, 60h, 80h, 0FBh, 27h, 72h, 21h, 80h, 0FBh, 2Ah, 73h
+	db	1Ch, 80h, 0EBh, 27h, 32h, 0FFh, 2Eh, 8Ah, 87h, 0DAh, 5Bh, 98h
+	db	99h, 26h, 89h, 46h, 0Ah, 26h, 89h, 56h, 0Ch, 26h, 88h, 'f$3', 0C0h
+	db	0EBh, 11h, 0E8h, 60h, 0A4h, 26h, 89h, 46h, 0Ah, 26h, 89h, 56h
+	db	0Ch, 33h, 0C0h, 26h, 88h, 'F$&', 0C6h, 46h, 0, 0, 26h, 89h, 46h
+	db	4, 26h, 89h, 46h, 2, 26h, 89h, 46h, 18h, 26h, 89h, 46h, 1Ah, 26h
+	db	88h, 46h, 1, 26h, 89h, 46h, 14h, 26h, 88h, 'F%&', 89h, 46h, 1Ch
+	db	0E9h, 46h, 14h, 26h, 80h, 4Eh, 5, 80h, 32h, 0C0h, 0C3h
+L05C72:	mov	al, byte ptr es:[bp+5]	;@05C72
+	test	al, 10h	;@05C76
+	jne	@@5	;@05C78
+	test	al, 20h	;@05C7A
+	jne	@@6	;@05C7C
+@@1:	mov	ax, word ptr es:[bp+4]	;@05C7E
+@@2:	and	ax, 8040h	;@05C82
+	cmp	ax, 8040h	;@05C85
+	jne	@@3	;@05C88
+	call	L05CD9	;@05C8A
+	test	byte ptr es:[bp+5], 40h	;@05C8D
+	je	@@4	;@05C92
+	and	byte ptr es:[bp+5], 0BFh	;@05C94
+	mov	al, byte ptr es:[bp+25h]	;@05C99
+	and	al, 7Fh	;@05C9D
+	mov	byte ptr es:[bp], al	;@05C9F
+	mov	ax, word ptr es:[bp+1Ch]	;@05CA3
+	mov	word ptr es:[bp+2], ax	;@05CA7
+@@3:	xor	al, al	;@05CAB
+@@4:	ret	;@05CAD
+@@5:	call	L06A14	;@05CAE
+	xor	ax, ax	;@05CB1
+	mov	word ptr es:[bp+1Ch], ax	;@05CB3
+	mov	byte ptr es:[bp+25h], al	;@05CB7
+	mov	ax, word ptr es:[bp+4]	;@05CBB
+	and	byte ptr es:[bp+5], 2Fh	;@05CBF
+	jmp	@@2	;@05CC4
+@@6:	call	L0748E	;@05CC6
+	jmp	@@1	;@05CC9
+L05CCB:	test	byte ptr es:[bp+5], 20h	;@05CCB
+	jne	@@1	;@05CD0
+	ret	;@05CD2
+@@1:	call	L0748E	;@05CD3
+	xor	al, al	;@05CD6
+	ret	;@05CD8
+L05CD9:	call	L070A5	;@05CD9
+	call	L07196	;@05CDC
+	call	L07225	;@05CDF
+	call	L05CE8	;@05CE2
+	jmp	L070B0	;@05CE5
+L05CE8:	and	byte ptr es:[bp], 7Fh	;@05CE8
+	or	byte ptr es:[bp+4], 80h	;@05CED
+	mov	al, byte ptr es:[bp+5]	;@05CF2
+	and	al, 3	;@05CF6
+	shl	al, 1	;@05CF8
+	shl	al, 1	;@05CFA
+	and	byte ptr es:[bp+5], 0F0h	;@05CFC
+	or	byte ptr es:[bp+5], al	;@05D01
+	ret	;@05D05
+L05D06:	test	byte ptr es:[bp+5], 80h	;@05D06
+	je	@@1	;@05D0B
+	call	L05CD9	;@05D0D
+@@1:	and	byte ptr es:[bp+5], 0FCh	;@05D10
+	or	byte ptr es:[bp+5], 1	;@05D15
+	xor	al, al	;@05D1A
+	ret	;@05D1C
+L05D1D:	test	byte ptr es:[bp+5], 80h	;@05D1D
+	je	@@1	;@05D22
+	call	L05CD9	;@05D24
+@@1:	and	byte ptr es:[bp+5], 0FCh	;@05D27
+	or	byte ptr es:[bp+5], 2	;@05D2C
+	xor	al, al	;@05D31
+	ret	;@05D33
+L05D34:	call	L070A5	;@05D34
+	mov	byte ptr es:[bp], 87h	;@05D37
+	jmp	L070B0	;@05D3C
+L05D3F:	call	L070A5	;@05D3F
+	test	byte ptr es:[bp], 80h	;@05D42
+	jne	@@1	;@05D47
+	test	byte ptr es:[bp+4], 40h	;@05D49
+	je	@@2	;@05D4E
+	test	byte ptr es:[bp+5], 80h	;@05D50
+	je	@@2	;@05D55
+	test	byte ptr es:[bp+4], 4	;@05D57
+	je	@@2	;@05D5C
+@@1:	test	byte ptr es:[bp+5], 40h	;@05D5E
+	je	@@2	;@05D63
+	call	L07196	;@05D65
+	call	L07225	;@05D68
+	test	byte ptr es:[bp+5], 40h	;@05D6B
+	je	@@2	;@05D70
+	mov	al, byte ptr es:[bp+25h]	;@05D72
+	mov	di, word ptr es:[bp+1Ch]	;@05D76
+	call	L05D97	;@05D7A
+	mov	byte ptr es:[bp], al	;@05D7D
+	mov	word ptr es:[bp+2], di	;@05D81
+	xor	ax, ax	;@05D85
+	mov	word ptr es:[bp+1Ch], ax	;@05D87
+	mov	byte ptr es:[bp+25h], al	;@05D8B
+	and	byte ptr es:[bp+5], 0BFh	;@05D8F
+@@2:	jmp	L070B0	;@05D94
+L05D97:	cmp	al, 8Ah	;@05D97
+	jne	@@2	;@05D99
+	test	word ptr ds:[517Ch], 1000h	;@05D9B
+	jne	@@2	;@05DA1
+	push	bx	;@05DA3
+	mov	bl, al	;@05DA4
+	mov	cx, di	;@05DA6
+	push	bx	;@05DA8
+	push	di	;@05DA9
+	call	L00094	;@05DAA
+	pop	di	;@05DAD
+	pop	bx	;@05DAE
+	and	dx, dx	;@05DAF
+	jne	@@1	;@05DB1
+	call	L0A9CB	;@05DB3
+	pop	bx	;@05DB6
+	and	al, al	;@05DB7
+	je	@@1	;@05DB9
+	or	al, 80h	;@05DBB
+	xor	di, di	;@05DBD
+	jmp	short @@2	;@05DBF
+@@1:	mov	al, 8Ah	;@05DC1
+@@2:	ret	;@05DC3
+L05DC4:	cmp	byte ptr ds:[38CBh], 0	;@05DC4
+	je	@@1	;@05DC9
+	test	word ptr ds:[517Ch], 2000h	;@05DCB
+	jne	@@1	;@05DD1
+	stc	;@05DD3
+	mov	sp, word ptr ds:[38AEh]	;@05DD4
+	ret	;@05DD8
+@@1:	call	L070B7	;@05DD9
+	and	byte ptr es:[bp+5], 0EFh	;@05DDC
+	test	byte ptr es:[bp], 80h	;@05DE1
+	jne	@@3	;@05DE6
+	call	L07455	;@05DE8
+	les	bp, dword ptr ds:[55F6h]	;@05DEB
+	mov	cx, word ptr es:[bp+4]	;@05DEF
+	and	cx, 8040h	;@05DF3
+	cmp	cx, 40h	;@05DF7
+	je	@@2	;@05DFA
+	les	bp, dword ptr ds:[55EEh]	;@05DFC
+	mov	ax, word ptr es:[bp+0Ah]	;@05E00
+	call	L0A9CB	;@05E04
+	or	al, 80h	;@05E07
+	les	bp, dword ptr ds:[55F6h]	;@05E09
+	or	byte ptr es:[bp+5], 40h	;@05E0D
+	mov	byte ptr es:[bp+25h], al	;@05E12
+	mov	word ptr es:[bp+1Ch], 0	;@05E16
+@@2:	jmp	L070EE	;@05E1C
+@@3:	test	byte ptr es:[bp+5], 20h	;@05E1F
+	je	@@4	;@05E24
+	mov	al, byte ptr es:[bp]	;@05E26
+	cmp	al, 87h	;@05E2A
+	jb	@@4	;@05E2C
+	cmp	al, 8Ah	;@05E2E
+	jae	@@4	;@05E30
+	les	bp, dword ptr ds:[55EEh]	;@05E32
+	test	word ptr es:[bp+0Ah], 8000h	;@05E36
+	les	bp, dword ptr ds:[55F6h]	;@05E3C
+	jne	@@4	;@05E40
+	and	byte ptr es:[bp+5], 0DFh	;@05E42
+	xor	ax, ax	;@05E47
+	mov	word ptr es:[bp+22h], ax	;@05E49
+	mov	word ptr es:[bp+1Eh], ax	;@05E4D
+	mov	word ptr es:[bp+20h], ax	;@05E51
+@@4:	call	L07455	;@05E55
+	les	bp, dword ptr ds:[55EEh]	;@05E58
+	mov	ax, word ptr es:[bp+0Ah]	;@05E5C
+	call	L0A9CB	;@05E60
+	or	al, 80h	;@05E63
+	les	bp, dword ptr ds:[55F6h]	;@05E65
+	mov	byte ptr es:[bp], al	;@05E69
+	xor	ax, ax	;@05E6D
+	mov	byte ptr es:[bp+25h], al	;@05E6F
+	mov	word ptr es:[bp+1Ch], ax	;@05E73
+	mov	word ptr es:[bp+2], ax	;@05E77
+	and	byte ptr es:[bp+5], 0BFh	;@05E7B
+	les	bp, dword ptr ds:[55EEh]	;@05E80
+	test	byte ptr es:[bp], 80h	;@05E84
+	jne	@@5	;@05E89
+	jmp	L070EE	;@05E8B
+@@5:	mov	ax, word ptr es:[bp+14h]	;@05E8E
+	mov	cx, word ptr es:[bp+18h]	;@05E92
+	les	bp, dword ptr ds:[55F6h]	;@05E96
+	mov	word ptr es:[bp+14h], ax	;@05E9A
+	mov	word ptr es:[bp+18h], cx	;@05E9E
+	jmp	L070EE	;@05EA2
+L05EA5:	call	L070B7	;@05EA5
+	call	L07196	;@05EA8
+	call	L07225	;@05EAB
+L05EAE:	les	bp, dword ptr ds:[55EEh]	;@05EAE
+	mov	al, byte ptr es:[bp]	;@05EB2
+	mov	cx, word ptr es:[bp+2]	;@05EB6
+	les	bp, dword ptr ds:[55F6h]	;@05EBA
+	mov	byte ptr es:[bp], al	;@05EBE
+	mov	word ptr es:[bp+2], cx	;@05EC2
+	xor	ax, ax	;@05EC6
+	mov	byte ptr es:[bp+25h], al	;@05EC8
+	mov	word ptr es:[bp+1Ch], ax	;@05ECC
+	jmp	L070EE	;@05ED0
+L05ED3:	call	L070B7	;@05ED3
+	call	L071D4	;@05ED6
+	call	L07225	;@05ED9
+	les	bp, dword ptr ds:[55EEh]	;@05EDC
+	call	L071D4	;@05EE0
+	les	bp, dword ptr ds:[55EEh]	;@05EE3
+	mov	bl, byte ptr es:[bp]	;@05EE7
+	sub	bl, 80h	;@05EEB
+	mov	cx, word ptr es:[bp+2]	;@05EEE
+	call	L00094	;@05EF2
+	push	ax	;@05EF5
+	push	dx	;@05EF6
+	les	bp, dword ptr ds:[55F6h]	;@05EF7
+	mov	bl, byte ptr es:[bp]	;@05EFB
+	sub	bl, 80h	;@05EFF
+	mov	cx, word ptr es:[bp+2]	;@05F02
+	call	L00094	;@05F06
+	pop	cx	;@05F09
+	pop	bx	;@05F0A
+	sub	ax, bx	;@05F0B
+	sbb	dx, cx	;@05F0D
+	jb	@@1	;@05F0F
+	add	word ptr es:[bp+0Ah], ax	;@05F11
+	adc	word ptr es:[bp+0Ch], dx	;@05F15
+	adc	byte ptr es:[bp+24h], 0	;@05F19
+	call	L0AB17	;@05F1E
+@@1:	jmp	L05EAE	;@05F21
+L05F23:	call	L070B7	;@05F23
+	call	L071D4	;@05F26
+	call	L07225	;@05F29
+	les	bp, dword ptr ds:[55EEh]	;@05F2C
+	call	L071D4	;@05F30
+	jmp	L05EAE	;@05F33
+	db	0B3h, 80h, 0EBh, 39h, 0B3h, 81h, 0EBh, 35h, 0F6h, 6, 87h, 51h	;@05F36
+	db	2, 75h, 0Dh, 0EBh, 7, 0F6h, 6, 87h, 51h, 8, 75h, 4
+	mov	bl, 82h	;@05F4E
+	jmp	short @@1	;@05F50
+	mov	bl, 83h	;@05F52
+	jmp	short @@1	;@05F54
+	mov	bl, 84h	;@05F56
+	jmp	short @@1	;@05F58
+	mov	bl, 85h	;@05F5A
+	jmp	short @@1	;@05F5C
+	db	0B3h, 86h, 0EBh, 11h, 0B3h, 87h, 0EBh, 0Dh, 0F6h, 6, 87h, 51h	;@05F5E
+	db	2, 75h, 4, 0B3h, 88h, 0EBh, 2, 0B3h, 89h
+@@1:	call	L0599C	;@05F73
+	mov	byte ptr es:[bp], bl	;@05F76
+	xor	al, al	;@05F7A
+	ret	;@05F7C
+L05F7D:	push	ax	;@05F7D
+	call	L0599C	;@05F7E
+	pop	ax	;@05F81
+	mov	byte ptr es:[bp], 8Ah	;@05F82
+	mov	word ptr es:[bp+2], ax	;@05F87
+	mov	bx, ax	;@05F8B
+	call	L0393F	;@05F8D
+	xor	al, al	;@05F90
+	ret	;@05F92
+L05F93:	call	far ptr L101E0	;@05F93
+	call	L00CF8	;@05F98
+	push	bx	;@05F9B
+	call	L0599C	;@05F9C
+	pop	bx	;@05F9F
+	sub	bl, 0A0h	;@05FA0
+	mov	byte ptr es:[bp], bl	;@05FA3
+	xor	al, al	;@05FA7
+	ret	;@05FA9
+	db	8Bh, 0D8h, 0E8h, 0EDh, 0F9h, 26h, 89h, 5Eh, 6, 0F6h, 6, 0C9h, 38h	;@05FAA
+	db	0Bh, 75h, 5, 80h, 0Eh, 0CAh, 38h, 1, 32h, 0C0h, 0C3h
+L05FC2:	mov	word ptr ds:[55F2h], ax	;@05FC2
+	call	L070A5	;@05FC5
+	call	L071B7	;@05FC8
+	call	L07225	;@05FCB
+	cmp	byte ptr es:[bp], 8Ah	;@05FCE
+	jne	@@1	;@05FD3
+	mov	ax, word ptr es:[bp+2]	;@05FD5
+	call	far ptr L101E0	;@05FD9
+	mov	ax, word ptr ds:[55F2h]	;@05FDE
+	call	L00E7D	;@05FE1
+	je	@@2	;@05FE4
+	les	bp, dword ptr ds:[55EEh]	;@05FE6
+	sub	bl, 0A0h	;@05FEA
+	mov	byte ptr es:[bp], bl	;@05FED
+	mov	word ptr es:[bp+2], cx	;@05FF1
+	add	word ptr es:[bp+0Ah], ax	;@05FF5
+	adc	word ptr es:[bp+0Ch], dx	;@05FF9
+	call	L0AB17	;@05FFD
+@@1:	jmp	L070B0	;@06000
+@@2:	les	bp, dword ptr ds:[55EEh]	;@06003
+	mov	ax, word ptr es:[bp+2]	;@06007
+	mov	word ptr es:[bp+6], ax	;@0600B
+	call	L072F9	;@0600F
+	jmp	L070B0	;@06012
+L06015:	cmp	byte ptr ds:[38CBh], 0	;@06015
+	je	@@1	;@0601A
+	test	word ptr ds:[517Ch], 2000h	;@0601C
+	jne	@@1	;@06022
+	stc	;@06024
+	mov	sp, word ptr ds:[38AEh]	;@06025
+	ret	;@06029
+@@1:	call	L070B7	;@0602A
+	test	byte ptr es:[bp+5], 10h	;@0602D
+	je	@@2	;@06032
+	call	L06A14	;@06034
+	and	byte ptr es:[bp+5], 0EFh	;@06037
+@@2:	les	bp, dword ptr ds:[55EEh]	;@0603C
+	call	L071F1	;@06040
+	call	L072BB	;@06043
+	les	bp, dword ptr ds:[55F6h]	;@06046
+	test	byte ptr es:[bp], 80h	;@0604A
+	jne	@@3	;@0604F
+	test	word ptr ds:[517Ch], 1000h	;@06051
+	jne	@@3	;@06057
+	test	byte ptr es:[bp+4], 4	;@06059
+	jne	@@3	;@0605E
+	call	@@3	;@06060
+	and	byte ptr es:[bp+4], 0FBh	;@06063
+	and	byte ptr es:[bp], 7Fh	;@06068
+	xor	ax, ax	;@0606D
+	mov	word ptr es:[bp+14h], ax	;@0606F
+	mov	word ptr es:[bp+18h], ax	;@06073
+	mov	word ptr es:[bp+1Ah], ax	;@06077
+	mov	byte ptr es:[bp+1], al	;@0607B
+	ret	;@0607F
+@@3:	les	bp, dword ptr ds:[55EEh]	;@06080
+	mov	al, byte ptr es:[bp+4]	;@06084
+	test	al, 4	;@06088
+	je	@@4	;@0608A
+	test	al, 40h	;@0608C
+	jne	@@5	;@0608E
+	mov	al, byte ptr es:[bp+1]	;@06090
+	and	al, 7	;@06094
+	cmp	al, 4	;@06096
+	jne	@@5	;@06098
+@@4:	les	bp, dword ptr ds:[55F6h]	;@0609A
+	test	byte ptr es:[bp+4], 4	;@0609E
+	je	@@6	;@060A3
+	mov	al, byte ptr es:[bp+1]	;@060A5
+	and	al, 7	;@060A9
+	cmp	al, 4	;@060AB
+	jb	@@6	;@060AD
+	test	word ptr ds:[517Ch], 1000h	;@060AF
+	je	@@7	;@060B5
+@@5:	mov	cx, 69h	;@060B7
+	call	L0AA98	;@060BA
+@@6:	les	bp, dword ptr ds:[55F6h]	;@060BD
+	call	L07196	;@060C1
+	les	bp, dword ptr ds:[55EEh]	;@060C4
+	test	byte ptr es:[bp+4], 40h	;@060C8
+	je	@@8	;@060CD
+	mov	ax, word ptr es:[bp+0Eh]	;@060CF
+	call	L0087F	;@060D3
+	je	@@9	;@060D6
+	les	bp, dword ptr ds:[55F6h]	;@060D8
+	mov	word ptr es:[bp+14h], 0	;@060DC
+	mov	cx, 1Fh	;@060E2
+	call	L07559	;@060E5
+@@7:	jmp	L070EE	;@060E8
+@@8:	les	bp, dword ptr ds:[55F6h]	;@060EB
+	mov	word ptr es:[bp+14h], 0	;@060EF
+	jmp	short @@11	;@060F5
+@@9:	les	bp, dword ptr ds:[55F6h]	;@060F7
+	mov	word ptr es:[bp+14h], ax	;@060FB
+	mov	word ptr es:[bp+1Eh], ax	;@060FF
+	call	far ptr L101E0	;@06103
+	call	L01A84	;@06108
+	call	far ptr L101E0	;@0610B
+	mov	di, bp	;@06110
+	push	es	;@06112
+	pop	ds	;@06113
+	les	bp, dword ptr ss:[55EEh]	;@06114
+	mov	ax, word ptr [di+6]	;@06119
+	mov	word ptr es:[bp+6], ax	;@0611C
+	and	ax, ax	;@06120
+	je	@@10	;@06122
+	push	ds	;@06124
+	push	di	;@06125
+	push	ss	;@06126
+	pop	ds	;@06127
+	call	L072F9	;@06128
+	pop	di	;@0612B
+	pop	ds	;@0612C
+@@10:	mov	ax, word ptr [di+0Ah]	;@0612D
+	add	word ptr es:[bp+0Ah], ax	;@06130
+	mov	ax, word ptr [di+0Ch]	;@06134
+	adc	word ptr es:[bp+0Ch], ax	;@06137
+	mov	al, byte ptr [di+24h]	;@0613B
+	adc	byte ptr es:[bp+24h], al	;@0613E
+	mov	al, byte ptr [di+4]	;@06142
+	and	al, 4	;@06145
+	or	byte ptr es:[bp+4], al	;@06147
+	mov	al, byte ptr [di+1]	;@0614B
+	mov	byte ptr es:[bp+1], al	;@0614E
+	mov	ax, word ptr [di+26h]	;@06152
+	mov	word ptr es:[bp+26h], ax	;@06155
+	mov	ax, word ptr [di+18h]	;@06159
+	mov	word ptr es:[bp+18h], ax	;@0615C
+	mov	ax, word ptr [di+1Ah]	;@06160
+	mov	word ptr es:[bp+1Ah], ax	;@06163
+	push	ss	;@06167
+	pop	ds	;@06168
+	call	L0AB17	;@06169
+@@11:	mov	di, word ptr ds:[55EEh]	;@0616C
+	mov	ax, word ptr ds:[55F0h]	;@06170
+	les	bp, dword ptr ds:[55F6h]	;@06173
+	call	L074D8	;@06177
+	call	L0A9EE	;@0617A
+	jmp	L070EE	;@0617D
+L06180:	call	L070A5	;@06180
+	push	word ptr es:[bp+6]	;@06183
+	call	L0619A	;@06187
+	pop	word ptr es:[bp+6]	;@0618A
+	jmp	L070B0	;@0618E
+L06191:	call	L070A5	;@06191
+	call	L0619A	;@06194
+	jmp	L070B0	;@06197
+L0619A:	xor	cl, cl	;@0619A
+	cmp	word ptr es:[bp+6], 0	;@0619C
+	jne	@@9	;@061A1
+	test	byte ptr es:[bp+4], 4	;@061A3
+	je	@@1	;@061A8
+	mov	ax, word ptr es:[bp+1Ah]	;@061AA
+	call	L0077A	;@061AE
+	je	@@1	;@061B1
+	or	cl, 80h	;@061B3
+@@1:	mov	al, byte ptr es:[bp]	;@061B6
+	test	al, 80h	;@061BA
+	je	@@5	;@061BC
+	cmp	al, 87h	;@061BE
+	jb	@@3	;@061C0
+	cmp	al, 8Ah	;@061C2
+	jae	@@3	;@061C4
+	test	byte ptr es:[bp+5], 10h	;@061C6
+	je	@@2	;@061CB
+	or	cl, 4	;@061CD
+@@2:	or	cl, 21h	;@061D0
+	jmp	short @@9	;@061D3
+@@3:	test	byte ptr es:[bp+4], 40h	;@061D5
+	jne	@@6	;@061DA
+	test	byte ptr es:[bp+5], 10h	;@061DC
+	jne	@@4	;@061E1
+	or	cl, 2Ah	;@061E3
+	jmp	short @@9	;@061E6
+@@4:	or	cl, 26h	;@061E8
+	jmp	short @@9	;@061EB
+@@5:	mov	al, byte ptr es:[bp+1]	;@061ED
+	and	al, 7	;@061F1
+	cmp	al, 4	;@061F3
+	jne	@@7	;@061F5
+@@6:	or	cl, 20h	;@061F7
+	jmp	short @@9	;@061FA
+@@7:	test	byte ptr es:[bp+4], 40h	;@061FC
+	jne	@@8	;@06201
+	test	byte ptr es:[bp+4], 4	;@06203
+	jne	@@9	;@06208
+	or	cl, 24h	;@0620A
+	jmp	short @@9	;@0620D
+@@8:	test	word ptr es:[bp+4], 8080h	;@0620F
+	jne	@@6	;@06215
+	or	cl, 30h	;@06217
+@@9:	push	cx	;@0621A
+	call	L059B6	;@0621B
+	pop	cx	;@0621E
+	mov	byte ptr es:[bp+0Ah], cl	;@0621F
+	jmp	L070B0	;@06223
+L06226:	call	L070F5	;@06226
+	les	bp, dword ptr ds:[55EEh]	;@06229
+	mov	ax, word ptr es:[bp+0Ah]	;@0622D
+	mov	bx, word ptr es:[bp+0Ch]	;@06231
+	mov	dl, byte ptr es:[bp+24h]	;@06235
+	les	bp, dword ptr ds:[55F6h]	;@06239
+	or	word ptr es:[bp+0Ah], ax	;@0623D
+	or	word ptr es:[bp+0Ch], bx	;@06241
+	or	byte ptr es:[bp+24h], dl	;@06245
+	jmp	L070EB	;@06249
+L0624C:	call	L070F5	;@0624C
+	les	bp, dword ptr ds:[55EEh]	;@0624F
+	mov	ax, word ptr es:[bp+0Ah]	;@06253
+	mov	bx, word ptr es:[bp+0Ch]	;@06257
+	mov	dl, byte ptr es:[bp+24h]	;@0625B
+	les	bp, dword ptr ds:[55F6h]	;@0625F
+	xor	word ptr es:[bp+0Ah], ax	;@06263
+	xor	word ptr es:[bp+0Ch], bx	;@06267
+	xor	byte ptr es:[bp+24h], dl	;@0626B
+	jmp	L070EB	;@0626F
+L06272:	call	L070F5	;@06272
+	les	bp, dword ptr ds:[55EEh]	;@06275
+	mov	ax, word ptr es:[bp+0Ah]	;@06279
+	mov	bx, word ptr es:[bp+0Ch]	;@0627D
+	mov	dl, byte ptr es:[bp+24h]	;@06281
+	les	bp, dword ptr ds:[55F6h]	;@06285
+	and	word ptr es:[bp+0Ah], ax	;@06289
+	and	word ptr es:[bp+0Ch], bx	;@0628D
+	and	byte ptr es:[bp+24h], dl	;@06291
+	jmp	L070EB	;@06295
+L06298:	call	L070A5	;@06298
+	call	L071F1	;@0629B
+	call	L0953E	;@0629E
+	call	L09DB7	;@062A1
+	not	word ptr es:[bp+0Ah]	;@062A4
+	not	word ptr es:[bp+0Ch]	;@062A8
+	not	byte ptr es:[bp+24h]	;@062AC
+	jmp	L070B0	;@062B0
+	db	0E8h, 0B3h, 1, 0E8h, 76h, 0Eh, 0E8h, 72h, 0, 0B8h, 0FFh, 0FFh	;@062B3
+	db	74h, 2, 33h, 0C0h, 0EBh, 5Ah, 0E8h, 0A1h, 1, 0E8h, 64h, 0Eh, 0E8h
+	db	60h, 0, 0B8h, 0FFh, 0FFh, 75h, 2, 33h, 0C0h, 0EBh, 48h, 0E8h, 8Fh
+	db	1, 0E8h, 42h, 0Eh, 0E8h, 4Eh, 0, 0B8h, 0FFh, 0FFh, 72h, 2, 33h
+	db	0C0h, 0EBh, 36h, 0E8h, 7Dh, 1, 0E8h, 40h, 0Eh, 0E8h, 3Ch, 0, 0B8h
+	db	0FFh, 0FFh, 76h, 2, 33h, 0C0h, 0EBh, 24h, 0E8h, 6Bh, 1, 0E8h, 1Eh
+	db	0Eh, 0E8h, 2Ah, 0, 0B8h, 0FFh, 0FFh, 77h, 2, 33h, 0C0h, 0EBh, 12h
+	db	0E8h, 59h, 1, 0E8h, 1Ch, 0Eh, 0E8h, 18h, 0, 0B8h, 0FFh, 0FFh, 73h
+	db	2, 33h, 0C0h, 0EBh, 0, 26h, 89h, 46h, 0Ah, 26h, 89h, 46h, 0Ch
+	db	26h, 88h, 46h, 24h, 0E9h, 82h, 0Dh, 26h, 8Bh, 46h, 0Ah, 0F7h, 6
+	db	7Ch, 51h, 8, 10h, 75h, 4, 23h, 0C0h, 0EBh, 4, 26h, 0Bh, 46h, 0Ch
+	db	74h, 7, 26h, 8Ah, 46h, 24h, 0D0h, 0D8h, 0C3h, 26h, 8Ah, 46h, 4
+	db	26h, 80h, 66h, 4, 8Fh, 0A8h, 20h, 75h, 16h, 0A8h, 40h, 74h, 12h
+	db	0A8h, 10h, 74h, 0Ah, 26h, 8Bh, 46h, 0Eh, '&;F', 12h, 0F8h, 0C3h
+	db	32h, 0C0h, 0FEh, 0C8h, 0F8h, 0C3h
+L06370:	call	L070B7	;@06370
+	les	bp, dword ptr ds:[55EEh]	;@06373
+	test	byte ptr es:[bp], 80h	;@06377
+	jne	@@1	;@0637C
+	call	L071F1	;@0637E
+	call	L072A8	;@06381
+	les	bp, dword ptr ds:[55F6h]	;@06384
+	test	byte ptr es:[bp], 80h	;@06388
+	jne	@@4	;@0638D
+	call	L071F1	;@0638F
+	call	L072A8	;@06392
+	call	L09A79	;@06395
+	jmp	short @@5	;@06398
+@@1:	les	bp, dword ptr ds:[55F6h]	;@0639A
+	test	byte ptr es:[bp], 80h	;@0639E
+	jne	@@3	;@063A3
+@@2:	call	L071F1	;@063A5
+	call	L0953E	;@063A8
+	call	L072A8	;@063AB
+	les	bp, dword ptr ds:[55EEh]	;@063AE
+	mov	al, byte ptr es:[bp]	;@063B2
+	mov	dx, word ptr es:[bp+2]	;@063B6
+	les	bp, dword ptr ds:[55F6h]	;@063BA
+	mov	byte ptr es:[bp], al	;@063BE
+	mov	word ptr es:[bp+2], dx	;@063C2
+	call	L07461	;@063C6
+	call	L07430	;@063C9
+	jmp	short @@6	;@063CC
+@@3:	test	word ptr ds:[517Ch], 1000h	;@063CE
+	jne	@@2	;@063D4
+	jmp	short @@5	;@063D6
+@@4:	call	L072A8	;@063D8
+@@5:	call	L07455	;@063DB
+	call	L0741D	;@063DE
+@@6:	call	L0733D	;@063E1
+	les	bp, dword ptr ds:[55F6h]	;@063E4
+	test	byte ptr es:[bp+4], 4	;@063E8
+	les	bp, dword ptr ds:[55EEh]	;@063ED
+	je	@@7	;@063F1
+	test	byte ptr es:[bp+4], 4	;@063F3
+	je	@@7	;@063F8
+	mov	cx, 6Ah	;@063FA
+	call	L0AA98	;@063FD
+@@7:	les	bp, dword ptr ds:[55F6h]	;@06400
+	lds	di, dword ptr ds:[55EEh]	;@06404
+	test	byte ptr [di+4], 4	;@06408
+	je	@@8	;@0640C
+	or	byte ptr es:[bp+4], 4	;@0640E
+	mov	al, byte ptr [di+1]	;@06413
+	mov	byte ptr es:[bp+1], al	;@06416
+	mov	ax, word ptr [di+26h]	;@0641A
+	mov	word ptr es:[bp+26h], ax	;@0641D
+	mov	ax, word ptr [di+18h]	;@06421
+	mov	word ptr es:[bp+18h], ax	;@06424
+	mov	ax, word ptr [di+1Ah]	;@06428
+	mov	word ptr es:[bp+1Ah], ax	;@0642B
+	mov	ax, word ptr [di+16h]	;@0642F
+	mov	word ptr es:[bp+16h], ax	;@06432
+@@8:	mov	ax, word ptr [di+14h]	;@06436
+	and	ax, ax	;@06439
+	je	@@9	;@0643B
+	mov	word ptr es:[bp+14h], ax	;@0643D
+@@9:	mov	ax, word ptr [di+0Ah]	;@06441
+	add	word ptr es:[bp+0Ah], ax	;@06444
+	mov	ax, word ptr [di+0Ch]	;@06448
+	adc	word ptr es:[bp+0Ch], ax	;@0644B
+	mov	al, byte ptr [di+24h]	;@0644F
+	adc	byte ptr es:[bp+24h], al	;@06452
+	mov	al, byte ptr [di+5]	;@06456
+	and	al, 3	;@06459
+	or	byte ptr es:[bp+5], al	;@0645B
+	mov	ax, ss	;@0645F
+	mov	ds, ax	;@06461
+	call	L0AB17	;@06463
+	jmp	L070EE	;@06466
+L06469:	call	L070B7	;@06469
+	les	bp, dword ptr ds:[55EEh]	;@0646C
+	test	byte ptr es:[bp], 80h	;@06470
+	jne	@@3	;@06475
+	call	L071F1	;@06477
+	call	L0953E	;@0647A
+	call	L072A8	;@0647D
+	call	L07455	;@06480
+	call	L0741D	;@06483
+	les	bp, dword ptr ds:[55F6h]	;@06486
+	test	word ptr ds:[517Ch], 1000h	;@0648A
+	jne	@@1	;@06490
+	test	byte ptr es:[bp], 80h	;@06492
+	jne	@@6	;@06497
+@@1:	call	L071F1	;@06499
+	call	L0953E	;@0649C
+	call	L072A8	;@0649F
+	test	word ptr ds:[517Ch], 1000h	;@064A2
+	je	@@2	;@064A8
+	call	L09DDF	;@064AA
+	call	L09A79	;@064AD
+@@2:	jmp	short @@7	;@064B0
+@@3:	call	L072A8	;@064B2
+	les	bp, dword ptr ds:[55F6h]	;@064B5
+	test	byte ptr es:[bp], 80h	;@064B9
+	jne	@@5	;@064BE
+	call	L071F1	;@064C0
+	call	L0953E	;@064C3
+	test	word ptr ds:[517Ch], 1000h	;@064C6
+	je	@@4	;@064CC
+	call	L09DDF	;@064CE
+@@4:	call	L07461	;@064D1
+	call	L07430	;@064D4
+	les	bp, dword ptr ds:[55EEh]	;@064D7
+	mov	al, byte ptr es:[bp]	;@064DB
+	mov	dx, word ptr es:[bp+2]	;@064DF
+	les	bp, dword ptr ds:[55F6h]	;@064E3
+	mov	byte ptr es:[bp], al	;@064E7
+	mov	word ptr es:[bp+2], dx	;@064EB
+	jmp	short @@7	;@064EF
+@@5:	test	word ptr ds:[517Ch], 1000h	;@064F1
+	je	@@6	;@064F7
+	mov	al, byte ptr es:[bp]	;@064F9
+	les	bp, dword ptr ds:[55F6h]	;@064FD
+	mov	byte ptr es:[bp], al	;@06501
+	call	L09CDE	;@06505
+@@6:	and	byte ptr es:[bp+5], 0DFh	;@06508
+	xor	ax, ax	;@0650D
+	mov	word ptr es:[bp+22h], ax	;@0650F
+	mov	word ptr es:[bp+20h], ax	;@06513
+	mov	word ptr es:[bp+1Eh], ax	;@06517
+	mov	word ptr es:[bp+2], ax	;@0651B
+	mov	byte ptr es:[bp], 0	;@0651F
+@@7:	call	L0733D	;@06524
+	les	bp, dword ptr ds:[55F6h]	;@06527
+	mov	al, byte ptr es:[bp+1]	;@0652B
+	and	al, 7	;@0652F
+	je	@@10	;@06531
+	cmp	word ptr es:[bp+6], 0	;@06533
+	jne	@@8	;@06538
+	mov	bx, word ptr es:[bp+1Ah]	;@0653A
+	mov	cx, word ptr es:[bp+18h]	;@0653E
+	les	bp, dword ptr ds:[55EEh]	;@06542
+	mov	ah, byte ptr es:[bp+1]	;@06546
+	and	ah, 7	;@0654A
+	je	@@9	;@0654D
+	cmp	cx, word ptr es:[bp+18h]	;@0654F
+	jne	@@9	;@06553
+	cmp	bx, word ptr es:[bp+1Ah]	;@06555
+	jne	@@11	;@06559
+	test	word ptr ds:[517Ch], 1000h	;@0655B
+	je	@@8	;@06561
+	cmp	al, ah	;@06563
+	je	@@8	;@06565
+	cmp	ah, 3	;@06567
+	jne	@@9	;@0656A
+	cmp	al, 1	;@0656C
+	jne	@@9	;@0656E
+	call	@@16	;@06570
+	les	bp, dword ptr ds:[55F6h]	;@06573
+	call	@@16	;@06577
+	and	byte ptr es:[bp+1], 0F8h	;@0657A
+	or	byte ptr es:[bp+1], 2	;@0657F
+	mov	ds, word ptr ds:[55EEh]	;@06584
+	jmp	@@14	;@06588
+@@8:	jmp	short @@12	;@0658B
+@@9:	les	bp, dword ptr ds:[55F6h]	;@0658D
+	mov	cx, 6Bh	;@06591
+	call	L0AA98	;@06594
+	jmp	short @@13	;@06597
+@@10:	lds	di, dword ptr ds:[55EEh]	;@06599
+	mov	al, byte ptr [di+4]	;@0659D
+	and	al, 4	;@065A0
+	or	byte ptr es:[bp+4], al	;@065A2
+	mov	al, byte ptr [di+1]	;@065A6
+	mov	byte ptr es:[bp+1], al	;@065A9
+	mov	ax, word ptr [di+26h]	;@065AD
+	mov	word ptr es:[bp+26h], ax	;@065B0
+	mov	ax, word ptr [di+1Ah]	;@065B4
+	mov	word ptr es:[bp+1Ah], ax	;@065B7
+	mov	ax, word ptr [di+18h]	;@065BB
+	mov	word ptr es:[bp+18h], ax	;@065BE
+	mov	ax, word ptr [di+16h]	;@065C2
+	mov	word ptr es:[bp+16h], ax	;@065C5
+	jmp	short @@14	;@065C9
+@@11:	cmp	al, ah	;@065CB
+	jne	@@9	;@065CD
+	mov	ax, bx	;@065CF
+	call	L0077A	;@065D1
+	jne	@@9	;@065D4
+	mov	ax, word ptr es:[bp+1Ah]	;@065D6
+	call	L0077A	;@065DA
+	je	@@9	;@065DD
+	les	bp, dword ptr ds:[55F6h]	;@065DF
+	mov	word ptr es:[bp+18h], ax	;@065E3
+	mov	word ptr es:[bp+1Ah], ax	;@065E7
+	mov	byte ptr es:[bp], 0	;@065EB
+	mov	word ptr es:[bp+2], 0	;@065F0
+	lds	di, dword ptr ds:[55EEh]	;@065F6
+	jmp	short @@14	;@065FA
+@@12:	les	bp, dword ptr ds:[55F6h]	;@065FC
+	mov	byte ptr es:[bp], 0	;@06600
+	mov	word ptr es:[bp+2], 0	;@06605
+@@13:	les	bp, dword ptr ds:[55EEh]	;@0660B
+	call	@@16	;@0660F
+	les	bp, dword ptr ds:[55F6h]	;@06612
+	call	@@16	;@06616
+	xor	ax, ax	;@06619
+	and	byte ptr es:[bp+4], 0FBh	;@0661B
+	mov	byte ptr es:[bp+1], al	;@06620
+	mov	word ptr es:[bp+18h], ax	;@06624
+	mov	word ptr es:[bp+1Ah], ax	;@06628
+	lds	di, dword ptr ds:[55EEh]	;@0662C
+@@14:	mov	ax, word ptr [di+14h]	;@06630
+	and	ax, ax	;@06633
+	je	@@15	;@06635
+	mov	word ptr es:[bp+14h], ax	;@06637
+@@15:	mov	ax, word ptr [di+0Ah]	;@0663B
+	sub	ax, word ptr es:[bp+0Ah]	;@0663E
+	mov	word ptr es:[bp+0Ah], ax	;@06642
+	mov	ax, word ptr [di+0Ch]	;@06646
+	sbb	ax, word ptr es:[bp+0Ch]	;@06649
+	mov	word ptr es:[bp+0Ch], ax	;@0664D
+	mov	al, byte ptr [di+24h]	;@06651
+	sbb	al, byte ptr es:[bp+24h]	;@06654
+	mov	byte ptr es:[bp+24h], al	;@06658
+	mov	al, byte ptr [di+5]	;@0665C
+	and	al, 3	;@0665F
+	or	byte ptr es:[bp+5], al	;@06661
+	mov	ax, ss	;@06665
+	mov	ds, ax	;@06667
+	call	L0AB17	;@06669
+	jmp	L070EE	;@0666C
+@@16:	mov	ax, word ptr es:[bp+16h]	;@0666F
+	cwd	;@06673
+	mov	cl, dl	;@06674
+	shl	ax, 1	;@06676
+	rcl	dx, 1	;@06678
+	shl	ax, 1	;@0667A
+	rcl	dx, 1	;@0667C
+	shl	ax, 1	;@0667E
+	rcl	dx, 1	;@06680
+	shl	ax, 1	;@06682
+	rcl	dx, 1	;@06684
+	add	word ptr es:[bp+0Ah], ax	;@06686
+	adc	word ptr es:[bp+0Ch], dx	;@0668A
+	adc	byte ptr es:[bp+24h], cl	;@0668E
+	mov	word ptr es:[bp+16h], 0	;@06692
+	jmp	L0AB17	;@06698
+	db	0E8h, 19h, 0Ah, 0E8h, 0B4h, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 49h	;@0669B
+	db	0Bh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 42h, 0Bh, 0E8h, 0C7h, 33h, 0C4h
+	db	2Eh, 0EEh, 55h, 26h, 0F6h, 46h, 4, 40h, 74h, 0Dh, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 0F3h, 36h, 0C4h, 2Eh, 0EEh, 55h, 0EBh, 7, 0E8h, 0EAh
+	db	36h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 9Ah, 0Bh, 0F7h, 6, 7Ch, 51h, 8
+	db	10h, 75h, 39h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0DAh, 43h, 0C4h, 2Eh
+	db	0EEh, 55h, 0E8h, 0D3h, 43h, 0C4h, 2Eh, 0F6h, 55h, 0C5h, 3Eh, 0EEh
+	db	55h, 0F6h, 45h, 4, '@t-', 8Bh, 45h, 0Eh, 26h, 89h, 46h, 0Eh, 26h
+	db	80h, 4Eh, 4, 40h, 8Bh, 45h, 10h, 26h, 8Bh, 4Eh, 0Ah, 26h, 8Bh
+	db	7Eh, 0Ch, 26h, 8Ah, 5Eh, 24h, 0EBh, 24h, 0C4h, 2Eh, 0F6h, 55h
+	db	0E8h, 0B4h, 43h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0ADh, 43h, 0EBh, 0C5h
+	db	26h, 0F6h, 46h, 4, '@tI&', 8Bh, 46h, 10h, 8Bh, 4Dh, 0Ah, 8Bh, 7Dh
+	db	0Ch, 8Ah, 5Dh, 24h, 99h, 8Ah, 0FAh, 16h, 1Fh, 26h, 0F6h, 46h, 5
+	db	80h, 75h, 1Eh, 0E8h, 16h, 0E7h, 8Ah, 47h, 4, 98h, 3Bh, 47h, 2
+	db	75h, 9, 32h, 47h, 1, 24h, 80h, 8Bh, 7, 74h, 9, 0B9h, 2Ch, 0, 0E8h
+	db	0F9h, 0Dh, 0B8h, 1, 0, 26h, 89h, 46h, 10h, 3Dh, 1, 0, 74h, 5, 26h
+	db	80h, 4Eh, 4, 20h, 0C5h, 3Eh, 0EEh, 55h, 8Ah, 45h, 5, 24h, 3, 26h
+	db	8, 46h, 5, 8Bh, 45h, 0Ah, 8Bh, 55h, 0Ch, 8Ah, '}$&', 8Bh, 4Eh
+	db	0Ah, 26h, 8Bh, 7Eh, 0Ch, 26h, 8Ah, 5Eh, 24h, 16h, 1Fh, 0E8h, 0C6h
+	db	0E6h, 0EBh, 62h, 0E8h, 58h, 9, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 2Ch
+	db	43h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, '%C&', 8Bh, 46h, 0Ah, 26h, 8Bh
+	db	56h, 0Ch, 26h, 8Ah, 7Eh, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Bh, 4Eh
+	db	0Ah, 26h, 8Bh, 7Eh, 0Ch, 26h, 8Ah, 5Eh, 24h, 0E8h, 0, 0E6h, 0EBh
+	db	30h, 0E8h, 26h, 9, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0FAh, 42h, 0C4h
+	db	2Eh, 0EEh, 55h, 0E8h, 0F3h, 42h, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh
+	db	56h, 0Ch, 26h, 8Ah, 7Eh, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Bh, 4Eh
+	db	0Ah, 26h, 8Bh, 7Eh, 0Ch, 26h, 8Ah, 5Eh, 24h, 0E8h, 17h, 0E6h, 0C4h
+	db	2Eh, 0F6h, 55h, 8Bh, 7, 26h, 89h, 46h, 0Ah, 8Bh, 47h, 2, 26h, 89h
+	db	46h, 0Ch, 8Ah, 47h, 4, 26h, 88h, 46h, 24h, 0E8h, 0, 43h, 0E9h
+	db	0D1h, 8, 0E8h, 0D8h, 8, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h, 24h
+	db	1, 74h, 19h, 33h, 0C0h, 26h, 0F7h, 56h, 0Ah, 26h, 0F7h, 56h, 0Ch
+	db	26h, 83h, 46h, 0Ah, 1, 26h, 11h, 46h, 0Ch, 26h, 10h, 46h, 24h
+	db	0EBh, 75h, 26h, 83h, 7Eh, 0Ch, 0, 'u$&', 8Bh, 4Eh, 0Ah, 83h, 0F9h
+	db	20h, 73h, 1Bh, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh
+	db	5Eh, 0Ch, 0E3h, 19h, 26h, 8Ah, 76h, 24h, 0D0h, 0EEh, 0D1h, 0DBh
+	db	0D1h, 0D8h, 49h, 0EBh, 0F1h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h
+	db	24h, 8Ah, 0E0h, 8Bh, 0D8h, 26h, 8Ah, 4Eh, 24h, 0C4h, 2Eh, 0F6h
+	db	55h, 26h, 89h, 46h, 0Ah, 26h, 89h, 5Eh, 0Ch, 26h, 88h, 4Eh, 24h
+	db	0E9h, 5Ch, 8, 0E8h, 63h, 8, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h
+	db	24h, 1, 74h, 19h, 33h, 0C0h, 26h, 0F7h, 56h, 0Ah, 26h, 0F7h, 56h
+	db	0Ch, 26h, 83h, 46h, 0Ah, 1, 26h, 11h, 46h, 0Ch, 26h, 10h, 46h
+	db	24h, 0EBh, 8Bh, 26h, 83h, 7Eh, 0Ch, 0, 75h, 1Eh, 26h, 8Bh, 4Eh
+	db	0Ah, 83h, 0F9h, 20h, 73h, 15h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Bh
+	db	46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch, 0E3h, 13h, 0D1h, 0E0h, 0D1h, 0D3h
+	db	49h, 0EBh, 0F7h, 0C4h, 2Eh, 0EEh, 55h, 33h, 0C0h, 8Bh, 0D8h, 26h
+	db	88h, 46h, 24h, 0F7h, 6, 7Ch, 51h, 8, 10h, 75h, 4, 26h, 8Bh, 5Eh
+	db	0Ch, 26h, 8Ah, 4Eh, 24h, 0C4h, 2Eh, 0F6h, 55h, 26h, 89h, 46h, 0Ah
+	db	0F7h, 6, 7Ch, 51h, 0, 20h, 75h, 0Ch, 32h, 0C9h, 0F7h, 6, 7Ch, 51h
+	db	8, 0, 75h, 2, 33h, 0DBh, 26h, 89h, 5Eh, 0Ch, 26h, 88h, 4Eh, 24h
+	db	0E9h, 0CDh, 7
+L0691E:	mov	word ptr ds:[55EEh], bp	;@0691E
+	mov	word ptr ds:[55F0h], es	;@06922
+	call	L071F1	;@06926
+	test	word ptr ds:[517Ch], 1000h	;@06929
+	je	@@1	;@0692F
+	call	L09DB7	;@06931
+	mov	byte ptr es:[bp], 0	;@06934
+@@1:	test	byte ptr es:[bp+4], 1	;@06939
+	je	@@2	;@0693E
+	xor	byte ptr es:[bp+4], 2	;@06940
+	jmp	L070B0	;@06945
+@@2:	not	word ptr es:[bp+0Ah]	;@06948
+	not	word ptr es:[bp+0Ch]	;@0694C
+	add	word ptr es:[bp+0Ah], 1	;@06950
+	adc	word ptr es:[bp+0Ch], 0	;@06955
+	not	byte ptr es:[bp+24h]	;@0695A
+	call	L0AB17	;@0695E
+	jmp	L070B0	;@06961
+	db	0E8h, 0ADh, 0	;@06964
+L06967:	call	L07147	;@06967
+	test	byte ptr es:[bp+4], 4	;@0696A
+	je	@@2	;@0696F
+	mov	ax, word ptr es:[bp+0Ah]	;@06971
+	or	al, byte ptr es:[bp+24h]	;@06975
+	or	ax, word ptr es:[bp+0Ch]	;@06979
+	je	@@1	;@0697D
+	mov	cx, 23h	;@0697F
+	call	L0AB06	;@06982
+@@1:	add	byte ptr es:[bp+1], 5	;@06985
+	test	byte ptr ds:[5186h], 80h	;@0698A
+	je	@@2	;@0698F
+	test	word ptr ds:[5182h], 4000h	;@06991
+	je	@@2	;@06997
+	mov	cx, 807Fh	;@06999
+	call	L07559	;@0699C
+@@2:	mov	al, byte ptr es:[bp+0Bh]	;@0699F
+	xor	ah, ah	;@069A3
+	mov	word ptr es:[bp+0Ah], ax	;@069A5
+	xor	ax, ax	;@069A9
+	mov	word ptr es:[bp+0Ch], ax	;@069AB
+	mov	byte ptr es:[bp+24h], ah	;@069AF
+	jmp	L070B0	;@069B3
+	db	0E8h, 5Bh, 0	;@069B6
+L069B9:	call	L07147	;@069B9
+	test	byte ptr es:[bp+4], 4	;@069BC
+	je	@@1	;@069C1
+	add	byte ptr es:[bp+1], 4	;@069C3
+	test	byte ptr ds:[5186h], 80h	;@069C8
+	je	@@1	;@069CD
+	test	word ptr ds:[5182h], 4000h	;@069CF
+	je	@@1	;@069D5
+	mov	cx, 807Fh	;@069D7
+	call	L07559	;@069DA
+@@1:	xor	ax, ax	;@069DD
+	mov	byte ptr es:[bp+0Bh], al	;@069DF
+	mov	word ptr es:[bp+0Ch], ax	;@069E3
+	mov	byte ptr es:[bp+24h], al	;@069E7
+	jmp	L070B0	;@069EB
+	db	0E8h, 7Fh, 7, 0E8h, 70h, 0, 0E9h, 0B9h, 6, 26h, 80h, 4Eh, 5, 10h	;@069EE
+	db	80h, 3Eh, 0CBh, 38h, 0, 74h, 0Eh, 0F7h, 6, 7Ch, 51h, 0, 20h, 75h
+	db	6, 0F9h, 8Bh, 26h, 0AEh, 38h, 0C3h, 32h, 0C0h, 0C3h
+L06A14:	test	byte ptr es:[bp], 80h	;@06A14
+	jne	@@2	;@06A19
+	mov	al, byte ptr es:[bp+1]	;@06A1B
+	and	al, 7	;@06A1F
+	cmp	al, 4	;@06A21
+	jne	@@1	;@06A23
+	mov	ax, word ptr es:[bp+18h]	;@06A25
+	push	es	;@06A29
+	push	bp	;@06A2A
+	call	far ptr L101E0	;@06A2B
+	call	L0167F	;@06A30
+	pop	bp	;@06A33
+	pop	es	;@06A34
+	mov	word ptr es:[bp+18h], cx	;@06A35
+	and	byte ptr es:[bp+1], 0F8h	;@06A39
+	or	byte ptr es:[bp+1], 1	;@06A3E
+@@1:	ret	;@06A43
+@@2:	mov	al, byte ptr es:[bp]	;@06A44
+	mov	cx, word ptr es:[bp+2]	;@06A48
+	mov	byte ptr es:[bp+25h], al	;@06A4C
+	mov	word ptr es:[bp+1Ch], cx	;@06A50
+	or	byte ptr es:[bp+5], 40h	;@06A54
+	mov	byte ptr es:[bp], 0	;@06A59
+	mov	word ptr es:[bp+2], 0	;@06A5E
+	and	byte ptr es:[bp+5], 0DFh	;@06A64
+	xor	ax, ax	;@06A69
+	mov	word ptr es:[bp+22h], ax	;@06A6B
+	mov	word ptr es:[bp+1Eh], ax	;@06A6F
+	mov	word ptr es:[bp+20h], ax	;@06A73
+	test	byte ptr es:[bp+4], 4	;@06A77
+	je	@@4	;@06A7C
+	cmp	al, 2	;@06A7E
+	jne	@@3	;@06A80
+	and	byte ptr es:[bp+4], 0FBh	;@06A82
+	xor	ax, ax	;@06A87
+	mov	byte ptr es:[bp+1], al	;@06A89
+	mov	word ptr es:[bp+18h], ax	;@06A8D
+	mov	word ptr es:[bp+1Ah], ax	;@06A91
+	jmp	short @@4	;@06A95
+@@3:	cmp	al, 3	;@06A97
+	jne	@@4	;@06A99
+	sub	byte ptr es:[bp+1], 2	;@06A9B
+	call	L0A9EE	;@06AA0
+@@4:	xor	ax, ax	;@06AA3
+	mov	word ptr es:[bp+14h], ax	;@06AA5
+	mov	word ptr es:[bp+16h], ax	;@06AA9
+	ret	;@06AAD
+	db	26h, 0F6h, 46h, 4, 4, 74h, 0Bh, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 4, 75h	;@06AAE
+	db	1, 0C3h, 0E8h, 0ADh, 6, 26h, 0F6h, 46h, 4, 4, 74h, 0Ah, 26h, 80h, 66h, 1
+	db	0F8h, 26h, 80h, 4Eh, 1, 4, 26h, 8Bh, 46h, 16h, 99h, 26h, 89h, 46h, 0Ah, 26h
+	db	89h, 56h, 0Ch, 26h, 88h, 56h, 24h, 33h, 0C0h, 26h, 89h, 46h, 14h, 26h, 89h, 46h
+	db	16h, 26h, 80h, 66h, 4, 8Fh, 26h, 80h, 66h, 5, 9Ch, 26h, 80h, 4Eh, 5, 1
+	db	26h, 89h, 46h, 22h, 26h, 89h, 46h, 1Eh, 26h, 89h, 46h, 20h, 26h, 89h, 46h, 0Eh
+	db	26h, 89h, 46h, 12h, 26h, 0C7h, 46h, 10h, 1, 0, 26h, 88h, 46h, 25h, 26h, 89h
+	db	46h, 1Ch, 0E9h, 8Dh, 5, 8Bh, 0D8h, 0E8h, 74h, 0EEh, 0E8h, 14h, 0CEh, 6, 55h, 8Bh
+	db	0C3h, 9Ah
 	dd	L101E0
 	db	53h, 0E8h, 0B1h, 95h, 5Bh, 5Dh, 7, 74h, 0Bh, 26h, 89h, 46h, 0Ah, 26h, 89h, 56h
 	db	0Ch, 32h, 0C0h, 0C3h, 26h, 89h, 5Eh, 6, 0E8h, 0AAh, 7, 0EBh, 0F4h, 8Bh, 0D8h, 0E8h
@@ -4353,42 +7224,176 @@ L05BA0:	sub	ax, word ptr ds:[55FEh]	;@05BA0
 	db	0Ch, 32h, 0C0h, 0C3h, 26h, 89h, 5Eh, 6, 0E8h, 17h, 7, 33h, 0C0h, 8Bh, 0D0h, 0EBh
 	db	0E8h, 0E8h, 6, 6, 0E8h, 0C9h, 31h, 26h, 8Bh, 46h, 0Ah, 0E8h, 0D6h, 3Dh, 0Ch, 80h
 	db	26h, 88h, 46h, 0, 33h, 0C0h, 26h, 89h, 46h, 2, 26h, 89h, 46h, 0Ah, 26h, 89h
-	db	46h, 0Ch, 26h, 88h, 46h, 24h, 0EBh, 8, 0E8h, 8Ah, 0EDh, 26h, 0C6h, 46h, 0, 88h
-	db	6, 55h, 0E8h, 0AEh, 0CDh, 5Dh, 7, 26h, 89h, 46h, 0Ah, 26h, 89h, 56h, 0Ch, 83h
-	db	3Eh, 0B0h, 51h, 0, 74h, 7, 26h, 0C6h, 46h, 0, 0, 0EBh, 43h, 8Bh, 0Eh, 7Eh
-	db	51h, 0E3h, 0F3h, 26h, 0C6h, 46h, 1, 3, 26h, 0C6h, 46h, 4, 4, 6, 55h, 8Bh
-	db	0C1h, 9Ah
-	dd	L101E0
-	db	0E8h, 2Fh, 0AAh, 5Dh, 7, 26h, 89h, 46h, 1Ah, 26h, 89h, 4Eh, 18h, 0E8h, 43h, 9Bh
-	db	0B2h, 1, 74h, 2, 0B2h, 2, 26h, 8, 56h, 5, 3Bh, 0C1h, 75h, 0Ch, 8Bh, 0C1h
-	db	0E8h, 53h, 9Bh, 75h, 5, 26h, 80h, 6Eh, 1, 1, 32h, 0C0h, 0C3h, 0B8h, 61h, 0
-	db	8Bh, 0C8h, 9Ah
-	dd	L100B0
-	db	9Ah
-	dd	L101E0
-	db	26h, 89h, 4Eh, 2, 49h, 89h, 0Eh, 0Ah, 56h, 8Bh, 0Eh, 6, 56h, 26h, 89h, 4Eh
-	db	0, 0A3h, 6, 56h, 40h, 0A3h, 8, 56h, 0EBh, 0Ah, 90h, 8Bh, 0D8h, 83h, 3Eh, 0Ah
-	db	56h, 0, 74h, 0CDh, 53h, 8Bh, 1Eh, 8, 56h, 0C1h, 0C3h, 4, 8Bh, 0EBh, 83h, 0E5h
-	db	0F0h, 83h, 0E3h, 0Fh, 0D1h, 0E3h, 36h, 8Eh, 87h, 0D2h, 38h, 5Bh, 0B8h, 3, 0, 1
-	db	6, 8, 56h, 29h, 6, 0Ah, 56h, 33h, 0C0h, 8Bh, 0FDh, 0B9h, 14h, 0, 0F3h, 0ABh
-	db	26h, 0C6h, 46h, 10h, 1, 8Bh, 0C3h, 2Bh, 6, 0FEh, 55h, 72h, 6Ch, 3Dh, 58h, 0
-	db	73h, 67h, 26h, 0C6h, 46h, 4, 40h, 26h, 89h, 5Eh, 0Eh, 3Dh, 3Ch, 0, 72h, 12h
-	db	3Dh, 54h, 0, 73h, 27h, 26h, 0C6h, 46h, 0, 2, 26h, 80h, 4Eh, 5, 1, 32h
-	db	0C0h, 0C3h, 3Dh, 10h, 0, 72h, 29h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 15h, 26h
-	db	0C6h, 46h, 0, 3, 26h, 80h, 4Eh, 5, 2, 32h, 0C0h, 0C3h, 0F7h, 6, 7Ch, 51h
-	db	8, 0, 75h, 0D1h, 33h, 0C0h, 26h, 88h, 46h, 4, 26h, 89h, 46h, 0Eh, 0EBh, 19h
-	db	26h, 0C6h, 46h, 0, 1, 32h, 0C0h, 0C3h, 8Bh, 0CBh, 8Bh, 0DAh, 8Ah, 0F0h, 25h, 1Fh
-	db	0, 0D1h, 0E0h, 8Bh, 0F8h, 0FFh, 0A5h, 2Ah, 1Dh, 8Bh, 0C2h, 6, 55h, 0E8h, 9Ah, 97h
-	db	5Dh, 7, 0A8h, 20h, 74h, 0E2h, 8Bh, 0DAh, 24h, 0Fh, 2Ch, 80h, 0E8h, 2Fh, 0F0h, 26h
-	db	88h, 46h, 0, 26h, 89h, 7Eh, 2, 26h, 0C6h, 46h, 1, 3, 26h, 0C6h, 46h, 4
-	db	4, 3Ch, 89h, 75h, 9, 26h, 80h, 4Eh, 1, 10h, 26h, 89h, 5Eh, 26h, 0E8h, 0B5h
-	db	0CBh, 56h, 6, 55h, 53h, 0C1h, 0C3h, 4, 8Bh, 0EBh, 83h, 0E5h, 0F0h, 83h, 0E3h, 0Fh
-	db	0D1h, 0E3h, 36h, 8Eh, 87h, 0D2h, 38h, 5Bh, 0E8h, 0Fh, 0A6h, 89h, 2Eh, 0Ch, 56h, 5Dh
-	db	7, 26h, 89h, 46h, 0Ah, 26h, 89h, 56h, 0Ch, 26h, 89h, 76h, 1Ah, 26h, 89h, 7Eh
-	db	18h, 72h, 10h, 26h, 0C6h, 46h, 5, 20h, 26h, 89h, 4Eh, 22h, 0A1h, 0Ch, 56h, 26h
-	db	89h, 46h, 20h, 26h, 8, 5Eh, 5, 8Bh, 0C6h, 5Eh, 3Bh, 0C7h, 75h, 0Eh, 23h, 0C0h
-	db	74h, 0Ah, 0E8h, 0E5h, 99h, 75h, 5, 26h, 80h, 6Eh, 1, 1, 32h, 0C0h, 0C3h, 0E8h
-	db	54h, 0CBh, 56h, 53h, 6, 55h, 8Bh, 0C3h, 9Ah
+	db	46h, 0Ch, 26h, 88h, 46h, 24h, 0EBh, 8
+L06C0F:	call	L0599C	;@06C0F
+	mov	byte ptr es:[bp], 88h	;@06C12
+	push	es	;@06C17
+	push	bp	;@06C18
+	call	L039CA	;@06C19
+	pop	bp	;@06C1C
+	pop	es	;@06C1D
+	mov	word ptr es:[bp+0Ah], ax	;@06C1E
+	mov	word ptr es:[bp+0Ch], dx	;@06C22
+	cmp	word ptr ds:[51B0h], 0	;@06C26
+	je	@@2	;@06C2B
+@@1:	mov	byte ptr es:[bp], 0	;@06C2D
+	jmp	short @@4	;@06C32
+@@2:	mov	cx, word ptr ds:[517Eh]	;@06C34
+	jcxz	@@1	;@06C38
+	mov	byte ptr es:[bp+1], 3	;@06C3A
+	mov	byte ptr es:[bp+4], 4	;@06C3F
+	push	es	;@06C44
+	push	bp	;@06C45
+	mov	ax, cx	;@06C46
+	call	far ptr L101E0	;@06C48
+	call	L0167F	;@06C4D
+	pop	bp	;@06C50
+	pop	es	;@06C51
+	mov	word ptr es:[bp+1Ah], ax	;@06C52
+	mov	word ptr es:[bp+18h], cx	;@06C56
+	call	L007A0	;@06C5A
+	mov	dl, 1	;@06C5D
+	je	@@3	;@06C5F
+	mov	dl, 2	;@06C61
+@@3:	or	byte ptr es:[bp+5], dl	;@06C63
+	cmp	ax, cx	;@06C67
+	jne	@@4	;@06C69
+	mov	ax, cx	;@06C6B
+	call	L007C3	;@06C6D
+	jne	@@4	;@06C70
+	sub	byte ptr es:[bp+1], 1	;@06C72
+@@4:	xor	al, al	;@06C77
+	ret	;@06C79
+L06C7A:	mov	ax, 61h	;@06C7A
+	mov	cx, ax	;@06C7D
+	call	far ptr L100B0	;@06C7F
+	call	far ptr L101E0	;@06C84
+	mov	word ptr es:[bp+2], cx	;@06C89
+	dec	cx	;@06C8D
+	mov	word ptr ds:[560Ah], cx	;@06C8E
+	mov	cx, word ptr ds:[5606h]	;@06C92
+	mov	word ptr es:[bp], cx	;@06C96
+	mov	word ptr ds:[5606h], ax	;@06C9A
+	inc	ax	;@06C9D
+	mov	word ptr ds:[5608h], ax	;@06C9E
+	jmp	L06CAD	;@06CA1
+L06CA4:	mov	bx, ax	;@06CA4
+	cmp	word ptr ds:[560Ah], 0	;@06CA6
+	je	L06C7A	;@06CAB
+L06CAD:	push	bx	;@06CAD
+	mov	bx, word ptr ds:[5608h]	;@06CAE
+	rol	bx, 4	;@06CB2
+	mov	bp, bx	;@06CB5
+	and	bp, -10h	;@06CB7
+	and	bx, 0Fh	;@06CBA
+	shl	bx, 1	;@06CBD
+	mov	es, word ptr ss:[bx+38D2h]	;@06CBF
+	pop	bx	;@06CC4
+	mov	ax, 3	;@06CC5
+	add	word ptr ds:[5608h], ax	;@06CC8
+	sub	word ptr ds:[560Ah], ax	;@06CCC
+	xor	ax, ax	;@06CD0
+	mov	di, bp	;@06CD2
+	mov	cx, 14h	;@06CD4
+	rep stosw	;@06CD7
+	mov	byte ptr es:[bp+10h], 1	;@06CD9
+	mov	ax, bx	;@06CDE
+	sub	ax, word ptr ds:[55FEh]	;@06CE0
+	jb	@@7	;@06CE4
+	cmp	ax, 58h	;@06CE6
+	jae	@@7	;@06CE9
+	mov	byte ptr es:[bp+4], 40h	;@06CEB
+	mov	word ptr es:[bp+0Eh], bx	;@06CF0
+	cmp	ax, 3Ch	;@06CF4
+	jb	@@2	;@06CF7
+	cmp	ax, 54h	;@06CF9
+	jae	@@3	;@06CFC
+@@1:	mov	byte ptr es:[bp], 2	;@06CFE
+	or	byte ptr es:[bp+5], 1	;@06D03
+	xor	al, al	;@06D08
+	ret	;@06D0A
+@@2:	cmp	ax, 10h	;@06D0B
+	jb	@@5	;@06D0E
+	test	word ptr ds:[517Ch], 8	;@06D10
+	je	@@4	;@06D16
+	mov	byte ptr es:[bp], 3	;@06D18
+	or	byte ptr es:[bp+5], 2	;@06D1D
+	xor	al, al	;@06D22
+	ret	;@06D24
+@@3:	test	word ptr ds:[517Ch], 8	;@06D25
+	jne	@@1	;@06D2B
+@@4:	xor	ax, ax	;@06D2D
+	mov	byte ptr es:[bp+4], al	;@06D2F
+	mov	word ptr es:[bp+0Eh], ax	;@06D33
+	jmp	short @@7	;@06D37
+@@5:	mov	byte ptr es:[bp], 1	;@06D39
+	xor	al, al	;@06D3E
+	ret	;@06D40
+@@6:	mov	cx, bx	;@06D41
+	mov	bx, dx	;@06D43
+	mov	dh, al	;@06D45
+	and	ax, 1Fh	;@06D47
+	shl	ax, 1	;@06D4A
+	mov	di, ax	;@06D4C
+	jmp	word ptr [di+1D2Ah]	;@06D4E
+@@7:	mov	ax, dx	;@06D52
+	push	es	;@06D54
+	push	bp	;@06D55
+	call	L004F3	;@06D56
+	pop	bp	;@06D59
+	pop	es	;@06D5A
+	test	al, 20h	;@06D5B
+	je	@@6	;@06D5D
+	mov	bx, dx	;@06D5F
+	and	al, 0Fh	;@06D61
+	sub	al, 80h	;@06D63
+	call	L05D97	;@06D65
+	mov	byte ptr es:[bp], al	;@06D68
+	mov	word ptr es:[bp+2], di	;@06D6C
+	mov	byte ptr es:[bp+1], 3	;@06D70
+	mov	byte ptr es:[bp+4], 4	;@06D75
+	cmp	al, 89h	;@06D7A
+	jne	@@8	;@06D7C
+	or	byte ptr es:[bp+1], 10h	;@06D7E
+	mov	word ptr es:[bp+26h], bx	;@06D83
+@@8:	call	L0393F	;@06D87
+	push	si	;@06D8A
+	push	es	;@06D8B
+	push	bp	;@06D8C
+	push	bx	;@06D8D
+	rol	bx, 4	;@06D8E
+	mov	bp, bx	;@06D91
+	and	bp, -10h	;@06D93
+	and	bx, 0Fh	;@06D96
+	shl	bx, 1	;@06D99
+	mov	es, word ptr ss:[bx+38D2h]	;@06D9B
+	pop	bx	;@06DA0
+	call	L013B3	;@06DA1
+	mov	word ptr ds:[560Ch], bp	;@06DA4
+	pop	bp	;@06DA8
+	pop	es	;@06DA9
+	mov	word ptr es:[bp+0Ah], ax	;@06DAA
+	mov	word ptr es:[bp+0Ch], dx	;@06DAE
+	mov	word ptr es:[bp+1Ah], si	;@06DB2
+	mov	word ptr es:[bp+18h], di	;@06DB6
+	jb	@@9	;@06DBA
+	mov	byte ptr es:[bp+5], 20h	;@06DBC
+	mov	word ptr es:[bp+22h], cx	;@06DC1
+	mov	ax, word ptr ds:[560Ch]	;@06DC5
+	mov	word ptr es:[bp+20h], ax	;@06DC8
+@@9:	or	byte ptr es:[bp+5], bl	;@06DCC
+	mov	ax, si	;@06DD0
+	pop	si	;@06DD2
+	cmp	ax, di	;@06DD3
+	jne	@@10	;@06DD5
+	and	ax, ax	;@06DD7
+	je	@@10	;@06DD9
+	call	L007C3	;@06DDB
+	jne	@@10	;@06DDE
+	sub	byte ptr es:[bp+1], 1	;@06DE0
+@@10:	xor	al, al	;@06DE5
+	ret	;@06DE7
+	db	0E8h, 54h, 0CBh, 56h, 53h, 6, 55h, 8Bh, 0C3h, 9Ah	;@06DE8
 	dd	L101E0
 	db	0E8h, 0C7h, 0A2h, 89h, 2Eh, 0Ch, 56h, 5Dh, 7, 74h, 9, 5Bh, 5Eh, 26h, 89h, 5Eh
 	db	6, 0E9h, 70h, 1, 26h, 0C6h, 46h, 0, 88h, 26h, 0C6h, 46h, 1, 3, 26h, 0C6h
@@ -4439,91 +7444,377 @@ L05BA0:	sub	ax, word ptr ds:[55FEh]	;@05BA0
 	db	0E8h, 0BFh, 0C8h, 6, 55h, 8Bh, 0C3h, 9Ah
 	dd	L101E0
 	db	0E8h, 1, 9Bh, 5Dh, 7, 26h, 89h, 46h, 0Ah, 26h, 89h, 56h, 0Ch, 32h, 0C0h, 0C3h
-	db	26h, 0C6h, 46h, 4, 1, 26h, 89h, 5Eh, 8, 32h, 0C0h, 0C3h, 89h, 2Eh, 0EEh, 55h
-	db	8Ch, 6, 0F0h, 55h, 0E9h, 84h, 3Ah, 0C4h, 2Eh, 0EEh, 55h, 32h, 0C0h, 0C3h, 89h, 3Eh
-	db	0EEh, 55h, 0A3h, 0F0h, 55h, 89h, 2Eh, 0F6h, 55h, 8Ch, 6, 0F8h, 55h, 8Eh, 0C0h, 8Bh
-	db	0EFh, 0E8h, 67h, 3Ah, 26h, 8Bh, 46h, 6, 26h, 8Ah, 5Eh, 5, 80h, 0E3h, 90h, 0C4h
-	db	2Eh, 0F6h, 55h, 26h, 8, 5Eh, 5, 23h, 0C0h, 74h, 4, 26h, 89h, 46h, 6, 0E9h
-	db	49h, 3Ah, 0E8h, 2Fh, 3, 0C4h, 2Eh, 0F6h, 55h, 32h, 0C0h, 0C3h, 0E8h, 0BFh, 0FFh, 0E8h
-	db	5Ah, 3, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0EFh, 0, 0E8h, 39h, 24h, 0E8h, 0AFh, 2Ch, 26h
-	db	8Ah, 46h, 5, 24h, 3, 0C4h, 2Eh, 0F6h, 55h, 26h, 8, 46h, 5, 0E8h, 0D8h, 0
-	db	0E8h, 22h, 24h, 0E9h, 98h, 2Ch, 0E8h, 83h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0C8h, 0
-	db	0E8h, 12h, 24h, 0E9h, 88h, 2Ch, 0E8h, 73h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0B8h, 0
-	db	0E8h, 2, 24h, 26h, 0F6h, 46h, 4, 40h, 75h, 3, 0E9h, 71h, 2Ch, 0C3h, 0E8h, 5Bh
-	db	0FFh, 0E8h, 0A4h, 0, 0E8h, 0EEh, 23h, 0E8h, 8Ch, 2Ch, 26h, 0C6h, 46h, 0, 1, 26h
-	db	0F6h, 46h, 4, 4, 74h, 0Ah, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 1, 75h, 1
-	db	0C3h, 0B9h, 6Ch, 0, 0E9h, 28h, 39h, 0E8h, 32h, 0FFh, 0E8h, 20h, 0, 0E8h, 0ACh, 0
-	db	26h, 0C6h, 46h, 0, 0, 26h, 0F6h, 46h, 4, 4, 74h, 0Ah, 26h, 8Ah, 46h, 1
-	db	24h, 7, 3Ch, 4, 73h, 1, 0C3h, 0B9h, 6Dh, 0, 0E9h, 2, 39h, 26h, 8Ah, 46h
-	db	0, 0A8h, 80h, 74h, 1, 0C3h, 3Ch, 2, 74h, 0Eh, 3Ch, 3, 74h, 0Ah, 3Ch, 0
-	db	74h, 6, 0B9h, 1Ah, 0, 0E8h, 0A8h, 3, 26h, 0C6h, 46h, 0, 0, 0C3h, 26h, 8Ah
-	db	46h, 0, 0A8h, 80h, 74h, 5, 3Ch, 8Ah, 75h, 6, 0C3h, 0E8h, 0D8h, 0FFh, 0EBh, 0F6h
-	db	26h, 0C6h, 46h, 0, 80h, 0B9h, 16h, 0, 0E9h, 85h, 3, 26h, 8Ah, 46h, 0, 0A8h
-	db	80h, 74h, 5, 3Ch, 87h, 73h, 6, 0C3h, 0E8h, 0BBh, 0FFh, 0EBh, 0F6h, 26h, 0C6h, 46h
-	db	0, 80h, 0B9h, 16h, 0, 0E9h, 68h, 3, 26h, 0F6h, 46h, 5, 10h, 75h, 8, 26h
-	db	0F6h, 46h, 0, 80h, 75h, 4, 0C3h, 0E9h, 11h, 0F8h, 26h, 80h, 66h, 0, 7Fh, 26h
-	db	80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h, 46h, 1, 26h, 89h, 46h, 1Ah, 26h, 89h
-	db	46h, 18h, 26h, 89h, 46h, 14h, 0B9h, 15h, 0, 0E9h, 34h, 3, 26h, 0F6h, 46h, 0
-	db	80h, 74h, 1, 0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 14h, 26h, 0F6h, 46h, 4
-	db	80h, 74h, 17h, 0B9h, 1Eh, 0, 0E8h, 17h, 3, 26h, 80h, 66h, 4, 7Fh, 0EBh, 0Ah
-	db	26h, 0F6h, 46h, 5, 20h, 74h, 3, 0E9h, 3Bh, 2, 0E8h, 0D4h, 1Eh, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 24h, 0A8h, 9Ah
-	dd	L101E0
-	db	8Bh, 0FDh, 8Ch, 0C0h, 5Dh, 7, 0E9h, 6Ah, 2, 26h, 8Ah, 46h, 4, 0A8h, 94h, 75h
-	db	1, 0C3h, 0A8h, 80h, 74h, 8, 0B9h, 1Eh, 0, 0E8h, 0D8h, 2, 24h, 7Fh, 0A8h, 10h
-	db	74h, 0Eh, 0B9h, 1Ch, 0, 0E8h, 0CCh, 2, 24h, 0EFh, 26h, 0C7h, 46h, 12h, 0, 0
-	db	0A8h, 4, 74h, 0Ah, 26h, 88h, 46h, 4, 0B9h, 6Eh, 0, 0E9h, 0F5h, 37h, 26h, 88h
-	db	46h, 4, 0C3h, 26h, 0F6h, 46h, 4, 80h, 75h, 1, 0C3h, 26h, 80h, 66h, 4, 7Fh
-	db	0B9h, 1Eh, 0, 0E9h, 9Eh, 2, 26h, 8Ah, 46h, 4, 0A8h, 0B0h, 75h, 1, 0C3h, 0A8h
-	db	80h, 74h, 8, 0B9h, 1Eh, 0, 0E8h, 8Bh, 2, 24h, 7Fh, 0A8h, 10h, 74h, 0Eh, 0B9h
-	db	1Ch, 0, 0E8h, 7Fh, 2, 24h, 0EFh, 26h, 0C7h, 46h, 12h, 0, 0, 0A8h, 20h, 74h
-	db	0Eh, 0B9h, 1Dh, 0, 0E8h, 6Dh, 2, 24h, 0DFh, 26h, 0C7h, 46h, 10h, 1, 0, 26h
-	db	88h, 46h, 4, 0C3h, 0F6h, 6, 0C9h, 38h, 0Bh, 75h, 1Eh, 80h, 3Eh, 0CCh, 38h, 0
-	db	75h, 6, 80h, 0Eh, 0CAh, 38h, 1, 0C3h, 6, 55h, 26h, 8Bh, 46h, 6, 9Ah
-	dd	L101E0
-	db	0E8h, 7Fh, 93h, 5Dh, 7, 0C3h, 0F6h, 6, 0C9h, 38h, 8, 75h, 7, 80h, 3Eh, 0CFh
-	db	38h, 0, 75h, 0E0h, 80h, 3Eh, 0CBh, 38h, 0, 75h, 0D9h, 0B9h, 2Bh, 10h, 26h, 8Bh
-	db	7Eh, 6, 0E9h, 1Ch, 2, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 4, 0C4h, 2Eh, 0F6h
-	db	55h, 26h, 8Ah, 66h, 4, 0A8h, 40h, 74h, 4Ah, 0F6h, 0C4h, 40h, 74h, 45h, 0A8h, 20h
-	db	74h, 16h, 0F6h, 0C4h, 20h, 74h, 11h, 26h, 80h, 66h, 4, 0DFh, 26h, 0C7h, 46h, 10h
-	db	1, 0, 0B9h, 1Bh, 0, 0E8h, 0E9h, 1, 0A8h, 10h, 75h, 5, 0F6h, 0C4h, 10h, 74h
-	db	22h, 33h, 0C9h, 0C4h, 2Eh, 0EEh, 55h, 26h, 89h, 4Eh, 12h, 26h, 80h, 66h, 4, 0EFh
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 89h, 4Eh, 12h, 26h, 80h, 66h, 4, 0EFh, 0B9h, 1Ch, 0
-	db	0E8h, 0BEh, 1, 0C5h, 3Eh, 0EEh, 55h, 0F6h, 45h, 4, 20h, 74h, 3Bh, 26h, 0F6h, 46h
-	db	4, 40h, 74h, 0Dh, 26h, 80h, 4Eh, 4, 10h, 26h, 8Bh, 46h, 0Eh, 26h, 89h, 46h
-	db	12h, 26h, 80h, 4Eh, 4, 60h, 8Bh, 45h, 0Eh, 26h, 89h, 46h, 0Eh, 8Bh, 45h, 10h
-	db	26h, 89h, 46h, 10h, 0F6h, 45h, 4, 10h, 74h, 46h, 26h, 80h, 4Eh, 4, 10h, 8Bh
-	db	45h, 12h, 26h, 89h, 46h, 12h, 0EBh, 38h, 0F6h, 45h, 4, 40h, 74h, 32h, 26h, 0F6h
-	db	46h, 4, 40h, 75h, 1Fh, 8Ah, 45h, 4, 24h, 70h, 26h, 8, 46h, 4, 8Bh, 45h
-	db	0Eh, 26h, 89h, 46h, 0Eh, 8Bh, 45h, 12h, 26h, 89h, 46h, 12h, 26h, 0C7h, 46h, 10h
-	db	1, 0, 0EBh, 0Ch, 26h, 80h, 4Eh, 4, 10h, 8Bh, 45h, 0Eh, 26h, 89h, 46h, 12h
-	db	8Ch, 0D0h, 8Eh, 0D8h, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 26h, 0F6h, 46h, 0, 80h, 75h, 2Ch
-	db	26h, 0F6h, 46h, 5, 40h, 74h, 1, 0C3h, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h, 5
-	db	40h, 74h, 19h, 26h, 8Ah, 5Eh, 25h, 26h, 8Bh, 46h, 1Ch, 0C4h, 2Eh, 0F6h, 55h, 26h
-	db	89h, 46h, 1Ch, 26h, 88h, 5Eh, 25h, 26h, 80h, 4Eh, 5, 40h, 0C3h, 0C4h, 2Eh, 0F6h
-	db	55h, 26h, 0F6h, 46h, 5, 20h, 74h, 1, 0C3h, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h
-	db	5, 20h, 74h, 21h, 26h, 8Bh, 46h, 1Eh, 26h, 8Bh, 5Eh, 20h, 26h, 8Bh, 56h, 22h
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 80h, 4Eh, 5, 20h, 26h, 89h, 46h, 1Eh, 26h, 89h, 5Eh
-	db	20h, 26h, 89h, 56h, 22h, 0C3h, 26h, 8Bh, 46h, 1Eh, 26h, 89h, 46h, 14h, 26h, 8Bh
-	db	46h, 20h, 26h, 89h, 46h, 16h, 26h, 0F6h, 46h, 0, 80h, 75h, 5, 26h, 0C6h, 46h
-	db	0, 80h, 26h, 8Bh, 46h, 22h, 23h, 0C0h, 74h, 25h, 26h, 89h, 46h, 18h, 8Bh, 0D8h
-	db	26h, 0F6h, 46h, 4, 4, 75h, 4, 26h, 89h, 5Eh, 1Ah, 26h, 8Ah, 46h, 1, 24h
-	db	7, 3Ch, 2, 73h, 5, 26h, 80h, 46h, 1, 2, 26h, 80h, 4Eh, 4, 4, 0C3h
-	db	8Bh, 0D8h, 26h, 80h, 4Eh, 0, 80h, 26h, 0F6h, 46h, 4, 4, 74h, 1Ah, 0F7h, 6
-	db	7Ch, 51h, 0, 10h, 74h, 12h, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 4, 72h, 8
-	db	53h, 0B9h, 6Dh, 0, 0E8h, 99h, 35h, 5Bh, 8Eh, 0DBh, 0F6h, 45h, 4, 4, 74h, 30h
-	db	83h, 7Dh, 6, 0, 75h, 2Ah, 8Bh, 5Dh, 1Ah, 26h, 0F6h, 46h, 4, 4, 75h, 4
-	db	26h, 89h, 5Eh, 1Ah, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 2, 73h, 5, 26h, 80h
-	db	46h, 1, 2, 26h, 89h, 5Eh, 18h, 26h, 89h, 5Eh, 22h, 26h, 80h, 4Eh, 4, 4
-	db	6, 55h, 8Ch, 0D8h, 8Eh, 0C0h, 8Bh, 0EFh, 16h, 1Fh, 0E8h, 69h, 35h, 26h, 8Bh, 46h
-	db	0Ah, 5Dh, 7, 26h, 89h, 46h, 16h, 26h, 89h, 46h, 20h, 26h, 80h, 4Eh, 5, 20h
-	db	0C3h, 80h, 3Eh, 0CCh, 38h, 0, 75h, 3, 0E9h, 0C9h, 0BFh, 0C3h, 26h, 0F6h, 46h, 0
-	db	80h, 75h, 7, 26h, 0F6h, 46h, 4, 0C0h, 74h, 8, 0E8h, 84h, 1Fh, 0E8h, 9Fh, 21h
-	db	0EBh, 6, 0E8h, 69h, 1Fh, 0E8h, 66h, 21h, 26h, 8Ah, 5Eh, 0, 80h, 0E3h, 7Fh, 0B8h
-	db	2, 0, 80h, 0FBh, 2, 74h, 12h, 0B8h, 4, 0, 80h, 0FBh, 3, 74h, 0Ah, 0B8h
-	db	6, 0, 80h, 0FBh, 5, 74h, 2, 33h, 0C0h, 0C3h, 0A1h, 0FEh, 55h, 5, 54h, 0
-	db	0B9h, 2, 0, 0E8h, 0D1h, 92h, 74h, 3, 0E8h, 23h, 0, 5, 2, 0, 0E2h, 0F3h
+	db	26h, 0C6h, 46h, 4, 1, 26h, 89h, 5Eh, 8, 32h, 0C0h, 0C3h
+L070A5:	mov	word ptr ds:[55EEh], bp	;@070A5
+	mov	word ptr ds:[55F0h], es	;@070A9
+	jmp	L0AB34	;@070AD
+L070B0:	les	bp, dword ptr ds:[55EEh]	;@070B0
+	xor	al, al	;@070B4
+	ret	;@070B6
+L070B7:	mov	word ptr ds:[55EEh], di	;@070B7
+	mov	word ptr ds:[55F0h], ax	;@070BB
+	mov	word ptr ds:[55F6h], bp	;@070BE
+	mov	word ptr ds:[55F8h], es	;@070C2
+	mov	es, ax	;@070C6
+	mov	bp, di	;@070C8
+	call	L0AB34	;@070CA
+	mov	ax, word ptr es:[bp+6]	;@070CD
+	mov	bl, byte ptr es:[bp+5]	;@070D1
+	and	bl, 90h	;@070D5
+	les	bp, dword ptr ds:[55F6h]	;@070D8
+	or	byte ptr es:[bp+5], bl	;@070DC
+	and	ax, ax	;@070E0
+	je	@@1	;@070E2
+	mov	word ptr es:[bp+6], ax	;@070E4
+@@1:	jmp	L0AB34	;@070E8
+L070EB:	call	L0741D	;@070EB
+L070EE:	les	bp, dword ptr ds:[55F6h]	;@070EE
+	xor	al, al	;@070F2
+	ret	;@070F4
+L070F5:	call	L070B7	;@070F5
+	call	L07455	;@070F8
+	les	bp, dword ptr ds:[55EEh]	;@070FB
+	call	L071F1	;@070FF
+	call	L0953E	;@07102
+	call	L09DB7	;@07105
+	mov	al, byte ptr es:[bp+5]	;@07108
+	and	al, 3	;@0710C
+	les	bp, dword ptr ds:[55F6h]	;@0710E
+	or	byte ptr es:[bp+5], al	;@07112
+	call	L071F1	;@07116
+	call	L0953E	;@07119
+	jmp	L09DB7	;@0711C
+	db	0E8h, 83h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0C8h, 0, 0E8h, 12h	;@0711F
+	db	24h, 0E9h, 88h, 2Ch, 0E8h, 73h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h
+	db	0B8h, 0, 0E8h, 2, 24h, 26h, 0F6h, 46h, 4, 40h, 75h, 3, 0E9h, 71h
+	db	2Ch, 0C3h
+L07147:	call	L070A5	;@07147
+	call	L071F1	;@0714A
+	call	L0953E	;@0714D
+	call	L09DDF	;@07150
+	mov	byte ptr es:[bp], 1	;@07153
+	test	byte ptr es:[bp+4], 4	;@07158
+	je	@@1	;@0715D
+	mov	al, byte ptr es:[bp+1]	;@0715F
+	and	al, 7	;@07163
+	cmp	al, 1	;@07165
+	jne	@@2	;@07167
+@@1:	ret	;@07169
+@@2:	mov	cx, 6Ch	;@0716A
+	jmp	L0AA98	;@0716D
+	db	0E8h, 32h, 0FFh, 0E8h, 20h, 0, 0E8h, 0ACh, 0, 26h, 0C6h, 46h, 0	;@07170
+	db	0, 26h, 0F6h, 46h, 4, 4, 74h, 0Ah, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch
+	db	4, 73h, 1, 0C3h, 0B9h, 6Dh, 0, 0E9h, 2, 39h
+L07196:	mov	al, byte ptr es:[bp]	;@07196
+	test	al, 80h	;@0719A
+	je	L0719F	;@0719C
+	ret	;@0719E
+L0719F:	cmp	al, 2	;@0719F
+	je	@@1	;@071A1
+	cmp	al, 3	;@071A3
+	je	@@1	;@071A5
+	cmp	al, 0	;@071A7
+	je	@@1	;@071A9
+	mov	cx, 1Ah	;@071AB
+	call	L07559	;@071AE
+@@1:	mov	byte ptr es:[bp], 0	;@071B1
+	ret	;@071B6
+L071B7:	mov	al, byte ptr es:[bp]	;@071B7
+	test	al, 80h	;@071BB
+	je	@@2	;@071BD
+@@1:	cmp	al, 8Ah	;@071BF
+	jne	@@3	;@071C1
+	ret	;@071C3
+@@2:	call	L0719F	;@071C4
+	jmp	@@1	;@071C7
+@@3:	mov	byte ptr es:[bp], 80h	;@071C9
+	mov	cx, 16h	;@071CE
+	jmp	L07559	;@071D1
+L071D4:	mov	al, byte ptr es:[bp]	;@071D4
+	test	al, 80h	;@071D8
+	je	@@2	;@071DA
+@@1:	cmp	al, 87h	;@071DC
+	jae	@@3	;@071DE
+	ret	;@071E0
+@@2:	call	L0719F	;@071E1
+	jmp	@@1	;@071E4
+@@3:	mov	byte ptr es:[bp], 80h	;@071E6
+	mov	cx, 16h	;@071EB
+	jmp	L07559	;@071EE
+L071F1:	test	byte ptr es:[bp+5], 10h	;@071F1
+	jne	@@1	;@071F6
+	test	byte ptr es:[bp], 80h	;@071F8
+	jne	@@2	;@071FD
+	ret	;@071FF
+@@1:	jmp	L06A14	;@07200
+@@2:	and	byte ptr es:[bp], 7Fh	;@07203
+	and	byte ptr es:[bp+4], 0FBh	;@07208
+	xor	ax, ax	;@0720D
+	mov	byte ptr es:[bp+1], al	;@0720F
+	mov	word ptr es:[bp+1Ah], ax	;@07213
+	mov	word ptr es:[bp+18h], ax	;@07217
+	mov	word ptr es:[bp+14h], ax	;@0721B
+	mov	cx, 15h	;@0721F
+	jmp	L07559	;@07222
+L07225:	test	byte ptr es:[bp], 80h	;@07225
+	je	@@1	;@0722A
+	ret	;@0722C
+@@1:	test	word ptr ds:[517Ch], 1000h	;@0722D
+	je	@@2	;@07233
+	test	byte ptr es:[bp+4], 80h	;@07235
+	je	@@3	;@0723A
+	mov	cx, 1Eh	;@0723C
+	call	L07559	;@0723F
+	and	byte ptr es:[bp+4], 7Fh	;@07242
+	jmp	short @@3	;@07247
+@@2:	test	byte ptr es:[bp+5], 20h	;@07249
+	je	@@3	;@0724E
+	jmp	L0748E	;@07250
+@@3:	call	L0912A	;@07253
+	push	es	;@07256
+	push	bp	;@07257
+	call	far ptr L101E0	;@07258
+	call	L01A84	;@0725D
+	call	far ptr L101E0	;@07260
+	mov	di, bp	;@07265
+	mov	ax, es	;@07267
+	pop	bp	;@07269
+	pop	es	;@0726A
+	jmp	L074D8	;@0726B
+	db	26h, 8Ah, 46h, 4, 0A8h, 94h, 75h, 1, 0C3h, 0A8h, 80h, 74h, 8, 0B9h	;@0726E
+	db	1Eh, 0, 0E8h, 0D8h, 2, 24h, 7Fh, 0A8h, 10h, 74h, 0Eh, 0B9h, 1Ch
+	db	0, 0E8h, 0CCh, 2, 24h, 0EFh, 26h, 0C7h, 46h, 12h, 0, 0, 0A8h, 4
+	db	74h, 0Ah, 26h, 88h, 46h, 4, 0B9h, 6Eh, 0, 0E9h, 0F5h, 37h, 26h
+	db	88h, 46h, 4, 0C3h
+L072A8:	test	byte ptr es:[bp+4], 80h	;@072A8
+	jne	@@1	;@072AD
+	ret	;@072AF
+@@1:	and	byte ptr es:[bp+4], 7Fh	;@072B0
+	mov	cx, 1Eh	;@072B5
+	jmp	L07559	;@072B8
+L072BB:	mov	al, byte ptr es:[bp+4]	;@072BB
+	test	al, 0B0h	;@072BF
+	jne	@@1	;@072C1
+	ret	;@072C3
+@@1:	test	al, 80h	;@072C4
+	je	@@2	;@072C6
+	mov	cx, 1Eh	;@072C8
+	call	L07559	;@072CB
+	and	al, 7Fh	;@072CE
+@@2:	test	al, 10h	;@072D0
+	je	@@3	;@072D2
+	mov	cx, 1Ch	;@072D4
+	call	L07559	;@072D7
+	and	al, 0EFh	;@072DA
+	mov	word ptr es:[bp+12h], 0	;@072DC
+@@3:	test	al, 20h	;@072E2
+	je	@@4	;@072E4
+	mov	cx, 1Dh	;@072E6
+	call	L07559	;@072E9
+	and	al, 0DFh	;@072EC
+	mov	word ptr es:[bp+10h], 1	;@072EE
+@@4:	mov	byte ptr es:[bp+4], al	;@072F4
+	ret	;@072F8
+L072F9:	test	byte ptr ds:[38C9h], 0Bh	;@072F9
+	jne	@@3	;@072FE
+	cmp	byte ptr ds:[38CCh], 0	;@07300
+	jne	@@2	;@07305
+	or	byte ptr ds:[38CAh], 1	;@07307
+@@1:	ret	;@0730C
+@@2:	push	es	;@0730D
+	push	bp	;@0730E
+	mov	ax, word ptr es:[bp+6]	;@0730F
+	call	far ptr L101E0	;@07313
+	call	L0069A	;@07318
+	pop	bp	;@0731B
+	pop	es	;@0731C
+	ret	;@0731D
+@@3:	test	byte ptr ds:[38C9h], 8	;@0731E
+	jne	@@4	;@07323
+	cmp	byte ptr ds:[38CFh], 0	;@07325
+	jne	@@1	;@0732A
+@@4:	cmp	byte ptr ds:[38CBh], 0	;@0732C
+	jne	@@1	;@07331
+	mov	cx, 102Bh	;@07333
+	mov	di, word ptr es:[bp+6]	;@07336
+	jmp	L07559	;@0733A
+L0733D:	les	bp, dword ptr ds:[55EEh]	;@0733D
+	mov	al, byte ptr es:[bp+4]	;@07341
+	les	bp, dword ptr ds:[55F6h]	;@07345
+	mov	ah, byte ptr es:[bp+4]	;@07349
+	test	al, 40h	;@0734D
+	je	@@3	;@0734F
+	test	ah, 40h	;@07351
+	je	@@3	;@07354
+	test	al, 20h	;@07356
+	je	@@1	;@07358
+	test	ah, 20h	;@0735A
+	je	@@1	;@0735D
+	and	byte ptr es:[bp+4], 0DFh	;@0735F
+	mov	word ptr es:[bp+10h], 1	;@07364
+	mov	cx, 1Bh	;@0736A
+	call	L07559	;@0736D
+@@1:	test	al, 10h	;@07370
+	jne	@@2	;@07372
+	test	ah, 10h	;@07374
+	je	@@3	;@07377
+@@2:	xor	cx, cx	;@07379
+	les	bp, dword ptr ds:[55EEh]	;@0737B
+	mov	word ptr es:[bp+12h], cx	;@0737F
+	and	byte ptr es:[bp+4], 0EFh	;@07383
+	les	bp, dword ptr ds:[55F6h]	;@07388
+	mov	word ptr es:[bp+12h], cx	;@0738C
+	and	byte ptr es:[bp+4], 0EFh	;@07390
+	mov	cx, 1Ch	;@07395
+	call	L07559	;@07398
+@@3:	lds	di, dword ptr ds:[55EEh]	;@0739B
+	test	byte ptr [di+4], 20h	;@0739F
+	je	@@5	;@073A3
+	test	byte ptr es:[bp+4], 40h	;@073A5
+	je	@@4	;@073AA
+	or	byte ptr es:[bp+4], 10h	;@073AC
+	mov	ax, word ptr es:[bp+0Eh]	;@073B1
+	mov	word ptr es:[bp+12h], ax	;@073B5
+@@4:	or	byte ptr es:[bp+4], 60h	;@073B9
+	mov	ax, word ptr [di+0Eh]	;@073BE
+	mov	word ptr es:[bp+0Eh], ax	;@073C1
+	mov	ax, word ptr [di+10h]	;@073C5
+	mov	word ptr es:[bp+10h], ax	;@073C8
+	test	byte ptr [di+4], 10h	;@073CC
+	je	@@7	;@073D0
+	or	byte ptr es:[bp+4], 10h	;@073D2
+	mov	ax, word ptr [di+12h]	;@073D7
+	mov	word ptr es:[bp+12h], ax	;@073DA
+	jmp	short @@7	;@073DE
+@@5:	test	byte ptr [di+4], 40h	;@073E0
+	je	@@7	;@073E4
+	test	byte ptr es:[bp+4], 40h	;@073E6
+	jne	@@6	;@073EB
+	mov	al, byte ptr [di+4]	;@073ED
+	and	al, 70h	;@073F0
+	or	byte ptr es:[bp+4], al	;@073F2
+	mov	ax, word ptr [di+0Eh]	;@073F6
+	mov	word ptr es:[bp+0Eh], ax	;@073F9
+	mov	ax, word ptr [di+12h]	;@073FD
+	mov	word ptr es:[bp+12h], ax	;@07400
+	mov	word ptr es:[bp+10h], 1	;@07404
+	jmp	short @@7	;@0740A
+@@6:	or	byte ptr es:[bp+4], 10h	;@0740C
+	mov	ax, word ptr [di+0Eh]	;@07411
+	mov	word ptr es:[bp+12h], ax	;@07414
+@@7:	mov	ax, ss	;@07418
+	mov	ds, ax	;@0741A
+	ret	;@0741C
+L0741D:	les	bp, dword ptr ds:[55F6h]	;@0741D
+	test	byte ptr es:[bp], 80h	;@07421
+	jne	L07454	;@07426
+	test	byte ptr es:[bp+5], 40h	;@07428
+	je	L07430	;@0742D
+	ret	;@0742F
+L07430:	les	bp, dword ptr ds:[55EEh]	;@07430
+	test	byte ptr es:[bp+5], 40h	;@07434
+	je	L07454	;@07439
+	mov	bl, byte ptr es:[bp+25h]	;@0743B
+	mov	ax, word ptr es:[bp+1Ch]	;@0743F
+	les	bp, dword ptr ds:[55F6h]	;@07443
+	mov	word ptr es:[bp+1Ch], ax	;@07447
+	mov	byte ptr es:[bp+25h], bl	;@0744B
+	or	byte ptr es:[bp+5], 40h	;@0744F
+L07454:	ret	;@07454
+L07455:	les	bp, dword ptr ds:[55F6h]	;@07455
+	test	byte ptr es:[bp+5], 20h	;@07459
+	je	L07461	;@0745E
+	ret	;@07460
+L07461:	les	bp, dword ptr ds:[55EEh]	;@07461
+	test	byte ptr es:[bp+5], 20h	;@07465
+	je	@@1	;@0746A
+	mov	ax, word ptr es:[bp+1Eh]	;@0746C
+	mov	bx, word ptr es:[bp+20h]	;@07470
+	mov	dx, word ptr es:[bp+22h]	;@07474
+	les	bp, dword ptr ds:[55F6h]	;@07478
+	or	byte ptr es:[bp+5], 20h	;@0747C
+	mov	word ptr es:[bp+1Eh], ax	;@07481
+	mov	word ptr es:[bp+20h], bx	;@07485
+	mov	word ptr es:[bp+22h], dx	;@07489
+@@1:	ret	;@0748D
+L0748E:	mov	ax, word ptr es:[bp+1Eh]	;@0748E
+	mov	word ptr es:[bp+14h], ax	;@07492
+	mov	ax, word ptr es:[bp+20h]	;@07496
+	mov	word ptr es:[bp+16h], ax	;@0749A
+	test	byte ptr es:[bp], 80h	;@0749E
+	jne	@@1	;@074A3
+	mov	byte ptr es:[bp], 80h	;@074A5
+@@1:	mov	ax, word ptr es:[bp+22h]	;@074AA
+	and	ax, ax	;@074AE
+	je	@@4	;@074B0
+	mov	word ptr es:[bp+18h], ax	;@074B2
+	mov	bx, ax	;@074B6
+	test	byte ptr es:[bp+4], 4	;@074B8
+	jne	@@2	;@074BD
+	mov	word ptr es:[bp+1Ah], bx	;@074BF
+@@2:	mov	al, byte ptr es:[bp+1]	;@074C3
+	and	al, 7	;@074C7
+	cmp	al, 2	;@074C9
+	jae	@@3	;@074CB
+	add	byte ptr es:[bp+1], 2	;@074CD
+@@3:	or	byte ptr es:[bp+4], 4	;@074D2
+@@4:	ret	;@074D7
+L074D8:	mov	bx, ax	;@074D8
+	or	byte ptr es:[bp], 80h	;@074DA
+	test	byte ptr es:[bp+4], 4	;@074DF
+	je	@@1	;@074E4
+	test	word ptr ds:[517Ch], 1000h	;@074E6
+	je	@@1	;@074EC
+	mov	al, byte ptr es:[bp+1]	;@074EE
+	and	al, 7	;@074F2
+	cmp	al, 4	;@074F4
+	jb	@@1	;@074F6
+	push	bx	;@074F8
+	mov	cx, 6Dh	;@074F9
+	call	L0AA98	;@074FC
+	pop	bx	;@074FF
+@@1:	mov	ds, bx	;@07500
+	test	byte ptr [di+4], 4	;@07502
+	je	@@4	;@07506
+	cmp	word ptr [di+6], 0	;@07508
+	jne	@@4	;@0750C
+	mov	bx, word ptr [di+1Ah]	;@0750E
+	test	byte ptr es:[bp+4], 4	;@07511
+	jne	@@2	;@07516
+	mov	word ptr es:[bp+1Ah], bx	;@07518
+@@2:	mov	al, byte ptr es:[bp+1]	;@0751C
+	and	al, 7	;@07520
+	cmp	al, 2	;@07522
+	jae	@@3	;@07524
+	add	byte ptr es:[bp+1], 2	;@07526
+@@3:	mov	word ptr es:[bp+18h], bx	;@0752B
+	mov	word ptr es:[bp+22h], bx	;@0752F
+	or	byte ptr es:[bp+4], 4	;@07533
+@@4:	push	es	;@07538
+	push	bp	;@07539
+	mov	ax, ds	;@0753A
+	mov	es, ax	;@0753C
+	mov	bp, di	;@0753E
+	push	ss	;@07540
+	pop	ds	;@07541
+	call	L0AAAE	;@07542
+	mov	ax, word ptr es:[bp+0Ah]	;@07545
+	pop	bp	;@07549
+	pop	es	;@0754A
+	mov	word ptr es:[bp+16h], ax	;@0754B
+	mov	word ptr es:[bp+20h], ax	;@0754F
+	or	byte ptr es:[bp+5], 20h	;@07553
+	ret	;@07558
+L07559:	cmp	byte ptr ds:[38CCh], 0	;@07559
+	jne	@@1	;@0755E
+	jmp	L0352C	;@07560
+@@1:	ret	;@07563
+	db	26h, 0F6h, 46h, 0, 80h, 75h, 7, 26h, 0F6h, 46h, 4, 0C0h, 74h, 8	;@07564
+	db	0E8h, 84h, 1Fh, 0E8h, 9Fh, 21h, 0EBh, 6, 0E8h, 69h, 1Fh, 0E8h
+	db	'f!&', 8Ah, 5Eh, 0, 80h, 0E3h, 7Fh, 0B8h, 2, 0, 80h, 0FBh, 2, 74h
+	db	12h, 0B8h, 4, 0, 80h, 0FBh, 3, 74h, 0Ah, 0B8h, 6, 0, 80h, 0FBh
+	db	5, 74h, 2, 33h, 0C0h, 0C3h, 0A1h, 0FEh, 55h, 5, 54h, 0, 0B9h, 2
+	db	0, 0E8h, 0D1h, 92h, 74h, 3, 0E8h, 23h, 0, 5, 2, 0, 0E2h, 0F3h
 	db	0C3h
 L075B9:	mov	ax, word ptr ds:[55FEh]	;@075B9
 	add	ax, 4Ch	;@075BC
@@ -4638,26 +7929,75 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	0E8h, 0D0h, 89h, 32h, 0C0h, 0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 7, 0F6h, 6
 	db	0C9h, 38h, 0Bh, 74h, 19h, 8Bh, 0DAh, 8Bh, 0D0h, 0E8h, 76h, 0C0h, 8Bh, 0C3h, 0E8h, 25h
 	db	8Ch, 24h, 3Fh, 3Ch, 0, 75h, 1Dh, 0F6h, 6, 0C9h, 38h, 0Bh, 75h, 6, 80h, 0Eh
-	db	0CAh, 38h, 1, 0C3h, 0B9h, 2Bh, 10h, 8Bh, 0FBh, 0E9h, 43h, 0BCh, 8Bh, 0FBh, 0B9h, 13h
-	db	10h, 0E9h, 3Bh, 0BCh, 0A8h, 20h, 74h, 6, 0A8h, 10h, 75h, 0F0h, 0EBh, 0Ah, 24h, 1Fh
-	db	3Ch, 1, 74h, 0E8h, 3Ch, 9, 74h, 0E4h, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 0Dh
-	db	0F6h, 6, 0C9h, 38h, 1, 75h, 12h, 8Bh, 0C2h, 8Bh, 0D3h, 0EBh, 0Dh, 8Bh, 0C3h, 9Ah
-	dd	L101E0
-	db	0E8h, 62h, 89h, 32h, 0C0h, 0C3h, 0E8h, 18h, 0, 0E8h, 66h, 89h, 32h, 0C0h, 0C3h, 0E8h
-	db	0Fh, 0, 0E8h, 70h, 89h, 32h, 0C0h, 0C3h, 0E8h, 6, 0, 0E8h, 7Ah, 89h, 32h, 0C0h
-	db	0C3h, 52h, 0E8h, 5Eh, 0F3h, 59h, 0E8h, 48h, 2, 26h, 0F6h, 46h, 0, 80h, 74h, 25h
-	db	0E8h, 8Ah, 23h, 26h, 0F6h, 46h, 4, 4, 74h, 21h, 26h, 8Bh, 46h, 1Ah, 51h, 23h
-	db	0C0h, 74h, 8, 9Ah
-	dd	L101E0
-	db	0E8h, 49h, 9Dh, 8Bh, 0D9h, 8Bh, 0C8h, 0C4h, 2Eh, 0EEh, 55h, 0EBh, 0Bh, 0E8h, 78h, 0F8h
-	db	0E8h, 3Bh, 24h, 51h, 33h, 0C9h, 33h, 0DBh, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 56h, 0Ch
-	db	5Fh, 50h, 8Bh, 0C7h, 9Ah
-	dd	L101E0
-	db	58h, 0C3h, 50h, 52h, 51h, 57h, 0E8h, 1, 0E0h, 5Fh, 59h, 5Ah, 58h, 26h, 89h, 46h
-	db	0Ah, 26h, 89h, 56h, 0Ch, 8Ah, 0C6h, 98h, 26h, 88h, 66h, 24h, 0B8h, 46h, 0, 3
-	db	6, 0FEh, 55h, 26h, 89h, 46h, 0Eh, 26h, 0C7h, 46h, 4, 40h, 80h, 53h, 57h, 51h
-	db	0E8h, 60h, 0F8h, 59h, 5Fh, 5Bh, 8Ah, 0D3h, 0F6h, 0C3h, 20h, 74h, 0Bh, 80h, 0EBh, 0A0h
-	db	26h, 88h, 5Eh, 0, 26h, 89h, 7Eh, 2, 9Ah
+	db	0CAh, 38h, 1, 0C3h, 0B9h, 2Bh, 10h, 8Bh, 0FBh, 0E9h, 43h, 0BCh
+@@3:	mov	di, bx	;@078E9
+	mov	cx, 1013h	;@078EB
+	jmp	L0352C	;@078EE
+	test	al, 20h	;@078F1
+	je	@@4	;@078F3
+	test	al, 10h	;@078F5
+	jne	@@3	;@078F7
+	jmp	short @@5	;@078F9
+@@4:	and	al, 1Fh	;@078FB
+	cmp	al, 1	;@078FD
+	je	@@3	;@078FF
+	cmp	al, 9	;@07901
+	je	@@3	;@07903
+@@5:	test	word ptr ds:[517Ch], 1000h	;@07905
+	je	@@6	;@0790B
+	test	byte ptr ds:[38C9h], 1	;@0790D
+	jne	@@7	;@07912
+	mov	ax, dx	;@07914
+	mov	dx, bx	;@07916
+	jmp	short @@8	;@07918
+@@6:	mov	ax, bx	;@0791A
+	call	far ptr L101E0	;@0791C
+	call	L00286	;@07921
+	xor	al, al	;@07924
+@@7:	ret	;@07926
+@@8:	call	@@9	;@07927
+	call	L00293	;@0792A
+	xor	al, al	;@0792D
+	ret	;@0792F
+	db	0E8h, 0Fh, 0, 0E8h, 70h, 89h, 32h, 0C0h, 0C3h, 0E8h, 6, 0, 0E8h	;@07930
+	db	7Ah, 89h, 32h, 0C0h, 0C3h
+@@9:	push	dx	;@07942
+	call	L06CA4	;@07943
+	pop	cx	;@07946
+	call	L07B92	;@07947
+	test	byte ptr es:[bp], 80h	;@0794A
+	je	@@11	;@0794F
+	call	L09CDE	;@07951
+	test	byte ptr es:[bp+4], 4	;@07954
+	je	@@12	;@07959
+	mov	ax, word ptr es:[bp+1Ah]	;@0795B
+	push	cx	;@0795F
+	and	ax, ax	;@07960
+	je	@@10	;@07962
+	call	far ptr L101E0	;@07964
+	call	L016B5	;@07969
+@@10:	mov	bx, cx	;@0796C
+	mov	cx, ax	;@0796E
+	les	bp, dword ptr ds:[55EEh]	;@07970
+	jmp	short @@13	;@07974
+@@11:	call	L071F1	;@07976
+	call	L09DB7	;@07979
+@@12:	push	cx	;@0797C
+	xor	cx, cx	;@0797D
+	xor	bx, bx	;@0797F
+@@13:	mov	ax, word ptr es:[bp+0Ah]	;@07981
+	mov	dx, word ptr es:[bp+0Ch]	;@07985
+	pop	di	;@07989
+	push	ax	;@0798A
+	mov	ax, di	;@0798B
+	call	far ptr L101E0	;@0798D
+	pop	ax	;@07992
+	ret	;@07993
+	db	50h, 52h, 51h, 57h, 0E8h, 1, 0E0h, 5Fh, 59h, 5Ah, 58h, 26h, 89h, 46h, 0Ah, 26h	;@07994
+	db	89h, 56h, 0Ch, 8Ah, 0C6h, 98h, 26h, 88h, 66h, 24h, 0B8h, 46h, 0, 3, 6, 0FEh
+	db	55h, 26h, 89h, 46h, 0Eh, 26h, 0C7h, 46h, 4, 40h, 80h, 53h, 57h, 51h, 0E8h, 60h
+	db	0F8h, 59h, 5Fh, 5Bh, 8Ah, 0D3h, 0F6h, 0C3h, 20h, 74h, 0Bh, 80h, 0EBh, 0A0h, 26h, 88h
+	db	5Eh, 0, 26h, 89h, 7Eh, 2, 9Ah
 	dd	L101F7
 	db	50h, 8Bh, 0C1h, 9Ah
 	dd	L101E0
@@ -4685,23 +8025,51 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 56h, 0Ch, 0B1h, 0FFh, 0E9h, 0D3h, 0C0h, 32h, 0C9h, 0E9h
 	db	0CEh, 0C0h, 0E8h, 42h, 0EFh, 0E8h, 0BDh, 0, 0E8h, 21h, 1Ah, 0E8h, 4, 23h, 26h, 83h
 	db	7Eh, 6, 0, 75h, 28h, 26h, 0F6h, 46h, 4, 4, 74h, 30h, 0A1h, 7Eh, 51h, 26h
-	db	39h, 46h, 1Ah, 74h, 27h, 0B9h, 53h, 0, 0E8h, 34h, 0BAh, 0EBh, 1Fh, 0E8h, 95h, 0
-	db	0E8h, 0F1h, 0F6h, 0E8h, 0B4h, 22h, 26h, 83h, 7Eh, 6, 0, 74h, 0Fh, 80h, 26h, 0CAh
-	db	38h, 0FEh, 26h, 8Bh, 7Eh, 6, 0B9h, 2Dh, 10h, 0E8h, 13h, 0BAh, 26h, 8Bh, 46h, 0Ah
-	db	26h, 8Bh, 4Eh, 0Ch, 0F7h, 6, 7Ch, 51h, 8, 10h, 75h, 14h, 50h, 26h, 8Ah, 46h
-	db	24h, 98h, 3Bh, 0C1h, 74h, 6, 0B9h, 8Fh, 80h, 0E8h, 0F3h, 0B9h, 33h, 0C9h, 58h, 0C3h
-	db	32h, 0DBh, 0C3h, 0E8h, 0B7h, 0FFh, 26h, 80h, 7Eh, 24h, 0, 75h, 7, 8Bh, 0D8h, 0Bh
-	db	0D9h, 74h, 1, 0C3h, 0B9h, 0Fh, 0, 0E8h, 0D5h, 0B9h, 0B8h, 1, 0, 33h, 0C9h, 0C3h
-	db	0E8h, 32h, 0, 26h, 83h, 7Eh, 6, 0, 75h, 13h, 26h, 8Bh, 7Eh, 2, 26h, 8Ah
-	db	5Eh, 0, 0F6h, 0C3h, 80h, 74h, 3, 80h, 0EBh, 60h, 33h, 0C0h, 0C3h, 0F6h, 6, 0C9h
-	db	38h, 0Bh, 26h, 8Bh, 46h, 6, 74h, 8, 8Bh, 0F8h, 0B9h, 7, 10h, 0E8h, 9Fh, 0B9h
-	db	32h, 0DBh, 33h, 0FFh, 0C3h, 89h, 2Eh, 0EEh, 55h, 8Ch, 6, 0F0h, 55h, 51h, 0E8h, 96h
-	db	2Fh, 59h, 0C3h, 26h, 0F6h, 46h, 4, 44h, 75h, 1, 0C3h, 26h, 0F6h, 46h, 4, 40h
-	db	74h, 6, 0B9h, 19h, 0, 0E8h, 0CBh, 2Eh, 26h, 0F6h, 46h, 4, 4, 74h, 17h, 26h
-	db	83h, 7Eh, 6, 0, 75h, 10h, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 4, 74h, 6
-	db	0B9h, 69h, 0, 0E9h, 0C5h, 2Eh, 0C3h, 0E8h, 0E2h, 17h, 0E8h, 17h, 0F6h, 26h, 0F6h, 46h
-	db	4, 1, 74h, 43h, 0E8h, 0D3h, 21h, 26h, 8Ah, 66h, 4, 80h, 0E4h, 2, 50h, 26h
-	db	8Bh, 46h, 8, 9Ah
+	db	39h, 46h, 1Ah, 74h, 27h, 0B9h, 53h, 0, 0E8h, 34h, 0BAh, 0EBh, 1Fh
+L07AFA:	call	L07B92	;@07AFA
+	call	L071F1	;@07AFD
+	call	L09DB7	;@07B00
+	cmp	word ptr es:[bp+6], 0	;@07B03
+	je	@@1	;@07B08
+	and	byte ptr ds:[38CAh], 0FEh	;@07B0A
+	mov	di, word ptr es:[bp+6]	;@07B0F
+	mov	cx, 102Dh	;@07B13
+	call	L0352C	;@07B16
+@@1:	mov	ax, word ptr es:[bp+0Ah]	;@07B19
+	mov	cx, word ptr es:[bp+0Ch]	;@07B1D
+	test	word ptr ds:[517Ch], 1008h	;@07B21
+	jne	@@3	;@07B27
+	push	ax	;@07B29
+	mov	al, byte ptr es:[bp+24h]	;@07B2A
+	cbw	;@07B2E
+	cmp	ax, cx	;@07B2F
+	je	@@2	;@07B31
+	mov	cx, 808Fh	;@07B33
+	call	L0352C	;@07B36
+@@2:	xor	cx, cx	;@07B39
+	pop	ax	;@07B3B
+	ret	;@07B3C
+@@3:	xor	bl, bl	;@07B3D
+	ret	;@07B3F
+	db	0E8h, 0B7h, 0FFh, 26h, 80h, 7Eh, 24h, 0, 75h, 7, 8Bh, 0D8h, 0Bh	;@07B40
+	db	0D9h, 74h, 1, 0C3h, 0B9h, 0Fh, 0, 0E8h, 0D5h, 0B9h, 0B8h, 1, 0
+	db	33h, 0C9h, 0C3h, 0E8h, 32h, 0, 26h, 83h, 7Eh, 6, 0, 75h, 13h, 26h
+	db	8Bh, 7Eh, 2, 26h, 8Ah, 5Eh, 0, 0F6h, 0C3h, 80h, 74h, 3, 80h, 0EBh
+	db	60h, 33h, 0C0h, 0C3h, 0F6h, 6, 0C9h, 38h, 0Bh, 26h, 8Bh, 46h, 6
+	db	74h, 8, 8Bh, 0F8h, 0B9h, 7, 10h, 0E8h, 9Fh, 0B9h, 32h, 0DBh, 33h
+	db	0FFh, 0C3h
+L07B92:	mov	word ptr ds:[55EEh], bp	;@07B92
+	mov	word ptr ds:[55F0h], es	;@07B96
+	push	cx	;@07B9A
+	call	L0AB34	;@07B9B
+	pop	cx	;@07B9E
+	ret	;@07B9F
+	db	26h, 0F6h, 46h, 4, 44h, 75h, 1, 0C3h, 26h, 0F6h, 46h, 4, 40h, 74h, 6, 0B9h	;@07BA0
+	db	19h, 0, 0E8h, 0CBh, 2Eh, 26h, 0F6h, 46h, 4, 4, 74h, 17h, 26h, 83h, 7Eh, 6
+	db	0, 75h, 10h, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 4, 74h, 6, 0B9h, 69h, 0
+	db	0E9h, 0C5h, 2Eh, 0C3h, 0E8h, 0E2h, 17h, 0E8h, 17h, 0F6h, 26h, 0F6h, 46h, 4, 1, 74h
+	db	43h, 0E8h, 0D3h, 21h, 26h, 8Ah, 66h, 4, 80h, 0E4h, 2, 50h, 26h, 8Bh, 46h, 8
+	db	9Ah
 	dd	L101E0
 	db	58h, 0E8h, 0D8h, 88h, 0E8h, 6Ch, 0D1h, 51h, 0E3h, 1Eh, 0FCh, 8Ah, 7, 43h, 53h, 0E8h
 	db	0E7h, 0C8h, 5Bh, 83h, 3Eh, 0B0h, 51h, 0, 74h, 0Ch, 53h, 51h, 0E8h, 0F4h, 0BDh, 59h
@@ -4749,896 +8117,3333 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	0E8h, 90h, 0C7h, 58h, 0B9h, 0, 0, 0C3h, 0B8h, 6, 0, 33h, 0C9h, 50h, 0E8h, 82h
 	db	0C7h, 58h, 0B9h, 0, 0, 0C3h, 0B8h, 8, 0, 33h, 0C9h, 50h, 0E8h, 74h, 0C7h, 58h
 	db	0B9h, 0, 0, 0C3h, 0B8h, 0Ah, 0, 33h, 0C9h, 50h, 0E8h, 66h, 0C7h, 58h, 0B9h, 0
-	db	0, 0C3h, 0E8h, 66h, 0BBh, 8Ah, 0C1h, 0E8h, 5Fh, 0C6h, 0E9h, 76h, 0BBh, 0E8h, 5Bh, 0BBh
-	db	0F7h, 6, 7Ch, 51h, 40h, 0, 75h, 8, 0B0h, 9Bh, 0E8h, 4Ch, 0C6h, 0E9h, 85h, 0BBh
-	db	0BFh, 72h, 56h, 0E8h, 0A5h, 2Ah, 0B0h, 90h, 0E8h, 3Eh, 0C6h, 0B0h, 9Bh, 0E8h, 39h, 0C6h
-	db	0E9h, 72h, 0BBh, 0E8h, 0Eh, 15h, 0E8h, 3Bh, 16h, 0E8h, 2Dh, 17h, 0E8h, 60h, 1Dh, 0E8h
-	db	1Ch, 14h, 0E9h, 60h, 0BBh, 0E8h, 0FCh, 14h, 0E8h, 29h, 16h, 0E8h, 51h, 1Dh, 0F6h, 0C1h
-	db	10h, 74h, 3, 0E8h, 25h, 2, 0E8h, 5, 14h, 0E9h, 49h, 0BBh, 0E8h, 0E5h, 14h, 0E8h
-	db	12h, 16h, 0E8h, 3Ah, 1Dh, 0E8h, 4, 2, 0E8h, 77h, 14h, 0E9h, 37h, 0BBh, 0E8h, 0D3h
-	db	14h, 0E8h, 0, 16h, 0E8h, 88h, 16h, 0E8h, 0F2h, 1, 0F7h, 6, 7Ch, 51h, 0, 4
-	db	74h, 24h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 1Ah, 26h, 8Bh, 46h, 0Eh
-	db	3Bh, 6, 4Ah, 56h, 75h, 10h, 0E8h, 23h, 1Dh, 0B0h, 0DFh, 0E8h, 0CBh, 0C5h, 0B0h, 0E0h
-	db	0E8h, 0C6h, 0C5h, 0E9h, 0FFh, 0BAh, 0E8h, 0F6h, 1Ch, 0E8h, 36h, 14h, 0E9h, 0F6h, 0BAh, 0E8h
-	db	92h, 14h, 0E8h, 0BFh, 15h, 0E8h, 47h, 16h, 0F7h, 6, 7Ch, 51h, 0, 4, 74h, 44h
-	db	26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 2Dh, 26h, 8Bh, 46h, 0Eh, 3Bh, 6
-	db	4Ah, 56h, 75h, 2Bh, 0E8h, 0E5h, 1Ch, 0F7h, 6, 7Ch, 51h, 40h, 0, 74h, 6, 0BFh
-	db	74h, 56h, 0E8h, 0E6h, 29h, 0B0h, 9Bh, 0E8h, 7Fh, 0C5h, 0B0h, 0DFh, 0E8h, 7Ah, 0C5h, 0B0h
-	db	0E0h, 0E8h, 75h, 0C5h, 0E9h, 0AEh, 0BAh, 0F7h, 6, 7Ch, 51h, 40h, 0, 75h, 5, 0B0h
-	db	9Bh, 0E8h, 65h, 0C5h, 0E8h, 98h, 1Ch, 0E8h, 54h, 13h, 0E9h, 98h, 0BAh, 0E8h, 34h, 14h
-	db	0E8h, 61h, 15h, 0E8h, 0E9h, 15h, 0E8h, 86h, 1Ch, 0F6h, 0C1h, 10h, 74h, 3, 0E8h, 5Ah
-	db	1, 0E8h, 3Ah, 13h, 0E9h, 7Eh, 0BAh, 0E8h, 1Ah, 14h, 0E8h, 47h, 15h, 0E8h, 0CFh, 15h
-	db	0E8h, 6Ch, 1Ch, 0E8h, 36h, 1, 0E8h, 0A9h, 13h, 0E9h, 69h, 0BAh, 0E8h, 5, 14h, 0E8h
-	db	32h, 15h, 0E8h, 29h, 16h, 0E8h, 57h, 1Ch, 0E8h, 9, 13h, 0E9h, 57h, 0BAh, 0E8h, 0F3h
-	db	13h, 0E8h, 20h, 15h, 0E8h, 3Dh, 16h, 0E8h, 45h, 1Ch, 26h, 80h, 7Eh, 0, 6, 75h
-	db	8, 0B5h, 0DBh, 0E8h, 0F8h, 12h, 0E9h, 3Ch, 0BAh, 8Ah, 0CDh, 0B5h, 0D9h, 0E8h, 0E4h, 12h
-	db	0E9h, 32h, 0BAh, 0E8h, 0CEh, 13h, 0E8h, 0FBh, 14h, 0E8h, 38h, 16h, 0E8h, 20h, 1Ch, 26h
-	db	80h, 7Eh, 0, 4, 75h, 8, 0B5h, 0DBh, 0E8h, 0C9h, 12h, 0E9h, 17h, 0BAh, 8Ah, 0CDh
-	db	0B5h, 0DBh, 0E8h, 0BFh, 12h, 0E9h, 0Dh, 0BAh, 0E8h, 0A9h, 13h, 0E8h, 0D6h, 14h, 0E8h, 33h
-	db	16h, 0E8h, 0FBh, 1Bh, 0E8h, 0ADh, 12h, 0E9h, 0FBh, 0B9h, 0E8h, 0BEh, 0B9h, 0F7h, 6, 7Ch
-	db	51h, 40h, 0, 74h, 8, 0BFh, 74h, 56h, 0E8h, 10h, 29h, 0EBh, 0Dh, 80h, 0FDh, 0DBh
-	db	74h, 8, 0F7h, 6, 7Ch, 51h, 0, 4, 75h, 5, 0B0h, 9Bh, 0E8h, 9Ah, 0C4h, 8Ah
-	db	0C5h, 0E8h, 95h, 0C4h, 8Ah, 0C1h, 0E8h, 90h, 0C4h, 0E9h, 0C9h, 0B9h, 0E8h, 8Ch, 0B9h, 8Ah
-	db	0C5h, 0E8h, 85h, 0C4h, 8Ah, 0C1h, 0E8h, 80h, 0C4h, 0E9h, 0B9h, 0B9h, 0E8h, 55h, 13h, 0E8h
-	db	6Fh, 14h, 0E8h, 28h, 1Eh, 0E8h, 0F5h, 12h, 0E9h, 0AAh, 0B9h, 0E8h, 60h, 13h, 0E8h, 60h
-	db	14h, 0E8h, 19h, 1Eh, 8Ah, 0F1h, 52h, 26h, 80h, 7Eh, 0Ah, 0, 74h, 17h, 0B8h, 22h
-	db	0, 0E8h, 0A9h, 13h, 26h, 0C6h, 46h, 0Ah, 0, 0EBh, 0Ah, 52h, 0E8h, 3Fh, 13h, 0E8h
-	db	3Fh, 14h, 0E8h, 0F8h, 1Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 35h, 14h, 0E8h, 0EEh, 1Dh, 5Ah
-	db	26h, 80h, 7Eh, 0Ah, 0, 74h, 20h, 0C4h, 2Eh, 0F6h, 55h, 26h, 80h, 7Eh, 0Ah, 0
-	db	75h, 21h, 80h, 0CDh, 4, 8Ah, 0F1h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 0Ah, 0C4h
-	db	2Eh, 0F6h, 55h, 26h, 88h, 46h, 0Ah, 8Ah, 0CEh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 8Dh, 12h
-	db	0E9h, 42h, 0B9h, 0B8h, 22h, 0, 0E8h, 54h, 13h, 0E9h, 39h, 0B9h, 0F7h, 6, 7Ch, 51h
-	db	40h, 0, 75h, 1, 0C3h, 0B8h, 55h, 0, 0E9h, 42h, 13h, 0F7h, 6, 7Ch, 51h, 0
-	db	4, 74h, 0Dh, 0F7h, 6, 7Ch, 51h, 40h, 0, 75h, 5, 0B0h, 9Bh, 0E9h, 0D9h, 0C3h
-	db	0C3h, 0E8h, 0B0h, 12h, 0E8h, 0FFh, 13h, 0EBh, 14h, 0E8h, 0A8h, 12h, 0E8h, 0F7h, 13h, 0E8h
-	db	2, 22h, 0EBh, 9, 0E8h, 9Dh, 12h, 0E8h, 0ECh, 13h, 0E8h, 9, 22h, 0F7h, 6, 7Ch
-	db	51h, 1, 0, 74h, 54h, 26h, 8Ah, 46h, 0, 3Ch, 87h, 74h, 4Ch, 3Ch, 89h, 75h
-	db	24h, 0E8h, 0F7h, 1Fh, 73h, 1Fh, 8Ah, 0C1h, 0E8h, 9Eh, 0C3h, 0B0h, 2, 0E8h, 99h, 0C3h
-	db	0B0h, 0EBh, 0E8h, 94h, 0C3h, 0E8h, 26h, 21h, 4, 3, 0E8h, 8Ch, 0C3h, 0B1h, 0EAh, 0E8h
-	db	0ABh, 10h, 0E9h, 0C0h, 0B8h, 0E8h, 54h, 20h, 73h, 1Fh, 8Ah, 0C1h, 0E8h, 7Ah, 0C3h, 0B0h
-	db	2, 0E8h, 75h, 0C3h, 0B0h, 0EBh, 0E8h, 70h, 0C3h, 0E8h, 2, 21h, 0FEh, 0C0h, 0E8h, 68h
-	db	0C3h, 0B1h, 0E9h, 0E8h, 4Bh, 10h, 0E9h, 9Ch, 0B8h, 0E8h, 0A2h, 10h, 0E9h, 96h, 0B8h, 0E8h
-	db	32h, 12h, 0E8h, 81h, 13h, 0F7h, 6, 7Ch, 51h, 9, 0, 74h, 28h, 26h, 8Ah, 46h
-	db	0, 3Ch, 87h, 74h, 20h, 3Ch, 89h, 75h, 22h, 0E8h, 8Fh, 1Fh, 73h, 1Dh, 8Ah, 0C1h
-	db	34h, 1, 0E8h, 34h, 0C3h, 0E8h, 0C6h, 20h, 4, 3, 0E8h, 2Ch, 0C3h, 0B1h, 0EAh, 0E8h
-	db	4Bh, 10h, 0E9h, 60h, 0B8h, 0E8h, 66h, 10h, 0E9h, 5Ah, 0B8h, 0E8h, 0EEh, 1Fh, 73h, 0F5h
-	db	0F7h, 6, 7Ch, 51h, 8, 0, 75h, 17h, 8Ah, 0C1h, 34h, 1, 0E8h, 0Ah, 0C3h, 0E8h
-	db	9Ch, 20h, 0FEh, 0C0h, 0E8h, 2, 0C3h, 0B1h, 0E9h, 0E8h, 0E5h, 0Fh, 0E9h, 36h, 0B8h, 0B0h
-	db	0Fh, 0E8h, 0F5h, 0C2h, 80h, 0F1h, 0F0h, 0E8h, 0D7h, 0Fh, 0E9h, 28h, 0B8h, 0E8h, 0C4h, 11h
-	db	26h, 0F6h, 46h, 4, 80h, 75h, 5, 0E8h, 73h, 12h, 73h, 11h, 0E8h, 0E5h, 12h, 0E8h
-	db	64h, 14h, 0E8h, 1Dh, 1Ah, 0B1h, 20h, 0E8h, 75h, 0Fh, 0E9h, 8, 0B8h, 26h, 8Ah, 46h
-	db	0, 3Ch, 87h, 74h, 2Bh, 3Ch, 89h, 75h, 1Ah, 0F7h, 6, 7Ch, 51h, 0, 20h, 0BBh
-	db	48h, 0A1h, 74h, 3, 0BBh, 40h, 0A1h, 0FFh, 0D3h, 73h, 8, 0B1h, 0EAh, 0E8h, 0CDh, 0Fh
-	db	0E9h, 0E2h, 0B7h, 0E8h, 76h, 1Fh, 73h, 8, 0B1h, 0E9h, 0E8h, 84h, 0Fh, 0E9h, 0D5h, 0B7h
-	db	0B1h, 0EBh, 0E8h, 0D9h, 0Fh, 0E9h, 0CDh, 0B7h, 0E8h, 69h, 11h, 26h, 0F6h, 46h, 4, 80h
-	db	75h, 5, 0E8h, 3Fh, 12h, 73h, 11h, 0E8h, 8Ah, 12h, 0E8h, 9, 14h, 0E8h, 0C2h, 19h
-	db	0B1h, 10h, 0E8h, 1Ah, 0Fh, 0E9h, 0ADh, 0B7h, 26h, 80h, 7Eh, 0, 89h, 75h, 12h, 0E8h
-	db	0B9h, 1Eh, 73h, 8, 0B1h, 9Ah, 0E8h, 84h, 0Fh, 0E9h, 99h, 0B7h, 0B0h, 0Eh, 0E8h, 58h
-	db	0C2h, 0B1h, 0E8h, 0E8h, 3Bh, 0Fh, 0E9h, 8Ch, 0B7h, 0E8h, 42h, 11h, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 3Eh, 12h, 0E8h, 1Eh, 13h, 0E8h, 93h, 19h, 26h, 0F6h, 46h, 4, 40h, 74h, 58h
-	db	26h, 8Bh, 46h, 0Eh, 0E8h, 57h, 0Eh, 22h, 0C0h, 75h, 45h, 0C4h, 2Eh, 0F6h, 55h, 0E8h
-	db	1Fh, 12h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 1Dh, 0E8h, 6Dh, 19h, 26h
-	db	8Bh, 46h, 0Eh, 3Bh, 6, 4Eh, 56h, 75h, 2Ch, 80h, 0C9h, 8, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 66h, 20h, 0E8h, 0DFh, 0Fh, 0E9h, 3Ch, 0B7h, 0E8h, 3Bh, 1Bh, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 56h, 20h, 0E8h, 0CFh, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 98h, 22h, 0E9h, 25h, 0B7h
-	db	0B8h, 64h, 0, 0EBh, 3, 0B8h, 65h, 0, 0E8h, 32h, 11h, 0E9h, 17h, 0B7h, 0E8h, 0DAh
-	db	0B6h, 0E8h, 42h, 20h, 8Ah, 0C1h, 0E8h, 0D0h, 0C1h, 0E9h, 9, 0B7h, 0E8h, 0CCh, 0B6h, 8Ah
-	db	0C1h, 0E8h, 0C5h, 0C1h, 0E9h, 0FEh, 0B6h, 0E8h, 0C1h, 0B6h, 8Ah, 0C1h, 0E8h, 63h, 0C1h, 0E9h
-	db	0F3h, 0B6h, 0E8h, 0B6h, 0B6h, 8Ah, 0C1h, 0E8h, 2Dh, 0C1h, 0E9h, 0E8h, 0B6h, 0E8h, 0ABh, 0B6h
-	db	8Ah, 0C1h, 0E8h, 0A4h, 0C1h, 8Ah, 0C5h, 0E8h, 9Fh, 0C1h, 0E9h, 0D8h, 0B6h, 0E8h, 8Eh, 10h
-	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 9Dh, 11h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 96h, 11h, 0E8h, 5Bh
-	db	14h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0B7h, 18h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0B0h, 18h, 0E8h
-	db	0D7h, 1Fh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 10h, 0D6h, 0E8h, 40h, 20h, 0E8h, 11h, 0D6h, 0C4h
-	db	2Eh, 0F6h, 55h, 0E8h, 3Ch, 0Fh, 0E9h, 9Ch, 0B6h, 0E8h, 38h, 10h, 0E8h, 65h, 11h, 0E8h
-	db	32h, 12h, 0E8h, 8Ah, 18h, 0E8h, 0B1h, 1Fh, 0E8h, 27h, 0Fh, 0E9h, 87h, 0B6h, 0E8h, 23h
-	db	10h, 0E8h, 50h, 11h, 0E8h, 0A5h, 11h, 0E8h, 75h, 18h, 0B1h, 0D7h, 0E8h, 13h, 0Fh, 0E9h
-	db	73h, 0B6h, 0E8h, 29h, 10h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 38h, 11h, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 1Eh, 11h, 0E8h, 0F8h, 15h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 6Fh, 18h, 8Ah, 0E9h, 0E8h
-	db	9Fh, 0Dh, 0E8h, 74h, 1Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 43h, 18h, 0E8h, 83h, 0Fh, 0E9h
-	db	43h, 0B6h, 0E8h, 0F9h, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 8, 11h, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 0EEh, 10h, 0E8h, 8Dh, 11h, 0E8h, 43h, 18h, 0E8h, 75h, 0Dh, 0E8h, 4Ah, 1Fh, 0C4h
-	db	2Eh, 0F6h, 55h, 0E8h, 19h, 18h, 0E8h, 0E9h, 1Fh, 0F7h, 6, 7Ch, 51h, 20h, 0, 74h
-	db	22h, 0E8h, 0A4h, 1Eh, 0C4h, 2Eh, 0EEh, 55h, 72h, 7, 26h, 80h, 7Eh, 0, 2, 0EBh
-	db	5, 26h, 80h, 7Eh, 0, 3, 0C4h, 2Eh, 0F6h, 55h, 75h, 7, 26h, 0F6h, 46h, 4
-	db	40h, 74h, 0Bh, 0E8h, 0E9h, 1Eh, 0B5h, 8Dh, 0E8h, 2Ah, 0Fh, 0E9h, 0E7h, 0B5h, 8Ah, 0C1h
-	db	0B1h, 3, 0D2h, 0E8h, 0Ch, 0B8h, 0E8h, 0A0h, 0C0h, 0E8h, 55h, 21h, 0E9h, 0D6h, 0B5h, 0E8h
-	db	72h, 0Fh, 0E8h, 8Ch, 10h, 0E8h, 0B9h, 19h, 33h, 0C0h, 0E8h, 81h, 1Ch, 73h, 0Bh, 8Ah
-	db	0C1h, 0E8h, 85h, 0C0h, 0E8h, 50h, 21h, 0E9h, 0BBh, 0B5h, 8Ah, 0C1h, 0Ch, 1, 0E8h, 78h
-	db	0C0h, 0E9h, 0B1h, 0B5h, 0E8h, 4Dh, 0Fh, 0E8h, 67h, 10h, 0E8h, 0AAh, 19h, 8Ah, 0C1h, 0E8h
-	db	67h, 0C0h, 0E8h, 10h, 21h, 0E9h, 9Dh, 0B5h, 0E8h, 39h, 0Fh, 0F6h, 0C1h, 20h, 75h, 5
-	db	0C6h, 6, 0FAh, 55h, 0FFh, 0E8h, 5Ch, 10h, 0E8h, 29h, 11h, 0E8h, 94h, 17h, 0E8h, 0A8h
-	db	1Eh, 0B5h, 0F6h, 0E8h, 0B2h, 0Eh, 0E9h, 7Ch, 0B5h, 0E8h, 32h, 0Fh, 0C6h, 6, 0FAh, 55h
-	db	0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 3Ch, 10h, 0E8h, 9, 11h, 0E8h, 74h, 17h, 0E8h, 88h
-	db	1Eh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 19h, 10h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h
-	db	75h, 19h, 0E8h, 67h, 17h, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 10h, 56h, 75h, 4Ah, 0C4h
-	db	2Eh, 0EEh, 55h, 0B5h, 0D2h, 0E8h, 70h, 0Eh, 0E9h, 3Ah, 0B5h, 0E8h, 39h, 19h, 0B8h, 1
-	db	0, 0E8h, 0EAh, 1Bh, 73h, 1Bh, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 1Fh, 0B5h, 0C0h
-	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 51h, 0Eh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 87h, 20h, 0E9h, 14h
-	db	0B5h, 0C4h, 2Eh, 0EEh, 55h, 0B5h, 0D0h, 0E8h, 3Eh, 0Eh, 0E9h, 8, 0B5h, 26h, 83h, 7Eh
-	db	6, 0, 75h, 0EDh, 0B8h, 66h, 0, 0EBh, 3, 0B8h, 67h, 0, 0E8h, 0Eh, 0Fh, 0E9h
-	db	0F3h, 0B4h, 0E8h, 8Fh, 0Eh, 0E8h, 0A9h, 0Fh, 0E8h, 0ECh, 18h, 0B8h, 3, 0, 0E8h, 9Dh
-	db	1Bh, 72h, 8, 0B0h, 0CCh, 0E8h, 0A1h, 0BFh, 0E9h, 0DAh, 0B4h, 0B0h, 0CDh, 0E8h, 99h, 0BFh
-	db	0E8h, 42h, 20h, 0E9h, 0CFh, 0B4h, 0E8h, 85h, 0Eh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 81h, 0Fh
-	db	0E8h, 3, 19h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 8Ah, 0Fh, 0E8h, 0C5h, 16h, 0C4h, 2Eh, 0EEh
-	db	55h, 26h, 8Ah, 46h, 0Ah, 8Ah, 0E8h, 0D0h, 0EDh, 0D0h, 0EDh, 0D0h, 0EDh, 80h, 0CDh, 0D8h
-	db	24h, 7, 0D0h, 0E0h, 0D0h, 0E0h, 0D0h, 0E0h, 8Ah, 0C8h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0D1h
-	db	0Dh, 0E9h, 91h, 0B4h, 0E8h, 2Dh, 0Eh, 0C6h, 6, 0FAh, 55h, 0FFh, 0E8h, 55h, 0Fh, 0E8h
-	db	22h, 10h, 0E8h, 8Dh, 16h, 0E8h, 0A1h, 1Dh, 26h, 80h, 7Eh, 0, 1, 74h, 17h, 26h
-	db	8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 0Dh, 0E8h, 99h, 0Bh, 0Ch, 40h, 0Ah, 0C1h
-	db	0E8h, 26h, 0BFh, 0E9h, 5Fh, 0B4h, 0B5h, 0FEh, 0E8h, 8Dh, 0Dh, 0E9h, 57h, 0B4h, 0E8h, 0Dh
-	db	0Eh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 1Ch, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 15h, 0Fh, 0E8h
-	db	0DAh, 11h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 20h
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 28h, 26h, 80h
-	db	7Eh, 0, 1, 74h, 21h, 26h, 8Bh, 46h, 0Eh, 0E8h, 2, 0Bh, 22h, 0C0h, 75h, 16h
-	db	8Bh, 3Eh, 0EEh, 55h, 0A1h, 0F0h, 55h, 87h, 3Eh, 0F6h, 55h, 87h, 6, 0F8h, 55h, 89h
-	db	3Eh, 0EEh, 55h, 0A3h, 0F0h, 55h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0Fh, 16h, 0E8h, 19h, 1Dh
-	db	0C4h, 2Eh, 0F6h, 55h, 0E8h, 0FBh, 15h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h
-	db	25h, 0C4h, 2Eh, 0EEh, 55h, 26h, 80h, 7Eh, 0, 1, 74h, 1Ah, 26h, 8Bh, 46h, 0Eh
-	db	0E8h, 0BBh, 0Ah, 22h, 0C0h, 75h, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0F7h, 0Ah, 0Ch, 90h
-	db	0E8h, 86h, 0BEh, 0E9h, 0BFh, 0B3h, 0C6h, 6, 0FAh, 55h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h
-	db	0FFh, 0Ah, 0B5h, 86h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0DDh, 0Ch, 0E9h, 0A7h, 0B3h, 0E8h, 5Dh
-	db	0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 6Ch, 0Eh, 0E8h, 8Bh, 1Bh, 72h, 3Ch, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 4Dh, 0Eh, 0E8h, 0D8h, 10h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 30h, 17h, 0C4h, 2Eh
-	db	0EEh, 55h, 0E8h, 8Dh, 15h, 0E8h, 0A1h, 1Ch, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h
-	db	75h, 61h, 26h, 8Bh, 46h, 0Eh, 0E8h, 55h, 0Ah, 22h, 0C0h, 75h, 56h, 0C4h, 2Eh, 0F6h
-	db	55h, 0B1h, 0A8h, 0E8h, 0B7h, 0Ah, 0E9h, 5Ch, 0B3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 24h, 0Eh
-	db	0E8h, 0E9h, 10h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 74h
-	db	16h, 8Bh, 3Eh, 0EEh, 55h, 0A1h, 0F0h, 55h, 87h, 3Eh, 0F6h, 55h, 87h, 6, 0F8h, 55h
-	db	89h, 3Eh, 0EEh, 55h, 0A3h, 0F0h, 55h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 3Eh, 15h, 0E8h, 70h
-	db	0Ah, 0E8h, 45h, 1Ch, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 27h, 15h, 0B5h, 84h, 0E8h, 48h, 0Ch
-	db	0E9h, 12h, 0B3h, 32h, 0C9h, 0B5h, 0F6h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 3Ah, 0Ch, 0C4h, 2Eh
-	db	0F6h, 55h, 0E8h, 64h, 1Eh, 0E9h, 0FDh, 0B2h, 0E8h, 0B3h, 0Ch, 0C4h, 2Eh, 0EEh, 55h, 0E8h
-	db	0C2h, 0Dh, 0E8h, 0E1h, 1Ah, 0C4h, 2Eh, 0F6h, 55h, 73h, 2, 0EBh, 5Bh, 0E8h, 0A1h, 0Dh
-	db	0E8h, 2Ch, 10h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 84h, 16h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0E1h
-	db	14h, 0E8h, 0F5h, 1Bh, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 20h, 0E8h, 0F4h
-	db	9, 0Ch, 0B0h, 8Ah, 0C8h, 0C4h, 2Eh, 0F6h, 55h, 26h, 80h, 7Eh, 0, 1, 74h, 3
-	db	80h, 0C9h, 8, 8Ah, 0C1h, 0E8h, 71h, 0BDh, 0E8h, 0Eh, 1Eh, 0E9h, 0A7h, 0B2h, 0C6h, 6
-	db	0FAh, 55h, 0FFh, 32h, 0C9h, 0B5h, 0C6h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0CAh, 0Bh, 0C4h, 2Eh
-	db	0F6h, 55h, 0E8h, 0F4h, 1Dh, 0E9h, 8Dh, 0B2h, 0E8h, 59h, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 32h
-	db	0C9h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 19h, 0C4h, 2Eh, 0F6h, 55h, 26h
-	db	8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 28h, 26h, 8Bh, 46h, 0Eh, 0E8h, 4Eh, 9
-	db	3Ch, 8, 72h, 1Dh, 0C6h, 6, 0FAh, 55h, 0FFh, 0B1h, 2, 8Bh, 3Eh, 0EEh, 55h, 0A1h
-	db	0F0h, 55h, 87h, 3Eh, 0F6h, 55h, 87h, 6, 0F8h, 55h, 89h, 3Eh, 0EEh, 55h, 0A3h, 0F0h
-	db	55h, 80h, 0F1h, 2, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 47h, 14h, 0C4h, 2Eh, 0EEh, 55h, 0E8h
-	db	4Ah, 14h, 26h, 8Bh, 46h, 0Eh, 0E8h, 15h, 9, 22h, 0C0h, 74h, 20h, 2Ch, 8, 73h
-	db	52h, 0E8h, 0B8h, 0Fh, 0C4h, 2Eh, 0EEh, 55h, 8Ah, 0E9h, 80h, 0CDh, 88h, 0E8h, 61h, 9
-	db	0E8h, 36h, 1Bh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 3Eh, 0Bh, 0E9h, 8, 0B2h, 0C4h, 2Eh, 0F6h
-	db	55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 80h, 75h, 0D6h, 0E8h, 8Eh, 0Fh, 0C4h, 2Eh
-	db	0F6h, 55h, 0E8h, 14h, 1Bh, 0E8h, 42h, 1Bh, 80h, 0F1h, 2, 80h, 0C9h, 0A0h, 26h, 80h
-	db	7Eh, 0, 1, 74h, 3, 80h, 0C9h, 1, 8Ah, 0C1h, 0E8h, 9Ch, 0BCh, 0E8h, 51h, 1Dh
-	db	0E9h, 0D2h, 0B1h, 26h, 80h, 7Eh, 0, 3, 74h, 59h, 3Ch, 1, 74h, 45h, 8Ah, 0E9h
-	db	0B1h, 3, 0D2h, 0E0h, 80h, 0CDh, 8Ch, 8Ah, 0C8h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0Fh, 0Dh
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 14h, 80h, 3Eh
-	db	0FAh, 55h, 0, 75h, 5, 0E8h, 0C3h, 0Eh, 0EBh, 13h, 0E8h, 0F6h, 0Ch, 0E8h, 0B9h, 1Ah
-	db	0EBh, 0Bh, 0F7h, 6, 7Ch, 51h, 0, 20h, 74h, 3, 0E8h, 0E2h, 0Ch, 0E8h, 0C2h, 0Ah
-	db	0E9h, 82h, 0B1h, 80h, 3Eh, 0FAh, 55h, 0, 75h, 0B4h, 0B9h, 22h, 0, 0E8h, 77h, 0ACh
-	db	0E9h, 72h, 0B1h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 26h, 0F7h, 6, 7Ch, 51h, 80h
-	db	0, 74h, 1Eh, 50h, 0E8h, 0F5h, 0Eh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 6Eh, 13h, 5Bh, 32h
-	db	0FFh, 0D1h, 0E3h, 8Ah, 0E9h, 32h, 0C9h, 0Bh, 8Fh, 0CAh, 1Ch, 0E8h, 0C6h, 0Ah, 0E9h, 44h
-	db	0B1h, 0B8h, 68h, 0, 0E8h, 56h, 0Bh, 0E9h, 3Bh, 0B1h, 0E8h, 0F1h, 0Ah, 0C4h, 2Eh, 0EEh
-	db	55h, 0E8h, 0, 0Ch, 0E8h, 1Fh, 19h, 0C4h, 2Eh, 0F6h, 55h, 73h, 57h, 0E8h, 0F4h, 0Bh
-	db	0E8h, 0B9h, 0Eh, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 74h
-	db	20h, 8Ah, 0C1h, 34h, 38h, 0A2h, 0FAh, 55h, 80h, 0C9h, 2, 8Bh, 3Eh, 0EEh, 55h, 0A1h
-	db	0F0h, 55h, 87h, 3Eh, 0F6h, 55h, 87h, 6, 0F8h, 55h, 89h, 3Eh, 0EEh, 55h, 0A3h, 0F0h
-	db	55h, 80h, 0F1h, 2, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0F7h, 12h, 0C4h, 2Eh, 0EEh, 55h, 0E8h
-	db	0FAh, 12h, 8Ah, 0E9h, 0E8h, 2Ah, 8, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0FBh, 19h, 0E8h, 7
-	db	0Ah, 0E9h, 0D1h, 0B0h, 0E8h, 8Ah, 0Bh, 0E8h, 15h, 0Eh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 6Dh
-	db	14h, 0E8h, 0E5h, 19h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0C7h, 12h, 26h, 8Ah, 46h, 4, 24h
-	db	0C0h, 34h, 40h, 75h, 2Bh, 26h, 8Bh, 46h, 0Eh, 0E8h, 92h, 7, 22h, 0C0h, 75h, 20h
-	db	26h, 8Bh, 46h, 0Eh, 3Bh, 6, 1Eh, 56h, 75h, 9, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 7Eh
-	db	17h, 73h, 0Dh, 0C4h, 2Eh, 0F6h, 55h, 80h, 0C9h, 4, 0E8h, 0E0h, 7, 0E9h, 85h, 0B0h
-	db	8Ah, 0C1h, 34h, 38h, 0A2h, 0FAh, 55h, 0C4h, 2Eh, 0F6h, 55h, 0B5h, 80h, 26h, 80h, 7Eh
-	db	0, 1, 74h, 35h, 80h, 0CDh, 1, 0F7h, 6, 7Ch, 51h, 20h, 0, 75h, 0Fh, 80h
-	db	0F9h, 20h, 74h, 14h, 80h, 0F9h, 8, 74h, 0Fh, 80h, 0F9h, 30h, 74h, 0Ah, 0E8h, 3Eh
-	db	17h, 72h, 5, 80h, 0CDh, 2, 0EBh, 11h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 83h, 9, 0C4h
-	db	2Eh, 0F6h, 55h, 0E8h, 0A3h, 1Bh, 0E9h, 3Ch, 0B0h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 72h, 9
-	db	0C4h, 2Eh, 0F6h, 55h, 0E8h, 9Eh, 1Bh, 0E9h, 2Bh, 0B0h, 0E8h, 0C7h, 9, 26h, 0F6h, 46h
-	db	0, 80h, 75h, 7, 26h, 0F6h, 46h, 4, 0C0h, 74h, 5Ch, 26h, 8Ah, 46h, 4, 24h
-	db	0C0h, 34h, 40h, 75h, 4Fh, 0E8h, 0DCh, 0Ah, 0E8h, 68h, 0Bh, 0E8h, 1Eh, 12h, 26h, 8Bh
-	db	46h, 0Eh, 0E8h, 0E9h, 6, 2Ch, 8, 73h, 11h, 8Ah, 0C8h, 0E8h, 1Bh, 19h, 8Ah, 0C1h
-	db	4, 8, 0Ch, 50h, 0E8h, 0B2h, 0BAh, 0E9h, 0EBh, 0AFh, 8Ah, 0C8h, 0E8h, 40h, 0Bh, 8Ah
-	db	0C1h, 0D0h, 0E0h, 0D0h, 0E0h, 0D0h, 0E0h, 3Ch, 20h, 73h, 8, 0Ch, 6, 0E8h, 99h, 0BAh
-	db	0E9h, 0D2h, 0AFh, 8Ah, 0C8h, 0B0h, 0Fh, 0E8h, 8Fh, 0BAh, 8Ah, 0C1h, 0Ch, 80h, 0E8h, 88h
-	db	0BAh, 0E9h, 0C1h, 0AFh, 0E9h, 86h, 0, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h, 5, 80h
-	db	74h, 0Eh, 0F7h, 6, 82h, 51h, 0, 80h, 74h, 6, 0B8h, 80h, 80h, 0E8h, 0BDh, 9
-	db	0E8h, 5Eh, 0Ah, 0E8h, 5Bh, 0Ch, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 26h, 0E8h, 0B8h
-	db	18h, 0B1h, 68h, 0E8h, 38h, 13h, 0E8h, 76h, 16h, 72h, 0Eh, 80h, 0C9h, 2, 8Ah, 0C1h
-	db	0E8h, 46h, 0BAh, 0E8h, 0EFh, 1Ah, 0E9h, 7Ch, 0AFh, 8Ah, 0C1h, 0E8h, 3Bh, 0BAh, 0E8h, 0D8h
-	db	1Ah, 0E9h, 71h, 0AFh, 0F7h, 6, 7Ch, 51h, 20h, 0, 74h, 6Bh, 0E8h, 52h, 13h, 0B0h
-	db	50h, 0E8h, 25h, 0BAh, 0B0h, 55h, 0E8h, 20h, 0BAh, 0B0h, 8Bh, 0E8h, 1Bh, 0BAh, 0B0h, 0ECh
-	db	0E8h, 16h, 0BAh, 0B0h, 0C7h, 0E8h, 11h, 0BAh, 0B0h, 46h, 0E8h, 0Ch, 0BAh, 0B0h, 2, 0E8h
-	db	7, 0BAh, 0E8h, 0D2h, 1Ah, 0B0h, 5Dh, 0E8h, 0FFh, 0B9h, 0E9h, 38h, 0AFh, 0E8h, 4, 0Ah
-	db	0E8h, 1Fh, 0Ch, 26h, 8Ah, 46h, 0, 0F7h, 6, 7Ch, 51h, 8, 0, 75h, 0Eh, 3Ch
-	db	3, 75h, 18h, 0B8h, 2, 0, 26h, 0C6h, 46h, 0, 2, 0EBh, 23h, 3Ch, 5, 75h
-	db	0Ah, 0B8h, 4, 0, 26h, 0C6h, 46h, 0, 3, 0EBh, 15h, 0E8h, 2Bh, 18h, 0B9h, 30h
-	db	0FFh, 0E8h, 3Eh, 8, 0E9h, 0FEh, 0AEh, 0B9h, 8Ch, 0, 0E8h, 0FAh, 0A9h, 0E9h, 0F5h, 0AEh
-	db	0F7h, 6, 7Ch, 51h, 20h, 0, 74h, 0EFh, 56h, 50h, 6, 55h, 0E8h, 58h, 0CEh, 5Eh
-	db	1Fh, 58h, 1Eh, 56h, 83h, 0C6h, 0, 8Bh, 0FDh, 83h, 0C7h, 0, 0B9h, 28h, 0, 0F3h
-	db	0A4h, 16h, 1Fh, 26h, 0C6h, 46h, 0, 2, 26h, 1, 46h, 0Ah, 26h, 83h, 56h, 0Ch
-	db	0, 26h, 80h, 56h, 24h, 0, 0E8h, 0E0h, 17h, 0B9h, 30h, 0FFh, 0E8h, 0F3h, 7, 0E8h
-	db	0B3h, 0AEh, 0E8h, 76h, 0AEh, 5Dh, 7, 0E8h, 0CFh, 17h, 0B9h, 30h, 0FFh, 0E8h, 0E2h, 7
-	db	5Eh, 0E9h, 0A1h, 0AEh, 0E8h, 3Dh, 8, 0E8h, 6Ah, 9, 0E8h, 85h, 0Bh, 26h, 8Ah, 46h
-	db	4, 24h, 0C0h, 34h, 40h, 75h, 67h, 0E8h, 0A2h, 10h, 26h, 8Bh, 46h, 0Eh, 0E8h, 6Dh
-	db	5, 2Ch, 8, 73h, 11h, 4, 8, 8Ah, 0C8h, 0E8h, 9Dh, 17h, 8Ah, 0C1h, 0Ch, 58h
-	db	0E8h, 36h, 0B9h, 0E9h, 6Fh, 0AEh, 8Ah, 0C8h, 0E8h, 0C4h, 9, 8Ah, 0C1h, 3Ch, 1, 74h
-	db	12h, 0D0h, 0E0h, 0D0h, 0E0h, 0D0h, 0E0h, 3Ch, 20h, 73h, 11h, 0Ch, 7, 0E8h, 19h, 0B9h
-	db	0E9h, 52h, 0AEh, 0B9h, 22h, 0, 0E8h, 4Eh, 0A9h, 0E9h, 49h, 0AEh, 0F7h, 6, 7Ch, 51h
-	db	8, 0, 74h, 11h, 8Ah, 0C8h, 0B0h, 0Fh, 0E8h, 0FEh, 0B8h, 8Ah, 0C1h, 0Ch, 81h, 0E8h
-	db	0F7h, 0B8h, 0E9h, 30h, 0AEh, 0B9h, 68h, 0, 0E8h, 2Ch, 0A9h, 0E9h, 27h, 0AEh, 0C6h, 6
-	db	0FAh, 55h, 0FFh, 0E8h, 2Ch, 10h, 26h, 8Ah, 46h, 0, 0F7h, 6, 7Ch, 51h, 8, 0
-	db	75h, 0Eh, 3Ch, 3, 75h, 18h, 26h, 0C6h, 46h, 0, 2, 0B8h, 2, 0, 0EBh, 23h
-	db	3Ch, 5, 75h, 0Ah, 26h, 0C6h, 46h, 0, 3, 0B8h, 4, 0, 0EBh, 15h, 0E8h, 18h
-	db	17h, 0B9h, 0, 8Fh, 0E8h, 2Bh, 7, 0E9h, 0EBh, 0ADh, 0B9h, 8Ch, 0, 0E8h, 0E7h, 0A8h
-	db	0E9h, 0E2h, 0ADh, 0F7h, 6, 7Ch, 51h, 20h, 0, 74h, 0EFh, 56h, 50h, 6, 55h, 0E8h
-	db	45h, 0CDh, 5Eh, 1Fh, 58h, 1Eh, 56h, 83h, 0C6h, 0, 8Bh, 0FDh, 83h, 0C7h, 0, 0B9h
-	db	28h, 0, 0F3h, 0A4h, 26h, 0C6h, 46h, 0, 2, 26h, 1, 46h, 0Ah, 26h, 83h, 56h
-	db	0Ch, 0, 26h, 80h, 56h, 24h, 0, 8Ch, 0C0h, 8Bh, 0FDh, 5Dh, 7, 50h, 57h, 16h
-	db	1Fh, 0E8h, 0C5h, 16h, 0B9h, 0, 8Fh, 0E8h, 0D8h, 6, 0E8h, 98h, 0ADh, 0E8h, 5Bh, 0ADh
-	db	5Dh, 7, 0E8h, 0B4h, 16h, 0B9h, 0, 8Fh, 0E8h, 0C7h, 6, 5Eh, 0E9h, 86h, 0ADh, 0E8h
-	db	3Ch, 7, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 38h, 8, 0E8h, 7Bh, 11h, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 2Eh, 8, 0E8h, 5Bh, 11h, 0B0h, 0C8h, 0E8h, 2Eh, 0B8h, 0E8h, 0F9h, 18h, 0C4h, 2Eh
-	db	0F6h, 55h, 0E8h, 0D0h, 18h, 0E9h, 5Dh, 0ADh, 0E8h, 13h, 7, 0E8h, 88h, 16h, 0EBh, 0D2h
-	db	0E8h, 0Bh, 7, 0E8h, 92h, 16h, 0EBh, 0CAh, 0E8h, 2Bh, 7, 0C6h, 6, 0FAh, 55h, 0FFh
-	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 0Dh, 8, 0E8h, 52h, 0Fh, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 3
-	db	8, 0E8h, 3Eh, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0E6h, 7, 0E8h, 4Ah, 0Eh, 0C4h, 2Eh
-	db	0F6h, 55h, 0E8h, 0C9h, 10h, 0E8h, 41h, 16h, 0B5h, 69h, 0E8h, 2, 14h, 72h, 1Bh, 80h
-	db	0CDh, 2, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 58h, 4, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 42h, 6
-	db	0C4h, 2Eh, 0F6h, 55h, 0E8h, 6Eh, 18h, 0E9h, 0FBh, 0ACh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 40h
-	db	4, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 2Ah, 6, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 4Ah, 18h, 0E9h
-	db	0E3h, 0ACh, 0E8h, 99h, 6, 0C6h, 6, 0FAh, 55h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0A3h
-	db	7, 0E8h, 0C2h, 14h, 0C4h, 2Eh, 0F6h, 55h, 72h, 49h, 0E8h, 84h, 7, 0E8h, 0CCh, 0Ah
-	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 0D5h, 0Eh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 60h, 10h, 0E8h, 0D8h
-	db	15h, 0B5h, 69h, 0E8h, 99h, 13h, 72h, 17h, 80h, 0CDh, 2, 0C4h, 2Eh, 0EEh, 55h, 0E8h
-	db	0EFh, 3, 0E8h, 0DDh, 5, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 9, 18h, 0E9h, 96h, 0ACh, 0C4h
-	db	2Eh, 0EEh, 55h, 0E8h, 0DBh, 3, 0E8h, 0C9h, 5, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0E9h, 17h
-	db	0E9h, 82h, 0ACh, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 1Ch, 0E8h, 46h, 7, 0E8h, 8Dh
-	db	0Bh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 91h, 15h, 0E8h, 0B6h, 3, 0B5h, 0AFh, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 0E0h, 5, 0E9h, 5Eh, 0ACh, 0B9h, 68h, 0, 0E8h, 5Ah, 0A7h, 0E9h, 55h, 0ACh
-	db	0E8h, 0Bh, 6, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 7, 7, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 13h
-	db	7, 0E8h, 0E0h, 7, 0E8h, 38h, 0Eh, 0E8h, 5Fh, 15h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 4Bh
-	db	0Eh, 26h, 0F6h, 46h, 4, 40h, 74h, 14h, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 4Eh, 56h
-	db	75h, 0Ah, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0B9h, 4, 0E9h, 19h, 0ACh, 0B8h, 65h, 0, 0E8h
-	db	2Bh, 6, 0E9h, 10h, 0ACh, 0E8h, 0ACh, 5, 0E8h, 0D9h, 6, 0E8h, 93h, 8, 0E8h, 0FEh
-	db	0Dh, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 18h, 26h, 8Ah, 46h, 5, 0A8h, 2, 75h
-	db	15h, 0A8h, 1, 75h, 0Ch, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 5, 0E8h, 5Ch, 79h, 75h
-	db	5, 0E8h, 12h, 15h, 0EBh, 3, 0E8h, 1Fh, 15h, 0E8h, 58h, 5, 0E9h, 0D6h, 0ABh, 0E8h
-	db	72h, 5, 0E8h, 9Fh, 6, 0E8h, 27h, 7, 0E8h, 0D7h, 0Dh, 0E8h, 46h, 5, 0E9h, 0C4h
-	db	0ABh, 0E8h, 7Ah, 5, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 89h, 6, 0C4h, 2Eh, 0F6h, 55h, 0E8h
-	db	82h, 6, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 5, 0E8h, 1Fh, 0Ah, 0EBh, 3, 0E8h
-	db	0BCh, 0Ah, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0A9h, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0ACh, 0Dh
-	db	8Ah, 0E9h, 0E8h, 0DCh, 2, 0E8h, 0B1h, 14h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0C3h, 4, 0E9h
-	db	83h, 0ABh, 0E8h, 39h, 5, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 48h, 6, 0E8h, 0D0h, 6, 0C4h
-	db	2Eh, 0F6h, 55h, 0E8h, 3Eh, 6, 0E8h, 0C6h, 6, 0E8h, 76h, 0Dh, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 79h, 0Dh, 8Ah, 0E9h, 0E8h, 0A9h, 2, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 93h, 4, 0E9h
-	db	53h, 0ABh, 0E8h, 9, 5, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 18h, 6, 0C4h, 2Eh, 0F6h, 55h
-	db	0E8h, 11h, 6, 0E8h, 58h, 0Ah, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 45h, 0Dh, 0C4h, 2Eh, 0EEh
-	db	55h, 0E8h, 48h, 0Dh, 8Ah, 0E9h, 0E8h, 78h, 2, 0E8h, 4Dh, 14h, 0C4h, 2Eh, 0F6h, 55h
-	db	0E8h, 0A1h, 4, 0E9h, 1Fh, 0ABh, 0E8h, 0D5h, 4, 0F6h, 0C1h, 18h, 74h, 5, 0C6h, 6
-	db	0FAh, 55h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0DAh, 5, 0E8h, 15h, 0Dh, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 0BDh, 5, 26h, 0F6h, 46h, 4, 40h, 75h, 1Ch, 0E8h, 0F9h, 0Eh, 0B5h, 0BAh
-	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 4Ch, 6, 0E8h, 0Fh, 14h, 0E8h, 67h, 4, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 51h, 16h, 0E9h, 0DEh, 0AAh, 0E8h, 0F4h, 9, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0EBh
-	db	0Ch, 8Ah, 0E9h, 80h, 0CDh, 83h, 0E8h, 18h, 2, 0E8h, 0EDh, 13h, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 41h, 4, 0E9h, 0BFh, 0AAh, 0E8h, 75h, 4, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 84h, 5
-	db	0E8h, 0BFh, 0Ch, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 67h, 5, 0E8h, 0BFh, 0Ch, 0E8h, 0BEh, 9
-	db	0C4h, 2Eh, 0EEh, 55h, 8Ah, 0E9h, 0E8h, 0E8h, 1, 0E8h, 0BDh, 13h, 0C4h, 2Eh, 0F6h, 55h
-	db	0E8h, 11h, 4, 0E9h, 8Fh, 0AAh, 0E8h, 45h, 4, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 54h, 5
-	db	0E8h, 8Fh, 0Ch, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 37h, 5, 0E8h, 8Fh, 0Ch, 0E8h, 18h, 0Bh
-	db	0C4h, 2Eh, 0EEh, 55h, 8Ah, 0E9h, 0E8h, 0B8h, 1, 0E8h, 8Dh, 13h, 0C4h, 2Eh, 0F6h, 55h
-	db	0E8h, 0D7h, 3, 0E9h, 5Fh, 0AAh, 0E8h, 0FBh, 3, 0C6h, 6, 0FAh, 55h, 0FFh, 0E8h, 23h
-	db	5, 0E8h, 78h, 5, 0E8h, 5Bh, 0Ch, 8Ah, 0E9h, 32h, 0C9h, 0E8h, 0C6h, 3, 0E9h, 44h
-	db	0AAh, 6, 55h, 8Eh, 0C0h, 8Bh, 0EFh, 5Fh, 58h, 0E8h, 1Ah, 4, 0C6h, 6, 0FAh, 55h
-	db	0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0FCh, 4, 0E8h, 37h, 0Ch, 0C4h, 2Eh, 0F6h, 55h, 0E8h
-	db	0DFh, 4, 0E8h, 37h, 0Ch, 0E8h, 36h, 9, 8Ah, 0E9h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 60h
-	db	1, 0E8h, 35h, 13h, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 0C6h, 4, 26h, 8Ah, 46h, 4, 24h
-	db	0C0h, 34h, 40h, 75h, 1Ah, 0E8h, 14h, 0Ch, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 10h, 56h
-	db	75h, 21h, 80h, 0CDh, 1, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 68h, 3, 0E9h, 0E6h, 0A9h, 0E8h
-	db	0E5h, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 5Bh, 3, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 45h, 15h
-	db	0E9h, 0D2h, 0A9h, 0B8h, 67h, 0, 0E8h, 0E4h, 3, 0E9h, 0C9h, 0A9h, 0E8h, 8Ch, 0A9h, 0E8h
-	db	6, 13h, 8Ah, 0C1h, 0E8h, 82h, 0B4h, 0E9h, 0BBh, 0A9h, 0E8h, 71h, 3, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 80h, 4, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 66h, 4, 0E8h, 40h, 9, 0C4h, 2Eh
-	db	0EEh, 55h, 0E8h, 0B7h, 0Bh, 8Ah, 0E9h, 0E8h, 0E7h, 0, 0E8h, 0BCh, 12h, 0C4h, 2Eh, 0F6h
-	db	55h, 0E8h, 8Bh, 0Bh, 0E8h, 0Dh, 3, 0E9h, 8Bh, 0A9h, 0E8h, 27h, 3, 0E8h, 54h, 4
-	db	0E8h, 0E0h, 4, 0E8h, 96h, 0Bh, 0E8h, 0A0h, 12h, 0E8h, 0A9h, 0, 8Ah, 0C8h, 80h, 0C9h
-	db	0C8h, 0B0h, 0Fh, 0E8h, 33h, 0B4h, 8Ah, 0C1h, 0E8h, 2Eh, 0B4h, 0E9h, 67h, 0A9h, 0E8h, 1Dh
-	db	3, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 2Ch, 4, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 25h, 4, 0E8h
-	db	0EAh, 6, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 59h, 0Bh, 0E8h, 6Dh, 12h, 0C4h, 2Eh, 0F6h, 55h
-	db	0E8h, 59h, 0Bh, 0C6h, 6, 0FAh, 55h, 0FFh, 8Ah, 0E9h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 80h
-	db	0, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0A2h, 2, 0E9h, 2Ah, 0A9h, 0E8h, 0C6h, 2, 0E8h, 0F3h
-	db	3, 0E8h, 1Bh, 0Bh, 0B5h, 1, 0B1h, 38h, 0E8h, 99h, 2, 0E9h, 17h, 0A9h, 2Bh, 6
-	db	0FEh, 55h, 0D1h, 0E8h, 3Dh, 8, 0, 72h, 0Bh, 2Dh, 8, 0, 3Dh, 16h, 0, 72h
-	db	3, 2Dh, 16h, 0, 0C3h, 26h, 0F6h, 46h, 4, 40h, 74h, 21h, 26h, 8Bh, 46h, 0Eh
-	db	0E8h, 0DBh, 0FFh, 24h, 6, 3Ch, 4, 74h, 18h, 26h, 0F6h, 46h, 4, 10h, 74h, 0Dh
-	db	26h, 8Bh, 46h, 12h, 0E8h, 0C7h, 0FFh, 24h, 6, 3Ch, 4, 74h, 4, 0A1h, 0FCh, 55h
-	db	0C3h, 0A1h, 5Eh, 56h, 0C3h, 26h, 0F6h, 46h, 4, 40h, 74h, 0Bh, 26h, 8Bh, 46h, 0Eh
-	db	0E8h, 0ABh, 0FFh, 3Ch, 8, 73h, 1, 0C3h, 0B8h, 3Eh, 0, 0E8h, 0CFh, 2, 32h, 0C0h
-	db	0C3h, 0E8h, 0E1h, 0FFh, 0D0h, 0E0h, 0D0h, 0E0h, 0D0h, 0E0h, 8Ah, 0C8h, 0C3h, 26h, 80h, 7Eh
-	db	0, 1, 74h, 3, 80h, 0C9h, 1, 8Ah, 0C1h, 0E8h, 5Dh, 0B3h, 0E9h, 0FAh, 13h, 26h
-	db	8Ah, 46h, 0, 3Ch, 2, 74h, 27h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 1Ch, 3Ch
-	db	5, 74h, 23h, 26h, 8Ah, 46h, 5, 0A8h, 2, 75h, 1Eh, 0A8h, 1, 75h, 0Ch, 0A1h
-	db	7Eh, 51h, 23h, 0C0h, 74h, 5, 0E8h, 0E2h, 75h, 75h, 0Eh, 80h, 0C9h, 8, 0E8h, 95h
-	db	11h, 0B5h, 0FFh, 0E9h, 9Ch, 1, 80h, 0C9h, 8, 0E8h, 9Ch, 11h, 0B5h, 0FFh, 0E9h, 91h
-	db	1, 0E8h, 7Ah, 0, 0E8h, 0E5h, 0Eh, 0E8h, 0A4h, 10h, 0FEh, 0C0h, 32h, 0E4h, 26h, 29h
-	db	46h, 0Ah, 26h, 83h, 5Eh, 0Ch, 0, 26h, 80h, 5Eh, 24h, 0, 0E8h, 6Ch, 10h, 73h
-	db	0Eh, 0E8h, 0B4h, 0Dh, 0E8h, 71h, 11h, 8Ah, 0C1h, 0E8h, 0EDh, 0B2h, 0E9h, 0C4h, 13h, 0E8h
-	db	46h, 0Dh, 0E8h, 51h, 11h, 8Ah, 0C1h, 0E8h, 0DFh, 0B2h, 0E9h, 0AAh, 13h, 0E8h, 4Bh, 10h
-	db	73h, 0Eh, 0E8h, 0C4h, 0Ah, 0E8h, 50h, 11h, 8Ah, 0C1h, 0E8h, 0CCh, 0B2h, 0E9h, 0F1h, 13h
-	db	0E8h, 0F3h, 0Ah, 0E8h, 30h, 11h, 8Ah, 0C1h, 0E8h, 0BEh, 0B2h, 0E9h, 0A5h, 13h, 0E8h, 1Dh
-	db	0, 0E8h, 88h, 0Eh, 26h, 83h, 6Eh, 0Ah, 2, 26h, 83h, 5Eh, 0Ch, 0, 26h, 80h
-	db	5Eh, 24h, 0, 0E8h, 8Eh, 0Ch, 8Ah, 0C1h, 0E8h, 9Eh, 0B2h, 0E9h, 47h, 13h, 0A1h, 7Eh
-	db	51h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 28h, 6, 55h, 0A1h, 5Ch, 56h, 9Ah
-	dd	L101E0
-	db	51h, 0E8h, 18h, 88h, 59h, 9Ah
-	dd	L101E0
-	db	26h, 83h, 7Eh, 6, 0, 75h, 42h, 26h, 8Bh, 46h, 1Ah, 26h, 0F6h, 46h, 4, 4
-	db	5Dh, 7, 74h, 38h, 23h, 0C0h, 74h, 34h, 8Bh, 0D0h, 26h, 8Bh, 46h, 18h, 23h, 0C0h
-	db	74h, 2Ah, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 0BBh, 83h, 0E8h, 9Fh, 83h, 92h, 9Ah
-	dd	L101E0
-	db	0E8h, 0AFh, 83h, 0E8h, 93h, 83h, 5Dh, 7, 3Bh, 0C2h, 74h, 7, 8Bh, 0C2h, 0E8h, 0C2h
-	db	74h, 74h, 4, 0C3h, 5Dh, 7, 0C3h, 51h, 0B9h, 88h, 0, 0E8h, 67h, 0A2h, 59h, 0C3h
-	db	0E8h, 0B5h, 10h, 26h, 80h, 7Eh, 0, 1, 74h, 3, 80h, 0C9h, 1, 8Ah, 0C1h, 0E9h
-	db	15h, 0B2h, 26h, 80h, 7Eh, 0, 3, 74h, 3, 80h, 0CDh, 4, 0F7h, 6, 7Ch, 51h
-	db	40h, 0, 74h, 63h, 26h, 83h, 7Eh, 6, 0, 75h, 64h, 0E8h, 0CCh, 10h, 74h, 41h
-	db	0E8h, 19h, 0FEh, 2Ch, 8, 98h, 0D1h, 0E0h, 8Bh, 0D8h, 8Bh, 0BFh, 0ECh, 1Ch, 23h, 0FFh
-	db	74h, 5, 53h, 0E8h, 43h, 16h, 5Bh, 53h, 0B0h, 9Bh, 0E8h, 0DAh, 0B1h, 5Bh, 8Bh, 0BFh
-	db	0F8h, 1Ch, 23h, 0FFh, 74h, 5, 53h, 0E8h, 2Fh, 16h, 5Bh, 8Ah, 0C3h, 0D0h, 0E8h, 0BBh
-	db	0E6h, 1Ch, 0D7h, 0E8h, 3Fh, 0B1h, 0E8h, 0F4h, 0Fh, 8Ah, 0C5h, 0E8h, 0B9h, 0B1h, 0E9h, 22h
-	db	13h, 0BFh, 74h, 56h, 0E8h, 12h, 16h, 0B0h, 9Bh, 0E8h, 0ABh, 0B1h, 0E8h, 0DEh, 0Fh, 8Ah
-	db	0C5h, 0E8h, 0A3h, 0B1h, 0E9h, 0Ch, 13h, 0F7h, 6, 7Ch, 51h, 0, 4, 75h, 11h, 0B0h
-	db	9Bh, 0E8h, 93h, 0B1h, 0EBh, 0Ah, 26h, 80h, 7Eh, 0, 1, 74h, 3, 80h, 0CDh, 1
-	db	0E8h, 15h, 10h, 8Ah, 0C5h, 0E8h, 7Fh, 0B1h, 0E9h, 0E8h, 12h, 0F7h, 6, 7Ch, 51h, 40h
-	db	0, 74h, 8, 0BFh, 74h, 56h, 0E8h, 0D0h, 15h, 0EBh, 8, 0F7h, 6, 7Ch, 51h, 0
-	db	4, 75h, 5, 0B0h, 9Bh, 0E8h, 5Fh, 0B1h, 8Ah, 0C5h, 0E8h, 5Ah, 0B1h, 8Ah, 0C1h, 0Ch
-	db	0C0h, 26h, 0Ah, 46h, 0Ah, 0E9h, 4Fh, 0B1h, 26h, 80h, 7Eh, 0, 1, 74h, 3, 80h
-	db	0CDh, 1, 0E8h, 0D3h, 0Fh, 0B0h, 0Fh, 0E8h, 3Dh, 0B1h, 8Ah, 0C5h, 0E8h, 38h, 0B1h, 0E9h
-	db	0A1h, 12h, 89h, 2Eh, 0EEh, 55h, 8Ch, 6, 0F0h, 55h, 6, 55h, 0E8h, 2Ah, 0A6h, 5Dh
-	db	7, 0C3h, 0C6h, 6, 0FAh, 55h, 0, 89h, 2Eh, 0EEh, 55h, 8Ch, 6, 0F0h, 55h, 0E8h
-	db	17h, 0A6h, 0C4h, 2Eh, 0EEh, 55h, 51h, 0E8h, 53h, 17h, 59h, 0C3h, 0C6h, 6, 0FAh, 55h
-	db	0, 89h, 3Eh, 0EEh, 55h, 0A3h, 0F0h, 55h, 89h, 2Eh, 0F6h, 55h, 8Ch, 6, 0F8h, 55h
-	db	0E8h, 0F6h, 0A5h, 0C4h, 2Eh, 0EEh, 55h, 51h, 0E8h, 32h, 17h, 0C4h, 2Eh, 0F6h, 55h, 0E8h
-	db	2Bh, 17h, 59h, 0C3h, 0C6h, 6, 0FAh, 55h, 0, 89h, 1Eh, 0EEh, 55h, 89h, 16h, 0F0h
-	db	55h, 89h, 3Eh, 0F2h, 55h, 0A3h, 0F4h, 55h, 89h, 2Eh, 0F6h, 55h, 8Ch, 6, 0F8h, 55h
-	db	0E8h, 0C6h, 0A5h, 0C4h, 2Eh, 0EEh, 55h, 51h, 0E8h, 2, 17h, 0C4h, 2Eh, 0F2h, 55h, 0E8h
-	db	0FBh, 16h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0F4h, 16h, 59h, 0C3h, 51h, 8Bh, 0C8h, 0E8h, 0E4h
-	db	0A0h, 59h, 0C3h, 51h, 8Bh, 0C8h, 0E8h, 48h, 16h, 59h, 0C3h, 26h, 0F6h, 46h, 24h, 80h
-	db	74h, 11h, 0BAh, 0FFh, 0FFh, 33h, 0C2h, 8Bh, 0F8h, 26h, 2Bh, 7Eh, 0Ah, 26h, 1Bh, 56h
-	db	0Ch, 0EBh, 0Dh, 26h, 8Bh, 7Eh, 0Ah, 2Bh, 0F8h, 26h, 8Bh, 56h, 0Ch, 83h, 0DAh, 0
-	db	0B8h, 33h, 8, 51h, 8Bh, 0C8h, 0E8h, 86h, 16h, 59h, 0C3h, 26h, 8Ah, 46h, 0, 3Ch
-	db	80h, 74h, 0Eh, 3Ch, 87h, 74h, 9, 3Ch, 88h, 74h, 5, 3Ch, 89h, 74h, 1, 0F9h
-	db	0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 0F7h, 26h, 83h, 7Eh, 14h, 0, 74h, 0F0h
-	db	0F9h, 0C3h, 26h, 8Ah, 46h, 0, 3Ch, 80h, 74h, 0Ah, 3Ch, 88h, 74h, 5, 3Ch, 89h
-	db	74h, 1, 0F9h, 0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 0F7h, 26h, 83h, 7Eh, 14h
-	db	0, 74h, 0F0h, 0F9h, 0C3h, 26h, 8Ah, 46h, 0, 0A8h, 80h, 74h, 1, 0C3h, 26h, 0C6h
-	db	46h, 0, 0, 0E8h, 0B9h, 0DCh, 0E8h, 45h, 0DDh, 0B8h, 42h, 0, 0E9h, 5Ch, 0FFh, 26h
-	db	0F6h, 46h, 0, 80h, 75h, 1, 0C3h, 51h, 0E8h, 22h, 0D5h, 59h, 0B8h, 15h, 0, 0E9h
-	db	49h, 0FFh, 26h, 0F6h, 46h, 0, 80h, 75h, 1, 0C3h, 0E8h, 0E4h, 0C7h, 0F7h, 6, 7Ch
-	db	51h, 0, 10h, 75h, 1, 0C3h, 0F7h, 6, 82h, 51h, 1, 0, 74h, 0F7h, 0B8h, 40h
-	db	80h, 0E9h, 27h, 0FFh, 0E8h, 0AEh, 0FFh, 26h, 8Ah, 46h, 0, 3Ch, 80h, 74h, 0Ch, 3Ch
-	db	87h, 74h, 8, 3Ch, 88h, 74h, 4, 3Ch, 89h, 75h, 1, 0C3h, 26h, 0C6h, 46h, 0
-	db	80h, 0B8h, 16h, 0, 0E9h, 4, 0FFh, 26h, 80h, 7Eh, 0, 4, 73h, 1, 0C3h, 26h
-	db	0C6h, 46h, 0, 0, 0B8h, 16h, 0, 0E9h, 0F1h, 0FEh, 0B0h, 1, 26h, 80h, 7Eh, 0
-	db	0, 74h, 4, 26h, 38h, 46h, 0, 26h, 88h, 46h, 0, 75h, 1, 0C3h, 0B8h, 16h
-	db	0, 0E9h, 0D7h, 0FEh, 0E8h, 0CBh, 0Ah, 72h, 9, 26h, 8Ah, 46h, 0, 3Ch, 3, 73h
-	db	0CEh, 0C3h, 26h, 0C6h, 46h, 0, 2, 0B8h, 20h, 80h, 0E9h, 0BEh, 0FEh, 0B0h, 2, 0EBh
-	db	0CBh, 0E8h, 0AEh, 0Ah, 72h, 1Ah, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 25h, 3Ch, 4
-	db	73h, 21h, 3Ch, 3, 74h, 1, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 14h, 0C3h
-	db	0F7h, 6, 7Ch, 51h, 8, 0, 74h, 5, 0B8h, 20h, 80h, 0EBh, 9, 26h, 0C6h, 46h
-	db	0, 2, 0C3h, 0B8h, 16h, 0, 50h, 0E8h, 51h, 0Dh, 26h, 88h, 46h, 0, 58h, 0E9h
-	db	79h, 0FEh, 0E8h, 6Dh, 0Ah, 72h, 16h, 26h, 8Ah, 46h, 0, 3Ch, 4, 73h, 13h, 3Ch
-	db	3, 74h, 1, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 6, 0C3h, 0B8h, 20h, 80h
-	db	0EBh, 0D4h, 0B8h, 16h, 0, 0EBh, 0CFh, 0B0h, 6, 0E9h, 60h, 0FFh, 0E8h, 43h, 0Ah, 72h
-	db	11h, 26h, 8Ah, 46h, 0, 3Ch, 3, 72h, 0Eh, 3Ch, 5, 73h, 0Ah, 3Ch, 5, 74h
-	db	6, 0C3h, 0B8h, 20h, 80h, 0EBh, 3, 0B8h, 16h, 0, 26h, 0C6h, 46h, 0, 4, 0E9h
-	db	29h, 0FEh, 0E8h, 1Dh, 0Ah, 72h, 11h, 26h, 8Ah, 46h, 0, 3Ch, 3, 72h, 0Eh, 3Ch
-	db	7, 73h, 0Ah, 3Ch, 5, 74h, 6, 0C3h, 0B8h, 20h, 80h, 0EBh, 0DDh, 0B8h, 16h, 0
-	db	0EBh, 0D8h, 0E8h, 0FDh, 9, 72h, 11h, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 0Eh, 3Ch
-	db	5, 73h, 0Ah, 3Ch, 5, 74h, 6, 0C3h, 0B8h, 20h, 80h, 0EBh, 0BDh, 0B8h, 16h, 0
-	db	0EBh, 0B8h, 0E8h, 0DDh, 9, 72h, 0Dh, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 0Ah, 3Ch
-	db	4, 73h, 6, 0C3h, 0B8h, 20h, 80h, 0EBh, 3, 0B8h, 16h, 0, 26h, 0C6h, 46h, 0
-	db	3, 0E9h, 0C7h, 0FDh, 0E8h, 0BBh, 9, 72h, 1Ah, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h
-	db	28h, 3Ch, 6, 73h, 24h, 3Ch, 5, 74h, 1, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0
-	db	74h, 17h, 0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 8, 0E8h, 6Dh, 0Ch, 26h, 88h
-	db	46h, 0, 0C3h, 0B8h, 20h, 80h, 0E9h, 0Dh, 0FFh, 0B8h, 16h, 0, 0E9h, 7, 0FFh, 0E8h
-	db	80h, 9, 72h, 0Dh, 26h, 8Ah, 46h, 0, 3Ch, 4, 72h, 18h, 3Ch, 6, 73h, 14h
-	db	0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 6, 26h, 0C6h, 46h, 0, 5, 0C3h, 0B8h
-	db	20h, 80h, 0EBh, 3, 0B8h, 16h, 0, 26h, 0C6h, 46h, 0, 5, 0E9h, 5Ch, 0FDh, 0E8h
-	db	81h, 9, 72h, 16h, 26h, 8Ah, 46h, 0, 3Ch, 4, 73h, 1Eh, 3Ch, 3, 74h, 1
-	db	0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 11h, 0C3h, 0E8h, 5Ch, 0Bh, 26h, 0C6h, 46h
-	db	0, 2, 73h, 5, 26h, 0C6h, 46h, 0, 3, 0C3h, 0B8h, 16h, 0, 0E9h, 0A6h, 0FEh
-	db	0E8h, 1Fh, 9, 72h, 1Ah, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 26h, 3Ch, 5, 74h
-	db	5, 3Ch, 4, 73h, 1Eh, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 15h, 0C3h, 0F7h
-	db	6, 7Ch, 51h, 8, 0, 74h, 6, 0B8h, 20h, 80h, 0E9h, 79h, 0FEh, 26h, 0C6h, 46h
-	db	0, 2, 0C3h, 0B8h, 16h, 0, 0E9h, 6Dh, 0FEh, 0E8h, 0E6h, 8, 72h, 18h, 26h, 8Ah
-	db	46h, 0, 3Ch, 2, 72h, 11h, 3Ch, 4, 73h, 0Dh, 0F7h, 6, 7Ch, 51h, 8, 0
-	db	75h, 4, 3Ch, 3, 74h, 1, 0C3h, 0B8h, 16h, 0, 0E9h, 49h, 0FEh, 0C4h, 2Eh, 0EEh
-	db	55h, 0E8h, 0BEh, 8, 72h, 15h, 26h, 8Ah, 46h, 0, 3Ch, 4, 73h, 32h, 0C4h, 2Eh
-	db	0F6h, 55h, 26h, 88h, 46h, 0, 3Ch, 3, 74h, 18h, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h
-	db	0D1h, 8, 72h, 21h, 26h, 8Ah, 46h, 0, 3Ch, 4, 73h, 14h, 0C4h, 2Eh, 0EEh, 55h
-	db	0EBh, 0E0h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 6, 0C3h, 0B8h, 41h, 0, 0EBh, 62h
-	db	0B8h, 16h, 0, 0EBh, 5Dh, 0B8h, 20h, 80h, 0EBh, 58h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 71h
-	db	8, 72h, 22h, 26h, 8Ah, 46h, 0, 3Ch, 4, 73h, 3Fh, 0C4h, 2Eh, 0F6h, 55h, 50h
-	db	0E8h, 5Fh, 8, 58h, 72h, 6, 26h, 3Ah, 46h, 0, 75h, 29h, 26h, 88h, 46h, 0
-	db	3Ch, 3, 74h, 18h, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 46h, 8, 72h, 21h, 26h, 8Ah
-	db	46h, 0, 3Ch, 4, 73h, 14h, 0C4h, 2Eh, 0EEh, 55h, 0EBh, 0E0h, 0F7h, 6, 7Ch, 51h
-	db	8, 0, 74h, 6, 0C3h, 0B8h, 41h, 0, 0EBh, 8, 0B8h, 16h, 0, 0EBh, 3, 0B8h
-	db	20h, 80h, 50h, 0E8h, 0F5h, 0Ah, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh
-	db	0F6h, 55h, 26h, 88h, 46h, 0, 58h, 0E9h, 11h, 0FCh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 1
-	db	8, 72h, 19h, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 3Ah, 3Ch, 4, 73h, 36h, 0C4h
-	db	2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 3Ch, 3, 74h, 1Ch, 0C3h, 0C4h, 2Eh, 0F6h, 55h
-	db	0E8h, 10h, 8, 72h, 25h, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 18h, 3Ch, 4, 73h
-	db	14h, 0C4h, 2Eh, 0EEh, 55h, 0EBh, 0DCh, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 6, 0C3h
-	db	0B8h, 20h, 0, 0EBh, 9Dh, 0B8h, 16h, 0, 0EBh, 98h, 0F7h, 6, 7Ch, 51h, 8, 0
-	db	74h, 5, 0B8h, 20h, 80h, 0EBh, 8Bh, 0C4h, 2Eh, 0EEh, 55h, 26h, 0C6h, 46h, 0, 2
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h, 0, 2, 0C3h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 91h
-	db	7, 72h, 28h, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 52h, 3Ch, 4, 73h, 4Eh, 0FEh
-	db	0C0h, 0C4h, 2Eh, 0F6h, 55h, 50h, 0E8h, 79h, 7, 58h, 72h, 6, 26h, 3Ah, 46h, 0
-	db	75h, 36h, 26h, 88h, 46h, 0, 3Ch, 4, 74h, 25h, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h
-	db	60h, 7, 72h, 2Eh, 26h, 8Ah, 46h, 0, 3Ch, 3, 72h, 21h, 3Ch, 5, 73h, 1Dh
-	db	0FEh, 0C8h, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 3Ch, 3, 74h, 1, 0C3h, 0F7h
-	db	6, 7Ch, 51h, 8, 0, 74h, 6, 0C3h, 0B8h, 20h, 0, 0EBh, 25h, 0B8h, 16h, 0
-	db	0EBh, 20h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 5, 0B8h, 20h, 80h, 0EBh, 13h, 0C4h
-	db	2Eh, 0EEh, 55h, 26h, 0C6h, 46h, 0, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h, 0
-	db	3, 0C3h, 50h, 0E8h, 0E5h, 9, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0FEh, 0C0h
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 58h, 0E9h, 0FFh, 0FAh, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 0EFh, 6, 72h, 26h, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 48h, 3Ch, 4, 73h
-	db	44h, 0C4h, 2Eh, 0F6h, 55h, 50h, 0E8h, 0D9h, 6, 58h, 72h, 6, 26h, 3Ah, 46h, 0
-	db	75h, 2Dh, 26h, 88h, 46h, 0, 3Ch, 3, 74h, 1Ch, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h
-	db	0C0h, 6, 72h, 27h, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 19h, 3Ch, 4, 73h, 15h
-	db	0C4h, 2Eh, 0EEh, 55h, 0EBh, 0DCh, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 7, 0C3h, 0B8h
-	db	20h, 0, 0E9h, 7Dh, 0FEh, 0B8h, 16h, 0, 0E9h, 77h, 0FEh, 0F7h, 6, 7Ch, 51h, 8
-	db	0, 74h, 6, 0B8h, 20h, 80h, 0E9h, 69h, 0FEh, 0C4h, 2Eh, 0EEh, 55h, 26h, 0C6h, 46h
-	db	0, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h, 0, 2, 0C3h, 0C4h, 2Eh, 0EEh, 55h
-	db	0E8h, 6Fh, 6, 72h, 2Eh, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 64h, 3Ch, 4, 73h
-	db	60h, 0FEh, 0C0h, 3Ch, 4, 75h, 2, 0FEh, 0C0h, 0C4h, 2Eh, 0F6h, 55h, 50h, 0E8h, 51h
-	db	6, 58h, 72h, 6, 26h, 3Ah, 46h, 0, 75h, 35h, 26h, 88h, 46h, 0, 3Ch, 5
-	db	74h, 44h, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 38h, 6, 72h, 28h, 26h, 8Ah, 46h, 0
-	db	3Ch, 3, 72h, 2Dh, 3Ch, 6, 73h, 29h, 3Ch, 4, 74h, 25h, 72h, 2, 0FEh, 0C8h
-	db	0FEh, 0C8h, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 3Ch, 3, 74h, 18h, 0C3h, 0B8h
-	db	41h, 0, 0EBh, 2Eh, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 13h, 0B8h, 20h, 80h, 0EBh
-	db	21h, 0B8h, 16h, 0, 0EBh, 1Ch, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0F3h, 0C3h, 0C4h
-	db	2Eh, 0EEh, 55h, 26h, 0C6h, 46h, 0, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h, 0
-	db	3, 0C3h, 50h, 0E8h, 0B5h, 8, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0FEh, 0C0h
-	db	3Ch, 4, 75h, 2, 0FEh, 0C0h, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 58h, 0E9h
-	db	0C9h, 0F9h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 0, 3Ch, 0, 74h, 16h, 3Ch, 4
-	db	73h, 27h, 0C4h, 2Eh, 0F6h, 55h, 26h, 80h, 7Eh, 0, 0, 74h, 17h, 26h, 3Ah, 46h
-	db	0, 75h, 1Bh, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Ah, 46h, 0, 3Ch, 4, 73h, 9
-	db	0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0C3h, 0B8h, 16h, 0, 0EBh, 3, 0B8h, 41h
-	db	0, 0C4h, 2Eh, 0EEh, 55h, 26h, 0C6h, 46h, 0, 0, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h
-	db	46h, 0, 0, 0E9h, 75h, 0F9h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 65h, 5, 72h, 2Ah, 26h
-	db	8Ah, 46h, 0, 3Ch, 2, 72h, 4Bh, 3Ch, 4, 73h, 47h, 0C4h, 2Eh, 0F6h, 55h, 50h
-	db	0E8h, 4Fh, 5, 58h, 72h, 32h, 26h, 8Ah, 66h, 0, 80h, 0FCh, 1, 74h, 9, 80h
-	db	0FCh, 2, 75h, 2Eh, 3Ch, 3, 75h, 2Fh, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 32h, 5
-	db	72h, 2Ah, 26h, 8Ah, 46h, 0, 3Ch, 3, 73h, 18h, 3Ch, 1, 74h, 1Eh, 0C4h, 2Eh
-	db	0EEh, 55h, 26h, 0C6h, 46h, 0, 3, 0C3h, 3Ch, 3, 74h, 1Fh, 26h, 0C6h, 46h, 0
-	db	1, 0C3h, 0B8h, 16h, 0, 0EBh, 8Ah, 0B8h, 41h, 0, 0EBh, 85h, 0E8h, 0DCh, 7, 0C4h
-	db	2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h, 0, 1
-	db	0B8h, 20h, 80h, 0E9h, 0F5h, 0F8h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0E5h, 4, 72h, 45h, 26h
-	db	8Ah, 46h, 0, 3Ch, 2, 72h, 26h, 3Ch, 4, 73h, 22h, 0C4h, 2Eh, 0F2h, 55h, 50h
-	db	0E8h, 0CFh, 4, 58h, 73h, 4, 26h, 88h, 46h, 0, 26h, 3Ah, 46h, 0, 75h, 12h
-	db	0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 3Ch, 3, 74h, 5Ch, 0C3h, 0B8h, 16h, 0
-	db	0EBh, 7Bh, 0B8h, 41h, 0, 0EBh, 76h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 52h, 0B8h
-	db	20h, 80h, 0EBh, 69h, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 97h, 4, 72h, 16h, 26h, 8Ah, 46h
-	db	0, 3Ch, 2, 72h, 0D8h, 3Ch, 4, 73h, 0D4h, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h
-	db	0, 0EBh, 0BDh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 78h, 4, 72h, 0CBh, 26h, 8Ah, 46h, 0
-	db	3Ch, 2, 72h, 0B9h, 3Ch, 4, 73h, 0B5h, 0C4h, 2Eh, 0F2h, 55h, 26h, 88h, 46h, 0
-	db	0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 9Dh
-	db	0C3h, 0E8h, 27h, 7, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh, 0F2h, 55h
-	db	26h, 88h, 46h, 0, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 0C3h, 50h, 0E8h, 0Ah
-	db	7, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh, 0F2h, 55h, 26h, 88h, 46h
-	db	0, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 58h, 0E9h, 1Eh, 0F8h, 26h, 0F6h, 46h
-	db	4, 80h, 74h, 1, 0C3h, 26h, 80h, 4Eh, 4, 80h, 0B8h, 18h, 0, 0E9h, 0Bh, 0F8h
-	db	26h, 8Ah, 46h, 4, 24h, 0C0h, 34h, 40h, 75h, 0E3h, 26h, 8Ah, 46h, 4, 34h, 40h
-	db	75h, 0Bh, 26h, 8Bh, 46h, 0Ah, 26h, 0Bh, 46h, 0Ch, 75h, 61h, 0C3h, 26h, 0F6h, 46h
-	db	4, 80h, 74h, 0Bh, 0B8h, 1Eh, 0, 0E8h, 0E1h, 0F7h, 26h, 80h, 66h, 4, 7Fh, 26h
-	db	0F6h, 46h, 4, 20h, 74h, 11h, 0B8h, 1Dh, 0, 0E8h, 0CFh, 0F7h, 26h, 0C7h, 46h, 10h
-	db	1, 0, 26h, 80h, 66h, 4, 0DFh, 26h, 0F6h, 46h, 4, 40h, 75h, 6, 0B8h, 3Dh
-	db	0, 0E8h, 0B7h, 0F7h, 26h, 0F6h, 46h, 4, 10h, 74h, 11h, 0B8h, 1Ch, 0, 0E8h, 0AAh
-	db	0F7h, 26h, 0C7h, 46h, 12h, 0, 0, 26h, 80h, 66h, 4, 0EFh, 26h, 0F6h, 46h, 4
-	db	5, 75h, 0Ah, 26h, 8Bh, 46h, 0Ah, 26h, 0Bh, 46h, 0Ch, 74h, 29h, 0B8h, 23h, 0
-	db	0E8h, 88h, 0F7h, 26h, 80h, 66h, 4, 0F8h, 33h, 0C0h, 26h, 89h, 46h, 8, 26h, 89h
-	db	46h, 0Ah, 26h, 89h, 46h, 0Ch, 26h, 88h, 46h, 24h, 26h, 88h, 46h, 1, 26h, 89h
-	db	46h, 1Ah, 26h, 89h, 46h, 18h, 0C3h, 26h, 0F6h, 46h, 4, 0F8h, 75h, 1, 0C3h, 26h
-	db	0F6h, 46h, 4, 80h, 74h, 0Bh, 26h, 80h, 66h, 4, 7Fh, 0B8h, 1Eh, 0, 0E8h, 4Ah
-	db	0F7h, 26h, 0F6h, 46h, 4, 40h, 74h, 1Bh, 0B8h, 19h, 0, 0E8h, 3Dh, 0F7h, 26h, 80h
-	db	66h, 4, 8Fh, 33h, 0C0h, 26h, 89h, 46h, 0Eh, 26h, 89h, 46h, 12h, 26h, 0C7h, 46h
-	db	10h, 1, 0, 0C3h, 26h, 0F6h, 46h, 4, 0F8h, 75h, 0Ch, 26h, 8Ah, 46h, 24h, 98h
-	db	26h, 3Bh, 46h, 0Ch, 75h, 6, 0C3h, 0E8h, 0B5h, 0FFh, 0EBh, 0EFh, 0B8h, 3Fh, 0, 0E9h
-	db	41h, 0F7h, 26h, 0F6h, 46h, 4, 0F8h, 75h, 36h, 26h, 8Ah, 46h, 1, 24h, 7, 74h
-	db	22h, 3Ch, 2, 74h, 0Bh, 3Ch, 3, 75h, 1Ah, 26h, 80h, 6Eh, 1, 2, 0EBh, 13h
-	db	26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h, 46h, 1, 26h, 89h, 46h, 1Ah, 26h
-	db	89h, 46h, 18h, 26h, 8Ah, 46h, 24h, 98h, 26h, 3Bh, 46h, 0Ch, 75h, 6, 0C3h, 0E8h
-	db	6Dh, 0FFh, 0EBh, 0C5h, 0B8h, 3Fh, 0, 0E9h, 0F9h, 0F6h, 26h, 0F6h, 46h, 4, 0F8h, 75h
-	db	2Ah, 26h, 8Ah, 46h, 1, 24h, 7, 74h, 0Dh, 3Ch, 2, 74h, 0Ah, 3Ch, 3, 75h
-	db	5, 26h, 80h, 6Eh, 1, 2, 0C3h, 26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h
-	db	46h, 1, 26h, 89h, 46h, 1Ah, 26h, 89h, 46h, 18h, 0C3h, 0E8h, 31h, 0FFh, 0EBh, 0D1h
-	db	26h, 0F6h, 46h, 4, 0F8h, 75h, 8, 26h, 0F6h, 46h, 4, 4, 75h, 6, 0C3h, 0E8h
-	db	1Dh, 0FFh, 0EBh, 0F3h, 0B8h, 6Eh, 0, 0E8h, 71h, 0F6h, 0EBh, 2Ah, 26h, 8Ah, 46h, 0
-	db	3Ch, 2, 74h, 3Bh, 3Ch, 1, 74h, 4Dh, 26h, 0F6h, 46h, 4, 0F8h, 75h, 2Bh, 26h
-	db	8Ah, 46h, 1, 24h, 7, 74h, 22h, 3Ch, 2, 74h, 0Bh, 3Ch, 3, 75h, 1Ah, 26h
-	db	80h, 6Eh, 1, 2, 0EBh, 13h, 26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h, 46h
-	db	1, 26h, 89h, 46h, 1Ah, 26h, 89h, 46h, 18h, 0C3h, 0E8h, 0D2h, 0FEh, 0EBh, 0D0h, 0E8h
-	db	0C6h, 0FFh, 26h, 83h, 7Eh, 6, 0, 75h, 0Bh, 26h, 8Ah, 46h, 24h, 98h, 26h, 3Bh
-	db	46h, 0Ch, 75h, 39h, 0C3h, 0E8h, 0B0h, 0FFh, 26h, 8Ah, 46h, 1, 24h, 7, 74h, 15h
-	db	3Ch, 4, 74h, 0Bh, 3Ch, 1, 75h, 0Dh, 26h, 80h, 6Eh, 1, 0FCh, 0EBh, 6, 0B8h
-	db	71h, 0, 0E8h, 0FEh, 0F5h, 26h, 83h, 7Eh, 6, 0, 75h, 17h, 26h, 8Ah, 46h, 24h
-	db	98h, 26h, 3Bh, 46h, 0Ch, 75h, 6, 26h, 3Ah, 46h, 0Bh, 74h, 6, 0B8h, 3Fh, 0
-	db	0E9h, 10h, 0F6h, 0C3h, 0E8h, 71h, 0FFh, 26h, 0F6h, 46h, 4, 4, 74h, 6, 0B8h, 6Eh
-	db	0, 0E8h, 0CFh, 0F5h, 26h, 83h, 7Eh, 6, 0, 75h, 1Fh, 26h, 8Ah, 46h, 24h, 98h
-	db	26h, 3Bh, 46h, 0Ch, 75h, 0Eh, 26h, 3Ah, 46h, 0Bh, 75h, 8, 26h, 32h, 46h, 0Ah
-	db	24h, 0C0h, 74h, 6, 0B8h, 3Fh, 0, 0E9h, 0D9h, 0F5h, 0C3h, 0E8h, 3Ah, 0FFh, 26h, 0F6h
-	db	46h, 4, 4, 74h, 6, 0B8h, 6Eh, 0, 0E8h, 98h, 0F5h, 26h, 83h, 7Eh, 6, 0
-	db	75h, 1Fh, 26h, 8Ah, 46h, 24h, 98h, 26h, 3Bh, 46h, 0Ch, 75h, 0Eh, 26h, 3Ah, 46h
-	db	0Bh, 75h, 8, 26h, 32h, 46h, 0Ah, 24h, 0F8h, 74h, 6, 0B8h, 3Fh, 0, 0E9h, 0A2h
-	db	0F5h, 0C3h, 0E8h, 2, 0FEh, 26h, 8Ah, 46h, 1, 24h, 7, 74h, 12h, 26h, 0C6h, 46h
-	db	1, 0Dh, 0E8h, 0F6h, 0, 0E8h, 0FFh, 0Ah, 26h, 0F6h, 46h, 1, 8, 75h, 26h, 26h
-	db	83h, 7Eh, 6, 0, 75h, 18h, 26h, 8Ah, 46h, 0Ah, 98h, 99h, 26h, 3Ah, 66h, 0Bh
-	db	75h, 0Dh, 26h, 3Bh, 56h, 0Ch, 75h, 7, 26h, 32h, 66h, 24h, 75h, 1, 0C3h, 0B8h
-	db	7Fh, 0, 0E9h, 36h, 0F5h, 0E8h, 0B3h, 1, 33h, 0C0h, 26h, 83h, 46h, 0Ah, 2, 26h
-	db	11h, 46h, 0Ch, 26h, 10h, 46h, 24h, 26h, 39h, 46h, 6, 75h, 0E1h, 26h, 38h, 46h
-	db	0Bh, 75h, 0Dh, 26h, 39h, 46h, 0Ch, 75h, 7, 26h, 38h, 46h, 24h, 75h, 1, 0C3h
-	db	0B8h, 33h, 0, 0E9h, 0F5h, 0F4h, 0E8h, 8Eh, 0FDh, 26h, 8Ah, 46h, 1, 24h, 7, 74h
-	db	17h, 26h, 80h, 66h, 1, 0F8h, 26h, 80h, 4Eh, 1, 9, 0E8h, 7Dh, 0, 0E8h, 86h
-	db	0Ah, 26h, 0F6h, 46h, 1, 8, 75h, 19h, 26h, 83h, 7Eh, 6, 0, 75h, 0Bh, 26h
-	db	8Ah, 46h, 24h, 98h, 26h, 3Bh, 46h, 0Ch, 75h, 1, 0C3h, 0B8h, 0FFh, 7Fh, 0E9h, 0CAh
-	db	0F4h, 0E8h, 47h, 1, 33h, 0C0h, 26h, 83h, 46h, 0Ah, 3, 26h, 11h, 46h, 0Ch, 26h
-	db	10h, 46h, 24h, 26h, 39h, 46h, 0Ch, 75h, 7, 26h, 38h, 46h, 24h, 75h, 1, 0C3h
-	db	0B8h, 33h, 0, 0E9h, 95h, 0F4h, 0E8h, 2Eh, 0FDh, 26h, 8Ah, 46h, 1, 24h, 7, 74h
-	db	29h, 26h, 80h, 66h, 1, 0F8h, 26h, 80h, 4Eh, 1, 9, 0E8h, 1Dh, 0, 0E8h, 26h
-	db	0Ah, 26h, 0F6h, 46h, 1, 8, 74h, 12h, 0E8h, 0, 1, 26h, 83h, 46h, 0Ah, 5
-	db	26h, 83h, 56h, 0Ch, 0, 26h, 80h, 56h, 24h, 0, 0C3h, 51h, 6, 55h, 0A1h, 5Ch
-	db	56h, 9Ah
-	dd	L101E0
-	db	0E8h, 94h, 7Ah, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 5Eh, 6, 23h, 0DBh, 74h, 0Ch, 5Dh, 7, 26h, 89h, 5Eh, 6, 0E8h, 0F3h
-	db	0D2h, 59h, 0EBh, 1Ch, 26h, 0F6h, 46h, 4, 4, 74h, 0Ch, 26h, 8Bh, 46h, 1Ah, 5Dh
-	db	7, 59h, 26h, 89h, 46h, 18h, 0C3h, 5Dh, 7, 0B9h, 54h, 0, 0E8h, 8, 95h, 59h
-	db	26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 89h, 46h, 18h, 26h, 89h, 46h, 1Ah, 26h
-	db	88h, 46h, 1, 0C3h, 26h, 80h, 7Eh, 0, 0, 75h, 29h, 0F7h, 6, 7Ch, 51h, 0
-	db	10h, 75h, 20h, 26h, 0F6h, 46h, 5, 40h, 74h, 19h, 26h, 80h, 66h, 5, 0BFh, 26h
-	db	8Ah, 46h, 25h, 24h, 7Fh, 26h, 88h, 46h, 0, 26h, 8Bh, 46h, 1Ch, 26h, 89h, 46h
-	db	2, 75h, 1, 0F9h, 0C3h, 0E8h, 0CCh, 0FFh, 73h, 4Eh, 0F7h, 6, 7Ch, 51h, 0, 10h
-	db	75h, 48h, 26h, 0F6h, 46h, 4, 40h, 75h, 41h, 26h, 83h, 7Eh, 6, 0, 75h, 3Ah
-	db	26h, 8Ah, 46h, 24h, 98h, 26h, 3Bh, 46h, 0Ch, 0B4h, 3, 75h, 27h, 0F7h, 6, 7Ch
-	db	51h, 8, 0, 75h, 25h, 26h, 3Ah, 46h, 0Bh, 0B4h, 2, 75h, 17h, 26h, 0F6h, 46h
-	db	4, 4, 74h, 16h, 0B4h, 1, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 5, 74h, 4
-	db	3Ch, 6, 75h, 6, 26h, 88h, 66h, 0, 0F8h, 0C3h, 0F9h, 0C3h, 0E8h, 35h, 99h, 26h
-	db	29h, 46h, 0Ah, 26h, 19h, 56h, 0Ch, 26h, 80h, 5Eh, 24h, 0, 0C3h, 0E8h, 24h, 99h
-	db	26h, 1, 46h, 0Ah, 26h, 11h, 56h, 0Ch, 26h, 80h, 56h, 24h, 0, 0C3h, 26h, 83h
-	db	7Eh, 6, 0, 75h, 0Eh, 26h, 0F6h, 46h, 4, 4, 75h, 7, 26h, 3Bh, 46h, 0Ah
-	db	75h, 1, 0C3h, 0F9h, 0C3h, 26h, 83h, 7Eh, 6, 0, 75h, 3Dh, 26h, 0F6h, 46h, 4
-	db	4, 75h, 36h, 26h, 8Ah, 46h, 0Ah, 98h, 26h, 3Ah, 66h, 0Bh, 75h, 2Bh, 0C3h, 26h
-	db	83h, 7Eh, 6, 0, 75h, 23h, 26h, 0F6h, 46h, 4, 4, 75h, 1Ch, 26h, 8Ah, 46h
-	db	0Ah, 98h, 26h, 3Ah, 66h, 0Bh, 75h, 11h, 0F7h, 6, 7Ch, 51h, 8, 0, 75h, 1
-	db	0C3h, 99h, 26h, 3Bh, 56h, 0Ch, 75h, 1, 0C3h, 0F9h, 0C3h, 0F7h, 6, 7Ch, 51h, 20h
-	db	0, 74h, 49h, 26h, 83h, 7Eh, 6, 0, 75h, 42h, 0A1h, 7Eh, 51h, 0F7h, 6, 7Ch
-	db	51h, 0, 10h, 75h, 39h, 26h, 0F6h, 46h, 4, 4, 74h, 30h, 6, 55h, 51h, 0A1h
-	db	5Ch, 56h, 9Ah
-	dd	L101E0
-	db	0E8h, 15h, 79h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 46h, 1Ah, 26h, 0F6h, 46h, 4, 4, 59h, 5Dh, 7, 74h, 0Fh, 8Bh, 0D0h
-	db	26h, 8Bh, 46h, 18h, 23h, 0C0h, 74h, 5, 3Bh, 0C2h, 75h, 1, 0C3h, 0F9h, 0C3h, 23h
-	db	0C0h, 74h, 0FAh, 8Bh, 0D0h, 26h, 8Bh, 46h, 18h, 23h, 0C0h, 74h, 0F0h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 0AEh, 74h, 0E8h, 92h, 74h, 92h, 9Ah
-	dd	L101E0
-	db	0E8h, 0A2h, 74h, 0E8h, 86h, 74h, 5Dh, 7, 3Bh, 0C2h, 75h, 0D1h, 0C3h, 26h, 83h, 7Eh
-	db	6, 0, 75h, 51h, 26h, 0F6h, 46h, 4, 4, 74h, 1Bh, 26h, 8Ah, 46h, 1, 24h
-	db	7, 3Ch, 3, 74h, 8, 3Ch, 2, 74h, 4, 3Ch, 1, 75h, 38h, 0A1h, 7Eh, 51h
-	db	26h, 3Bh, 46h, 1Ah, 75h, 2Fh, 0A1h, 70h, 51h, 8Bh, 16h, 72h, 51h, 26h, 8Bh, 5Eh
-	db	0Ah, 2Bh, 0D8h, 8Bh, 0C3h, 26h, 8Bh, 5Eh, 0Ch, 1Bh, 0DAh, 2Dh, 2, 0, 83h, 0DBh
-	db	0, 23h, 0DBh, 74h, 5, 83h, 0FBh, 0FFh, 75h, 0Bh, 3Ah, 0E3h, 75h, 7, 32h, 0D8h
-	db	80h, 0E3h, 80h, 74h, 1, 0F9h, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 26h, 8Ah, 46h, 4, 0A8h
-	db	0C0h, 75h, 20h, 26h, 0F6h, 46h, 0, 80h, 74h, 1Bh, 26h, 80h, 7Eh, 0, 80h, 75h
-	db	12h, 26h, 83h, 7Eh, 6, 0, 74h, 0Bh, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h, 4
-	db	80h, 75h, 1, 0F9h, 0C3h, 26h, 0F6h, 46h, 5, 80h, 74h, 0F8h, 0F7h, 6, 82h, 51h
-	db	0, 80h, 74h, 0F0h, 0B8h, 80h, 80h, 0E8h, 0E4h, 0F1h, 0F8h, 0C3h, 0F7h, 6, 7Ch, 51h
-	db	8, 0, 75h, 1, 0C3h, 26h, 8Ah, 46h, 5, 0A8h, 2, 75h, 10h, 0A8h, 1, 75h
-	db	0Dh, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 6, 0E8h, 21h, 65h, 74h, 1, 0F9h, 0C3h, 0F7h
-	db	6, 7Ch, 51h, 8, 0, 74h, 28h, 26h, 8Ah, 46h, 5, 0A8h, 2, 75h, 16h, 0A8h
-	db	1, 75h, 1Ch, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 8, 0E8h, 0FFh, 64h, 74h, 3, 0B0h
-	db	4, 0C3h, 0B0h, 2, 0C3h, 0E8h, 0EBh, 0FFh, 3Ch, 4, 74h, 0Ch, 0B0h, 5, 0C3h, 0E8h
-	db	0E1h, 0FFh, 3Ch, 2, 74h, 2, 0B0h, 3, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 75h
-	db	1, 0C3h, 26h, 8Ah, 46h, 5, 24h, 0Ch, 74h, 1Ch, 0A8h, 4, 74h, 3Eh, 0A8h, 8
-	db	74h, 3Bh, 26h, 8Ah, 46h, 4, 0A8h, 40h, 74h, 32h, 26h, 8Bh, 5Eh, 0Eh, 2Bh, 1Eh
-	db	0FEh, 55h, 83h, 0FBh, 3Ch, 0C3h, 26h, 0F6h, 46h, 4, 80h, 74h, 13h, 26h, 83h, 7Eh
-	db	6, 0, 75h, 0Ch, 26h, 8Ah, 46h, 24h, 98h, 26h, 39h, 46h, 0Ch, 75h, 0Dh, 0C3h
-	db	0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 6, 0E8h, 92h, 64h, 74h, 1, 0F9h, 0C3h, 0A1h, 7Eh
-	db	51h, 23h, 0C0h, 74h, 8, 0E8h, 84h, 64h, 74h, 3, 0B0h, 3, 0C3h, 0B0h, 2, 0C3h
-	db	0E8h, 96h, 0FFh, 72h, 12h, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 0Ah, 0E8h, 6Dh, 64h, 74h
-	db	5, 0B0h, 67h, 0E9h, 88h, 0A1h, 0C3h, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 5, 0E8h, 5Bh
-	db	64h, 75h, 5, 0B0h, 67h, 0E9h, 76h, 0A1h, 0C3h, 90h, 26h, 8Ah, 46h, 0, 3Ch, 3
-	db	74h, 17h, 3Ch, 2, 74h, 1, 0C3h, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 0Ah, 0E8h, 3Bh
-	db	64h, 74h, 5, 0B0h, 66h, 0E9h, 56h, 0A1h, 0C3h, 0A1h, 7Eh, 51h, 23h, 0C0h, 74h, 6
-	db	0E8h, 29h, 64h, 74h, 1, 0C3h, 0B0h, 66h, 0E9h, 43h, 0A1h, 0E8h, 3Fh, 0, 75h, 0Ah
-	db	26h, 0F6h, 46h, 4, 80h, 74h, 2, 0EBh, 97h, 0C3h, 0E8h, 82h, 0EDh, 2Ch, 8, 3Ch
-	db	1, 74h, 9, 0BBh, 0E6h, 1Ch, 0D7h, 0E8h, 0CEh, 0A0h, 0EBh, 84h, 0F7h, 6, 82h, 51h
-	db	4, 0, 74h, 0EFh, 80h, 3Eh, 0FAh, 55h, 0, 74h, 0E8h, 0F7h, 6, 7Ch, 51h, 80h
-	db	0, 74h, 0E0h, 51h, 0B9h, 60h, 80h, 0E8h, 6Eh, 91h, 59h, 0EBh, 0D6h, 26h, 0F6h, 46h
-	db	4, 80h, 75h, 1, 0C3h, 0E8h, 2Bh, 0, 23h, 0C0h, 74h, 1Eh, 50h, 0E8h, 56h, 0EDh
-	db	5Bh, 93h, 3Bh, 0C3h, 74h, 1Ah, 8Bh, 1Eh, 0FCh, 55h, 3Bh, 1Eh, 5Ah, 56h, 74h, 1
-	db	0C3h, 0B8h, 3Ch, 0, 0E8h, 57h, 0F0h, 33h, 0C0h, 0C3h, 0B8h, 31h, 0, 0E8h, 4Eh, 0F0h
-	db	33h, 0C0h, 0C3h, 51h, 26h, 8Bh, 5Eh, 14h, 23h, 0DBh, 74h, 2Ch, 6, 55h, 8Bh, 0C3h
-	db	9Ah
-	dd	L101E0
-	db	0E8h, 78h, 76h, 9Ah
-	dd	L101E0
-	db	26h, 83h, 7Eh, 6, 0, 5Dh, 7, 75h, 3, 0E8h, 8Dh, 4, 26h, 8Bh, 5Eh, 14h
-	db	0E9h, 35h, 1, 0E8h, 3, 0EDh, 8Bh, 0D8h, 0E9h, 2Dh, 1, 26h, 8Bh, 46h, 18h, 23h
-	db	0C0h, 74h, 0F0h, 0E8h, 43h, 63h, 75h, 0EBh, 0E8h, 0EEh, 0ECh, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 3Eh, 76h, 8Bh, 0F8h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 5Eh, 6, 5Dh, 7, 23h, 0DBh, 74h, 3, 0E9h, 8Bh, 0, 0E8h, 4Dh, 4
-	db	74h, 0C5h, 26h, 83h, 7Eh, 6, 0, 75h, 79h, 33h, 0FFh, 0B9h, 6, 0, 0F7h, 6
-	db	7Ch, 51h, 8, 0, 75h, 3, 0B9h, 4, 0, 0BBh, 66h, 56h, 8Bh, 7, 0E8h, 1
-	db	64h, 75h, 34h, 53h, 51h, 57h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 0F7h, 75h, 50h, 9Ah
-	dd	L101F7
-	db	8Bh, 0F8h, 58h, 9Ah
-	dd	L101E0
-	db	26h, 83h, 7Eh, 6, 0, 5Dh, 7, 75h, 0Dh, 0E8h, 3, 4, 5Fh, 75h, 8, 59h
-	db	5Bh, 8Bh, 1Fh, 0E9h, 0A8h, 0, 58h, 59h, 5Bh, 83h, 0C3h, 2, 0E2h, 0C0h, 23h, 0FFh
-	db	74h, 79h, 0F6h, 6, 0C9h, 38h, 0Bh, 75h, 72h, 26h, 89h, 7Eh, 6, 80h, 0Eh, 0CAh
-	db	38h, 1, 33h, 0DBh, 0A1h, 0FCh, 55h, 3Bh, 6, 5Ah, 56h, 75h, 3, 0E9h, 7Eh, 0
-	db	8Bh, 0DFh, 0EBh, 7Ah, 8Bh, 3Eh, 5Ch, 56h, 0EBh, 0E8h, 0F6h, 6, 0C9h, 38h, 0Bh, 75h
-	db	4Ah, 8Bh, 0C3h, 33h, 0DBh, 26h, 3Bh, 46h, 1Ah, 74h, 5Ah, 57h, 0B9h, 6, 0, 0F7h
-	db	6, 7Ch, 51h, 8, 0, 75h, 3, 0B9h, 4, 0, 0BBh, 66h, 56h, 8Bh, 7, 0E8h
-	db	72h, 63h, 75h, 39h, 53h, 51h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 69h, 75h, 9Ah
-	dd	L101E0
-	db	26h, 8Bh, 5Eh, 6, 5Dh, 7, 23h, 0DBh, 75h, 10h, 0E8h, 7Dh, 3, 75h, 17h, 59h
-	db	5Bh, 8Bh, 1Fh, 5Fh, 0EBh, 23h, 33h, 0DBh, 0EBh, 1Fh, 26h, 3Bh, 5Eh, 1Ah, 75h, 6
-	db	59h, 5Bh, 8Bh, 1Fh, 0EBh, 9, 59h, 5Bh, 83h, 0C3h, 2, 0E2h, 0BBh, 33h, 0DBh, 5Fh
-	db	26h, 89h, 7Eh, 6, 80h, 0Eh, 0CAh, 38h, 1, 8Bh, 0CBh, 26h, 8Ah, 46h, 1, 24h
-	db	7, 3Ch, 3, 74h, 4, 3Ch, 2, 75h, 1Fh, 26h, 80h, 6Eh, 1, 2, 75h, 15h
-	db	26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 89h, 46h, 18h, 26h, 89h, 46h, 1Ah, 8Bh
-	db	0C1h, 59h, 23h, 0C0h, 0C3h, 0E8h, 66h, 4, 8Bh, 0C1h, 59h, 23h, 0C0h, 0C3h, 26h, 8Ah
-	db	46h, 0, 3Ch, 2, 74h, 26h, 3Ch, 1, 75h, 2Eh, 0B6h, 2, 0E8h, 0E3h, 3, 26h
-	db	8Ah, 46h, 0Ah, 0E9h, 48h, 9Fh, 0E8h, 14h, 0FDh, 72h, 1Dh, 26h, 8Ah, 46h, 24h, 98h
-	db	26h, 3Bh, 46h, 0Ch, 74h, 6, 0B8h, 21h, 0, 0E9h, 86h, 0EEh, 0B6h, 2, 0E8h, 0C1h
-	db	3, 26h, 8Bh, 46h, 0Ah, 0E9h, 44h, 9Fh, 0B6h, 4, 0E8h, 0B5h, 3, 26h, 8Bh, 46h
-	db	0Ah, 26h, 8Bh, 4Eh, 0Ch, 0E9h, 50h, 9Fh, 0B6h, 2, 0E8h, 0A5h, 3, 26h, 8Bh, 46h
-	db	0Ah, 26h, 8Bh, 4Eh, 16h, 0E9h, 40h, 9Fh, 0B6h, 4, 0E8h, 95h, 3, 26h, 8Bh, 46h
-	db	0Ah, 26h, 8Bh, 5Eh, 0Ch, 26h, 8Ah, 76h, 24h, 0B9h, 8, 0, 0E9h, 91h, 9Fh, 0B6h
-	db	4, 0E8h, 7Eh, 3, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch, 26h, 8Ah, 76h, 24h
-	db	0B9h, 6, 0, 0E9h, 7Ah, 9Fh, 0B6h, 4, 0E8h, 67h, 3, 26h, 8Bh, 46h, 0Ah, 26h
-	db	8Bh, 4Eh, 0Ch, 26h, 8Bh, 7Eh, 16h, 0E9h, 1Dh, 9Fh, 0B6h, 4, 0E8h, 53h, 3, 26h
-	db	8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch, 26h, 8Ah, 76h, 24h, 0B9h, 0Ah, 0, 0E9h, 4Fh
-	db	9Fh, 0B9h, 4, 0, 0E9h, 23h, 9Fh, 0B9h, 6, 0, 0E9h, 1Dh, 9Fh, 0B9h, 8, 0
-	db	0E9h, 17h, 9Fh, 0B9h, 0Ah, 0, 0E9h, 11h, 9Fh, 90h, 26h, 0F6h, 46h, 4, 80h, 75h
-	db	2Bh, 26h, 0F6h, 46h, 4, 40h, 74h, 18h, 26h, 8Bh, 46h, 0Eh, 0E8h, 0A4h, 0EAh, 3Ch
-	db	8, 73h, 7, 0Ah, 0C1h, 0Ch, 0C0h, 0E9h, 74h, 9Eh, 0B8h, 3Eh, 0, 0E9h, 0C2h, 0EDh
-	db	0B8h, 3Dh, 0, 0E9h, 0BCh, 0EDh, 0B8h, 21h, 0, 0E9h, 0B6h, 0EDh, 0E8h, 2Eh, 0FCh, 73h
-	db	3, 0E9h, 0CEh, 0, 26h, 8Ah, 46h, 24h, 98h, 26h, 3Bh, 46h, 0Ch, 75h, 0E7h, 26h
-	db	8Ah, 46h, 4, 0A8h, 40h, 75h, 26h, 0B0h, 6, 0Ah, 0C1h, 0E8h, 40h, 9Eh, 0B6h, 2
-	db	0E8h, 0CFh, 2, 26h, 8Bh, 46h, 0Ah, 0E9h, 52h, 9Eh, 8Ah, 0C1h, 0Ch, 80h, 0E8h, 2Dh
-	db	9Eh, 0B6h, 2, 0E8h, 0BCh, 2, 26h, 8Bh, 46h, 0Ah, 0E9h, 3Fh, 9Eh, 26h, 83h, 7Eh
-	db	6, 0, 75h, 0E6h, 0A8h, 20h, 75h, 0AEh, 26h, 8Bh, 46h, 0Eh, 2Bh, 6, 0FEh, 55h
-	db	0D1h, 0E8h, 2Dh, 1Eh, 0, 72h, 9Fh, 3Ch, 8, 73h, 9Bh, 0BBh, 4, 1Dh, 0D7h, 0A8h
-	db	80h, 75h, 93h, 8Ah, 0F0h, 26h, 0F6h, 46h, 4, 10h, 74h, 2Bh, 26h, 8Bh, 46h, 12h
-	db	2Bh, 6, 0FEh, 55h, 0D1h, 0E8h, 2Dh, 1Eh, 0, 72h, 54h, 3Ch, 8, 73h, 50h, 0BBh
-	db	4, 1Dh, 0D7h, 0A8h, 80h, 75h, 48h, 0D0h, 0E0h, 0D0h, 0E0h, 0Ah, 0C6h, 0BBh, 0Ch, 1Dh
-	db	0D7h, 0A8h, 80h, 75h, 3Ah, 8Ah, 0F0h, 80h, 0F6h, 4, 0Ah, 0CEh, 0E8h, 0CBh, 0F9h, 72h
-	db	89h, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 54h, 56h, 75h, 7, 26h, 0F6h, 46h, 4, 10h
-	db	74h, 0Ah, 26h, 8Bh, 46h, 0Ah, 26h, 0Bh, 46h, 0Ch, 74h, 0Eh, 8Ah, 0C1h, 0Ch, 40h
-	db	0E8h, 9Bh, 9Dh, 26h, 8Ah, 46h, 0Ah, 0E9h, 94h, 9Dh, 8Ah, 0C1h, 0E9h, 8Fh, 9Dh, 0E9h
-	db	24h, 0FFh, 26h, 8Ah, 46h, 4, 0A8h, 40h, 75h, 17h, 0B0h, 5, 0Ah, 0C1h, 0E8h, 7Dh
-	db	9Dh, 0B6h, 4, 0E8h, 0Ch, 2, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 4Eh, 0Ch, 0E9h, 0A7h
-	db	9Dh, 0A8h, 30h, 75h, 59h, 26h, 8Bh, 46h, 0Eh, 2Bh, 6, 0FEh, 55h, 0D1h, 0E8h, 2Dh
-	db	8, 0, 72h, 0CBh, 3Ch, 8, 73h, 0C7h, 0Ah, 0C8h, 0E8h, 77h, 0F9h, 72h, 0Fh, 26h
-	db	8Bh, 46h, 0Ah, 26h, 0Bh, 46h, 0Ch, 74h, 8, 80h, 0C9h, 40h, 0EBh, 3, 80h, 0C9h
-	db	80h, 8Ah, 0C1h, 24h, 0C7h, 3Ch, 5, 75h, 3, 80h, 0C9h, 40h, 8Ah, 0C1h, 0E8h, 2Dh
-	db	9Dh, 24h, 7, 3Ch, 4, 75h, 5, 0B0h, 24h, 0E8h, 22h, 9Dh, 0F6h, 0C1h, 40h, 75h
-	db	6, 0F6h, 0C1h, 80h, 75h, 9Bh, 0C3h, 26h, 8Ah, 46h, 0Ah, 0E9h, 10h, 9Dh, 80h, 0C9h
-	db	4, 26h, 8Bh, 5Eh, 10h, 32h, 0EDh, 83h, 0FBh, 1, 74h, 15h, 0B5h, 40h, 83h, 0FBh
-	db	2, 74h, 0Eh, 0B5h, 80h, 83h, 0FBh, 4, 74h, 7, 0B5h, 0C0h, 83h, 0FBh, 8, 75h
-	db	32h, 0A8h, 10h, 75h, 31h, 26h, 8Bh, 46h, 0Eh, 2Bh, 6, 0FEh, 55h, 0D1h, 0E8h, 2Dh
-	db	8, 0, 72h, 1Fh, 3Ch, 8, 73h, 1Bh, 3Ch, 4, 74h, 17h, 0D0h, 0E0h, 0D0h, 0E0h
-	db	0D0h, 0E0h, 0Ch, 5, 0Ah, 0E8h, 8Ah, 0C1h, 0E8h, 0C3h, 9Ch, 8Ah, 0C5h, 0E8h, 0BEh, 9Ch
-	db	0E9h, 3Eh, 0FFh, 0E9h, 50h, 0FEh, 0E8h, 0DBh, 0F8h, 72h, 0Fh, 26h, 8Bh, 46h, 0Ah, 26h
-	db	0Bh, 46h, 0Ch, 74h, 8, 80h, 0C9h, 40h, 0EBh, 3, 80h, 0C9h, 80h, 26h, 8Bh, 46h
-	db	12h, 2Bh, 6, 0FEh, 55h, 0D1h, 0E8h, 2Dh, 8, 0, 72h, 0D7h, 3Ch, 8, 73h, 0D3h
-	db	8Ah, 0D0h, 26h, 8Bh, 46h, 0Eh, 2Bh, 6, 0FEh, 55h, 0D1h, 0E8h, 2Dh, 8, 0, 72h
-	db	0C2h, 3Ch, 8, 73h, 0BEh, 26h, 0F6h, 46h, 4, 20h, 75h, 6, 3Ch, 4, 75h, 2
-	db	86h, 0C2h, 0Ah, 0EAh, 3Ch, 4, 74h, 0ABh, 0D0h, 0E0h, 0D0h, 0E0h, 0D0h, 0E0h, 0Ah, 0E8h
-	db	8Bh, 0C1h, 25h, 0C0h, 7, 3Dh, 0, 5, 75h, 3, 80h, 0C1h, 40h, 8Ah, 0C1h, 0E8h
-	db	4Ch, 9Ch, 8Ah, 0C5h, 0E8h, 47h, 9Ch, 0E9h, 22h, 0FFh, 57h, 6, 55h, 9Ah
-	dd	L101E0
-	db	8Bh, 0FDh, 6, 1Fh, 5Dh, 7, 26h, 8Bh, 46h, 16h, 99h, 90h, 3Bh, 45h, 0Ah, 75h
-	db	77h, 3Bh, 55h, 0Ch, 75h, 72h, 3Ah, 55h, 24h, 75h, 6Dh, 0F6h, 45h, 4, 4, 74h
-	db	6Bh, 26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 3, 74h, 4, 3Ch, 2, 75h, 59h, 26h
-	db	8Bh, 46h, 18h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 6Ah, 6Dh, 5Dh, 7, 3Bh, 45h, 1Ah, 74h, 44h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 40h, 6Dh, 5Dh, 7, 3Bh, 45h, 1Ah, 74h, 26h, 36h, 0F7h, 6, 7Ch, 51h, 0
-	db	10h, 75h, 2Ah, 36h, 0F6h, 6, 87h, 51h, 1, 74h, 1Eh, 8Bh, 45h, 1Ah, 6, 55h
-	db	9Ah
-	dd	L101E0
-	db	0E8h, 1Bh, 6Dh, 5Dh, 7, 26h, 3Bh, 46h, 18h, 75h, 0Dh, 8Bh, 45h, 1Ah, 26h, 89h
-	db	46h, 18h, 0EBh, 4, 32h, 0C0h, 0FEh, 0C8h, 16h, 1Fh, 5Fh, 0C3h, 26h, 8Ah, 46h, 1
-	db	24h, 7, 3Ch, 3, 74h, 0EEh, 3Ch, 2, 74h, 0EAh, 32h, 0C0h, 0EBh, 0EAh, 8Bh, 45h
-	db	2Ah, 23h, 0C0h, 75h, 23h, 6, 55h, 51h, 56h, 57h, 8Bh, 5, 9Ah
-	dd	L101E0
-	db	0E8h, 6Bh, 5Bh, 9Ah
-	dd	L10375
-	db	33h, 0EDh, 9Ah
-	dd	L12F1D
-	db	5Fh, 5Eh, 59h, 5Dh, 7, 89h, 45h, 2Ah, 6, 55h, 0E8h, 53h, 92h, 5Dh, 7, 0C3h
-	db	26h, 0F6h, 46h, 4, 4, 75h, 1, 0C3h, 0F6h, 6, 0CAh, 38h, 1, 75h, 0F8h, 26h
-	db	8Bh, 5Eh, 18h, 26h, 8Bh, 7Eh, 1Ah, 26h, 8Ah, 46h, 1, 0F7h, 6, 0B6h, 38h, 0
-	db	8, 75h, 0Ah, 24h, 0EFh, 6, 55h, 0E8h, 3Ah, 92h, 5Dh, 7, 0C3h, 3Ch, 11h, 74h
-	db	4, 3Ch, 13h, 75h, 0F0h, 6, 55h, 50h, 26h, 8Bh, 46h, 26h, 9Ah
-	dd	L101E0
-	db	58h, 0E8h, 0C5h, 58h, 5Dh, 7, 0EBh, 0DCh, 0F6h, 0C4h, 80h, 75h, 0Ch, 3Dh, 0Bh, 0
-	db	73h, 15h, 8Bh, 0D8h, 8Ah, 87h, 0A9h, 1Ch, 0C3h, 0F7h, 0D0h, 3Dh, 3, 0, 73h, 7
-	db	8Bh, 0D8h, 8Ah, 87h, 0B4h, 1Ch, 0C3h, 0B0h, 0, 0C3h, 90h, 26h, 0F6h, 46h, 4, 4
-	db	74h, 3Fh, 26h, 83h, 7Eh, 6, 0, 75h, 70h, 26h, 8Bh, 5Eh, 18h, 26h, 0F6h, 46h
-	db	1, 8, 74h, 2Eh, 0A1h, 7Eh, 51h, 26h, 3Bh, 46h, 1Ah, 75h, 24h, 3Bh, 0C3h, 74h
-	db	27h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 3Bh, 6Ch, 5Dh, 7, 3Bh, 0C3h, 74h, 17h, 6, 55h, 9Ah
-	dd	L101E0
-	db	0E8h, 12h, 6Ch, 5Dh, 7, 3Bh, 0C3h, 74h, 7, 0C3h, 26h, 3Bh, 5Eh, 1Ah, 75h, 44h
-	db	26h, 8Ah, 46h, 1, 24h, 7, 3Ch, 1, 74h, 0Ch, 3Ch, 5, 74h, 8, 3Ch, 6
-	db	74h, 4, 3Ch, 3, 75h, 2Eh, 8Bh, 0C3h, 0E8h, 6Dh, 5Dh, 74h, 7, 26h, 0F6h, 46h
-	db	1, 8, 74h, 20h, 26h, 80h, 7Eh, 1, 3, 75h, 6, 26h, 80h, 6Eh, 1, 1
-	db	0C3h, 26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h, 46h, 1, 26h, 89h, 46h, 1Ah
-	db	26h, 89h, 46h, 18h, 0C3h, 26h, 80h, 66h, 4, 8Fh, 33h, 0C0h, 26h, 89h, 46h, 0Eh
-	db	26h, 89h, 46h, 12h, 26h, 0C7h, 46h, 10h, 1, 0, 0E9h, 94h, 8Ah, 26h, 80h, 66h
-	db	4, 0FBh, 33h, 0C0h, 26h, 88h, 46h, 1, 26h, 89h, 46h, 18h, 26h, 89h, 46h, 1Ah
-	db	0E9h, 7Eh, 8Ah, 33h, 0C0h, 26h, 39h, 46h, 0Ch, 75h, 4Dh, 26h, 38h, 46h, 24h, 75h
-	db	47h, 0C3h, 26h, 8Ah, 46h, 0Bh, 98h, 99h, 26h, 3Bh, 56h, 0Ch, 75h, 3Ah, 26h, 32h
-	db	66h, 24h, 75h, 34h, 0C3h, 26h, 8Ah, 46h, 0Dh, 98h, 26h, 32h, 66h, 24h, 75h, 28h
-	db	0C3h, 26h, 8Ah, 46h, 24h, 98h, 26h, 88h, 66h, 24h, 0F7h, 6, 7Ch, 51h, 8, 10h
-	db	75h, 7, 8Ah, 0C4h, 98h, 26h, 89h, 46h, 0Ch, 0F7h, 6, 82h, 51h, 0, 10h, 74h
-	db	6, 0B9h, 2Ch, 80h, 0E9h, 2Ah, 8Ah, 0C3h, 0B9h, 14h, 0, 33h, 0C0h, 26h, 89h, 46h
-	db	0Ah, 26h, 89h, 46h, 0Ch, 26h, 88h, 46h, 24h, 0E9h, 15h, 8Ah, 26h, 8Ah, 46h, 24h
-	db	22h, 0C0h, 74h, 4, 3Ch, 0FFh, 75h, 0B9h, 0F7h, 6, 7Ch, 51h, 8, 10h, 75h, 7
-	db	98h, 26h, 3Bh, 46h, 0Ch, 75h, 0AAh, 0C3h, 90h, 26h, 0F6h, 46h, 4, 1, 74h, 3Bh
-	db	26h, 8Ah, 66h, 4, 80h, 0E4h, 2, 6, 55h, 50h, 26h, 8Bh, 46h, 8, 9Ah
-	dd	L101E0
-	db	58h, 0E8h, 7Fh, 59h, 0E8h, 0F8h, 0A1h, 5Dh, 7, 8Bh, 7, 26h, 89h, 46h, 0Ah, 8Ah
-	db	47h, 4, 26h, 88h, 46h, 24h, 8Bh, 47h, 2, 26h, 89h, 46h, 0Ch, 26h, 0C7h, 46h
-	db	8, 0, 0, 26h, 80h, 66h, 4, 0FEh, 0C3h, 0, 0C6h, 6, 0CBh, 38h, 0FFh, 56h
-	db	0E8h, 2Ah, 0, 72h, 1Ah, 75h, 18h, 0E8h, 3Eh, 0B0h, 72h, 13h, 75h, 11h, 0E8h, 95h
-	db	7Dh, 74h, 0Ch, 0C6h, 6, 0CBh, 38h, 0, 0E8h, 36h, 0B0h, 32h, 0C0h, 5Ah, 0C3h, 80h
-	db	26h, 0CAh, 38h, 0FEh, 5Eh, 32h, 0C0h, 0A2h, 0CBh, 38h, 0FEh, 0C8h, 0C3h, 89h, 26h, 0AEh
-	db	38h, 0E9h, 43h, 5, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 19h, 0E8h, 38h, 5, 75h
-	db	13h, 0E9h, 9, 0B1h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 9, 0E8h, 28h, 5, 75h
-	db	3, 0E9h, 0A0h, 0B0h, 0C3h, 0E8h, 4Eh, 7Dh, 75h, 65h, 22h, 0E4h, 74h, 29h, 83h, 0C6h
-	db	2, 50h, 52h, 0E8h, 40h, 7Dh, 75h, 12h, 3Bh, 6, 5Eh, 58h, 74h, 0Ch, 3Bh, 6
-	db	56h, 58h, 74h, 6, 3Bh, 6, 5Ch, 58h, 75h, 8, 83h, 0EEh, 2, 5Ah, 58h, 0E9h
-	db	0FDh, 3, 83h, 0EEh, 2, 5Ah, 58h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0Ch, 3Bh
-	db	6, 8Ch, 58h, 74h, 0Eh, 3Bh, 6, 8Eh, 58h, 74h, 16h, 0E8h, 0A9h, 0, 74h, 20h
-	db	0E9h, 0F8h, 0, 83h, 0C6h, 2, 0E8h, 0ACh, 0FFh, 74h, 3, 0E8h, 52h, 7, 0E9h, 0D7h
-	db	0B0h, 83h, 0C6h, 2, 0E8h, 9Eh, 0FFh, 74h, 3, 0E8h, 44h, 7, 0E9h, 0E0h, 0B0h, 0C3h
-	db	0E8h, 0E3h, 7Ch, 75h, 9, 3Bh, 6, 6Ah, 58h, 75h, 12h, 83h, 0C6h, 2, 6, 55h
-	db	0E8h, 82h, 0FFh, 5Fh, 58h, 74h, 3, 0E8h, 34h, 7, 0E9h, 4Ah, 0B2h, 3Bh, 6, 0B6h
-	db	58h, 75h, 12h, 83h, 0C6h, 2, 6, 55h, 0E8h, 6Ah, 0FFh, 5Fh, 58h, 74h, 3, 0E8h
-	db	1Ch, 7, 0E9h, 60h, 0B2h, 3Bh, 6, 0B8h, 58h, 75h, 0D3h, 83h, 0C6h, 2, 6, 55h
-	db	0E8h, 52h, 0FFh, 5Fh, 58h, 74h, 3, 0E8h, 4, 7, 0E9h, 98h, 0B2h, 0E8h, 96h, 7Ch
-	db	75h, 0Eh, 3Bh, 6, 66h, 58h, 75h, 8, 83h, 0C6h, 2, 0E8h, 16h, 0FFh, 75h, 1
-	db	0C3h, 0E8h, 0FAh, 0ACh, 32h, 0C0h, 0C3h, 0E8h, 7Ch, 7Ch, 75h, 15h, 0E8h, 18h, 0, 75h
-	db	1, 0C3h, 0E8h, 0F4h, 59h, 74h, 6, 83h, 0C6h, 2, 0E9h, 0EFh, 0B2h, 32h, 0C0h, 0FEh
-	db	0C8h, 0C3h, 0E8h, 61h, 7Ch, 75h, 0FAh, 16h, 7, 0BFh, 6Ch, 58h, 0B9h, 0Eh, 0, 0F2h
-	db	0AFh, 75h, 0Eh, 83h, 0C6h, 2, 0BBh, 0Dh, 0, 2Bh, 0D9h, 0D1h, 0E3h, 0FFh, 0A7h, 48h
-	db	1Fh, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 14h, 3Bh, 6, 0B4h, 58h, 75h, 0Eh, 83h
-	db	0C6h, 2, 0E8h, 0E0h, 0FEh, 74h, 3, 0E8h, 94h, 6, 32h, 0C0h, 0C3h, 22h, 0F6h, 74h
-	db	15h, 8Bh, 0C2h, 0E8h, 0CFh, 5Bh, 75h, 12h, 83h, 0C6h, 2, 0E8h, 87h, 5Bh, 74h, 3
-	db	0E9h, 6Ch, 0B2h, 0E9h, 7Fh, 0B2h, 32h, 0C0h, 0FEh, 0C8h, 0C3h, 0E8h, 8, 7Ch, 75h, 2Fh
-	db	0E8h, 32h, 0, 75h, 2Ah, 0E8h, 0FEh, 7Bh, 75h, 23h, 3Bh, 6, 5Ah, 58h, 75h, 1Dh
-	db	83h, 0C6h, 2, 0E8h, 0F0h, 7Bh, 75h, 0Fh, 8Bh, 0C2h, 0E8h, 6Ch, 59h, 74h, 8, 83h
-	db	0C6h, 2, 0E8h, 7Fh, 0B2h, 0EBh, 0DEh, 0B9h, 0Ch, 0, 0E8h, 0E1h, 87h, 32h, 0C0h, 0C3h
-	db	0E8h, 0D3h, 7Bh, 75h, 24h, 0E8h, 27h, 0, 75h, 1Fh, 0E8h, 0C9h, 7Bh, 75h, 18h, 3Bh
-	db	6, 2Eh, 58h, 75h, 12h, 83h, 0C6h, 2, 6, 55h, 0E8h, 0E3h, 0FFh, 5Fh, 58h, 74h
-	db	3, 0E8h, 1Ah, 6, 0E9h, 0A0h, 0B2h, 32h, 0C0h, 0C3h, 0E8h, 0A9h, 7Bh, 75h, 14h, 3Bh
-	db	6, 90h, 58h, 75h, 0Fh, 83h, 0C6h, 2, 0E8h, 0EFh, 0FFh, 74h, 3, 0E8h, 0F0h, 5
-	db	0E9h, 0EFh, 0B3h, 0C3h, 0E8h, 43h, 0, 75h, 3Bh, 0E8h, 8Ah, 7Bh, 75h, 34h, 3Bh, 6
-	db	92h, 58h, 75h, 14h, 83h, 0C6h, 2, 6, 55h, 0E8h, 29h, 0, 5Fh, 58h, 74h, 3
-	db	0E8h, 0CDh, 5, 0E8h, 72h, 0B4h, 0EBh, 0E1h, 3Bh, 6, 94h, 58h, 75h, 14h, 83h, 0C6h
-	db	2, 6, 55h, 0E8h, 0Fh, 0, 5Fh, 58h, 74h, 3, 0E8h, 0B3h, 5, 0E8h, 7Eh, 0B4h
-	db	0EBh, 0C7h, 32h, 0C0h, 0C3h, 0E8h, 4Eh, 7Bh, 75h, 26h, 0E8h, 29h, 0, 75h, 21h, 0E8h
-	db	44h, 7Bh, 75h, 1Ah, 3Bh, 6, 96h, 58h, 75h, 14h, 83h, 0C6h, 2, 6, 55h, 0E8h
-	db	0Fh, 0, 5Fh, 58h, 74h, 3, 0E8h, 87h, 5, 0E8h, 78h, 0B4h, 0EBh, 0E1h, 32h, 0C0h
-	db	0C3h, 0E8h, 22h, 7Bh, 75h, 14h, 3Bh, 6, 98h, 58h, 75h, 0Fh, 83h, 0C6h, 2, 0E8h
-	db	0EFh, 0FFh, 74h, 3, 0E8h, 69h, 5, 0E9h, 80h, 0B4h, 0C3h, 0E8h, 94h, 0, 75h, 17h
-	db	0E8h, 3, 7Bh, 75h, 10h, 8Ch, 0C3h, 16h, 7, 0BFh, 9Ah, 58h, 0B9h, 6, 0, 0F2h
-	db	0AFh, 8Eh, 0C3h, 74h, 3, 32h, 0C0h, 0C3h, 83h, 0C6h, 2, 0BBh, 5, 0, 2Bh, 0D9h
-	db	0D1h, 0E3h, 0FFh, 0A7h, 3Ch, 1Fh, 6, 55h, 0E8h, 62h, 0, 5Fh, 58h, 74h, 3, 0E8h
-	db	2Eh, 5, 0E8h, 60h, 0B4h, 0EBh, 0C9h, 6, 55h, 0E8h, 51h, 0, 5Fh, 58h, 74h, 3
-	db	0E8h, 1Dh, 5, 0E8h, 61h, 0B4h, 0EBh, 0B8h, 6, 55h, 0E8h, 40h, 0, 5Fh, 58h, 74h
-	db	3, 0E8h, 0Ch, 5, 0E8h, 62h, 0B4h, 0EBh, 0A7h, 6, 55h, 0E8h, 2Fh, 0, 5Fh, 58h
-	db	74h, 3, 0E8h, 0FBh, 4, 0E8h, 63h, 0B4h, 0EBh, 96h, 6, 55h, 0E8h, 1Eh, 0, 5Fh
-	db	58h, 74h, 3, 0E8h, 0EAh, 4, 0E8h, 64h, 0B4h, 0EBh, 85h, 6, 55h, 0E8h, 0Dh, 0
-	db	5Fh, 58h, 74h, 3, 0E8h, 0D9h, 4, 0E8h, 65h, 0B4h, 0E9h, 73h, 0FFh, 0E8h, 76h, 7Ah
-	db	75h, 40h, 0E8h, 43h, 0, 75h, 3Bh, 0E8h, 6Ch, 7Ah, 75h, 34h, 3Bh, 6, 0A6h, 58h
-	db	75h, 14h, 83h, 0C6h, 2, 6, 55h, 0E8h, 29h, 0, 5Fh, 58h, 74h, 3, 0E8h, 0AFh
-	db	4, 0E8h, 9Eh, 0B4h, 0EBh, 0E1h, 3Bh, 6, 0A8h, 58h, 75h, 14h, 83h, 0C6h, 2, 6
-	db	55h, 0E8h, 0Fh, 0, 5Fh, 58h, 74h, 3, 0E8h, 95h, 4, 0E8h, 7Dh, 0B5h, 0EBh, 0C7h
-	db	32h, 0C0h, 0C3h, 0E8h, 30h, 7Ah, 75h, 1Ch, 0E8h, 89h, 0, 75h, 48h, 0E8h, 26h, 7Ah
-	db	75h, 10h, 8Ch, 0C3h, 16h, 7, 0BFh, 0AAh, 58h, 0B9h, 5, 0, 0F2h, 0AFh, 8Eh, 0C3h
-	db	74h, 3, 32h, 0C0h, 0C3h, 83h, 0C6h, 2, 0BBh, 4, 0, 2Bh, 0D9h, 0D1h, 0E3h, 0FFh
-	db	0A7h, 32h, 1Fh, 6, 55h, 0E8h, 51h, 0, 5Fh, 58h, 74h, 3, 0E8h, 51h, 4, 0E8h
-	db	6Bh, 0B7h, 0EBh, 0C9h, 6, 55h, 0E8h, 40h, 0, 5Fh, 58h, 74h, 3, 0E8h, 40h, 4
-	db	0E8h, 59h, 0B8h, 0EBh, 0B8h, 0C3h, 6, 55h, 0E8h, 2Eh, 0, 5Fh, 58h, 74h, 3, 0E8h
-	db	2Eh, 4, 0E8h, 79h, 0B8h, 0EBh, 0A6h, 6, 55h, 0E8h, 1Dh, 0, 5Fh, 58h, 74h, 3
-	db	0E8h, 1Dh, 4, 0E8h, 0B6h, 0B8h, 0EBh, 95h, 6, 55h, 0E8h, 0Ch, 0, 5Fh, 58h, 74h
-	db	3, 0E8h, 0Ch, 4, 0E8h, 1Ah, 0B9h, 0EBh, 84h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h
-	db	0Eh, 0E9h, 10h, 2, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 8, 0E9h, 0Ah, 2, 0E8h
-	db	94h, 79h, 75h, 11h, 3Bh, 6, 0A6h, 58h, 75h, 0Ch, 83h, 0C6h, 2, 0E8h, 0EFh, 0FFh
-	db	74h, 3, 0E9h, 0DBh, 3, 0C3h, 3Bh, 6, 0A8h, 58h, 75h, 0Eh, 83h, 0C6h, 2, 0E8h
-	db	0DDh, 0FFh, 74h, 3, 0E8h, 0C9h, 3, 0E9h, 66h, 0B9h, 0F7h, 6, 7Ch, 51h, 0, 10h
-	db	75h, 8, 0E9h, 0B3h, 2, 0E8h, 5Eh, 79h, 75h, 28h, 3Bh, 6, 0B6h, 58h, 75h, 0Eh
-	db	83h, 0C6h, 2, 0E8h, 0EFh, 0FFh, 74h, 3, 0E8h, 0A5h, 3, 0E9h, 8Bh, 0B9h, 3Bh, 6
-	db	0B8h, 58h, 75h, 0Fh, 83h, 0C6h, 2, 0E8h, 0DBh, 0FFh, 74h, 3, 0E8h, 91h, 3, 0E9h
-	db	0C9h, 0B9h, 0C3h, 16h, 7, 0BFh, 0BAh, 58h, 0B9h, 9, 0, 0F2h, 0AFh, 74h, 21h, 22h
-	db	0E4h, 74h, 18h, 83h, 0C6h, 2, 3Bh, 6, 60h, 58h, 74h, 9, 3Bh, 6, 68h, 58h
-	db	74h, 6, 0E9h, 91h, 0BCh, 0E9h, 0F9h, 0BBh, 0E9h, 83h, 0A9h, 32h, 0C0h, 0FEh, 0C8h, 0C3h
-	db	83h, 0C6h, 2, 0BBh, 8, 0, 2Bh, 0D9h, 0D1h, 0E3h, 0FFh, 0A7h, 20h, 1Fh, 0E8h, 0A4h
-	db	0FBh, 74h, 3, 0E8h, 58h, 3, 0E9h, 0B7h, 0B9h, 0E8h, 99h, 0FBh, 74h, 3, 0E8h, 4Dh
-	db	3, 0E9h, 7Eh, 0BAh, 0E8h, 0DFh, 78h, 75h, 1Fh, 8Bh, 0C2h, 0E8h, 5Bh, 56h, 74h, 18h
-	db	83h, 0C6h, 2, 0E9h, 0CFh, 0BAh, 0E8h, 0CDh, 78h, 75h, 0Dh, 8Bh, 0C2h, 0E8h, 49h, 56h
-	db	74h, 6, 83h, 0C6h, 2, 0E9h, 0EBh, 0BAh, 83h, 0EEh, 2, 0E8h, 0B8h, 78h, 83h, 0C6h
-	db	2, 0E9h, 32h, 0BCh, 0E8h, 0AFh, 78h, 75h, 0EFh, 8Bh, 0C2h, 0E8h, 2Bh, 56h, 74h, 0E8h
-	db	83h, 0C6h, 2, 0E9h, 0, 0BBh, 0E8h, 9Dh, 78h, 75h, 0DDh, 8Bh, 0C2h, 0E8h, 19h, 56h
-	db	74h, 0D6h, 83h, 0C6h, 2, 0E9h, 20h, 0BBh, 0E8h, 27h, 0FCh, 74h, 9, 0B9h, 7, 0
-	db	0E8h, 1, 3, 0E8h, 4Ah, 0A9h, 0E9h, 70h, 0BBh, 3Bh, 26h, 0C6h, 38h, 72h, 42h, 0E8h
-	db	23h, 0FBh, 74h, 3, 0E8h, 0D7h, 2, 0E8h, 6Ch, 78h, 75h, 0Bh, 3Bh, 6, 56h, 58h
-	db	75h, 5, 83h, 0C6h, 2, 0EBh, 3, 0E8h, 0D2h, 2, 0E9h, 0Eh, 0ACh, 3Bh, 26h, 0C6h
-	db	38h, 72h, 1Eh, 0E8h, 0FFh, 0FAh, 74h, 3, 0E8h, 0A5h, 2, 0E8h, 48h, 78h, 75h, 0Bh
-	db	3Bh, 6, 5Ch, 58h, 75h, 5, 83h, 0C6h, 2, 0EBh, 3, 0E8h, 0B3h, 2, 32h, 0C0h
-	db	0C3h, 0B9h, 75h, 40h, 0E9h, 37h, 84h, 0E8h, 2Ch, 78h, 75h, 50h, 22h, 0E4h, 74h, 29h
-	db	83h, 0C6h, 2, 50h, 52h, 0E8h, 1Eh, 78h, 75h, 12h, 3Bh, 6, 5Eh, 58h, 74h, 0Ch
-	db	3Bh, 6, 56h, 58h, 74h, 6, 3Bh, 6, 5Ch, 58h, 75h, 8, 83h, 0EEh, 2, 5Ah
-	db	58h, 0E9h, 0DBh, 0FEh, 83h, 0EEh, 2, 5Ah, 58h, 3Bh, 6, 8Ah, 58h, 74h, 1Eh, 3Bh
-	db	6, 88h, 58h, 74h, 26h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0Ch, 3Bh, 6, 8Ch
-	db	58h, 74h, 35h, 3Bh, 6, 8Eh, 58h, 74h, 3Dh, 0E9h, 48h, 0FCh, 0C3h, 83h, 0C6h, 2
-	db	0E8h, 0A4h, 0FFh, 74h, 3, 0E8h, 28h, 2, 0E9h, 0DBh, 0ABh, 83h, 0C6h, 2, 0A0h, 0CCh
-	db	38h, 50h, 0C6h, 6, 0CCh, 38h, 0FFh, 0E8h, 8Dh, 0FFh, 58h, 0C6h, 6, 0CCh, 38h, 0
-	db	74h, 3, 0E8h, 0Bh, 2, 0E9h, 1Bh, 0B0h, 83h, 0C6h, 2, 0E8h, 79h, 0FFh, 74h, 3
-	db	0E8h, 0FDh, 1, 0E9h, 82h, 0ABh, 83h, 0C6h, 2, 0E8h, 6Bh, 0FFh, 74h, 3, 0E8h, 0EFh
-	db	1, 0E9h, 8Bh, 0ABh, 0E8h, 8Fh, 77h, 75h, 1Eh, 16h, 7, 0BFh, 0B4h, 58h, 0B9h, 6
-	db	0, 0F2h, 0AFh, 74h, 13h, 0E8h, 0A8h, 0, 75h, 0Dh, 0E8h, 79h, 77h, 75h, 6, 3Bh
-	db	6, 6Ah, 58h, 74h, 11h, 32h, 0C0h, 0C3h, 83h, 0C6h, 2, 0BBh, 5, 0, 2Bh, 0D9h
-	db	0D1h, 0E3h, 0FFh, 0A7h, 14h, 1Fh, 83h, 0C6h, 2, 6, 55h, 0E8h, 4Ch, 0, 5Fh, 58h
-	db	74h, 3, 0E8h, 0ABh, 1, 0E9h, 0EEh, 0ABh, 0E8h, 3Fh, 0, 74h, 3, 0E8h, 0A0h, 1
-	db	0E9h, 83h, 0B7h, 0E8h, 34h, 0, 74h, 3, 0E8h, 95h, 1, 0E9h, 0CAh, 0B7h, 0E8h, 29h
-	db	0, 74h, 3, 0E8h, 8Ah, 1, 0E9h, 0, 0B8h, 0E8h, 1Eh, 0, 74h, 3, 0E8h, 7Fh
-	db	1, 0E9h, 0ACh, 0B8h, 0E8h, 13h, 0, 74h, 3, 0E8h, 74h, 1, 0E9h, 0DBh, 0B9h, 0E8h
-	db	8, 0, 74h, 3, 0E8h, 69h, 1, 0E9h, 0C5h, 0A9h, 0E8h, 9, 77h, 75h, 30h, 22h
-	db	0E4h, 74h, 29h, 83h, 0C6h, 2, 50h, 52h, 0E8h, 0FBh, 76h, 75h, 12h, 3Bh, 6, 5Eh
-	db	58h, 74h, 0Ch, 3Bh, 6, 56h, 58h, 74h, 6, 3Bh, 6, 5Ch, 58h, 75h, 8, 83h
-	db	0EEh, 2, 5Ah, 58h, 0E9h, 0B8h, 0FDh, 83h, 0EEh, 2, 5Ah, 58h, 0E9h, 4Ah, 0FFh, 0C3h
-	db	0E8h, 41h, 0FDh, 75h, 22h, 0E8h, 0CEh, 76h, 75h, 6, 3Bh, 6, 2Eh, 58h, 74h, 3
-	db	32h, 0C0h, 0C3h, 83h, 0C6h, 2, 6, 55h, 0E8h, 24h, 0FDh, 5Fh, 58h, 74h, 3, 0E8h
-	db	0Eh, 1, 0E8h, 0A2h, 0ADh, 0EBh, 0DEh, 0C3h, 0E8h, 46h, 0, 75h, 43h, 0E8h, 0A6h, 76h
-	db	75h, 12h, 3Bh, 6, 5Ah, 58h, 74h, 23h, 3Bh, 6, 0C0h, 58h, 74h, 9, 3Bh, 6
-	db	0C2h, 58h, 74h, 3, 32h, 0C0h, 0C3h, 6, 55h, 0E8h, 25h, 0, 5Fh, 58h, 74h, 6
-	db	8Eh, 0C0h, 8Bh, 0EFh, 0EBh, 0EEh, 0E8h, 0C9h, 0B0h, 0EBh, 0D2h, 83h, 0C6h, 2, 6, 55h
-	db	0E8h, 67h, 0FFh, 5Fh, 58h, 74h, 3, 0E8h, 0C6h, 0, 0E8h, 0B5h, 0B0h, 0E9h, 81h, 0AAh
-	db	0C3h, 16h, 7, 0BFh, 0C0h, 58h, 0B9h, 6, 0, 0F2h, 0AFh, 74h, 3, 0E9h, 2Fh, 0FDh
-	db	83h, 0C6h, 2, 0BBh, 5, 0, 2Bh, 0D9h, 0D1h, 0E3h, 0FFh, 0A7h, 8, 1Fh, 3Bh, 26h
-	db	0C6h, 38h, 72h, 1Eh, 0E8h, 10h, 0FEh, 74h, 3, 0E8h, 94h, 0, 0E8h, 37h, 76h, 75h
-	db	0Bh, 3Bh, 6, 56h, 58h, 75h, 5, 83h, 0C6h, 2, 0EBh, 3, 0E8h, 9Dh, 0, 0E9h
-	db	6Ah, 0A9h, 0B9h, 75h, 40h, 0E9h, 26h, 82h, 3Bh, 26h, 0C6h, 38h, 72h, 0F4h, 0E8h, 0E6h
-	db	0FDh, 74h, 3, 0E8h, 6Ah, 0, 0E8h, 0Dh, 76h, 75h, 0Bh, 3Bh, 6, 5Ch, 58h, 75h
-	db	5, 83h, 0C6h, 2, 0EBh, 3, 0E8h, 78h, 0, 32h, 0C0h, 0C3h, 0E8h, 0F7h, 75h, 75h
-	db	0Dh, 8Bh, 0C2h, 0E8h, 73h, 53h, 74h, 6, 83h, 0C6h, 2, 0E9h, 15h, 0B8h, 83h, 0EEh
-	db	2, 0E8h, 0E2h, 75h, 83h, 0C6h, 2, 0E9h, 5Ch, 0B9h, 0E8h, 0D9h, 75h, 75h, 0EFh, 8Bh
-	db	0C2h, 0E8h, 55h, 53h, 74h, 0E8h, 83h, 0C6h, 2, 0E9h, 5Ch, 0B8h, 0E8h, 0C7h, 75h, 75h
-	db	0DDh, 8Bh, 0C2h, 0E8h, 43h, 53h, 74h, 0D6h, 83h, 0C6h, 2, 0E9h, 0B7h, 0B7h, 0E8h, 0B5h
-	db	75h, 75h, 0CBh, 8Bh, 0C2h, 0E8h, 31h, 53h, 74h, 0C4h, 83h, 0C6h, 2, 0E9h, 6, 0B8h
-	db	0B9h, 2, 0, 0E8h, 1Eh, 0, 50h, 57h, 0E8h, 13h, 0A6h, 5Fh, 58h, 0C3h, 0B9h, 3
-	db	0, 0E8h, 10h, 0, 50h, 57h, 0E8h, 57h, 0A6h, 5Fh, 58h, 0C3h, 0B9h, 1, 0, 0EBh
-	db	3, 0B9h, 0, 0, 80h, 3Eh, 0CBh, 38h, 0, 75h, 3, 0E9h, 80h, 81h, 80h, 26h
-	db	0CAh, 38h, 0FEh, 0F9h, 8Bh, 26h, 0AEh, 38h, 0C3h, 0, 9Ah
+	db	0, 0C3h
+L07E87:	call	L039F0	;@07E87
+	mov	al, cl	;@07E8A
+	call	L044EE	;@07E8C
+	jmp	L03A08	;@07E8F
+	db	0E8h, 5Bh, 0BBh, 0F7h, 6, '|Q@', 0, 75h, 8, 0B0h, 9Bh, 0E8h, 4Ch	;@07E92
+	db	0C6h, 0E9h, 85h, 0BBh, 0BFh, 72h, 56h, 0E8h, 0A5h, 2Ah, 0B0h, 90h
+	db	0E8h, 3Eh, 0C6h, 0B0h, 9Bh, 0E8h, 39h, 0C6h, 0E9h, 72h, 0BBh, 0E8h
+	db	0Eh, 15h, 0E8h, 3Bh, 16h, 0E8h, 2Dh, 17h, 0E8h, 60h, 1Dh, 0E8h
+	db	1Ch, 14h, 0E9h, 60h, 0BBh
+L07ECA:	call	L093C9	;@07ECA
+	call	L094F9	;@07ECD
+	call	L09C24	;@07ED0
+	test	cl, 10h	;@07ED3
+	je	@@1	;@07ED6
+	call	L08100	;@07ED8
+@@1:	call	L092E3	;@07EDB
+	jmp	L03A2A	;@07EDE
+	db	0E8h, 0E5h, 14h, 0E8h, 12h, 16h, 0E8h, 3Ah, 1Dh, 0E8h, 4, 2, 0E8h	;@07EE1
+	db	77h, 14h, 0E9h, 37h, 0BBh, 0E8h, 0D3h, 14h, 0E8h, 0, 16h, 0E8h
+	db	88h, 16h, 0E8h, 0F2h, 1, 0F7h, 6, 7Ch, 51h, 0, 4, 't$&', 8Ah, 46h
+	db	4, 24h, 0C0h, '4@u', 1Ah, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 'JVu', 10h
+	db	0E8h, 23h, 1Dh, 0B0h, 0DFh, 0E8h, 0CBh, 0C5h, 0B0h, 0E0h, 0E8h
+	db	0C6h, 0C5h, 0E9h, 0FFh, 0BAh, 0E8h, 0F6h, 1Ch, 0E8h, 36h, 14h
+	db	0E9h, 0F6h, 0BAh, 0E8h, 92h, 14h, 0E8h, 0BFh, 15h, 0E8h, 47h, 16h
+	db	0F7h, 6, 7Ch, 51h, 0, 4, 'tD&', 8Ah, 46h, 4, 24h, 0C0h, '4@u-&'
+	db	8Bh, 46h, 0Eh, 3Bh, 6, 'JVu+', 0E8h, 0E5h, 1Ch, 0F7h, 6, '|Q@'
+	db	0, 74h, 6, 0BFh, 74h, 56h, 0E8h, 0E6h, 29h, 0B0h, 9Bh, 0E8h, 7Fh
+	db	0C5h, 0B0h, 0DFh, 0E8h, 7Ah, 0C5h, 0B0h, 0E0h, 0E8h, 75h, 0C5h
+	db	0E9h, 0AEh, 0BAh, 0F7h, 6, '|Q@', 0, 75h, 5, 0B0h, 9Bh, 0E8h, 65h
+	db	0C5h, 0E8h, 98h, 1Ch, 0E8h, 54h, 13h, 0E9h, 98h, 0BAh, 0E8h, 34h
+	db	14h, 0E8h, 61h, 15h, 0E8h, 0E9h, 15h, 0E8h, 86h, 1Ch, 0F6h, 0C1h
+	db	10h, 74h, 3, 0E8h, 5Ah, 1, 0E8h, 3Ah, 13h, 0E9h, 7Eh, 0BAh, 0E8h
+	db	1Ah, 14h, 0E8h, 47h, 15h, 0E8h, 0CFh, 15h, 0E8h, 6Ch, 1Ch, 0E8h
+	db	36h, 1, 0E8h, 0A9h, 13h, 0E9h, 69h, 0BAh
+L07FC1:	call	L093C9	;@07FC1
+	call	L094F9	;@07FC4
+	call	L095F3	;@07FC7
+	call	L09C24	;@07FCA
+	call	L092D9	;@07FCD
+	jmp	L03A2A	;@07FD0
+	db	0E8h, 0F3h, 13h, 0E8h, 20h, 15h, 0E8h, 3Dh, 16h, 0E8h, 45h, 1Ch	;@07FD3
+	db	26h, 80h, 7Eh, 0, 6, 75h, 8, 0B5h, 0DBh, 0E8h, 0F8h, 12h, 0E9h
+	db	3Ch, 0BAh, 8Ah, 0CDh, 0B5h, 0D9h, 0E8h, 0E4h, 12h, 0E9h, 32h, 0BAh
+	db	0E8h, 0CEh, 13h, 0E8h, 0FBh, 14h, 0E8h, 38h, 16h, 0E8h, 20h, 1Ch
+	db	26h, 80h, 7Eh, 0, 4, 75h, 8, 0B5h, 0DBh, 0E8h, 0C9h, 12h, 0E9h
+	db	17h, 0BAh, 8Ah, 0CDh, 0B5h, 0DBh, 0E8h, 0BFh, 12h, 0E9h, 0Dh, 0BAh
+L0801D:	call	L093C9	;@0801D
+	call	L094F9	;@08020
+	call	L09659	;@08023
+	call	L09C24	;@08026
+	call	L092D9	;@08029
+	jmp	L03A2A	;@0802C
+L0802F:	call	L039F0	;@0802F
+	test	word ptr ds:[517Ch], 40h	;@08032
+	je	@@1	;@08038
+	mov	di, 5674h	;@0803A
+	call	L0A950	;@0803D
+	jmp	short @@2	;@08040
+@@1:	cmp	ch, 0DBh	;@08042
+	je	@@2	;@08045
+	test	word ptr ds:[517Ch], 400h	;@08047
+	jne	@@3	;@0804D
+@@2:	mov	al, 9Bh	;@0804F
+	call	L044EE	;@08051
+@@3:	mov	al, ch	;@08054
+	call	L044EE	;@08056
+	mov	al, cl	;@08059
+	call	L044EE	;@0805B
+	jmp	L03A2A	;@0805E
+L08061:	call	L039F0	;@08061
+	mov	al, ch	;@08064
+	call	L044EE	;@08066
+	mov	al, cl	;@08069
+	call	L044EE	;@0806B
+	jmp	L03A2A	;@0806E
+L08071:	call	L093C9	;@08071
+	call	L094E6	;@08074
+	call	L09EA2	;@08077
+	call	L09372	;@0807A
+	jmp	L03A2A	;@0807D
+L08080:	call	L093E3	;@08080
+	call	L094E6	;@08083
+	call	L09EA2	;@08086
+	mov	dh, cl	;@08089
+	push	dx	;@0808B
+	cmp	byte ptr es:[bp+0Ah], 0	;@0808C
+	je	L080AA	;@08091
+	mov	ax, 22h	;@08093
+	call	L09442	;@08096
+	mov	byte ptr es:[bp+0Ah], 0	;@08099
+	jmp	short L080AA	;@0809E
+L080A0:	push	dx	;@080A0
+	call	L093E3	;@080A1
+	call	L094E6	;@080A4
+	call	L09EA2	;@080A7
+L080AA:	les	bp, dword ptr ds:[55EEh]	;@080AA
+	call	L094E6	;@080AE
+	call	L09EA2	;@080B1
+	pop	dx	;@080B4
+	cmp	byte ptr es:[bp+0Ah], 0	;@080B5
+	je	@@1	;@080BA
+	les	bp, dword ptr ds:[55F6h]	;@080BC
+	cmp	byte ptr es:[bp+0Ah], 0	;@080C0
+	jne	@@2	;@080C5
+	or	ch, 4	;@080C7
+	mov	dh, cl	;@080CA
+	les	bp, dword ptr ds:[55EEh]	;@080CC
+	mov	al, byte ptr es:[bp+0Ah]	;@080D0
+	les	bp, dword ptr ds:[55F6h]	;@080D4
+	mov	byte ptr es:[bp+0Ah], al	;@080D8
+@@1:	mov	cl, dh	;@080DC
+	les	bp, dword ptr ds:[55F6h]	;@080DE
+	call	L09372	;@080E2
+	jmp	L03A2A	;@080E5
+@@2:	mov	ax, 22h	;@080E8
+	call	L09442	;@080EB
+	jmp	L03A2A	;@080EE
+	db	0F7h, 6, '|Q@', 0, 75h, 1, 0C3h, 0B8h, 55h, 0, 0E9h, 42h, 13h	;@080F1
+L08100:	test	word ptr ds:[517Ch], 400h	;@08100
+	je	@@1	;@08106
+	test	word ptr ds:[517Ch], 40h	;@08108
+	jne	@@1	;@0810E
+	mov	al, 9Bh	;@08110
+	jmp	L044EE	;@08112
+@@1:	ret	;@08115
+	db	0E8h, 0B0h, 12h, 0E8h, 0FFh, 13h, 0EBh, 14h, 0E8h, 0A8h, 12h, 0E8h	;@08116
+	db	0F7h, 13h, 0E8h, 2, 22h, 0EBh, 9, 0E8h, 9Dh, 12h, 0E8h, 0ECh, 13h
+	db	0E8h, 9, 22h, 0F7h, 6, 7Ch, 51h, 1, 0, 'tT&', 8Ah, 46h, 0, 3Ch
+	db	87h, 'tL<', 89h, 75h, 24h, 0E8h, 0F7h, 1Fh, 73h, 1Fh, 8Ah, 0C1h
+	db	0E8h, 9Eh, 0C3h, 0B0h, 2, 0E8h, 99h, 0C3h, 0B0h, 0EBh, 0E8h, 94h
+	db	0C3h, 0E8h, 26h, 21h, 4, 3, 0E8h, 8Ch, 0C3h, 0B1h, 0EAh, 0E8h
+	db	0ABh, 10h, 0E9h, 0C0h, 0B8h, 0E8h, 'T s', 1Fh, 8Ah, 0C1h, 0E8h
+	db	7Ah, 0C3h, 0B0h, 2, 0E8h, 75h, 0C3h, 0B0h, 0EBh, 0E8h, 70h, 0C3h
+	db	0E8h, 2, 21h, 0FEh, 0C0h, 0E8h, 68h, 0C3h, 0B1h, 0E9h, 0E8h, 4Bh
+	db	10h, 0E9h, 9Ch, 0B8h, 0E8h, 0A2h, 10h, 0E9h, 96h, 0B8h
+L08194:	call	L093C9	;@08194
+	call	L0951B	;@08197
+	test	word ptr ds:[517Ch], 9	;@0819A
+	je	@@1	;@081A0
+	mov	al, byte ptr es:[bp]	;@081A2
+	cmp	al, 87h	;@081A6
+	je	@@1	;@081A8
+	cmp	al, 89h	;@081AA
+	jne	@@2	;@081AC
+	call	L0A140	;@081AE
+	jae	@@2	;@081B1
+	mov	al, cl	;@081B3
+	xor	al, 1	;@081B5
+	call	L044EE	;@081B7
+	call	L0A283	;@081BA
+	add	al, 3	;@081BD
+	call	L044EE	;@081BF
+	mov	cl, 0EAh	;@081C2
+	call	L09212	;@081C4
+	jmp	L03A2A	;@081C7
+@@1:	call	L09233	;@081CA
+	jmp	L03A2A	;@081CD
+@@2:	call	L0A1C1	;@081D0
+	jae	@@1	;@081D3
+	test	word ptr ds:[517Ch], 8	;@081D5
+	jne	@@3	;@081DB
+	mov	al, cl	;@081DD
+	xor	al, 1	;@081DF
+	call	L044EE	;@081E1
+	call	L0A283	;@081E4
+	inc	al	;@081E7
+	call	L044EE	;@081E9
+	mov	cl, 0E9h	;@081EC
+	call	L091D6	;@081EE
+	jmp	L03A2A	;@081F1
+@@3:	mov	al, 0Fh	;@081F4
+	call	L044EE	;@081F6
+	xor	cl, 0F0h	;@081F9
+	call	L091D6	;@081FC
+	jmp	L03A2A	;@081FF
+	db	0E8h, 0C4h, 11h, 26h, 0F6h, 46h, 4, 80h, 75h, 5, 0E8h, 73h, 12h	;@08202
+	db	73h, 11h, 0E8h, 0E5h, 12h, 0E8h, 64h, 14h, 0E8h, 1Dh, 1Ah, 0B1h
+	db	20h, 0E8h, 75h, 0Fh, 0E9h, 8, 0B8h, 26h, 8Ah, 46h, 0, 3Ch, 87h
+	db	't+<', 89h, 75h, 1Ah, 0F7h, 6, 7Ch, 51h, 0, 20h, 0BBh, 48h, 0A1h
+	db	74h, 3, 0BBh, 40h, 0A1h, 0FFh, 0D3h, 73h, 8, 0B1h, 0EAh, 0E8h
+	db	0CDh, 0Fh, 0E9h, 0E2h, 0B7h, 0E8h, 76h, 1Fh, 73h, 8, 0B1h, 0E9h
+	db	0E8h, 84h, 0Fh, 0E9h, 0D5h, 0B7h, 0B1h, 0EBh, 0E8h, 0D9h, 0Fh
+	db	0E9h, 0CDh, 0B7h, 0E8h, 69h, 11h, 26h, 0F6h, 46h, 4, 80h, 75h
+	db	5, 0E8h, 3Fh, 12h, 73h, 11h, 0E8h, 8Ah, 12h, 0E8h, 9, 14h, 0E8h
+	db	0C2h, 19h, 0B1h, 10h, 0E8h, 1Ah, 0Fh, 0E9h, 0ADh, 0B7h, 26h, 80h
+	db	7Eh, 0, 89h, 75h, 12h, 0E8h, 0B9h, 1Eh, 73h, 8, 0B1h, 9Ah, 0E8h
+	db	84h, 0Fh, 0E9h, 99h, 0B7h, 0B0h, 0Eh, 0E8h, 58h, 0C2h, 0B1h, 0E8h
+	db	0E8h, 3Bh, 0Fh, 0E9h, 8Ch, 0B7h, 0E8h, 42h, 11h, 0C4h, 2Eh, 0EEh
+	db	55h, 0E8h, 3Eh, 12h, 0E8h, 1Eh, 13h, 0E8h, 93h, 19h, 26h, 0F6h
+	db	46h, 4, '@tX&', 8Bh, 46h, 0Eh, 0E8h, 57h, 0Eh, 22h, 0C0h, 75h
+	db	45h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 1Fh, 12h, 26h, 8Ah, 46h, 4, 24h
+	db	0C0h, '4@u', 1Dh, 0E8h, 6Dh, 19h, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 'NVu,'
+	db	80h, 0C9h, 8, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 66h, 20h, 0E8h, 0DFh
+	db	0Fh, 0E9h, 3Ch, 0B7h, 0E8h, 3Bh, 1Bh, 0C4h, 2Eh, 0EEh, 55h, 0E8h
+	db	56h, 20h, 0E8h, 0CFh, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 98h, 22h
+	db	0E9h, 25h, 0B7h, 0B8h, 64h, 0, 0EBh, 3, 0B8h, 65h, 0, 0E8h, 32h
+	db	11h, 0E9h, 17h, 0B7h
+L08313:	call	L039F0	;@08313
+	call	L0A35B	;@08316
+	mov	al, cl	;@08319
+	call	L044EE	;@0831B
+	jmp	L03A2A	;@0831E
+L08321:	call	L039F0	;@08321
+	mov	al, cl	;@08324
+	call	L044EE	;@08326
+	jmp	L03A2A	;@08329
+	db	0E8h, 0C1h, 0B6h, 8Ah, 0C1h, 0E8h, 63h, 0C1h, 0E9h, 0F3h, 0B6h	;@0832C
+L08337:	call	L039F0	;@08337
+	mov	al, cl	;@0833A
+	call	L0446C	;@0833C
+	jmp	L03A2A	;@0833F
+	db	0E8h, 0ABh, 0B6h, 8Ah, 0C1h, 0E8h, 0A4h, 0C1h, 8Ah, 0C5h, 0E8h	;@08342
+	db	9Fh, 0C1h, 0E9h, 0D8h, 0B6h, 0E8h, 8Eh, 10h, 0C4h, 2Eh, 0EEh, 55h
+	db	0E8h, 9Dh, 11h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 96h, 11h, 0E8h, 5Bh
+	db	14h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0B7h, 18h, 0C4h, 2Eh, 0F6h, 55h
+	db	0E8h, 0B0h, 18h, 0E8h, 0D7h, 1Fh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 10h
+	db	0D6h, 0E8h, 40h, 20h, 0E8h, 11h, 0D6h, 0C4h, 2Eh, 0F6h, 55h, 0E8h
+	db	3Ch, 0Fh, 0E9h, 9Ch, 0B6h, 0E8h, 38h, 10h, 0E8h, 65h, 11h, 0E8h
+	db	32h, 12h, 0E8h, 8Ah, 18h, 0E8h, 0B1h, 1Fh, 0E8h, 27h, 0Fh, 0E9h
+	db	87h, 0B6h, 0E8h, 23h, 10h, 0E8h, 50h, 11h, 0E8h, 0A5h, 11h, 0E8h
+	db	75h, 18h, 0B1h, 0D7h, 0E8h, 13h, 0Fh, 0E9h, 73h, 0B6h, 0E8h, 29h
+	db	10h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 38h, 11h, 0C4h, 2Eh, 0EEh, 55h
+	db	0E8h, 1Eh, 11h, 0E8h, 0F8h, 15h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 6Fh
+	db	18h, 8Ah, 0E9h, 0E8h, 9Fh, 0Dh, 0E8h, 74h, 1Fh, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 43h, 18h, 0E8h, 83h, 0Fh, 0E9h, 43h, 0B6h, 0E8h, 0F9h
+	db	0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 8, 11h, 0C4h, 2Eh, 0EEh, 55h
+	db	0E8h, 0EEh, 10h, 0E8h, 8Dh, 11h, 0E8h, 43h, 18h, 0E8h, 75h, 0Dh
+	db	0E8h, 4Ah, 1Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 19h, 18h, 0E8h, 0E9h
+	db	1Fh, 0F7h, 6, '|Q ', 0, 74h, 22h, 0E8h, 0A4h, 1Eh, 0C4h, 2Eh, 0EEh
+	db	55h, 72h, 7, 26h, 80h, 7Eh, 0, 2, 0EBh, 5, 26h, 80h, 7Eh, 0, 3
+	db	0C4h, 2Eh, 0F6h, 55h, 75h, 7, 26h, 0F6h, 46h, 4, 40h, 74h, 0Bh
+	db	0E8h, 0E9h, 1Eh, 0B5h, 8Dh, 0E8h, 2Ah, 0Fh, 0E9h, 0E7h, 0B5h, 8Ah
+	db	0C1h, 0B1h, 3, 0D2h, 0E8h, 0Ch, 0B8h, 0E8h, 0A0h, 0C0h, 0E8h, 55h
+	db	21h, 0E9h, 0D6h, 0B5h, 0E8h, 72h, 0Fh, 0E8h, 8Ch, 10h, 0E8h, 0B9h
+	db	19h, 33h, 0C0h, 0E8h, 81h, 1Ch, 73h, 0Bh, 8Ah, 0C1h, 0E8h, 85h
+	db	0C0h, 0E8h, 50h, 21h, 0E9h, 0BBh, 0B5h, 8Ah, 0C1h, 0Ch, 1, 0E8h
+	db	78h, 0C0h, 0E9h, 0B1h, 0B5h, 0E8h, 4Dh, 0Fh, 0E8h, 67h, 10h, 0E8h
+	db	0AAh, 19h, 8Ah, 0C1h, 0E8h, 67h, 0C0h, 0E8h, 10h, 21h, 0E9h, 9Dh
+	db	0B5h
+L0848D:	call	L093C9	;@0848D
+	test	cl, 20h	;@08490
+	jne	@@1	;@08493
+	mov	byte ptr ds:[55FAh], 0FFh	;@08495
+@@1:	call	L094F9	;@0849A
+	call	L095C9	;@0849D
+	call	L09C37	;@084A0
+	call	L0A34E	;@084A3
+	mov	ch, 0F6h	;@084A6
+	call	L0935D	;@084A8
+	jmp	L03A2A	;@084AB
+L084AE:	call	L093E3	;@084AE
+	mov	byte ptr ds:[55FAh], 0FFh	;@084B1
+	les	bp, dword ptr ds:[55EEh]	;@084B6
+	call	L094F9	;@084BA
+	call	L095C9	;@084BD
+	call	L09C37	;@084C0
+	call	L0A34E	;@084C3
+	les	bp, dword ptr ds:[55F6h]	;@084C6
+	call	L094E6	;@084CA
+	mov	al, byte ptr es:[bp+4]	;@084CD
+	and	al, 0C0h	;@084D1
+	xor	al, 40h	;@084D3
+	jne	@@1	;@084D5
+	call	L09C41	;@084D7
+	mov	ax, word ptr es:[bp+0Eh]	;@084DA
+	cmp	ax, word ptr ds:[5610h]	;@084DE
+	jne	@@4	;@084E2
+	les	bp, dword ptr ds:[55EEh]	;@084E4
+	mov	ch, 0D2h	;@084E8
+	call	L0935D	;@084EA
+	jmp	L03A2A	;@084ED
+@@1:	call	L09E2C	;@084F0
+	mov	ax, 1	;@084F3
+	call	L0A0E3	;@084F6
+	jae	@@2	;@084F9
+	test	word ptr ds:[517Ch], 2	;@084FB
+	je	@@3	;@08501
+	mov	ch, 0C0h	;@08503
+	les	bp, dword ptr ds:[55EEh]	;@08505
+	call	L0935D	;@08509
+	les	bp, dword ptr ds:[55F6h]	;@0850C
+	call	L0A59A	;@08510
+	jmp	L03A2A	;@08513
+@@2:	les	bp, dword ptr ds:[55EEh]	;@08516
+	mov	ch, 0D0h	;@0851A
+	call	L0935D	;@0851C
+	jmp	L03A2A	;@0851F
+@@3:	cmp	word ptr es:[bp+6], 0	;@08522
+	jne	@@2	;@08527
+	mov	ax, 66h	;@08529
+	jmp	short @@5	;@0852C
+@@4:	mov	ax, 67h	;@0852E
+@@5:	call	L09442	;@08531
+	jmp	L03A2A	;@08534
+	db	0E8h, 8Fh, 0Eh, 0E8h, 0A9h, 0Fh, 0E8h, 0ECh, 18h, 0B8h, 3, 0, 0E8h	;@08537
+	db	9Dh, 1Bh, 72h, 8, 0B0h, 0CCh, 0E8h, 0A1h, 0BFh, 0E9h, 0DAh, 0B4h
+	db	0B0h, 0CDh, 0E8h, 99h, 0BFh, 0E8h, 42h, 20h, 0E9h, 0CFh, 0B4h
+	db	0E8h, 85h, 0Eh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 81h, 0Fh, 0E8h, 3
+	db	19h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 8Ah, 0Fh, 0E8h, 0C5h, 16h, 0C4h
+	db	2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 0Ah, 8Ah, 0E8h, 0D0h, 0EDh, 0D0h
+	db	0EDh, 0D0h, 0EDh, 80h, 0CDh, 0D8h, 24h, 7, 0D0h, 0E0h, 0D0h, 0E0h
+	db	0D0h, 0E0h, 8Ah, 0C8h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0D1h, 0Dh, 0E9h
+	db	91h, 0B4h, 0E8h, 2Dh, 0Eh, 0C6h, 6, 0FAh, 55h, 0FFh, 0E8h, 55h
+	db	0Fh, 0E8h, 22h, 10h, 0E8h, 8Dh, 16h, 0E8h, 0A1h, 1Dh, 26h, 80h
+	db	7Eh, 0, 1, 74h, 17h, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@u', 0Dh, 0E8h
+	db	99h, 0Bh, 0Ch, 40h, 0Ah, 0C1h, 0E8h, 26h, 0BFh, 0E9h, 5Fh, 0B4h
+	db	0B5h, 0FEh, 0E8h, 8Dh, 0Dh, 0E9h, 57h, 0B4h, 0E8h, 0Dh, 0Eh, 0C4h
+	db	2Eh, 0EEh, 55h, 0E8h, 1Ch, 0Fh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 15h
+	db	0Fh, 0E8h, 0DAh, 11h, 0C4h, 2Eh, 0EEh, 55h, 26h, 8Ah, 46h, 4, 24h
+	db	0C0h, '4@u ', 0C4h, 2Eh, 0F6h, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h
+	db	'4@u(&', 80h, 7Eh, 0, 1, 't!&', 8Bh, 46h, 0Eh, 0E8h, 2, 0Bh, 22h
+	db	0C0h, 75h, 16h, 8Bh, 3Eh, 0EEh, 55h, 0A1h, 0F0h, 55h, 87h, 3Eh
+	db	0F6h, 55h, 87h, 6, 0F8h, 55h, 89h, 3Eh, 0EEh, 55h, 0A3h, 0F0h
+	db	55h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0Fh, 16h, 0E8h, 19h, 1Dh, 0C4h
+	db	2Eh, 0F6h, 55h, 0E8h, 0FBh, 15h, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@u%'
+	db	0C4h, 2Eh, 0EEh, 55h, 26h, 80h, 7Eh, 0, 1, 74h, 1Ah, 26h, 8Bh
+	db	46h, 0Eh, 0E8h, 0BBh, 0Ah, 22h, 0C0h, 75h, 0Fh, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 0F7h, 0Ah, 0Ch, 90h, 0E8h, 86h, 0BEh, 0E9h, 0BFh, 0B3h
+	db	0C6h, 6, 0FAh, 55h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0FFh, 0Ah
+	db	0B5h, 86h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0DDh, 0Ch, 0E9h, 0A7h, 0B3h
+	db	0E8h, 5Dh, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 6Ch, 0Eh, 0E8h, 8Bh
+	db	1Bh, 72h, 3Ch, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 4Dh, 0Eh, 0E8h, 0D8h
+	db	10h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 30h, 17h, 0C4h, 2Eh, 0EEh, 55h
+	db	0E8h, 8Dh, 15h, 0E8h, 0A1h, 1Ch, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@ua&'
+	db	8Bh, 46h, 0Eh, 0E8h, 55h, 0Ah, 22h, 0C0h, 75h, 56h, 0C4h, 2Eh
+	db	0F6h, 55h, 0B1h, 0A8h, 0E8h, 0B7h, 0Ah, 0E9h, 5Ch, 0B3h, 0C4h
+	db	2Eh, 0F6h, 55h, 0E8h, 24h, 0Eh, 0E8h, 0E9h, 10h, 0C4h, 2Eh, 0EEh
+	db	55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@t', 16h, 8Bh, 3Eh, 0EEh, 55h
+	db	0A1h, 0F0h, 55h, 87h, 3Eh, 0F6h, 55h, 87h, 6, 0F8h, 55h, 89h, 3Eh
+	db	0EEh, 55h, 0A3h, 0F0h, 55h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 3Eh, 15h
+	db	0E8h, 70h, 0Ah, 0E8h, 45h, 1Ch, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 27h
+	db	15h, 0B5h, 84h, 0E8h, 48h, 0Ch, 0E9h, 12h, 0B3h, 32h, 0C9h, 0B5h
+	db	0F6h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 3Ah, 0Ch, 0C4h, 2Eh, 0F6h, 55h
+	db	0E8h, 64h, 1Eh, 0E9h, 0FDh, 0B2h, 0E8h, 0B3h, 0Ch, 0C4h, 2Eh, 0EEh
+	db	55h, 0E8h, 0C2h, 0Dh, 0E8h, 0E1h, 1Ah, 0C4h, 2Eh, 0F6h, 55h, 73h
+	db	2, 0EBh, 5Bh, 0E8h, 0A1h, 0Dh, 0E8h, 2Ch, 10h, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 84h, 16h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0E1h, 14h, 0E8h
+	db	0F5h, 1Bh, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@u ', 0E8h, 0F4h, 9
+	db	0Ch, 0B0h, 8Ah, 0C8h, 0C4h, 2Eh, 0F6h, 55h, 26h, 80h, 7Eh, 0, 1
+	db	74h, 3, 80h, 0C9h, 8, 8Ah, 0C1h, 0E8h, 71h, 0BDh, 0E8h, 0Eh, 1Eh
+	db	0E9h, 0A7h, 0B2h, 0C6h, 6, 0FAh, 55h, 0FFh, 32h, 0C9h, 0B5h, 0C6h
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 0CAh, 0Bh, 0C4h, 2Eh, 0F6h, 55h, 0E8h
+	db	0F4h, 1Dh, 0E9h, 8Dh, 0B2h, 0E8h, 59h, 0Dh, 0C4h, 2Eh, 0EEh, 55h
+	db	32h, 0C9h, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@u', 19h, 0C4h, 2Eh
+	db	0F6h, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@u(&', 8Bh, 46h, 0Eh
+	db	0E8h, 4Eh, 9, 3Ch, 8, 72h, 1Dh, 0C6h, 6, 0FAh, 55h, 0FFh, 0B1h
+	db	2, 8Bh, 3Eh, 0EEh, 55h, 0A1h, 0F0h, 55h, 87h, 3Eh, 0F6h, 55h, 87h
+	db	6, 0F8h, 55h, 89h, 3Eh, 0EEh, 55h, 0A3h, 0F0h, 55h, 80h, 0F1h
+	db	2, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 47h, 14h, 0C4h, 2Eh, 0EEh, 55h
+	db	0E8h, 4Ah, 14h, 26h, 8Bh, 46h, 0Eh, 0E8h, 15h, 9, 22h, 0C0h, 't ,'
+	db	8, 73h, 52h, 0E8h, 0B8h, 0Fh, 0C4h, 2Eh, 0EEh, 55h, 8Ah, 0E9h
+	db	80h, 0CDh, 88h, 0E8h, 61h, 9, 0E8h, 36h, 1Bh, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 3Eh, 0Bh, 0E9h, 8, 0B2h, 0C4h, 2Eh, 0F6h, 55h, 26h
+	db	8Ah, 46h, 4, 24h, 0C0h, 34h, 80h, 75h, 0D6h, 0E8h, 8Eh, 0Fh, 0C4h
+	db	2Eh, 0F6h, 55h, 0E8h, 14h, 1Bh, 0E8h, 42h, 1Bh, 80h, 0F1h, 2, 80h
+	db	0C9h, 0A0h, 26h, 80h, 7Eh, 0, 1, 74h, 3, 80h, 0C9h, 1, 8Ah, 0C1h
+	db	0E8h, 9Ch, 0BCh, 0E8h, 51h, 1Dh, 0E9h, 0D2h, 0B1h, 26h, 80h, 7Eh
+	db	0, 3, 'tY<', 1, 74h, 45h, 8Ah, 0E9h, 0B1h, 3, 0D2h, 0E0h, 80h
+	db	0CDh, 8Ch, 8Ah, 0C8h, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0Fh, 0Dh, 0C4h
+	db	2Eh, 0F6h, 55h, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@u', 14h, 80h, 3Eh
+	db	0FAh, 55h, 0, 75h, 5, 0E8h, 0C3h, 0Eh, 0EBh, 13h, 0E8h, 0F6h, 0Ch
+	db	0E8h, 0B9h, 1Ah, 0EBh, 0Bh, 0F7h, 6, 7Ch, 51h, 0, 20h, 74h, 3
+	db	0E8h, 0E2h, 0Ch, 0E8h, 0C2h, 0Ah, 0E9h, 82h, 0B1h, 80h, 3Eh, 0FAh
+	db	55h, 0, 75h, 0B4h, 0B9h, 22h, 0, 0E8h, 77h, 0ACh, 0E9h, 72h, 0B1h
+	db	0F7h, 6, 7Ch, 51h, 8, 0, 74h, 26h, 0F7h, 6, 7Ch, 51h, 80h, 0, 74h
+	db	1Eh, 50h, 0E8h, 0F5h, 0Eh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 6Eh, 13h
+	db	5Bh, 32h, 0FFh, 0D1h, 0E3h, 8Ah, 0E9h, 32h, 0C9h, 0Bh, 8Fh, 0CAh
+	db	1Ch, 0E8h, 0C6h, 0Ah, 0E9h, 44h, 0B1h, 0B8h, 68h, 0, 0E8h, 56h
+	db	0Bh, 0E9h, 3Bh, 0B1h
+L088EF:	call	L093E3	;@088EF
+	les	bp, dword ptr ds:[55EEh]	;@088F2
+	call	L094F9	;@088F6
+	call	L0A21B	;@088F9
+	les	bp, dword ptr ds:[55F6h]	;@088FC
+	jae	@@2	;@08900
+	call	L094F9	;@08902
+	call	L097C1	;@08905
+	les	bp, dword ptr ds:[55EEh]	;@08908
+	mov	al, byte ptr es:[bp+4]	;@0890C
+	and	al, 0C0h	;@08910
+	xor	al, 40h	;@08912
+	je	@@1	;@08914
+	mov	al, cl	;@08916
+	xor	al, 38h	;@08918
+	mov	byte ptr ds:[55FAh], al	;@0891A
+	or	cl, 2	;@0891D
+	mov	di, word ptr ds:[55EEh]	;@08920
+	mov	ax, word ptr ds:[55F0h]	;@08924
+	xchg	word ptr ds:[55F6h], di	;@08927
+	xchg	word ptr ds:[55F8h], ax	;@0892B
+	mov	word ptr ds:[55EEh], di	;@0892F
+	mov	word ptr ds:[55F0h], ax	;@08933
+@@1:	xor	cl, 2	;@08936
+	les	bp, dword ptr ds:[55F6h]	;@08939
+	call	L09C37	;@0893D
+	les	bp, dword ptr ds:[55EEh]	;@08940
+	call	L09C41	;@08944
+	mov	ch, cl	;@08947
+	call	L09176	;@08949
+	les	bp, dword ptr ds:[55F6h]	;@0894C
+	call	L0A34E	;@08950
+	call	L0935D	;@08953
+	jmp	L03A2A	;@08956
+@@2:	call	L094E6	;@08959
+	call	L09774	;@0895C
+	les	bp, dword ptr ds:[55F6h]	;@0895F
+	call	L09DD3	;@08963
+	call	L0A34E	;@08966
+	les	bp, dword ptr ds:[55EEh]	;@08969
+	call	L09C37	;@0896D
+	mov	al, byte ptr es:[bp+4]	;@08970
+	and	al, 0C0h	;@08974
+	xor	al, 40h	;@08976
+	jne	@@4	;@08978
+	mov	ax, word ptr es:[bp+0Eh]	;@0897A
+	call	L09113	;@0897E
+	and	al, al	;@08981
+	jne	@@4	;@08983
+	mov	ax, word ptr es:[bp+0Eh]	;@08985
+	cmp	ax, word ptr ds:[561Eh]	;@08989
+	jne	@@3	;@0898D
+	les	bp, dword ptr ds:[55F6h]	;@0898F
+	call	L0A114	;@08993
+	jae	@@4	;@08996
+@@3:	les	bp, dword ptr ds:[55F6h]	;@08998
+	or	cl, 4	;@0899C
+	call	L09182	;@0899F
+	jmp	L03A2A	;@089A2
+@@4:	mov	al, cl	;@089A5
+	xor	al, 38h	;@089A7
+	mov	byte ptr ds:[55FAh], al	;@089A9
+	les	bp, dword ptr ds:[55F6h]	;@089AC
+	mov	ch, 80h	;@089B0
+	cmp	byte ptr es:[bp], 1	;@089B2
+	je	@@7	;@089B7
+	or	ch, 1	;@089B9
+	test	word ptr ds:[517Ch], 20h	;@089BC
+	jne	@@5	;@089C2
+	cmp	cl, 20h	;@089C4
+	je	@@6	;@089C7
+	cmp	cl, 8	;@089C9
+	je	@@6	;@089CC
+	cmp	cl, 30h	;@089CE
+	je	@@6	;@089D1
+@@5:	call	L0A114	;@089D3
+	jb	@@6	;@089D6
+	or	ch, 2	;@089D8
+	jmp	short @@7	;@089DB
+@@6:	les	bp, dword ptr ds:[55EEh]	;@089DD
+	call	L09367	;@089E1
+	les	bp, dword ptr ds:[55F6h]	;@089E4
+	call	L0A58E	;@089E8
+	jmp	L03A2A	;@089EB
+@@7:	les	bp, dword ptr ds:[55EEh]	;@089EE
+	call	L09367	;@089F2
+	les	bp, dword ptr ds:[55F6h]	;@089F5
+	call	L0A59A	;@089F9
+	jmp	L03A2A	;@089FC
+	db	0E8h, 0C7h, 9, 26h, 0F6h, 46h, 0, 80h, 75h, 7, 26h, 0F6h, 46h	;@089FF
+	db	4, 0C0h, 't\&', 8Ah, 46h, 4, 24h, 0C0h, '4@uO', 0E8h, 0DCh, 0Ah
+	db	0E8h, 68h, 0Bh, 0E8h, 1Eh, 12h, 26h, 8Bh, 46h, 0Eh, 0E8h, 0E9h
+	db	6, 2Ch, 8, 73h, 11h, 8Ah, 0C8h, 0E8h, 1Bh, 19h, 8Ah, 0C1h, 4, 8
+	db	0Ch, 50h, 0E8h, 0B2h, 0BAh, 0E9h, 0EBh, 0AFh, 8Ah, 0C8h, 0E8h
+	db	40h, 0Bh, 8Ah, 0C1h, 0D0h, 0E0h, 0D0h, 0E0h, 0D0h, 0E0h, '< s'
+	db	8, 0Ch, 6, 0E8h, 99h, 0BAh, 0E9h, 0D2h, 0AFh, 8Ah, 0C8h, 0B0h
+	db	0Fh, 0E8h, 8Fh, 0BAh, 8Ah, 0C1h, 0Ch, 80h, 0E8h, 88h, 0BAh, 0E9h
+	db	0C1h, 0AFh, 0E9h, 86h, 0, 0C4h, 2Eh, 0EEh, 55h, 26h, 0F6h, 46h
+	db	5, 80h, 74h, 0Eh, 0F7h, 6, 82h, 51h, 0, 80h, 74h, 6, 0B8h, 80h
+	db	80h, 0E8h, 0BDh, 9, 0E8h, 5Eh, 0Ah, 0E8h, 5Bh, 0Ch, 0F7h, 6, 7Ch
+	db	51h, 2, 0, 74h, 26h, 0E8h, 0B8h, 18h, 0B1h, 68h, 0E8h, 38h, 13h
+	db	0E8h, 76h, 16h, 72h, 0Eh, 80h, 0C9h, 2, 8Ah, 0C1h, 0E8h, 46h, 0BAh
+	db	0E8h, 0EFh, 1Ah, 0E9h, 7Ch, 0AFh, 8Ah, 0C1h, 0E8h, 3Bh, 0BAh, 0E8h
+	db	0D8h, 1Ah, 0E9h, 71h, 0AFh, 0F7h, 6, '|Q ', 0, 74h, 6Bh, 0E8h
+	db	52h, 13h, 0B0h, 50h, 0E8h, 25h, 0BAh, 0B0h, 55h, 0E8h, 20h, 0BAh
+	db	0B0h, 8Bh, 0E8h, 1Bh, 0BAh, 0B0h, 0ECh, 0E8h, 16h, 0BAh, 0B0h
+	db	0C7h, 0E8h, 11h, 0BAh, 0B0h, 46h, 0E8h, 0Ch, 0BAh, 0B0h, 2, 0E8h
+	db	7, 0BAh, 0E8h, 0D2h, 1Ah, 0B0h, 5Dh, 0E8h, 0FFh, 0B9h, 0E9h, 38h
+	db	0AFh, 0E8h, 4, 0Ah, 0E8h, 1Fh, 0Ch, 26h, 8Ah, 46h, 0, 0F7h, 6
+	db	7Ch, 51h, 8, 0, 75h, 0Eh, 3Ch, 3, 75h, 18h, 0B8h, 2, 0, 26h, 0C6h
+	db	46h, 0, 2, 0EBh, 23h, 3Ch, 5, 75h, 0Ah, 0B8h, 4, 0, 26h, 0C6h
+	db	46h, 0, 3, 0EBh, 15h, 0E8h, 2Bh, 18h, 0B9h, 30h, 0FFh, 0E8h, 3Eh
+	db	8, 0E9h, 0FEh, 0AEh, 0B9h, 8Ch, 0, 0E8h, 0FAh, 0A9h, 0E9h, 0F5h
+	db	0AEh, 0F7h, 6, '|Q ', 0, 74h, 0EFh, 56h, 50h, 6, 55h, 0E8h, 58h
+	db	0CEh, 5Eh, 1Fh, 58h, 1Eh, 56h, 83h, 0C6h, 0, 8Bh, 0FDh, 83h, 0C7h
+	db	0, 0B9h, 28h, 0, 0F3h, 0A4h, 16h, 1Fh, 26h, 0C6h, 46h, 0, 2, 26h
+	db	1, 46h, 0Ah, 26h, 83h, 56h, 0Ch, 0, 26h, 80h, 56h, 24h, 0, 0E8h
+	db	0E0h, 17h, 0B9h, 30h, 0FFh, 0E8h, 0F3h, 7, 0E8h, 0B3h, 0AEh, 0E8h
+	db	76h, 0AEh, 5Dh, 7, 0E8h, 0CFh, 17h, 0B9h, 30h, 0FFh, 0E8h, 0E2h
+	db	7, 5Eh, 0E9h, 0A1h, 0AEh, 0E8h, 3Dh, 8, 0E8h, 6Ah, 9, 0E8h, 85h
+	db	0Bh, 26h, 8Ah, 46h, 4, 24h, 0C0h, '4@ug', 0E8h, 0A2h, 10h, 26h
+	db	8Bh, 46h, 0Eh, 0E8h, 6Dh, 5, 2Ch, 8, 73h, 11h, 4, 8, 8Ah, 0C8h
+	db	0E8h, 9Dh, 17h, 8Ah, 0C1h, 0Ch, 58h, 0E8h, 36h, 0B9h, 0E9h, 6Fh
+	db	0AEh, 8Ah, 0C8h, 0E8h, 0C4h, 9, 8Ah, 0C1h, 3Ch, 1, 74h, 12h, 0D0h
+	db	0E0h, 0D0h, 0E0h, 0D0h, 0E0h, '< s', 11h, 0Ch, 7, 0E8h, 19h, 0B9h
+	db	0E9h, 52h, 0AEh, 0B9h, 22h, 0, 0E8h, 4Eh, 0A9h, 0E9h, 49h, 0AEh
+	db	0F7h, 6, 7Ch, 51h, 8, 0, 74h, 11h, 8Ah, 0C8h, 0B0h, 0Fh, 0E8h
+	db	0FEh, 0B8h, 8Ah, 0C1h, 0Ch, 81h, 0E8h, 0F7h, 0B8h, 0E9h, 30h, 0AEh
+	db	0B9h, 68h, 0, 0E8h, 2Ch, 0A9h, 0E9h, 27h, 0AEh, 0C6h, 6, 0FAh
+	db	55h, 0FFh, 0E8h, 2Ch, 10h, 26h, 8Ah, 46h, 0, 0F7h, 6, 7Ch, 51h
+	db	8, 0, 75h, 0Eh, 3Ch, 3, 75h, 18h, 26h, 0C6h, 46h, 0, 2, 0B8h, 2
+	db	0, 0EBh, 23h, 3Ch, 5, 75h, 0Ah, 26h, 0C6h, 46h, 0, 3, 0B8h, 4
+	db	0, 0EBh, 15h, 0E8h, 18h, 17h, 0B9h, 0, 8Fh, 0E8h, 2Bh, 7, 0E9h
+	db	0EBh, 0ADh, 0B9h, 8Ch, 0, 0E8h, 0E7h, 0A8h, 0E9h, 0E2h, 0ADh, 0F7h
+	db	6, '|Q ', 0, 74h, 0EFh, 56h, 50h, 6, 55h, 0E8h, 45h, 0CDh, 5Eh
+	db	1Fh, 58h, 1Eh, 56h, 83h, 0C6h, 0, 8Bh, 0FDh, 83h, 0C7h, 0, 0B9h
+	db	28h, 0, 0F3h, 0A4h, 26h, 0C6h, 46h, 0, 2, 26h, 1, 46h, 0Ah, 26h
+	db	83h, 56h, 0Ch, 0, 26h, 80h, 56h, 24h, 0, 8Ch, 0C0h, 8Bh, 0FDh
+	db	5Dh, 7, 50h, 57h, 16h, 1Fh, 0E8h, 0C5h, 16h, 0B9h, 0, 8Fh, 0E8h
+	db	0D8h, 6, 0E8h, 98h, 0ADh, 0E8h, 5Bh, 0ADh, 5Dh, 7, 0E8h, 0B4h
+	db	16h, 0B9h, 0, 8Fh, 0E8h, 0C7h, 6, 5Eh, 0E9h, 86h, 0ADh, 0E8h, 3Ch
+	db	7, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 38h, 8, 0E8h, 7Bh, 11h, 0C4h, 2Eh
+	db	0EEh, 55h, 0E8h, 2Eh, 8, 0E8h, 5Bh, 11h, 0B0h, 0C8h, 0E8h, 2Eh
+	db	0B8h, 0E8h, 0F9h, 18h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0D0h, 18h, 0E9h
+	db	5Dh, 0ADh, 0E8h, 13h, 7, 0E8h, 88h, 16h, 0EBh, 0D2h, 0E8h, 0Bh
+	db	7, 0E8h, 92h, 16h, 0EBh, 0CAh, 0E8h, 2Bh, 7, 0C6h, 6, 0FAh, 55h
+	db	0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0Dh, 8, 0E8h, 52h, 0Fh, 0C4h
+	db	2Eh, 0F2h, 55h, 0E8h, 3, 8, 0E8h, 3Eh, 0Fh, 0C4h, 2Eh, 0F6h, 55h
+	db	0E8h, 0E6h, 7, 0E8h, 4Ah, 0Eh, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0C9h
+	db	10h, 0E8h, 41h, 16h, 0B5h, 69h, 0E8h, 2, 14h, 72h, 1Bh, 80h, 0CDh
+	db	2, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 58h, 4, 0C4h, 2Eh, 0F2h, 55h, 0E8h
+	db	42h, 6, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 6Eh, 18h, 0E9h, 0FBh, 0ACh
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 40h, 4, 0C4h, 2Eh, 0F2h, 55h, 0E8h
+	db	2Ah, 6, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 4Ah, 18h, 0E9h, 0E3h, 0ACh
+	db	0E8h, 99h, 6, 0C6h, 6, 0FAh, 55h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h
+	db	0A3h, 7, 0E8h, 0C2h, 14h, 0C4h, 2Eh, 0F6h, 'UrI', 0E8h, 84h, 7
+	db	0E8h, 0CCh, 0Ah, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0D5h, 0Eh, 0C4h, 2Eh
+	db	0F6h, 55h, 0E8h, 60h, 10h, 0E8h, 0D8h, 15h, 0B5h, 69h, 0E8h, 99h
+	db	13h, 72h, 17h, 80h, 0CDh, 2, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0EFh
+	db	3, 0E8h, 0DDh, 5, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 9, 18h, 0E9h, 96h
+	db	0ACh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0DBh, 3, 0E8h, 0C9h, 5, 0C4h
+	db	2Eh, 0F6h, 55h, 0E8h, 0E9h, 17h, 0E9h, 82h, 0ACh, 0F7h, 6, 7Ch
+	db	51h, 8, 0, 74h, 1Ch, 0E8h, 46h, 7, 0E8h, 8Dh, 0Bh, 0C4h, 2Eh, 0EEh
+	db	55h, 0E8h, 91h, 15h, 0E8h, 0B6h, 3, 0B5h, 0AFh, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 0E0h, 5, 0E9h, 5Eh, 0ACh, 0B9h, 68h, 0, 0E8h, 5Ah, 0A7h
+	db	0E9h, 55h, 0ACh, 0E8h, 0Bh, 6, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 7, 7
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 13h, 7, 0E8h, 0E0h, 7, 0E8h, 38h, 0Eh
+	db	0E8h, 5Fh, 15h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 4Bh, 0Eh, 26h, 0F6h
+	db	46h, 4, 40h, 74h, 14h, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 'NVu', 0Ah
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 0B9h, 4, 0E9h, 19h, 0ACh, 0B8h, 65h
+	db	0, 0E8h, 2Bh, 6, 0E9h, 10h, 0ACh
+L08E1A:	call	L093C9	;@08E1A
+	call	L094F9	;@08E1D
+	call	L096B6	;@08E20
+	call	L09C24	;@08E23
+	test	word ptr ds:[517Ch], 8	;@08E26
+	je	@@1	;@08E2C
+	mov	al, byte ptr es:[bp+5]	;@08E2E
+	test	al, 2	;@08E32
+	jne	@@2	;@08E34
+	test	al, 1	;@08E36
+	jne	@@1	;@08E38
+	mov	ax, word ptr ds:[517Eh]	;@08E3A
+	and	ax, ax	;@08E3D
+	je	@@1	;@08E3F
+	call	L007A0	;@08E41
+	jne	@@2	;@08E44
+@@1:	call	L0A35B	;@08E46
+	jmp	short @@3	;@08E49
+@@2:	call	L0A36D	;@08E4B
+@@3:	call	L093A9	;@08E4E
+	jmp	L03A2A	;@08E51
+L08E54:	call	L093C9	;@08E54
+	call	L094F9	;@08E57
+	call	L09584	;@08E5A
+	call	L09C37	;@08E5D
+	call	L093A9	;@08E60
+	jmp	L03A2A	;@08E63
+	db	0E8h, 7Ah, 5, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 89h, 6, 0C4h, 2Eh, 0F6h	;@08E66
+	db	55h, 0E8h, 82h, 6, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 5, 0E8h, 1Fh
+	db	0Ah, 0EBh, 3, 0E8h, 0BCh, 0Ah, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0A9h
+	db	0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0ACh, 0Dh, 8Ah, 0E9h, 0E8h, 0DCh
+	db	2, 0E8h, 0B1h, 14h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0C3h, 4, 0E9h
+	db	83h, 0ABh, 0E8h, 39h, 5, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 48h, 6, 0E8h
+	db	0D0h, 6, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 3Eh, 6, 0E8h, 0C6h, 6, 0E8h
+	db	76h, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 79h, 0Dh, 8Ah, 0E9h, 0E8h
+	db	0A9h, 2, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 93h, 4, 0E9h, 53h, 0ABh, 0E8h
+	db	9, 5, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 18h, 6, 0C4h, 2Eh, 0F6h, 55h
+	db	0E8h, 11h, 6, 0E8h, 58h, 0Ah, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 45h
+	db	0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 48h, 0Dh, 8Ah, 0E9h, 0E8h, 78h
+	db	2, 0E8h, 4Dh, 14h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0A1h, 4, 0E9h, 1Fh
+	db	0ABh
+L08F0B:	call	L093E3	;@08F0B
+	test	cl, 18h	;@08F0E
+	je	@@1	;@08F11
+	mov	byte ptr ds:[55FAh], 0FFh	;@08F13
+@@1:	les	bp, dword ptr ds:[55EEh]	;@08F18
+	call	L094F9	;@08F1C
+	call	L09C37	;@08F1F
+	les	bp, dword ptr ds:[55F6h]	;@08F22
+	call	L094E6	;@08F26
+	test	byte ptr es:[bp+4], 40h	;@08F29
+	jne	@@2	;@08F2E
+	call	L09E2C	;@08F30
+	mov	ch, 0BAh	;@08F33
+	les	bp, dword ptr ds:[55EEh]	;@08F35
+	call	L09588	;@08F39
+	call	L0A34E	;@08F3C
+	call	L093A9	;@08F3F
+	les	bp, dword ptr ds:[55F6h]	;@08F42
+	call	L0A59A	;@08F46
+	jmp	L03A2A	;@08F49
+@@2:	call	L09943	;@08F4C
+	les	bp, dword ptr ds:[55F6h]	;@08F4F
+	call	L09C41	;@08F53
+	mov	ch, cl	;@08F56
+	or	ch, 83h	;@08F58
+	call	L09176	;@08F5B
+	call	L0A34E	;@08F5E
+	les	bp, dword ptr ds:[55EEh]	;@08F61
+	call	L093A9	;@08F65
+	jmp	L03A2A	;@08F68
+	db	0E8h, 75h, 4, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 84h, 5, 0E8h, 0BFh, 0Ch	;@08F6B
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 67h, 5, 0E8h, 0BFh, 0Ch, 0E8h, 0BEh
+	db	9, 0C4h, 2Eh, 0EEh, 55h, 8Ah, 0E9h, 0E8h, 0E8h, 1, 0E8h, 0BDh
+	db	13h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 11h, 4, 0E9h, 8Fh, 0AAh, 0E8h
+	db	45h, 4, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 54h, 5, 0E8h, 8Fh, 0Ch, 0C4h
+	db	2Eh, 0EEh, 55h, 0E8h, 37h, 5, 0E8h, 8Fh, 0Ch, 0E8h, 18h, 0Bh, 0C4h
+	db	2Eh, 0EEh, 55h, 8Ah, 0E9h, 0E8h, 0B8h, 1, 0E8h, 8Dh, 13h, 0C4h
+	db	2Eh, 0F6h, 55h, 0E8h, 0D7h, 3, 0E9h, 5Fh, 0AAh
+L08FCB:	call	L093C9	;@08FCB
+	mov	byte ptr ds:[55FAh], 0FFh	;@08FCE
+	call	L094F9	;@08FD3
+	call	L09551	;@08FD6
+	call	L09C37	;@08FD9
+	mov	ch, cl	;@08FDC
+	xor	cl, cl	;@08FDE
+	call	L093A9	;@08FE0
+	jmp	L03A2A	;@08FE3
+	db	6, 55h, 8Eh, 0C0h, 8Bh, 0EFh, 5Fh, 58h, 0E8h, 1Ah, 4, 0C6h, 6	;@08FE6
+	db	0FAh, 55h, 0FFh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0FCh, 4, 0E8h, 37h
+	db	0Ch, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 0DFh, 4, 0E8h, 37h, 0Ch, 0E8h
+	db	36h, 9, 8Ah, 0E9h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 60h, 1, 0E8h, 35h
+	db	13h, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 0C6h, 4, 26h, 8Ah, 46h, 4, 24h
+	db	0C0h, '4@u', 1Ah, 0E8h, 14h, 0Ch, 26h, 8Bh, 46h, 0Eh, 3Bh, 6, 10h
+	db	'Vu!', 80h, 0CDh, 1, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 68h, 3, 0E9h
+	db	0E6h, 0A9h, 0E8h, 0E5h, 0Dh, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 5Bh, 3
+	db	0C4h, 2Eh, 0F2h, 55h, 0E8h, 45h, 15h, 0E9h, 0D2h, 0A9h, 0B8h, 67h
+	db	0, 0E8h, 0E4h, 3, 0E9h, 0C9h, 0A9h
+L09061:	call	L039F0	;@09061
+	call	L0A36D	;@09064
+	mov	al, cl	;@09067
+	call	L044EE	;@09069
+	jmp	L03A2A	;@0906C
+	db	0E8h, 71h, 3, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 80h, 4, 0C4h, 2Eh, 0EEh	;@0906F
+	db	55h, 0E8h, 66h, 4, 0E8h, 40h, 9, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 0B7h
+	db	0Bh, 8Ah, 0E9h, 0E8h, 0E7h, 0, 0E8h, 0BCh, 12h, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 8Bh, 0Bh, 0E8h, 0Dh, 3, 0E9h, 8Bh, 0A9h, 0E8h, 27h
+	db	3, 0E8h, 54h, 4, 0E8h, 0E0h, 4, 0E8h, 96h, 0Bh, 0E8h, 0A0h, 12h
+	db	0E8h, 0A9h, 0, 8Ah, 0C8h, 80h, 0C9h, 0C8h, 0B0h, 0Fh, 0E8h, 33h
+	db	0B4h, 8Ah, 0C1h, 0E8h, 2Eh, 0B4h, 0E9h, 67h, 0A9h, 0E8h, 1Dh, 3
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 2Ch, 4, 0C4h, 2Eh, 0F6h, 55h, 0E8h
+	db	25h, 4, 0E8h, 0EAh, 6, 0C4h, 2Eh, 0EEh, 55h, 0E8h, 59h, 0Bh, 0E8h
+	db	6Dh, 12h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 59h, 0Bh, 0C6h, 6, 0FAh
+	db	55h, 0FFh, 8Ah, 0E9h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 80h, 0, 0C4h
+	db	2Eh, 0EEh, 55h, 0E8h, 0A2h, 2, 0E9h, 2Ah, 0A9h, 0E8h, 0C6h, 2
+	db	0E8h, 0F3h, 3, 0E8h, 1Bh, 0Bh, 0B5h, 1, 0B1h, 38h, 0E8h, 99h, 2
+	db	0E9h, 17h, 0A9h
+L09113:	sub	ax, word ptr ds:[55FEh]	;@09113
+	shr	ax, 1	;@09117
+	cmp	ax, 8	;@09119
+	jb	@@1	;@0911C
+	sub	ax, 8	;@0911E
+	cmp	ax, 16h	;@09121
+	jb	@@1	;@09124
+	sub	ax, 16h	;@09126
+@@1:	ret	;@09129
+L0912A:	test	byte ptr es:[bp+4], 40h	;@0912A
+	je	@@1	;@0912F
+	mov	ax, word ptr es:[bp+0Eh]	;@09131
+	call	L09113	;@09135
+	and	al, 6	;@09138
+	cmp	al, 4	;@0913A
+	je	@@2	;@0913C
+	test	byte ptr es:[bp+4], 10h	;@0913E
+	je	@@1	;@09143
+	mov	ax, word ptr es:[bp+12h]	;@09145
+	call	L09113	;@09149
+	and	al, 6	;@0914C
+	cmp	al, 4	;@0914E
+	je	@@2	;@09150
+@@1:	mov	ax, word ptr ds:[55FCh]	;@09152
+	ret	;@09155
+@@2:	mov	ax, word ptr ds:[565Eh]	;@09156
+	ret	;@09159
+L0915A:	test	byte ptr es:[bp+4], 40h	;@0915A
+	je	@@1	;@0915F
+	mov	ax, word ptr es:[bp+0Eh]	;@09161
+	call	L09113	;@09165
+	cmp	al, 8	;@09168
+	jae	@@2	;@0916A
+@@1:	ret	;@0916C
+@@2:	mov	ax, 3Eh	;@0916D
+	call	L09442	;@09170
+	xor	al, al	;@09173
+	ret	;@09175
+L09176:	call	L0915A	;@09176
+	shl	al, 1	;@09179
+	shl	al, 1	;@0917B
+	shl	al, 1	;@0917D
+	mov	cl, al	;@0917F
+	ret	;@09181
+L09182:	cmp	byte ptr es:[bp], 1	;@09182
+	je	@@1	;@09187
+	or	cl, 1	;@09189
+@@1:	mov	al, cl	;@0918C
+	call	L044EE	;@0918E
+	jmp	L0A58E	;@09191
+	db	26h, 8Ah, 46h, 0, 3Ch, 2, 74h, 27h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h	;@09194
+	db	1Ch, 3Ch, 5, 't#&', 8Ah, 46h, 5, 0A8h, 2, 75h, 1Eh, 0A8h, 1, 75h
+	db	0Ch, 0A1h, '~Q#', 0C0h, 74h, 5, 0E8h, 0E2h, 75h, 75h, 0Eh, 80h
+	db	0C9h, 8, 0E8h, 95h, 11h, 0B5h, 0FFh, 0E9h, 9Ch, 1, 80h, 0C9h, 8
+	db	0E8h, 9Ch, 11h, 0B5h, 0FFh, 0E9h, 91h, 1
+L091D6:	call	L09253	;@091D6
+	call	L0A0C1	;@091D9
+	call	L0A283	;@091DC
+	inc	al	;@091DF
+	xor	ah, ah	;@091E1
+	sub	word ptr es:[bp+0Ah], ax	;@091E3
+	sbb	word ptr es:[bp+0Ch], 0	;@091E7
+	sbb	byte ptr es:[bp+24h], 0	;@091EC
+	call	L0A260	;@091F1
+	jae	@@1	;@091F4
+	call	L09FAD	;@091F6
+	call	L0A36D	;@091F9
+	mov	al, cl	;@091FC
+	call	L044EE	;@091FE
+	jmp	L0A5C8	;@09201
+@@1:	call	L09F4D	;@09204
+	call	L0A35B	;@09207
+	mov	al, cl	;@0920A
+	call	L044EE	;@0920C
+	jmp	L0A5BC	;@0920F
+L09212:	call	L0A260	;@09212
+	jae	@@1	;@09215
+	call	L09CDE	;@09217
+	call	L0A36D	;@0921A
+	mov	al, cl	;@0921D
+	call	L044EE	;@0921F
+	jmp	L0A616	;@09222
+@@1:	call	L09D1B	;@09225
+	call	L0A35B	;@09228
+	mov	al, cl	;@0922B
+	call	L044EE	;@0922D
+	jmp	L0A5D8	;@09230
+L09233:	call	L09253	;@09233
+	call	L0A0C1	;@09236
+	sub	word ptr es:[bp+0Ah], 2	;@09239
+	sbb	word ptr es:[bp+0Ch], 0	;@0923E
+	sbb	byte ptr es:[bp+24h], 0	;@09243
+	call	L09ED9	;@09248
+	mov	al, cl	;@0924B
+	call	L044EE	;@0924D
+	jmp	L0A59A	;@09250
+L09253:	mov	ax, word ptr ds:[517Eh]	;@09253
+	test	word ptr ds:[517Ch], 1000h	;@09256
+	jne	@@1	;@0925C
+	push	es	;@0925E
+	push	bp	;@0925F
+	mov	ax, word ptr ds:[565Ch]	;@09260
+	call	far ptr L101E0	;@09263
+	push	cx	;@09268
+	call	L01A84	;@09269
+	pop	cx	;@0926C
+	call	far ptr L101E0	;@0926D
+	cmp	word ptr es:[bp+6], 0	;@09272
+	jne	@@3	;@09277
+	mov	ax, word ptr es:[bp+1Ah]	;@09279
+	test	byte ptr es:[bp+4], 4	;@0927D
+	pop	bp	;@09282
+	pop	es	;@09283
+	je	@@4	;@09284
+@@1:	and	ax, ax	;@09286
+	je	@@4	;@09288
+	mov	dx, ax	;@0928A
+	mov	ax, word ptr es:[bp+18h]	;@0928C
+	and	ax, ax	;@09290
+	je	@@4	;@09292
+	push	es	;@09294
+	push	bp	;@09295
+	call	far ptr L101E0	;@09296
+	call	L01659	;@0929B
+	call	L01640	;@0929E
+	xchg	ax, dx	;@092A1
+	call	far ptr L101E0	;@092A2
+	call	L01659	;@092A7
+	call	L01640	;@092AA
+	pop	bp	;@092AD
+	pop	es	;@092AE
+	cmp	ax, dx	;@092AF
+	je	@@2	;@092B1
+	mov	ax, dx	;@092B3
+	call	L0077A	;@092B5
+	je	@@4	;@092B8
+@@2:	ret	;@092BA
+@@3:	pop	bp	;@092BB
+	pop	es	;@092BC
+	ret	;@092BD
+@@4:	push	cx	;@092BE
+	mov	cx, 88h	;@092BF
+	call	L0352C	;@092C2
+	pop	cx	;@092C5
+	ret	;@092C6
+	db	0E8h, 0B5h, 10h, 26h, 80h, 7Eh, 0, 1, 74h, 3, 80h, 0C9h, 1, 8Ah	;@092C7
+	db	0C1h, 0E9h, 15h, 0B2h
+L092D9:	cmp	byte ptr es:[bp], 3	;@092D9
+	je	L092E3	;@092DE
+	or	ch, 4	;@092E0
+L092E3:	test	word ptr ds:[517Ch], 40h	;@092E3
+	je	@@4	;@092E9
+	cmp	word ptr es:[bp+6], 0	;@092EB
+	jne	@@5	;@092F0
+	call	L0A3C1	;@092F2
+	je	@@3	;@092F5
+	call	L09113	;@092F7
+	sub	al, 8	;@092FA
+	cbw	;@092FC
+	shl	ax, 1	;@092FD
+	mov	bx, ax	;@092FF
+	mov	di, word ptr [bx+1CECh]	;@09301
+	and	di, di	;@09305
+	je	@@1	;@09307
+	push	bx	;@09309
+	call	L0A950	;@0930A
+	pop	bx	;@0930D
+@@1:	push	bx	;@0930E
+	mov	al, 9Bh	;@0930F
+	call	L044EE	;@09311
+	pop	bx	;@09314
+	mov	di, word ptr [bx+1CF8h]	;@09315
+	and	di, di	;@09319
+	je	@@2	;@0931B
+	push	bx	;@0931D
+	call	L0A950	;@0931E
+	pop	bx	;@09321
+@@2:	mov	al, bl	;@09322
+	shr	al, 1	;@09324
+	mov	bx, 1CE6h	;@09326
+	xlat	;@09329
+	call	L0446C	;@0932A
+	call	L0A324	;@0932D
+	mov	al, ch	;@09330
+	call	L044EE	;@09332
+	jmp	L0A65A	;@09335
+@@3:	mov	di, 5674h	;@09338
+	call	L0A950	;@0933B
+	mov	al, 9Bh	;@0933E
+	call	L044EE	;@09340
+	call	L0A324	;@09343
+	mov	al, ch	;@09346
+	call	L044EE	;@09348
+	jmp	L0A65A	;@0934B
+@@4:	test	word ptr ds:[517Ch], 400h	;@0934E
+	jne	L09367	;@09354
+@@5:	mov	al, 9Bh	;@09356
+	call	L044EE	;@09358
+	jmp	short L09367	;@0935B
+L0935D:	cmp	byte ptr es:[bp], 1	;@0935D
+	je	L09367	;@09362
+	or	ch, 1	;@09364
+L09367:	call	L0A37F	;@09367
+	mov	al, ch	;@0936A
+	call	L044EE	;@0936C
+	jmp	L0A65A	;@0936F
+L09372:	test	word ptr ds:[517Ch], 40h	;@09372
+	je	@@1	;@09378
+	mov	di, 5674h	;@0937A
+	call	L0A950	;@0937D
+	jmp	short @@2	;@09380
+@@1:	test	word ptr ds:[517Ch], 400h	;@09382
+	jne	@@3	;@09388
+@@2:	mov	al, 9Bh	;@0938A
+	call	L044EE	;@0938C
+@@3:	mov	al, ch	;@0938F
+	call	L044EE	;@09391
+	mov	al, cl	;@09394
+	or	al, 0C0h	;@09396
+	or	al, byte ptr es:[bp+0Ah]	;@09398
+	jmp	L044EE	;@0939C
+	db	26h, 80h, 7Eh, 0, 1, 74h, 3, 80h, 0CDh, 1	;@0939F
+L093A9:	call	L0A37F	;@093A9
+	mov	al, 0Fh	;@093AC
+	call	L044EE	;@093AE
+	mov	al, ch	;@093B1
+	call	L044EE	;@093B3
+	jmp	L0A65A	;@093B6
+	db	89h, 2Eh, 0EEh, 55h, 8Ch, 6, 0F0h, 55h, 6, 55h, 0E8h, 2Ah, 0A6h	;@093B9
+	db	5Dh, 7, 0C3h
+L093C9:	mov	byte ptr ds:[55FAh], 0	;@093C9
+	mov	word ptr ds:[55EEh], bp	;@093CE
+	mov	word ptr ds:[55F0h], es	;@093D2
+	call	L039F0	;@093D6
+	les	bp, dword ptr ds:[55EEh]	;@093D9
+	push	cx	;@093DD
+	call	L0AB34	;@093DE
+	pop	cx	;@093E1
+	ret	;@093E2
+L093E3:	mov	byte ptr ds:[55FAh], 0	;@093E3
+	mov	word ptr ds:[55EEh], di	;@093E8
+	mov	word ptr ds:[55F0h], ax	;@093EC
+	mov	word ptr ds:[55F6h], bp	;@093EF
+	mov	word ptr ds:[55F8h], es	;@093F3
+	call	L039F0	;@093F7
+	les	bp, dword ptr ds:[55EEh]	;@093FA
+	push	cx	;@093FE
+	call	L0AB34	;@093FF
+	les	bp, dword ptr ds:[55F6h]	;@09402
+	call	L0AB34	;@09406
+	pop	cx	;@09409
+	ret	;@0940A
+	db	0C6h, 6, 0FAh, 55h, 0, 89h, 1Eh, 0EEh, 55h, 89h, 16h, 0F0h, 55h	;@0940B
+	db	89h, 3Eh, 0F2h, 55h, 0A3h, 0F4h, 55h, 89h, 2Eh, 0F6h, 55h, 8Ch
+	db	6, 0F8h, 55h, 0E8h, 0C6h, 0A5h, 0C4h, 2Eh, 0EEh, 55h, 51h, 0E8h
+	db	2, 17h, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 0FBh, 16h, 0C4h, 2Eh, 0F6h
+	db	55h, 0E8h, 0F4h, 16h, 59h, 0C3h
+L09442:	push	cx	;@09442
+	mov	cx, ax	;@09443
+	call	L0352C	;@09445
+	pop	cx	;@09448
+	ret	;@09449
+L0944A:	push	cx	;@0944A
+	mov	cx, ax	;@0944B
+	call	L0AA98	;@0944D
+	pop	cx	;@09450
+	ret	;@09451
+L09452:	test	byte ptr es:[bp+24h], 80h	;@09452
+	je	@@1	;@09457
+	mov	dx, 0FFFFh	;@09459
+	xor	ax, dx	;@0945C
+	mov	di, ax	;@0945E
+	sub	di, word ptr es:[bp+0Ah]	;@09460
+	sbb	dx, word ptr es:[bp+0Ch]	;@09464
+	jmp	short @@2	;@09468
+@@1:	mov	di, word ptr es:[bp+0Ah]	;@0946A
+	sub	di, ax	;@0946E
+	mov	dx, word ptr es:[bp+0Ch]	;@09470
+	sbb	dx, 0	;@09474
+@@2:	mov	ax, 833h	;@09477
+L0947A:	push	cx	;@0947A
+	mov	cx, ax	;@0947B
+	call	L0AB06	;@0947D
+	pop	cx	;@09480
+	ret	;@09481
+	db	26h, 8Ah, 46h, 0, 3Ch, 80h, 74h, 0Eh, 3Ch, 87h, 74h, 9, 3Ch, 88h	;@09482
+	db	74h, 5, 3Ch, 89h, 74h, 1, 0F9h, 0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h
+	db	75h, 0F7h, 26h, 83h, 7Eh, 14h, 0, 74h, 0F0h, 0F9h, 0C3h, 26h, 8Ah
+	db	46h, 0, 3Ch, 80h, 74h, 0Ah, 3Ch, 88h, 74h, 5, 3Ch, 89h, 74h, 1
+	db	0F9h, 0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 0F7h, 26h, 83h, 7Eh
+	db	14h, 0, 74h, 0F0h, 0F9h, 0C3h
+L094CC:	mov	al, byte ptr es:[bp]	;@094CC
+	test	al, 80h	;@094D0
+	je	@@1	;@094D2
+	ret	;@094D4
+@@1:	mov	byte ptr es:[bp], 0	;@094D5
+	call	L07196	;@094DA
+	call	L07225	;@094DD
+	mov	ax, 42h	;@094E0
+	jmp	L09442	;@094E3
+L094E6:	test	byte ptr es:[bp], 80h	;@094E6
+	jne	@@1	;@094EB
+	ret	;@094ED
+@@1:	push	cx	;@094EE
+	call	L06A14	;@094EF
+	pop	cx	;@094F2
+	mov	ax, 15h	;@094F3
+	jmp	L09442	;@094F6
+L094F9:	test	byte ptr es:[bp], 80h	;@094F9
+	jne	@@1	;@094FE
+	ret	;@09500
+@@1:	call	L05CE8	;@09501
+	test	word ptr ds:[517Ch], 1000h	;@09504
+	jne	@@3	;@0950A
+@@2:	ret	;@0950C
+@@3:	test	word ptr ds:[5182h], 1	;@0950D
+	je	@@2	;@09513
+	mov	ax, 8040h	;@09515
+	jmp	L09442	;@09518
+L0951B:	call	L094CC	;@0951B
+	mov	al, byte ptr es:[bp]	;@0951E
+	cmp	al, 80h	;@09522
+	je	@@1	;@09524
+	cmp	al, 87h	;@09526
+	je	@@1	;@09528
+	cmp	al, 88h	;@0952A
+	je	@@1	;@0952C
+	cmp	al, 89h	;@0952E
+	jne	@@2	;@09530
+@@1:	ret	;@09532
+@@2:	mov	byte ptr es:[bp], 80h	;@09533
+	mov	ax, 16h	;@09538
+	jmp	L09442	;@0953B
+L0953E:	cmp	byte ptr es:[bp], 4	;@0953E
+	jae	@@1	;@09543
+	ret	;@09545
+@@1:	mov	byte ptr es:[bp], 0	;@09546
+	mov	ax, 16h	;@0954B
+	jmp	L09442	;@0954E
+L09551:	mov	al, 1	;@09551
+L09553:	cmp	byte ptr es:[bp], 0	;@09553
+	je	@@1	;@09558
+	cmp	byte ptr es:[bp], al	;@0955A
+@@1:	mov	byte ptr es:[bp], al	;@0955E
+	jne	@@2	;@09562
+	ret	;@09564
+@@2:	mov	ax, 16h	;@09565
+	jmp	L09442	;@09568
+	db	0E8h, 0CBh, 0Ah, 72h, 9, 26h, 8Ah, 46h, 0, 3Ch, 3, 73h, 0CEh, 0C3h	;@0956B
+	db	26h, 0C6h, 46h, 0, 2, 0B8h, 20h, 80h, 0E9h, 0BEh, 0FEh
+L09584:	mov	al, 2	;@09584
+	jmp	L09553	;@09586
+L09588:	call	L0A039	;@09588
+	jb	@@2	;@0958B
+	mov	al, byte ptr es:[bp]	;@0958D
+	cmp	al, 2	;@09591
+	jb	@@4	;@09593
+	cmp	al, 4	;@09595
+	jae	@@4	;@09597
+	cmp	al, 3	;@09599
+	je	@@1	;@0959B
+	ret	;@0959D
+@@1:	test	word ptr ds:[517Ch], 8	;@0959E
+	je	@@4	;@095A4
+	ret	;@095A6
+@@2:	test	word ptr ds:[517Ch], 8	;@095A7
+	je	@@3	;@095AD
+	mov	ax, 8020h	;@095AF
+	jmp	short L095BD	;@095B2
+@@3:	mov	byte ptr es:[bp], 2	;@095B4
+	ret	;@095B9
+@@4:	mov	ax, 16h	;@095BA
+L095BD:	push	ax	;@095BD
+	call	L0A312	;@095BE
+	mov	byte ptr es:[bp], al	;@095C1
+	pop	ax	;@095C5
+	jmp	L09442	;@095C6
+L095C9:	call	L0A039	;@095C9
+	jb	@@2	;@095CC
+	mov	al, byte ptr es:[bp]	;@095CE
+	cmp	al, 4	;@095D2
+	jae	@@3	;@095D4
+	cmp	al, 3	;@095D6
+	je	@@1	;@095D8
+	ret	;@095DA
+@@1:	test	word ptr ds:[517Ch], 8	;@095DB
+	je	@@3	;@095E1
+	ret	;@095E3
+@@2:	mov	ax, 8020h	;@095E4
+	jmp	L095BD	;@095E7
+@@3:	mov	ax, 16h	;@095E9
+	jmp	L095BD	;@095EC
+	db	0B0h, 6, 0E9h, 60h, 0FFh	;@095EE
+L095F3:	call	L0A039	;@095F3
+	jb	@@1	;@095F6
+	mov	al, byte ptr es:[bp]	;@095F8
+	cmp	al, 3	;@095FC
+	jb	@@2	;@095FE
+	cmp	al, 5	;@09600
+	jae	@@2	;@09602
+	cmp	al, 5	;@09604
+	je	@@2	;@09606
+	ret	;@09608
+@@1:	mov	ax, 8020h	;@09609
+	jmp	short @@3	;@0960C
+@@2:	mov	ax, 16h	;@0960E
+@@3:	mov	byte ptr es:[bp], 4	;@09611
+	jmp	L09442	;@09616
+	db	0E8h, 1Dh, 0Ah, 72h, 11h, 26h, 8Ah, 46h, 0, 3Ch, 3, 72h, 0Eh, 3Ch	;@09619
+	db	7, 73h, 0Ah, 3Ch, 5, 74h, 6, 0C3h, 0B8h, 20h, 80h, 0EBh, 0DDh
+	db	0B8h, 16h, 0, 0EBh, 0D8h, 0E8h, 0FDh, 9, 72h, 11h, 26h, 8Ah, 46h
+	db	0, 3Ch, 2, 72h, 0Eh, 3Ch, 5, 73h, 0Ah, 3Ch, 5, 74h, 6, 0C3h, 0B8h
+	db	20h, 80h, 0EBh, 0BDh, 0B8h, 16h, 0, 0EBh, 0B8h
+L09659:	call	L0A039	;@09659
+	jb	@@1	;@0965C
+	mov	al, byte ptr es:[bp]	;@0965E
+	cmp	al, 2	;@09662
+	jb	@@2	;@09664
+	cmp	al, 4	;@09666
+	jae	@@2	;@09668
+	ret	;@0966A
+@@1:	mov	ax, 8020h	;@0966B
+	jmp	short @@3	;@0966E
+@@2:	mov	ax, 16h	;@09670
+@@3:	mov	byte ptr es:[bp], 3	;@09673
+	jmp	L09442	;@09678
+	db	0E8h, 0BBh, 9, 72h, 1Ah, 26h, 8Ah, 46h, 0, 3Ch, 2, 'r(<', 6, 's$<'	;@0967B
+	db	5, 74h, 1, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 17h, 0C3h, 0F7h
+	db	6, 7Ch, 51h, 0, 10h, 75h, 8, 0E8h, 6Dh, 0Ch, 26h, 88h, 46h, 0
+	db	0C3h, 0B8h, 20h, 80h, 0E9h, 0Dh, 0FFh, 0B8h, 16h, 0, 0E9h, 7, 0FFh
+L096B6:	call	L0A039	;@096B6
+	jb	@@1	;@096B9
+	mov	al, byte ptr es:[bp]	;@096BB
+	cmp	al, 4	;@096BF
+	jb	@@3	;@096C1
+	cmp	al, 6	;@096C3
+	jae	@@3	;@096C5
+	ret	;@096C7
+@@1:	test	word ptr ds:[517Ch], 1000h	;@096C8
+	jne	@@2	;@096CE
+	mov	byte ptr es:[bp], 5	;@096D0
+	ret	;@096D5
+@@2:	mov	ax, 8020h	;@096D6
+	jmp	short @@4	;@096D9
+@@3:	mov	ax, 16h	;@096DB
+@@4:	mov	byte ptr es:[bp], 5	;@096DE
+	jmp	L09442	;@096E3
+	db	0E8h, 81h, 9, 72h, 16h, 26h, 8Ah, 46h, 0, 3Ch, 4, 73h, 1Eh, 3Ch	;@096E6
+	db	3, 74h, 1, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 11h, 0C3h, 0E8h
+	db	5Ch, 0Bh, 26h, 0C6h, 46h, 0, 2, 73h, 5, 26h, 0C6h, 46h, 0, 3, 0C3h
+	db	0B8h, 16h, 0, 0E9h, 0A6h, 0FEh, 0E8h, 1Fh, 9, 72h, 1Ah, 26h, 8Ah
+	db	46h, 0, 3Ch, 2, 'r&<', 5, 74h, 5, 3Ch, 4, 73h, 1Eh, 0C3h, 0F7h
+	db	6, 7Ch, 51h, 8, 0, 74h, 15h, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h
+	db	6, 0B8h, 20h, 80h, 0E9h, 79h, 0FEh, 26h, 0C6h, 46h, 0, 2, 0C3h
+	db	0B8h, 16h, 0, 0E9h, 6Dh, 0FEh, 0E8h, 0E6h, 8, 72h, 18h, 26h, 8Ah
+	db	46h, 0, 3Ch, 2, 72h, 11h, 3Ch, 4, 73h, 0Dh, 0F7h, 6, 7Ch, 51h
+	db	8, 0, 75h, 4, 3Ch, 3, 74h, 1, 0C3h, 0B8h, 16h, 0, 0E9h, 49h, 0FEh
+L09774:	les	bp, dword ptr ds:[55EEh]	;@09774
+	call	L0A039	;@09778
+	jb	@@2	;@0977B
+	mov	al, byte ptr es:[bp]	;@0977D
+	cmp	al, 4	;@09781
+	jae	@@4	;@09783
+	les	bp, dword ptr ds:[55F6h]	;@09785
+@@1:	mov	byte ptr es:[bp], al	;@09789
+	cmp	al, 3	;@0978D
+	je	@@3	;@0978F
+	ret	;@09791
+@@2:	les	bp, dword ptr ds:[55F6h]	;@09792
+	call	L0A06A	;@09796
+	jb	@@5	;@09799
+	mov	al, byte ptr es:[bp]	;@0979B
+	cmp	al, 4	;@0979F
+	jae	@@4	;@097A1
+	les	bp, dword ptr ds:[55EEh]	;@097A3
+	jmp	@@1	;@097A7
+@@3:	test	word ptr ds:[517Ch], 8	;@097A9
+	je	@@4	;@097AF
+	ret	;@097B1
+	db	0B8h, 41h, 0, 0EBh, 62h	;@097B2
+@@4:	mov	ax, 16h	;@097B7
+	jmp	short L09819	;@097BA
+@@5:	mov	ax, 8020h	;@097BC
+	jmp	short L09819	;@097BF
+L097C1:	les	bp, dword ptr ds:[55EEh]	;@097C1
+	call	L0A039	;@097C5
+	jb	@@2	;@097C8
+	mov	al, byte ptr es:[bp]	;@097CA
+	cmp	al, 4	;@097CE
+	jae	@@5	;@097D0
+	les	bp, dword ptr ds:[55F6h]	;@097D2
+	push	ax	;@097D6
+	call	L0A039	;@097D7
+	pop	ax	;@097DA
+	jb	@@1	;@097DB
+	cmp	al, byte ptr es:[bp]	;@097DD
+	jne	@@4	;@097E1
+@@1:	mov	byte ptr es:[bp], al	;@097E3
+	cmp	al, 3	;@097E7
+	je	@@3	;@097E9
+	ret	;@097EB
+@@2:	les	bp, dword ptr ds:[55F6h]	;@097EC
+	call	L0A039	;@097F0
+	jb	@@6	;@097F3
+	mov	al, byte ptr es:[bp]	;@097F5
+	cmp	al, 4	;@097F9
+	jae	@@5	;@097FB
+	les	bp, dword ptr ds:[55EEh]	;@097FD
+	jmp	@@1	;@09801
+@@3:	test	word ptr ds:[517Ch], 8	;@09803
+	je	@@5	;@09809
+	ret	;@0980B
+@@4:	mov	ax, 41h	;@0980C
+	jmp	short L09819	;@0980F
+@@5:	mov	ax, 16h	;@09811
+	jmp	short L09819	;@09814
+@@6:	mov	ax, 8020h	;@09816
+L09819:	push	ax	;@09819
+	call	L0A312	;@0981A
+	les	bp, dword ptr ds:[55EEh]	;@0981D
+	mov	byte ptr es:[bp], al	;@09821
+	les	bp, dword ptr ds:[55F6h]	;@09825
+	mov	byte ptr es:[bp], al	;@09829
+	pop	ax	;@0982D
+	jmp	L09442	;@0982E
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 1, 8, 72h, 19h, 26h, 8Ah, 46h, 0, 3Ch	;@09831
+	db	2, 'r:<', 4, 73h, 36h, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0
+	db	3Ch, 3, 74h, 1Ch, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 10h, 8, 'r%&'
+	db	8Ah, 46h, 0, 3Ch, 2, 72h, 18h, 3Ch, 4, 73h, 14h, 0C4h, 2Eh, 0EEh
+	db	55h, 0EBh, 0DCh, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 6, 0C3h, 0B8h, 20h
+	db	0, 0EBh, 9Dh, 0B8h, 16h, 0, 0EBh, 98h, 0F7h, 6, 7Ch, 51h, 8, 0
+	db	74h, 5, 0B8h, 20h, 80h, 0EBh, 8Bh, 0C4h, 2Eh, 0EEh, 55h, 26h, 0C6h
+	db	46h, 0, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h, 0, 2, 0C3h, 0C4h
+	db	2Eh, 0EEh, 55h, 0E8h, 91h, 7, 'r(&', 8Ah, 46h, 0, 3Ch, 2, 'rR<'
+	db	4, 73h, 4Eh, 0FEh, 0C0h, 0C4h, 2Eh, 0F6h, 55h, 50h, 0E8h, 79h
+	db	7, 58h, 72h, 6, '&:F', 0, 'u6&', 88h, 46h, 0, 3Ch, 4, 74h, 25h
+	db	0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 60h, 7, 'r.&', 8Ah, 46h, 0, 3Ch
+	db	3, 'r!<', 5, 73h, 1Dh, 0FEh, 0C8h, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h
+	db	46h, 0, 3Ch, 3, 74h, 1, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 6
+	db	0C3h, 0B8h, 20h, 0, 0EBh, 25h, 0B8h, 16h, 0, 0EBh, 20h, 0F7h, 6
+	db	7Ch, 51h, 8, 0, 74h, 5, 0B8h, 20h, 80h, 0EBh, 13h, 0C4h, 2Eh, 0EEh
+	db	55h, 26h, 0C6h, 46h, 0, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h
+	db	0, 3, 0C3h, 50h, 0E8h, 0E5h, 9, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h
+	db	46h, 0, 0FEh, 0C0h, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h, 0, 58h
+	db	0E9h, 0FFh, 0FAh
+L09943:	les	bp, dword ptr ds:[55EEh]	;@09943
+	call	L0A039	;@09947
+	jb	@@2	;@0994A
+	mov	al, byte ptr es:[bp]	;@0994C
+	cmp	al, 2	;@09950
+	jb	@@5	;@09952
+	cmp	al, 4	;@09954
+	jae	@@5	;@09956
+	les	bp, dword ptr ds:[55F6h]	;@09958
+	push	ax	;@0995C
+	call	L0A039	;@0995D
+	pop	ax	;@09960
+	jb	@@1	;@09961
+	cmp	al, byte ptr es:[bp]	;@09963
+	jne	@@4	;@09967
+@@1:	mov	byte ptr es:[bp], al	;@09969
+	cmp	al, 3	;@0996D
+	je	@@3	;@0996F
+	ret	;@09971
+@@2:	les	bp, dword ptr ds:[55F6h]	;@09972
+	call	L0A039	;@09976
+	jb	@@6	;@09979
+	mov	al, byte ptr es:[bp]	;@0997B
+	cmp	al, 2	;@0997F
+	jb	@@5	;@09981
+	cmp	al, 4	;@09983
+	jae	@@5	;@09985
+	les	bp, dword ptr ds:[55EEh]	;@09987
+	jmp	@@1	;@0998B
+@@3:	test	word ptr ds:[517Ch], 8	;@0998D
+	je	@@5	;@09993
+	ret	;@09995
+@@4:	mov	ax, 20h	;@09996
+	jmp	L09819	;@09999
+@@5:	mov	ax, 16h	;@0999C
+	jmp	L09819	;@0999F
+@@6:	test	word ptr ds:[517Ch], 8	;@099A2
+	je	@@7	;@099A8
+	mov	ax, 8020h	;@099AA
+	jmp	L09819	;@099AD
+@@7:	les	bp, dword ptr ds:[55EEh]	;@099B0
+	mov	byte ptr es:[bp], 2	;@099B4
+	les	bp, dword ptr ds:[55F6h]	;@099B9
+	mov	byte ptr es:[bp], 2	;@099BD
+	ret	;@099C2
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 6Fh, 6, 'r.&', 8Ah, 46h, 0, 3Ch, 2	;@099C3
+	db	'rd<', 4, 73h, 60h, 0FEh, 0C0h, 3Ch, 4, 75h, 2, 0FEh, 0C0h, 0C4h
+	db	2Eh, 0F6h, 55h, 50h, 0E8h, 51h, 6, 58h, 72h, 6, '&:F', 0, 'u5&'
+	db	88h, 46h, 0, 3Ch, 5, 74h, 44h, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h
+	db	38h, 6, 'r(&', 8Ah, 46h, 0, 3Ch, 3, 'r-<', 6, 's)<', 4, 't%r'
+	db	2, 0FEh, 0C8h, 0FEh, 0C8h, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h
+	db	0, 3Ch, 3, 74h, 18h, 0C3h, 0B8h, 41h, 0, 0EBh, 2Eh, 0F7h, 6, 7Ch
+	db	51h, 8, 0, 74h, 13h, 0B8h, 20h, 80h, 0EBh, 21h, 0B8h, 16h, 0, 0EBh
+	db	1Ch, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0F3h, 0C3h, 0C4h, 2Eh, 0EEh
+	db	55h, 26h, 0C6h, 46h, 0, 2, 0C4h, 2Eh, 0F6h, 55h, 26h, 0C6h, 46h
+	db	0, 3, 0C3h, 50h, 0E8h, 0B5h, 8, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h
+	db	46h, 0, 0FEh, 0C0h, 3Ch, 4, 75h, 2, 0FEh, 0C0h, 0C4h, 2Eh, 0F6h
+	db	55h, 26h, 88h, 46h, 0, 58h, 0E9h, 0C9h, 0F9h
+L09A79:	les	bp, dword ptr ds:[55EEh]	;@09A79
+	mov	al, byte ptr es:[bp]	;@09A7D
+	cmp	al, 0	;@09A81
+	je	@@1	;@09A83
+	cmp	al, 4	;@09A85
+	jae	@@3	;@09A87
+	les	bp, dword ptr ds:[55F6h]	;@09A89
+	cmp	byte ptr es:[bp], 0	;@09A8D
+	je	@@2	;@09A92
+	cmp	al, byte ptr es:[bp]	;@09A94
+	jne	@@4	;@09A98
+	ret	;@09A9A
+@@1:	les	bp, dword ptr ds:[55F6h]	;@09A9B
+	mov	al, byte ptr es:[bp]	;@09A9F
+	cmp	al, 4	;@09AA3
+	jae	@@3	;@09AA5
+	les	bp, dword ptr ds:[55EEh]	;@09AA7
+@@2:	mov	byte ptr es:[bp], al	;@09AAB
+	ret	;@09AAF
+@@3:	mov	ax, 16h	;@09AB0
+	jmp	short @@5	;@09AB3
+@@4:	mov	ax, 41h	;@09AB5
+@@5:	les	bp, dword ptr ds:[55EEh]	;@09AB8
+	mov	byte ptr es:[bp], 0	;@09ABC
+	les	bp, dword ptr ds:[55F6h]	;@09AC1
+	mov	byte ptr es:[bp], 0	;@09AC5
+	jmp	L09442	;@09ACA
+	db	0C4h, 2Eh, 0EEh, 55h, 0E8h, 65h, 5, 'r*&', 8Ah, 46h, 0, 3Ch, 2	;@09ACD
+	db	'rK<', 4, 73h, 47h, 0C4h, 2Eh, 0F6h, 55h, 50h, 0E8h, 4Fh, 5, 'Xr2&'
+	db	8Ah, 66h, 0, 80h, 0FCh, 1, 74h, 9, 80h, 0FCh, 2, 'u.<', 3, 75h
+	db	2Fh, 0C3h, 0C4h, 2Eh, 0F6h, 55h, 0E8h, 32h, 5, 'r*&', 8Ah, 46h
+	db	0, 3Ch, 3, 73h, 18h, 3Ch, 1, 74h, 1Eh, 0C4h, 2Eh, 0EEh, 55h, 26h
+	db	0C6h, 46h, 0, 3, 0C3h, 3Ch, 3, 74h, 1Fh, 26h, 0C6h, 46h, 0, 1
+	db	0C3h, 0B8h, 16h, 0, 0EBh, 8Ah, 0B8h, 41h, 0, 0EBh, 85h, 0E8h, 0DCh
+	db	7, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh, 0F6h, 55h
+	db	26h, 0C6h, 46h, 0, 1, 0B8h, 20h, 80h, 0E9h, 0F5h, 0F8h, 0C4h, 2Eh
+	db	0EEh, 55h, 0E8h, 0E5h, 4, 'rE&', 8Ah, 46h, 0, 3Ch, 2, 'r&<', 4
+	db	73h, 22h, 0C4h, 2Eh, 0F2h, 55h, 50h, 0E8h, 0CFh, 4, 58h, 73h, 4
+	db	26h, 88h, 46h, 0, '&:F', 0, 75h, 12h, 0C4h, 2Eh, 0F6h, 55h, 26h
+	db	88h, 46h, 0, 3Ch, 3, 74h, 5Ch, 0C3h, 0B8h, 16h, 0, 0EBh, 7Bh, 0B8h
+	db	41h, 0, 0EBh, 76h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 52h, 0B8h, 20h
+	db	80h, 0EBh, 69h, 0C4h, 2Eh, 0F2h, 55h, 0E8h, 97h, 4, 72h, 16h, 26h
+	db	8Ah, 46h, 0, 3Ch, 2, 72h, 0D8h, 3Ch, 4, 73h, 0D4h, 0C4h, 2Eh, 0EEh
+	db	55h, 26h, 88h, 46h, 0, 0EBh, 0BDh, 0C4h, 2Eh, 0F6h, 55h, 0E8h
+	db	78h, 4, 72h, 0CBh, 26h, 8Ah, 46h, 0, 3Ch, 2, 72h, 0B9h, 3Ch, 4
+	db	73h, 0B5h, 0C4h, 2Eh, 0F2h, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh, 0EEh
+	db	55h, 26h, 88h, 46h, 0, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 9Dh, 0C3h
+	db	0E8h, 27h, 7, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh
+	db	0F2h, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh, 0F6h, 55h, 26h, 88h, 46h
+	db	0, 0C3h, 50h, 0E8h, 0Ah, 7, 0C4h, 2Eh, 0EEh, 55h, 26h, 88h, 46h
+	db	0, 0C4h, 2Eh, 0F2h, 55h, 26h, 88h, 46h, 0, 0C4h, 2Eh, 0F6h, 55h
+	db	26h, 88h, 46h, 0, 58h, 0E9h, 1Eh, 0F8h
+L09C24:	test	byte ptr es:[bp+4], 80h	;@09C24
+	je	@@1	;@09C29
+	ret	;@09C2B
+@@1:	or	byte ptr es:[bp+4], 80h	;@09C2C
+	mov	ax, 18h	;@09C31
+	jmp	L09442	;@09C34
+L09C37:	mov	al, byte ptr es:[bp+4]	;@09C37
+	and	al, 0C0h	;@09C3B
+	xor	al, 40h	;@09C3D
+	jne	L09C24	;@09C3F
+L09C41:	mov	al, byte ptr es:[bp+4]	;@09C41
+	xor	al, 40h	;@09C45
+	jne	@@1	;@09C47
+	mov	ax, word ptr es:[bp+0Ah]	;@09C49
+	or	ax, word ptr es:[bp+0Ch]	;@09C4D
+	jne	@@6	;@09C51
+	ret	;@09C53
+@@1:	test	byte ptr es:[bp+4], 80h	;@09C54
+	je	@@2	;@09C59
+	mov	ax, 1Eh	;@09C5B
+	call	L09442	;@09C5E
+	and	byte ptr es:[bp+4], 7Fh	;@09C61
+@@2:	test	byte ptr es:[bp+4], 20h	;@09C66
+	je	@@3	;@09C6B
+	mov	ax, 1Dh	;@09C6D
+	call	L09442	;@09C70
+	mov	word ptr es:[bp+10h], 1	;@09C73
+	and	byte ptr es:[bp+4], 0DFh	;@09C79
+@@3:	test	byte ptr es:[bp+4], 40h	;@09C7E
+	jne	@@4	;@09C83
+	mov	ax, 3Dh	;@09C85
+	call	L09442	;@09C88
+@@4:	test	byte ptr es:[bp+4], 10h	;@09C8B
+	je	@@5	;@09C90
+	mov	ax, 1Ch	;@09C92
+	call	L09442	;@09C95
+	mov	word ptr es:[bp+12h], 0	;@09C98
+	and	byte ptr es:[bp+4], 0EFh	;@09C9E
+@@5:	test	byte ptr es:[bp+4], 5	;@09CA3
+	jne	@@6	;@09CA8
+	mov	ax, word ptr es:[bp+0Ah]	;@09CAA
+	or	ax, word ptr es:[bp+0Ch]	;@09CAE
+	je	@@7	;@09CB2
+@@6:	mov	ax, 23h	;@09CB4
+	call	L09442	;@09CB7
+	and	byte ptr es:[bp+4], 0F8h	;@09CBA
+	xor	ax, ax	;@09CBF
+	mov	word ptr es:[bp+8], ax	;@09CC1
+	mov	word ptr es:[bp+0Ah], ax	;@09CC5
+	mov	word ptr es:[bp+0Ch], ax	;@09CC9
+	mov	byte ptr es:[bp+24h], al	;@09CCD
+	mov	byte ptr es:[bp+1], al	;@09CD1
+	mov	word ptr es:[bp+1Ah], ax	;@09CD5
+	mov	word ptr es:[bp+18h], ax	;@09CD9
+@@7:	ret	;@09CDD
+L09CDE:	test	byte ptr es:[bp+4], 0F8h	;@09CDE
+	jne	L09CE6	;@09CE3
+	ret	;@09CE5
+L09CE6:	test	byte ptr es:[bp+4], 80h	;@09CE6
+	je	@@1	;@09CEB
+	and	byte ptr es:[bp+4], 7Fh	;@09CED
+	mov	ax, 1Eh	;@09CF2
+	call	L09442	;@09CF5
+@@1:	test	byte ptr es:[bp+4], 40h	;@09CF8
+	je	@@2	;@09CFD
+	mov	ax, 19h	;@09CFF
+	call	L09442	;@09D02
+	and	byte ptr es:[bp+4], 8Fh	;@09D05
+	xor	ax, ax	;@09D0A
+	mov	word ptr es:[bp+0Eh], ax	;@09D0C
+	mov	word ptr es:[bp+12h], ax	;@09D10
+	mov	word ptr es:[bp+10h], 1	;@09D14
+@@2:	ret	;@09D1A
+L09D1B:	test	byte ptr es:[bp+4], 0F8h	;@09D1B
+	jne	@@2	;@09D20
+@@1:	mov	al, byte ptr es:[bp+24h]	;@09D22
+	cbw	;@09D26
+	cmp	ax, word ptr es:[bp+0Ch]	;@09D27
+	jne	@@3	;@09D2B
+	ret	;@09D2D
+@@2:	call	L09CE6	;@09D2E
+	jmp	@@1	;@09D31
+@@3:	mov	ax, 3Fh	;@09D33
+	jmp	L0947A	;@09D36
+	db	26h, 0F6h, 46h, 4, 0F8h, 'u6&', 8Ah, 46h, 1, 24h, 7, 't"<', 2	;@09D39
+	db	74h, 0Bh, 3Ch, 3, 75h, 1Ah, 26h, 80h, 6Eh, 1, 2, 0EBh, 13h, 26h
+	db	80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h, 46h, 1, 26h, 89h, 46h
+	db	1Ah, 26h, 89h, 46h, 18h, 26h, 8Ah, 46h, 24h, 98h, '&;F', 0Ch, 75h
+	db	6, 0C3h, 0E8h, 6Dh, 0FFh, 0EBh, 0C5h, 0B8h, 3Fh, 0, 0E9h, 0F9h
+	db	0F6h, 26h, 0F6h, 46h, 4, 0F8h, 'u*&', 8Ah, 46h, 1, 24h, 7, 74h
+	db	0Dh, 3Ch, 2, 74h, 0Ah, 3Ch, 3, 75h, 5, 26h, 80h, 6Eh, 1, 2, 0C3h
+	db	26h, 80h, 66h, 4, 0FBh, 33h, 0C0h, 26h, 88h, 46h, 1, 26h, 89h
+	db	46h, 1Ah, 26h, 89h, 46h, 18h, 0C3h, 0E8h, 31h, 0FFh, 0EBh, 0D1h
+L09DB7:	test	byte ptr es:[bp+4], 0F8h	;@09DB7
+	jne	@@2	;@09DBC
+@@1:	test	byte ptr es:[bp+4], 4	;@09DBE
+	jne	@@3	;@09DC3
+	ret	;@09DC5
+@@2:	call	L09CE6	;@09DC6
+	jmp	@@1	;@09DC9
+@@3:	mov	ax, 6Eh	;@09DCB
+	call	L09442	;@09DCE
+	jmp	short L09DFD	;@09DD1
+L09DD3:	mov	al, byte ptr es:[bp]	;@09DD3
+	cmp	al, 2	;@09DD7
+	je	L09E16	;@09DD9
+	cmp	al, 1	;@09DDB
+	je	L09E2C	;@09DDD
+L09DDF:	test	byte ptr es:[bp+4], 0F8h	;@09DDF
+	jne	L09E11	;@09DE4
+L09DE6:	mov	al, byte ptr es:[bp+1]	;@09DE6
+	and	al, 7	;@09DEA
+	je	L09E10	;@09DEC
+	cmp	al, 2	;@09DEE
+	je	L09DFD	;@09DF0
+	cmp	al, 3	;@09DF2
+	jne	L09E10	;@09DF4
+	sub	byte ptr es:[bp+1], 2	;@09DF6
+	jmp	short L09E10	;@09DFB
+L09DFD:	and	byte ptr es:[bp+4], 0FBh	;@09DFD
+	xor	ax, ax	;@09E02
+	mov	byte ptr es:[bp+1], al	;@09E04
+	mov	word ptr es:[bp+1Ah], ax	;@09E08
+	mov	word ptr es:[bp+18h], ax	;@09E0C
+L09E10:	ret	;@09E10
+L09E11:	call	L09CE6	;@09E11
+	jmp	L09DE6	;@09E14
+L09E16:	call	L09DDF	;@09E16
+	cmp	word ptr es:[bp+6], 0	;@09E19
+	jne	@@1	;@09E1E
+	mov	al, byte ptr es:[bp+24h]	;@09E20
+	cbw	;@09E24
+	cmp	ax, word ptr es:[bp+0Ch]	;@09E25
+	jne	L09E64	;@09E29
+@@1:	ret	;@09E2B
+L09E2C:	call	L09DDF	;@09E2C
+	mov	al, byte ptr es:[bp+1]	;@09E2F
+	and	al, 7	;@09E33
+	je	@@2	;@09E35
+	cmp	al, 4	;@09E37
+	je	@@1	;@09E39
+	cmp	al, 1	;@09E3B
+	jne	@@2	;@09E3D
+	sub	byte ptr es:[bp+1], 0FCh	;@09E3F
+	jmp	short @@2	;@09E44
+@@1:	mov	ax, 71h	;@09E46
+	call	L0944A	;@09E49
+@@2:	cmp	word ptr es:[bp+6], 0	;@09E4C
+	jne	L09E6A	;@09E51
+	mov	al, byte ptr es:[bp+24h]	;@09E53
+	cbw	;@09E57
+	cmp	ax, word ptr es:[bp+0Ch]	;@09E58
+	jne	L09E64	;@09E5C
+	cmp	al, byte ptr es:[bp+0Bh]	;@09E5E
+	je	L09E6A	;@09E62
+L09E64:	mov	ax, 3Fh	;@09E64
+	jmp	L0947A	;@09E67
+L09E6A:	ret	;@09E6A
+	db	0E8h, 71h, 0FFh, 26h, 0F6h, 46h, 4, 4, 74h, 6, 0B8h, 6Eh, 0, 0E8h	;@09E6B
+	db	0CFh, 0F5h, 26h, 83h, 7Eh, 6, 0, 75h, 1Fh, 26h, 8Ah, 46h, 24h
+	db	98h, '&;F', 0Ch, 75h, 0Eh, '&:F', 0Bh, 75h, 8, '&2F', 0Ah, 24h
+	db	0C0h, 74h, 6, 0B8h, 3Fh, 0, 0E9h, 0D9h, 0F5h, 0C3h
+L09EA2:	call	L09DDF	;@09EA2
+	test	byte ptr es:[bp+4], 4	;@09EA5
+	je	@@1	;@09EAA
+	mov	ax, 6Eh	;@09EAC
+	call	L0944A	;@09EAF
+@@1:	cmp	word ptr es:[bp+6], 0	;@09EB2
+	jne	@@3	;@09EB7
+	mov	al, byte ptr es:[bp+24h]	;@09EB9
+	cbw	;@09EBD
+	cmp	ax, word ptr es:[bp+0Ch]	;@09EBE
+	jne	@@2	;@09EC2
+	cmp	al, byte ptr es:[bp+0Bh]	;@09EC4
+	jne	@@2	;@09EC8
+	xor	al, byte ptr es:[bp+0Ah]	;@09ECA
+	and	al, 0F8h	;@09ECE
+	je	@@3	;@09ED0
+@@2:	mov	ax, 3Fh	;@09ED2
+	jmp	L0947A	;@09ED5
+@@3:	ret	;@09ED8
+L09ED9:	call	L09CDE	;@09ED9
+	mov	al, byte ptr es:[bp+1]	;@09EDC
+	and	al, 7	;@09EE0
+	je	@@1	;@09EE2
+	mov	byte ptr es:[bp+1], 0Dh	;@09EE4
+	call	L09FE2	;@09EE9
+	call	L0A9EE	;@09EEC
+	test	byte ptr es:[bp+1], 8	;@09EEF
+	jne	@@4	;@09EF4
+@@1:	cmp	word ptr es:[bp+6], 0	;@09EF6
+	jne	@@2	;@09EFB
+	mov	al, byte ptr es:[bp+0Ah]	;@09EFD
+	cbw	;@09F01
+	cwd	;@09F02
+	cmp	ah, byte ptr es:[bp+0Bh]	;@09F03
+	jne	@@3	;@09F07
+	cmp	dx, word ptr es:[bp+0Ch]	;@09F09
+	jne	@@3	;@09F0D
+	xor	ah, byte ptr es:[bp+24h]	;@09F0F
+	jne	@@3	;@09F13
+@@2:	ret	;@09F15
+@@3:	mov	ax, 7Fh	;@09F16
+	jmp	L09452	;@09F19
+@@4:	call	L0A0D2	;@09F1C
+	xor	ax, ax	;@09F1F
+	add	word ptr es:[bp+0Ah], 2	;@09F21
+	adc	word ptr es:[bp+0Ch], ax	;@09F26
+	adc	byte ptr es:[bp+24h], al	;@09F2A
+	cmp	word ptr es:[bp+6], ax	;@09F2E
+	jne	@@2	;@09F32
+	cmp	byte ptr es:[bp+0Bh], al	;@09F34
+	jne	@@5	;@09F38
+	cmp	word ptr es:[bp+0Ch], ax	;@09F3A
+	jne	@@5	;@09F3E
+	cmp	byte ptr es:[bp+24h], al	;@09F40
+	jne	@@5	;@09F44
+	ret	;@09F46
+@@5:	mov	ax, 33h	;@09F47
+	jmp	L09442	;@09F4A
+L09F4D:	call	L09CDE	;@09F4D
+	mov	al, byte ptr es:[bp+1]	;@09F50
+	and	al, 7	;@09F54
+	je	@@1	;@09F56
+	and	byte ptr es:[bp+1], 0F8h	;@09F58
+	or	byte ptr es:[bp+1], 9	;@09F5D
+	call	L09FE2	;@09F62
+	call	L0A9EE	;@09F65
+	test	byte ptr es:[bp+1], 8	;@09F68
+	jne	@@4	;@09F6D
+@@1:	cmp	word ptr es:[bp+6], 0	;@09F6F
+	jne	@@2	;@09F74
+	mov	al, byte ptr es:[bp+24h]	;@09F76
+	cbw	;@09F7A
+	cmp	ax, word ptr es:[bp+0Ch]	;@09F7B
+	jne	@@3	;@09F7F
+@@2:	ret	;@09F81
+@@3:	mov	ax, 7FFFh	;@09F82
+	jmp	L09452	;@09F85
+@@4:	call	L0A0D2	;@09F88
+	xor	ax, ax	;@09F8B
+	add	word ptr es:[bp+0Ah], 3	;@09F8D
+	adc	word ptr es:[bp+0Ch], ax	;@09F92
+	adc	byte ptr es:[bp+24h], al	;@09F96
+	cmp	word ptr es:[bp+0Ch], ax	;@09F9A
+	jne	@@5	;@09F9E
+	cmp	byte ptr es:[bp+24h], al	;@09FA0
+	jne	@@5	;@09FA4
+	ret	;@09FA6
+@@5:	mov	ax, 33h	;@09FA7
+	jmp	L09442	;@09FAA
+L09FAD:	call	L09CDE	;@09FAD
+	mov	al, byte ptr es:[bp+1]	;@09FB0
+	and	al, 7	;@09FB4
+	je	@@1	;@09FB6
+	and	byte ptr es:[bp+1], 0F8h	;@09FB8
+	or	byte ptr es:[bp+1], 9	;@09FBD
+	call	L09FE2	;@09FC2
+	call	L0A9EE	;@09FC5
+	test	byte ptr es:[bp+1], 8	;@09FC8
+	je	@@1	;@09FCD
+	call	L0A0D2	;@09FCF
+	add	word ptr es:[bp+0Ah], 5	;@09FD2
+	adc	word ptr es:[bp+0Ch], 0	;@09FD7
+	adc	byte ptr es:[bp+24h], 0	;@09FDC
+@@1:	ret	;@09FE1
+L09FE2:	push	cx	;@09FE2
+	push	es	;@09FE3
+	push	bp	;@09FE4
+	mov	ax, word ptr ds:[565Ch]	;@09FE5
+	call	far ptr L101E0	;@09FE8
+	call	L01A84	;@09FED
+	call	far ptr L101E0	;@09FF0
+	mov	bx, word ptr es:[bp+6]	;@09FF5
+	and	bx, bx	;@09FF9
+	je	@@1	;@09FFB
+	pop	bp	;@09FFD
+	pop	es	;@09FFE
+	mov	word ptr es:[bp+6], bx	;@09FFF
+	call	L072F9	;@0A003
+	pop	cx	;@0A006
+	jmp	short @@3	;@0A007
+@@1:	test	byte ptr es:[bp+4], 4	;@0A009
+	je	@@2	;@0A00E
+	mov	ax, word ptr es:[bp+1Ah]	;@0A010
+	pop	bp	;@0A014
+	pop	es	;@0A015
+	pop	cx	;@0A016
+	mov	word ptr es:[bp+18h], ax	;@0A017
+	ret	;@0A01B
+@@2:	pop	bp	;@0A01C
+	pop	es	;@0A01D
+	mov	cx, 54h	;@0A01E
+	call	L0352C	;@0A021
+	pop	cx	;@0A024
+@@3:	and	byte ptr es:[bp+4], 0FBh	;@0A025
+	xor	ax, ax	;@0A02A
+	mov	word ptr es:[bp+18h], ax	;@0A02C
+	mov	word ptr es:[bp+1Ah], ax	;@0A030
+	mov	byte ptr es:[bp+1], al	;@0A034
+	ret	;@0A038
+L0A039:	cmp	byte ptr es:[bp], 0	;@0A039
+	jne	@@2	;@0A03E
+	test	word ptr ds:[517Ch], 1000h	;@0A040
+	jne	@@1	;@0A046
+	test	byte ptr es:[bp+5], 40h	;@0A048
+	je	@@1	;@0A04D
+	and	byte ptr es:[bp+5], 0BFh	;@0A04F
+	mov	al, byte ptr es:[bp+25h]	;@0A054
+	and	al, 7Fh	;@0A058
+	mov	byte ptr es:[bp], al	;@0A05A
+	mov	ax, word ptr es:[bp+1Ch]	;@0A05E
+	mov	word ptr es:[bp+2], ax	;@0A062
+	jne	@@2	;@0A066
+@@1:	stc	;@0A068
+@@2:	ret	;@0A069
+L0A06A:	call	L0A039	;@0A06A
+	jae	@@2	;@0A06D
+	test	word ptr ds:[517Ch], 1000h	;@0A06F
+	jne	@@3	;@0A075
+	test	byte ptr es:[bp+4], 40h	;@0A077
+	jne	@@3	;@0A07C
+	cmp	word ptr es:[bp+6], 0	;@0A07E
+	jne	@@3	;@0A083
+	mov	al, byte ptr es:[bp+24h]	;@0A085
+	cbw	;@0A089
+	cmp	ax, word ptr es:[bp+0Ch]	;@0A08A
+	mov	ah, 3	;@0A08E
+	jne	@@1	;@0A090
+	test	word ptr ds:[517Ch], 8	;@0A092
+	jne	@@3	;@0A098
+	cmp	al, byte ptr es:[bp+0Bh]	;@0A09A
+	mov	ah, 2	;@0A09E
+	jne	@@1	;@0A0A0
+	test	byte ptr es:[bp+4], 4	;@0A0A2
+	je	@@3	;@0A0A7
+	mov	ah, 1	;@0A0A9
+	mov	al, byte ptr es:[bp+1]	;@0A0AB
+	and	al, 7	;@0A0AF
+	cmp	al, 5	;@0A0B1
+	je	@@1	;@0A0B3
+	cmp	al, 6	;@0A0B5
+	jne	@@3	;@0A0B7
+@@1:	mov	byte ptr es:[bp], ah	;@0A0B9
+@@2:	clc	;@0A0BD
+	ret	;@0A0BE
+@@3:	stc	;@0A0BF
+	ret	;@0A0C0
+L0A0C1:	call	L039F9	;@0A0C1
+	sub	word ptr es:[bp+0Ah], ax	;@0A0C4
+	sbb	word ptr es:[bp+0Ch], dx	;@0A0C8
+	sbb	byte ptr es:[bp+24h], 0	;@0A0CC
+	ret	;@0A0D1
+L0A0D2:	call	L039F9	;@0A0D2
+	add	word ptr es:[bp+0Ah], ax	;@0A0D5
+	adc	word ptr es:[bp+0Ch], dx	;@0A0D9
+	adc	byte ptr es:[bp+24h], 0	;@0A0DD
+	ret	;@0A0E2
+L0A0E3:	cmp	word ptr es:[bp+6], 0	;@0A0E3
+	jne	@@1	;@0A0E8
+	test	byte ptr es:[bp+4], 4	;@0A0EA
+	jne	@@1	;@0A0EF
+	cmp	ax, word ptr es:[bp+0Ah]	;@0A0F1
+	jne	@@1	;@0A0F5
+	ret	;@0A0F7
+@@1:	stc	;@0A0F8
+	ret	;@0A0F9
+L0A0FA:	cmp	word ptr es:[bp+6], 0	;@0A0FA
+	jne	L0A13E	;@0A0FF
+	test	byte ptr es:[bp+4], 4	;@0A101
+	jne	L0A13E	;@0A106
+	mov	al, byte ptr es:[bp+0Ah]	;@0A108
+	cbw	;@0A10C
+	cmp	ah, byte ptr es:[bp+0Bh]	;@0A10D
+	jne	L0A13E	;@0A111
+	ret	;@0A113
+L0A114:	cmp	word ptr es:[bp+6], 0	;@0A114
+	jne	L0A13E	;@0A119
+	test	byte ptr es:[bp+4], 4	;@0A11B
+	jne	L0A13E	;@0A120
+	mov	al, byte ptr es:[bp+0Ah]	;@0A122
+	cbw	;@0A126
+	cmp	ah, byte ptr es:[bp+0Bh]	;@0A127
+	jne	L0A13E	;@0A12B
+	test	word ptr ds:[517Ch], 8	;@0A12D
+	jne	@@1	;@0A133
+	ret	;@0A135
+@@1:	cwd	;@0A136
+	cmp	dx, word ptr es:[bp+0Ch]	;@0A137
+	jne	L0A13E	;@0A13B
+	ret	;@0A13D
+L0A13E:	stc	;@0A13E
+	ret	;@0A13F
+L0A140:	test	word ptr ds:[517Ch], 20h	;@0A140
+	je	@@1	;@0A146
+	cmp	word ptr es:[bp+6], 0	;@0A148
+	jne	@@1	;@0A14D
+	mov	ax, word ptr ds:[517Eh]	;@0A14F
+	test	word ptr ds:[517Ch], 1000h	;@0A152
+	jne	@@2	;@0A158
+	test	byte ptr es:[bp+4], 4	;@0A15A
+	je	@@1	;@0A15F
+	push	es	;@0A161
+	push	bp	;@0A162
+	push	cx	;@0A163
+	mov	ax, word ptr ds:[565Ch]	;@0A164
+	call	far ptr L101E0	;@0A167
+	call	L01A84	;@0A16C
+	call	far ptr L101E0	;@0A16F
+	mov	ax, word ptr es:[bp+1Ah]	;@0A174
+	test	byte ptr es:[bp+4], 4	;@0A178
+	pop	cx	;@0A17D
+	pop	bp	;@0A17E
+	pop	es	;@0A17F
+	je	@@1	;@0A180
+	mov	dx, ax	;@0A182
+	mov	ax, word ptr es:[bp+18h]	;@0A184
+	and	ax, ax	;@0A188
+	je	@@1	;@0A18A
+	cmp	ax, dx	;@0A18C
+	jne	@@1	;@0A18E
+	ret	;@0A190
+@@1:	stc	;@0A191
+	ret	;@0A192
+@@2:	and	ax, ax	;@0A193
+	je	@@1	;@0A195
+	mov	dx, ax	;@0A197
+	mov	ax, word ptr es:[bp+18h]	;@0A199
+	and	ax, ax	;@0A19D
+	je	@@1	;@0A19F
+	push	es	;@0A1A1
+	push	bp	;@0A1A2
+	call	far ptr L101E0	;@0A1A3
+	call	L01659	;@0A1A8
+	call	L01640	;@0A1AB
+	xchg	ax, dx	;@0A1AE
+	call	far ptr L101E0	;@0A1AF
+	call	L01659	;@0A1B4
+	call	L01640	;@0A1B7
+	pop	bp	;@0A1BA
+	pop	es	;@0A1BB
+	cmp	ax, dx	;@0A1BC
+	jne	@@1	;@0A1BE
+	ret	;@0A1C0
+L0A1C1:	cmp	word ptr es:[bp+6], 0	;@0A1C1
+	jne	@@4	;@0A1C6
+	test	byte ptr es:[bp+4], 4	;@0A1C8
+	je	@@2	;@0A1CD
+	mov	al, byte ptr es:[bp+1]	;@0A1CF
+	and	al, 7	;@0A1D3
+	cmp	al, 3	;@0A1D5
+	je	@@1	;@0A1D7
+	cmp	al, 2	;@0A1D9
+	je	@@1	;@0A1DB
+	cmp	al, 1	;@0A1DD
+	jne	@@4	;@0A1DF
+@@1:	mov	ax, word ptr ds:[517Eh]	;@0A1E1
+	cmp	ax, word ptr es:[bp+1Ah]	;@0A1E4
+	jne	@@4	;@0A1E8
+@@2:	mov	ax, word ptr ds:[5170h]	;@0A1EA
+	mov	dx, word ptr ds:[5172h]	;@0A1ED
+	mov	bx, word ptr es:[bp+0Ah]	;@0A1F1
+	sub	bx, ax	;@0A1F5
+	mov	ax, bx	;@0A1F7
+	mov	bx, word ptr es:[bp+0Ch]	;@0A1F9
+	sbb	bx, dx	;@0A1FD
+	sub	ax, 2	;@0A1FF
+	sbb	bx, 0	;@0A202
+	and	bx, bx	;@0A205
+	je	@@3	;@0A207
+	cmp	bx, -1	;@0A209
+	jne	@@4	;@0A20C
+@@3:	cmp	ah, bl	;@0A20E
+	jne	@@4	;@0A210
+	xor	bl, al	;@0A212
+	and	bl, 80h	;@0A214
+	je	@@5	;@0A217
+@@4:	stc	;@0A219
+@@5:	ret	;@0A21A
+L0A21B:	les	bp, dword ptr ds:[55F6h]	;@0A21B
+	mov	al, byte ptr es:[bp+4]	;@0A21F
+	test	al, 0C0h	;@0A223
+	jne	@@1	;@0A225
+	test	byte ptr es:[bp], 80h	;@0A227
+	je	@@3	;@0A22C
+	cmp	byte ptr es:[bp], 80h	;@0A22E
+	jne	@@1	;@0A233
+	cmp	word ptr es:[bp+6], 0	;@0A235
+	je	@@1	;@0A23A
+	les	bp, dword ptr ds:[55EEh]	;@0A23C
+	test	byte ptr es:[bp+4], 80h	;@0A240
+	jne	@@2	;@0A245
+@@1:	stc	;@0A247
+@@2:	ret	;@0A248
+@@3:	test	byte ptr es:[bp+5], 80h	;@0A249
+	je	@@2	;@0A24E
+	test	word ptr ds:[5182h], 8000h	;@0A250
+	je	@@2	;@0A256
+	mov	ax, 8080h	;@0A258
+	call	L09442	;@0A25B
+	clc	;@0A25E
+	ret	;@0A25F
+L0A260:	test	word ptr ds:[517Ch], 8	;@0A260
+	jne	@@1	;@0A266
+	ret	;@0A268
+@@1:	mov	al, byte ptr es:[bp+5]	;@0A269
+	test	al, 2	;@0A26D
+	jne	@@2	;@0A26F
+	test	al, 1	;@0A271
+	jne	@@3	;@0A273
+	mov	ax, word ptr ds:[517Eh]	;@0A275
+	and	ax, ax	;@0A278
+	je	@@3	;@0A27A
+	call	L007A0	;@0A27C
+	je	@@3	;@0A27F
+@@2:	stc	;@0A281
+@@3:	ret	;@0A282
+L0A283:	test	word ptr ds:[517Ch], 8	;@0A283
+	je	@@4	;@0A289
+	mov	al, byte ptr es:[bp+5]	;@0A28B
+	test	al, 2	;@0A28F
+	jne	@@3	;@0A291
+	test	al, 1	;@0A293
+	jne	@@4	;@0A295
+@@1:	mov	ax, word ptr ds:[517Eh]	;@0A297
+	and	ax, ax	;@0A29A
+	je	@@2	;@0A29C
+	call	L007A0	;@0A29E
+	je	@@2	;@0A2A1
+	mov	al, 4	;@0A2A3
+	ret	;@0A2A5
+@@2:	mov	al, 2	;@0A2A6
+	ret	;@0A2A8
+@@3:	call	@@1	;@0A2A9
+	cmp	al, 4	;@0A2AC
+	je	@@5	;@0A2AE
+	mov	al, 5	;@0A2B0
+	ret	;@0A2B2
+@@4:	call	@@1	;@0A2B3
+	cmp	al, 2	;@0A2B6
+	je	@@5	;@0A2B8
+	mov	al, 3	;@0A2BA
+@@5:	ret	;@0A2BC
+L0A2BD:	test	word ptr ds:[517Ch], 8	;@0A2BD
+	jne	@@1	;@0A2C3
+	ret	;@0A2C5
+@@1:	mov	al, byte ptr es:[bp+5]	;@0A2C6
+	and	al, 0Ch	;@0A2CA
+	je	@@2	;@0A2CC
+	test	al, 4	;@0A2CE
+	je	@@4	;@0A2D0
+	test	al, 8	;@0A2D2
+	je	@@5	;@0A2D4
+	mov	al, byte ptr es:[bp+4]	;@0A2D6
+	test	al, 40h	;@0A2DA
+	je	@@4	;@0A2DC
+	mov	bx, word ptr es:[bp+0Eh]	;@0A2DE
+	sub	bx, word ptr ds:[55FEh]	;@0A2E2
+	cmp	bx, 3Ch	;@0A2E6
+	ret	;@0A2E9
+@@2:	test	byte ptr es:[bp+4], 80h	;@0A2EA
+	je	@@3	;@0A2EF
+	cmp	word ptr es:[bp+6], 0	;@0A2F1
+	jne	@@3	;@0A2F6
+	mov	al, byte ptr es:[bp+24h]	;@0A2F8
+	cbw	;@0A2FC
+	cmp	word ptr es:[bp+0Ch], ax	;@0A2FD
+	jne	@@4	;@0A301
+	ret	;@0A303
+@@3:	mov	ax, word ptr ds:[517Eh]	;@0A304
+	and	ax, ax	;@0A307
+	je	@@5	;@0A309
+	call	L007A0	;@0A30B
+	je	@@5	;@0A30E
+@@4:	stc	;@0A310
+@@5:	ret	;@0A311
+L0A312:	mov	ax, word ptr ds:[517Eh]	;@0A312
+	and	ax, ax	;@0A315
+	je	@@1	;@0A317
+	call	L007A0	;@0A319
+	je	@@1	;@0A31C
+	mov	al, 3	;@0A31E
+	ret	;@0A320
+@@1:	mov	al, 2	;@0A321
+	ret	;@0A323
+L0A324:	call	L0A2BD	;@0A324
+	jb	@@2	;@0A327
+	mov	ax, word ptr ds:[517Eh]	;@0A329
+	and	ax, ax	;@0A32C
+	je	@@1	;@0A32E
+	call	L007A0	;@0A330
+	je	@@1	;@0A333
+	mov	al, 67h	;@0A335
+	jmp	L044C2	;@0A337
+@@1:	ret	;@0A33A
+@@2:	mov	ax, word ptr ds:[517Eh]	;@0A33B
+	and	ax, ax	;@0A33E
+	je	@@3	;@0A340
+	call	L007A0	;@0A342
+	jne	@@4	;@0A345
+@@3:	mov	al, 67h	;@0A347
+	jmp	L044C2	;@0A349
+@@4:	ret	;@0A34C
+	db	90h	;@0A34D
+L0A34E:	mov	al, byte ptr es:[bp]	;@0A34E
+	cmp	al, 3	;@0A352
+	je	L0A36D	;@0A354
+	cmp	al, 2	;@0A356
+	je	L0A35B	;@0A358
+	ret	;@0A35A
+L0A35B:	mov	ax, word ptr ds:[517Eh]	;@0A35B
+	and	ax, ax	;@0A35E
+	je	@@1	;@0A360
+	call	L007A0	;@0A362
+	je	@@1	;@0A365
+	mov	al, 66h	;@0A367
+	jmp	L044C2	;@0A369
+@@1:	ret	;@0A36C
+L0A36D:	mov	ax, word ptr ds:[517Eh]	;@0A36D
+	and	ax, ax	;@0A370
+	je	@@1	;@0A372
+	call	L007A0	;@0A374
+	je	@@1	;@0A377
+	ret	;@0A379
+@@1:	mov	al, 66h	;@0A37A
+	jmp	L044C2	;@0A37C
+L0A37F:	call	L0A3C1	;@0A37F
+	jne	@@2	;@0A382
+	test	byte ptr es:[bp+4], 80h	;@0A384
+	je	@@1	;@0A389
+	jmp	L0A324	;@0A38B
+@@1:	ret	;@0A38D
+@@2:	call	L09113	;@0A38E
+	sub	al, 8	;@0A391
+	cmp	al, 1	;@0A393
+	je	@@4	;@0A395
+@@3:	mov	bx, 1CE6h	;@0A397
+	xlat	;@0A39A
+	call	L0446C	;@0A39B
+	jmp	L0A324	;@0A39E
+@@4:	test	word ptr ds:[5182h], 4	;@0A3A0
+	je	@@3	;@0A3A6
+	cmp	byte ptr ds:[55FAh], 0	;@0A3A8
+	je	@@3	;@0A3AD
+	test	word ptr ds:[517Ch], 80h	;@0A3AF
+	je	@@3	;@0A3B5
+	push	cx	;@0A3B7
+	mov	cx, 8060h	;@0A3B8
+	call	L0352C	;@0A3BB
+	pop	cx	;@0A3BE
+	jmp	@@3	;@0A3BF
+L0A3C1:	test	byte ptr es:[bp+4], 80h	;@0A3C1
+	jne	@@1	;@0A3C6
+	ret	;@0A3C8
+@@1:	call	@@5	;@0A3C9
+	and	ax, ax	;@0A3CC
+	je	@@3	;@0A3CE
+	push	ax	;@0A3D0
+	call	L0912A	;@0A3D1
+	pop	bx	;@0A3D4
+	xchg	ax, bx	;@0A3D5
+	cmp	ax, bx	;@0A3D6
+	je	@@4	;@0A3D8
+	mov	bx, word ptr ds:[55FCh]	;@0A3DA
+	cmp	bx, word ptr ds:[565Ah]	;@0A3DE
+	je	@@2	;@0A3E2
+	ret	;@0A3E4
+@@2:	mov	ax, 3Ch	;@0A3E5
+	call	L09442	;@0A3E8
+	xor	ax, ax	;@0A3EB
+	ret	;@0A3ED
+@@3:	mov	ax, 31h	;@0A3EE
+	call	L09442	;@0A3F1
+@@4:	xor	ax, ax	;@0A3F4
+	ret	;@0A3F6
+@@5:	push	cx	;@0A3F7
+	mov	bx, word ptr es:[bp+14h]	;@0A3F8
+	and	bx, bx	;@0A3FC
+	je	@@8	;@0A3FE
+	push	es	;@0A400
+	push	bp	;@0A401
+	mov	ax, bx	;@0A402
+	call	far ptr L101E0	;@0A404
+	call	L01A84	;@0A409
+	call	far ptr L101E0	;@0A40C
+	cmp	word ptr es:[bp+6], 0	;@0A411
+	pop	bp	;@0A416
+	pop	es	;@0A417
+	jne	@@6	;@0A418
+	call	L0A8AA	;@0A41A
+@@6:	mov	bx, word ptr es:[bp+14h]	;@0A41D
+	jmp	@@27	;@0A421
+@@7:	call	L0912A	;@0A424
+	mov	bx, ax	;@0A427
+	jmp	@@27	;@0A429
+@@8:	mov	ax, word ptr es:[bp+18h]	;@0A42C
+	and	ax, ax	;@0A430
+	je	@@7	;@0A432
+	call	L0077A	;@0A434
+	jne	@@7	;@0A437
+	call	L0912A	;@0A439
+	push	es	;@0A43C
+	push	bp	;@0A43D
+	call	far ptr L101E0	;@0A43E
+	call	L01A84	;@0A443
+	mov	di, ax	;@0A446
+	call	far ptr L101E0	;@0A448
+	mov	bx, word ptr es:[bp+6]	;@0A44D
+	pop	bp	;@0A451
+	pop	es	;@0A452
+	and	bx, bx	;@0A453
+	je	@@9	;@0A455
+	jmp	@@18	;@0A457
+@@9:	call	L0A8AA	;@0A45A
+	je	@@7	;@0A45D
+	cmp	word ptr es:[bp+6], 0	;@0A45F
+	jne	@@17	;@0A464
+	xor	di, di	;@0A466
+	mov	cx, 6	;@0A468
+	test	word ptr ds:[517Ch], 8	;@0A46B
+	jne	@@10	;@0A471
+	mov	cx, 4	;@0A473
+@@10:	mov	bx, 5666h	;@0A476
+@@11:	mov	ax, word ptr [bx]	;@0A479
+	call	L0087F	;@0A47B
+	jne	@@14	;@0A47E
+	push	bx	;@0A480
+	push	cx	;@0A481
+	push	di	;@0A482
+	push	es	;@0A483
+	push	bp	;@0A484
+	call	far ptr L101E0	;@0A485
+	call	L01A84	;@0A48A
+	push	ax	;@0A48D
+	call	far ptr L101F7	;@0A48E
+	mov	di, ax	;@0A493
+	pop	ax	;@0A495
+	call	far ptr L101E0	;@0A496
+	cmp	word ptr es:[bp+6], 0	;@0A49B
+	pop	bp	;@0A4A0
+	pop	es	;@0A4A1
+	jne	@@12	;@0A4A2
+	call	L0A8AA	;@0A4A4
+	pop	di	;@0A4A7
+	jne	@@13	;@0A4A8
+	pop	cx	;@0A4AA
+	pop	bx	;@0A4AB
+	mov	bx, word ptr [bx]	;@0A4AC
+	jmp	@@27	;@0A4AE
+@@12:	pop	ax	;@0A4B1
+@@13:	pop	cx	;@0A4B2
+	pop	bx	;@0A4B3
+@@14:	add	bx, 2	;@0A4B4
+	loop	@@11	;@0A4B7
+	and	di, di	;@0A4B9
+	je	@@21	;@0A4BB
+	test	byte ptr ds:[38C9h], 0Bh	;@0A4BD
+	jne	@@21	;@0A4C2
+	mov	word ptr es:[bp+6], di	;@0A4C4
+	or	byte ptr ds:[38CAh], 1	;@0A4C8
+@@15:	xor	bx, bx	;@0A4CD
+	mov	ax, word ptr ds:[55FCh]	;@0A4CF
+	cmp	ax, word ptr ds:[565Ah]	;@0A4D2
+	jne	@@16	;@0A4D6
+	db	0E9h, 7Eh, 0	; jmp near ptr @@27	;@0A4D8
+@@16:	mov	bx, di	;@0A4DB
+	jmp	short @@27	;@0A4DD
+@@17:	mov	di, word ptr ds:[565Ch]	;@0A4DF
+	jmp	@@15	;@0A4E3
+@@18:	test	byte ptr ds:[38C9h], 0Bh	;@0A4E5
+	jne	@@21	;@0A4EA
+	mov	ax, bx	;@0A4EC
+	xor	bx, bx	;@0A4EE
+	cmp	ax, word ptr es:[bp+1Ah]	;@0A4F0
+	je	@@26	;@0A4F4
+	push	di	;@0A4F6
+	mov	cx, 6	;@0A4F7
+	test	word ptr ds:[517Ch], 8	;@0A4FA
+	jne	@@19	;@0A500
+	mov	cx, 4	;@0A502
+@@19:	mov	bx, 5666h	;@0A505
+@@20:	mov	ax, word ptr [bx]	;@0A508
+	call	L0087F	;@0A50A
+	jne	@@24	;@0A50D
+	push	bx	;@0A50F
+	push	cx	;@0A510
+	push	es	;@0A511
+	push	bp	;@0A512
+	call	far ptr L101E0	;@0A513
+	call	L01A84	;@0A518
+	call	far ptr L101E0	;@0A51B
+	mov	bx, word ptr es:[bp+6]	;@0A520
+	pop	bp	;@0A524
+	pop	es	;@0A525
+	and	bx, bx	;@0A526
+	jne	@@22	;@0A528
+	call	L0A8AA	;@0A52A
+	jne	@@23	;@0A52D
+	pop	cx	;@0A52F
+	pop	bx	;@0A530
+	mov	bx, word ptr [bx]	;@0A531
+	pop	di	;@0A533
+	jmp	short @@27	;@0A534
+@@21:	xor	bx, bx	;@0A536
+	jmp	short @@27	;@0A538
+@@22:	cmp	bx, word ptr es:[bp+1Ah]	;@0A53A
+	jne	@@23	;@0A53E
+	pop	cx	;@0A540
+	pop	bx	;@0A541
+	mov	bx, word ptr [bx]	;@0A542
+	jmp	short @@25	;@0A544
+@@23:	pop	cx	;@0A546
+	pop	bx	;@0A547
+@@24:	add	bx, 2	;@0A548
+	loop	@@20	;@0A54B
+	xor	bx, bx	;@0A54D
+@@25:	pop	di	;@0A54F
+@@26:	mov	word ptr es:[bp+6], di	;@0A550
+	or	byte ptr ds:[38CAh], 1	;@0A554
+@@27:	mov	cx, bx	;@0A559
+	mov	al, byte ptr es:[bp+1]	;@0A55B
+	and	al, 7	;@0A55F
+	cmp	al, 3	;@0A561
+	je	@@28	;@0A563
+	cmp	al, 2	;@0A565
+	jne	@@30	;@0A567
+@@28:	sub	byte ptr es:[bp+1], 2	;@0A569
+	jne	@@29	;@0A56E
+	and	byte ptr es:[bp+4], 0FBh	;@0A570
+	xor	ax, ax	;@0A575
+	mov	word ptr es:[bp+18h], ax	;@0A577
+	mov	word ptr es:[bp+1Ah], ax	;@0A57B
+	mov	ax, cx	;@0A57F
+	pop	cx	;@0A581
+	and	ax, ax	;@0A582
+	ret	;@0A584
+@@29:	call	L0A9EE	;@0A585
+@@30:	mov	ax, cx	;@0A588
+	pop	cx	;@0A58A
+	and	ax, ax	;@0A58B
+	ret	;@0A58D
+L0A58E:	mov	al, byte ptr es:[bp]	;@0A58E
+	cmp	al, 2	;@0A592
+	je	L0A5BC	;@0A594
+	cmp	al, 1	;@0A596
+	jne	L0A5C8	;@0A598
+L0A59A:	mov	dh, 2	;@0A59A
+	call	L0A982	;@0A59C
+	mov	al, byte ptr es:[bp+0Ah]	;@0A59F
+	jmp	L044EE	;@0A5A3
+	db	0E8h, 14h, 0FDh, 72h, 1Dh, 26h, 8Ah, 46h, 24h, 98h, '&;F', 0Ch	;@0A5A6
+	db	74h, 6, 0B8h, 21h, 0, 0E9h, 86h, 0EEh
+L0A5BC:	mov	dh, 2	;@0A5BC
+	call	L0A982	;@0A5BE
+	mov	ax, word ptr es:[bp+0Ah]	;@0A5C1
+	jmp	L0450C	;@0A5C5
+L0A5C8:	mov	dh, 4	;@0A5C8
+	call	L0A982	;@0A5CA
+	mov	ax, word ptr es:[bp+0Ah]	;@0A5CD
+	mov	cx, word ptr es:[bp+0Ch]	;@0A5D1
+	jmp	L04528	;@0A5D5
+L0A5D8:	mov	dh, 2	;@0A5D8
+	call	L0A982	;@0A5DA
+	mov	ax, word ptr es:[bp+0Ah]	;@0A5DD
+	mov	cx, word ptr es:[bp+16h]	;@0A5E1
+	jmp	L04528	;@0A5E5
+	db	0B6h, 4, 0E8h, 95h, 3, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch	;@0A5E8
+	db	26h, 8Ah, 76h, 24h, 0B9h, 8, 0, 0E9h, 91h, 9Fh, 0B6h, 4, 0E8h
+	db	7Eh, 3, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch, 26h, 8Ah, 76h
+	db	24h, 0B9h, 6, 0, 0E9h, 7Ah, 9Fh
+L0A616:	mov	dh, 4	;@0A616
+	call	L0A982	;@0A618
+	mov	ax, word ptr es:[bp+0Ah]	;@0A61B
+	mov	cx, word ptr es:[bp+0Ch]	;@0A61F
+	mov	di, word ptr es:[bp+16h]	;@0A623
+	jmp	L04547	;@0A627
+	db	0B6h, 4, 0E8h, 53h, 3, 26h, 8Bh, 46h, 0Ah, 26h, 8Bh, 5Eh, 0Ch	;@0A62A
+	db	26h, 8Ah, 76h, 24h, 0B9h, 0Ah, 0, 0E9h, 4Fh, 9Fh, 0B9h, 4, 0, 0E9h
+	db	23h, 9Fh, 0B9h, 6, 0, 0E9h, 1Dh, 9Fh, 0B9h, 8, 0, 0E9h, 17h, 9Fh
+	db	0B9h, 0Ah, 0, 0E9h, 11h, 9Fh, 90h
+L0A65A:	test	byte ptr es:[bp+4], 80h	;@0A65A
+	jne	@@4	;@0A65F
+	test	byte ptr es:[bp+4], 40h	;@0A661
+	je	@@2	;@0A666
+	mov	ax, word ptr es:[bp+0Eh]	;@0A668
+	call	L09113	;@0A66C
+	cmp	al, 8	;@0A66F
+	jae	@@1	;@0A671
+	or	al, cl	;@0A673
+	or	al, 0C0h	;@0A675
+	jmp	L044EE	;@0A677
+@@1:	mov	ax, 3Eh	;@0A67A
+	jmp	L09442	;@0A67D
+@@2:	mov	ax, 3Dh	;@0A680
+	jmp	L09442	;@0A683
+@@3:	mov	ax, 21h	;@0A686
+	jmp	L09442	;@0A689
+@@4:	call	L0A2BD	;@0A68C
+	jae	@@5	;@0A68F
+	jmp	@@13	;@0A691
+@@5:	mov	al, byte ptr es:[bp+24h]	;@0A694
+	cbw	;@0A698
+	cmp	ax, word ptr es:[bp+0Ch]	;@0A699
+	jne	@@3	;@0A69D
+	mov	al, byte ptr es:[bp+4]	;@0A69F
+	test	al, 40h	;@0A6A3
+	jne	@@7	;@0A6A5
+	mov	al, 6	;@0A6A7
+	or	al, cl	;@0A6A9
+	call	L044EE	;@0A6AB
+	mov	dh, 2	;@0A6AE
+	call	L0A982	;@0A6B0
+	mov	ax, word ptr es:[bp+0Ah]	;@0A6B3
+	jmp	L0450C	;@0A6B7
+@@6:	mov	al, cl	;@0A6BA
+	or	al, 80h	;@0A6BC
+	call	L044EE	;@0A6BE
+	mov	dh, 2	;@0A6C1
+	call	L0A982	;@0A6C3
+	mov	ax, word ptr es:[bp+0Ah]	;@0A6C6
+	jmp	L0450C	;@0A6CA
+@@7:	cmp	word ptr es:[bp+6], 0	;@0A6CD
+	jne	@@6	;@0A6D2
+	test	al, 20h	;@0A6D4
+	jne	@@3	;@0A6D6
+	mov	ax, word ptr es:[bp+0Eh]	;@0A6D8
+	sub	ax, word ptr ds:[55FEh]	;@0A6DC
+	shr	ax, 1	;@0A6E0
+	sub	ax, 1Eh	;@0A6E2
+	jb	@@3	;@0A6E5
+	cmp	al, 8	;@0A6E7
+	jae	@@3	;@0A6E9
+	mov	bx, 1D04h	;@0A6EB
+	xlat	;@0A6EE
+	test	al, 80h	;@0A6EF
+	jne	@@3	;@0A6F1
+	mov	dh, al	;@0A6F3
+	test	byte ptr es:[bp+4], 10h	;@0A6F5
+	je	@@8	;@0A6FA
+	mov	ax, word ptr es:[bp+12h]	;@0A6FC
+	sub	ax, word ptr ds:[55FEh]	;@0A700
+	shr	ax, 1	;@0A704
+	sub	ax, 1Eh	;@0A706
+	jb	@@12	;@0A709
+	cmp	al, 8	;@0A70B
+	jae	@@12	;@0A70D
+	mov	bx, 1D04h	;@0A70F
+	xlat	;@0A712
+	test	al, 80h	;@0A713
+	jne	@@12	;@0A715
+	shl	al, 1	;@0A717
+	shl	al, 1	;@0A719
+	or	al, dh	;@0A71B
+	mov	bx, 1D0Ch	;@0A71D
+	xlat	;@0A720
+	test	al, 80h	;@0A721
+	jne	@@12	;@0A723
+	mov	dh, al	;@0A725
+@@8:	xor	dh, 4	;@0A727
+	or	cl, dh	;@0A72A
+	call	L0A0FA	;@0A72C
+	jb	@@6	;@0A72F
+	mov	ax, word ptr es:[bp+0Eh]	;@0A731
+	cmp	ax, word ptr ds:[5654h]	;@0A735
+	jne	@@9	;@0A739
+	test	byte ptr es:[bp+4], 10h	;@0A73B
+	je	@@10	;@0A740
+@@9:	mov	ax, word ptr es:[bp+0Ah]	;@0A742
+	or	ax, word ptr es:[bp+0Ch]	;@0A746
+	je	@@11	;@0A74A
+@@10:	mov	al, cl	;@0A74C
+	or	al, 40h	;@0A74E
+	call	L044EE	;@0A750
+	mov	al, byte ptr es:[bp+0Ah]	;@0A753
+	jmp	L044EE	;@0A757
+@@11:	mov	al, cl	;@0A75A
+	jmp	L044EE	;@0A75C
+@@12:	jmp	@@3	;@0A75F
+@@13:	mov	al, byte ptr es:[bp+4]	;@0A762
+	test	al, 40h	;@0A766
+	jne	@@15	;@0A768
+	mov	al, 5	;@0A76A
+	or	al, cl	;@0A76C
+	call	L044EE	;@0A76E
+@@14:	mov	dh, 4	;@0A771
+	call	L0A982	;@0A773
+	mov	ax, word ptr es:[bp+0Ah]	;@0A776
+	mov	cx, word ptr es:[bp+0Ch]	;@0A77A
+	jmp	L04528	;@0A77E
+@@15:	test	al, 30h	;@0A781
+	jne	@@21	;@0A783
+	mov	ax, word ptr es:[bp+0Eh]	;@0A785
+	sub	ax, word ptr ds:[55FEh]	;@0A789
+	shr	ax, 1	;@0A78D
+	sub	ax, 8	;@0A78F
+	jb	@@12	;@0A792
+	cmp	al, 8	;@0A794
+	jae	@@12	;@0A796
+	or	cl, al	;@0A798
+	call	L0A114	;@0A79A
+	jb	@@16	;@0A79D
+	mov	ax, word ptr es:[bp+0Ah]	;@0A79F
+	or	ax, word ptr es:[bp+0Ch]	;@0A7A3
+	je	@@17	;@0A7A7
+	or	cl, 40h	;@0A7A9
+	jmp	short @@17	;@0A7AC
+@@16:	or	cl, 80h	;@0A7AE
+@@17:	mov	al, cl	;@0A7B1
+	and	al, 0C7h	;@0A7B3
+	cmp	al, 5	;@0A7B5
+	jne	@@18	;@0A7B7
+	or	cl, 40h	;@0A7B9
+@@18:	mov	al, cl	;@0A7BC
+	call	L044EE	;@0A7BE
+	and	al, 7	;@0A7C1
+	cmp	al, 4	;@0A7C3
+	jne	@@19	;@0A7C5
+	mov	al, 24h	;@0A7C7
+	call	L044EE	;@0A7C9
+@@19:	test	cl, 40h	;@0A7CC
+	jne	@@20	;@0A7CF
+	test	cl, 80h	;@0A7D1
+	jne	@@14	;@0A7D4
+	ret	;@0A7D6
+@@20:	mov	al, byte ptr es:[bp+0Ah]	;@0A7D7
+	jmp	L044EE	;@0A7DB
+@@21:	or	cl, 4	;@0A7DE
+	mov	bx, word ptr es:[bp+10h]	;@0A7E1
+	xor	ch, ch	;@0A7E5
+	cmp	bx, 1	;@0A7E7
+	je	@@22	;@0A7EA
+	mov	ch, 40h	;@0A7EC
+	cmp	bx, 2	;@0A7EE
+	je	@@22	;@0A7F1
+	mov	ch, 80h	;@0A7F3
+	cmp	bx, 4	;@0A7F5
+	je	@@22	;@0A7F8
+	mov	ch, 0C0h	;@0A7FA
+	cmp	bx, 8	;@0A7FC
+	jne	@@23	;@0A7FF
+@@22:	test	al, 10h	;@0A801
+	jne	@@24	;@0A803
+	mov	ax, word ptr es:[bp+0Eh]	;@0A805
+	sub	ax, word ptr ds:[55FEh]	;@0A809
+	shr	ax, 1	;@0A80D
+	sub	ax, 8	;@0A80F
+	jb	@@23	;@0A812
+	cmp	al, 8	;@0A814
+	jae	@@23	;@0A816
+	cmp	al, 4	;@0A818
+	je	@@23	;@0A81A
+	shl	al, 1	;@0A81C
+	shl	al, 1	;@0A81E
+	shl	al, 1	;@0A820
+	or	al, 5	;@0A822
+	or	ch, al	;@0A824
+	mov	al, cl	;@0A826
+	call	L044EE	;@0A828
+	mov	al, ch	;@0A82B
+	call	L044EE	;@0A82D
+	jmp	@@14	;@0A830
+@@23:	jmp	@@3	;@0A833
+@@24:	call	L0A114	;@0A836
+	jb	@@25	;@0A839
+	mov	ax, word ptr es:[bp+0Ah]	;@0A83B
+	or	ax, word ptr es:[bp+0Ch]	;@0A83F
+	je	@@26	;@0A843
+	or	cl, 40h	;@0A845
+	jmp	short @@26	;@0A848
+@@25:	or	cl, 80h	;@0A84A
+@@26:	mov	ax, word ptr es:[bp+12h]	;@0A84D
+	sub	ax, word ptr ds:[55FEh]	;@0A851
+	shr	ax, 1	;@0A855
+	sub	ax, 8	;@0A857
+	jb	@@23	;@0A85A
+	cmp	al, 8	;@0A85C
+	jae	@@23	;@0A85E
+	mov	dl, al	;@0A860
+	mov	ax, word ptr es:[bp+0Eh]	;@0A862
+	sub	ax, word ptr ds:[55FEh]	;@0A866
+	shr	ax, 1	;@0A86A
+	sub	ax, 8	;@0A86C
+	jb	@@23	;@0A86F
+	cmp	al, 8	;@0A871
+	jae	@@23	;@0A873
+	test	byte ptr es:[bp+4], 20h	;@0A875
+	jne	@@27	;@0A87A
+	cmp	al, 4	;@0A87C
+	jne	@@27	;@0A87E
+	xchg	al, dl	;@0A880
+@@27:	or	ch, dl	;@0A882
+	cmp	al, 4	;@0A884
+	je	@@23	;@0A886
+	shl	al, 1	;@0A888
+	shl	al, 1	;@0A88A
+	shl	al, 1	;@0A88C
+	or	ch, al	;@0A88E
+	mov	ax, cx	;@0A890
+	and	ax, 7C0h	;@0A892
+	cmp	ax, 500h	;@0A895
+	jne	@@28	;@0A898
+	add	cl, 40h	;@0A89A
+@@28:	mov	al, cl	;@0A89D
+	call	L044EE	;@0A89F
+	mov	al, ch	;@0A8A2
+	call	L044EE	;@0A8A4
+	jmp	@@19	;@0A8A7
+L0A8AA:	push	di	;@0A8AA
+	push	es	;@0A8AB
+	push	bp	;@0A8AC
+	call	far ptr L101E0	;@0A8AD
+	mov	di, bp	;@0A8B2
+	push	es	;@0A8B4
+	pop	ds	;@0A8B5
+	pop	bp	;@0A8B6
+	pop	es	;@0A8B7
+	mov	ax, word ptr es:[bp+16h]	;@0A8B8
+	cwd	;@0A8BC
+	nop	;@0A8BD
+	cmp	ax, word ptr [di+0Ah]	;@0A8BE
+	jne	@@4	;@0A8C1
+	cmp	dx, word ptr [di+0Ch]	;@0A8C3
+	jne	@@4	;@0A8C6
+	cmp	dl, byte ptr [di+24h]	;@0A8C8
+	jne	@@4	;@0A8CB
+	test	byte ptr [di+4], 4	;@0A8CD
+	je	@@5	;@0A8D1
+	mov	al, byte ptr es:[bp+1]	;@0A8D3
+	and	al, 7	;@0A8D7
+	cmp	al, 3	;@0A8D9
+	je	@@1	;@0A8DB
+	cmp	al, 2	;@0A8DD
+	jne	@@4	;@0A8DF
+@@1:	mov	ax, word ptr es:[bp+18h]	;@0A8E1
+	push	es	;@0A8E5
+	push	bp	;@0A8E6
+	call	far ptr L101E0	;@0A8E7
+	call	L01659	;@0A8EC
+	pop	bp	;@0A8EF
+	pop	es	;@0A8F0
+	cmp	ax, word ptr [di+1Ah]	;@0A8F1
+	je	@@4	;@0A8F4
+	push	es	;@0A8F6
+	push	bp	;@0A8F7
+	call	far ptr L101E0	;@0A8F8
+	call	L01640	;@0A8FD
+	pop	bp	;@0A900
+	pop	es	;@0A901
+	cmp	ax, word ptr [di+1Ah]	;@0A902
+	je	@@2	;@0A905
+	test	word ptr ss:[517Ch], 1000h	;@0A907
+	jne	@@4	;@0A90E
+	test	byte ptr ss:[5187h], 1	;@0A910
+	je	@@3	;@0A916
+	mov	ax, word ptr [di+1Ah]	;@0A918
+	push	es	;@0A91B
+	push	bp	;@0A91C
+	call	far ptr L101E0	;@0A91D
+	call	L01640	;@0A922
+	pop	bp	;@0A925
+	pop	es	;@0A926
+	cmp	ax, word ptr es:[bp+18h]	;@0A927
+	jne	@@4	;@0A92B
+@@2:	mov	ax, word ptr [di+1Ah]	;@0A92D
+	mov	word ptr es:[bp+18h], ax	;@0A930
+	jmp	short @@4	;@0A934
+@@3:	xor	al, al	;@0A936
+	dec	al	;@0A938
+@@4:	push	ss	;@0A93A
+	pop	ds	;@0A93B
+	pop	di	;@0A93C
+	ret	;@0A93D
+@@5:	mov	al, byte ptr es:[bp+1]	;@0A93E
+	and	al, 7	;@0A942
+	cmp	al, 3	;@0A944
+	je	@@3	;@0A946
+	cmp	al, 2	;@0A948
+	je	@@3	;@0A94A
+	xor	al, al	;@0A94C
+	jmp	@@4	;@0A94E
+L0A950:	mov	ax, word ptr [di+2Ah]	;@0A950
+	and	ax, ax	;@0A953
+	jne	@@1	;@0A955
+	push	es	;@0A957
+	push	bp	;@0A958
+	push	cx	;@0A959
+	push	si	;@0A95A
+	push	di	;@0A95B
+	mov	ax, word ptr [di]	;@0A95C
+	call	far ptr L101E0	;@0A95E
+	call	L004D1	;@0A963
+	call	far ptr L10375	;@0A966
+	xor	bp, bp	;@0A96B
+	call	far ptr L12F1D	;@0A96D
+	pop	di	;@0A972
+	pop	si	;@0A973
+	pop	cx	;@0A974
+	pop	bp	;@0A975
+	pop	es	;@0A976
+	mov	word ptr [di+2Ah], ax	;@0A977
+@@1:	push	es	;@0A97A
+	push	bp	;@0A97B
+	call	L03BD2	;@0A97C
+	pop	bp	;@0A97F
+	pop	es	;@0A980
+	ret	;@0A981
+L0A982:	test	byte ptr es:[bp+4], 4	;@0A982
+	jne	@@2	;@0A987
+@@1:	ret	;@0A989
+@@2:	test	byte ptr ds:[38CAh], 1	;@0A98A
+	jne	@@1	;@0A98F
+	mov	bx, word ptr es:[bp+18h]	;@0A991
+	mov	di, word ptr es:[bp+1Ah]	;@0A995
+	mov	al, byte ptr es:[bp+1]	;@0A999
+	test	word ptr ds:[38B6h], 800h	;@0A99D
+	jne	@@4	;@0A9A3
+	and	al, 0EFh	;@0A9A5
+@@3:	push	es	;@0A9A7
+	push	bp	;@0A9A8
+	call	L03BE6	;@0A9A9
+	pop	bp	;@0A9AC
+	pop	es	;@0A9AD
+	ret	;@0A9AE
+@@4:	cmp	al, 11h	;@0A9AF
+	je	@@5	;@0A9B1
+	cmp	al, 13h	;@0A9B3
+	jne	@@3	;@0A9B5
+@@5:	push	es	;@0A9B7
+	push	bp	;@0A9B8
+	push	ax	;@0A9B9
+	mov	ax, word ptr es:[bp+26h]	;@0A9BA
+	call	far ptr L101E0	;@0A9BE
+	pop	ax	;@0A9C3
+	call	L0028C	;@0A9C4
+	pop	bp	;@0A9C7
+	pop	es	;@0A9C8
+	jmp	@@3	;@0A9C9
+L0A9CB:	test	ah, 80h	;@0A9CB
+	jne	@@1	;@0A9CE
+	cmp	ax, 0Bh	;@0A9D0
+	jae	@@2	;@0A9D3
+	mov	bx, ax	;@0A9D5
+	mov	al, byte ptr [bx+1CA9h]	;@0A9D7
+	ret	;@0A9DB
+@@1:	not	ax	;@0A9DC
+	cmp	ax, 3	;@0A9DE
+	jae	@@2	;@0A9E1
+	mov	bx, ax	;@0A9E3
+	mov	al, byte ptr [bx+1CB4h]	;@0A9E5
+	ret	;@0A9E9
+@@2:	mov	al, 0	;@0A9EA
+	ret	;@0A9EC
+	db	90h	;@0A9ED
+L0A9EE:	test	byte ptr es:[bp+4], 4	;@0A9EE
+	je	@@1	;@0A9F3
+	cmp	word ptr es:[bp+6], 0	;@0A9F5
+	jne	@@6	;@0A9FA
+	mov	bx, word ptr es:[bp+18h]	;@0A9FC
+	test	byte ptr es:[bp+1], 8	;@0AA00
+	je	@@2	;@0AA05
+	mov	ax, word ptr ds:[517Eh]	;@0AA07
+	cmp	ax, word ptr es:[bp+1Ah]	;@0AA0A
+	jne	@@1	;@0AA0E
+	cmp	ax, bx	;@0AA10
+	je	@@3	;@0AA12
+	push	es	;@0AA14
+	push	bp	;@0AA15
+	call	far ptr L101E0	;@0AA16
+	call	L01659	;@0AA1B
+	pop	bp	;@0AA1E
+	pop	es	;@0AA1F
+	cmp	ax, bx	;@0AA20
+	je	@@3	;@0AA22
+	push	es	;@0AA24
+	push	bp	;@0AA25
+	call	far ptr L101E0	;@0AA26
+	call	L01640	;@0AA2B
+	pop	bp	;@0AA2E
+	pop	es	;@0AA2F
+	cmp	ax, bx	;@0AA30
+	je	@@3	;@0AA32
+@@1:	ret	;@0AA34
+@@2:	cmp	bx, word ptr es:[bp+1Ah]	;@0AA35
+	jne	@@7	;@0AA39
+@@3:	mov	al, byte ptr es:[bp+1]	;@0AA3B
+	and	al, 7	;@0AA3F
+	cmp	al, 1	;@0AA41
+	je	@@4	;@0AA43
+	cmp	al, 5	;@0AA45
+	je	@@4	;@0AA47
+	cmp	al, 6	;@0AA49
+	je	@@4	;@0AA4B
+	cmp	al, 3	;@0AA4D
+	jne	@@7	;@0AA4F
+@@4:	mov	ax, bx	;@0AA51
+	call	L007C3	;@0AA53
+	je	@@5	;@0AA56
+	test	byte ptr es:[bp+1], 8	;@0AA58
+	je	@@7	;@0AA5D
+@@5:	cmp	byte ptr es:[bp+1], 3	;@0AA5F
+	jne	@@6	;@0AA64
+	sub	byte ptr es:[bp+1], 1	;@0AA66
+	ret	;@0AA6B
+@@6:	and	byte ptr es:[bp+4], 0FBh	;@0AA6C
+	xor	ax, ax	;@0AA71
+	mov	byte ptr es:[bp+1], al	;@0AA73
+	mov	word ptr es:[bp+1Ah], ax	;@0AA77
+	mov	word ptr es:[bp+18h], ax	;@0AA7B
+@@7:	ret	;@0AA7F
+	db	26h, 80h, 66h, 4, 8Fh, 33h, 0C0h, 26h, 89h, 46h, 0Eh, 26h, 89h	;@0AA80
+	db	46h, 12h, 26h, 0C7h, 46h, 10h, 1, 0, 0E9h, 94h, 8Ah
+L0AA98:	and	byte ptr es:[bp+4], 0FBh	;@0AA98
+	xor	ax, ax	;@0AA9D
+	mov	byte ptr es:[bp+1], al	;@0AA9F
+	mov	word ptr es:[bp+18h], ax	;@0AAA3
+	mov	word ptr es:[bp+1Ah], ax	;@0AAA7
+	jmp	L0352C	;@0AAAB
+L0AAAE:	xor	ax, ax	;@0AAAE
+	cmp	word ptr es:[bp+0Ch], ax	;@0AAB0
+	jne	L0AB03	;@0AAB4
+	cmp	byte ptr es:[bp+24h], al	;@0AAB6
+	jne	L0AB03	;@0AABA
+	ret	;@0AABC
+	db	26h, 8Ah, 46h, 0Bh, 98h, 99h, '&;V', 0Ch, 'u:&2f$u4', 0C3h, 26h	;@0AABD
+	db	8Ah, 46h, 0Dh, 98h, '&2f$u(', 0C3h
+L0AADC:	mov	al, byte ptr es:[bp+24h]	;@0AADC
+	cbw	;@0AAE0
+	mov	byte ptr es:[bp+24h], ah	;@0AAE1
+	test	word ptr ds:[517Ch], 1008h	;@0AAE5
+	jne	@@1	;@0AAEB
+	mov	al, ah	;@0AAED
+	cbw	;@0AAEF
+	mov	word ptr es:[bp+0Ch], ax	;@0AAF0
+@@1:	test	word ptr ds:[5182h], 1000h	;@0AAF4
+	je	@@2	;@0AAFA
+	mov	cx, 802Ch	;@0AAFC
+	jmp	L0352C	;@0AAFF
+@@2:	ret	;@0AB02
+L0AB03:	mov	cx, 14h	;@0AB03
+L0AB06:	xor	ax, ax	;@0AB06
+	mov	word ptr es:[bp+0Ah], ax	;@0AB08
+	mov	word ptr es:[bp+0Ch], ax	;@0AB0C
+	mov	byte ptr es:[bp+24h], al	;@0AB10
+	jmp	L0352C	;@0AB14
+L0AB17:	mov	al, byte ptr es:[bp+24h]	;@0AB17
+	and	al, al	;@0AB1B
+	je	@@1	;@0AB1D
+	cmp	al, 0FFh	;@0AB1F
+	jne	L0AADC	;@0AB21
+@@1:	test	word ptr ds:[517Ch], 1008h	;@0AB23
+	jne	@@2	;@0AB29
+	cbw	;@0AB2B
+	cmp	ax, word ptr es:[bp+0Ch]	;@0AB2C
+	jne	L0AADC	;@0AB30
+@@2:	ret	;@0AB32
+	db	90h	;@0AB33
+L0AB34:	test	byte ptr es:[bp+4], 1	;@0AB34
+	je	@@1	;@0AB39
+	mov	ah, byte ptr es:[bp+4]	;@0AB3B
+	and	ah, 2	;@0AB3F
+	push	es	;@0AB42
+	push	bp	;@0AB43
+	push	ax	;@0AB44
+	mov	ax, word ptr es:[bp+8]	;@0AB45
+	call	far ptr L101E0	;@0AB49
+	pop	ax	;@0AB4E
+	call	L004D1	;@0AB4F
+	call	L04D4D	;@0AB52
+	pop	bp	;@0AB55
+	pop	es	;@0AB56
+	mov	ax, word ptr [bx]	;@0AB57
+	mov	word ptr es:[bp+0Ah], ax	;@0AB59
+	mov	al, byte ptr [bx+4]	;@0AB5D
+	mov	byte ptr es:[bp+24h], al	;@0AB60
+	mov	ax, word ptr [bx+2]	;@0AB64
+	mov	word ptr es:[bp+0Ch], ax	;@0AB67
+	mov	word ptr es:[bp+8], 0	;@0AB6B
+	and	byte ptr es:[bp+4], 0FEh	;@0AB71
+@@1:	ret	;@0AB76
+	db	0, 0C6h, 6, 0CBh, 38h, 0FFh, 56h, 0E8h, 2Ah, 0, 72h, 1Ah, 75h	;@0AB77
+	db	18h, 0E8h, 3Eh, 0B0h, 72h, 13h, 75h, 11h, 0E8h, 95h, 7Dh, 74h
+	db	0Ch, 0C6h, 6, 0CBh, 38h, 0, 0E8h, 36h, 0B0h, 32h, 0C0h, 5Ah, 0C3h
+	db	80h, 26h, 0CAh, 38h, 0FEh, 5Eh, 32h, 0C0h, 0A2h, 0CBh, 38h, 0FEh
+	db	0C8h, 0C3h, 89h, 26h, 0AEh, 38h, 0E9h, 43h, 5
+L0ABB2:	test	word ptr ds:[517Ch], 1000h	;@0ABB2
+	jne	L0ABD3	;@0ABB8
+	call	L0B0F5	;@0ABBA
+	jne	L0ABD2	;@0ABBD
+	jmp	L05CCB	;@0ABBF
+L0ABC2:	test	word ptr ds:[517Ch], 1000h	;@0ABC2
+	jne	L0ABD3	;@0ABC8
+	call	L0B0F5	;@0ABCA
+	jne	L0ABD2	;@0ABCD
+	jmp	L05C72	;@0ABCF
+L0ABD2:	ret	;@0ABD2
+L0ABD3:	call	L02924	;@0ABD3
+	jne	@@9	;@0ABD6
+	and	ah, ah	;@0ABD8
+	je	@@3	;@0ABDA
+	add	si, 2	;@0ABDC
+	push	ax	;@0ABDF
+	push	dx	;@0ABE0
+	call	L02924	;@0ABE1
+	jne	@@1	;@0ABE4
+	cmp	ax, word ptr ds:[585Eh]	;@0ABE6
+	je	@@1	;@0ABEA
+	cmp	ax, word ptr ds:[5856h]	;@0ABEC
+	je	@@1	;@0ABF0
+	cmp	ax, word ptr ds:[585Ch]	;@0ABF2
+	jne	@@2	;@0ABF6
+@@1:	sub	si, 2	;@0ABF8
+	pop	dx	;@0ABFB
+	pop	ax	;@0ABFC
+	jmp	L0AFFD	;@0ABFD
+@@2:	sub	si, 2	;@0AC00
+	pop	dx	;@0AC03
+	pop	ax	;@0AC04
+@@3:	test	word ptr ds:[517Ch], 8	;@0AC05
+	je	@@4	;@0AC0B
+	cmp	ax, word ptr ds:[588Ch]	;@0AC0D
+	je	@@5	;@0AC11
+	cmp	ax, word ptr ds:[588Eh]	;@0AC13
+	je	@@7	;@0AC17
+@@4:	call	L0ACC5	;@0AC19
+	je	@@10	;@0AC1C
+	jmp	L0AD19	;@0AC1E
+@@5:	add	si, 2	;@0AC21
+	call	L0ABD3	;@0AC24
+	je	@@6	;@0AC27
+	call	L0B37E	;@0AC29
+@@6:	jmp	L05D06	;@0AC2C
+@@7:	add	si, 2	;@0AC2F
+	call	L0ABD3	;@0AC32
+	je	@@8	;@0AC35
+	call	L0B37E	;@0AC37
+@@8:	jmp	L05D1D	;@0AC3A
+@@9:	ret	;@0AC3D
+@@10:	call	L02924	;@0AC3E
+	jne	@@11	;@0AC41
+	cmp	ax, word ptr ds:[586Ah]	;@0AC43
+	jne	@@13	;@0AC47
+	add	si, 2	;@0AC49
+@@11:	push	es	;@0AC4C
+	push	bp	;@0AC4D
+	call	L0ABD3	;@0AC4E
+	pop	di	;@0AC51
+	pop	ax	;@0AC52
+	je	@@12	;@0AC53
+	call	L0B38C	;@0AC55
+@@12:	jmp	L05EA5	;@0AC58
+@@13:	cmp	ax, word ptr ds:[58B6h]	;@0AC5B
+	jne	@@15	;@0AC5F
+	add	si, 2	;@0AC61
+	push	es	;@0AC64
+	push	bp	;@0AC65
+	call	L0ABD3	;@0AC66
+	pop	di	;@0AC69
+	pop	ax	;@0AC6A
+	je	@@14	;@0AC6B
+	call	L0B38C	;@0AC6D
+@@14:	jmp	L05ED3	;@0AC70
+@@15:	cmp	ax, word ptr ds:[58B8h]	;@0AC73
+	jne	@@11	;@0AC77
+	add	si, 2	;@0AC79
+	push	es	;@0AC7C
+	push	bp	;@0AC7D
+	call	L0ABD3	;@0AC7E
+	pop	di	;@0AC81
+	pop	ax	;@0AC82
+	je	@@16	;@0AC83
+	call	L0B38C	;@0AC85
+@@16:	jmp	L05F23	;@0AC88
+L0AC8B:	call	L02924	;@0AC8B
+	jne	@@1	;@0AC8E
+	cmp	ax, word ptr ds:[5866h]	;@0AC90
+	jne	@@1	;@0AC94
+	add	si, 2	;@0AC96
+	call	L0ABB2	;@0AC99
+	jne	@@2	;@0AC9C
+@@1:	ret	;@0AC9E
+@@2:	call	L0599C	;@0AC9F
+	xor	al, al	;@0ACA2
+	ret	;@0ACA4
+	db	0E8h, '||u', 15h, 0E8h, 18h, 0, 75h, 1, 0C3h, 0E8h, 0F4h, 59h	;@0ACA5
+	db	74h, 6, 83h, 0C6h, 2, 0E9h, 0EFh, 0B2h, 32h, 0C0h, 0FEh, 0C8h
+	db	0C3h, 0E8h, 'a|u', 0FAh
+L0ACC5:	push	ss	;@0ACC5
+	pop	es	;@0ACC6
+	mov	di, 586Ch	;@0ACC7
+	mov	cx, 0Eh	;@0ACCA
+	repne scasw	;@0ACCD
+	jne	@@1	;@0ACCF
+	add	si, 2	;@0ACD1
+	mov	bx, 0Dh	;@0ACD4
+	sub	bx, cx	;@0ACD7
+	shl	bx, 1	;@0ACD9
+	jmp	word ptr [bx+1F48h]	;@0ACDB
+@@1:	test	word ptr ds:[517Ch], 1000h	;@0ACDF
+	je	@@3	;@0ACE5
+	cmp	ax, word ptr ds:[58B4h]	;@0ACE7
+	jne	@@3	;@0ACEB
+	add	si, 2	;@0ACED
+	call	L0ABD3	;@0ACF0
+	je	@@2	;@0ACF3
+	call	L0B38C	;@0ACF5
+@@2:	xor	al, al	;@0ACF8
+	ret	;@0ACFA
+@@3:	and	dh, dh	;@0ACFB
+	je	@@5	;@0ACFD
+	mov	ax, dx	;@0ACFF
+	call	L008D3	;@0AD01
+	jne	@@6	;@0AD04
+	add	si, 2	;@0AD06
+	call	L00893	;@0AD09
+	je	@@4	;@0AD0C
+	jmp	L05F7D	;@0AD0E
+@@4:	jmp	L05F93	;@0AD11
+@@5:	xor	al, al	;@0AD14
+	dec	al	;@0AD16
+@@6:	ret	;@0AD18
+L0AD19:	call	L02924	;@0AD19
+	jne	@@4	;@0AD1C
+	call	@@6	;@0AD1E
+	jne	@@4	;@0AD21
+@@1:	call	L02924	;@0AD23
+	jne	@@3	;@0AD26
+	cmp	ax, word ptr ds:[585Ah]	;@0AD28
+	jne	@@3	;@0AD2C
+	add	si, 2	;@0AD2E
+	call	L02924	;@0AD31
+	jne	@@2	;@0AD34
+	mov	ax, dx	;@0AD36
+	call	L006A7	;@0AD38
+	je	@@2	;@0AD3B
+	add	si, 2	;@0AD3D
+	call	L05FC2	;@0AD40
+	jmp	@@1	;@0AD43
+@@2:	mov	cx, 0Ch	;@0AD45
+	call	L0352C	;@0AD48
+@@3:	xor	al, al	;@0AD4B
+@@4:	ret	;@0AD4D
+@@5:	call	L02924	;@0AD4E
+	jne	@@9	;@0AD51
+@@6:	call	@@11	;@0AD53
+	jne	@@9	;@0AD56
+	call	L02924	;@0AD58
+	jne	@@8	;@0AD5B
+	cmp	ax, word ptr ds:[582Eh]	;@0AD5D
+	jne	@@8	;@0AD61
+	add	si, 2	;@0AD63
+	push	es	;@0AD66
+	push	bp	;@0AD67
+	call	@@5	;@0AD68
+	pop	di	;@0AD6B
+	pop	ax	;@0AD6C
+	je	@@7	;@0AD6D
+	call	L0B38C	;@0AD6F
+@@7:	jmp	L06015	;@0AD72
+@@8:	xor	al, al	;@0AD75
+@@9:	ret	;@0AD77
+@@10:	call	L02924	;@0AD78
+	jne	@@13	;@0AD7B
+@@11:	cmp	ax, word ptr ds:[5890h]	;@0AD7D
+	jne	L0AD92	;@0AD81
+	add	si, 2	;@0AD83
+	call	@@10	;@0AD86
+	je	@@12	;@0AD89
+	call	L0B37E	;@0AD8B
+@@12:	jmp	L06180	;@0AD8E
+@@13:	ret	;@0AD91
+L0AD92:	call	@@8	;@0AD92
+	jne	@@6	;@0AD95
+@@1:	call	L02924	;@0AD97
+	jne	@@5	;@0AD9A
+	cmp	ax, word ptr ds:[5892h]	;@0AD9C
+	jne	@@3	;@0ADA0
+	add	si, 2	;@0ADA2
+	push	es	;@0ADA5
+	push	bp	;@0ADA6
+	call	@@7	;@0ADA7
+	pop	di	;@0ADAA
+	pop	ax	;@0ADAB
+	je	@@2	;@0ADAC
+	call	L0B37E	;@0ADAE
+@@2:	call	L06226	;@0ADB1
+	jmp	@@1	;@0ADB4
+@@3:	cmp	ax, word ptr ds:[5894h]	;@0ADB6
+	jne	@@5	;@0ADBA
+	add	si, 2	;@0ADBC
+	push	es	;@0ADBF
+	push	bp	;@0ADC0
+	call	@@7	;@0ADC1
+	pop	di	;@0ADC4
+	pop	ax	;@0ADC5
+	je	@@4	;@0ADC6
+	call	L0B37E	;@0ADC8
+@@4:	call	L0624C	;@0ADCB
+	jmp	@@1	;@0ADCE
+@@5:	xor	al, al	;@0ADD0
+@@6:	ret	;@0ADD2
+@@7:	call	L02924	;@0ADD3
+	jne	@@12	;@0ADD6
+@@8:	call	@@14	;@0ADD8
+	jne	@@12	;@0ADDB
+@@9:	call	L02924	;@0ADDD
+	jne	@@11	;@0ADE0
+	cmp	ax, word ptr ds:[5896h]	;@0ADE2
+	jne	@@11	;@0ADE6
+	add	si, 2	;@0ADE8
+	push	es	;@0ADEB
+	push	bp	;@0ADEC
+	call	@@13	;@0ADED
+	pop	di	;@0ADF0
+	pop	ax	;@0ADF1
+	je	@@10	;@0ADF2
+	call	L0B37E	;@0ADF4
+@@10:	call	L06272	;@0ADF7
+	jmp	@@9	;@0ADFA
+@@11:	xor	al, al	;@0ADFC
+@@12:	ret	;@0ADFE
+@@13:	call	L02924	;@0ADFF
+	jne	@@16	;@0AE02
+@@14:	cmp	ax, word ptr ds:[5898h]	;@0AE04
+	jne	@@17	;@0AE08
+	add	si, 2	;@0AE0A
+	call	@@13	;@0AE0D
+	je	@@15	;@0AE10
+	call	L0B37E	;@0AE12
+@@15:	jmp	L06298	;@0AE15
+@@16:	ret	;@0AE18
+@@17:	call	@@21	;@0AE19
+	jne	@@19	;@0AE1C
+	call	L02924	;@0AE1E
+	jne	@@18	;@0AE21
+	mov	bx, es	;@0AE23
+	push	ss	;@0AE25
+	pop	es	;@0AE26
+	mov	di, 589Ah	;@0AE27
+	mov	cx, 6	;@0AE2A
+	repne scasw	;@0AE2D
+	mov	es, bx	;@0AE2F
+	je	@@20	;@0AE31
+@@18:	xor	al, al	;@0AE33
+@@19:	ret	;@0AE35
+@@20:	add	si, 2	;@0AE36
+	mov	bx, 5	;@0AE39
+	sub	bx, cx	;@0AE3C
+	shl	bx, 1	;@0AE3E
+	jmp	word ptr [bx+1F3Ch]	;@0AE40
+	db	6, 55h, 0E8h, 62h, 0, '_Xt', 3, 0E8h, 2Eh, 5, 0E8h, 60h, 0B4h	;@0AE44
+	db	0EBh, 0C9h, 6, 55h, 0E8h, 51h, 0, '_Xt', 3, 0E8h, 1Dh, 5, 0E8h
+	db	61h, 0B4h, 0EBh, 0B8h, 6, 55h, 0E8h, 40h, 0, '_Xt', 3, 0E8h, 0Ch
+	db	5, 0E8h, 62h, 0B4h, 0EBh, 0A7h, 6, 55h, 0E8h, 2Fh, 0, '_Xt', 3
+	db	0E8h, 0FBh, 4, 0E8h, 63h, 0B4h, 0EBh, 96h, 6, 55h, 0E8h, 1Eh, 0
+	db	'_Xt', 3, 0E8h, 0EAh, 4, 0E8h, 64h, 0B4h, 0EBh, 85h, 6, 55h, 0E8h
+	db	0Dh, 0, '_Xt', 3, 0E8h, 0D9h, 4, 0E8h, 65h, 0B4h, 0E9h, 73h, 0FFh
+	db	0E8h, 'vzu@'
+@@21:	call	@@29	;@0AEB0
+	jne	@@27	;@0AEB3
+@@22:	call	L02924	;@0AEB5
+	jne	@@26	;@0AEB8
+	cmp	ax, word ptr ds:[58A6h]	;@0AEBA
+	jne	@@24	;@0AEBE
+	add	si, 2	;@0AEC0
+	push	es	;@0AEC3
+	push	bp	;@0AEC4
+	call	@@28	;@0AEC5
+	pop	di	;@0AEC8
+	pop	ax	;@0AEC9
+	je	@@23	;@0AECA
+	call	L0B37E	;@0AECC
+@@23:	call	L06370	;@0AECF
+	jmp	@@22	;@0AED2
+@@24:	cmp	ax, word ptr ds:[58A8h]	;@0AED4
+	jne	@@26	;@0AED8
+	add	si, 2	;@0AEDA
+	push	es	;@0AEDD
+	push	bp	;@0AEDE
+	call	@@28	;@0AEDF
+	pop	di	;@0AEE2
+	pop	ax	;@0AEE3
+	je	@@25	;@0AEE4
+	call	L0B37E	;@0AEE6
+@@25:	call	L06469	;@0AEE9
+	jmp	@@22	;@0AEEC
+@@26:	xor	al, al	;@0AEEE
+@@27:	ret	;@0AEF0
+@@28:	call	L02924	;@0AEF1
+	jne	@@31	;@0AEF4
+@@29:	call	@@34	;@0AEF6
+	jne	@@33	;@0AEF9
+	call	L02924	;@0AEFB
+	jne	@@30	;@0AEFE
+	mov	bx, es	;@0AF00
+	push	ss	;@0AF02
+	pop	es	;@0AF03
+	mov	di, 58AAh	;@0AF04
+	mov	cx, 5	;@0AF07
+	repne scasw	;@0AF0A
+	mov	es, bx	;@0AF0C
+	je	@@32	;@0AF0E
+@@30:	xor	al, al	;@0AF10
+@@31:	ret	;@0AF12
+@@32:	add	si, 2	;@0AF13
+	mov	bx, 4	;@0AF16
+	sub	bx, cx	;@0AF19
+	shl	bx, 1	;@0AF1B
+	jmp	word ptr [bx+1F32h]	;@0AF1D
+	db	6, 55h, 0E8h, 51h, 0, '_Xt', 3, 0E8h, 51h, 4, 0E8h, 6Bh, 0B7h	;@0AF21
+	db	0EBh, 0C9h, 6, 55h, 0E8h, 40h, 0, '_Xt', 3, 0E8h, 40h, 4, 0E8h
+	db	59h, 0B8h, 0EBh, 0B8h
+@@33:	ret	;@0AF43
+	db	6, 55h, 0E8h, 2Eh, 0, '_Xt', 3, 0E8h, 2Eh, 4, 0E8h, 79h, 0B8h	;@0AF44
+	db	0EBh, 0A6h, 6, 55h, 0E8h, 1Dh, 0, '_Xt', 3, 0E8h, 1Dh, 4, 0E8h
+	db	0B6h, 0B8h, 0EBh, 95h, 6, 55h, 0E8h, 0Ch, 0, '_Xt', 3, 0E8h, 0Ch
+	db	4, 0E8h, 1Ah, 0B9h, 0EBh, 84h, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h
+	db	0Eh, 0E9h, 10h, 2
+@@34:	test	word ptr ds:[517Ch], 1000h	;@0AF82
+	jne	L0AF92	;@0AF88
+	jmp	L0B197	;@0AF8A
+L0AF8D:	call	L02924	;@0AF8D
+	jne	L0AFA3	;@0AF90
+L0AF92:	cmp	ax, word ptr ds:[58A6h]	;@0AF92
+	jne	L0AFA4	;@0AF96
+	add	si, 2	;@0AF98
+	call	L0AF8D	;@0AF9B
+	je	L0AFA3	;@0AF9E
+	jmp	L0B37E	;@0AFA0
+L0AFA3:	ret	;@0AFA3
+L0AFA4:	cmp	ax, word ptr ds:[58A8h]	;@0AFA4
+	jne	@@2	;@0AFA8
+	add	si, 2	;@0AFAA
+	call	L0AF8D	;@0AFAD
+	je	@@1	;@0AFB0
+	call	L0B37E	;@0AFB2
+@@1:	jmp	L0691E	;@0AFB5
+@@2:	test	word ptr ds:[517Ch], 1000h	;@0AFB8
+	jne	@@4	;@0AFBE
+	jmp	L0B276	;@0AFC0
+@@3:	call	L02924	;@0AFC3
+	jne	@@8	;@0AFC6
+@@4:	cmp	ax, word ptr ds:[58B6h]	;@0AFC8
+	jne	@@6	;@0AFCC
+	add	si, 2	;@0AFCE
+	call	@@3	;@0AFD1
+	je	@@5	;@0AFD4
+	call	L0B37E	;@0AFD6
+@@5:	jmp	L06967	;@0AFD9
+@@6:	cmp	ax, word ptr ds:[58B8h]	;@0AFDC
+	jne	@@9	;@0AFE0
+	add	si, 2	;@0AFE2
+	call	@@3	;@0AFE5
+	je	@@7	;@0AFE8
+	call	L0B37E	;@0AFEA
+@@7:	jmp	L069B9	;@0AFED
+@@8:	ret	;@0AFF0
+@@9:	push	ss	;@0AFF1
+	pop	es	;@0AFF2
+	mov	di, 58BAh	;@0AFF3
+	mov	cx, 9	;@0AFF6
+	repne scasw	;@0AFF9
+	je	L0B01E	;@0AFFB
+L0AFFD:	and	ah, ah	;@0AFFD
+	je	@@3	;@0AFFF
+	add	si, 2	;@0B001
+	cmp	ax, word ptr ds:[5860h]	;@0B004
+	je	@@1	;@0B008
+	cmp	ax, word ptr ds:[5868h]	;@0B00A
+	je	@@2	;@0B00E
+	jmp	L06CA4	;@0B010
+@@1:	jmp	L06C0F	;@0B013
+@@2:	jmp	L0599C	;@0B016
+@@3:	xor	al, al	;@0B019
+	dec	al	;@0B01B
+	ret	;@0B01D
+L0B01E:	add	si, 2	;@0B01E
+	mov	bx, 8	;@0B021
+	sub	bx, cx	;@0B024
+	shl	bx, 1	;@0B026
+	jmp	word ptr [bx+1F20h]	;@0B028
+	db	0E8h, 0A4h, 0FBh, 74h, 3, 0E8h, 58h, 3, 0E9h, 0B7h, 0B9h, 0E8h	;@0B02C
+	db	99h, 0FBh, 74h, 3, 0E8h, 4Dh, 3, 0E9h, 7Eh, 0BAh, 0E8h, 0DFh, 78h
+	db	75h, 1Fh, 8Bh, 0C2h, 0E8h, '[Vt', 18h, 83h, 0C6h, 2, 0E9h, 0CFh
+	db	0BAh, 0E8h, 0CDh, 78h, 75h, 0Dh, 8Bh, 0C2h, 0E8h, 'IVt', 6, 83h
+	db	0C6h, 2, 0E9h, 0EBh, 0BAh, 83h, 0EEh, 2, 0E8h, 0B8h, 78h, 83h
+	db	0C6h, 2, 0E9h, 32h, 0BCh, 0E8h, 0AFh, 78h, 75h, 0EFh, 8Bh, 0C2h
+	db	0E8h, '+Vt', 0E8h, 83h, 0C6h, 2, 0E9h, 0, 0BBh, 0E8h, 9Dh, 78h
+	db	75h, 0DDh, 8Bh, 0C2h, 0E8h, 19h, 56h, 74h, 0D6h, 83h, 0C6h, 2
+	db	0E9h, 20h, 0BBh, 0E8h, 27h, 0FCh, 74h, 9, 0B9h, 7, 0, 0E8h, 1
+	db	3, 0E8h, 4Ah, 0A9h, 0E9h, 70h, 0BBh, 3Bh, 26h, 0C6h, '8rB', 0E8h
+	db	23h, 0FBh, 74h, 3, 0E8h, 0D7h, 2, 0E8h, 'lxu', 0Bh, 3Bh, 6, 'VXu'
+	db	5, 83h, 0C6h, 2, 0EBh, 3, 0E8h, 0D2h, 2, 0E9h, 0Eh, 0ACh, 3Bh
+	db	26h, 0C6h, 38h, 72h, 1Eh, 0E8h, 0FFh, 0FAh, 74h, 3, 0E8h, 0A5h
+	db	2, 0E8h, 'Hxu', 0Bh, 3Bh, 6, '\Xu', 5, 83h, 0C6h, 2, 0EBh, 3, 0E8h
+	db	0B3h, 2, 32h, 0C0h, 0C3h, 0B9h, 75h, 40h, 0E9h, 37h, 84h
+L0B0F5:	call	L02924	;@0B0F5
+	jne	@@5	;@0B0F8
+	and	ah, ah	;@0B0FA
+	je	@@3	;@0B0FC
+	add	si, 2	;@0B0FE
+	push	ax	;@0B101
+	push	dx	;@0B102
+	call	L02924	;@0B103
+	jne	@@1	;@0B106
+	cmp	ax, word ptr ds:[585Eh]	;@0B108
+	je	@@1	;@0B10C
+	cmp	ax, word ptr ds:[5856h]	;@0B10E
+	je	@@1	;@0B112
+	cmp	ax, word ptr ds:[585Ch]	;@0B114
+	jne	@@2	;@0B118
+@@1:	sub	si, 2	;@0B11A
+	pop	dx	;@0B11D
+	pop	ax	;@0B11E
+	jmp	L0AFFD	;@0B11F
+@@2:	sub	si, 2	;@0B122
+	pop	dx	;@0B125
+	pop	ax	;@0B126
+@@3:	cmp	ax, word ptr ds:[588Ah]	;@0B127
+	je	@@6	;@0B12B
+	cmp	ax, word ptr ds:[5888h]	;@0B12D
+	je	@@8	;@0B131
+	test	word ptr ds:[517Ch], 8	;@0B133
+	je	@@4	;@0B139
+	cmp	ax, word ptr ds:[588Ch]	;@0B13B
+	je	@@10	;@0B13F
+	cmp	ax, word ptr ds:[588Eh]	;@0B141
+	je	@@12	;@0B145
+@@4:	jmp	L0AD92	;@0B147
+@@5:	ret	;@0B14A
+@@6:	add	si, 2	;@0B14B
+	call	L0B0F5	;@0B14E
+	je	@@7	;@0B151
+	call	L0B37E	;@0B153
+@@7:	jmp	L05D34	;@0B156
+@@8:	add	si, 2	;@0B159
+	mov	al, byte ptr ds:[38CCh]	;@0B15C
+	push	ax	;@0B15F
+	mov	byte ptr ds:[38CCh], 0FFh	;@0B160
+	call	L0B0F5	;@0B165
+	pop	ax	;@0B168
+	mov	byte ptr ds:[38CCh], 0	;@0B169
+	je	@@9	;@0B16E
+	call	L0B37E	;@0B170
+@@9:	jmp	L06191	;@0B173
+@@10:	add	si, 2	;@0B176
+	call	L0B0F5	;@0B179
+	je	@@11	;@0B17C
+	call	L0B37E	;@0B17E
+@@11:	jmp	L05D06	;@0B181
+@@12:	add	si, 2	;@0B184
+	call	L0B0F5	;@0B187
+	je	@@13	;@0B18A
+	call	L0B37E	;@0B18C
+@@13:	jmp	L05D1D	;@0B18F
+	db	0E8h, 8Fh, 77h, 75h, 1Eh	;@0B192
+L0B197:	push	ss	;@0B197
+	pop	es	;@0B198
+	mov	di, 58B4h	;@0B199
+	mov	cx, 6	;@0B19C
+	repne scasw	;@0B19F
+	je	@@3	;@0B1A1
+	call	L0B24E	;@0B1A3
+	jne	@@2	;@0B1A6
+	call	L02924	;@0B1A8
+	jne	@@1	;@0B1AB
+	cmp	ax, word ptr ds:[586Ah]	;@0B1AD
+	je	@@4	;@0B1B1
+@@1:	xor	al, al	;@0B1B3
+@@2:	ret	;@0B1B5
+@@3:	add	si, 2	;@0B1B6
+	mov	bx, 5	;@0B1B9
+	sub	bx, cx	;@0B1BC
+	shl	bx, 1	;@0B1BE
+	jmp	word ptr [bx+1F14h]	;@0B1C0
+@@4:	add	si, 2	;@0B1C4
+	push	es	;@0B1C7
+	push	bp	;@0B1C8
+	call	L0B218	;@0B1C9
+	pop	di	;@0B1CC
+	pop	ax	;@0B1CD
+	je	@@5	;@0B1CE
+	call	L0B37E	;@0B1D0
+@@5:	jmp	L05DC4	;@0B1D3
+	db	0E8h, 3Fh, 0, 74h, 3, 0E8h, 0A0h, 1, 0E9h, 83h, 0B7h, 0E8h, 34h	;@0B1D6
+	db	0, 74h, 3, 0E8h, 95h, 1, 0E9h, 0CAh, 0B7h, 0E8h, 29h, 0, 74h, 3
+	db	0E8h, 8Ah, 1, 0E9h, 0, 0B8h, 0E8h, 1Eh, 0, 74h, 3, 0E8h, 7Fh, 1
+	db	0E9h, 0ACh, 0B8h, 0E8h, 13h, 0, 74h, 3, 0E8h, 74h, 1, 0E9h, 0DBh
+	db	0B9h, 0E8h, 8, 0, 74h, 3, 0E8h, 69h, 1, 0E9h, 0C5h, 0A9h
+L0B218:	call	L02924	;@0B218
+	jne	@@4	;@0B21B
+	and	ah, ah	;@0B21D
+	je	@@3	;@0B21F
+	add	si, 2	;@0B221
+	push	ax	;@0B224
+	push	dx	;@0B225
+	call	L02924	;@0B226
+	jne	@@1	;@0B229
+	cmp	ax, word ptr ds:[585Eh]	;@0B22B
+	je	@@1	;@0B22F
+	cmp	ax, word ptr ds:[5856h]	;@0B231
+	je	@@1	;@0B235
+	cmp	ax, word ptr ds:[585Ch]	;@0B237
+	jne	@@2	;@0B23B
+@@1:	sub	si, 2	;@0B23D
+	pop	dx	;@0B240
+	pop	ax	;@0B241
+	jmp	L0AFFD	;@0B242
+@@2:	sub	si, 2	;@0B245
+	pop	dx	;@0B248
+	pop	ax	;@0B249
+@@3:	jmp	L0B197	;@0B24A
+@@4:	ret	;@0B24D
+L0B24E:	call	L0AF92	;@0B24E
+	jne	@@5	;@0B251
+@@1:	call	L02924	;@0B253
+	jne	@@2	;@0B256
+	cmp	ax, word ptr ds:[582Eh]	;@0B258
+	je	@@3	;@0B25C
+@@2:	xor	al, al	;@0B25E
+	ret	;@0B260
+@@3:	add	si, 2	;@0B261
+	push	es	;@0B264
+	push	bp	;@0B265
+	call	L0AF8D	;@0B266
+	pop	di	;@0B269
+	pop	ax	;@0B26A
+	je	@@4	;@0B26B
+	call	L0B37E	;@0B26D
+@@4:	call	L06015	;@0B270
+	jmp	@@1	;@0B273
+@@5:	ret	;@0B275
+L0B276:	call	@@8	;@0B276
+	jne	@@7	;@0B279
+@@1:	call	L02924	;@0B27B
+	jne	@@2	;@0B27E
+	cmp	ax, word ptr ds:[585Ah]	;@0B280
+	je	@@5	;@0B284
+	cmp	ax, word ptr ds:[58C0h]	;@0B286
+	je	@@3	;@0B28A
+	cmp	ax, word ptr ds:[58C2h]	;@0B28C
+	je	@@3	;@0B290
+@@2:	xor	al, al	;@0B292
+	ret	;@0B294
+@@3:	push	es	;@0B295
+	push	bp	;@0B296
+	call	@@8	;@0B297
+	pop	di	;@0B29A
+	pop	ax	;@0B29B
+	je	@@4	;@0B29C
+	mov	es, ax	;@0B29E
+	mov	bp, di	;@0B2A0
+	jmp	@@2	;@0B2A2
+@@4:	call	L06370	;@0B2A4
+	jmp	@@1	;@0B2A7
+@@5:	add	si, 2	;@0B2A9
+	push	es	;@0B2AC
+	push	bp	;@0B2AD
+	call	L0B218	;@0B2AE
+	pop	di	;@0B2B1
+	pop	ax	;@0B2B2
+	je	@@6	;@0B2B3
+	call	L0B37E	;@0B2B5
+@@6:	call	L06370	;@0B2B8
+	jmp	L05D3F	;@0B2BB
+@@7:	ret	;@0B2BE
+@@8:	push	ss	;@0B2BF
+	pop	es	;@0B2C0
+	mov	di, 58C0h	;@0B2C1
+	mov	cx, 6	;@0B2C4
+	repne scasw	;@0B2C7
+	je	@@9	;@0B2C9
+	jmp	L0AFFD	;@0B2CB
+@@9:	add	si, 2	;@0B2CE
+	mov	bx, 5	;@0B2D1
+	sub	bx, cx	;@0B2D4
+	shl	bx, 1	;@0B2D6
+	jmp	word ptr [bx+1F08h]	;@0B2D8
+	db	3Bh, 26h, 0C6h, 38h, 72h, 1Eh, 0E8h, 10h, 0FEh, 74h, 3, 0E8h, 94h	;@0B2DC
+	db	0, 0E8h, '7vu', 0Bh, 3Bh, 6, 'VXu', 5, 83h, 0C6h, 2, 0EBh, 3, 0E8h
+	db	9Dh, 0, 0E9h, 6Ah, 0A9h, 0B9h, 75h, 40h, 0E9h, 26h, 82h, 3Bh, 26h
+	db	0C6h, 38h, 72h, 0F4h, 0E8h, 0E6h, 0FDh, 74h, 3, 0E8h, 6Ah, 0, 0E8h
+	db	0Dh, 76h, 75h, 0Bh, 3Bh, 6, '\Xu', 5, 83h, 0C6h, 2, 0EBh, 3, 0E8h
+	db	78h, 0, 32h, 0C0h, 0C3h, 0E8h, 0F7h, 75h, 75h, 0Dh, 8Bh, 0C2h
+	db	0E8h, 'sSt', 6, 83h, 0C6h, 2, 0E9h, 15h, 0B8h, 83h, 0EEh, 2, 0E8h
+	db	0E2h, 75h, 83h, 0C6h, 2, 0E9h, 5Ch, 0B9h, 0E8h, 0D9h, 75h, 75h
+	db	0EFh, 8Bh, 0C2h, 0E8h, 'USt', 0E8h, 83h, 0C6h, 2, 0E9h, 5Ch, 0B8h
+	db	0E8h, 0C7h, 75h, 75h, 0DDh, 8Bh, 0C2h, 0E8h, 'CSt', 0D6h, 83h
+	db	0C6h, 2, 0E9h, 0B7h, 0B7h, 0E8h, 0B5h, 75h, 75h, 0CBh, 8Bh, 0C2h
+	db	0E8h, '1St', 0C4h, 83h, 0C6h, 2, 0E9h, 6, 0B8h
+L0B37E:	mov	cx, 2	;@0B37E
+	call	L0B3A2	;@0B381
+	push	ax	;@0B384
+	push	di	;@0B385
+	call	L0599C	;@0B386
+	pop	di	;@0B389
+	pop	ax	;@0B38A
+	ret	;@0B38B
+L0B38C:	mov	cx, 3	;@0B38C
+	call	L0B3A2	;@0B38F
+	push	ax	;@0B392
+	push	di	;@0B393
+	call	L059EE	;@0B394
+	pop	di	;@0B397
+	pop	ax	;@0B398
+	ret	;@0B399
+	db	0B9h, 1, 0, 0EBh, 3, 0B9h, 0, 0	;@0B39A
+L0B3A2:	cmp	byte ptr ds:[38CBh], 0	;@0B3A2
+	jne	@@1	;@0B3A7
+	jmp	L0352C	;@0B3A9
+@@1:	and	byte ptr ds:[38CAh], 0FEh	;@0B3AC
+	stc	;@0B3B1
+	mov	sp, word ptr ds:[38AEh]	;@0B3B2
+	ret	;@0B3B6
+	db	0, 9Ah	;@0B3B7
 	dd	L101E0
 	db	0E8h, 64h, 75h, 75h, 6, 3Bh, 6, 64h, 57h, 74h, 1, 0C3h, 83h, 0C6h, 2, 0FFh
 	db	36h, 0C2h, 56h, 89h, 36h, 0C2h, 56h, 0BEh, 0FFh, 0B8h, 0E8h, 0C6h, 58h, 8Bh, 36h, 0C2h
@@ -5652,65 +11457,212 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	79h, 74h, 0C7h, 6, 0CCh, 56h, 0, 0, 9Ah
 	dd	L101E0
 	db	52h, 0E8h, 9Ah, 58h, 5Ah, 89h, 2Eh, 0D8h, 56h, 0C7h, 6, 0CEh, 56h, 24h, 0B8h, 0C7h
-	db	6, 0D2h, 56h, 90h, 0B7h, 8Ah, 0C3h, 24h, 0Fh, 0EBh, 6Fh, 33h, 0D2h, 0B0h, 1, 0EBh
-	db	1Eh, 33h, 0D2h, 0B0h, 2, 0EBh, 18h, 33h, 0D2h, 0B0h, 3, 0EBh, 30h, 33h, 0D2h, 0B0h
-	db	4, 0EBh, 2Ah, 33h, 0D2h, 0B0h, 5, 0EBh, 6, 33h, 0D2h, 0B0h, 6, 0EBh, 1Eh, 33h
-	db	0C9h, 89h, 0Eh, 0CCh, 56h, 89h, 0Eh, 0D8h, 56h, 0C7h, 6, 0D0h, 56h, 24h, 29h, 0C7h
-	db	6, 0CEh, 56h, 0C0h, 0B7h, 0C7h, 6, 0D2h, 56h, 90h, 0B7h, 0EBh, 2Dh, 33h, 0C9h, 89h
-	db	0Eh, 0CCh, 56h, 89h, 0Eh, 0D8h, 56h, 23h, 0D2h, 75h, 0Dh, 0F7h, 6, 7Ch, 51h, 0
-	db	10h, 75h, 5, 50h, 0E8h, 27h, 49h, 58h, 0C7h, 6, 0D0h, 56h, 6Bh, 0B7h, 0C7h, 6
-	db	0CEh, 56h, 0C0h, 0B7h, 0C7h, 6, 0D2h, 56h, 90h, 0B7h, 80h, 0Eh, 0CAh, 38h, 8, 0Ch
-	db	20h, 0A2h, 0DAh, 56h, 23h, 0D2h, 74h, 3, 0E8h, 0DCh, 51h, 89h, 16h, 0B6h, 56h, 0E8h
-	db	7Dh, 49h, 75h, 4Fh, 83h, 3Eh, 0B0h, 51h, 0, 75h, 4Bh, 83h, 3Eh, 0B6h, 56h, 0
-	db	74h, 3Bh, 0A1h, 0B6h, 56h, 9Ah
-	dd	L101E0
-	db	0A1h, 0CCh, 56h, 8Ah, 1Eh, 0DAh, 56h, 0E8h, 0A7h, 5Ch, 75h, 21h, 0E8h, 0C5h, 5Dh, 0FFh
-	db	36h, 70h, 51h, 0FFh, 36h, 72h, 51h, 0E8h, 9Ch, 0, 0E8h, 0C2h, 1, 0A1h, 0B6h, 56h
-	db	9Ah
-	dd	L101E0
-	db	5Ah, 58h, 0E8h, 0DBh, 82h, 0E9h, 9Bh, 48h, 0C7h, 6, 0B6h, 56h, 0, 0, 0E8h, 80h
-	db	0, 0E9h, 8Fh, 48h, 0E9h, 78h, 73h, 83h, 3Eh, 0B6h, 56h, 0, 74h, 39h, 0A1h, 0B0h
-	db	51h, 9Ah
-	dd	L101E0
-	db	8Bh, 16h, 0CCh, 56h, 0A1h, 0B6h, 56h, 8Ah, 1Eh, 0DAh, 56h, 0E8h, 8Ah, 58h, 0F7h, 6
-	db	7Ch, 51h, 0, 10h, 75h, 1Bh, 0A1h, 0B6h, 56h, 9Ah
-	dd	L101E0
-	db	0E8h, 3Ah, 55h, 75h, 0Eh, 0E8h, 6Ch, 83h, 8Ah, 1Eh, 0DAh, 56h, 8Bh, 0Eh, 0CCh, 56h
-	db	0E8h, 41h, 55h, 0FFh, 36h, 70h, 51h, 0FFh, 36h, 72h, 51h, 0B8h, 1, 0, 33h, 0C9h
-	db	0E8h, 0D0h, 89h, 0E8h, 27h, 0, 0E8h, 5Fh, 8Ah, 0E8h, 84h, 88h, 0E8h, 47h, 1, 8Bh
-	db	0Eh, 0B6h, 56h, 5Ah, 58h, 0E8h, 0Ah, 82h, 0A0h, 0CAh, 38h, 0A8h, 1, 74h, 0Bh, 80h
-	db	26h, 0CAh, 38h, 0FEh, 0B9h, 2Dh, 0, 0E8h, 65h, 7Fh, 0E9h, 12h, 48h, 0E8h, 1Fh, 0
-	db	0A1h, 0B6h, 56h, 23h, 0C0h, 74h, 17h, 9Ah
-	dd	L101E0
-	db	0A1h, 0BAh, 56h, 8Bh, 16h, 0BCh, 56h, 8Bh, 0Eh, 0BEh, 56h, 8Bh, 3Eh, 0C0h, 56h, 0E9h
-	db	0A6h, 5Dh, 0C3h, 0E8h, 46h, 0, 0FFh, 36h, 0BAh, 56h, 0FFh, 36h, 0BCh, 56h, 0FFh, 36h
-	db	0BEh, 56h, 0FFh, 36h, 0C0h, 56h, 0FFh, 36h, 0D6h, 56h, 0FFh, 36h, 0D4h, 56h, 0E8h, 1Ah
-	db	73h, 75h, 0Eh, 3Bh, 6, 5Eh, 58h, 75h, 8, 83h, 0C6h, 2, 0E8h, 1Dh, 0, 0EBh
-	db	0EDh, 32h, 0C0h, 8Fh, 6, 0D4h, 56h, 8Fh, 6, 0D6h, 56h, 8Fh, 6, 0C0h, 56h, 8Fh
-	db	6, 0BEh, 56h, 8Fh, 6, 0BCh, 56h, 8Fh, 6, 0BAh, 56h, 0C3h, 0FFh, 16h, 0D0h, 56h
-	db	75h, 25h, 3Bh, 6, 68h, 57h, 75h, 2Ah, 83h, 0C6h, 2, 0E8h, 0DDh, 72h, 75h, 0Ch
-	db	3Bh, 6, 5Eh, 58h, 74h, 6, 3Bh, 6, 5Ch, 58h, 75h, 13h, 0FFh, 16h, 0D2h, 56h
-	db	0C6h, 6, 0D7h, 56h, 0, 0EBh, 12h, 0B9h, 84h, 80h, 0E8h, 0C6h, 7Eh, 0EBh, 0EDh, 83h
-	db	0EEh, 2, 0FFh, 16h, 0CEh, 56h, 75h, 0E4h, 0C3h, 0A3h, 0BAh, 56h, 89h, 0Eh, 0BCh, 56h
-	db	0C7h, 6, 0BEh, 56h, 1, 0, 0C7h, 6, 0C0h, 56h, 0, 0, 0C3h, 3Bh, 26h, 0C6h
-	db	38h, 72h, 20h, 83h, 0C6h, 2, 0E8h, 0AEh, 0C4h, 0A3h, 0BEh, 56h, 89h, 0Eh, 0C0h, 56h
-	db	0E8h, 0D4h, 88h, 0E8h, 85h, 72h, 75h, 11h, 3Bh, 6, 0C2h, 58h, 75h, 0Bh, 83h, 0C6h
-	db	2, 0EBh, 0Ch, 0B9h, 75h, 40h, 0E9h, 7Ah, 7Eh, 0B9h, 5, 0, 0E8h, 74h, 7Eh, 0FFh
-	db	36h, 0BEh, 56h, 0FFh, 36h, 0C0h, 56h, 0E8h, 29h, 0FFh, 8Fh, 6, 0C0h, 56h, 8Fh, 6
-	db	0BEh, 56h, 0E8h, 56h, 72h, 75h, 0Bh, 3Bh, 6, 5Ch, 58h, 75h, 5, 83h, 0C6h, 2
-	db	0EBh, 6, 0B9h, 0, 0, 0E8h, 4Bh, 7Eh, 0A1h, 70h, 51h, 0A3h, 0BAh, 56h, 0A1h, 72h
-	db	51h, 0A3h, 0BCh, 56h, 0E8h, 15h, 89h, 32h, 0C0h, 0C3h, 8Ah, 1Eh, 0D7h, 56h, 32h, 0FFh
-	db	0D1h, 0E3h, 0FFh, 97h, 92h, 1Fh, 0A1h, 0BEh, 56h, 8Bh, 16h, 0C0h, 56h, 3Dh, 1, 0
-	db	75h, 1Bh, 23h, 0D2h, 75h, 17h, 80h, 3Eh, 0DAh, 56h, 21h, 74h, 1, 0C3h, 83h, 3Eh
-	db	0BAh, 56h, 1, 75h, 8, 83h, 3Eh, 0BCh, 56h, 0, 75h, 1, 0C3h, 8Bh, 2Eh, 0BAh
-	db	56h, 8Bh, 0Eh, 0BCh, 56h, 0E9h, 26h, 82h, 8Bh, 1Eh, 0D8h, 56h, 23h, 0DBh, 75h, 0ECh
-	db	8Ah, 1Eh, 0DAh, 56h, 0A1h, 0CCh, 56h, 0E9h, 0BEh, 4Dh, 8Ah, 1Eh, 0D6h, 56h, 0A1h, 0D4h
-	db	56h, 0E9h, 17h, 4Eh, 8Ah, 1Eh, 0D6h, 56h, 0A1h, 0D4h, 56h, 0E9h, 54h, 4Eh, 8Ah, 1Eh
-	db	0D6h, 56h, 0A1h, 0D4h, 56h, 0E9h, 91h, 4Eh, 8Ah, 1Eh, 0D6h, 56h, 0A1h, 0D4h, 56h, 0E9h
-	db	0CEh, 4Eh, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 3, 0E9h, 0AEh, 71h, 0E8h, 40h, 68h
-	db	75h, 14h, 56h, 50h, 22h, 0E4h, 75h, 0Ah, 0E8h, 35h, 68h, 75h, 7, 83h, 0C6h, 2
-	db	0EBh, 0F2h, 32h, 0C0h, 58h, 5Eh, 0C3h, 8Ah, 1Eh, 0DAh, 56h, 80h, 0EBh, 21h, 32h, 0FFh
-	db	0D1h, 0E3h, 0FFh, 0A7h, 70h, 1Fh, 0A1h, 0B8h, 56h, 9Ah
+	db	6, 0D2h, 56h, 90h, 0B7h, 8Ah, 0C3h, 24h, 0Fh, 0EBh, 6Fh
+	xor	dx, dx	;@0B475
+	mov	al, 1	;@0B477
+	jmp	short @@2	;@0B479
+	xor	dx, dx	;@0B47B
+	mov	al, 2	;@0B47D
+	jmp	short @@2	;@0B47F
+	xor	dx, dx	;@0B481
+	mov	al, 3	;@0B483
+	jmp	short @@3	;@0B485
+	xor	dx, dx	;@0B487
+	mov	al, 4	;@0B489
+	jmp	short @@3	;@0B48B
+	xor	dx, dx	;@0B48D
+	mov	al, 5	;@0B48F
+	jmp	short @@2	;@0B491
+	db	33h, 0D2h, 0B0h, 6, 0EBh, 1Eh	;@0B493
+@@2:	xor	cx, cx	;@0B499
+	mov	word ptr ds:[56CCh], cx	;@0B49B
+	mov	word ptr ds:[56D8h], cx	;@0B49F
+	mov	word ptr ds:[56D0h], 2924h	;@0B4A3
+	mov	word ptr ds:[56CEh], 0B7C0h	;@0B4A9
+	mov	word ptr ds:[56D2h], 0B790h	;@0B4AF
+	jmp	short @@5	;@0B4B5
+@@3:	xor	cx, cx	;@0B4B7
+	mov	word ptr ds:[56CCh], cx	;@0B4B9
+	mov	word ptr ds:[56D8h], cx	;@0B4BD
+	and	dx, dx	;@0B4C1
+	jne	@@4	;@0B4C3
+	test	word ptr ds:[517Ch], 1000h	;@0B4C5
+	jne	@@4	;@0B4CB
+	push	ax	;@0B4CD
+	call	L0FDF8	;@0B4CE
+	pop	ax	;@0B4D1
+@@4:	mov	word ptr ds:[56D0h], 0B76Bh	;@0B4D2
+	mov	word ptr ds:[56CEh], 0B7C0h	;@0B4D8
+	mov	word ptr ds:[56D2h], 0B790h	;@0B4DE
+@@5:	or	byte ptr ds:[38CAh], 8	;@0B4E4
+	or	al, 20h	;@0B4E9
+	mov	byte ptr ds:[56DAh], al	;@0B4EB
+	and	dx, dx	;@0B4EE
+	je	@@6	;@0B4F0
+	call	L006D1	;@0B4F2
+@@6:	mov	word ptr ds:[56B6h], dx	;@0B4F5
+	call	L0FE79	;@0B4F9
+	jne	@@9	;@0B4FC
+	cmp	word ptr ds:[51B0h], 0	;@0B4FE
+	jne	@@10	;@0B503
+	cmp	word ptr ds:[56B6h], 0	;@0B505
+	je	@@8	;@0B50A
+	mov	ax, word ptr ds:[56B6h]	;@0B50C
+	call	far ptr L101E0	;@0B50F
+	mov	ax, word ptr ds:[56CCh]	;@0B514
+	mov	bl, byte ptr ds:[56DAh]	;@0B517
+	call	L011C5	;@0B51B
+	jne	@@7	;@0B51E
+	call	L012E8	;@0B520
+	push	word ptr ds:[5170h]	;@0B523
+	push	word ptr ds:[5172h]	;@0B527
+	call	@@13	;@0B52B
+	call	@@24	;@0B52E
+	mov	ax, word ptr ds:[56B6h]	;@0B531
+	call	far ptr L101E0	;@0B534
+	pop	dx	;@0B539
+	pop	ax	;@0B53A
+	call	L03819	;@0B53B
+	jmp	L0FDDC	;@0B53E
+@@7:	mov	word ptr ds:[56B6h], 0	;@0B541
+@@8:	call	@@13	;@0B547
+	jmp	L0FDDC	;@0B54A
+@@9:	jmp	L028C8	;@0B54D
+@@10:	cmp	word ptr ds:[56B6h], 0	;@0B550
+	je	@@11	;@0B555
+	mov	ax, word ptr ds:[51B0h]	;@0B557
+	call	far ptr L101E0	;@0B55A
+	mov	dx, word ptr ds:[56CCh]	;@0B55F
+	mov	ax, word ptr ds:[56B6h]	;@0B563
+	mov	bl, byte ptr ds:[56DAh]	;@0B566
+	call	L00DF7	;@0B56A
+	test	word ptr ds:[517Ch], 1000h	;@0B56D
+	jne	@@11	;@0B573
+	mov	ax, word ptr ds:[56B6h]	;@0B575
+	call	far ptr L101E0	;@0B578
+	call	L00ABA	;@0B57D
+	jne	@@11	;@0B580
+	call	L038F1	;@0B582
+	mov	bl, byte ptr ds:[56DAh]	;@0B585
+	mov	cx, word ptr ds:[56CCh]	;@0B589
+	call	L00AD1	;@0B58D
+@@11:	push	word ptr ds:[5170h]	;@0B590
+	push	word ptr ds:[5172h]	;@0B594
+	mov	ax, 1	;@0B598
+	xor	cx, cx	;@0B59B
+	call	L03F70	;@0B59D
+	call	@@13	;@0B5A0
+	call	L04005	;@0B5A3
+	call	L03E2D	;@0B5A6
+	call	@@24	;@0B5A9
+	mov	cx, word ptr ds:[56B6h]	;@0B5AC
+	pop	dx	;@0B5B0
+	pop	ax	;@0B5B1
+	call	L037BF	;@0B5B2
+	mov	al, byte ptr ds:[38CAh]	;@0B5B5
+	test	al, 1	;@0B5B8
+	je	@@12	;@0B5BA
+	and	byte ptr ds:[38CAh], 0FEh	;@0B5BC
+	mov	cx, 2Dh	;@0B5C1
+	call	L0352C	;@0B5C4
+@@12:	jmp	L0FDDC	;@0B5C7
+@@13:	call	@@15	;@0B5CA
+	mov	ax, word ptr ds:[56B6h]	;@0B5CD
+	and	ax, ax	;@0B5D0
+	je	@@14	;@0B5D2
+	call	far ptr L101E0	;@0B5D4
+	mov	ax, word ptr ds:[56BAh]	;@0B5D9
+	mov	dx, word ptr ds:[56BCh]	;@0B5DC
+	mov	cx, word ptr ds:[56BEh]	;@0B5E0
+	mov	di, word ptr ds:[56C0h]	;@0B5E4
+	jmp	L01391	;@0B5E8
+@@14:	ret	;@0B5EB
+@@15:	call	@@18	;@0B5EC
+	push	word ptr ds:[56BAh]	;@0B5EF
+	push	word ptr ds:[56BCh]	;@0B5F3
+	push	word ptr ds:[56BEh]	;@0B5F7
+	push	word ptr ds:[56C0h]	;@0B5FB
+	push	word ptr ds:[56D6h]	;@0B5FF
+	push	word ptr ds:[56D4h]	;@0B603
+@@16:	call	L02924	;@0B607
+	jne	@@17	;@0B60A
+	cmp	ax, word ptr ds:[585Eh]	;@0B60C
+	jne	@@17	;@0B610
+	add	si, 2	;@0B612
+	call	@@18	;@0B615
+	jmp	@@16	;@0B618
+@@17:	xor	al, al	;@0B61A
+	pop	word ptr ds:[56D4h]	;@0B61C
+	pop	word ptr ds:[56D6h]	;@0B620
+	pop	word ptr ds:[56C0h]	;@0B624
+	pop	word ptr ds:[56BEh]	;@0B628
+	pop	word ptr ds:[56BCh]	;@0B62C
+	pop	word ptr ds:[56BAh]	;@0B630
+	ret	;@0B634
+@@18:	call	word ptr ds:[56D0h]	;@0B635
+	jne	@@20	;@0B639
+	cmp	ax, word ptr ds:[5768h]	;@0B63B
+	jne	@@22	;@0B63F
+	add	si, 2	;@0B641
+	call	L02924	;@0B644
+	jne	@@19	;@0B647
+	cmp	ax, word ptr ds:[585Eh]	;@0B649
+	je	@@19	;@0B64D
+	cmp	ax, word ptr ds:[585Ch]	;@0B64F
+	jne	@@21	;@0B653
+@@19:	call	word ptr ds:[56D2h]	;@0B655
+	mov	byte ptr ds:[56D7h], 0	;@0B659
+	jmp	short @@23	;@0B65E
+@@20:	mov	cx, 8084h	;@0B660
+	call	L0352C	;@0B663
+	jmp	@@19	;@0B666
+@@21:	sub	si, 2	;@0B668
+@@22:	call	word ptr ds:[56CEh]	;@0B66B
+	jne	@@19	;@0B66F
+	ret	;@0B671
+@@23:	mov	word ptr ds:[56BAh], ax	;@0B672
+	mov	word ptr ds:[56BCh], cx	;@0B675
+	mov	word ptr ds:[56BEh], 1	;@0B679
+	mov	word ptr ds:[56C0h], 0	;@0B67F
+	ret	;@0B685
+	db	3Bh, 26h, 0C6h, '8r ', 83h, 0C6h, 2, 0E8h, 0AEh, 0C4h, 0A3h, 0BEh	;@0B686
+	db	56h, 89h, 0Eh, 0C0h, 56h, 0E8h, 0D4h, 88h, 0E8h, 85h, 72h, 75h
+	db	11h, 3Bh, 6, 0C2h, 58h, 75h, 0Bh, 83h, 0C6h, 2, 0EBh, 0Ch, 0B9h
+	db	75h, 40h, 0E9h, 7Ah, 7Eh, 0B9h, 5, 0, 0E8h, 74h, 7Eh, 0FFh, 36h
+	db	0BEh, 56h, 0FFh, 36h, 0C0h, 56h, 0E8h, 29h, 0FFh, 8Fh, 6, 0C0h
+	db	56h, 8Fh, 6, 0BEh, 56h, 0E8h, 'Vru', 0Bh, 3Bh, 6, '\Xu', 5, 83h
+	db	0C6h, 2, 0EBh, 6, 0B9h, 0, 0, 0E8h, 4Bh, 7Eh, 0A1h, 70h, 51h, 0A3h
+	db	0BAh, 56h, 0A1h, 72h, 51h, 0A3h, 0BCh, 56h, 0E8h, 15h, 89h, 32h
+	db	0C0h, 0C3h
+@@24:	mov	bl, byte ptr ds:[56D7h]	;@0B6F3
+	xor	bh, bh	;@0B6F7
+	shl	bx, 1	;@0B6F9
+	call	word ptr [bx+1F92h]	;@0B6FB
+	mov	ax, word ptr ds:[56BEh]	;@0B6FF
+	mov	dx, word ptr ds:[56C0h]	;@0B702
+	cmp	ax, 1	;@0B706
+	jne	@@26	;@0B709
+	and	dx, dx	;@0B70B
+	jne	@@26	;@0B70D
+	cmp	byte ptr ds:[56DAh], 21h	;@0B70F
+	je	@@25	;@0B714
+	ret	;@0B716
+@@25:	cmp	word ptr ds:[56BAh], 1	;@0B717
+	jne	@@26	;@0B71C
+	cmp	word ptr ds:[56BCh], 0	;@0B71E
+	jne	@@26	;@0B723
+	ret	;@0B725
+@@26:	mov	bp, word ptr ds:[56BAh]	;@0B726
+	mov	cx, word ptr ds:[56BCh]	;@0B72A
+	jmp	L03957	;@0B72E
+	db	8Bh, 1Eh, 0D8h, 56h, 23h, 0DBh, 75h, 0ECh, 8Ah, 1Eh, 0DAh, 56h, 0A1h, 0CCh, 56h, 0E9h	;@0B731
+	db	0BEh, 4Dh, 8Ah, 1Eh, 0D6h, 56h, 0A1h, 0D4h, 56h, 0E9h, 17h, 4Eh, 8Ah, 1Eh, 0D6h, 56h
+	db	0A1h, 0D4h, 56h, 0E9h, 54h, 4Eh, 8Ah, 1Eh, 0D6h, 56h, 0A1h, 0D4h, 56h, 0E9h, 91h, 4Eh
+	db	8Ah, 1Eh, 0D6h, 56h, 0A1h, 0D4h, 56h, 0E9h, 0CEh, 4Eh, 0F7h, 6, 7Ch, 51h, 0, 10h
+	db	74h, 3, 0E9h, 0AEh, 71h, 0E8h, 40h, 68h, 75h, 14h, 56h, 50h, 22h, 0E4h, 75h, 0Ah
+	db	0E8h, 35h, 68h, 75h, 7, 83h, 0C6h, 2, 0EBh, 0F2h, 32h, 0C0h, 58h, 5Eh, 0C3h, 8Ah
+	db	1Eh, 0DAh, 56h, 80h, 0EBh, 21h, 32h, 0FFh, 0D1h, 0E3h, 0FFh, 0A7h, 70h, 1Fh, 0A1h, 0B8h
+	db	56h, 9Ah
 	dd	L101E0
 	db	0E8h, 0E2h, 55h, 0E8h, 89h, 7Dh, 8Bh, 0CAh, 50h, 51h, 0E8h, 0BCh, 87h, 0B8h, 1, 0
 	db	0E8h, 2Eh, 8Eh, 0E8h, 48h, 88h, 59h, 58h, 0C3h, 0FFh, 36h, 7Ch, 51h, 83h, 0Eh, 7Ch
@@ -5805,214 +11757,709 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	2Eh, 3Bh, 6, 5Eh, 58h, 74h, 28h, 3Bh, 6, 68h, 57h, 74h, 0Ch, 0BEh, 0CEh, 1Fh
 	db	0E8h, 0B1h, 78h, 8Bh, 36h, 0C2h, 56h, 0EBh, 3, 83h, 0C6h, 2, 0E8h, 0FBh, 6Bh, 75h
 	db	9, 3Bh, 6, 5Eh, 58h, 75h, 3, 83h, 0C6h, 2, 89h, 36h, 0C2h, 56h, 0F8h, 0C3h
-	db	0BEh, 0E2h, 1Fh, 0E9h, 8Eh, 78h, 0F9h, 0C3h, 0F8h, 0C3h, 0B0h, 98h, 0EBh, 36h, 0B0h, 0A7h
-	db	0EBh, 32h, 0B0h, 99h, 0EBh, 2Eh, 0B0h, 6Dh, 0EBh, 2Ah, 0B0h, 0CFh, 0EBh, 26h, 0B0h, 0ADh
-	db	0EBh, 22h, 0B0h, 0A5h, 0EBh, 1Eh, 0B0h, 6Fh, 0EBh, 1Ah, 0B0h, 61h, 0EBh, 16h, 0B0h, 9Dh
-	db	0EBh, 12h, 0B0h, 60h, 0EBh, 0Eh, 0B0h, 9Ch, 0EBh, 0Ah, 0B0h, 0AFh, 0EBh, 6, 0B0h, 0C9h
-	db	0EBh, 2, 0B0h, 0ABh, 0A2h, 0DCh, 56h, 0E8h, 83h, 40h, 75h, 12h, 0F7h, 6, 7Ch, 51h
-	db	8, 0, 74h, 0Dh, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0CCh, 0D2h, 0E9h, 44h, 40h, 0E9h, 2Dh
-	db	6Bh, 0E9h, 38h, 40h, 0B0h, 0B2h, 0EBh, 6, 0B0h, 0B4h, 0EBh, 2, 0B0h, 0B5h, 0A2h, 0DCh
-	db	56h, 0E8h, 59h, 40h, 75h, 0E8h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0E3h, 0E8h, 2
-	db	41h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0ADh, 0D2h, 0E9h, 17h, 40h, 0B0h, 20h, 0EBh, 0Ah, 0B0h
-	db	38h, 0EBh, 6, 0B0h, 30h, 0EBh, 2, 0B0h, 28h, 0A2h, 0DCh, 56h, 0E8h, 2Eh, 40h, 75h
-	db	0BDh, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0B8h, 0E8h, 0D7h, 40h, 8Ah, 0Eh, 0DCh, 56h
-	db	0E8h, 1Eh, 0D1h, 0E9h, 0ECh, 3Fh, 0B0h, 0BCh, 0EBh, 2, 0B0h, 0BDh, 0A2h, 0DCh, 56h, 0E8h
-	db	0Bh, 40h, 75h, 9Ah, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 95h, 0E8h, 0B4h, 40h, 8Ah
-	db	0Eh, 0DCh, 56h, 0E8h, 5Bh, 0D1h, 0E9h, 0C9h, 3Fh, 0B0h, 0BEh, 0EBh, 2, 0B0h, 0B6h, 0A2h
-	db	0DCh, 56h, 0E8h, 0E8h, 3Fh, 75h, 38h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 33h, 0E8h
-	db	91h, 40h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 68h, 0D1h, 0E9h, 0A6h, 3Fh, 0B0h, 0A4h, 0EBh, 2
-	db	0B0h, 0ACh, 0A2h, 0DCh, 56h, 0E8h, 0C5h, 3Fh, 75h, 15h, 0F7h, 6, 7Ch, 51h, 8, 0
-	db	74h, 10h, 0E8h, 0B7h, 40h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 90h, 0D1h, 0E9h, 83h, 3Fh, 0E9h
-	db	6Ch, 6Ah, 0E9h, 77h, 3Fh, 0B0h, 97h, 0EBh, 3Ah, 0B0h, 93h, 0EBh, 36h, 0B0h, 92h, 0EBh
-	db	32h, 0B0h, 96h, 0EBh, 2Eh, 0B0h, 94h, 0EBh, 2Ah, 0B0h, 9Fh, 0EBh, 26h, 0B0h, 9Dh, 0EBh
-	db	22h, 0B0h, 9Ch, 0EBh, 1Eh, 0B0h, 9Eh, 0EBh, 1Ah, 0B0h, 95h, 0EBh, 16h, 0B0h, 91h, 0EBh
-	db	12h, 0B0h, 9Bh, 0EBh, 0Eh, 0B0h, 99h, 0EBh, 0Ah, 0B0h, 90h, 0EBh, 6, 0B0h, 9Ah, 0EBh
-	db	2, 0B0h, 98h, 0A2h, 0DCh, 56h, 0E8h, 64h, 3Fh, 75h, 0B4h, 0F7h, 6, 7Ch, 51h, 8
-	db	0, 74h, 0AFh, 0E8h, 0FEh, 3Fh, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 14h, 0D1h, 0E9h, 22h, 3Fh
-	db	0B0h, 0E3h, 0EBh, 0Ah, 0B0h, 0E2h, 0EBh, 6, 0B0h, 0E1h, 0EBh, 2, 0B0h, 0E0h, 0A2h, 0DCh
-	db	56h, 0E8h, 39h, 3Fh, 75h, 89h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 84h, 0E8h, 0D3h
-	db	3Fh, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 47h, 0C2h, 0E9h, 0F7h, 3Eh, 0E8h, 1Fh, 3Fh, 75h, 6Ah
-	db	0F7h, 6, 7Ch, 51h, 10h, 0, 74h, 65h, 0E8h, 0B9h, 3Fh, 0E8h, 0A7h, 0D1h, 0E9h, 0E1h
-	db	3Eh, 0B0h, 0C0h, 0EBh, 2, 0B0h, 0A6h, 0A2h, 0DCh, 56h, 0E8h, 0, 3Fh, 75h, 4Bh, 0F7h
-	db	6, 7Ch, 51h, 10h, 0, 74h, 46h, 0E8h, 0A9h, 3Fh, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0A8h
-	db	0D1h, 0E9h, 0BEh, 3Eh, 0E8h, 0E6h, 3Eh, 75h, 31h, 0F7h, 6, 7Ch, 51h, 80h, 0, 74h
-	db	2Ch, 0E8h, 8Fh, 3Fh, 6, 55h, 8Eh, 0C0h, 8Bh, 0EFh, 5Fh, 58h, 0B1h, 63h, 0E8h, 6Ch
-	db	0CFh, 0E9h, 9Eh, 3Eh, 0E8h, 0C6h, 3Eh, 75h, 11h, 0F7h, 6, 7Ch, 51h, 80h, 0, 74h
-	db	0Ch, 0B9h, 0Fh, 6, 0E8h, 0F1h, 0C3h, 0E9h, 88h, 3Eh, 0E9h, 71h, 69h, 0E9h, 7Ch, 3Eh
-	db	0B0h, 2, 0EBh, 2, 0B0h, 3, 0A2h, 0DCh, 56h, 0E8h, 0A1h, 3Eh, 75h, 0ECh, 0F7h, 6
-	db	7Ch, 51h, 80h, 0, 74h, 0E7h, 0E8h, 4Ah, 3Fh, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 5Dh, 0CFh
-	db	0E9h, 5Fh, 3Eh, 0B0h, 10h, 0EBh, 0Ah, 0B0h, 18h, 0EBh, 6, 0B0h, 0, 0EBh, 2, 0B0h
-	db	8, 0B4h, 1, 0A3h, 0DCh, 56h, 0E8h, 74h, 3Eh, 75h, 0BFh, 0F7h, 6, 7Ch, 51h, 80h
-	db	0, 74h, 0BAh, 0E8h, 0Eh, 3Fh, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 73h, 0CEh, 0E9h, 32h, 3Eh
-	db	0B0h, 10h, 0EBh, 1Ah, 0B0h, 30h, 0EBh, 1Ah, 0B0h, 18h, 0EBh, 12h, 0B0h, 0, 0EBh, 0Eh
-	db	0B0h, 20h, 0EBh, 0Eh, 0B0h, 8, 0EBh, 6, 0B0h, 20h, 0EBh, 2, 0B0h, 28h, 32h, 0E4h
-	db	0EBh, 2, 0B4h, 1, 0A3h, 0DCh, 56h, 0E8h, 33h, 3Eh, 75h, 5Fh, 0F7h, 6, 7Ch, 51h
-	db	80h, 0, 74h, 5Ah, 0E8h, 0CDh, 3Eh, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 6Ch, 0CEh, 0E9h, 0F1h
-	db	3Dh, 0B0h, 8, 0EBh, 2, 0B0h, 9, 8Ah, 0E0h, 0B0h, 0Fh, 0A3h, 0DCh, 56h, 0E8h, 0Ch
-	db	3Eh, 75h, 38h, 0F7h, 6, 7Ch, 51h, 10h, 0, 74h, 33h, 0F7h, 6, 7Ch, 51h, 80h
-	db	0, 74h, 2Bh, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 2Eh, 0C3h, 0E9h, 0C5h, 3Dh, 0E8h, 0EDh, 3Dh
-	db	75h, 19h, 0F7h, 6, 7Ch, 51h, 10h, 0, 74h, 14h, 0F7h, 6, 7Ch, 51h, 80h, 0
-	db	74h, 0Ch, 0E8h, 7Fh, 3Eh, 0E8h, 0CEh, 0D0h, 0E9h, 0A7h, 3Dh, 0E9h, 90h, 68h, 0E9h, 9Bh
-	db	3Dh, 0E8h, 0C9h, 3Dh, 75h, 0F5h, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 0F0h, 0E8h, 72h
-	db	3Eh, 0B1h, 62h, 0E8h, 16h, 0CEh, 0E9h, 89h, 3Dh, 0E8h, 0B1h, 3Dh, 75h, 0DDh, 0F7h, 6
-	db	7Ch, 51h, 2, 0, 74h, 0D8h, 0E8h, 5Ah, 3Eh, 0E8h, 3Eh, 0CCh, 0E9h, 73h, 3Dh, 0E8h
-	db	9Bh, 3Dh, 75h, 0C7h, 0E8h, 4Ch, 3Eh, 0E8h, 59h, 0CCh, 0E9h, 65h, 3Dh, 0E8h, 8Dh, 3Dh
-	db	75h, 0B9h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0B4h, 0E8h, 36h, 3Eh, 0E8h, 4Bh, 0CCh
-	db	0E9h, 4Fh, 3Dh, 0E8h, 77h, 3Dh, 75h, 0A3h, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 9Eh
-	db	0E8h, 0F1h, 98h, 0E8h, 1Dh, 3Eh, 0B1h, 6Ch, 0E8h, 30h, 0CDh, 0E8h, 0EDh, 98h, 0E9h, 31h
-	db	3Dh, 0E8h, 59h, 3Dh, 75h, 85h, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 80h, 0E8h, 2
-	db	3Eh, 6, 55h, 8Eh, 0C0h, 8Bh, 0EFh, 5Fh, 58h, 0B1h, 6Eh, 0E8h, 0Dh, 0CDh, 0E9h, 11h
-	db	3Dh, 0B0h, 6Ch, 0EBh, 6, 0B0h, 6Eh, 0EBh, 2, 0B0h, 0C9h, 0A2h, 0DCh, 56h, 0E8h, 2Ch
-	db	3Dh, 75h, 5Fh, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 5Ah, 8Ah, 0Eh, 0DCh, 56h, 0E8h
-	db	35h, 0C2h, 0E9h, 0EDh, 3Ch, 0B0h, 60h, 0EBh, 0Ah, 0B0h, 61h, 0EBh, 6, 0B0h, 6Dh, 0EBh
-	db	2, 0B0h, 6Fh, 0A2h, 0DCh, 56h, 0E8h, 4, 3Dh, 75h, 37h, 0F7h, 6, 7Ch, 51h, 2
-	db	0, 74h, 32h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0FFh, 0C1h, 0E9h, 0C5h, 3Ch, 0B0h, 20h, 0EBh
-	db	2, 0B0h, 30h, 0A2h, 0DCh, 56h, 0E8h, 0E4h, 3Ch, 75h, 17h, 0F7h, 6, 7Ch, 51h, 0
-	db	1, 74h, 12h, 0E8h, 7Eh, 3Dh, 8Ah, 0Eh, 0DCh, 56h, 0B5h, 0DFh, 0E8h, 7Fh, 0BDh, 0E9h
-	db	0A0h, 3Ch, 0E9h, 89h, 67h, 0E9h, 94h, 3Ch, 0E8h, 0C2h, 3Ch, 75h, 0F5h, 0F7h, 6, 7Ch
-	db	51h, 0, 1, 74h, 0F0h, 0E8h, 40h, 0BDh, 0E9h, 87h, 3Ch, 0B8h, 28h, 0, 0EBh, 3
-	db	0B8h, 38h, 18h, 0A3h, 0DCh, 56h, 0E8h, 0A4h, 3Ch, 75h, 0D7h, 0F7h, 6, 7Ch, 51h, 0
-	db	1, 74h, 0D2h, 0E8h, 1Bh, 0EBh, 74h, 0Fh, 0E8h, 4Dh, 0EAh, 75h, 1Dh, 8Bh, 0Eh, 0DCh
-	db	56h, 0E8h, 55h, 0BEh, 0E9h, 5Bh, 3Ch, 0B5h, 0D9h, 8Ah, 0Eh, 0DDh, 56h, 22h, 0C9h, 74h
-	db	3, 80h, 0CDh, 4, 0E8h, 0E0h, 0BEh, 0E9h, 48h, 3Ch, 8Ah, 0Eh, 0DDh, 56h, 0B5h, 0D9h
-	db	22h, 0C9h, 74h, 3, 80h, 0CDh, 4, 80h, 0C9h, 0C1h, 0E8h, 88h, 0BEh, 0E9h, 32h, 3Ch
-	db	0B8h, 28h, 0, 0EBh, 3, 0B8h, 38h, 18h, 0A3h, 0DCh, 56h, 0E8h, 4Fh, 3Ch, 75h, 15h
-	db	0F7h, 6, 7Ch, 51h, 0, 1, 74h, 10h, 0E8h, 0E9h, 3Ch, 8Bh, 0Eh, 0DCh, 56h, 0E8h
-	db	2Ch, 0BEh, 0E9h, 0Dh, 3Ch, 0E9h, 0F6h, 66h, 0E9h, 1, 3Ch, 0B8h, 20h, 0D9h, 0EBh, 0Dh
-	db	0B8h, 20h, 0DDh, 0EBh, 8, 0B8h, 30h, 0DDh, 0EBh, 3, 0B8h, 30h, 0D9h, 0A3h, 0DCh, 56h
-	db	0E8h, 1Ah, 3Ch, 75h, 0E0h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 0DBh, 0E8h, 0B4h, 3Ch
-	db	8Bh, 0Eh, 0DCh, 56h, 0E8h, 0C9h, 0BCh, 0E9h, 0D8h, 3Bh, 0B8h, 30h, 0DDh, 0EBh, 3, 0B8h
-	db	30h, 0D9h, 0A3h, 0DCh, 56h, 0E8h, 0F5h, 3Bh, 75h, 0BBh, 0F7h, 6, 7Ch, 51h, 0, 1
-	db	74h, 0B6h, 0E8h, 8Fh, 3Ch, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 0BBh, 0BCh, 0E9h, 0B3h, 3Bh, 0E8h
-	db	0DBh, 3Bh, 75h, 0A1h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 9Ch, 0E8h, 75h, 3Ch, 0B9h
-	db	38h, 0DDh, 0E8h, 0F5h, 0BCh, 0E9h, 9Ah, 3Bh, 0B8h, 28h, 0D9h, 0EBh, 3, 0B8h, 38h, 0D9h
-	db	0A3h, 0DCh, 56h, 0E8h, 0B7h, 3Bh, 75h, 4Eh, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 49h
-	db	0E8h, 51h, 3Ch, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 2Eh, 0BDh, 0E9h, 75h, 3Bh, 0E8h, 9Dh, 3Bh
-	db	75h, 34h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 2Fh, 0E8h, 37h, 3Ch, 0B9h, 38h, 0DDh
-	db	0E8h, 76h, 0BCh, 0E9h, 5Ch, 3Bh, 0B8h, 38h, 0D9h, 0A3h, 0DCh, 56h, 0E8h, 7Eh, 3Bh, 75h
-	db	15h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 10h, 0E8h, 18h, 3Ch, 8Bh, 0Eh, 0DCh, 56h
-	db	0E8h, 0Fh, 0BDh, 0E9h, 3Ch, 3Bh, 0E9h, 25h, 66h, 0E9h, 30h, 3Bh, 0B8h, 0F0h, 0D9h, 0E9h
-	db	86h, 0, 0B8h, 0E1h, 0D9h, 0E9h, 80h, 0, 0B8h, 0E0h, 0D9h, 0EBh, 7Bh, 0B8h, 0E2h, 0DBh
-	db	0EBh, 76h, 0B8h, 0F6h, 0D9h, 0EBh, 71h, 0B8h, 0E1h, 0DBh, 0EBh, 6Ch, 0B8h, 0E0h, 0DBh, 0EBh
-	db	67h, 0B8h, 0F7h, 0D9h, 0EBh, 62h, 0B8h, 0E3h, 0DBh, 0EBh, 5Dh, 0B8h, 0E8h, 0D9h, 0EBh, 58h
-	db	0B8h, 0EAh, 0D9h, 0EBh, 53h, 0B8h, 0E9h, 0D9h, 0EBh, 4Eh, 0B8h, 0ECh, 0D9h, 0EBh, 49h, 0B8h
-	db	0EDh, 0D9h, 0EBh, 44h, 0B8h, 0EBh, 0D9h, 0EBh, 3Fh, 0B8h, 0EEh, 0D9h, 0EBh, 3Ah, 0B8h, 0D0h
-	db	0D9h, 0EBh, 35h, 0B8h, 0F3h, 0D9h, 0EBh, 30h, 0B8h, 0F8h, 0D9h, 0EBh, 2Bh, 0B8h, 0F2h, 0D9h
-	db	0EBh, 26h, 0B8h, 0FCh, 0D9h, 0EBh, 21h, 0B8h, 0FDh, 0D9h, 0EBh, 1Ch, 0B8h, 0FAh, 0D9h, 0EBh
-	db	17h, 0B8h, 0E4h, 0D9h, 0EBh, 12h, 0B8h, 0E5h, 0D9h, 0EBh, 0Dh, 0B8h, 0F4h, 0D9h, 0EBh, 8
-	db	0B8h, 0F1h, 0D9h, 0EBh, 3, 0B8h, 0F9h, 0D9h, 0A3h, 0DCh, 56h, 0E8h, 0CFh, 3Ah, 75h, 4Ch
-	db	0F7h, 6, 7Ch, 51h, 0, 1, 74h, 47h, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 0E6h, 0BCh, 0E9h
-	db	90h, 3Ah, 0B8h, 0F5h, 0D9h, 0EBh, 12h, 0B8h, 0FFh, 0D9h, 0EBh, 0Dh, 0B8h, 0FEh, 0D9h, 0EBh
-	db	8, 0B8h, 0FBh, 0D9h, 0EBh, 3, 0B8h, 0E9h, 0DAh, 0A3h, 0DCh, 56h, 0E8h, 9Eh, 3Ah, 75h
-	db	1Bh, 0F7h, 6, 7Ch, 51h, 0, 8, 0EBh, 0CDh, 0C7h, 6, 0DCh, 56h, 0E4h, 0DBh, 0E8h
-	db	8Bh, 3Ah, 75h, 8, 0F7h, 6, 7Ch, 51h, 0, 4, 0EBh, 0BAh, 0E9h, 3Fh, 65h, 0E9h
-	db	4Ah, 3Ah, 0B8h, 0E2h, 0DBh, 0EBh, 0Dh, 0B8h, 0E1h, 0DBh, 0EBh, 8, 0B8h, 0E0h, 0DBh, 0EBh
-	db	3, 0B8h, 0E3h, 0DBh, 0A3h, 0DCh, 56h, 0E8h, 63h, 3Ah, 75h, 0E0h, 0F7h, 6, 7Ch, 51h
-	db	0, 1, 74h, 0DBh, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 0ACh, 0BCh, 0E9h, 24h, 3Ah, 0B0h, 0
-	db	0EBh, 16h, 0B0h, 38h, 0EBh, 12h, 0B0h, 30h, 0EBh, 0Eh, 0B0h, 8, 0EBh, 0Ah, 0B0h, 28h
-	db	0EBh, 6, 0B0h, 20h, 0EBh, 2, 0B0h, 18h, 0A2h, 0DCh, 56h, 0E8h, 2Fh, 3Ah, 75h, 0ACh
-	db	0F7h, 6, 7Ch, 51h, 0, 1, 74h, 0A7h, 0E8h, 0A6h, 0E8h, 75h, 2Ah, 0E8h, 3Ah, 65h
-	db	75h, 1Ch, 3Bh, 6, 5Eh, 58h, 75h, 16h, 83h, 0C6h, 2, 6, 55h, 0E8h, 91h, 0E8h
-	db	5Fh, 58h, 8Ah, 0Eh, 0DCh, 56h, 0B5h, 0DEh, 0E8h, 7Bh, 0BCh, 0E9h, 0D4h, 39h, 6, 55h
-	db	0E8h, 8Fh, 95h, 5Fh, 58h, 0EBh, 0EBh, 0B5h, 0DEh, 8Ah, 0Eh, 0DCh, 56h, 80h, 0C9h, 0C1h
-	db	0E8h, 12h, 0BCh, 0E9h, 0BCh, 39h, 0B8h, 20h, 0DDh, 0EBh, 3, 0B8h, 28h, 0DDh, 0A3h, 0DCh
-	db	56h, 0E8h, 0D9h, 39h, 75h, 3Ch, 0F7h, 6, 7Ch, 51h, 0, 8, 0EBh, 16h, 0B8h, 0
-	db	0DDh, 0EBh, 3, 0B8h, 8, 0D9h, 0A3h, 0DCh, 56h, 0E8h, 0C1h, 39h, 75h, 24h, 0F7h, 6
-	db	7Ch, 51h, 0, 1, 74h, 1Fh, 0E8h, 38h, 0E8h, 74h, 0Dh, 8Bh, 0Eh, 0DCh, 56h, 80h
-	db	0C9h, 0C1h, 0E8h, 0D0h, 0BBh, 0E9h, 7Ah, 39h, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 8, 0BCh, 0E9h
-	db	70h, 39h, 0E9h, 59h, 64h, 0E9h, 64h, 39h, 0B8h, 0, 0DAh, 0EBh, 26h, 0B8h, 10h, 0DAh
-	db	0EBh, 21h, 0B8h, 18h, 0DAh, 0EBh, 1Ch, 0B8h, 30h, 0DAh, 0EBh, 17h, 0B8h, 38h, 0DAh, 0EBh
-	db	12h, 0B8h, 8, 0DAh, 0EBh, 0Dh, 0B8h, 10h, 0DBh, 0EBh, 8, 0B8h, 20h, 0DAh, 0EBh, 3
-	db	0B8h, 28h, 0DAh, 0A3h, 0DCh, 56h, 0E8h, 64h, 39h, 75h, 0C7h, 0F7h, 6, 7Ch, 51h, 0
-	db	1, 74h, 0C2h, 0E8h, 0FEh, 39h, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 66h, 0BBh, 0E9h, 22h, 39h
-	db	0B8h, 0, 0, 0EBh, 19h, 0B8h, 8, 8, 0EBh, 14h, 0B8h, 38h, 30h, 0EBh, 0Fh, 0B8h
-	db	30h, 38h, 0EBh, 0Ah, 0B8h, 28h, 20h, 0EBh, 5, 0B8h, 20h, 28h, 0EBh, 0, 0A3h, 0DCh
-	db	56h, 0E8h, 29h, 39h, 75h, 8Ch, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 87h, 0E8h, 0A0h
-	db	0E7h, 74h, 11h, 0E8h, 0D2h, 0E6h, 75h, 4Dh, 0B5h, 0D8h, 8Ah, 0Eh, 0DDh, 56h, 0E8h, 0C6h
-	db	0BAh, 0E9h, 0DEh, 38h, 0E8h, 23h, 64h, 75h, 2Dh, 3Bh, 6, 5Eh, 58h, 75h, 27h, 83h
-	db	0C6h, 2, 6, 55h, 0E8h, 7Ah, 0E7h, 5Fh, 58h, 74h, 0Dh, 0B9h, 12h, 0, 50h, 57h
-	db	0E8h, 0Fh, 70h, 0E8h, 7Ch, 94h, 5Fh, 58h, 8Bh, 0Eh, 0DCh, 56h, 8Ah, 0F5h, 0B5h, 0D8h
-	db	0E8h, 73h, 0BBh, 0E9h, 0ACh, 38h, 0B9h, 0Dh, 0, 0E8h, 0F6h, 6Fh, 6, 55h, 0E8h, 61h
-	db	94h, 5Fh, 58h, 0EBh, 0E3h, 0B5h, 0DEh, 8Ah, 0Eh, 0DCh, 56h, 80h, 0C9h, 0C1h, 0E8h, 0E4h
-	db	0BAh, 0E9h, 8Eh, 38h, 0B8h, 10h, 0D9h, 0EBh, 8, 0B8h, 10h, 0D8h, 0EBh, 3, 0B8h, 18h
-	db	0D8h, 0A3h, 0DCh, 56h, 0E8h, 0A6h, 38h, 75h, 43h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h
-	db	3Eh, 0E8h, 1Dh, 0E7h, 74h, 0Fh, 0E8h, 4Fh, 0E6h, 75h, 1Ch, 8Bh, 0Eh, 0DCh, 56h, 0E8h
-	db	45h, 0BAh, 0E9h, 5Dh, 38h, 8Bh, 0Eh, 0DCh, 56h, 0F6h, 0C5h, 1, 74h, 3, 80h, 0CDh
-	db	4, 0E8h, 0E3h, 0BAh, 0E9h, 4Bh, 38h, 8Bh, 0Eh, 0DCh, 56h, 0F6h, 0C5h, 1, 74h, 3
-	db	80h, 0CDh, 4, 80h, 0C9h, 0C1h, 0E8h, 8Ch, 0BAh, 0E9h, 36h, 38h, 0E9h, 1Fh, 63h, 0E9h
-	db	2Ah, 38h, 0E8h, 58h, 38h, 75h, 0F5h, 0E8h, 9, 39h, 0E8h, 1Ch, 0C0h, 0E9h, 22h, 38h
-	db	0E8h, 4Ah, 38h, 75h, 0E7h, 0E8h, 0FBh, 38h, 0E8h, 0BEh, 0C0h, 0E9h, 14h, 38h, 32h, 0C0h
-	db	0EBh, 1Ah, 0B0h, 8, 0EBh, 16h, 0B0h, 10h, 0EBh, 12h, 0B0h, 18h, 0EBh, 0Eh, 0B0h, 20h
-	db	0EBh, 0Ah, 0B0h, 28h, 0EBh, 6, 0B0h, 30h, 0EBh, 2, 0B0h, 38h, 0A2h, 0DCh, 56h, 0E8h
-	db	1Bh, 38h, 75h, 0B8h, 0E8h, 0CCh, 38h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0F7h, 0C2h, 0E9h, 0E1h
-	db	37h, 0E8h, 9, 38h, 75h, 0A6h, 0E8h, 0ABh, 38h, 0E8h, 31h, 0BFh, 0E9h, 0D3h, 37h, 0E8h
-	db	0FBh, 37h, 75h, 4Ah, 0E8h, 0ACh, 38h, 0E8h, 47h, 0BFh, 0E9h, 0C5h, 37h, 32h, 0C0h, 0EBh
-	db	2, 0B0h, 8, 0A2h, 0DCh, 56h, 0E8h, 0E4h, 37h, 75h, 33h, 0E8h, 86h, 38h, 8Ah, 0Eh
-	db	0DCh, 56h, 0E8h, 6Ah, 0BFh, 0E9h, 0AAh, 37h, 0E8h, 0D2h, 37h, 75h, 21h, 0E8h, 74h, 38h
-	db	0E8h, 0C2h, 0C3h, 0E8h, 82h, 0E5h, 74h, 0F8h, 0E9h, 97h, 37h, 0E8h, 0BFh, 37h, 75h, 0Eh
-	db	0E8h, 61h, 38h, 0E8h, 39h, 0C5h, 0E8h, 6Fh, 0E5h, 74h, 0F8h, 0E9h, 84h, 37h, 0E9h, 6Dh
-	db	62h, 0B0h, 0D5h, 0EBh, 2, 0B0h, 0D4h, 0A2h, 0DCh, 56h, 0E8h, 0A0h, 37h, 75h, 0EFh, 0E8h
-	db	56h, 0E5h, 8Ah, 0Eh, 0DCh, 56h, 75h, 6, 0E8h, 4, 0BEh, 0E9h, 64h, 37h, 0B5h, 0Ah
-	db	0E8h, 0C5h, 0BCh, 0E9h, 5Ch, 37h, 0E8h, 84h, 37h, 75h, 0D3h, 0E8h, 35h, 38h, 0B1h, 0E4h
-	db	0E8h, 11h, 0BCh, 0E9h, 4Ch, 37h, 0E8h, 74h, 37h, 75h, 0C3h, 0E8h, 25h, 38h, 6, 55h
-	db	8Eh, 0C0h, 8Bh, 0EFh, 5Fh, 58h, 0B1h, 0E6h, 0E8h, 0F9h, 0BBh, 0E9h, 34h, 37h, 0E8h, 5Ch
-	db	37h, 75h, 7Ah, 0E8h, 0Dh, 38h, 0E8h, 34h, 0BDh, 0E9h, 26h, 37h, 0B0h, 0C5h, 0EBh, 2
-	db	0B0h, 0C4h, 0A2h, 0DCh, 56h, 0E8h, 45h, 37h, 75h, 63h, 0E8h, 0F6h, 37h, 8Ah, 0Eh, 0DCh
-	db	56h, 0E8h, 0E9h, 0BCh, 0E9h, 0Bh, 37h, 0E8h, 33h, 37h, 75h, 51h, 0E8h, 0D5h, 37h, 0F7h
-	db	6, 7Ch, 51h, 2, 0, 74h, 3Eh, 0E8h, 40h, 62h, 75h, 39h, 3Bh, 6, 5Eh, 58h
-	db	75h, 33h, 83h, 0C6h, 2, 6, 55h, 0E8h, 0BAh, 37h, 0E8h, 2Dh, 62h, 5Bh, 5Ah, 75h
-	db	1Ah, 3Bh, 6, 5Eh, 58h, 75h, 14h, 83h, 0C6h, 2, 52h, 53h, 6, 55h, 0E8h, 0A3h
-	db	37h, 5Fh, 58h, 5Bh, 5Ah, 0E8h, 0CBh, 0C5h, 0E9h, 0C7h, 36h, 8Bh, 0C2h, 8Bh, 0FBh, 0E8h
-	db	2Bh, 0C6h, 0E9h, 0BDh, 36h, 0B1h, 28h, 0E8h, 69h, 0BDh, 0E9h, 0B5h, 36h, 0E9h, 9Eh, 61h
-	db	0B0h, 30h, 0EBh, 0Eh, 0B0h, 20h, 0EBh, 0Ah, 0B0h, 38h, 0EBh, 6, 0B0h, 18h, 0EBh, 2
-	db	0B0h, 10h, 0A2h, 0DCh, 56h, 0E8h, 0C5h, 36h, 75h, 0E3h, 0E8h, 67h, 37h, 8Ah, 0Eh, 0DCh
-	db	56h, 0E8h, 3Fh, 0BDh, 0E9h, 8Bh, 36h, 0B0h, 0, 0EBh, 16h, 0B0h, 8, 0EBh, 12h, 0B0h
-	db	20h, 0EBh, 0Eh, 0B0h, 38h, 0EBh, 0Ah, 0B0h, 28h, 0EBh, 6, 0B0h, 10h, 0EBh, 2, 0B0h
-	db	18h, 0A2h, 0DCh, 56h, 0E8h, 96h, 36h, 75h, 0B4h, 0E8h, 47h, 37h, 8Ah, 0Eh, 0DCh, 56h
-	db	0E8h, 31h, 0BDh, 0E9h, 5Ch, 36h, 0B1h, 0AAh, 0EBh, 2, 0B1h, 0AEh, 0E8h, 5, 92h, 0E8h
-	db	5, 0, 0E9h, 6, 92h, 0B1h, 0ACh, 88h, 0Eh, 0DCh, 56h, 0E8h, 6Fh, 36h, 75h, 8Dh
-	db	0E8h, 11h, 37h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0EAh, 0BBh, 0E9h, 35h, 36h, 0E8h, 5Dh, 36h
-	db	75h, 4Dh, 0E8h, 13h, 0E4h, 74h, 8, 0B1h, 0D7h, 0E8h, 6Bh, 0BBh, 0E9h, 23h, 36h, 0E8h
-	db	0E7h, 0BBh, 0E9h, 1Dh, 36h, 0E8h, 45h, 36h, 75h, 35h, 0E8h, 0C7h, 91h, 0E8h, 0F8h, 0E3h
-	db	0E8h, 0C8h, 91h, 0E8h, 0F0h, 36h, 0B1h, 0A4h, 0E8h, 7Dh, 0BBh, 0E9h, 4, 36h, 0E8h, 2Ch
-	db	36h, 75h, 1Ch, 0E8h, 0E2h, 0E3h, 0E8h, 0ABh, 91h, 0E8h, 0DAh, 36h, 50h, 57h, 0E8h, 0AAh
-	db	91h, 8Ch, 0C0h, 8Bh, 0FDh, 5Dh, 7, 0B1h, 0A6h, 0E8h, 5Ch, 0BBh, 0E9h, 0E3h, 35h, 0E9h
-	db	0CCh, 60h, 0B0h, 37h, 0EBh, 61h, 0B0h, 3Fh, 0EBh, 5Dh, 0B0h, 0F8h, 0EBh, 59h, 0B0h, 0FCh
-	db	0EBh, 55h, 0B0h, 0FAh, 0EBh, 51h, 0B0h, 0F5h, 0EBh, 4Dh, 0B0h, 0A6h, 0EBh, 49h, 0B0h, 27h
-	db	0EBh, 45h, 0B0h, 2Fh, 0EBh, 41h, 0B0h, 0F4h, 0EBh, 3Dh, 0B0h, 0CEh, 0EBh, 39h, 0B0h, 9Fh
-	db	0EBh, 35h, 0B0h, 0ACh, 0EBh, 31h, 0B0h, 0A4h, 0EBh, 2Dh, 0B0h, 9Eh, 0EBh, 29h, 0B0h, 0AEh
-	db	0EBh, 25h, 0B0h, 0F9h, 0EBh, 21h, 0B0h, 0FDh, 0EBh, 1Dh, 0B0h, 0FBh, 0EBh, 19h, 0B0h, 0AAh
-	db	0EBh, 15h, 0B0h, 9Bh, 0EBh, 11h, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 4, 0B0h, 0D7h
-	db	0EBh, 5, 0E9h, 48h, 0FFh, 0B0h, 90h, 0A2h, 0DCh, 56h, 0E8h, 0A0h, 35h, 75h, 90h, 8Ah
-	db	0Eh, 0DCh, 56h, 0E8h, 0B1h, 0BAh, 0E9h, 69h, 35h, 0B0h, 98h, 0EBh, 26h, 0B0h, 0A7h, 0EBh
-	db	22h, 0B0h, 99h, 0EBh, 1Eh, 0B0h, 0ADh, 0EBh, 1Ah, 0B0h, 0A5h, 0EBh, 16h, 0B0h, 9Dh, 0EBh
-	db	12h, 0B0h, 9Ch, 0EBh, 0Eh, 0B0h, 0CFh, 0EBh, 0Ah, 0B0h, 0AFh, 0EBh, 6, 0B0h, 0C9h, 0EBh
-	db	2, 0B0h, 0ABh, 0A2h, 0DCh, 56h, 0E8h, 64h, 35h, 75h, 0Ah, 8Ah, 0Eh, 0DCh, 56h, 0E8h
-	db	67h, 0BAh, 0E9h, 2Dh, 35h, 0E9h, 16h, 60h, 0B0h, 0F0h, 0EBh, 6, 0B0h, 0F3h, 0EBh, 2
-	db	0B0h, 0F2h, 0A2h, 0DCh, 56h, 0E8h, 45h, 35h, 75h, 0Ch, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 61h
-	db	0BAh, 0C6h, 6, 0C5h, 51h, 0FFh, 0FFh, 26h, 5Ah, 57h, 0B0h, 2Eh, 0EBh, 12h, 0B0h, 3Eh
-	db	0EBh, 0Eh, 0B0h, 36h, 0EBh, 0Ah, 0B0h, 26h, 0EBh, 6, 0B0h, 64h, 0EBh, 2, 0B0h, 65h
-	db	0A2h, 0DCh, 56h, 0E8h, 17h, 35h, 75h, 0Ch, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 3Eh, 0BAh, 0C6h
-	db	6, 0C5h, 51h, 0FFh, 0FFh, 26h, 5Ah, 57h, 0E8h, 2, 35h, 75h, 3Fh, 0E8h, 0B8h, 0E2h
-	db	75h, 13h, 0F6h, 6, 86h, 51h, 10h, 75h, 4, 0B1h, 0C2h, 0EBh, 2, 0B1h, 0CAh, 0E8h
-	db	38h, 0BBh, 0E9h, 0BDh, 34h, 0F6h, 6, 86h, 51h, 20h, 74h, 0Dh, 0F6h, 6, 0BFh, 51h
-	db	10h, 74h, 6, 0E8h, 0B2h, 0ADh, 0E9h, 0A9h, 34h, 0F6h, 6, 86h, 51h, 10h, 75h, 4
-	db	0B1h, 0C3h, 0EBh, 2, 0B1h, 0CBh, 0E8h, 0DEh, 0B9h, 0E9h, 96h, 34h, 0E9h, 7Fh, 5Fh, 0F6h
-	db	6, 87h, 51h, 2, 75h, 4, 0B0h, 0C2h, 0EBh, 2, 0B0h, 0CAh, 0A2h, 0DCh, 56h, 0E8h
-	db	0ABh, 34h, 75h, 0E8h, 0E8h, 61h, 0E2h, 75h, 0Ah, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0EAh, 0BAh
-	db	0E9h, 6Fh, 34h, 8Ah, 0Eh, 0DCh, 56h, 80h, 0C9h, 1, 0E8h, 0AAh, 0B9h, 0E9h, 62h, 34h
-	db	0E8h, 8Ah, 34h, 75h, 0C7h, 0E8h, 2Ch, 35h, 0E8h, 7Dh, 0B8h, 0E9h, 54h, 34h, 0B0h, 77h
-	db	0EBh, 3Ah, 0B0h, 76h, 0EBh, 36h, 0B0h, 72h, 0EBh, 32h, 0B0h, 73h, 0EBh, 2Eh, 0B0h, 74h
-	db	0EBh, 2Ah, 0B0h, 75h, 0EBh, 26h, 0B0h, 7Fh, 0EBh, 22h, 0B0h, 7Eh, 0EBh, 1Eh, 0B0h, 7Ch
-	db	0EBh, 1Ah, 0B0h, 7Dh, 0EBh, 16h, 0B0h, 70h, 0EBh, 12h, 0B0h, 71h, 0EBh, 0Eh, 0B0h, 78h
-	db	0EBh, 0Ah, 0B0h, 79h, 0EBh, 6, 0B0h, 7Bh, 0EBh, 2, 0B0h, 7Ah, 0A2h, 0DCh, 56h, 0E8h
-	db	3Bh, 34h, 75h, 2Ch, 0E8h, 0DDh, 34h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0BCh, 0B7h, 0E9h, 1
-	db	34h, 0B0h, 0E2h, 0EBh, 6, 0B0h, 0E1h, 0EBh, 2, 0B0h, 0E0h, 0A2h, 0DCh, 56h, 0E8h, 1Ch
-	db	34h, 75h, 0Dh, 0E8h, 0BEh, 34h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 1Fh, 0B7h, 0E9h, 0E2h, 33h
-	db	0E9h, 0CBh, 5Eh, 0B0h, 0E3h, 0EBh, 0Ah, 0B0h, 0E2h, 0EBh, 6, 0B0h, 0E1h, 0EBh, 2, 0B0h
-	db	0E0h, 0A2h, 0DCh, 56h, 0E8h, 0F6h, 33h, 75h, 0E7h, 0E8h, 98h, 34h, 8Ah, 0Eh, 0DCh, 56h
-	db	0E8h, 1, 0B7h, 0E9h, 0BCh, 33h, 0E8h, 0E4h, 33h, 75h, 0D5h, 0E8h, 95h, 34h, 0E8h, 2
-	db	0BDh, 0E9h, 0AEh, 33h, 0E8h, 19h, 34h, 75h, 3Bh, 56h, 9Ah
+	db	0BEh, 0E2h, 1Fh, 0E9h, 8Eh, 78h, 0F9h, 0C3h, 0F8h, 0C3h, 0B0h, 98h, 0EBh, 36h
+	mov	al, 0A7h	;@0BD48
+	jmp	short @@27	;@0BD4A
+	mov	al, 99h	;@0BD4C
+	jmp	short @@27	;@0BD4E
+	mov	al, 6Dh	;@0BD50
+	jmp	short @@27	;@0BD52
+	mov	al, 0CFh	;@0BD54
+	jmp	short @@27	;@0BD56
+	mov	al, 0ADh	;@0BD58
+	jmp	short @@27	;@0BD5A
+	mov	al, 0A5h	;@0BD5C
+	jmp	short @@27	;@0BD5E
+	mov	al, 6Fh	;@0BD60
+	jmp	short @@27	;@0BD62
+	mov	al, 61h	;@0BD64
+	jmp	short @@27	;@0BD66
+	mov	al, 9Dh	;@0BD68
+	jmp	short @@27	;@0BD6A
+	mov	al, 60h	;@0BD6C
+	jmp	short @@27	;@0BD6E
+	mov	al, 9Ch	;@0BD70
+	jmp	short @@27	;@0BD72
+	db	0B0h, 0AFh, 0EBh, 6, 0B0h, 0C9h, 0EBh, 2, 0B0h, 0ABh	;@0BD74
+@@27:	mov	byte ptr ds:[56DCh], al	;@0BD7E
+	call	L0FE07	;@0BD81
+	jne	@@28	;@0BD84
+	test	word ptr ds:[517Ch], 8	;@0BD86
+	je	@@29	;@0BD8C
+	mov	cl, byte ptr ds:[56DCh]	;@0BD8E
+	call	L09061	;@0BD92
+	jmp	L0FDDC	;@0BD95
+@@28:	jmp	L028C8	;@0BD98
+@@29:	jmp	L0FDD6	;@0BD9B
+	db	0B0h, 0B2h, 0EBh, 6, 0B0h, 0B4h, 0EBh, 2, 0B0h, 0B5h, 0A2h, 0DCh	;@0BD9E
+	db	56h, 0E8h, 'Y@u', 0E8h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0E3h, 0E8h
+	db	2, 41h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0ADh, 0D2h, 0E9h, 17h, 40h
+	mov	al, 20h	;@0BDC5
+	jmp	short @@30	;@0BDC7
+	db	0B0h, 38h, 0EBh, 6, 0B0h, 30h, 0EBh, 2, 0B0h, 28h	;@0BDC9
+@@30:	mov	byte ptr ds:[56DCh], al	;@0BDD3
+	call	L0FE07	;@0BDD6
+	jne	@@28	;@0BDD9
+	test	word ptr ds:[517Ch], 8	;@0BDDB
+	je	@@29	;@0BDE1
+	call	L0FEBD	;@0BDE3
+	mov	cl, byte ptr ds:[56DCh]	;@0BDE6
+	call	L08F0B	;@0BDEA
+	jmp	L0FDDC	;@0BDED
+	db	0B0h, 0BCh, 0EBh, 2, 0B0h, 0BDh, 0A2h, 0DCh, 56h, 0E8h, 0Bh, 40h	;@0BDF0
+	db	75h, 9Ah, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 95h, 0E8h, 0B4h, 40h, 8Ah
+	db	0Eh, 0DCh, 56h, 0E8h, 5Bh, 0D1h, 0E9h, 0C9h, 3Fh, 0B0h, 0BEh, 0EBh
+	db	2, 0B0h, 0B6h, 0A2h, 0DCh, 56h, 0E8h, 0E8h, '?u8', 0F7h, 6, 7Ch
+	db	51h, 8, 0, 74h, 33h, 0E8h, 91h, 40h, 8Ah, 0Eh, 0DCh, 56h, 0E8h
+	db	68h, 0D1h, 0E9h, 0A6h, 3Fh, 0B0h, 0A4h, 0EBh, 2, 0B0h, 0ACh, 0A2h
+	db	0DCh, 56h, 0E8h, 0C5h, 3Fh, 75h, 15h, 0F7h, 6, 7Ch, 51h, 8, 0
+	db	74h, 10h, 0E8h, 0B7h, 40h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 90h, 0D1h
+	db	0E9h, 83h, 3Fh
+@@31:	jmp	L028C8	;@0BE59
+@@32:	jmp	L0FDD6	;@0BE5C
+	mov	al, 97h	;@0BE5F
+	jmp	short @@33	;@0BE61
+	mov	al, 93h	;@0BE63
+	jmp	short @@33	;@0BE65
+	mov	al, 92h	;@0BE67
+	jmp	short @@33	;@0BE69
+	mov	al, 96h	;@0BE6B
+	jmp	short @@33	;@0BE6D
+	mov	al, 94h	;@0BE6F
+	jmp	short @@33	;@0BE71
+	mov	al, 9Fh	;@0BE73
+	jmp	short @@33	;@0BE75
+	mov	al, 9Dh	;@0BE77
+	jmp	short @@33	;@0BE79
+	mov	al, 9Ch	;@0BE7B
+	jmp	short @@33	;@0BE7D
+	mov	al, 9Eh	;@0BE7F
+	jmp	short @@33	;@0BE81
+	mov	al, 95h	;@0BE83
+	jmp	short @@33	;@0BE85
+	mov	al, 91h	;@0BE87
+	jmp	short @@33	;@0BE89
+	mov	al, 9Bh	;@0BE8B
+	jmp	short @@33	;@0BE8D
+	mov	al, 99h	;@0BE8F
+	jmp	short @@33	;@0BE91
+	db	0B0h, 90h, 0EBh, 6, 0B0h, 9Ah, 0EBh, 2, 0B0h, 98h	;@0BE93
+@@33:	mov	byte ptr ds:[56DCh], al	;@0BE9D
+	call	L0FE07	;@0BEA0
+	jne	@@31	;@0BEA3
+	test	word ptr ds:[517Ch], 8	;@0BEA5
+	je	@@32	;@0BEAB
+	call	L0FEAE	;@0BEAD
+	mov	cl, byte ptr ds:[56DCh]	;@0BEB0
+	call	L08FCB	;@0BEB4
+	jmp	L0FDDC	;@0BEB7
+	db	0B0h, 0E3h, 0EBh, 0Ah, 0B0h, 0E2h, 0EBh, 6, 0B0h, 0E1h, 0EBh, 2	;@0BEBA
+	db	0B0h, 0E0h, 0A2h, 0DCh, 56h, 0E8h, '9?u', 89h, 0F7h, 6, 7Ch, 51h
+	db	8, 0, 74h, 84h, 0E8h, 0D3h, 3Fh, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 47h
+	db	0C2h, 0E9h, 0F7h, 3Eh, 0E8h, 1Fh, '?uj', 0F7h, 6, 7Ch, 51h, 10h
+	db	0, 74h, 65h, 0E8h, 0B9h, 3Fh, 0E8h, 0A7h, 0D1h, 0E9h, 0E1h, 3Eh
+	db	0B0h, 0C0h, 0EBh, 2, 0B0h, 0A6h, 0A2h, 0DCh, 56h, 0E8h, 0, '?uK'
+	db	0F7h, 6, 7Ch, 51h, 10h, 0, 74h, 46h, 0E8h, 0A9h, 3Fh, 8Ah, 0Eh
+	db	0DCh, 56h, 0E8h, 0A8h, 0D1h, 0E9h, 0BEh, 3Eh, 0E8h, 0E6h, '>u1'
+	db	0F7h, 6, 7Ch, 51h, 80h, 0, 74h, 2Ch, 0E8h, 8Fh, 3Fh, 6, 55h, 8Eh
+	db	0C0h, 8Bh, 0EFh, 5Fh, 58h, 0B1h, 63h, 0E8h, 6Ch, 0CFh, 0E9h, 9Eh
+	db	3Eh, 0E8h, 0C6h, 3Eh, 75h, 11h, 0F7h, 6, 7Ch, 51h, 80h, 0, 74h
+	db	0Ch, 0B9h, 0Fh, 6, 0E8h, 0F1h, 0C3h, 0E9h, 88h, 3Eh
+@@34:	jmp	L028C8	;@0BF54
+@@35:	jmp	L0FDD6	;@0BF57
+	db	0B0h, 2, 0EBh, 2, 0B0h, 3, 0A2h, 0DCh, 56h, 0E8h, 0A1h, 3Eh, 75h	;@0BF5A
+	db	0ECh, 0F7h, 6, 7Ch, 51h, 80h, 0, 74h, 0E7h, 0E8h, 4Ah, 3Fh, 8Ah
+	db	0Eh, 0DCh, 56h, 0E8h, 5Dh, 0CFh, 0E9h, 5Fh, 3Eh
+	mov	al, 10h	;@0BF7D
+	jmp	short @@36	;@0BF7F
+	db	0B0h, 18h, 0EBh, 6, 0B0h, 0, 0EBh, 2, 0B0h, 8	;@0BF81
+@@36:	mov	ah, 1	;@0BF8B
+	mov	word ptr ds:[56DCh], ax	;@0BF8D
+	call	L0FE07	;@0BF90
+	jne	@@34	;@0BF93
+	test	word ptr ds:[517Ch], 80h	;@0BF95
+	je	@@35	;@0BF9B
+	call	L0FEAE	;@0BF9D
+	mov	cx, word ptr ds:[56DCh]	;@0BFA0
+	call	L08E1A	;@0BFA4
+	jmp	L0FDDC	;@0BFA7
+	mov	al, 10h	;@0BFAA
+	jmp	short @@37	;@0BFAC
+	mov	al, 30h	;@0BFAE
+	jmp	short @@38	;@0BFB0
+	mov	al, 18h	;@0BFB2
+	jmp	short @@37	;@0BFB4
+	mov	al, 0	;@0BFB6
+	jmp	short @@37	;@0BFB8
+	mov	al, 20h	;@0BFBA
+	jmp	short @@38	;@0BFBC
+	mov	al, 8	;@0BFBE
+	jmp	short @@37	;@0BFC0
+	db	0B0h, 20h, 0EBh, 2, 0B0h, 28h	;@0BFC2
+@@37:	xor	ah, ah	;@0BFC8
+	jmp	short @@39	;@0BFCA
+@@38:	mov	ah, 1	;@0BFCC
+@@39:	mov	word ptr ds:[56DCh], ax	;@0BFCE
+	call	L0FE07	;@0BFD1
+	jne	@@40	;@0BFD4
+	test	word ptr ds:[517Ch], 80h	;@0BFD6
+	je	@@41	;@0BFDC
+	call	L0FEAE	;@0BFDE
+	mov	cx, word ptr ds:[56DCh]	;@0BFE1
+	call	L08E54	;@0BFE5
+	jmp	L0FDDC	;@0BFE8
+	db	0B0h, 8, 0EBh, 2, 0B0h, 9, 8Ah, 0E0h, 0B0h, 0Fh, 0A3h, 0DCh, 56h	;@0BFEB
+	db	0E8h, 0Ch, '>u8', 0F7h, 6, 7Ch, 51h, 10h, 0, 74h, 33h, 0F7h, 6
+	db	7Ch, 51h, 80h, 0, 74h, 2Bh, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 2Eh, 0C3h
+	db	0E9h, 0C5h, 3Dh, 0E8h, 0EDh, 3Dh, 75h, 19h, 0F7h, 6, 7Ch, 51h
+	db	10h, 0, 74h, 14h, 0F7h, 6, 7Ch, 51h, 80h, 0, 74h, 0Ch, 0E8h, 7Fh
+	db	3Eh, 0E8h, 0CEh, 0D0h, 0E9h, 0A7h, 3Dh
+@@40:	jmp	L028C8	;@0C035
+@@41:	jmp	L0FDD6	;@0C038
+	db	0E8h, 0C9h, 3Dh, 75h, 0F5h, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 0F0h	;@0C03B
+	db	0E8h, 72h, 3Eh, 0B1h, 62h, 0E8h, 16h, 0CEh, 0E9h, 89h, 3Dh, 0E8h
+	db	0B1h, 3Dh, 75h, 0DDh, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 0D8h, 0E8h
+	db	5Ah, 3Eh, 0E8h, 3Eh, 0CCh, 0E9h, 73h, 3Dh, 0E8h, 9Bh, 3Dh, 75h
+	db	0C7h, 0E8h, 4Ch, 3Eh, 0E8h, 59h, 0CCh, 0E9h, 65h, 3Dh, 0E8h, 8Dh
+	db	3Dh, 75h, 0B9h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 0B4h, 0E8h, 36h
+	db	3Eh, 0E8h, 4Bh, 0CCh, 0E9h, 4Fh, 3Dh, 0E8h, 'w=u', 0A3h, 0F7h
+	db	6, 7Ch, 51h, 2, 0, 74h, 9Eh, 0E8h, 0F1h, 98h, 0E8h, 1Dh, 3Eh, 0B1h
+	db	6Ch, 0E8h, 30h, 0CDh, 0E8h, 0EDh, 98h, 0E9h, 31h, 3Dh, 0E8h, 'Y=u'
+	db	85h, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 80h, 0E8h, 2, 3Eh, 6, 55h, 8Eh
+	db	0C0h, 8Bh, 0EFh, 5Fh, 58h, 0B1h, 6Eh, 0E8h, 0Dh, 0CDh, 0E9h, 11h
+	db	3Dh, 0B0h, 6Ch, 0EBh, 6, 0B0h, 6Eh, 0EBh, 2, 0B0h, 0C9h, 0A2h
+	db	0DCh, 56h, 0E8h, ',=u_', 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 5Ah, 8Ah
+	db	0Eh, 0DCh, 56h, 0E8h, 35h, 0C2h, 0E9h, 0EDh, 3Ch
+	mov	al, 60h	;@0C0EF
+	jmp	short @@42	;@0C0F1
+	db	0B0h, 61h, 0EBh, 6, 0B0h, 6Dh, 0EBh, 2, 0B0h, 6Fh	;@0C0F3
+@@42:	mov	byte ptr ds:[56DCh], al	;@0C0FD
+	call	L0FE07	;@0C100
+	jne	@@43	;@0C103
+	test	word ptr ds:[517Ch], 2	;@0C105
+	je	@@44	;@0C10B
+	mov	cl, byte ptr ds:[56DCh]	;@0C10D
+	call	L08313	;@0C111
+	jmp	L0FDDC	;@0C114
+	db	0B0h, 20h, 0EBh, 2, 0B0h, 30h, 0A2h, 0DCh, 56h, 0E8h, 0E4h, 3Ch	;@0C117
+	db	75h, 17h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 12h, 0E8h, 7Eh, 3Dh, 8Ah
+	db	0Eh, 0DCh, 56h, 0B5h, 0DFh, 0E8h, 7Fh, 0BDh, 0E9h, 0A0h, 3Ch
+@@43:	jmp	L028C8	;@0C13C
+@@44:	jmp	L0FDD6	;@0C13F
+	db	0E8h, 0C2h, 3Ch, 75h, 0F5h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 0F0h	;@0C142
+	db	0E8h, 40h, 0BDh, 0E9h, 87h, 3Ch, 0B8h, 28h, 0, 0EBh, 3, 0B8h, 38h
+	db	18h, 0A3h, 0DCh, 56h, 0E8h, 0A4h, 3Ch, 75h, 0D7h, 0F7h, 6, 7Ch
+	db	51h, 0, 1, 74h, 0D2h, 0E8h, 1Bh, 0EBh, 74h, 0Fh, 0E8h, 4Dh, 0EAh
+	db	75h, 1Dh, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 55h, 0BEh, 0E9h, 5Bh, 3Ch
+	db	0B5h, 0D9h, 8Ah, 0Eh, 0DDh, 56h, 22h, 0C9h, 74h, 3, 80h, 0CDh
+	db	4, 0E8h, 0E0h, 0BEh, 0E9h, 48h, 3Ch, 8Ah, 0Eh, 0DDh, 56h, 0B5h
+	db	0D9h, 22h, 0C9h, 74h, 3, 80h, 0CDh, 4, 80h, 0C9h, 0C1h, 0E8h, 88h
+	db	0BEh, 0E9h, 32h, 3Ch, 0B8h, 28h, 0, 0EBh, 3, 0B8h, 38h, 18h, 0A3h
+	db	0DCh, 56h, 0E8h, 'O<u', 15h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 10h
+	db	0E8h, 0E9h, 3Ch, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 2Ch, 0BEh, 0E9h, 0Dh
+	db	3Ch
+@@45:	jmp	L028C8	;@0C1CF
+@@46:	jmp	L0FDD6	;@0C1D2
+	mov	ax, 0D920h	;@0C1D5
+	jmp	short @@47	;@0C1D8
+	mov	ax, 0DD20h	;@0C1DA
+	jmp	short @@47	;@0C1DD
+	db	0B8h, 30h, 0DDh, 0EBh, 3, 0B8h, 30h, 0D9h	;@0C1DF
+@@47:	mov	word ptr ds:[56DCh], ax	;@0C1E7
+	call	L0FE07	;@0C1EA
+	jne	@@45	;@0C1ED
+	test	word ptr ds:[517Ch], 100h	;@0C1EF
+	je	@@46	;@0C1F5
+	call	L0FEAE	;@0C1F7
+	mov	cx, word ptr ds:[56DCh]	;@0C1FA
+	call	L07ECA	;@0C1FE
+	jmp	L0FDDC	;@0C201
+	db	0B8h, 30h, 0DDh, 0EBh, 3, 0B8h, 30h, 0D9h, 0A3h, 0DCh, 56h, 0E8h	;@0C204
+	db	0F5h, 3Bh, 75h, 0BBh, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 0B6h, 0E8h
+	db	8Fh, 3Ch, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 0BBh, 0BCh, 0E9h, 0B3h, 3Bh
+	db	0E8h, 0DBh, 3Bh, 75h, 0A1h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 9Ch
+	db	0E8h, 75h, 3Ch, 0B9h, 38h, 0DDh, 0E8h, 0F5h, 0BCh, 0E9h, 9Ah, 3Bh
+	db	0B8h, 28h, 0D9h, 0EBh, 3, 0B8h, 38h, 0D9h, 0A3h, 0DCh, 56h, 0E8h
+	db	0B7h, ';uN', 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 49h, 0E8h, 51h, 3Ch
+	db	8Bh, 0Eh, 0DCh, 56h, 0E8h, 2Eh, 0BDh, 0E9h, 75h, 3Bh, 0E8h, 9Dh
+	db	';u4', 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 2Fh, 0E8h, 37h, 3Ch, 0B9h
+	db	38h, 0DDh, 0E8h, 76h, 0BCh, 0E9h, 5Ch, 3Bh, 0B8h, 38h, 0D9h, 0A3h
+	db	0DCh, 56h, 0E8h, '~;u', 15h, 0F7h, 6, 7Ch, 51h, 0, 1, 74h, 10h
+	db	0E8h, 18h, 3Ch, 8Bh, 0Eh, 0DCh, 56h, 0E8h, 0Fh, 0BDh, 0E9h, 3Ch
+	db	3Bh, 0E9h, 25h, 66h, 0E9h, 30h, 3Bh
+	mov	ax, 0D9F0h	;@0C2A6
+	jmp	@@48	;@0C2A9
+	mov	ax, 0D9E1h	;@0C2AC
+	jmp	@@48	;@0C2AF
+	mov	ax, 0D9E0h	;@0C2B2
+	jmp	short @@48	;@0C2B5
+	mov	ax, 0DBE2h	;@0C2B7
+	jmp	short @@48	;@0C2BA
+	mov	ax, 0D9F6h	;@0C2BC
+	jmp	short @@48	;@0C2BF
+	mov	ax, 0DBE1h	;@0C2C1
+	jmp	short @@48	;@0C2C4
+	mov	ax, 0DBE0h	;@0C2C6
+	jmp	short @@48	;@0C2C9
+	mov	ax, 0D9F7h	;@0C2CB
+	jmp	short @@48	;@0C2CE
+	mov	ax, 0DBE3h	;@0C2D0
+	jmp	short @@48	;@0C2D3
+	mov	ax, 0D9E8h	;@0C2D5
+	jmp	short @@48	;@0C2D8
+	mov	ax, 0D9EAh	;@0C2DA
+	jmp	short @@48	;@0C2DD
+	mov	ax, 0D9E9h	;@0C2DF
+	jmp	short @@48	;@0C2E2
+	mov	ax, 0D9ECh	;@0C2E4
+	jmp	short @@48	;@0C2E7
+	mov	ax, 0D9EDh	;@0C2E9
+	jmp	short @@48	;@0C2EC
+	mov	ax, 0D9EBh	;@0C2EE
+	jmp	short @@48	;@0C2F1
+	mov	ax, 0D9EEh	;@0C2F3
+	jmp	short @@48	;@0C2F6
+	mov	ax, 0D9D0h	;@0C2F8
+	jmp	short @@48	;@0C2FB
+	mov	ax, 0D9F3h	;@0C2FD
+	jmp	short @@48	;@0C300
+	mov	ax, 0D9F8h	;@0C302
+	jmp	short @@48	;@0C305
+	mov	ax, 0D9F2h	;@0C307
+	jmp	short @@48	;@0C30A
+	mov	ax, 0D9FCh	;@0C30C
+	jmp	short @@48	;@0C30F
+	mov	ax, 0D9FDh	;@0C311
+	jmp	short @@48	;@0C314
+	mov	ax, 0D9FAh	;@0C316
+	jmp	short @@48	;@0C319
+	mov	ax, 0D9E4h	;@0C31B
+	jmp	short @@48	;@0C31E
+	mov	ax, 0D9E5h	;@0C320
+	jmp	short @@48	;@0C323
+	mov	ax, 0D9F4h	;@0C325
+	jmp	short @@48	;@0C328
+	db	0B8h, 0F1h, 0D9h, 0EBh, 3, 0B8h, 0F9h, 0D9h	;@0C32A
+@@48:	mov	word ptr ds:[56DCh], ax	;@0C332
+	call	L0FE07	;@0C335
+	jne	@@51	;@0C338
+	test	word ptr ds:[517Ch], 100h	;@0C33A
+@@49:	je	@@52	;@0C340
+	mov	cx, word ptr ds:[56DCh]	;@0C342
+	call	L0802F	;@0C346
+	jmp	L0FDDC	;@0C349
+	mov	ax, 0D9F5h	;@0C34C
+	jmp	short @@50	;@0C34F
+	mov	ax, 0D9FFh	;@0C351
+	jmp	short @@50	;@0C354
+	mov	ax, 0D9FEh	;@0C356
+	jmp	short @@50	;@0C359
+	db	0B8h, 0FBh, 0D9h, 0EBh, 3, 0B8h, 0E9h, 0DAh	;@0C35B
+@@50:	mov	word ptr ds:[56DCh], ax	;@0C363
+	call	L0FE07	;@0C366
+	jne	@@51	;@0C369
+	test	word ptr ds:[517Ch], 800h	;@0C36B
+	jmp	@@49	;@0C371
+	db	0C7h, 6, 0DCh, 56h, 0E4h, 0DBh, 0E8h, 8Bh, 3Ah, 75h, 8, 0F7h, 6	;@0C373
+	db	7Ch, 51h, 0, 4, 0EBh, 0BAh
+@@51:	jmp	L028C8	;@0C386
+@@52:	jmp	L0FDD6	;@0C389
+	mov	ax, 0DBE2h	;@0C38C
+	jmp	short @@53	;@0C38F
+	mov	ax, 0DBE1h	;@0C391
+	jmp	short @@53	;@0C394
+	db	0B8h, 0E0h, 0DBh, 0EBh, 3, 0B8h, 0E3h, 0DBh	;@0C396
+@@53:	mov	word ptr ds:[56DCh], ax	;@0C39E
+	call	L0FE07	;@0C3A1
+	jne	@@51	;@0C3A4
+	test	word ptr ds:[517Ch], 100h	;@0C3A6
+	je	@@52	;@0C3AC
+	mov	cx, word ptr ds:[56DCh]	;@0C3AE
+	call	L08061	;@0C3B2
+	jmp	L0FDDC	;@0C3B5
+	mov	al, 0	;@0C3B8
+	jmp	short @@54	;@0C3BA
+	mov	al, 38h	;@0C3BC
+	jmp	short @@54	;@0C3BE
+	mov	al, 30h	;@0C3C0
+	jmp	short @@54	;@0C3C2
+	mov	al, 8	;@0C3C4
+	jmp	short @@54	;@0C3C6
+	db	0B0h, 28h, 0EBh, 6, 0B0h, 20h, 0EBh, 2, 0B0h, 18h	;@0C3C8
+@@54:	mov	byte ptr ds:[56DCh], al	;@0C3D2
+	call	L0FE07	;@0C3D5
+	jne	@@51	;@0C3D8
+	test	word ptr ds:[517Ch], 100h	;@0C3DA
+	je	@@52	;@0C3E0
+	call	L0AC8B	;@0C3E2
+	jne	@@57	;@0C3E5
+	call	L02924	;@0C3E7
+	jne	@@56	;@0C3EA
+	cmp	ax, word ptr ds:[585Eh]	;@0C3EC
+	jne	@@56	;@0C3F0
+	add	si, 2	;@0C3F2
+	push	es	;@0C3F5
+	push	bp	;@0C3F6
+	call	L0AC8B	;@0C3F7
+	pop	di	;@0C3FA
+	pop	ax	;@0C3FB
+@@55:	mov	cl, byte ptr ds:[56DCh]	;@0C3FC
+	mov	ch, 0DEh	;@0C400
+	call	L08080	;@0C402
+	jmp	L0FDDC	;@0C405
+@@56:	push	es	;@0C408
+	push	bp	;@0C409
+	call	L0599C	;@0C40A
+	pop	di	;@0C40D
+	pop	ax	;@0C40E
+	jmp	@@55	;@0C40F
+@@57:	mov	ch, 0DEh	;@0C411
+	mov	cl, byte ptr ds:[56DCh]	;@0C413
+	or	cl, 0C1h	;@0C417
+	call	L0802F	;@0C41A
+	jmp	L0FDDC	;@0C41D
+	db	0B8h, 20h, 0DDh, 0EBh, 3, 0B8h, 28h, 0DDh, 0A3h, 0DCh, 56h, 0E8h	;@0C420
+	db	0D9h, '9u<', 0F7h, 6, 7Ch, 51h, 0, 8, 0EBh, 16h, 0B8h, 0, 0DDh
+	db	0EBh, 3, 0B8h, 8, 0D9h, 0A3h, 0DCh, 56h, 0E8h, 0C1h, '9u$', 0F7h
+	db	6, 7Ch, 51h, 0, 1, 74h, 1Fh, 0E8h, 38h, 0E8h, 74h, 0Dh, 8Bh, 0Eh
+	db	0DCh, 56h, 80h, 0C9h, 0C1h, 0E8h, 0D0h, 0BBh, 0E9h, 7Ah, 39h, 8Bh
+	db	0Eh, 0DCh, 56h, 0E8h, 8, 0BCh, 0E9h, 70h, 39h
+@@58:	jmp	L028C8	;@0C46C
+@@59:	jmp	L0FDD6	;@0C46F
+	mov	ax, 0DA00h	;@0C472
+	jmp	short @@60	;@0C475
+	mov	ax, 0DA10h	;@0C477
+	jmp	short @@60	;@0C47A
+	mov	ax, 0DA18h	;@0C47C
+	jmp	short @@60	;@0C47F
+	mov	ax, 0DA30h	;@0C481
+	jmp	short @@60	;@0C484
+	mov	ax, 0DA38h	;@0C486
+	jmp	short @@60	;@0C489
+	mov	ax, 0DA08h	;@0C48B
+	jmp	short @@60	;@0C48E
+	mov	ax, 0DB10h	;@0C490
+	jmp	short @@60	;@0C493
+	db	0B8h, 20h, 0DAh, 0EBh, 3, 0B8h, 28h, 0DAh	;@0C495
+@@60:	mov	word ptr ds:[56DCh], ax	;@0C49D
+	call	L0FE07	;@0C4A0
+	jne	@@58	;@0C4A3
+	test	word ptr ds:[517Ch], 100h	;@0C4A5
+	je	@@59	;@0C4AB
+	call	L0FEAE	;@0C4AD
+	mov	cx, word ptr ds:[56DCh]	;@0C4B0
+	call	L0801D	;@0C4B4
+	jmp	L0FDDC	;@0C4B7
+	mov	ax, 0	;@0C4BA
+	jmp	short @@61	;@0C4BD
+	mov	ax, 808h	;@0C4BF
+	jmp	short @@61	;@0C4C2
+	mov	ax, 3038h	;@0C4C4
+	jmp	short @@61	;@0C4C7
+	mov	ax, 3830h	;@0C4C9
+	jmp	short @@61	;@0C4CC
+	db	0B8h, 28h, 20h, 0EBh, 5, 0B8h, 20h, 28h, 0EBh, 0	;@0C4CE
+@@61:	mov	word ptr ds:[56DCh], ax	;@0C4D8
+	call	L0FE07	;@0C4DB
+	jne	@@58	;@0C4DE
+	test	word ptr ds:[517Ch], 100h	;@0C4E0
+	je	@@59	;@0C4E6
+	call	L0AC8B	;@0C4E8
+	je	@@62	;@0C4EB
+	call	L0ABC2	;@0C4ED
+	jne	@@65	;@0C4F0
+	mov	ch, 0D8h	;@0C4F2
+	mov	cl, byte ptr ds:[56DDh]	;@0C4F4
+	call	L07FC1	;@0C4F8
+	jmp	L0FDDC	;@0C4FB
+@@62:	call	L02924	;@0C4FE
+	jne	@@64	;@0C501
+	cmp	ax, word ptr ds:[585Eh]	;@0C503
+	jne	@@64	;@0C507
+	add	si, 2	;@0C509
+	push	es	;@0C50C
+	push	bp	;@0C50D
+	call	L0AC8B	;@0C50E
+	pop	di	;@0C511
+	pop	ax	;@0C512
+	je	@@63	;@0C513
+	mov	cx, 12h	;@0C515
+	push	ax	;@0C518
+	push	di	;@0C519
+	call	L0352C	;@0C51A
+	call	L0599C	;@0C51D
+	pop	di	;@0C520
+	pop	ax	;@0C521
+@@63:	mov	cx, word ptr ds:[56DCh]	;@0C522
+	mov	dh, ch	;@0C526
+	mov	ch, 0D8h	;@0C528
+	call	L080A0	;@0C52A
+	jmp	L0FDDC	;@0C52D
+@@64:	mov	cx, 0Dh	;@0C530
+	call	L0352C	;@0C533
+	push	es	;@0C536
+	push	bp	;@0C537
+	call	L0599C	;@0C538
+	pop	di	;@0C53B
+	pop	ax	;@0C53C
+	jmp	@@63	;@0C53D
+@@65:	mov	ch, 0DEh	;@0C53F
+	mov	cl, byte ptr ds:[56DCh]	;@0C541
+	or	cl, 0C1h	;@0C545
+	call	L0802F	;@0C548
+	jmp	L0FDDC	;@0C54B
+	mov	ax, 0D910h	;@0C54E
+	jmp	short @@66	;@0C551
+	db	0B8h, 10h, 0D8h, 0EBh, 3, 0B8h, 18h, 0D8h	;@0C553
+@@66:	mov	word ptr ds:[56DCh], ax	;@0C55B
+	call	L0FE07	;@0C55E
+	jne	@@71	;@0C561
+	test	word ptr ds:[517Ch], 100h	;@0C563
+	je	@@72	;@0C569
+	call	L0AC8B	;@0C56B
+	je	@@67	;@0C56E
+	call	L0ABC2	;@0C570
+	jne	@@69	;@0C573
+	mov	cx, word ptr ds:[56DCh]	;@0C575
+	call	L07FC1	;@0C579
+	jmp	L0FDDC	;@0C57C
+@@67:	mov	cx, word ptr ds:[56DCh]	;@0C57F
+	test	ch, 1	;@0C583
+	je	@@68	;@0C586
+	or	ch, 4	;@0C588
+@@68:	call	L08071	;@0C58B
+	jmp	L0FDDC	;@0C58E
+@@69:	mov	cx, word ptr ds:[56DCh]	;@0C591
+	test	ch, 1	;@0C595
+	je	@@70	;@0C598
+	or	ch, 4	;@0C59A
+@@70:	or	cl, 0C1h	;@0C59D
+	call	L0802F	;@0C5A0
+	jmp	L0FDDC	;@0C5A3
+@@71:	jmp	L028C8	;@0C5A6
+@@72:	jmp	L0FDD6	;@0C5A9
+	db	0E8h, 'X8u', 0F5h, 0E8h, 9, 39h, 0E8h, 1Ch, 0C0h, 0E9h, 22h, 38h	;@0C5AC
+	db	0E8h, 'J8u', 0E7h, 0E8h, 0FBh, 38h, 0E8h, 0BEh, 0C0h, 0E9h, 14h
+	db	38h
+	xor	al, al	;@0C5C8
+	jmp	short @@73	;@0C5CA
+	mov	al, 8	;@0C5CC
+	jmp	short @@73	;@0C5CE
+	mov	al, 10h	;@0C5D0
+	jmp	short @@73	;@0C5D2
+	mov	al, 18h	;@0C5D4
+	jmp	short @@73	;@0C5D6
+	mov	al, 20h	;@0C5D8
+	jmp	short @@73	;@0C5DA
+	db	0B0h, 28h, 0EBh, 6, 0B0h, 30h, 0EBh, 2, 0B0h, 38h	;@0C5DC
+@@73:	mov	byte ptr ds:[56DCh], al	;@0C5E6
+	call	L0FE07	;@0C5E9
+	jne	@@71	;@0C5EC
+	call	L0FEBD	;@0C5EE
+	mov	cl, byte ptr ds:[56DCh]	;@0C5F1
+	call	L088EF	;@0C5F5
+	jmp	L0FDDC	;@0C5F8
+	db	0E8h, 9, 38h, 75h, 0A6h, 0E8h, 0ABh, 38h, 0E8h, 31h, 0BFh, 0E9h	;@0C5FB
+	db	0D3h, 37h, 0E8h, 0FBh, '7uJ', 0E8h, 0ACh, 38h, 0E8h, 47h, 0BFh
+	db	0E9h, 0C5h, 37h, 32h, 0C0h, 0EBh, 2, 0B0h, 8, 0A2h, 0DCh, 56h
+	db	0E8h, 0E4h, '7u3', 0E8h, 86h, 38h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 6Ah
+	db	0BFh, 0E9h, 0AAh, 37h, 0E8h, 0D2h, '7u!', 0E8h, 74h, 38h, 0E8h
+	db	0C2h, 0C3h, 0E8h, 82h, 0E5h, 74h, 0F8h, 0E9h, 97h, 37h, 0E8h, 0BFh
+	db	37h, 75h, 0Eh, 0E8h, 61h, 38h, 0E8h, 39h, 0C5h, 0E8h, 6Fh, 0E5h
+	db	74h, 0F8h, 0E9h, 84h, 37h, 0E9h, 6Dh, 62h, 0B0h, 0D5h, 0EBh, 2
+	db	0B0h, 0D4h, 0A2h, 0DCh, 56h, 0E8h, 0A0h, 37h, 75h, 0EFh, 0E8h
+	db	56h, 0E5h, 8Ah, 0Eh, 0DCh, 56h, 75h, 6, 0E8h, 4, 0BEh, 0E9h, 64h
+	db	37h, 0B5h, 0Ah, 0E8h, 0C5h, 0BCh, 0E9h, 5Ch, 37h, 0E8h, 84h, 37h
+	db	75h, 0D3h, 0E8h, 35h, 38h, 0B1h, 0E4h, 0E8h, 11h, 0BCh, 0E9h, 4Ch
+	db	37h, 0E8h, 't7u', 0C3h, 0E8h, 25h, 38h, 6, 55h, 8Eh, 0C0h, 8Bh
+	db	0EFh, 5Fh, 58h, 0B1h, 0E6h, 0E8h, 0F9h, 0BBh, 0E9h, 34h, 37h, 0E8h
+	db	'\7uz', 0E8h, 0Dh, 38h, 0E8h, 34h, 0BDh, 0E9h, 26h, 37h, 0B0h
+	db	0C5h, 0EBh, 2, 0B0h, 0C4h, 0A2h, 0DCh, 56h, 0E8h, 'E7uc', 0E8h
+	db	0F6h, 37h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0E9h, 0BCh, 0E9h, 0Bh, 37h
+	db	0E8h, '37uQ', 0E8h, 0D5h, 37h, 0F7h, 6, 7Ch, 51h, 2, 0, 74h, 3Eh
+	db	0E8h, '@bu9;', 6, '^Xu3', 83h, 0C6h, 2, 6, 55h, 0E8h, 0BAh, 37h
+	db	0E8h, '-b[Zu', 1Ah, 3Bh, 6, '^Xu', 14h, 83h, 0C6h, 2, 52h, 53h
+	db	6, 55h, 0E8h, 0A3h, '7_X[Z', 0E8h, 0CBh, 0C5h, 0E9h, 0C7h, 36h
+	db	8Bh, 0C2h, 8Bh, 0FBh, 0E8h, 2Bh, 0C6h, 0E9h, 0BDh, 36h, 0B1h, 28h
+	db	0E8h, 69h, 0BDh, 0E9h, 0B5h, 36h
+@@74:	jmp	L028C8	;@0C727
+	mov	al, 30h	;@0C72A
+	jmp	short @@75	;@0C72C
+	mov	al, 20h	;@0C72E
+	jmp	short @@75	;@0C730
+	db	0B0h, 38h, 0EBh, 6, 0B0h, 18h, 0EBh, 2, 0B0h, 10h	;@0C732
+@@75:	mov	byte ptr ds:[56DCh], al	;@0C73C
+	call	L0FE07	;@0C73F
+	jne	@@74	;@0C742
+	call	L0FEAE	;@0C744
+	mov	cl, byte ptr ds:[56DCh]	;@0C747
+	call	L0848D	;@0C74B
+	jmp	L0FDDC	;@0C74E
+	mov	al, 0	;@0C751
+	jmp	short @@76	;@0C753
+	mov	al, 8	;@0C755
+	jmp	short @@76	;@0C757
+	mov	al, 20h	;@0C759
+	jmp	short @@76	;@0C75B
+	mov	al, 38h	;@0C75D
+	jmp	short @@76	;@0C75F
+	db	0B0h, 28h, 0EBh, 6, 0B0h, 10h, 0EBh, 2, 0B0h, 18h	;@0C761
+@@76:	mov	byte ptr ds:[56DCh], al	;@0C76B
+	call	L0FE07	;@0C76E
+	jne	@@74	;@0C771
+	call	L0FEBD	;@0C773
+	mov	cl, byte ptr ds:[56DCh]	;@0C776
+	call	L084AE	;@0C77A
+	jmp	L0FDDC	;@0C77D
+	db	0B1h, 0AAh, 0EBh, 2, 0B1h, 0AEh, 0E8h, 5, 92h, 0E8h, 5, 0, 0E9h	;@0C780
+	db	6, 92h, 0B1h, 0ACh, 88h, 0Eh, 0DCh, 56h, 0E8h, 'o6u', 8Dh, 0E8h
+	db	11h, 37h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0EAh, 0BBh, 0E9h, 35h, 36h
+	db	0E8h, ']6uM', 0E8h, 13h, 0E4h, 74h, 8, 0B1h, 0D7h, 0E8h, 6Bh, 0BBh
+	db	0E9h, 23h, 36h, 0E8h, 0E7h, 0BBh, 0E9h, 1Dh, 36h, 0E8h, 'E6u5'
+	db	0E8h, 0C7h, 91h, 0E8h, 0F8h, 0E3h, 0E8h, 0C8h, 91h, 0E8h, 0F0h
+	db	36h, 0B1h, 0A4h, 0E8h, 7Dh, 0BBh, 0E9h, 4, 36h, 0E8h, ',6u', 1Ch
+	db	0E8h, 0E2h, 0E3h, 0E8h, 0ABh, 91h, 0E8h, 0DAh, '6PW', 0E8h, 0AAh
+	db	91h, 8Ch, 0C0h, 8Bh, 0FDh, 5Dh, 7, 0B1h, 0A6h, 0E8h, 5Ch, 0BBh
+	db	0E9h, 0E3h, 35h
+@@77:	jmp	L028C8	;@0C7F9
+	mov	al, 37h	;@0C7FC
+	jmp	short @@78	;@0C7FE
+	mov	al, 3Fh	;@0C800
+	jmp	short @@78	;@0C802
+	mov	al, 0F8h	;@0C804
+	jmp	short @@78	;@0C806
+	mov	al, 0FCh	;@0C808
+	jmp	short @@78	;@0C80A
+	mov	al, 0FAh	;@0C80C
+	jmp	short @@78	;@0C80E
+	mov	al, 0F5h	;@0C810
+	jmp	short @@78	;@0C812
+	mov	al, 0A6h	;@0C814
+	jmp	short @@78	;@0C816
+	mov	al, 27h	;@0C818
+	jmp	short @@78	;@0C81A
+	mov	al, 2Fh	;@0C81C
+	jmp	short @@78	;@0C81E
+	mov	al, 0F4h	;@0C820
+	jmp	short @@78	;@0C822
+	mov	al, 0CEh	;@0C824
+	jmp	short @@78	;@0C826
+	mov	al, 9Fh	;@0C828
+	jmp	short @@78	;@0C82A
+	mov	al, 0ACh	;@0C82C
+	jmp	short @@78	;@0C82E
+	mov	al, 0A4h	;@0C830
+	jmp	short @@78	;@0C832
+	mov	al, 9Eh	;@0C834
+	jmp	short @@78	;@0C836
+	mov	al, 0AEh	;@0C838
+	jmp	short @@78	;@0C83A
+	mov	al, 0F9h	;@0C83C
+	jmp	short @@78	;@0C83E
+	mov	al, 0FDh	;@0C840
+	jmp	short @@78	;@0C842
+	mov	al, 0FBh	;@0C844
+	jmp	short @@78	;@0C846
+	db	0B0h, 0AAh, 0EBh, 15h, 0B0h, 9Bh, 0EBh, 11h, 0F7h, 6, 7Ch, 51h	;@0C848
+	db	0, 10h, 74h, 4, 0B0h, 0D7h, 0EBh, 5, 0E9h, 48h, 0FFh, 0B0h, 90h
+@@78:	mov	byte ptr ds:[56DCh], al	;@0C861
+	call	L0FE07	;@0C864
+	jne	@@77	;@0C867
+	mov	cl, byte ptr ds:[56DCh]	;@0C869
+	call	L08321	;@0C86D
+	jmp	L0FDDC	;@0C870
+	mov	al, 98h	;@0C873
+	jmp	short @@79	;@0C875
+	mov	al, 0A7h	;@0C877
+	jmp	short @@79	;@0C879
+	mov	al, 99h	;@0C87B
+	jmp	short @@79	;@0C87D
+	mov	al, 0ADh	;@0C87F
+	jmp	short @@79	;@0C881
+	mov	al, 0A5h	;@0C883
+	jmp	short @@79	;@0C885
+	mov	al, 9Dh	;@0C887
+	jmp	short @@79	;@0C889
+	mov	al, 9Ch	;@0C88B
+	jmp	short @@79	;@0C88D
+	mov	al, 0CFh	;@0C88F
+	jmp	short @@79	;@0C891
+	db	0B0h, 0AFh, 0EBh, 6, 0B0h, 0C9h, 0EBh, 2, 0B0h, 0ABh	;@0C893
+@@79:	mov	byte ptr ds:[56DCh], al	;@0C89D
+	call	L0FE07	;@0C8A0
+	jne	@@80	;@0C8A3
+	mov	cl, byte ptr ds:[56DCh]	;@0C8A5
+	call	L08313	;@0C8A9
+	jmp	L0FDDC	;@0C8AC
+@@80:	jmp	L028C8	;@0C8AF
+	db	0B0h, 0F0h, 0EBh, 6, 0B0h, 0F3h, 0EBh, 2, 0B0h, 0F2h, 0A2h, 0DCh	;@0C8B2
+	db	56h, 0E8h, 'E5u', 0Ch, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 61h, 0BAh, 0C6h
+	db	6, 0C5h, 51h, 0FFh, 0FFh, '&ZW', 0B0h, 2Eh, 0EBh, 12h
+	mov	al, 3Eh	;@0C8D8
+	jmp	short @@81	;@0C8DA
+	mov	al, 36h	;@0C8DC
+	jmp	short @@81	;@0C8DE
+	db	0B0h, 26h, 0EBh, 6, 0B0h, 64h, 0EBh, 2, 0B0h, 65h	;@0C8E0
+@@81:	mov	byte ptr ds:[56DCh], al	;@0C8EA
+	call	L0FE07	;@0C8ED
+	jne	@@82	;@0C8F0
+	mov	cl, byte ptr ds:[56DCh]	;@0C8F2
+	call	L08337	;@0C8F6
+	mov	byte ptr ds:[51C5h], 0FFh	;@0C8F9
+@@82:	jmp	word ptr ds:[575Ah]	;@0C8FE
+	db	0E8h, 2, '5u?', 0E8h, 0B8h, 0E2h, 75h, 13h, 0F6h, 6, 86h, 51h	;@0C902
+	db	10h, 75h, 4, 0B1h, 0C2h, 0EBh, 2, 0B1h, 0CAh, 0E8h, 38h, 0BBh
+	db	0E9h, 0BDh, 34h, 0F6h, 6, 86h, 'Q t', 0Dh, 0F6h, 6, 0BFh, 51h
+	db	10h, 74h, 6, 0E8h, 0B2h, 0ADh, 0E9h, 0A9h, 34h, 0F6h, 6, 86h, 51h
+	db	10h, 75h, 4, 0B1h, 0C3h, 0EBh, 2, 0B1h, 0CBh, 0E8h, 0DEh, 0B9h
+	db	0E9h, 96h, 34h, 0E9h, 7Fh, 5Fh, 0F6h, 6, 87h, 51h, 2, 75h, 4, 0B0h
+	db	0C2h, 0EBh, 2, 0B0h, 0CAh, 0A2h, 0DCh, 56h, 0E8h, 0ABh, 34h, 75h
+	db	0E8h, 0E8h, 61h, 0E2h, 75h, 0Ah, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 0EAh
+	db	0BAh, 0E9h, 6Fh, 34h, 8Ah, 0Eh, 0DCh, 56h, 80h, 0C9h, 1, 0E8h
+	db	0AAh, 0B9h, 0E9h, 62h, 34h, 0E8h, 8Ah, 34h, 75h, 0C7h, 0E8h, 2Ch
+	db	35h, 0E8h, 7Dh, 0B8h, 0E9h, 54h, 34h
+	mov	al, 77h	;@0C988
+	jmp	short @@83	;@0C98A
+	mov	al, 76h	;@0C98C
+	jmp	short @@83	;@0C98E
+	mov	al, 72h	;@0C990
+	jmp	short @@83	;@0C992
+	mov	al, 73h	;@0C994
+	jmp	short @@83	;@0C996
+	mov	al, 74h	;@0C998
+	jmp	short @@83	;@0C99A
+	mov	al, 75h	;@0C99C
+	jmp	short @@83	;@0C99E
+	mov	al, 7Fh	;@0C9A0
+	jmp	short @@83	;@0C9A2
+	mov	al, 7Eh	;@0C9A4
+	jmp	short @@83	;@0C9A6
+	mov	al, 7Ch	;@0C9A8
+	jmp	short @@83	;@0C9AA
+	mov	al, 7Dh	;@0C9AC
+	jmp	short @@83	;@0C9AE
+	mov	al, 70h	;@0C9B0
+	jmp	short @@83	;@0C9B2
+	mov	al, 71h	;@0C9B4
+	jmp	short @@83	;@0C9B6
+	mov	al, 78h	;@0C9B8
+	jmp	short @@83	;@0C9BA
+	db	0B0h, 79h, 0EBh, 6, 0B0h, 7Bh, 0EBh, 2, 0B0h, 7Ah	;@0C9BC
+@@83:	mov	byte ptr ds:[56DCh], al	;@0C9C6
+	call	L0FE07	;@0C9C9
+	jne	@@84	;@0C9CC
+	call	L0FEAE	;@0C9CE
+	mov	cl, byte ptr ds:[56DCh]	;@0C9D1
+	call	L08194	;@0C9D5
+	jmp	L0FDDC	;@0C9D8
+	db	0B0h, 0E2h, 0EBh, 6, 0B0h, 0E1h, 0EBh, 2, 0B0h, 0E0h, 0A2h, 0DCh	;@0C9DB
+	db	56h, 0E8h, 1Ch, 34h, 75h, 0Dh, 0E8h, 0BEh, 34h, 8Ah, 0Eh, 0DCh
+	db	56h, 0E8h, 1Fh, 0B7h, 0E9h, 0E2h, 33h
+@@84:	jmp	L028C8	;@0C9FA
+	db	0B0h, 0E3h, 0EBh, 0Ah, 0B0h, 0E2h, 0EBh, 6, 0B0h, 0E1h, 0EBh, 2, 0B0h, 0E0h, 0A2h, 0DCh	;@0C9FD
+	db	56h, 0E8h, 0F6h, 33h, 75h, 0E7h, 0E8h, 98h, 34h, 8Ah, 0Eh, 0DCh, 56h, 0E8h, 1, 0B7h
+	db	0E9h, 0BCh, 33h, 0E8h, 0E4h, 33h, 75h, 0D5h, 0E8h, 95h, 34h, 0E8h, 2, 0BDh, 0E9h, 0AEh
+	db	33h, 0E8h, 19h, 34h, 75h, 3Bh, 56h, 9Ah
 	dd	L1063A
 	db	5Eh, 0E9h, 9Fh, 33h, 0E8h, 0Ah, 34h, 75h, 2Ch, 0E8h, 0DFh, 5Eh, 75h, 1Dh, 3Bh, 6
 	db	0A6h, 58h, 75h, 29h, 83h, 0C6h, 2, 0E8h, 0D1h, 5Eh, 75h, 5, 83h, 0EEh, 2, 0EBh
@@ -6255,21 +12702,64 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	7Eh, 51h, 0E3h, 38h, 50h, 8Bh, 0C1h, 9Ah
 	dd	L101E0
 	db	58h, 8Bh, 0C8h, 49h, 33h, 0DBh, 0D1h, 0E8h, 72h, 16h, 0FEh, 0C3h, 80h, 0FBh, 10h, 75h
-	db	0F5h, 0F7h, 6, 82h, 51h, 2, 0, 75h, 1, 0C3h, 0B9h, 59h, 80h, 0E9h, 71h, 5Eh
-	db	23h, 0C0h, 75h, 0EDh, 51h, 80h, 0FBh, 5, 73h, 2Ah, 0D1h, 0E3h, 0FFh, 0A7h, 0EEh, 1Fh
-	db	0B9h, 30h, 0, 0EBh, 3, 0B9h, 49h, 0, 0E8h, 56h, 5Eh, 0E9h, 3, 27h, 0E9h, 0ECh
-	db	51h, 59h, 0E9h, 0FCh, 26h, 0E8h, 59h, 30h, 0EBh, 0Dh, 0E8h, 5Dh, 30h, 0EBh, 8, 0E8h
-	db	65h, 30h, 0EBh, 3, 0E8h, 71h, 30h, 75h, 3, 0E8h, 0B5h, 0FFh, 59h, 0A1h, 70h, 51h
-	db	85h, 0C1h, 74h, 0DEh, 50h, 0A1h, 7Eh, 51h, 9Ah
-	dd	L101E0
-	db	0E8h, 2Bh, 30h, 58h, 75h, 15h, 0F6h, 6, 0C9h, 38h, 0Bh, 75h, 5, 80h, 0Eh, 0CAh
-	db	38h, 1, 51h, 32h, 0C9h, 0E8h, 67h, 0A7h, 59h, 0EBh, 0D5h, 40h, 85h, 0C1h, 74h, 0Eh
-	db	51h, 0B1h, 87h, 0E8h, 0F3h, 0ABh, 0B1h, 0DBh, 0E8h, 0EEh, 0ABh, 59h, 0EBh, 0C2h, 51h, 0B1h
-	db	90h, 0E8h, 0E5h, 0ABh, 59h, 0EBh, 0B9h, 0E8h, 37h, 27h, 75h, 95h, 0B8h, 2, 0, 0E9h
-	db	3Ch, 0FFh, 0E8h, 2Ch, 27h, 75h, 8Ah, 83h, 3Eh, 0B0h, 51h, 0, 74h, 3, 0E9h, 77h
-	db	0FFh, 8Bh, 0Eh, 7Eh, 51h, 0E3h, 10h, 0F6h, 6, 70h, 51h, 1, 74h, 6, 0B8h, 1
-	db	0, 0E8h, 7Ch, 6Eh, 0E9h, 6Dh, 26h, 0E9h, 59h, 0FFh, 0E8h, 4, 27h, 75h, 4Bh, 56h
-	db	9Ah
+	db	0F5h
+@@85:	test	word ptr ds:[5182h], 2	;@0D6AC
+	jne	@@86	;@0D6B2
+	ret	;@0D6B4
+@@86:	mov	cx, 8059h	;@0D6B5
+	jmp	L0352C	;@0D6B8
+	and	ax, ax	;@0D6BB
+	jne	@@85	;@0D6BD
+	push	cx	;@0D6BF
+	cmp	bl, 5	;@0D6C0
+	jae	@@88	;@0D6C3
+	shl	bx, 1	;@0D6C5
+	jmp	word ptr [bx+1FEEh]	;@0D6C7
+	db	0B9h, 30h, 0, 0EBh, 3, 0B9h, 49h, 0, 0E8h, 56h, 5Eh, 0E9h, 3, 27h	;@0D6CB
+	db	0E9h, 0ECh, 51h, 59h
+@@87:	jmp	L0FDDC	;@0D6DD
+	db	0E8h, 59h, 30h, 0EBh, 0Dh, 0E8h, 5Dh, 30h, 0EBh, 8, 0E8h, 65h	;@0D6E0
+	db	30h, 0EBh, 3
+@@88:	call	L00763	;@0D6EF
+	jne	@@89	;@0D6F2
+	call	@@85	;@0D6F4
+@@89:	pop	cx	;@0D6F7
+@@90:	mov	ax, word ptr ds:[5170h]	;@0D6F8
+	test	ax, cx	;@0D6FB
+	je	@@87	;@0D6FD
+	push	ax	;@0D6FF
+	mov	ax, word ptr ds:[517Eh]	;@0D700
+	call	far ptr L101E0	;@0D703
+	call	L00736	;@0D708
+	pop	ax	;@0D70B
+	jne	@@92	;@0D70C
+	test	byte ptr ds:[38C9h], 0Bh	;@0D70E
+	jne	@@91	;@0D713
+	or	byte ptr ds:[38CAh], 1	;@0D715
+@@91:	push	cx	;@0D71A
+	xor	cl, cl	;@0D71B
+	call	L07E87	;@0D71D
+	pop	cx	;@0D720
+	jmp	@@90	;@0D721
+@@92:	inc	ax	;@0D723
+	test	ax, cx	;@0D724
+	je	@@93	;@0D726
+	push	cx	;@0D728
+	mov	cl, 87h	;@0D729
+	call	L08321	;@0D72B
+	mov	cl, 0DBh	;@0D72E
+	call	L08321	;@0D730
+	pop	cx	;@0D733
+	jmp	@@90	;@0D734
+@@93:	push	cx	;@0D736
+	mov	cl, 90h	;@0D737
+	call	L08321	;@0D739
+	pop	cx	;@0D73C
+	jmp	@@90	;@0D73D
+	db	0E8h, 37h, 27h, 75h, 95h, 0B8h, 2, 0, 0E9h, 3Ch, 0FFh, 0E8h, 2Ch, 27h, 75h, 8Ah	;@0D73F
+	db	83h, 3Eh, 0B0h, 51h, 0, 74h, 3, 0E9h, 77h, 0FFh, 8Bh, 0Eh, 7Eh, 51h, 0E3h, 10h
+	db	0F6h, 6, 70h, 51h, 1, 74h, 6, 0B8h, 1, 0, 0E8h, 7Ch, 6Eh, 0E9h, 6Dh, 26h
+	db	0E9h, 59h, 0FFh, 0E8h, 4, 27h, 75h, 4Bh, 56h, 9Ah
 	dd	L11CBD
 	db	5Eh, 0E9h, 5Bh, 26h, 0E8h, 0F5h, 26h, 75h, 3Ch, 0B9h, 28h, 0, 0E8h, 0A0h, 5Dh, 0E9h
 	db	4Dh, 26h, 0E8h, 0E7h, 26h, 75h, 2Eh, 0E8h, 8Dh, 51h, 75h, 20h, 8Bh, 0C2h, 0E8h, 9
@@ -6311,26 +12801,74 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	6, 0E8h, 36h, 0A1h, 0Bh, 0C1h, 0C3h, 33h, 0C0h, 0C3h, 0E8h, 0D9h, 45h, 75h, 12h, 83h
 	db	0C6h, 2, 52h, 0E8h, 0CAh, 81h, 58h, 73h, 3, 0E9h, 27h, 2Eh, 32h, 0C0h, 0FEh, 0C8h
 	db	0C3h, 0F7h, 6, 7Ch, 51h, 0, 10h, 74h, 0F7h, 0B9h, 0Dh, 0, 0E8h, 3Dh, 5Bh, 32h
-	db	0C0h, 0C3h, 0E8h, 2Fh, 0, 75h, 2, 0F3h, 0A6h, 0C3h, 0E8h, 27h, 0, 75h, 0FAh, 0E3h
-	db	0F8h, 0ACh, 3Ch, 61h, 72h, 6, 3Ch, 7Bh, 73h, 2, 2Ch, 20h, 26h, 8Ah, 25h, 47h
-	db	80h, 0FCh, 61h, 72h, 8, 80h, 0FCh, 7Bh, 73h, 3, 80h, 0ECh, 20h, 3Ah, 0C4h, 75h
-	db	0D8h, 0E2h, 0DEh, 0C3h, 0E8h, 0D1h, 23h, 0E8h, 4Ah, 44h, 75h, 0Fh, 53h, 51h, 0E8h, 0F3h
-	db	4Eh, 59h, 5Bh, 75h, 6, 3Bh, 6, 5Eh, 58h, 74h, 0Bh, 0B9h, 83h, 0, 0E8h, 0EBh
-	db	5Ah, 32h, 0C0h, 0FEh, 0C8h, 0C3h, 83h, 0C6h, 2, 51h, 53h, 0E8h, 26h, 44h, 5Eh, 58h
-	db	75h, 0E9h, 33h, 0C1h, 75h, 4, 8Bh, 0FBh, 16h, 7, 0C3h, 0E8h, 9Ah, 23h, 0E8h, 13h
-	db	44h, 75h, 3, 23h, 0C9h, 0C3h, 0B9h, 83h, 0, 0E8h, 0C0h, 5Ah, 32h, 0C0h, 0C3h, 0BBh
-	db	0D1h, 0D8h, 0EBh, 35h, 0BBh, 0DDh, 0D8h, 0EBh, 30h, 0BBh, 0E9h, 0D8h, 0EBh, 2Bh, 0BBh, 0FAh
-	db	0D8h, 0EBh, 26h, 0BBh, 0Bh, 0D9h, 0EBh, 21h, 0BBh, 4Ch, 0D9h, 0EBh, 1Ch, 0BBh, 58h, 0D9h
-	db	0EBh, 17h, 0BBh, 64h, 0D9h, 0EBh, 12h, 0BBh, 70h, 0D9h, 0EBh, 0Dh, 0BBh, 7Ch, 0D9h, 0EBh
-	db	8, 0BBh, 88h, 0D9h, 0EBh, 3, 0BBh, 94h, 0D9h, 53h, 0E8h, 0B8h, 23h, 5Bh, 0A0h, 0C2h
-	db	51h, 22h, 0C0h, 74h, 3Dh, 3Ah, 6, 0C4h, 51h, 74h, 33h, 3Ah, 6, 0C3h, 51h, 75h
-	db	30h, 0C6h, 6, 0C3h, 51h, 0, 0FEh, 0Eh, 0C2h, 51h, 0FFh, 0E3h, 0E8h, 96h, 23h, 0A0h
-	db	0C2h, 51h, 22h, 0C0h, 74h, 1Ch, 3Ah, 6, 0C4h, 51h, 74h, 12h, 3Ah, 6, 0C3h, 51h
-	db	74h, 1, 0C3h, 0A2h, 0C4h, 51h, 0C6h, 6, 0C3h, 51h, 0, 0E9h, 0EEh, 22h, 0A2h, 0C3h
-	db	51h, 0C3h, 0B9h, 37h, 0, 0E9h, 34h, 5Ah, 0E8h, 6Ah, 23h, 0A0h, 0C2h, 51h, 22h, 0C0h
-	db	74h, 0F0h, 0FEh, 0Eh, 0C2h, 51h, 3Ah, 6, 0C3h, 51h, 75h, 5, 0C6h, 6, 0C3h, 51h
-	db	0, 80h, 3Eh, 0C3h, 51h, 0, 75h, 6, 0A0h, 0C2h, 51h, 0A2h, 0C4h, 51h, 0E9h, 0BBh
-	db	22h, 0E8h, 55h, 23h, 75h, 14h, 0E8h, 30h, 0, 75h, 17h, 56h, 9Ah
+	db	0C0h, 0C3h
+	call	@@98	;@0D9F2
+	jne	@@94	;@0D9F5
+	repe cmpsb	;@0D9F7
+@@94:	ret	;@0D9F9
+	call	@@98	;@0D9FA
+	jne	@@94	;@0D9FD
+	jcxz	@@94	;@0D9FF
+@@95:	lodsb	;@0DA01
+	cmp	al, 61h	;@0DA02
+	jb	@@96	;@0DA04
+	cmp	al, 7Bh	;@0DA06
+	jae	@@96	;@0DA08
+	sub	al, 20h	;@0DA0A
+@@96:	mov	ah, byte ptr es:[di]	;@0DA0C
+	inc	di	;@0DA0F
+	cmp	ah, 61h	;@0DA10
+	jb	@@97	;@0DA13
+	cmp	ah, 7Bh	;@0DA15
+	jae	@@97	;@0DA18
+	sub	ah, 20h	;@0DA1A
+@@97:	cmp	al, ah	;@0DA1D
+	jne	@@94	;@0DA1F
+	loop	@@95	;@0DA21
+	ret	;@0DA23
+@@98:	call	L0FDF8	;@0DA24
+	call	L01E74	;@0DA27
+	jne	@@99	;@0DA2A
+	push	bx	;@0DA2C
+	push	cx	;@0DA2D
+	call	L02924	;@0DA2E
+	pop	cx	;@0DA31
+	pop	bx	;@0DA32
+	jne	@@99	;@0DA33
+	cmp	ax, word ptr ds:[585Eh]	;@0DA35
+	je	@@100	;@0DA39
+@@99:	mov	cx, 83h	;@0DA3B
+	call	L0352C	;@0DA3E
+	xor	al, al	;@0DA41
+	dec	al	;@0DA43
+	ret	;@0DA45
+@@100:	add	si, 2	;@0DA46
+	push	cx	;@0DA49
+	push	bx	;@0DA4A
+	call	L01E74	;@0DA4B
+	pop	si	;@0DA4E
+	pop	ax	;@0DA4F
+	jne	@@99	;@0DA50
+	xor	ax, cx	;@0DA52
+	jne	@@101	;@0DA54
+	mov	di, bx	;@0DA56
+	push	ss	;@0DA58
+	pop	es	;@0DA59
+@@101:	ret	;@0DA5A
+	db	0E8h, 9Ah, 23h, 0E8h, 13h, 44h, 75h, 3, 23h, 0C9h, 0C3h, 0B9h, 83h, 0, 0E8h, 0C0h	;@0DA5B
+	db	5Ah, 32h, 0C0h, 0C3h, 0BBh, 0D1h, 0D8h, 0EBh, 35h, 0BBh, 0DDh, 0D8h, 0EBh, 30h, 0BBh, 0E9h
+	db	0D8h, 0EBh, 2Bh, 0BBh, 0FAh, 0D8h, 0EBh, 26h, 0BBh, 0Bh, 0D9h, 0EBh, 21h, 0BBh, 4Ch, 0D9h
+	db	0EBh, 1Ch, 0BBh, 58h, 0D9h, 0EBh, 17h, 0BBh, 64h, 0D9h, 0EBh, 12h, 0BBh, 70h, 0D9h, 0EBh
+	db	0Dh, 0BBh, 7Ch, 0D9h, 0EBh, 8, 0BBh, 88h, 0D9h, 0EBh, 3, 0BBh, 94h, 0D9h, 53h, 0E8h
+	db	0B8h, 23h, 5Bh, 0A0h, 0C2h, 51h, 22h, 0C0h, 74h, 3Dh, 3Ah, 6, 0C4h, 51h, 74h, 33h
+	db	3Ah, 6, 0C3h, 51h, 75h, 30h, 0C6h, 6, 0C3h, 51h, 0, 0FEh, 0Eh, 0C2h, 51h, 0FFh
+	db	0E3h, 0E8h, 96h, 23h, 0A0h, 0C2h, 51h, 22h, 0C0h, 74h, 1Ch, 3Ah, 6, 0C4h, 51h, 74h
+	db	12h, 3Ah, 6, 0C3h, 51h, 74h, 1, 0C3h, 0A2h, 0C4h, 51h, 0C6h, 6, 0C3h, 51h, 0
+	db	0E9h, 0EEh, 22h, 0A2h, 0C3h, 51h, 0C3h, 0B9h, 37h, 0, 0E9h, 34h, 5Ah, 0E8h, 6Ah, 23h
+	db	0A0h, 0C2h, 51h, 22h, 0C0h, 74h, 0F0h, 0FEh, 0Eh, 0C2h, 51h, 3Ah, 6, 0C3h, 51h, 75h
+	db	5, 0C6h, 6, 0C3h, 51h, 0, 80h, 3Eh, 0C3h, 51h, 0, 75h, 6, 0A0h, 0C2h, 51h
+	db	0A2h, 0C4h, 51h, 0E9h, 0BBh, 22h, 0E8h, 55h, 23h, 75h, 14h, 0E8h, 30h, 0, 75h, 17h
+	db	56h, 9Ah
 	dd	L11A73
 	db	9Ah
 	dd	L11B65
@@ -6670,25 +13208,47 @@ L075F6:	test	byte ptr ds:[38C9h], 1	;@075F6
 	db	57h, 0EBh, 0BBh, 16h, 7, 0BFh, 0ACh, 57h, 0B9h, 13h, 0, 0F2h, 0AFh, 75h, 11h, 41h
 	db	0BBh, 13h, 0, 2Bh, 0D9h, 83h, 0C6h, 2, 0D1h, 0E3h, 0FFh, 97h, 22h, 20h, 0EBh, 9Eh
 	db	0B9h, 2Fh, 10h, 8Bh, 0F8h, 0E8h, 74h, 47h, 83h, 0C6h, 2, 0EBh, 91h, 0E8h, 0F9h, 0
-	db	0E9h, 0BCh, 3, 0B0h, 20h, 0EBh, 12h, 0B0h, 40h, 0EBh, 0Eh, 0B0h, 0A0h, 0EBh, 0Ah, 0B0h
-	db	60h, 0EBh, 6, 0B0h, 80h, 0EBh, 2, 0B0h, 0C0h, 0F6h, 6, 13h, 57h, 0E0h, 75h, 6
-	db	0C7h, 6, 10h, 57h, 0, 0, 80h, 26h, 13h, 57h, 1Fh, 8, 6, 13h, 57h, 0C3h
-	db	80h, 26h, 13h, 57h, 0E3h, 0C3h, 80h, 26h, 13h, 57h, 0E3h, 80h, 0Eh, 13h, 57h, 4
-	db	0C3h, 80h, 26h, 13h, 57h, 0E3h, 80h, 0Eh, 13h, 57h, 8, 0C3h, 80h, 26h, 13h, 57h
-	db	0E3h, 80h, 0Eh, 13h, 57h, 14h, 0C3h, 80h, 26h, 13h, 57h, 0E3h, 80h, 0Eh, 13h, 57h
-	db	18h, 0C3h, 80h, 26h, 13h, 57h, 3, 0E8h, 4, 3, 23h, 0C9h, 75h, 0Dh, 0F6h, 6
-	db	13h, 57h, 2, 75h, 3, 0A3h, 10h, 57h, 32h, 0C0h, 0C3h, 0B9h, 87h, 0, 0E8h, 0EBh
-	db	46h, 0EBh, 0F5h, 0C6h, 6, 12h, 57h, 0FFh, 80h, 26h, 13h, 57h, 0FEh, 0C3h, 0F7h, 6
-	db	7Ch, 51h, 8, 0, 74h, 22h, 0C6h, 6, 12h, 57h, 0FFh, 80h, 0Eh, 13h, 57h, 1
-	db	0F6h, 6, 13h, 57h, 0E0h, 75h, 0Bh, 80h, 0Eh, 13h, 57h, 60h, 0C7h, 6, 10h, 57h
-	db	0, 0, 83h, 0Eh, 10h, 57h, 4, 0C3h, 0B9h, 7Eh, 0, 0E9h, 0AEh, 46h, 0A1h, 7Eh
-	db	51h, 0A3h, 10h, 57h, 80h, 0Eh, 13h, 57h, 2, 0C3h, 0B0h, 0, 0EBh, 0Ah, 0B0h, 1
-	db	0EBh, 6, 0B0h, 2, 0EBh, 2, 0B0h, 3, 0F6h, 6, 13h, 57h, 0E0h, 75h, 0Bh, 80h
-	db	0Eh, 13h, 57h, 60h, 0C7h, 6, 10h, 57h, 0, 0, 32h, 0E4h, 83h, 26h, 10h, 57h
-	db	0FCh, 0Dh, 4, 0, 9, 6, 10h, 57h, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h
-	db	1Dh, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 15h, 80h, 3Eh, 12h, 57h, 0, 75h, 0Eh
-	db	0F7h, 6, 82h, 51h, 40h, 0, 74h, 6, 0B9h, 73h, 80h, 0E8h, 4Eh, 46h, 0A1h, 0DEh
-	db	56h, 9Ah
+	db	0E9h, 0BCh, 3
+	mov	al, 20h	;@0EDC3
+	jmp	short @@102	;@0EDC5
+	mov	al, 40h	;@0EDC7
+	jmp	short @@102	;@0EDC9
+	mov	al, 0A0h	;@0EDCB
+	jmp	short @@102	;@0EDCD
+	db	0B0h, 60h, 0EBh, 6, 0B0h, 80h, 0EBh, 2, 0B0h, 0C0h	;@0EDCF
+@@102:	test	byte ptr ds:[5713h], 0E0h	;@0EDD9
+	jne	@@103	;@0EDDE
+	mov	word ptr ds:[5710h], 0	;@0EDE0
+@@103:	and	byte ptr ds:[5713h], 1Fh	;@0EDE6
+	or	byte ptr ds:[5713h], al	;@0EDEB
+	ret	;@0EDEF
+	db	80h, 26h, 13h, 57h, 0E3h, 0C3h, 80h, 26h, 13h, 57h, 0E3h, 80h	;@0EDF0
+	db	0Eh, 13h, 57h, 4, 0C3h, 80h, 26h, 13h, 57h, 0E3h, 80h, 0Eh, 13h
+	db	57h, 8, 0C3h, 80h, 26h, 13h, 57h, 0E3h, 80h, 0Eh, 13h, 57h, 14h
+	db	0C3h, 80h, 26h, 13h, 57h, 0E3h, 80h, 0Eh, 13h, 57h, 18h, 0C3h
+	db	80h, 26h, 13h, 57h, 3, 0E8h, 4, 3, 23h, 0C9h, 75h, 0Dh, 0F6h, 6
+	db	13h, 57h, 2, 75h, 3, 0A3h, 10h, 57h, 32h, 0C0h, 0C3h, 0B9h, 87h
+	db	0, 0E8h, 0EBh, 46h, 0EBh, 0F5h, 0C6h, 6, 12h, 57h, 0FFh, 80h, 26h
+	db	13h, 57h, 0FEh, 0C3h, 0F7h, 6, 7Ch, 51h, 8, 0, 74h, 22h, 0C6h
+	db	6, 12h, 57h, 0FFh, 80h, 0Eh, 13h, 57h, 1, 0F6h, 6, 13h, 57h, 0E0h
+	db	75h, 0Bh, 80h, 0Eh, 13h, 57h, 60h, 0C7h, 6, 10h, 57h, 0, 0, 83h
+	db	0Eh, 10h, 57h, 4, 0C3h, 0B9h, 7Eh, 0, 0E9h, 0AEh, 46h, 0A1h, 7Eh
+	db	51h, 0A3h, 10h, 57h, 80h, 0Eh, 13h, 57h, 2, 0C3h
+	mov	al, 0	;@0EE8A
+	jmp	short @@104	;@0EE8C
+	db	0B0h, 1, 0EBh, 6, 0B0h, 2, 0EBh, 2, 0B0h, 3	;@0EE8E
+@@104:	test	byte ptr ds:[5713h], 0E0h	;@0EE98
+	jne	@@105	;@0EE9D
+	or	byte ptr ds:[5713h], 60h	;@0EE9F
+	mov	word ptr ds:[5710h], 0	;@0EEA4
+@@105:	xor	ah, ah	;@0EEAA
+	and	word ptr ds:[5710h], -4	;@0EEAC
+	or	ax, 4	;@0EEB1
+	or	word ptr ds:[5710h], ax	;@0EEB4
+	ret	;@0EEB8
+	db	0F7h, 6, 7Ch, 51h, 8, 0, 74h, 1Dh, 0F7h, 6, 7Ch, 51h, 0, 10h, 75h, 15h	;@0EEB9
+	db	80h, 3Eh, 12h, 57h, 0, 75h, 0Eh, 0F7h, 6, 82h, 51h, 40h, 0, 74h, 6, 0B9h
+	db	73h, 80h, 0E8h, 4Eh, 46h, 0A1h, 0DEh, 56h, 9Ah
 	dd	L101E0
 	db	0E8h, 0A9h, 25h, 75h, 1Bh, 0A1h, 0Eh, 57h, 0E8h, 0, 4Ah, 8Ah, 1Eh, 13h, 57h, 8Ah
 	db	3Eh, 12h, 57h, 8Bh, 3Eh, 10h, 57h, 0E8h, 0AEh, 25h, 0A1h, 0DEh, 56h, 0E9h, 6Ah, 54h
@@ -7315,11 +13875,23 @@ L0FB78:	xor	ax, ax	;@0FB78
 	db	0C2h, 9Ah
 	dd	L101E0
 	db	0E8h, 0C2h, 8, 0F6h, 6, 0C9h, 38h, 0Bh, 75h, 8, 80h, 0Eh, 0CAh, 38h, 3, 0E9h
-	db	0FBh, 2Ah, 0B9h, 8, 0, 0E8h, 59h, 37h, 0E9h, 0F2h, 2Ah, 0B9h, 68h, 0, 0E9h, 50h
-	db	37h, 0E8h, 45h, 2Bh, 75h, 9, 0E8h, 0E4h, 2Ah, 0B9h, 6, 0, 0E9h, 42h, 37h, 0C3h
-	db	8Bh, 0Eh, 56h, 57h, 0E9h, 0D5h, 21h, 0A1h, 56h, 57h, 0E9h, 95h, 22h, 0F7h, 6, 7Ch
-	db	51h, 0, 10h, 75h, 6, 0A1h, 58h, 57h, 0E9h, 87h, 22h, 0C3h
-L0FE07:	call	@@4	;@0FE07
+	db	0FBh, 2Ah, 0B9h, 8, 0, 0E8h, 59h, 37h, 0E9h, 0F2h, 2Ah
+L0FDD6:	mov	cx, 68h	;@0FDD6
+	jmp	L0352C	;@0FDD9
+L0FDDC:	call	L02924	;@0FDDC
+	jne	@@1	;@0FDDF
+	call	L028C8	;@0FDE1
+	mov	cx, 6	;@0FDE4
+	jmp	L0352C	;@0FDE7
+@@1:	ret	;@0FDEA
+	db	8Bh, 0Eh, 56h, 57h, 0E9h, 0D5h, 21h, 0A1h, 56h, 57h, 0E9h, 95h	;@0FDEB
+	db	22h
+L0FDF8:	test	word ptr ds:[517Ch], 1000h	;@0FDF8
+	jne	@@1	;@0FDFE
+	mov	ax, word ptr ds:[5758h]	;@0FE00
+	jmp	L0208D	;@0FE03
+@@1:	ret	;@0FE06
+L0FE07:	call	L0FE79	;@0FE07
 	jne	@@1	;@0FE0A
 	test	byte ptr ds:[51BFh], 80h	;@0FE0C
 	jne	@@2	;@0FE11
@@ -7348,34 +13920,70 @@ L0FE07:	call	@@4	;@0FE07
 	db	0EBh, 2Dh, 32h, 0C0h, 0FEh, 0C8h, 0C3h, 0F6h, 6, 0C9h, 38h, 1, 74h, 21h, 0F7h, 6
 	db	0B4h, 51h, 10h, 0, 75h, 5, 9Ah
 	dd	L106D9
-@@4:	test	byte ptr ds:[38C9h], 1	;@0FE79
-	je	@@5	;@0FE7E
+L0FE79:	test	byte ptr ds:[38C9h], 1	;@0FE79
+	je	@@1	;@0FE7E
 	test	word ptr ds:[51B4h], 1	;@0FE80
-	jne	@@5	;@0FE86
+	jne	@@1	;@0FE86
 	call	far ptr L106D9	;@0FE88
-@@5:	cmp	byte ptr ds:[51C3h], 0	;@0FE8D
-	jne	@@6	;@0FE92
+@@1:	cmp	byte ptr ds:[51C3h], 0	;@0FE8D
+	jne	@@2	;@0FE92
 	ret	;@0FE94
-@@6:	test	byte ptr ds:[38C9h], 1	;@0FE95
-	je	@@7	;@0FE9A
+@@2:	test	byte ptr ds:[38C9h], 1	;@0FE95
+	je	@@3	;@0FE9A
 	test	word ptr ds:[51B4h], 10h	;@0FE9C
-	jne	@@8	;@0FEA2
+	jne	@@4	;@0FEA2
 	call	far ptr L106D9	;@0FEA4
-@@7:	xor	al, al	;@0FEA9
+@@3:	xor	al, al	;@0FEA9
 	dec	al	;@0FEAB
-@@8:	ret	;@0FEAD
-	db	0E8h, 11h, 0ADh, 75h, 1, 0C3h, 0E8h, 0E5h, 5Ah, 0B9h, 0Dh, 0, 0E9h	;@0FEAE
-	db	6Fh, 36h, 0E8h, 2, 0ADh, 75h, 18h, 0E8h, '_*u', 16h, 3Bh, 6, '^Xu'
-	db	10h, 83h, 0C6h, 2, 6, 55h, 0E8h, 0EDh, 0ACh, '_Xu', 11h, 0C3h
-	db	0E8h, 0BFh, 5Ah, 6, 55h, 0E8h, 0BAh, 'Z_X', 0B9h, 0Dh, 0, 0E9h
-	db	'B6PW', 0E8h, 0ADh, 'Z_X', 0B9h, 0Ah, 0, 0F7h, 6, 7Ch, 51h, 0
-	db	20h, 75h, 4, 81h, 0C9h, 0, 80h, 57h, 0E8h, '(6_', 0C3h, 0E8h, 0B9h
-	db	0ACh, 75h, 37h, 0E8h, 16h, '*u5;', 6, '^Xu/', 83h, 0C6h, 2, 6
-	db	55h, 0E8h, 0A4h, 0ACh, '_XuBPW', 0E8h, 0FDh, ')[Zu!;', 6, '^Xu'
-	db	1Bh, 83h, 0C6h, 2, 6, 'URS', 0E8h, 87h, 0ACh, '[Z_Xu.', 0C3h, 0E8h
-	db	57h, 5Ah, 6, 55h, 0E8h, 'RZ_XPW', 6, 55h, 0E8h, 'IZ_X[Z', 0B9h
-	db	0Dh, 0, 'RSW', 0E8h, 0CCh, '5_[Z', 0C3h, 50h, 57h, 0E8h, '3Z[Z'
-	db	8Ch, 0C0h, 8Bh, 0FDh, 52h, 53h, 0E8h, 76h, 0FFh, 5Bh, 5Ah, 0C3h
+@@4:	ret	;@0FEAD
+L0FEAE:	call	L0ABC2	;@0FEAE
+	jne	@@1	;@0FEB1
+	ret	;@0FEB3
+@@1:	call	L0599C	;@0FEB4
+	mov	cx, 0Dh	;@0FEB7
+	jmp	L0352C	;@0FEBA
+L0FEBD:	call	L0ABC2	;@0FEBD
+	jne	@@1	;@0FEC0
+	call	L02924	;@0FEC2
+	jne	@@2	;@0FEC5
+	cmp	ax, word ptr ds:[585Eh]	;@0FEC7
+	jne	@@2	;@0FECB
+	add	si, 2	;@0FECD
+	push	es	;@0FED0
+	push	bp	;@0FED1
+	call	L0ABC2	;@0FED2
+	pop	di	;@0FED5
+	pop	ax	;@0FED6
+	jne	@@3	;@0FED7
+	ret	;@0FED9
+@@1:	call	L0599C	;@0FEDA
+@@2:	push	es	;@0FEDD
+	push	bp	;@0FEDE
+	call	L0599C	;@0FEDF
+	pop	di	;@0FEE2
+	pop	ax	;@0FEE3
+	mov	cx, 0Dh	;@0FEE4
+	jmp	L0352C	;@0FEE7
+@@3:	push	ax	;@0FEEA
+	push	di	;@0FEEB
+	call	L0599C	;@0FEEC
+	pop	di	;@0FEEF
+	pop	ax	;@0FEF0
+	mov	cx, 0Ah	;@0FEF1
+	test	word ptr ds:[517Ch], 2000h	;@0FEF4
+	jne	@@4	;@0FEFA
+	or	cx, 8000h	;@0FEFC
+@@4:	push	di	;@0FF00
+	call	L0352C	;@0FF01
+	pop	di	;@0FF04
+	ret	;@0FF05
+	db	0E8h, 0B9h, 0ACh, 75h, 37h, 0E8h, 16h, '*u5;', 6, '^Xu/', 83h	;@0FF06
+	db	0C6h, 2, 6, 55h, 0E8h, 0A4h, 0ACh, '_XuBPW', 0E8h, 0FDh, ')[Zu!;'
+	db	6, '^Xu', 1Bh, 83h, 0C6h, 2, 6, 'URS', 0E8h, 87h, 0ACh, '[Z_Xu.'
+	db	0C3h, 0E8h, 57h, 5Ah, 6, 55h, 0E8h, 'RZ_XPW', 6, 55h, 0E8h, 'IZ_X[Z'
+	db	0B9h, 0Dh, 0, 'RSW', 0E8h, 0CCh, '5_[Z', 0C3h, 50h, 57h, 0E8h
+	db	'3Z[Z', 8Ch, 0C0h, 8Bh, 0FDh, 52h, 53h, 0E8h, 76h, 0FFh, 5Bh, 5Ah
+	db	0C3h
 SEG1	ends
 
 SEG2	segment para public 'CODE'
@@ -9729,9 +16337,22 @@ L11656:	mov	ax, ds	;@11656
 	mov	es, word ptr ds:[397Ch]	;@117EA
 	call	@@17	;@117EE
 @@20:	ret	;@117F1
-	db	8Bh, 0F7h, 0B9h, 0FFh, 0FFh, 32h, 0C0h, 0F2h, 0AEh, 0F7h, 0D9h	;@117F2
-	db	83h, 0E9h, 2, 0B0h, 2, 1Eh, 6, 0E8h, 9, 0, 1Fh, 8Ah, 0C1h, 0AAh
-	db	0F3h, 0A4h, 1Fh, 0EBh, 8Eh
+	mov	si, di	;@117F2
+	mov	cx, 0FFFFh	;@117F4
+	xor	al, al	;@117F7
+	repne scasb	;@117F9
+	neg	cx	;@117FB
+	sub	cx, 2	;@117FD
+	mov	al, 2	;@11800
+	push	ds	;@11802
+	push	es	;@11803
+	call	@@21	;@11804
+	pop	ds	;@11807
+	mov	al, cl	;@11808
+	stosb	;@1180A
+	rep movsb	;@1180B
+	pop	ds	;@1180D
+	jmp	@@16	;@1180E
 @@21:	mov	es, word ptr ds:[397Ch]	;@11810
 	mov	di, word ptr ds:[3984h]	;@11814
 	stosb	;@11818
@@ -13943,7 +20564,10 @@ L14502:	mov	di, word ptr ds:[5046h]	;@14502
 	jb	@@2	;@14514
 	ret	;@14516
 @@2:	jmp	L14E70	;@14517
-	db	0B0h, 80h, 0E8h, 0E6h, 9, 8Bh, 0C2h, 0E8h, 0C2h, 9	;@1451A
+	mov	al, 80h	;@1451A
+	call	L14F05	;@1451C
+	mov	ax, dx	;@1451F
+	call	L14EE6	;@14521
 L14524:	call	L14E7B	;@14524
 	test	word ptr ds:[38B6h], 4	;@14527
 	jne	@@1	;@1452D
@@ -13989,11 +20613,35 @@ L14574:	mov	al, 88h	;@14574
 	mov	al, 1	;@1457F
 	stosb	;@14581
 	jmp	L14E7B	;@14582
-	db	0B0h, 88h, 0E8h, 7Bh, 9, 0B0h, 0C0h, 0AAh, 0B0h, 9Eh, 0AAh, 0E9h	;@14585
-	db	0E8h, 8, 8Bh, 0D0h, 0B0h, 88h, 0E8h, 6Bh, 9, 0B0h, 0C0h, 0AAh
-	db	0B0h, 9Fh, 0AAh, 8Bh, 0C2h, 32h, 0EDh, 6, 57h, 0Eh, 0E8h, 0B5h
-	db	0BDh, 8Bh, 0F7h, 8Ch, 0C0h, 8Eh, 0D8h, 5Fh, 7, 0F3h, 0A4h, 8Ch
-	db	0D0h, 8Eh, 0D8h, 0E9h, 0C0h, 8
+	mov	al, 88h	;@14585
+	call	L14F05	;@14587
+	mov	al, 0C0h	;@1458A
+	stosb	;@1458C
+	mov	al, 9Eh	;@1458D
+	stosb	;@1458F
+	jmp	L14E7B	;@14590
+	mov	dx, ax	;@14593
+	mov	al, 88h	;@14595
+	call	L14F05	;@14597
+	mov	al, 0C0h	;@1459A
+	stosb	;@1459C
+	mov	al, 9Fh	;@1459D
+	stosb	;@1459F
+	mov	ax, dx	;@145A0
+	xor	ch, ch	;@145A2
+	push	es	;@145A4
+	push	di	;@145A5
+	push	cs	;@145A6
+	call	L1035F	;@145A7
+	mov	si, di	;@145AA
+	mov	ax, es	;@145AC
+	mov	ds, ax	;@145AE
+	pop	di	;@145B0
+	pop	es	;@145B1
+	rep movsb	;@145B2
+	mov	ax, ss	;@145B4
+	mov	ds, ax	;@145B6
+	jmp	L14E7B	;@145B8
 L145BB:	test	word ptr ds:[38B6h], 4	;@145BB
 	jne	@@2	;@145C1
 	push	ax	;@145C3
@@ -14039,11 +20687,33 @@ L145E3:	push	ax	;@145E3
 @@1:	call	L14E7B	;@1460D
 	mov	ax, bp	;@14610
 	ret	;@14612
-	db	8Bh, 0D0h, 0B0h, 88h, 0E8h, 0EBh, 8, 0B0h, 40h, 0AAh, 0B0h, 0E0h	;@14613
-	db	0AAh, 8Bh, 0C2h, 80h, 0E4h, 0Fh, 0E8h, 0B0h, 8, 0E9h, 50h, 8, 8Bh
-	db	0D0h, 0B0h, 88h, 0E8h, 0D3h, 8, 0B0h, 40h, 0AAh, 0B0h, 0E1h, 0AAh
-	db	8Bh, 0C2h, 80h, 0E4h, 0Fh, 0E8h, 98h, 8, 32h, 0C0h, 0F6h, 0C6h
-	db	40h, 74h, 2, 0B0h, 28h, 0AAh, 0E9h, 2Eh, 8
+	mov	dx, ax	;@14613
+	mov	al, 88h	;@14615
+	call	L14F05	;@14617
+	mov	al, 40h	;@1461A
+	stosb	;@1461C
+	mov	al, 0E0h	;@1461D
+	stosb	;@1461F
+	mov	ax, dx	;@14620
+	and	ah, 0Fh	;@14622
+	call	L14ED8	;@14625
+	jmp	L14E7B	;@14628
+	mov	dx, ax	;@1462B
+	mov	al, 88h	;@1462D
+	call	L14F05	;@1462F
+	mov	al, 40h	;@14632
+	stosb	;@14634
+	mov	al, 0E1h	;@14635
+	stosb	;@14637
+	mov	ax, dx	;@14638
+	and	ah, 0Fh	;@1463A
+	call	L14ED8	;@1463D
+	xor	al, al	;@14640
+	test	dh, 40h	;@14642
+	je	@@2	;@14645
+	mov	al, 28h	;@14647
+@@2:	stosb	;@14649
+	jmp	L14E7B	;@1464A
 L1464D:	mov	byte ptr ds:[503Dh], 0	;@1464D
 	ret	;@14652
 	db	40h, 80h, '>=P', 0, 'tZ;6>PuM;>@PuG', 8Bh, 0Eh, 'FP#', 0D2h, 74h	;@14653
@@ -14060,28 +20730,150 @@ L146DE:	cmp	byte ptr ds:[503Dh], 0	;@146DE
 	les	di, dword ptr ds:[5042h]	;@146E5
 	jmp	L14E7B	;@146E9
 @@1:	ret	;@146EC
-	db	0E8h, 2Fh, 0, 0E8h, 1Bh, 0, 0D0h, 0E0h, 0D0h, 0E0h, 0D0h, 0E0h	;@146ED
-	db	0D0h, 0E0h, 8Ah, 0E0h, 0E8h, 0Eh, 0, 0Ah, 0C4h, 0AAh, 0E2h, 0EBh
-	db	8Ch, 0D0h, 8Eh, 0D8h, 89h, '>BP', 0C3h, 0ACh, '<9w', 3, 2Ch, 30h
-	db	0C3h, '<ar', 2, ', ,7', 0C3h, 32h, 0EDh, 0D1h, 0E9h, 0E3h, 19h
-	db	80h, '>=P', 0, 74h, 13h, 0C4h, '>BP', 6, 57h, 0Eh, 0E8h, 29h, 0BCh
-	db	8Bh, 0F7h, 8Ch, 0C0h, 8Eh, 0D8h, 5Fh, 7, 0C3h, 50h, 51h, 0B0h
-	db	88h, 0A2h, 3Dh, 50h, 0E8h, 0BCh, 7, 0B0h, 40h, 0AAh, 59h, 58h
-	db	0EBh, 0E0h, 8Bh, 0C8h, 0B0h, 88h, 0E8h, 0AEh, 7, 0B0h, 40h, 0AAh
-	db	0B0h, 0E5h, 23h, 0D2h, 74h, 2, 0Ch, 10h, 0AAh, 8Bh, 0C1h, 0E8h
-	db	70h, 7, 8Bh, 0C3h, 0ABh, 8Bh, 0C2h, 23h, 0C0h, 74h, 1, 0ABh, 0E9h
-	db	6, 7, 0B0h, 88h, 0E8h, 8Bh, 7, 0B0h, 40h, 0AAh, 0B0h, 0E7h, 23h
-	db	0D2h, 74h, 2, 0Ch, 10h, 0AAh, 0EBh, 0E0h, 57h, 50h, 0B0h, 88h
-	db	0E8h, 76h, 7, 0B0h, 40h, 0AAh, 0B0h, 0E6h, 23h, 0D2h, 74h, 2, 0Ch
-	db	10h, 0AAh, 58h, 0E8h, 47h, 7, 8Bh, 0C5h, 80h, 0E4h, 0Fh, 0E8h
-	db	31h, 7, 32h, 0C0h, 0F7h, 0C5h, 0, 10h, 74h, 2, 0B0h, 28h, 0AAh
-	db	58h, 0E8h, 22h, 7, 8Bh, 0C6h, 0E8h, 1Dh, 7, 8Bh, 0C3h, 0ABh, 8Bh
-	db	0C2h, 23h, 0C0h, 74h, 1, 0ABh, 0E9h, 0B3h, 6, 50h, 0B0h, 88h, 0E8h
-	db	37h, 7, 0B0h, 40h, 0AAh, 0B0h, 0E6h, 0AAh, 58h, 0E8h, 0Eh, 7, 8Bh
-	db	0C5h, 80h, 0E4h, 0Fh, 0E8h, 0F8h, 6, 0B0h, 2, 0AAh, 8Bh, 0C3h
-	db	0ABh, 0E9h, 92h, 6, 50h, 0B0h, 88h, 0E8h, 16h, 7, 0B0h, 40h, 0AAh
-	db	0B0h, 0E6h, 0AAh, 58h, 0E8h, 0EDh, 6, 8Bh, 0C5h, 80h, 0E4h, 0Fh
-	db	0E8h, 0D7h, 6, 0B0h, 7, 0AAh, 0E9h, 74h, 6
+	call	@@6	;@146ED
+@@2:	call	@@3	;@146F0
+	shl	al, 1	;@146F3
+	shl	al, 1	;@146F5
+	shl	al, 1	;@146F7
+	shl	al, 1	;@146F9
+	mov	ah, al	;@146FB
+	call	@@3	;@146FD
+	or	al, ah	;@14700
+	stosb	;@14702
+	loop	@@2	;@14703
+	mov	ax, ss	;@14705
+	mov	ds, ax	;@14707
+	mov	word ptr ds:[5042h], di	;@14709
+	ret	;@1470D
+@@3:	lodsb	;@1470E
+	cmp	al, 39h	;@1470F
+	ja	@@4	;@14711
+	sub	al, 30h	;@14713
+	ret	;@14715
+@@4:	cmp	al, 61h	;@14716
+	jb	@@5	;@14718
+	sub	al, 20h	;@1471A
+@@5:	sub	al, 37h	;@1471C
+	ret	;@1471E
+@@6:	xor	ch, ch	;@1471F
+	shr	cx, 1	;@14721
+	jcxz	@@8	;@14723
+	cmp	byte ptr ds:[503Dh], 0	;@14725
+	je	@@9	;@1472A
+	les	di, dword ptr ds:[5042h]	;@1472C
+@@7:	push	es	;@14730
+	push	di	;@14731
+	push	cs	;@14732
+	call	L1035F	;@14733
+	mov	si, di	;@14736
+	mov	ax, es	;@14738
+	mov	ds, ax	;@1473A
+	pop	di	;@1473C
+	pop	es	;@1473D
+@@8:	ret	;@1473E
+@@9:	push	ax	;@1473F
+	push	cx	;@14740
+	mov	al, 88h	;@14741
+	mov	byte ptr ds:[503Dh], al	;@14743
+	call	L14F05	;@14746
+	mov	al, 40h	;@14749
+	stosb	;@1474B
+	pop	cx	;@1474C
+	pop	ax	;@1474D
+	jmp	@@7	;@1474E
+	mov	cx, ax	;@14750
+	mov	al, 88h	;@14752
+	call	L14F05	;@14754
+	mov	al, 40h	;@14757
+	stosb	;@14759
+	mov	al, 0E5h	;@1475A
+	and	dx, dx	;@1475C
+	je	@@10	;@1475E
+	or	al, 10h	;@14760
+@@10:	stosb	;@14762
+	mov	ax, cx	;@14763
+	call	L14ED8	;@14765
+@@11:	mov	ax, bx	;@14768
+	stosw	;@1476A
+	mov	ax, dx	;@1476B
+	and	ax, ax	;@1476D
+	je	@@12	;@1476F
+	stosw	;@14771
+@@12:	jmp	L14E7B	;@14772
+	mov	al, 88h	;@14775
+	call	L14F05	;@14777
+	mov	al, 40h	;@1477A
+	stosb	;@1477C
+	mov	al, 0E7h	;@1477D
+	and	dx, dx	;@1477F
+	je	@@13	;@14781
+	or	al, 10h	;@14783
+@@13:	stosb	;@14785
+	jmp	@@11	;@14786
+	push	di	;@14788
+	push	ax	;@14789
+	mov	al, 88h	;@1478A
+	call	L14F05	;@1478C
+	mov	al, 40h	;@1478F
+	stosb	;@14791
+	mov	al, 0E6h	;@14792
+	and	dx, dx	;@14794
+	je	@@14	;@14796
+	or	al, 10h	;@14798
+@@14:	stosb	;@1479A
+	pop	ax	;@1479B
+	call	L14EE6	;@1479C
+	mov	ax, bp	;@1479F
+	and	ah, 0Fh	;@147A1
+	call	L14ED8	;@147A4
+	xor	al, al	;@147A7
+	test	bp, 1000h	;@147A9
+	je	@@15	;@147AD
+	mov	al, 28h	;@147AF
+@@15:	stosb	;@147B1
+	pop	ax	;@147B2
+	call	L14ED8	;@147B3
+	mov	ax, si	;@147B6
+	call	L14ED8	;@147B8
+	mov	ax, bx	;@147BB
+	stosw	;@147BD
+	mov	ax, dx	;@147BE
+	and	ax, ax	;@147C0
+	je	@@16	;@147C2
+	stosw	;@147C4
+@@16:	jmp	L14E7B	;@147C5
+	push	ax	;@147C8
+	mov	al, 88h	;@147C9
+	call	L14F05	;@147CB
+	mov	al, 40h	;@147CE
+	stosb	;@147D0
+	mov	al, 0E6h	;@147D1
+	stosb	;@147D3
+	pop	ax	;@147D4
+	call	L14EE6	;@147D5
+	mov	ax, bp	;@147D8
+	and	ah, 0Fh	;@147DA
+	call	L14ED8	;@147DD
+	mov	al, 2	;@147E0
+	stosb	;@147E2
+	mov	ax, bx	;@147E3
+	stosw	;@147E5
+	jmp	L14E7B	;@147E6
+	push	ax	;@147E9
+	mov	al, 88h	;@147EA
+	call	L14F05	;@147EC
+	mov	al, 40h	;@147EF
+	stosb	;@147F1
+	mov	al, 0E6h	;@147F2
+	stosb	;@147F4
+	pop	ax	;@147F5
+	call	L14EE6	;@147F6
+	mov	ax, bp	;@147F9
+	and	ah, 0Fh	;@147FB
+	call	L14ED8	;@147FE
+	mov	al, 7	;@14801
+	stosb	;@14803
+	jmp	L14E7B	;@14804
 L14807:	mov	al, 88h	;@14807
 	call	L14F05	;@14809
 	mov	al, 40h	;@1480C
@@ -14113,25 +20905,122 @@ L14807:	mov	al, 88h	;@14807
 	cmp	bx, 7	;@14842
 	jne	@@1	;@14845
 	ret	;@14847
-	db	50h, 0B0h, 88h, 0E8h, 0B7h, 6, 0B0h, 40h, 0AAh, 0B0h, 0E3h, 0AAh	;@14848
-	db	8Bh, 0C5h, 0E8h, 7Fh, 6, 58h, 0E8h, 89h, 6, 8Bh, 0C3h, 0ABh, 0B0h
-	db	20h, 0AAh, 8Bh, 0C2h, 0ABh, 0E9h, 12h, 6, 50h, 0B0h, 88h, 0E8h
-	db	96h, 6, 0B0h, 40h, 0AAh, 0B0h, 0E3h, 0AAh, 8Bh, 0C5h, 0E8h, 5Eh
-	db	6, 58h, 0E8h, 68h, 6, 8Bh, 0C3h, 0ABh, 0B0h, 21h, 0AAh, 8Bh, 0C2h
-	db	0ABh, 0E9h, 0F1h, 5, 0B0h, 88h, 0E8h, 76h, 6, 0B0h, 40h, 0AAh
-	db	0B0h, 0E3h, 0AAh, 8Bh, 0C5h, 0E8h, 3Eh, 6, 32h, 0C0h, 0AAh, 0B8h
-	db	2, 0, 0ABh, 0B0h, 15h, 0AAh, 8Bh, 0C3h, 80h, 0E4h, 0Fh, 0E8h, 2Ch
-	db	6, 32h, 0C0h, 0AAh, 0E9h, 0C9h, 5, 0B0h, 88h, 0E8h, 4Eh, 6, 0B0h
-	db	40h, 0AAh, 0B0h, 0E3h, 0AAh, 8Bh, 0C5h, 0E8h, 16h, 6, 32h, 0C0h
-	db	0AAh, 0B8h, 4, 0, 0ABh, 0B0h, 16h, 0AAh, 8Bh, 0C3h, 80h, 0E4h
-	db	0Fh, 0E8h, 4, 6, 32h, 0C0h, 0AAh, 0E9h, 0A1h, 5, 0B0h, 88h, 0E8h
-	db	26h, 6, 0B0h, 40h, 0AAh, 0B0h, 0E3h, 0AAh, 8Bh, 0C5h, 0E8h, 0EEh
-	db	5, 32h, 0C0h, 0AAh, 0B8h, 4, 0, 0ABh, 0B0h, 18h, 0AAh, 8Bh, 0C3h
-	db	80h, 0E4h, 0Fh, 0E8h, 0DCh, 5, 32h, 0C0h, 0AAh, 0E9h, 79h, 5, 0B0h
-	db	88h, 0E8h, 0FEh, 5, 0B0h, 40h, 0AAh, 0B0h, 0E3h, 0AAh, 8Bh, 0C5h
-	db	0E8h, 0C6h, 5, 32h, 0C0h, 0AAh, 0B8h, 6, 0, 0ABh, 0B0h, 19h, 0AAh
-	db	8Bh, 0C3h, 80h, 0E4h, 0Fh, 0E8h, 0B4h, 5, 32h, 0C0h, 0AAh, 0E9h
-	db	51h, 5
+	push	ax	;@14848
+	mov	al, 88h	;@14849
+	call	L14F05	;@1484B
+	mov	al, 40h	;@1484E
+	stosb	;@14850
+	mov	al, 0E3h	;@14851
+	stosb	;@14853
+	mov	ax, bp	;@14854
+	call	L14ED8	;@14856
+	pop	ax	;@14859
+	call	L14EE6	;@1485A
+	mov	ax, bx	;@1485D
+	stosw	;@1485F
+	mov	al, 20h	;@14860
+	stosb	;@14862
+	mov	ax, dx	;@14863
+	stosw	;@14865
+	jmp	L14E7B	;@14866
+	push	ax	;@14869
+	mov	al, 88h	;@1486A
+	call	L14F05	;@1486C
+	mov	al, 40h	;@1486F
+	stosb	;@14871
+	mov	al, 0E3h	;@14872
+	stosb	;@14874
+	mov	ax, bp	;@14875
+	call	L14ED8	;@14877
+	pop	ax	;@1487A
+	call	L14EE6	;@1487B
+	mov	ax, bx	;@1487E
+	stosw	;@14880
+	mov	al, 21h	;@14881
+	stosb	;@14883
+	mov	ax, dx	;@14884
+	stosw	;@14886
+	jmp	L14E7B	;@14887
+	mov	al, 88h	;@1488A
+	call	L14F05	;@1488C
+	mov	al, 40h	;@1488F
+	stosb	;@14891
+	mov	al, 0E3h	;@14892
+	stosb	;@14894
+	mov	ax, bp	;@14895
+	call	L14ED8	;@14897
+	xor	al, al	;@1489A
+	stosb	;@1489C
+	mov	ax, 2	;@1489D
+	stosw	;@148A0
+	mov	al, 15h	;@148A1
+	stosb	;@148A3
+	mov	ax, bx	;@148A4
+	and	ah, 0Fh	;@148A6
+	call	L14ED8	;@148A9
+	xor	al, al	;@148AC
+	stosb	;@148AE
+	jmp	L14E7B	;@148AF
+	mov	al, 88h	;@148B2
+	call	L14F05	;@148B4
+	mov	al, 40h	;@148B7
+	stosb	;@148B9
+	mov	al, 0E3h	;@148BA
+	stosb	;@148BC
+	mov	ax, bp	;@148BD
+	call	L14ED8	;@148BF
+	xor	al, al	;@148C2
+	stosb	;@148C4
+	mov	ax, 4	;@148C5
+	stosw	;@148C8
+	mov	al, 16h	;@148C9
+	stosb	;@148CB
+	mov	ax, bx	;@148CC
+	and	ah, 0Fh	;@148CE
+	call	L14ED8	;@148D1
+	xor	al, al	;@148D4
+	stosb	;@148D6
+	jmp	L14E7B	;@148D7
+	mov	al, 88h	;@148DA
+	call	L14F05	;@148DC
+	mov	al, 40h	;@148DF
+	stosb	;@148E1
+	mov	al, 0E3h	;@148E2
+	stosb	;@148E4
+	mov	ax, bp	;@148E5
+	call	L14ED8	;@148E7
+	xor	al, al	;@148EA
+	stosb	;@148EC
+	mov	ax, 4	;@148ED
+	stosw	;@148F0
+	mov	al, 18h	;@148F1
+	stosb	;@148F3
+	mov	ax, bx	;@148F4
+	and	ah, 0Fh	;@148F6
+	call	L14ED8	;@148F9
+	xor	al, al	;@148FC
+	stosb	;@148FE
+	jmp	L14E7B	;@148FF
+	mov	al, 88h	;@14902
+	call	L14F05	;@14904
+	mov	al, 40h	;@14907
+	stosb	;@14909
+	mov	al, 0E3h	;@1490A
+	stosb	;@1490C
+	mov	ax, bp	;@1490D
+	call	L14ED8	;@1490F
+	xor	al, al	;@14912
+	stosb	;@14914
+	mov	ax, 6	;@14915
+	stosw	;@14918
+	mov	al, 19h	;@14919
+	stosb	;@1491B
+	mov	ax, bx	;@1491C
+	and	ah, 0Fh	;@1491E
+	call	L14ED8	;@14921
+	xor	al, al	;@14924
+	stosb	;@14926
+	jmp	L14E7B	;@14927
 L1492A:	push	ax	;@1492A
 	mov	al, 88h	;@1492B
 	call	L14F05	;@1492D
@@ -14302,35 +21191,84 @@ L14B86:	mov	byte ptr ds:[503Dh], 0	;@14B86
 	db	5Fh, 8Bh, 0D1h, 8Bh, 0C3h, 0E8h, 0Ch, 0, 89h, 3Eh, 42h, 50h, 0FFh, 6, 50h, 50h
 	db	0A1h, 50h, 50h, 0C3h, 23h, 0D2h, 75h, 10h, 3Dh, 80h, 0, 77h, 2, 0AAh, 0C3h, 8Bh
 	db	0D0h, 0B0h, 81h, 0AAh, 8Bh, 0C2h, 0ABh, 0C3h, 50h, 0B0h, 88h, 0AAh, 58h, 0ABh, 8Bh, 0C2h
-	db	0ABh, 0C3h, 50h, 0B0h, 88h, 0E8h, 0B0h, 2, 0B0h, 40h, 0AAh, 0B0h, 0A0h, 0AAh, 0B8h, 2
-	db	0, 0ABh, 58h, 0E8h, 83h, 2, 32h, 0C0h, 0AAh, 0E9h, 12h, 2, 50h, 57h, 0B0h, 90h
-	db	0Bh, 0D2h, 74h, 2, 0Ch, 1, 0E8h, 8Fh, 2, 58h, 0E8h, 5Eh, 2, 8Bh, 0C6h, 0E8h
-	db	59h, 2, 0Bh, 0C0h, 75h, 1, 0ABh, 58h, 0E8h, 5Eh, 2, 8Bh, 0C3h, 0ABh, 0Bh, 0D2h
-	db	74h, 3, 8Bh, 0C2h, 0ABh, 32h, 0C0h, 0AAh, 0E9h, 0E3h, 1, 50h, 57h, 0B0h, 0B6h, 0EBh
-	db	0CFh, 88h, 0Eh, 60h, 50h, 8Bh, 0F0h, 6, 89h, 16h, 58h, 50h, 0B0h, 0A2h, 0Ah, 0C1h
-	db	0E8h, 55h, 2, 8Bh, 0C2h, 0E8h, 23h, 2, 8Bh, 0C3h, 0ABh, 22h, 0C9h, 74h, 3, 8Bh
-	db	0C6h, 0ABh, 89h, 3Eh, 5Ah, 50h, 89h, 3Eh, 42h, 50h, 7, 0C3h, 8Ch, 0C3h, 0C4h, 3Eh
-	db	42h, 50h, 0ABh, 80h, 3Eh, 60h, 50h, 0, 74h, 3, 8Bh, 0C2h, 0ABh, 8Bh, 0C1h, 0ABh
-	db	89h, 3Eh, 42h, 50h, 8Eh, 0C3h, 0C3h, 8Ch, 0DAh, 8Ch, 0C3h, 0C4h, 3Eh, 42h, 50h, 8Eh
-	db	0DBh, 0B8h, 1, 0, 0ABh, 33h, 0C0h, 36h, 80h, 3Eh, 60h, 50h, 0, 74h, 1, 0ABh
-	db	0ABh, 8Ah, 0C1h, 0AAh, 0F3h, 0A4h, 8Eh, 0DAh, 89h, 3Eh, 42h, 50h, 8Eh, 0C3h, 0C3h, 8Ch
-	db	0C3h, 0C4h, 3Eh, 42h, 50h, 0B8h, 1, 0, 0ABh, 33h, 0C0h, 80h, 3Eh, 60h, 50h, 0
-	db	74h, 1, 0ABh, 0ABh, 8Ah, 0C1h, 0AAh, 32h, 0C0h, 0F3h, 0AAh, 89h, 3Eh, 42h, 50h, 8Eh
-	db	0C3h, 0C3h, 6, 0C4h, 3Eh, 42h, 50h, 0E8h, 44h, 1, 7, 0C3h, 89h, 16h, 58h, 50h
-	db	8Bh, 0F0h, 32h, 0C9h, 23h, 0F6h, 74h, 3, 80h, 0C9h, 1, 0B0h, 0A0h, 0Ah, 0C1h, 0E8h
-	db	0B6h, 1, 0A1h, 58h, 50h, 0E8h, 83h, 1, 8Bh, 0C3h, 0ABh, 22h, 0C9h, 74h, 3, 8Bh
-	db	0C6h, 0ABh, 89h, 3Eh, 5Ah, 50h, 0C3h, 36h, 3, 3Eh, 5Ah, 50h, 0F3h, 0A4h, 0C3h, 3
-	db	3Eh, 5Ah, 50h, 0E9h, 8, 1, 80h, 3Eh, 60h, 50h, 0, 75h, 7, 0BBh, 5, 0
-	db	0B8h, 4, 0, 0C3h, 0BBh, 7, 0, 0B8h, 6, 0, 0C3h, 57h, 80h, 3Eh, 3Dh, 50h
-	db	0, 74h, 76h, 8Ah, 0C2h, 32h, 6, 3Dh, 50h, 24h, 1, 75h, 61h, 0C4h, 3Eh, 42h
-	db	50h, 80h, 0E2h, 0FEh, 80h, 0CFh, 80h, 0Ah, 0FAh, 8Bh, 0C3h, 86h, 0C4h, 0ABh, 5Bh, 3Ah
-	db	0CDh, 75h, 4, 3Bh, 0F3h, 74h, 1Dh, 8Ah, 0C1h, 0B1h, 4, 0D2h, 0E0h, 0Ah, 0C5h, 0Ch
-	db	4, 0AAh, 8Bh, 0C6h, 3Dh, 7Fh, 0, 77h, 3, 0AAh, 0EBh, 6, 80h, 0CCh, 80h, 86h
-	db	0E0h, 0ABh, 0EBh, 5, 8Ah, 0C5h, 0Ch, 54h, 0AAh, 8Bh, 0C3h, 3Dh, 7Fh, 0, 77h, 3
-	db	0AAh, 0EBh, 6, 80h, 0CCh, 80h, 86h, 0E0h, 0ABh, 89h, 3Eh, 42h, 50h, 0A1h, 46h, 50h
-	db	5, 0F6h, 3, 3Bh, 0F8h, 77h, 1, 0C3h, 0E8h, 0E6h, 0F8h, 0E9h, 52h, 0F8h, 51h, 56h
-	db	53h, 52h, 0E8h, 0DCh, 0F8h, 5Ah, 5Bh, 5Eh, 59h, 0B0h, 9Ch, 8Ah, 0E2h, 80h, 0E4h, 1
-	db	0Ah, 0C4h, 0A2h, 3Dh, 50h, 0E8h, 0F0h, 0, 0EBh, 87h
+	db	0ABh, 0C3h
+	push	ax	;@14C4F
+	mov	al, 88h	;@14C50
+	call	L14F05	;@14C52
+	mov	al, 40h	;@14C55
+	stosb	;@14C57
+	mov	al, 0A0h	;@14C58
+	stosb	;@14C5A
+	mov	ax, 2	;@14C5B
+	stosw	;@14C5E
+	pop	ax	;@14C5F
+	call	L14EE6	;@14C60
+	xor	al, al	;@14C63
+	stosb	;@14C65
+	jmp	L14E7B	;@14C66
+	push	ax	;@14C69
+	push	di	;@14C6A
+	mov	al, 90h	;@14C6B
+	or	dx, dx	;@14C6D
+	je	@@1	;@14C6F
+	or	al, 1	;@14C71
+@@1:	call	L14F05	;@14C73
+	pop	ax	;@14C76
+	call	L14ED8	;@14C77
+	mov	ax, si	;@14C7A
+	call	L14ED8	;@14C7C
+	or	ax, ax	;@14C7F
+	jne	@@2	;@14C81
+	stosw	;@14C83
+@@2:	pop	ax	;@14C84
+	call	L14EE6	;@14C85
+	mov	ax, bx	;@14C88
+	stosw	;@14C8A
+	or	dx, dx	;@14C8B
+	je	@@3	;@14C8D
+	mov	ax, dx	;@14C8F
+	stosw	;@14C91
+@@3:	xor	al, al	;@14C92
+	stosb	;@14C94
+	jmp	L14E7B	;@14C95
+	db	50h, 57h, 0B0h, 0B6h, 0EBh, 0CFh, 88h, 0Eh, 60h, 50h, 8Bh, 0F0h	;@14C98
+	db	6, 89h, 16h, 58h, 50h, 0B0h, 0A2h, 0Ah, 0C1h, 0E8h, 55h, 2, 8Bh
+	db	0C2h
+	call	L14ED8	;@14CB2
+	mov	ax, bx	;@14CB5
+	stosw	;@14CB7
+	and	cl, cl	;@14CB8
+	je	@@4	;@14CBA
+	mov	ax, si	;@14CBC
+	stosw	;@14CBE
+@@4:	mov	word ptr ds:[505Ah], di	;@14CBF
+	mov	word ptr ds:[5042h], di	;@14CC3
+	pop	es	;@14CC7
+	ret	;@14CC8
+	db	8Ch, 0C3h, 0C4h, '>BP', 0ABh, 80h, '>`P', 0, 74h, 3, 8Bh, 0C2h	;@14CC9
+	db	0ABh, 8Bh, 0C1h, 0ABh, 89h, '>BP', 8Eh, 0C3h, 0C3h, 8Ch, 0DAh
+	db	8Ch, 0C3h, 0C4h, '>BP', 8Eh, 0DBh, 0B8h, 1, 0, 0ABh, 33h, 0C0h
+	db	36h, 80h, '>`P', 0, 74h, 1, 0ABh, 0ABh, 8Ah, 0C1h, 0AAh, 0F3h
+	db	0A4h, 8Eh, 0DAh, 89h, '>BP', 8Eh, 0C3h, 0C3h, 8Ch, 0C3h, 0C4h
+	db	'>BP', 0B8h, 1, 0, 0ABh, 33h, 0C0h, 80h, '>`P', 0, 74h, 1, 0ABh
+	db	0ABh, 8Ah, 0C1h, 0AAh, 32h, 0C0h, 0F3h, 0AAh, 89h, '>BP', 8Eh
+	db	0C3h, 0C3h, 6, 0C4h, '>BP', 0E8h, 44h, 1, 7, 0C3h, 89h, 16h, 58h
+	db	50h, 8Bh, 0F0h, 32h, 0C9h, 23h, 0F6h, 74h, 3, 80h, 0C9h, 1, 0B0h
+	db	0A0h, 0Ah, 0C1h, 0E8h, 0B6h, 1, 0A1h, 58h, 50h, 0E8h, 83h, 1, 8Bh
+	db	0C3h, 0ABh, 22h, 0C9h, 74h, 3, 8Bh, 0C6h, 0ABh, 89h, '>ZP', 0C3h
+	db	36h, 3, '>ZP', 0F3h, 0A4h, 0C3h, 3, '>ZP', 0E9h, 8, 1, 80h, '>`P'
+	db	0, 75h, 7, 0BBh, 5, 0, 0B8h, 4, 0, 0C3h, 0BBh, 7, 0, 0B8h, 6, 0
+	db	0C3h, 57h, 80h, '>=P', 0, 74h, 76h, 8Ah, 0C2h, 32h, 6, '=P$', 1
+	db	75h, 61h, 0C4h, '>BP', 80h, 0E2h, 0FEh, 80h, 0CFh, 80h, 0Ah, 0FAh
+	db	8Bh, 0C3h, 86h, 0C4h, 0ABh, 5Bh, 3Ah, 0CDh, 75h, 4, 3Bh, 0F3h
+	db	74h, 1Dh, 8Ah, 0C1h, 0B1h, 4, 0D2h, 0E0h, 0Ah, 0C5h, 0Ch, 4, 0AAh
+	db	8Bh, 0C6h, 3Dh, 7Fh, 0, 77h, 3, 0AAh, 0EBh, 6, 80h, 0CCh, 80h
+	db	86h, 0E0h, 0ABh, 0EBh, 5, 8Ah, 0C5h, 0Ch, 54h, 0AAh, 8Bh, 0C3h
+	db	3Dh, 7Fh, 0, 77h, 3, 0AAh, 0EBh, 6, 80h, 0CCh, 80h, 86h, 0E0h
+	db	0ABh, 89h, '>BP', 0A1h, 46h, 50h, 5, 0F6h, 3, 3Bh, 0F8h, 77h, 1
+	db	0C3h, 0E8h, 0E6h, 0F8h, 0E9h, 52h, 0F8h, 'QVSR', 0E8h, 0DCh, 0F8h
+	db	'Z[^Y', 0B0h, 9Ch, 8Ah, 0E2h, 80h, 0E4h, 1, 0Ah, 0C4h, 0A2h, 3Dh
+	db	50h, 0E8h, 0F0h, 0, 0EBh, 87h
 L14E17:	mov	al, 88h	;@14E17
 	call	L14F05	;@14E19
 	xor	ax, ax	;@14E1C

@@ -12,7 +12,7 @@ for byte.
 |---|---|
 | The original | `BIN/TASMX.EXE` of Borland C++ 2.0, 109,234 bytes, SHA-256 `d1cf3399545b567c58e30b18fa5cfa53c513f8c0bc7159e3def7e819b8e8d2cc` |
 | Build | **byte-identical** to the original |
-| Source | the generated first draft: [STUB.ASM](src/STUB.ASM) (the DOS stub, decoded) and [TASMX.ASM](src/TASMX.ASM) (the protected-mode assembler). TASMX.ASM is decoded only as far as the generator traced it from the entry point and the far calls; most of it is still bytes. It has no names and no comments. |
+| Source | the generated first draft: [STUB.ASM](src/STUB.ASM) (the DOS stub, decoded) and [TASMX.ASM](src/TASMX.ASM) (the protected-mode assembler). TASMX.ASM is decoded as far as the generator traced it from the entry point, the far calls, and 295 routine starts found by matching [../tasm20/](../tasm20/)'s routines (tools/gen/xentries.json); about one line in six is still bytes. It has no names and no comments. |
 
 ## Building
 

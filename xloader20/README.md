@@ -76,8 +76,9 @@ How they are built:
 The sources are a first draft, thinner than the loaders':
 - The selectors are plain numbers, because the binding tool left no relocation table to show
   where they are.
-- **TLINKX.OVY:** decoded only as far as the generator traced it from the entry point. Its
-  main segment is the TLINK core rebuilt for protected mode, close to
+- **TLINKX.OVY:** decoded from the entry point and from 214 routine starts found by matching
+  [../tlink20/](../tlink20/)'s core (tools/gen/ovy_entries.json); 150 of them carry their
+  tlink20 names. Its main segment is the TLINK core rebuilt for protected mode, close to
   [../tlink20/](../tlink20/)'s source but not the same bytes.
 - **BCCX.OVY:** still all bytes, in 17 modules, because one file is too big for TASM. Its
   code is the C compiler, overlaid.

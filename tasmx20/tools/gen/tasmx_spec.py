@@ -16,3 +16,4 @@ for _k in range(_n):
     _o,_s=_st.unpack_from('<HH',_d,0x1C+4*_k); _r=_s*16+_o
     if _r>=3 and _img[_r-3] in (0x9a,0xea):
         _oo,_sv=_st.unpack_from('<HH',_img,_r-2); ENTRIES.append(_sv*16+_oo)
+ENTRIES+=__import__('json').load(open('/private/tmp/claude-501/-Users-jonw-turbocpp/2beb636e-51d3-4acf-9478-abaf68a73e88/scratchpad/tsx/xentries.json'))
