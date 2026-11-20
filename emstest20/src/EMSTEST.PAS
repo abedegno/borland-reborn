@@ -1,3 +1,4 @@
+{$P512}
 program EmsTest;
 
 type
@@ -6,6 +7,10 @@ type
 
   IntPtr = ^integer;
   PageArr = array[1..$2000] of integer;
+  Name8 = array[1..8] of char;
+  HandleRec = record
+    Handle, Pages: integer;
+  end;
   PagePtr = ^PageArr;
   VecPtr = ^IntPtr;
   RegType = record
@@ -17,16 +22,20 @@ type
 const
   Ext: string[3] = 'COM';
 var
-  Fill0: array[0..$1FF] of byte;
   Page: array[0..3] of PagePtr;
-  FillA: array[0..9] of byte;
+  LogPage: array[0..3] of integer;
+  WinSeg: integer;
   NumPages: integer;
-  FillB: array[0..1] of byte;
+  FreeBefore: integer;
   Handle: integer;
-  Fill1: array[0..$3FF] of byte;
+  HandleMap: array[1..256] of HandleRec;
   Regs: RegType;
-  Fill2: array[0..5] of byte;
+  I: integer;
+  J: integer;
+  K: integer;
   Ch: char;
+  F: file of PageArr;
+  NamePtr: ^Name8;
 
 function Avail: integer;
 begin
@@ -263,5 +272,226 @@ begin
     Quit;
 end;
 
+procedure PartOne;
+
+  function Version: byte;
+  begin
+    if StatusOk(EmsCall($46, Regs)) then
+      Version := Regs.AL
+    else
+      Quit;
+  end;
+
+  function TotalPages: integer;
+  begin
+    if StatusOk(EmsCall($42, Regs)) then
+      TotalPages := Regs.DX
+    else
+      Quit;
+  end;
+
+  function EmsInstalled: boolean;
+  begin
+    EmsInstalled := true;
+    if Seg(Int67Vec^^) = 0 then
+    begin
+      EmsInstalled := false;
+      Writeln('Expanded Memory Manager Interrupt (INT 67H) not installed.');
+    end
+    else if EmsCall($40, Regs) = 0 then
+    begin
+      NamePtr := Ptr(Seg(Int67Vec^^), $000A);
+      if NamePtr^ <> 'EMMXXXX0' then
+      begin
+        EmsInstalled := false;
+        Writeln('Invalid Expanded Memory Manager Device Name ("', NamePtr^, '").');
+      end;
+    end
+    else
+    begin
+      EmsInstalled := false;
+      if Regs.AH <> $40 then
+      begin
+        if StatusOk(Regs.AH) then ;
+      end
+      else
+        Writeln('Expanded Memory Manager Software not found.');
+    end;
+  end;
+
+  procedure ShowHandles;
+
+    function HandlePages(var Map): integer;
+    begin
+      Regs.ES := Seg(Map);
+      Regs.DI := Ofs(Map);
+      Regs.BX := 0;
+      if StatusOk(EmsCall($4D, Regs)) then
+        HandlePages := Regs.BX
+      else
+        Quit;
+    end;
+
+  begin
+    Writeln;
+    Writeln('Process ID   Pages allocated');
+    Writeln('----------------------------');
+    for I := 1 to HandlePages(HandleMap) do
+      Writeln(Hex(HandleMap[I].Handle, 2):7, HandleMap[I].Pages:11, ' (', 16 * HandleMap[I].Pages:4, 'k)');
+    Writeln('   Free', FreePageCount:11, ' (', 16 * FreePageCount:4, 'k)');
+    Writeln('----------------------------');
+  end;
+
 begin
+  Writeln('  PART ONE - EMS DETECTION');
+  Writeln('  ------------------------');
+  Writeln;
+  if EmsInstalled then
+    Writeln('Expanded Memory Manager version ', Version, '.')
+  else
+  begin
+    Writeln('Expanded Memory not found or unusable - Program halted.');
+    Quit;
+  end;
+  Writeln;
+  Writeln('INT 67 Handler Address: ', Hex(Seg(Int67Vec^^), 2), ':', Hex(Ofs(Int67Vec^^), 2));
+  Writeln('Window Segment Address: ', Hex(FrameSeg, 2));
+  Writeln('Total no. of Pages    : ', TotalPages:4, ' (', 16 * TotalPages:4, 'k)');
+  ShowHandles;
+end;
+
+procedure PartTwo;
+begin
+  Writeln('  PART TWO - BASIC EMS FUNCTIONS');
+  Writeln('  ------------------------------');
+  Writeln;
+  if FreePageCount < 4 then
+    Fatal('< 4 pages of Expanded Memory free');
+  FreeBefore := FreePageCount;
+  WinSeg := FrameSeg;
+  Page[0] := Ptr(WinSeg, 0);
+  Page[1] := Ptr(WinSeg + 1 * ($2000 div 8), 0);
+  Page[2] := Ptr(WinSeg + 2 * ($2000 div 8), 0);
+  Page[3] := Ptr(WinSeg + 3 * ($2000 div 8), 0);
+  NumPages := Min($80, FreeBefore);
+  Write('Allocating ' + IntStr(NumPages, 0) + ' pages EMS memory: ':38);
+  NumPages := Allocate(NumPages);
+  Report(NumPages = FreeBefore - FreePageCount, 'Memory allocation failure');
+  Writeln('EMS handle (Process ID): ':38, Hex(Handle, 2));
+  Write('Saving page map and map window: ':38);
+  SaveMap;
+  Report(true, '');
+  Write('Initializing ' + IntStr(NumPages, 0) + ' pages: ':38);
+  for J := 0 to Pred(NumPages) do
+  begin
+    Write(J:3);
+    FillPage(Random(4), J);
+    Write(#8#8#8);
+  end;
+  Writeln('OK.');
+  Write('Checking ' + IntStr(NumPages, 0) + ' pages: ':38);
+  for J := 0 to Pred(NumPages) do
+  begin
+    Write(J:3);
+    if not MapAndCheck(Random(4), J) then
+      Fatal('Page corrupted');
+    Write(#8#8#8);
+  end;
+  Writeln('OK.');
+  Write('Restoring page map: ':38);
+  RestoreMap;
+  Report(true, '');
+  Write('De-allocating ' + IntStr(NumPages, 0) + ' pages EMS memory: ':38);
+  Deallocate;
+  Report(FreePageCount = FreeBefore, 'Memory de-allocation failure');
+end;
+
+procedure PartThree;
+begin
+  Writeln('  PART THREE - EMS I/O FUNCTIONS');
+  Writeln('  ------------------------------');
+  Writeln;
+  Write('Allocating ' + IntStr(NumPages, 0) + ' pages EMS memory: ':38);
+  NumPages := Allocate(NumPages);
+  Report(NumPages = FreeBefore - FreePageCount, 'Memory allocation failure');
+  Writeln('EMS handle (Process ID): ':38, Hex(Handle, 2));
+  Write('Saving page map and map window: ':38);
+  SaveMap;
+  Report(true, '');
+  Write('Initializing ' + IntStr(NumPages, 0) + ' pages: ':38);
+  for J := 0 to Pred(NumPages) do
+  begin
+    Write(J:3);
+    FillPage(Random(4), J);
+    Write(#8#8#8);
+  end;
+  Writeln('OK.');
+  Write('Creating temp file EMSTEST.$$$: ':38);
+  Assign(F, 'EMSTEST.$$$');
+  Rewrite(F);
+  Report(true, '');
+  Write(IntStr(250, 0) + ' random EMS I/O with disk access: ':38);
+  for K := 0 to 3 do
+  begin
+    LogPage[K] := Random(NumPages);
+    MapPage(K, LogPage[K]);
+    Seek(F, K);
+    Write(F, Page[K]^);
+    if not CheckPage(K, LogPage[K]) then
+      Fatal('Page corrupted [0]');
+  end;
+  for I := 1 to 250 do
+  begin
+    Write(I:4, '/1');
+    K := Random(3);
+    if not CheckPage(K, LogPage[K]) then
+      Fatal('Page corrupted [1]');
+    Write(#8'2');
+    LogPage[K] := Random(NumPages);
+    MapPage(K, LogPage[K]);
+    if not CheckPage(K, LogPage[K]) then
+      Fatal('Page corrupted [2]');
+    Write(#8'3');
+    Seek(F, K);
+    Write(F, Page[K]^);
+    if not CheckPage(K, LogPage[K]) then
+      Fatal('Page corrupted [3]');
+    Write(#8'4');
+    K := Random(3);
+    if not CheckPage(K, LogPage[K]) then
+      Fatal('Page corrupted [4]');
+    Write(#8'5');
+    Seek(F, K);
+    Read(F, Page[K]^);
+    if not CheckPage(K, LogPage[K]) then
+      Fatal('Page corrupted [5]');
+    Write(#8#8#8#8#8#8);
+  end;
+  Report(true, '');
+  Write('Erasing temp file EMSTEST.$$$: ':38);
+  Close(F);
+  Erase(F);
+  Report(true, '');
+  Write('Restoring page map: ':38);
+  RestoreMap;
+  Report(true, '');
+  Write('De-allocating ' + IntStr(NumPages, 0) + ' pages EMS memory: ':38);
+  Deallocate;
+  Report(FreePageCount = FreeBefore, 'Memory de-allocation failure');
+end;
+
+begin
+  Writeln('ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿');
+  Writeln('³ Borland C++ EMS Test Program Version 2.0      ³');
+  Writeln('³ Copyright (C) 1991 Borland International Inc. ³');
+  Writeln('ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ');
+  Writeln;
+  Handle := -1;
+  PartOne;
+  if AskContinue then
+  begin
+    PartTwo;
+    if AskContinue then
+      PartThree;
+  end;
 end.

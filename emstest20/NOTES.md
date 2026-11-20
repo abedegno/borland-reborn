@@ -12,5 +12,14 @@ compiler's runtime-address immediates lowered by 14), documented as a native dif
   EMSTEST.COM's (from 2C3Fh), accepting words that differ by exactly 14.
 - tools/PROBE.PAS: maps runtime call targets to builtins (3.02A address - 14 = EMSTEST's
   for targets at 315h and above).
-- src/EMSTEST.PAS: matches through the first 40% of the program part (to 39FEh: the EMS wrappers, page fill/check, map save/restore); globals placed with filler arrays (Fill0..Fill2, FillA, FillB) until all are known.
-- tools/outline.py START END: disassembles EMSTEST between two addresses, with inline strings and known routine names.
+- src/EMSTEST.PAS: complete. Built with stock TP 3.02A (`tools/tp3c.sh EMSTEST 8 'A1000\r'`:
+  compiler options Com-file, mAximum free dynamic memory 1000h), its program part equals
+  EMSTEST.COM's except for the 14-byte runtime shift (tools/emscmp.py: MATCH). It needs
+  {$P512} (a 512-byte output buffer, which is why the globals start at 462h).
+- The parameter block after the start-up call still differs in three words: 4DEh against 4DDh
+  (follows from the runtime's size; the patched compiler gives it), and 0087h/0A4Bh against
+  47C9h/518Ch (segment values from the compile: where TURBO.COM was loaded on the machine that
+  built it; Borland's own 1985 programs carry other values of the same kind).
+- Next: the patched compiler (runtime without the window check, the compiler's runtime
+  addresses and program origin lowered by 14) and the build script.
+- tools/outline.py, tools/outline2.py START END: disassemble EMSTEST between two addresses, with inline strings and routine names.
