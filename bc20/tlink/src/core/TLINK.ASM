@@ -12558,7 +12558,9 @@ L081C3:	push	ax	;@081C3
 	pop	bx	;@08224
 	pop	ax	;@08225
 	ret	;@08226
-L08227:	push	bx	;@08227
+; OVERLAY_DATA_SIZE: the size of the overlay data in DX:AX, 16 times the paragraphs of the last
+; overlay segment record (404h), or 0 with no overlays.
+OVERLAY_DATA_SIZE:	push	bx	;@08227
 	push	cx	;@08228
 	mov	bx, word ptr ds:[404h]	;@08229
 	cmp	bx, -1	;@0822D
@@ -12581,12 +12583,14 @@ L08227:	push	bx	;@08227
 @@2:	pop	cx	;@08258
 	pop	bx	;@08259
 	ret	;@0825A
-L0825B:	push	si	;@0825B
+; WRITE_FBOV_HEADER: build the overlay block's header at 662h: 'FBOV', the overlay data's size,
+; and the place of the segment table.
+WRITE_FBOV_HEADER:	push	si	;@0825B
 	push	di	;@0825C
 	mov	di, 662h	;@0825D
 	mov	word ptr [di], 4246h	;@08260
 	mov	word ptr [di+2], 564Fh	;@08264
-	call	L08227	;@08269
+	call	OVERLAY_DATA_SIZE	;@08269
 	mov	word ptr [di+4], ax	;@0826C
 	mov	word ptr [di+6], dx	;@0826F
 	mov	dx, word ptr ds:[40Ah]	;@08272
@@ -12646,7 +12650,7 @@ L082C2:	push	si	;@082C2
 	jae	@@3	;@08304
 	mov	es, word ptr ds:[79Eh]	;@08306
 	jmp	@@2	;@0830A
-@@3:	call	L0825B	;@0830C
+@@3:	call	WRITE_FBOV_HEADER	;@0830C
 @@4:	pop	di	;@0830F
 	pop	si	;@08310
 	ret	;@08311
@@ -13257,7 +13261,8 @@ L08979:	push	bx	;@08979
 	call	far ptr HEAP_MODE_SET_BITS56	;@08997
 	pop	bx	;@0899C
 	ret	;@0899D
-L0899E:	push	ax	;@0899E
+; ADDRESS_TO_COM_OFFSET: a segment (DX) and offset (CX) made linear, then as COM_OFFSET.
+ADDRESS_TO_COM_OFFSET:	push	ax	;@0899E
 	push	cx	;@0899F
 	push	dx	;@089A0
 	xchg	ax, cx	;@089A1
@@ -13268,7 +13273,7 @@ L0899E:	push	ax	;@0899E
 	xor	dx, cx	;@089AB
 	add	ax, cx	;@089AD
 	adc	dl, dh	;@089AF
-	jmp	short L089C0	;@089B1
+	jmp	short COM_OFFSET	;@089B1
 ; COM_DATA_BELOW_ENTRY: a COM file may have no data below 100h.
 COM_DATA_BELOW_ENTRY:	xor	ax, ax	;@089B3
 	push	ax	;@089B5
@@ -13278,7 +13283,9 @@ COM_DATA_BELOW_ENTRY:	xor	ax, ax	;@089B3
 L089BD:	push	ax	;@089BD
 	push	cx	;@089BE
 	push	dx	;@089BF
-L089C0:	sub	ax, word ptr ds:[0C33h]	;@089C0
+; COM_OFFSET: the linear address DX:AX as an offset in a COM file: less the entry offset (C33h);
+; below it is "Cannot generate COM file: data below initial CS:IP".
+COM_OFFSET:	sub	ax, word ptr ds:[0C33h]	;@089C0
 	sbb	dx, 0	;@089C4
 	jb	COM_DATA_BELOW_ENTRY	;@089C7
 	mov	bx, 0E000h	;@089C9
@@ -13344,7 +13351,7 @@ L08A4F:	mov	word ptr ds:[3456h], ds	;@08A4F
 L08A59:	push	ax	;@08A59
 	push	bx	;@08A5A
 	push	cx	;@08A5B
-@@1:	call	L0899E	;@08A5C
+@@1:	call	ADDRESS_TO_COM_OFFSET	;@08A5C
 	push	ds	;@08A5F
 	lds	bx, dword ptr ds:[3454h]	;@08A60
 	mov	ds, word ptr [bx]	;@08A64
