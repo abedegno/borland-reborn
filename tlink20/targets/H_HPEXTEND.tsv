@@ -1,0 +1,2 @@
+# segment H_HPEXTEND base 0xE6F0 size 0x85 org 0xE2F0
+EXTEND_HEAP	EXTEND_HEAP	0x0	0x85

@@ -1,0 +1,2 @@
+# segment R_RMSET base 0xD297 size 0x2E org 0xCE97
+RTL_MEMSET	RTL_MEMSET	0x0	0x2E

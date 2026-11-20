@@ -1,0 +1,2 @@
+# segment H_RT2F09 base 0xF534 size 0x1A org 0xF134
+RESOLVE_HANDLE_FAR	RT2F09	0x0	0x1A

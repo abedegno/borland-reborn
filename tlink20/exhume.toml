@@ -1,0 +1,28 @@
+[project]
+name = "Borland C++ 2.0 TLINK.EXE source reconstruction"
+root = "."
+src = "src"
+targets = "targets"
+symbols = "symbols.tsv"
+matched = "matched.txt"
+map = "map"
+build = "build"
+queue = "queue"
+
+[binary]
+exe = "toolchain/BC20/BIN/TLINK.EXE"
+# the MZ header is 0x400 bytes; the C modules and the heap address their data in segment 113Dh
+dgroup_para = 0x113D
+
+[toolchain]
+profile = "borland-bc20"
+home = "toolchain/BC20"
+stage = ["toolchain/BC20/BIN", "toolchain/BC20/INCLUDE"]
+c_opts = "-mm -G -O -Z -p"
+asm_opts = "/ml"
+dos = "auto"
+
+[toolchain.compilers.TC201]
+stage = ["toolchain/TC201/BIN", "toolchain/TC201/INCLUDE", "toolchain/BC20/BIN/TASM.EXE"]
+c_command = "TCC -c {opts} -IC:\\ {file}"
+

@@ -1,0 +1,2 @@
+# segment R_RMMOVE base 0xD344 size 0x55 org 0xCF44
+RTL_MEMMOVE	RTL_MEMMOVE	0x0	0x55

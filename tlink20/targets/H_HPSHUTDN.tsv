@@ -1,0 +1,2 @@
+# segment H_HPSHUTDN base 0xF3BB size 0x20 org 0xEFBB
+SHUTDOWN_HEAP_BANKS	RH2D67	0x0	0x20

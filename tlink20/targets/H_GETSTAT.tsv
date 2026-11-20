@@ -1,0 +1,2 @@
+# segment H_GETSTAT base 0xF3DB size 0xF org 0xEFDB
+BCC_READ_STATUS	GETSTAT	0x0	0xF

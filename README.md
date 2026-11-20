@@ -23,6 +23,7 @@ wrong.
 | [`thelp20/`](thelp20/) | **Borland C++ 2.0** (1991), `THELP.COM` 2.0, the help TSR (assembler) | Complete: rebuilds byte-identical (SHA-256 `f2559182...`) |
 | [`trancopy20/`](trancopy20/) | **Borland C++ 2.0** (1991), `TRANCOPY.EXE` 2.0, the copier of the IDE's Transfer menu (C++) | Complete: rebuilds byte-identical (SHA-256 `bb66a1e9...`) |
 | [`tkinst20/`](tkinst20/) | **Borland C++ 2.0** (1991), `TKINST.EXE` 2.0, the installer of the protected-mode kernel (C and assembler) | Complete: rebuilds byte-identical (SHA-256 `6f84a44c...`; header padded after the link) |
+| [`tlink20/`](tlink20/) | **Borland C++ 2.0** (1991), `TLINK.EXE` 4.0, the linker (assembler, C and the far-memory heap) | Rebuilds byte-identical (SHA-256 `81701462...`); the assembler core is still a generated draft (address labels, no comments) |
 | [`interim-rtl/`](interim-rtl/) | the run-time library Borland linked its own 1990-91 utilities with | The modules no released library has, as C (used by `tlib20` and `make20`) |
 | [`bcc20-port/`](bcc20-port/) | `BCC.EXE` as a native compiler and library, for decompiling Borland-built games | Complete: every function checked against BCC.EXE; 1874 of 1880 corpus compiles identical; native binaries and a library |
 

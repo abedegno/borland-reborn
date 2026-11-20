@@ -1,0 +1,2 @@
+# segment H_HPUNFXLO base 0xDAC0 size 0x55 org 0xD6C0
+UNFIX_LOW_NODE	UNFIX_LOW_NODE	0x0	0x55

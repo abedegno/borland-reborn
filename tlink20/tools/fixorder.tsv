@@ -1,0 +1,15 @@
+# Fixup order for tools/fixorder.py: object stem, then every fixup of the object as a data
+# offset (hex, from the start of its code segment), in the order TLINK must see them.
+#
+# HPSHRINK (src/heap/HPSHRINK.C, image 0xE4D8..0xE5BD). TLINK.EXE's relocation table lists
+# entries #119-#122 as E507h (SHRINK_HEAP_FULLY's far call to SHRINK_HEAP_TO,
+# (fixup at offset 2Dh, its segment word at 2Fh), then E4DDh, E4FCh and E514h (the DGROUP loads at 5h, 24h and 3Ch).
+# The file is compiled through TASM 2.51 (-B -TjNOSMART), which gives every byte and writes
+# the fixups as 5h, 24h, 3Ch, 2Dh. The same module and the same order are in BCC.EXE and
+# CPP.EXE; cpp20 (tools/fixorder.tsv and docs/FINDINGS.md there) tested Turbo C 2.01, BC 2.0,
+# Turbo C++ 1.01, TASM 1.0/2.0/2.51 and TLINK 3.0/4.0, and no source gives the order:
+# TASM only puts a far call first when its target is declared before the call, and here the
+# target is a later function of the same file. Split files cannot give it either (TLINK
+# keeps object order). Only the far call moves; the other fixups keep TASM's order.
+
+HPSHRINK	2D 5 24 3C B 13 17 1A 48 4C 50 56 59 5D 62 6E 72 76 79 80 8A 8E 91 95 BB CA D2 D5 D8 DC
