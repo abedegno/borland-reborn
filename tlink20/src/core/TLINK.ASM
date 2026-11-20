@@ -3568,7 +3568,7 @@ P2_THEADR:	cmp	byte ptr ds:[492h], 0	;@02608
 	mov	word ptr ds:[3E0h], di	;@026AF
 	cmp	bl, 8Ah	;@026B3
 	jne	@@3	;@026B6
-	jmp	L03CE3	;@026B8
+	jmp	MODEND_START	;@026B8
 ; LOOKUP_NAME_SKIP: look up the name at SI (NAME_LOOKUP_COPY) and step SI past it;
 ; returns the entry in AX.
 LOOKUP_NAME_SKIP:	push	di	;@026BB
@@ -5620,10 +5620,10 @@ FIXUP_OVERFLOW:	push	dx	;@0391A
 	call	ERROR	; "Fixup overflow at %s, target = %s"	;@039E1
 	pop	si	;@039E4
 	pop	dx	;@039E5
-	jmp	short L03A32	;@039E6
+	jmp	short RETURN_CARRY	;@039E6
 ; UNDEFINED_SYMBOL: report an external no module defines.
 UNDEFINED_SYMBOL:	test	byte ptr es:[bx+0Eh], 40h	;@039E8
-	jne	L03A32	;@039ED
+	jne	RETURN_CARRY	;@039ED
 	or	byte ptr es:[bx+0Eh], 40h	;@039EF
 	mov	bx, word ptr ds:[218h]	;@039F4
 	push	bx	;@039F8
@@ -5652,9 +5652,12 @@ UNDEFINED_SYMBOL:	test	byte ptr es:[bx+0Eh], 40h	;@039E8
 	call	ERROR	; "Undefined symbol %s"	;@03A2D
 	pop	si	;@03A30
 	pop	bx	;@03A31
-L03A32:	stc	;@03A32
+; RETURN_CARRY: return with carry set (after "Undefined symbol").
+RETURN_CARRY:	stc	;@03A32
 	ret	;@03A33
-L03A34:	push	ax	;@03A34
+; COMPARE_DEBUG_KEYS: the sort comparison for debug entries: the words at ES:SI and ES:DI
+; (segment 375h), equal keys ordered by address.
+COMPARE_DEBUG_KEYS:	push	ax	;@03A34
 	push	es	;@03A35
 	mov	es, word ptr ds:[375h]	;@03A36
 	mov	ax, word ptr es:[si]	;@03A3A
@@ -5664,7 +5667,9 @@ L03A34:	push	ax	;@03A34
 @@1:	pop	es	;@03A44
 	pop	ax	;@03A45
 	ret	;@03A46
-L03A47:	push	bp	;@03A47
+; FINISH_MODULE_DEBUG: at the end of a module with debug information: sort its entries and
+; fill in the module's record at 2A0h (counts of its symbols, scopes and lines).
+FINISH_MODULE_DEBUG:	push	bp	;@03A47
 	call	SORT_DEBUG_ENTRIES	;@03A48
 	mov	bx, 2A0h	;@03A4B
 	mov	di, 4D8h	;@03A4E
@@ -5725,7 +5730,7 @@ L03A47:	push	bp	;@03A47
 	cmp	cx, 1	;@03AEC
 	jbe	@@7	;@03AEF
 	shl	cx, 1	;@03AF1
-	mov	bp, offset L03A34	;@03AF3
+	mov	bp, offset COMPARE_DEBUG_KEYS	;@03AF3
 	mov	es, word ptr ds:[379h]	;@03AF6
 	call SORT	;@03AFA
 @@7:	mov	ax, word ptr ds:[4F6h]	;@03AFD
@@ -5797,7 +5802,7 @@ L03A47:	push	bp	;@03A47
 	loop	@@15	;@03B9F
 	pop	cx	;@03BA1
 	push	cx	;@03BA2
-	mov	bp, offset L0441E	;@03BA3
+	mov	bp, offset COMPARE_KEYS	;@03BA3
 	shl	cx, 1	;@03BA6
 	mov	es, word ptr ds:[3B8h]	;@03BA8
 	call SORT	;@03BAC
@@ -5861,10 +5866,10 @@ P2_MODEND:	inc	byte ptr ds:[492h]	;@03C2A
 	mov	al, byte ptr [si]	;@03C31
 	cmp	al, 0C1h	;@03C33
 	je	@@1	;@03C35
-	jmp	L03CD9	;@03C37
+	jmp	MODEND_DEBUG	;@03C37
 @@1:	cmp	word ptr ds:[4B0h], -1	;@03C3A
 	je	@@2	;@03C3F
-	jmp	L03CD9	;@03C41
+	jmp	MODEND_DEBUG	;@03C41
 @@2:	inc	si	;@03C44
 	mov	dx, 0CC00h	;@03C45
 	call	DECODE_FIXUP	;@03C48
@@ -5916,17 +5921,19 @@ COM_BAD_ENTRY:	xor	ax, ax	;@03CB9
 	call FATAL	; "Cannot generate COM file : invalid initial entry point address"	;@03CC0
 ; BAD_ENTRY_OFFSET: the start address is outside its segment.
 BAD_ENTRY_OFFSET:	cmp	word ptr ds:[420h], 0	;@03CC3
-	je	L03CD9	;@03CC8
+	je	MODEND_DEBUG	;@03CC8
 	xor	ax, ax	;@03CCA
 	push	ax	;@03CCC
 	mov	ax, 29h	;@03CCD
 	push	ax	;@03CD0
 	call ERROR	; "Invalid entry point offset"	;@03CD1
 	or	byte ptr ds:[410h], 1	;@03CD4
-L03CD9:	cmp	byte ptr ds:[14h], 0	;@03CD9
-	je	L03CE3	;@03CDE
-	call	L03A47	;@03CE0
-L03CE3:	cmp	byte ptr ds:[3D2h], 1	;@03CE3
+; MODEND_DEBUG: (pass 2, MODEND) finish the module's debug information when it has any (14h).
+MODEND_DEBUG:	cmp	byte ptr ds:[14h], 0	;@03CD9
+	je	MODEND_START	;@03CDE
+	call	FINISH_MODULE_DEBUG	;@03CE0
+; MODEND_START: (pass 2, MODEND) the module's start address, if it gives one.
+MODEND_START:	cmp	byte ptr ds:[3D2h], 1	;@03CE3
 	jb	@@4	;@03CE8
 	je	@@1	;@03CEA
 	mov	di, word ptr ds:[3E2h]	;@03CEC
@@ -5963,7 +5970,9 @@ L03CE3:	cmp	byte ptr ds:[3D2h], 1	;@03CE3
 	adc	si, ax	;@03D35
 	jmp NEXT_RECORD	;@03D37
 @@4:	ret	;@03D3A
-L03D3B:	push	si	;@03D3B
+; WRITE_LINE_NUMBERS: the line numbers of a LINNUM record (4 bytes each), written to the debug
+; information; opens a scope entry first if the module has none (39Bh).
+WRITE_LINE_NUMBERS:	push	si	;@03D3B
 	cmp	word ptr ds:[39Bh], -1	;@03D3C
 	jne	@@1	;@03D41
 	push	ax	;@03D43
@@ -6104,7 +6113,7 @@ P2_LINNUM:	cmp	byte ptr ds:[3478h], 0	;@03E14
 	push	bx	;@03E95
 	push	si	;@03E96
 	push	bp	;@03E97
-	call	L03D3B	;@03E98
+	call	WRITE_LINE_NUMBERS	;@03E98
 	pop	bp	;@03E9B
 	pop	si	;@03E9C
 	pop	bx	;@03E9D
@@ -6248,10 +6257,13 @@ APPLY_FIXUPS:	push	si	;@03F9B
 	pop	cx	;@03FF2
 	pop	bp	;@03FF3
 	ret	;@03FF4
-L03FF5:	add	di, word ptr ds:[3E8h]	;@03FF5
+; OVERLAY_ENTRY_AT, OVERLAY_ENTRY: add an entry to the current overlay segment's table of
+; entry points (counted at +11h of its record); OVERLAY_ENTRY_AT first keeps the place
+; (DI plus 3E8h) in 660h.
+OVERLAY_ENTRY_AT:	add	di, word ptr ds:[3E8h]	;@03FF5
 	mov	word ptr ds:[660h], di	;@03FF9
 	sub	di, word ptr ds:[3E8h]	;@03FFD
-L04001:	push	es	;@04001
+OVERLAY_ENTRY:	push	es	;@04001
 	push	si	;@04002
 	push	di	;@04003
 	push	ax	;@04004
@@ -6492,7 +6504,7 @@ P2_FIXUPP:	jmp	@@16	;@040D5
 	mov	es, word ptr ds:[79Eh]	;@04261
 @@28:	cmp	dx, -1	;@04265
 	je	@@32	;@04268
-	mov	word ptr ds:[222h], offset L03FF5	;@0426A
+	mov	word ptr ds:[222h], offset OVERLAY_ENTRY_AT	;@0426A
 	test	byte ptr ds:[215h], 4	;@04270
 	je	@@30	;@04275
 @@29:	cmp	bx, word ptr es:[si+4]	;@04277
@@ -6542,7 +6554,9 @@ P2_FIXUPP:	jmp	@@16	;@040D5
 	jmp	@@33	;@042F0
 @@36:	call	APPLY_FIXUPS	;@042F2
 	jmp	@@16	;@042F5
-L042F8:	push	bp	;@042F8
+; START_DATA_RECORD: set up for a data record of segment entry BX (AX: its offset): the
+; segment's frame (3EEh) and overlay number (3F0h); the segment entry is kept in 3E6h.
+START_DATA_RECORD:	push	bp	;@042F8
 	mov	bp, sp	;@042F9
 	lea	sp, [bp-4]	;@042FB
 	mov	word ptr [bp-2], ax	;@042FE
@@ -6593,8 +6607,10 @@ P2_LEDATA:	call	P2_FLUSH_DATA	;@0435C
 	mov	bl, byte ptr [si]	;@04370
 @@1:	inc	si	;@04372
 	cmp	bx, 4000h	;@04373
-	jle	L043DE	;@04377
-L04379:	sub	bx, 4001h	;@04379
+	jle	DATA_SEGMENT_INDEX	;@04377
+; DATA_SCOPE_SEGMENT, DATA_SEGMENT_INDEX: the segment of a data record: an index above 4000h
+; names a debug scope's segment, a smaller one the module's segment table (10-byte entries).
+DATA_SCOPE_SEGMENT:	sub	bx, 4001h	;@04379
 	shl	bx, 1	;@0437D
 	add	bx, word ptr ds:[52Ch]	;@0437F
 	mov	es, word ptr ds:[786h]	;@04383
@@ -6613,7 +6629,7 @@ L04379:	sub	bx, 4001h	;@04379
 	mov	bx, word ptr es:[bx]	;@043A7
 	mov	word ptr ds:[168h], bx	;@043AA
 	mov	es, word ptr ds:[77Eh]	;@043AE
-	call	L042F8	;@043B2
+	call	START_DATA_RECORD	;@043B2
 @@1:	jmp	SKIP_RECORD	;@043B5
 @@2:	mov	byte ptr ds:[3F1h], 0FFh	;@043B8
 	jmp	@@1	;@043BD
@@ -6629,9 +6645,9 @@ P2_LIDATA:	call	P2_FLUSH_DATA	;@043BF
 	mov	bl, byte ptr [si]	;@043D3
 @@1:	inc	si	;@043D5
 	cmp	bx, 4000h	;@043D6
-	jle	L043DE	;@043DA
-	jmp	L04379	;@043DC
-L043DE:	dec	bx	;@043DE
+	jle	DATA_SEGMENT_INDEX	;@043DA
+	jmp	DATA_SCOPE_SEGMENT	;@043DC
+DATA_SEGMENT_INDEX:	dec	bx	;@043DE
 	xchg	ax, bx	;@043DF
 	mov	ah, 0Ah	;@043E0
 	mul	ah	;@043E2
@@ -6648,11 +6664,13 @@ L043DE:	dec	bx	;@043DE
 	je	@@2	;@04407
 	mov	es, word ptr ds:[77Eh]	;@04409
 	mov	ax, word ptr es:[bx+6]	;@0440D
-	call	L042F8	;@04411
+	call	START_DATA_RECORD	;@04411
 @@1:	jmp	SKIP_RECORD	;@04414
 @@2:	mov	byte ptr ds:[3F1h], 0FFh	;@04417
 	jmp	@@1	;@0441C
-L0441E:	push	ax	;@0441E
+; COMPARE_KEYS: the sort comparison for the table at segment 3B4h: carry when the word at SI is
+; below the word at DI, equal keys ordered by address.
+COMPARE_KEYS:	push	ax	;@0441E
 	mov	es, word ptr ds:[3B4h]	;@0441F
 	mov	ax, word ptr es:[si]	;@04423
 	cmp	ax, word ptr es:[di]	;@04426
@@ -6668,9 +6686,10 @@ L0441E:	push	ax	;@0441E
 	jmp	@@1	;@04439
 	db	0C3h, 0, 0, 0, 0, 1, 5, 28h, 2, 6, 48h, 3, 7, 48h, 0, 0, 0, 0E0h	;@0443B
 	db	5, 28h, 0E1h, 6, 48h, 0, 0, 0, 0, 0, 0
-L04458	dw	L0445C, L04461	;@04458
-L0445C	db	'_TEXT'	;@0445C
-L04461	db	'_DATA'	;@04461
+; DEFAULT_SEGMENT_NAMES: the names `_TEXT` and `_DATA`.
+DEFAULT_SEGMENT_NAMES	dw	NAME_TEXT, NAME_DATA	;@04458
+NAME_TEXT	db	'_TEXT'	;@0445C
+NAME_DATA	db	'_DATA'	;@04461
 L04466:	mov	word ptr ds:[259h], dx	;@04466
 	mov	word ptr ds:[25Bh], cx	;@0446A
 	lodsw	;@0446E
@@ -6748,9 +6767,10 @@ L04466:	mov	word ptr ds:[259h], dx	;@04466
 	mov	di, word ptr ds:[494h]	;@04539
 	mov	byte ptr [di+8], 1	;@0453D
 	ret	;@04541
-@@7:	call	L04548	;@04542
+@@7:	call	RELEASE_BUFFER	;@04542
 	jmp	@@3	;@04545
-L04548:	cmp	byte ptr ds:[25Fh], 1	;@04548
+; RELEASE_BUFFER: give back the buffer at 282h when this module allocated it (25Fh = 1).
+RELEASE_BUFFER:	cmp	byte ptr ds:[25Fh], 1	;@04548
 	jne	@@1	;@0454D
 	push	ds	;@0454F
 	mov	ax, 282h	;@04550
@@ -6759,7 +6779,9 @@ L04548:	cmp	byte ptr ds:[25Fh], 1	;@04548
 	push	ax	;@04556
 	call	far ptr RESIZE_POOL_BLOCK	;@04557
 @@1:	ret	;@0455C
-L0455D:	lodsb	;@0455D
+; READ_PACKED_NUMBER: read a number of one to three bytes at SI (a set top bit means more
+; bytes follow).
+READ_PACKED_NUMBER:	lodsb	;@0455D
 	cbw	;@0455E
 	and	al, al	;@0455F
 	js	@@1	;@04561
@@ -6986,7 +7008,7 @@ L04580:	push	ds	;@04580
 	rep movsb	;@04705
 	and	bx, 7	;@04707
 	shl	bx, 1	;@0470A
-	mov	si, word ptr cs:L04458[bx]	;@0470C
+	mov	si, word ptr cs:DEFAULT_SEGMENT_NAMES[bx]	;@0470C
 	push	cs	;@04711
 	pop	ds	;@04712
 	mov	cx, 5	;@04713
@@ -7046,7 +7068,7 @@ L04580:	push	ds	;@04580
 	jne	@@23	;@0477C
 	lodsw	;@0477E
 	push	ax	;@0477F
-@@23:	call	L0455D	;@04780
+@@23:	call	READ_PACKED_NUMBER	;@04780
 	push	ax	;@04783
 	push	es	;@04784
 	pop	ds	;@04785
@@ -7296,12 +7318,12 @@ L04A48:	push	bp	;@04A48
 	lea	si, [si+18h]	;@04A8A
 	mov	di, 4E2h	;@04A8D
 	mov	cx, 3	;@04A90
-	call	L051CF	;@04A93
+	call	ADD_WORDS_CHECKED	;@04A93
 	mov	si, word ptr [bp-6]	;@04A96
 	lea	si, [si+1Eh]	;@04A99
 	mov	di, 4ECh	;@04A9C
 	mov	cx, 5	;@04A9F
-	call	L051CF	;@04AA2
+	call	ADD_WORDS_CHECKED	;@04AA2
 	mov	si, word ptr [bp-6]	;@04AA5
 	mov	di, 4D8h	;@04AA8
 	mov	ax, word ptr [si+28h]	;@04AAB
@@ -7352,8 +7374,8 @@ L04A48:	push	bp	;@04A48
 	and	word ptr ds:[3A8h], 80h	;@04B24
 	push	bp	;@04B2A
 	mov	word ptr ds:[3B0h], 1	;@04B2B
-	mov	bp, offset L04F93	;@04B31
-	call	L04F5A	;@04B34
+	mov	bp, offset ASSIGN_SYMBOL_NUMBER	;@04B31
+	call	NUMBER_DEBUG_SYMBOLS	;@04B34
 	pop	bp	;@04B37
 	mov	di, 4D8h	;@04B38
 	mov	ax, word ptr [di+10h]	;@04B3B
@@ -7766,7 +7788,9 @@ L04A48:	push	bp	;@04A48
 	mov	sp, bp	;@04F56
 	pop	bp	;@04F58
 	ret	;@04F59
-L04F5A:	xor	bx, bx	;@04F5A
+; NUMBER_DEBUG_SYMBOLS: walk the list of symbols at 7BEh and give each one that has a name
+; entry (+0Ch) the next debug symbol number.
+NUMBER_DEBUG_SYMBOLS:	xor	bx, bx	;@04F5A
 	jmp	short @@3	;@04F5C
 @@1:	mov	es, word ptr ds:[7BEh]	;@04F5E
 	mov	si, word ptr es:[bx]	;@04F62
@@ -7794,7 +7818,8 @@ L04F5A:	xor	bx, bx	;@04F5A
 @@3:	cmp	bx, word ptr ds:[7BCh]	;@04F8C
 	jb	@@1	;@04F90
 	ret	;@04F92
-L04F93:	mov	ax, word ptr ds:[3B0h]	;@04F93
+; ASSIGN_SYMBOL_NUMBER: give the symbol at ES:SI the next debug symbol number (3B0h).
+ASSIGN_SYMBOL_NUMBER:	mov	ax, word ptr ds:[3B0h]	;@04F93
 	mov	word ptr es:[si+12h], ax	;@04F96
 	inc	word ptr ds:[3B0h]	;@04F9A
 	mov	bx, word ptr es:[si+0Ch]	;@04F9E
@@ -7895,9 +7920,11 @@ L05003:	push	si	;@05003
 	shl	si, 1	;@0507C
 	mov	es, word ptr [si+756h]	;@0507E
 	pop	si	;@05082
-	call	L053A0	;@05083
+	call	WRITE_DEBUG_SYMBOL	;@05083
 	ret	;@05086
-L05087:	push	ax	;@05087
+; COMPARE_BY_GROUP: the sort comparison for segments: by group, with the groups at 44Eh and
+; 450h placed specially.
+COMPARE_BY_GROUP:	push	ax	;@05087
 	push	bx	;@05088
 	mov	es, word ptr ds:[776h]	;@05089
 	mov	ax, word ptr es:[si+2]	;@0508D
@@ -7929,7 +7956,9 @@ L05087:	push	ax	;@05087
 	ret	;@050D3
 @@5:	cmp	si, di	;@050D4
 	jmp	@@4	;@050D6
-L050D8:	push	si	;@050D8
+; RESET_SEGMENT_MARKS: clear the mark byte (+9) of every segment entry, acting on the marks
+; that were set.
+RESET_SEGMENT_MARKS:	push	si	;@050D8
 	push	di	;@050D9
 	xor	si, si	;@050DA
 	mov	di, 0C4Eh	;@050DC
@@ -7965,7 +7994,7 @@ L050D8:	push	si	;@050D8
 	mov	si, 0C4Eh	;@0512A
 	mov	cx, word ptr ds:[4F4h]	;@0512D
 	rep movsw	;@05131
-	mov	bp, offset L05087	;@05133
+	mov	bp, offset COMPARE_BY_GROUP	;@05133
 	pop	cx	;@05136
 	push	cx	;@05137
 	call SORT	;@05138
@@ -8025,11 +8054,13 @@ L050D8:	push	si	;@050D8
 	pop	di	;@051CC
 	pop	si	;@051CD
 	ret	;@051CE
-L051CF:	lodsw	;@051CF
+; ADD_WORDS_CHECKED: add CX words at SI to the words at ES:DI; a carry is a debug information
+; overflow.
+ADD_WORDS_CHECKED:	lodsw	;@051CF
 	add	ax, word ptr es:[di]	;@051D0
 	jb	@@1	;@051D3
 	stosw	;@051D5
-	loop	L051CF	;@051D6
+	loop	ADD_WORDS_CHECKED	;@051D6
 	ret	;@051D8
 @@1:	jmp	DEBUG_OVERFLOW	;@051D9
 ; WRITE_AT: write CX bytes from BP at the image offset in [BX] (advancing it).
@@ -8235,7 +8266,9 @@ NAME_LOOKUP_COPY:	push	bp	;@05327
 	call	FIND_NAME_ENTRY	;@0539B
 	pop	bp	;@0539E
 	ret	;@0539F
-L053A0:	push	bx	;@053A0
+; WRITE_DEBUG_SYMBOL: build the debug entry at 290h for the symbol at ES:SI (class, type,
+; value) and write it.
+WRITE_DEBUG_SYMBOL:	push	bx	;@053A0
 	push	cx	;@053A1
 	push	dx	;@053A2
 	push	si	;@053A3
@@ -8247,15 +8280,15 @@ L053A0:	push	bx	;@053A0
 	mov	word ptr [di+2], ax	;@053B3
 	push	word ptr es:[si+0Ch]	;@053B6
 	test	byte ptr es:[si+0Eh], 20h	;@053BA
-	jne	L05411	;@053BF
+	jne	DEBUG_SYMBOL_FLAG20	;@053BF
 	call	L07E30	;@053C1
 	cmp	dh, 1	;@053C4
-	jne	L053D5	;@053C7
+	jne	DEBUG_SYMBOL_VALUE	;@053C7
 	mov	dh, byte ptr [di+8]	;@053C9
 	and	dh, 0F8h	;@053CC
 	or	dh, 1	;@053CF
 	or	byte ptr [di+8], dh	;@053D2
-L053D5:	mov	word ptr [di+6], ax	;@053D5
+DEBUG_SYMBOL_VALUE:	mov	word ptr [di+6], ax	;@053D5
 	mov	word ptr [di+4], cx	;@053D8
 	pop	si	;@053DB
 	mov	ax, word ptr ds:[391h]	;@053DC
@@ -8277,13 +8310,15 @@ L053D5:	mov	word ptr [di+6], ax	;@053D5
 	mov	bx, 309h	;@05402
 	mov	bp, 47Eh	;@05405
 	call	WRITE_AT	;@05408
-L0540B:	pop	es	;@0540B
+DEBUG_SYMBOL_DONE:	pop	es	;@0540B
 	pop	si	;@0540C
 	pop	dx	;@0540D
 	pop	cx	;@0540E
 	pop	bx	;@0540F
 	ret	;@05410
-L05411:	push	di	;@05411
+; DEBUG_SYMBOL_FLAG20: a symbol whose flags have bit 20h set takes its value through the tables
+; at 806h and 7CEh.
+DEBUG_SYMBOL_FLAG20:	push	di	;@05411
 	mov	si, word ptr es:[si+2]	;@05412
 	mov	es, word ptr ds:[806h]	;@05416
 	mov	ax, word ptr es:[si+4]	;@0541A
@@ -8308,10 +8343,12 @@ L05411:	push	di	;@05411
 	mov	cx, ax	;@0544C
 	pop	ax	;@0544E
 	pop	di	;@0544F
-	jmp	L053D5	;@05450
-L05452:	add	sp, 2	;@05452
-	jmp	L0540B	;@05455
-L05457:	mov	ax, 10h	;@05457
+	jmp	DEBUG_SYMBOL_VALUE	;@05450
+DEBUG_SYMBOL_DROP:	add	sp, 2	;@05452
+	jmp	DEBUG_SYMBOL_DONE	;@05455
+; WRITE_DEBUG_SEGMENTS: write the debug segment table (16-byte entries, 4F4h of them) and free
+; its memory.
+WRITE_DEBUG_SEGMENTS:	mov	ax, 10h	;@05457
 	mul	word ptr ds:[4F4h]	;@0545A
 	xchg	ax, cx	;@0545E
 	jcxz	@@1	;@0545F
@@ -8330,7 +8367,7 @@ L05457:	mov	ax, 10h	;@05457
 	mov	ax, word ptr ds:[307h]	;@05487
 	mov	word ptr ds:[30Bh], ax	;@0548A
 	mov	bp, offset L05003	;@0548D
-	call	L04F5A	;@05490
+	call	NUMBER_DEBUG_SYMBOLS	;@05490
 	mov	word ptr ds:[391h], 0	;@05493
 	mov	ax, word ptr ds:[329h]	;@05499
 	mov	dx, word ptr ds:[32Bh]	;@0549C
@@ -12754,7 +12791,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	call	RESET_PASS	;@08521
 	call	PROCESS_FILES	;@08524
 	mov	word ptr ds:[494h], 0	;@08527
-	call	L04548	;@0852D
+	call	RELEASE_BUFFER	;@0852D
 	mov	byte ptr ds:[254h], 1	;@08530
 	mov	byte ptr ds:[3D5h], 2	;@08535
 	call	@@30	;@0853A
@@ -12884,7 +12921,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 @@22:	cmp	byte ptr ds:[14h], 0	;@086AB
 	je	@@23	;@086B0
 	call	L04A48	;@086B2
-	call	L050D8	;@086B5
+	call	RESET_SEGMENT_MARKS	;@086B5
 @@23:	mov	word ptr ds:[3EAh], 0	;@086B8
 	xor	dx, dx	;@086BE
 	cmp	byte ptr ds:[121h], 1	;@086C0
@@ -12917,7 +12954,7 @@ LINK:	mov	word ptr ds:[47Eh], ds	;@08408
 	call	L082C2	;@08724
 	cmp	byte ptr ds:[14h], 0	;@08727
 	je	@@25	;@0872C
-	call	L05457	;@0872E
+	call	WRITE_DEBUG_SEGMENTS	;@0872E
 @@25:	cmp	byte ptr ds:[129h], 1	;@08731
 	jne	@@26	;@08736
 	cmp	word ptr ds:[4AEh], 100h	;@08738
@@ -15285,7 +15322,7 @@ L09B96:	push	bx	;@09B96
 	mov	word ptr ds:[6F3h], di	;@09BC6
 	mov	word ptr ds:[6F5h], cx	;@09BCA
 	mov	word ptr ds:[6F7h], 0	;@09BCE
-	call	L04001	;@09BD4
+	call	OVERLAY_ENTRY	;@09BD4
 @@3:	pop	di	;@09BD7
 	pop	si	;@09BD8
 	pop	cx	;@09BD9
@@ -15354,7 +15391,7 @@ NE_BAD_ENTRY:	push	si	;@09BDC
 	mov	word ptr ds:[6F7h], cx	;@09C8C
 	add	di, word ptr ds:[3E8h]	;@09C90
 	mov	word ptr ds:[6F3h], di	;@09C94
-	call	L04001	;@09C98
+	call	OVERLAY_ENTRY	;@09C98
 	pop	es	;@09C9B
 	pop	di	;@09C9C
 	pop	si	;@09C9D
