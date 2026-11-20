@@ -1,0 +1,9 @@
+EXE='/private/tmp/claude-501/-Users-jonw-turbocpp/2beb636e-51d3-4acf-9478-abaf68a73e88/scratchpad/ts/stub.exe'
+SEGS=[('STUB',0,0x413,'code',"segment para public 'CODE'",0),('STK',0x413,0x4DB,'data',"segment byte stack 'STACK'",0x41)]
+SEGNAME={0:'STUB',0x41:'STK'}
+ENTRIES=[0x239]
+NAMES={0x239:'start'}
+HEAD='\t.286\n\tlocals'
+TAIL='\tend\tstart'
+TRACE_ONLY=True
+DSDEFAULT='STUB'
