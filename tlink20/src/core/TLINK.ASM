@@ -1291,14 +1291,16 @@ P1_COMENT_E1:	sub	bx, bx	;@010F7
 	lodsb	;@01126
 	or	byte ptr es:[di+0Fh], al	;@01127
 	ret	;@0112B
-L0112C:	nop	;@0112C
-L0112D:	nop	;@0112D
+; BAD_COMENT_E2, BAD_COMENT_E4: the exits of P1_COMENT_E2 and P1_COMENT_E4 for a record
+; that overruns its end; two NOPs that fall into BAD_COMENT.
+BAD_COMENT_E2:	nop	;@0112C
+BAD_COMENT_E4:	nop	;@0112D
 ; BAD_COMENT: a malformed Borland COMENT record ("Bad object file").
 BAD_COMENT:	call	BAD_OBJECT	;@0112E
 ; P1_COMENT_E2: pass 1, Borland COMENT class E2h (debug information).
 P1_COMENT_E2:	cmp	si, word ptr ds:[3E0h]	;@01131
 	jb	@@2	;@01135
-	jne	L0112C	;@01137
+	jne	BAD_COMENT_E2	;@01137
 	ret	;@01139
 @@1:	add	si, 4	;@0113A
 	jmp	P1_COMENT_E2	;@0113D
@@ -1343,7 +1345,7 @@ P1_COMENT_E3:	cmp	byte ptr [si], 80h	;@0118D
 P1_COMENT_E4:	cmp	si, word ptr ds:[3E0h]	;@011BA
 	jb	@@2	;@011BE
 	je	@@1	;@011C0
-	jmp	L0112D	;@011C2
+	jmp	BAD_COMENT_E4	;@011C2
 @@1:	ret	;@011C5
 @@2:	inc	word ptr [di+1Ah]	;@011C6
 	lodsb	;@011C9
@@ -1352,7 +1354,9 @@ P1_COMENT_E4:	cmp	si, word ptr ds:[3E0h]	;@011BA
 	add	si, ax	;@011CC
 	lodsw	;@011CE
 	jmp	P1_COMENT_E4	;@011CF
-L011D1:	push	ax	;@011D1
+; FIND_DEBUG_SCOPE: find, or add, the 17-byte entry for debug index BX (above 4000h) in the
+; table at 7AAh/7AEh; returns it at ES:DI.
+FIND_DEBUG_SCOPE:	push	ax	;@011D1
 	push	bx	;@011D2
 	sub	bx, 4001h	;@011D3
 	shl	bx, 1	;@011D7
@@ -1395,21 +1399,25 @@ P1_COMENT_E5:	inc	word ptr ds:[178h]	;@01213
 	mov	bl, byte ptr [si]	;@0122F
 @@2:	inc	si	;@01231
 	cmp	bx, 4000h	;@01232
-	jg	L01257	;@01236
+	jg	E5_SCOPE_INDEX	;@01236
 	inc	word ptr [di+20h]	;@01238
 	call	MARK_EXTERN_USED	;@0123B
 	mov	word ptr ds:[182h], 0FFFFh	;@0123E
-L01244:	mov	ax, word ptr ds:[367h]	;@01244
+; E5_END: keep the largest count of locals (367h) in 48Ch, and reset the count.
+E5_END:	mov	ax, word ptr ds:[367h]	;@01244
 	cmp	ax, word ptr ds:[48Ch]	;@01247
 	jbe	@@1	;@0124B
 	mov	word ptr ds:[48Ch], ax	;@0124D
 @@1:	mov	word ptr ds:[367h], 0	;@01250
 	ret	;@01256
-L01257:	call	L011D1	;@01257
+; E5_SCOPE_INDEX: an E5h record whose index is above 4000h: count it in its scope entry.
+E5_SCOPE_INDEX:	call	FIND_DEBUG_SCOPE	;@01257
 	mov	word ptr ds:[182h], bx	;@0125A
 	inc	word ptr es:[di+8]	;@0125E
-	jmp	L01244	;@01262
-L01264:	cmp	si, word ptr ds:[3E0h]	;@01264
+	jmp	E5_END	;@01262
+; COUNT_DEBUG_SYMBOLS: walk a debug record's symbol entries to its end, counting them; BX
+; points at a table of extra lengths by entry kind (12BEh for E6h records).
+COUNT_DEBUG_SYMBOLS:	cmp	si, word ptr ds:[3E0h]	;@01264
 	jb	@@2	;@01268
 	je	@@1	;@0126A
 	jmp	BAD_COMENT	;@0126C
@@ -1438,7 +1446,7 @@ L01264:	cmp	si, word ptr ds:[3E0h]	;@01264
 	cmp	bx, -1	;@012A3
 	je	@@4	;@012A6
 	push	di	;@012A8
-	call	L011D1	;@012A9
+	call	FIND_DEBUG_SCOPE	;@012A9
 	inc	word ptr es:[di+6]	;@012AC
 	pop	di	;@012B0
 	jmp	short @@5	;@012B1
@@ -1446,15 +1454,15 @@ L01264:	cmp	si, word ptr ds:[3E0h]	;@01264
 @@5:	pop	bx	;@012B6
 	and	ax, 7	;@012B7
 	add	si, ax	;@012BA
-	jmp	L01264	;@012BC
+	jmp	COUNT_DEBUG_SYMBOLS	;@012BC
 	db	92h, 82h, 2, 2, 1, 4, 0, 0	;@012BE
 ; P1_COMENT_E6: pass 1, Borland COMENT class E6h (debug information).
 P1_COMENT_E6:	mov	bx, 12BEh	;@012C6
-	call	L01264	;@012C9
+	call	COUNT_DEBUG_SYMBOLS	;@012C9
 	ret	;@012CC
 ; P1_COMENT_E7: pass 1, Borland COMENT class E7h (debug information).
 P1_COMENT_E7:	dec	word ptr ds:[178h]	;@012CD
-	jmp	L01244	;@012D1
+	jmp	E5_END	;@012D1
 ; P1_COMENT_E8: pass 1, Borland COMENT class E8h (debug information).
 P1_COMENT_E8:	sub	bx, bx	;@012D4
 	add	bl, byte ptr [si]	;@012D6
@@ -1580,7 +1588,7 @@ P1_COMENT_EE:	cmp	byte ptr ds:[12Dh], 1	;@013A5
 @@2:	mov	si, word ptr ds:[3E0h]	;@013D3
 	ret	;@013D7
 @@3:	add	sp, 2	;@013D8
-	call	L011D1	;@013DB
+	call	FIND_DEBUG_SCOPE	;@013DB
 	mov	ax, word ptr ds:[3E0h]	;@013DE
 	sub	ax, si	;@013E1
 	shr	ax, 1	;@013E3
@@ -2005,7 +2013,9 @@ ALLOC_SYMBOL:	push	ax	;@017D8
 	pop	bx	;@01809
 	jae	@@1	;@0180A
 	jmp L09219	;@0180C
-L0180F:	mov	ax, word ptr es:[bx]	;@0180F
+; ADD_EXTERN: give the name at ES:BX a symbol if it has none (flags DL), and append the
+; symbol to the module's list of externals (782h/784h).
+ADD_EXTERN:	mov	ax, word ptr es:[bx]	;@0180F
 	cmp	ax, 0FFFFh	;@01812
 	jne	@@1	;@01815
 	call	ALLOC_SYMBOL	;@01817
@@ -2045,7 +2055,7 @@ P1_EXTDEF_NAMES:	mov	bx, word ptr ds:[174h]	;@01864
 	call	QUALIFY_LOCAL_NAME	;@01872
 @@2:	mov	ah, 0	;@01875
 	call	HASH_NAME_DS	;@01877
-	call	L0180F	;@0187A
+	call	ADD_EXTERN	;@0187A
 	cmp	byte ptr [si], 80h	;@0187D
 	sbb	si, -2	;@01880
 @@3:	cmp	si, word ptr ds:[3E0h]	;@01883
@@ -2058,7 +2068,10 @@ P1_EXTDEF:	mov	dl, 0	;@01890
 ; P1_LEXTDEF: pass 1, LEXTDEF (B4h): module-local external names.
 P1_LEXTDEF:	mov	dl, 4	;@01894
 	jmp	P1_EXTDEF_NAMES	;@01896
-L01898:	cmp	byte ptr [si], 80h	;@01898
+; READ_PUBDEF_BASE: skip a PUBDEF's group index and read its segment index. Returns in AX
+; the segment's 10-byte entry, or the frame word for an absolute base (DL = 2), or FFFFh
+; for an index above 4000h.
+READ_PUBDEF_BASE:	cmp	byte ptr [si], 80h	;@01898
 	sbb	si, -2	;@0189B
 	sub	bx, bx	;@0189E
 	add	bl, byte ptr [si]	;@018A0
@@ -2090,7 +2103,8 @@ L01898:	cmp	byte ptr [si], 80h	;@01898
 @@4:	ret	;@018D6
 @@5:	mov	ax, 0FFFFh	;@018D7
 	jmp	@@4	;@018DA
-L018DC:	push	bx	;@018DC
+; NAME_SYMBOL_WORD: for the name entry BX, the word at +2 of its symbol, in SI.
+NAME_SYMBOL_WORD:	push	bx	;@018DC
 	and	bx, 3	;@018DD
 	shl	bx, 1	;@018E0
 	shl	bx, 1	;@018E2
@@ -2185,7 +2199,7 @@ DEFINE_PUBLIC:	cmp	word ptr es:[bx], -1	;@01902
 	push	ax	;@019CA
 	push	dx	;@019CB
 	push	bx	;@019CC
-	call	L018DC	;@019CD
+	call	NAME_SYMBOL_WORD	;@019CD
 	mov	bx, si	;@019D0
 	pop	si	;@019D2
 	push	bx	;@019D3
@@ -2258,7 +2272,7 @@ DEFINE_PUBLIC:	cmp	word ptr es:[bx], -1	;@01902
 	jmp	@@5	;@01A6A
 ; P1_PUBDEF_NAMES: the names of a PUBDEF or LPUBDEF record.
 P1_PUBDEF_NAMES:	mov	byte ptr ds:[172h], al	;@01A6D
-	call	L01898	;@01A70
+	call	READ_PUBDEF_BASE	;@01A70
 	or	byte ptr ds:[172h], dl	;@01A73
 	mov	word ptr ds:[16Ch], ax	;@01A77
 	jmp	short @@6	;@01A7A
@@ -2356,7 +2370,7 @@ P1_LINNUM:	cmp	byte ptr [si], 80h	;@01B10
 	jne	@@5	;@01B72
 	mov	byte ptr ds:[538h], 2	;@01B74
 @@5:	jmp	SKIP_RECORD	;@01B79
-@@6:	call	L011D1	;@01B7C
+@@6:	call	FIND_DEBUG_SCOPE	;@01B7C
 	cmp	word ptr ds:[39Bh], -1	;@01B7F
 	jne	@@7	;@01B84
 	inc	word ptr es:[di+2]	;@01B86
@@ -2385,7 +2399,10 @@ P1_LNAMES:	jmp	short @@3	;@01BB0
 @@3:	cmp	si, word ptr ds:[3E0h]	;@01BC9
 	jb	@@1	;@01BCD
 	jmp	SKIP_RECORD	;@01BCF
-L01BD2:	mov	word ptr es:[di], bx	;@01BD2
+; STORE_NAME_PAIR: store the name entries BX and DX at ES:DI, giving each name the next
+; number (3D8h) the first time it is stored; the entry of the pair at 438h/44Ch is kept
+; in C41h.
+STORE_NAME_PAIR:	mov	word ptr es:[di], bx	;@01BD2
 	mov	word ptr es:[di+2], dx	;@01BD5
 	cmp	word ptr ds:[0C41h], -1	;@01BD9
 	jne	@@1	;@01BDE
@@ -2518,7 +2535,7 @@ P1_SEGDEF:	call	ALLOC_SEGMENT_ENTRY	;@01C2B
 @@12:	pop	di	;@01D12
 	pop	si	;@01D13
 	mov	es, word ptr ds:[776h]	;@01D14
-	call	L01BD2	;@01D18
+	call	STORE_NAME_PAIR	;@01D18
 	jmp	SKIP_RECORD	;@01D1B
 @@13:	mov	word ptr ds:[422h], 1	;@01D1E
 	xor	ax, ax	;@01D24
@@ -2799,7 +2816,10 @@ DECODE_START:	push	ax	;@01F27
 	sbb	si, -2	;@01F99
 @@8:	pop	ax	;@01F9C
 	ret	;@01F9D
-L01F9E:	push	bp	;@01F9E
+; READ_FIXDAT: decode the fix data of a FIXUPP subrecord at SI: the frame and target
+; (explicit, or from the threads at 232h/236h) and the target displacement (a doubleword when
+; 41Eh is set).
+READ_FIXDAT:	push	bp	;@01F9E
 	mov	bp, sp	;@01F9F
 	sub	sp, 4	;@01FA1
 	push	dx	;@01FA4
@@ -3002,7 +3022,7 @@ FIXUPP_THREADS:	mov	ax, word ptr ds:[3ECh]	;@020E7
 	mov	ah, al	;@02163
 	lodsb	;@02165
 	mov	dx, ax	;@02166
-	call	L01F9E	;@02168
+	call	READ_FIXDAT	;@02168
 	cmp	byte ptr ds:[3F1h], 1	;@0216B
 	jne	@@8	;@02170
 	mov	di, dx	;@02172
@@ -3370,7 +3390,7 @@ P2_NEW_MODULE:	push	bp	;@024DE
 	pop	si	;@02507
 	add	si, 2	;@02508
 	xor	ax, ax	;@0250B
-	call	L05327	;@0250D
+	call	NAME_LOOKUP_COPY	;@0250D
 	mov	word ptr ds:[22Ah], ax	;@02510
 	cmp	byte ptr ds:[3D2h], 1	;@02513
 	jae	@@5	;@02518
@@ -3418,7 +3438,7 @@ P2_NEW_MODULE:	push	bp	;@024DE
 	pop	es	;@02569
 	mov	ds, word ptr cs:DATA_SEGMENT	;@0256A
 	xor	ax, ax	;@0256F
-	call	L05327	;@02571
+	call	NAME_LOOKUP_COPY	;@02571
 @@5:	mov	di, 2A0h	;@02574
 	mov	word ptr [di], ax	;@02577
 	mov	si, 528h	;@02579
@@ -3549,11 +3569,13 @@ P2_THEADR:	cmp	byte ptr ds:[492h], 0	;@02608
 	cmp	bl, 8Ah	;@026B3
 	jne	@@3	;@026B6
 	jmp	L03CE3	;@026B8
-L026BB:	push	di	;@026BB
+; LOOKUP_NAME_SKIP: look up the name at SI (NAME_LOOKUP_COPY) and step SI past it;
+; returns the entry in AX.
+LOOKUP_NAME_SKIP:	push	di	;@026BB
 	push	ds	;@026BC
 	pop	es	;@026BD
 	push	si	;@026BE
-	call	L05327	;@026BF
+	call	NAME_LOOKUP_COPY	;@026BF
 	pop	si	;@026C2
 	mov	bx, ax	;@026C3
 	lodsb	;@026C5
@@ -3588,7 +3610,7 @@ LOOKUP_NAME:	mov	ah, 0	;@026CD
 	ret	;@02700
 ; P2_COMENT_E2: pass 2, Borland COMENT class E2h (debug information).
 P2_COMENT_E2:	xor	dx, dx	;@02701
-L02703:	jmp	short @@6	;@02703
+P2_E2_NEXT:	jmp	short @@6	;@02703
 @@1:	inc	word ptr ds:[4E4h]	;@02705
 	mov	di, 290h	;@02709
 	lodsb	;@0270C
@@ -3605,7 +3627,7 @@ L02703:	jmp	short @@6	;@02703
 	dec	si	;@0271E
 	push	dx	;@0271F
 	xor	ax, ax	;@02720
-	call	L026BB	;@02722
+	call	LOOKUP_NAME_SKIP	;@02722
 	pop	dx	;@02725
 @@2:	pop	bx	;@02726
 	mov	word ptr [di+1], ax	;@02727
@@ -3659,50 +3681,50 @@ L02703:	jmp	short @@6	;@02703
 	jmp	@@4	;@02789
 ; P2_COMENT_E4: pass 2, Borland COMENT class E4h (debug information).
 P2_COMENT_E4:	mov	dx, 1	;@0278B
-	jmp	L02703	;@0278E
+	jmp	P2_E2_NEXT	;@0278E
 
-; COMENT subtypes: (type, handler) for 20 types, then the handler for any other
+; the kinds of type in a COMENT E3h record: (kind, handler) for 20 kinds, then the handler for any other
 P2_TYPE_HANDLERS	db	23h	;@02791
-	dw	L02869
+	dw	E3_TYPE_23
 	db	1Eh
-	dw	L02846
+	dw	E3_TYPE_1E_1F
 	db	1Fh
-	dw	L02846
+	dw	E3_TYPE_1E_1F
 	db	15h
-	dw	L02884
+	dw	E3_TYPE_INDEXED
 	db	16h
-	dw	L02884
+	dw	E3_TYPE_INDEXED
 	db	1Ah
-	dw	L0284D
+	dw	E3_TYPE_1A
 	db	22h
-	dw	L028A4
+	dw	E3_TYPE_22
 	db	24h
-	dw	L028A1
+	dw	E3_TYPE_24
 	db	2Eh
-	dw	L0290C
+	dw	E3_TYPE_2E
 	db	34h
-	dw	L02884
+	dw	E3_TYPE_INDEXED
 	db	35h
-	dw	L02884
+	dw	E3_TYPE_INDEXED
 	db	2Dh
-	dw	L02932
+	dw	E3_TYPE_2D
 	db	33h
-	dw	L0298E
+	dw	E3_TYPE_33
 	db	20h
-	dw	L02822
+	dw	E3_TYPE_20_21
 	db	21h
-	dw	L02822
+	dw	E3_TYPE_20_21
 	db	17h
-	dw	L02884
+	dw	E3_TYPE_INDEXED
 	db	30h
-	dw	L028E6
+	dw	E3_TYPE_30
 	db	18h
-	dw	L02884
+	dw	E3_TYPE_INDEXED
 	db	19h
-	dw	L02884
+	dw	E3_TYPE_INDEXED
 	db	1Bh
-	dw	L02828
-	dw	L028BD
+	dw	E3_TYPE_1B
+	dw	E3_WRITE_ENTRY
 ; P2_COMENT_E3: pass 2, Borland COMENT class E3h (debug information).
 P2_COMENT_E3:	mov	di, 290h	;@027CF
 	xor	ax, ax	;@027D2
@@ -3725,7 +3747,7 @@ P2_COMENT_E3:	mov	di, 290h	;@027CF
 	je	@@2	;@027EF
 	dec	si	;@027F1
 	xor	ax, ax	;@027F2
-	call	L026BB	;@027F4
+	call	LOOKUP_NAME_SKIP	;@027F4
 @@2:	mov	bx, 290h	;@027F7
 	mov	word ptr [bx+1], ax	;@027FA
 	lodsw	;@027FD
@@ -3747,10 +3769,15 @@ P2_COMENT_E3:	mov	di, 290h	;@027CF
 	mov	cx, 8	;@0281A
 	mov	dx, word ptr ds:[38Fh]	;@0281D
 	ret	;@02821
-L02822:	movsw	;@02822
+; E3_TYPE_xx: the handlers of P2_TYPE_HANDLERS, one per kind of type in a COMENT E3h record.
+; Each turns the record into the linker's 16-byte (CX = 10h) or 8-byte type entry at 290h;
+; type indices below 18h are predefined, larger ones are moved by the module's base (DX).
+; E3_TYPE_20_21: kinds 20h and 21h.
+E3_TYPE_20_21:	movsw	;@02822
 	mov	cx, 10h	;@02823
-	jmp	short L02847	;@02826
-L02828:	movsw	;@02828
+	jmp	short E3_TYPE_LIST	;@02826
+; E3_TYPE_1B: kind 1Bh, a word and one type index.
+E3_TYPE_1B:	movsw	;@02828
 	mov	cx, 10h	;@02829
 	sub	bx, bx	;@0282C
 	add	bl, byte ptr [si]	;@0282E
@@ -3762,14 +3789,17 @@ L02828:	movsw	;@02828
 @@1:	inc	si	;@0283A
 	mov	word ptr [di], bx	;@0283B
 	cmp	bx, 18h	;@0283D
-	jb	L028BD	;@02840
+	jb	E3_WRITE_ENTRY	;@02840
 	add	word ptr [di], dx	;@02842
-	jmp	short L028BD	;@02844
-L02846:	inc	di	;@02846
-L02847:	mov	ax, word ptr ds:[39Dh]	;@02847
+	jmp	short E3_WRITE_ENTRY	;@02844
+; E3_TYPE_1E_1F: kinds 1Eh and 1Fh.
+E3_TYPE_1E_1F:	inc	di	;@02846
+; E3_TYPE_LIST: store the current member list (39Dh) and start a new one.
+E3_TYPE_LIST:	mov	ax, word ptr ds:[39Dh]	;@02847
 	stosw	;@0284A
-	jmp	short L028B6	;@0284B
-L0284D:	sub	bx, bx	;@0284D
+	jmp	short E3_NEW_LIST	;@0284B
+; E3_TYPE_1A: kind 1Ah, one type index.
+E3_TYPE_1A:	sub	bx, bx	;@0284D
 	add	bl, byte ptr [si]	;@0284F
 	jge	@@1	;@02851
 	inc	si	;@02853
@@ -3779,10 +3809,11 @@ L0284D:	sub	bx, bx	;@0284D
 @@1:	inc	si	;@0285B
 	mov	word ptr [di+1], bx	;@0285C
 	cmp	bx, 18h	;@0285F
-	jb	L028BD	;@02862
+	jb	E3_WRITE_ENTRY	;@02862
 	add	word ptr [di+1], dx	;@02864
-	jmp	short L028BD	;@02867
-L02869:	sub	bx, bx	;@02869
+	jmp	short E3_WRITE_ENTRY	;@02867
+; E3_TYPE_23: kind 23h.
+E3_TYPE_23:	sub	bx, bx	;@02869
 	add	bl, byte ptr [si]	;@0286B
 	jge	@@1	;@0286D
 	inc	si	;@0286F
@@ -3796,8 +3827,9 @@ L02869:	sub	bx, bx	;@02869
 	and	ah, 80h	;@0287C
 	or	al, ah	;@0287F
 	stosb	;@02881
-	jmp	short L02895	;@02882
-L02884:	sub	bx, bx	;@02884
+	jmp	short E3_STORE_INDEX	;@02882
+; E3_TYPE_INDEXED: kinds 15h-19h, 34h and 35h: a type index and one byte.
+E3_TYPE_INDEXED:	sub	bx, bx	;@02884
 	add	bl, byte ptr [si]	;@02886
 	jge	@@1	;@02888
 	inc	si	;@0288A
@@ -3807,15 +3839,19 @@ L02884:	sub	bx, bx	;@02884
 @@1:	inc	si	;@02892
 	push	bx	;@02893
 	movsb	;@02894
-L02895:	pop	ax	;@02895
+; E3_STORE_INDEX: store the type index on the stack, moved by the module's base if not
+; predefined, and write the entry.
+E3_STORE_INDEX:	pop	ax	;@02895
 	stosw	;@02896
 	cmp	ax, 18h	;@02897
-	jb	L028BD	;@0289A
+	jb	E3_WRITE_ENTRY	;@0289A
 	add	word ptr [di-2], dx	;@0289C
-	jmp	short L028BD	;@0289F
-L028A1:	movsb	;@028A1
-	jmp	short L028BD	;@028A2
-L028A4:	cmp	byte ptr [si], 80h	;@028A4
+	jmp	short E3_WRITE_ENTRY	;@0289F
+; E3_TYPE_24: kind 24h, one byte.
+E3_TYPE_24:	movsb	;@028A1
+	jmp	short E3_WRITE_ENTRY	;@028A2
+; E3_TYPE_22: kind 22h.
+E3_TYPE_22:	cmp	byte ptr [si], 80h	;@028A4
 	sbb	si, -2	;@028A7
 	mov	cx, 10h	;@028AA
 	add	di, 3	;@028AD
@@ -3823,11 +3859,14 @@ L028A4:	cmp	byte ptr [si], 80h	;@028A4
 	movsw	;@028B1
 	mov	ax, word ptr ds:[39Dh]	;@028B2
 	stosw	;@028B5
-L028B6:	mov	ax, word ptr ds:[4E4h]	;@028B6
+; E3_NEW_LIST: the next member list starts after the last one written (4E4h).
+E3_NEW_LIST:	mov	ax, word ptr ds:[4E4h]	;@028B6
 	inc	ax	;@028B9
 	mov	word ptr ds:[39Dh], ax	;@028BA
-L028BD:	pop	ax	;@028BD
-L028BE:	sub	ax, 18h	;@028BE
+; E3_WRITE_ENTRY: write the entry at 290h (CX bytes) as type number AX (popped) of the
+; output's type table, and count its size in units of 8 bytes (4E2h).
+E3_WRITE_ENTRY:	pop	ax	;@028BD
+E3_WRITE_AX:	sub	ax, 18h	;@028BE
 	mov	di, cx	;@028C1
 	push	cx	;@028C3
 	mov	cl, 3	;@028C4
@@ -3844,7 +3883,8 @@ L028BE:	sub	ax, 18h	;@028BE
 	call	IMAGE_WRITE_FAR	;@028E1
 	pop	si	;@028E4
 	ret	;@028E5
-L028E6:	sub	bx, bx	;@028E6
+; E3_TYPE_30: kind 30h, a type index and a name.
+E3_TYPE_30:	sub	bx, bx	;@028E6
 	add	bl, byte ptr [si]	;@028E8
 	jge	@@1	;@028EA
 	inc	si	;@028EC
@@ -3859,14 +3899,15 @@ L028E6:	sub	bx, bx	;@028E6
 	push	dx	;@028FA
 	push	es	;@028FB
 	xor	ax, ax	;@028FC
-	call	L026BB	;@028FE
+	call	LOOKUP_NAME_SKIP	;@028FE
 	pop	es	;@02901
 	pop	dx	;@02902
 	pop	di	;@02903
 	mov	word ptr [di+2], ax	;@02904
 	mov	cx, 10h	;@02907
-	jmp	L02895	;@0290A
-L0290C:	mov	ax, word ptr [bx+1]	;@0290C
+	jmp	E3_STORE_INDEX	;@0290A
+; E3_TYPE_2E: kind 2Eh.
+E3_TYPE_2E:	mov	ax, word ptr [bx+1]	;@0290C
 	mov	word ptr ds:[3A5h], ax	;@0290F
 	sub	bx, bx	;@02912
 	add	bl, byte ptr [si]	;@02914
@@ -3881,8 +3922,9 @@ L0290C:	mov	ax, word ptr [bx+1]	;@0290C
 	mov	word ptr [di+1], bx	;@02929
 	pop	ax	;@0292C
 	mov	word ptr ds:[22Ch], ax	;@0292D
-	jmp	L028BE	;@02930
-L02932:	lodsb	;@02932
+	jmp	E3_WRITE_AX	;@02930
+; E3_TYPE_2D: kind 2Dh, with an optional range and a name.
+E3_TYPE_2D:	lodsb	;@02932
 	cbw	;@02933
 	and	al, al	;@02934
 	jns	@@1	;@02936
@@ -3933,10 +3975,11 @@ L02932:	lodsb	;@02932
 	shl	ah, cl	;@02980
 	stosw	;@02982
 	mov	cx, 10h	;@02983
-	jmp	L028BD	;@02986
+	jmp	E3_WRITE_ENTRY	;@02986
 @@7:	add	di, 6	;@02989
 	jmp	@@6	;@0298C
-L0298E:	inc	di	;@0298E
+; E3_TYPE_33: kind 33h.
+E3_TYPE_33:	inc	di	;@0298E
 	lodsb	;@0298F
 	cbw	;@02990
 	and	al, al	;@02991
@@ -3958,7 +4001,7 @@ L0298E:	inc	di	;@0298E
 @@3:	add	ax, word ptr ds:[3A1h]	;@029AD
 	stosw	;@029B1
 	mov	cx, 10h	;@029B2
-	jmp	L028BD	;@029B5
+	jmp	E3_WRITE_ENTRY	;@029B5
 ; COMPARE_DEBUG_ENTRIES: the SORT callback for the debug-information entries.
 COMPARE_DEBUG_ENTRIES:	push	ax	;@029B8
 	push	es	;@029B9
@@ -4020,7 +4063,10 @@ SORT_DEBUG_ENTRIES:	push	bp	;@029E2
 	mov	word ptr es:[di+14h], ax	;@02A4E
 @@4:	pop	bp	;@02A52
 	ret	;@02A53
-L02A54:	mov	es, word ptr ds:[77Eh]	;@02A54
+; FIND_DEBUG_SEGMENT: for segment entry BX, find its record in the debug segment table (16-byte
+; entries at 371h, in chunks of FF0h bytes); keeps the record's offset in 395h and the
+; segment's length in 397h, and returns its number (from 1) in AX.
+FIND_DEBUG_SEGMENT:	mov	es, word ptr ds:[77Eh]	;@02A54
 	mov	cx, word ptr es:[bx+6]	;@02A58
 	mov	al, byte ptr es:[bx+9]	;@02A5C
 	and	ax, 0FFh	;@02A60
@@ -4116,7 +4162,7 @@ P2_COMENT_E5:	push	bp	;@02AAB
 	mul	ah	;@02B54
 	xchg	ax, bx	;@02B56
 	add	bx, word ptr ds:[52Ah]	;@02B57
-@@6:	call	L02A54	;@02B5B
+@@6:	call	FIND_DEBUG_SEGMENT	;@02B5B
 	mov	ax, word ptr [bp-4]	;@02B5E
 	and	ax, ax	;@02B61
 	je	@@7	;@02B63
@@ -4161,7 +4207,10 @@ P2_COMENT_E5:	push	bp	;@02AAB
 	mov	word ptr ds:[230h], 1	;@02BD6
 	mov	si, word ptr ds:[3E0h]	;@02BDC
 	jmp	@@9	;@02BE0
-L02BE2:	dec	bx	;@02BE2
+; SEGMENT_INDEX_BASE: for segment index BX of the module, its base: AX = the segment's
+; frame and BX = 1 for a plain segment; for an absolute or common one, the result of L093E8
+; with BX = 0.
+SEGMENT_INDEX_BASE:	dec	bx	;@02BE2
 	xchg	ax, bx	;@02BE3
 	mov	ah, 0Ah	;@02BE4
 	mul	ah	;@02BE6
@@ -4186,7 +4235,7 @@ P2_COMENT_E6:	cmp	word ptr ds:[230h], 1	;@02C13
 	jne	@@1	;@02C18
 	cmp	word ptr ds:[178h], 0	;@02C1A
 	je	@@1	;@02C1F
-	jmp	L02D7F	;@02C21
+	jmp	E6_SKIP	;@02C21
 @@1:	mov	ax, word ptr ds:[4E6h]	;@02C24
 	inc	ax	;@02C27
 	cmp	word ptr ds:[178h], 0	;@02C28
@@ -4194,21 +4243,24 @@ P2_COMENT_E6:	cmp	word ptr ds:[230h], 1	;@02C13
 	cmp	word ptr ds:[38Dh], 0	;@02C2F
 	jne	@@2	;@02C34
 	mov	word ptr ds:[38Dh], ax	;@02C36
-@@2:	jmp	short L02CB6	;@02C39
+@@2:	jmp	short E6_LOOP	;@02C39
 @@3:	mov	di, word ptr ds:[383h]	;@02C3B
 	mov	es, word ptr ds:[36Dh]	;@02C3F
 	cmp	word ptr es:[di-16h], 0	;@02C43
-	jne	L02CB6	;@02C48
+	jne	E6_LOOP	;@02C48
 	mov	word ptr es:[di-16h], ax	;@02C4A
-	jmp	short L02CB6	;@02C4E
-L02C50:	inc	word ptr ds:[4E6h]	;@02C50
+	jmp	short E6_LOOP	;@02C4E
+; E6_NEXT_SYMBOL: one symbol of a COMENT E6h record: name, type index (moved by the module's
+; base) and a class byte whose low three bits choose how its value is read (E6_CLASS_HANDLERS).
+; Class 0 and 1 symbols go to the module's local list (E6_KEEP_LOCAL), others are written.
+E6_NEXT_SYMBOL:	inc	word ptr ds:[4E6h]	;@02C50
 	cmp	word ptr ds:[178h], 0	;@02C54
 	je	@@1	;@02C59
 	mov	di, word ptr ds:[383h]	;@02C5B
 	mov	es, word ptr ds:[36Dh]	;@02C5F
 	inc	word ptr es:[di-14h]	;@02C63
 @@1:	xor	ax, ax	;@02C67
-	call	L026BB	;@02C69
+	call	LOOKUP_NAME_SKIP	;@02C69
 	mov	di, 290h	;@02C6C
 	mov	word ptr [di], ax	;@02C6F
 	sub	bx, bx	;@02C71
@@ -4228,22 +4280,24 @@ L02C50:	inc	word ptr ds:[4E6h]	;@02C50
 	and	ax, 7	;@02C90
 	mov	bx, ax	;@02C93
 	shl	bx, 1	;@02C95
-	call	word ptr cs:L02CE5[bx]	;@02C97
+	call	word ptr cs:E6_CLASS_HANDLERS[bx]	;@02C97
 	push	si	;@02C9C
 	mov	si, 290h	;@02C9D
 	mov	cx, 9	;@02CA0
 	mov	al, byte ptr [si+8]	;@02CA3
 	and	al, 7	;@02CA6
 	cmp	al, 1	;@02CA8
-	jbe	L02CBD	;@02CAA
+	jbe	E6_KEEP_LOCAL	;@02CAA
 	mov	bp, 47Eh	;@02CAC
 	mov	bx, 309h	;@02CAF
 	call	WRITE_AT	;@02CB2
-L02CB5:	pop	si	;@02CB5
-L02CB6:	cmp	si, word ptr ds:[3E0h]	;@02CB6
-	jb	L02C50	;@02CBA
-L02CBC:	ret	;@02CBC
-L02CBD:	mov	es, word ptr ds:[381h]	;@02CBD
+E6_SYMBOL_DONE:	pop	si	;@02CB5
+E6_LOOP:	cmp	si, word ptr ds:[3E0h]	;@02CB6
+	jb	E6_NEXT_SYMBOL	;@02CBA
+E6_DONE:	ret	;@02CBC
+; E6_KEEP_LOCAL: keep the 9-byte entry at 290h in the local symbol buffer (37Dh), with its
+; offset in the list at 381h.
+E6_KEEP_LOCAL:	mov	es, word ptr ds:[381h]	;@02CBD
 	mov	di, word ptr ds:[38Bh]	;@02CC1
 	mov	ax, word ptr ds:[389h]	;@02CC5
 	stosw	;@02CC8
@@ -4256,14 +4310,17 @@ L02CBD:	mov	es, word ptr ds:[381h]	;@02CBD
 	rep movsb	;@02CD9
 	inc	word ptr ds:[367h]	;@02CDB
 	mov	word ptr ds:[389h], di	;@02CDF
-	jmp	L02CB5	;@02CE3
-L02CE5	dw	L02CFE, L02D42, L02D71, L02D71, L02D7B, L02CF5, L02D70, L02D70	;@02CE5
-L02CF5:	lodsw	;@02CF5
+	jmp	E6_SYMBOL_DONE	;@02CE3
+; E6_CLASS_HANDLERS: how a symbol's value is read, by the low three bits of its class byte.
+E6_CLASS_HANDLERS	dw	E6_GROUP_ADDRESS, E6_SEGMENT_ADDRESS, E6_WORD, E6_WORD, E6_BYTE, E6_DWORD, E6_NOTHING, E6_NOTHING	;@02CE5
+; E6_DWORD: class 5, two words.
+E6_DWORD:	lodsw	;@02CF5
 	mov	word ptr [di+4], ax	;@02CF6
 	lodsw	;@02CF9
 	mov	word ptr [di+6], ax	;@02CFA
 	ret	;@02CFD
-L02CFE:	sub	bx, bx	;@02CFE
+; E6_GROUP_ADDRESS: class 0, a group index, then a segment index and offset.
+E6_GROUP_ADDRESS:	sub	bx, bx	;@02CFE
 	add	bl, byte ptr [si]	;@02D00
 	jge	@@1	;@02D02
 	inc	si	;@02D04
@@ -4272,7 +4329,7 @@ L02CFE:	sub	bx, bx	;@02CFE
 	mov	bl, byte ptr [si]	;@02D0A
 @@1:	inc	si	;@02D0C
 	and	bx, bx	;@02D0D
-	je	L02D42	;@02D0F
+	je	E6_SEGMENT_ADDRESS	;@02D0F
 	dec	bx	;@02D11
 	shl	bx, 1	;@02D12
 	shl	bx, 1	;@02D14
@@ -4289,11 +4346,12 @@ L02CFE:	sub	bx, bx	;@02CFE
 	mov	ax, word ptr es:[bx]	;@02D30
 	xor	cx, cx	;@02D33
 	cmp	byte ptr [si], 0	;@02D35
-	jne	L02D42	;@02D38
+	jne	E6_SEGMENT_ADDRESS	;@02D38
 	cmp	byte ptr [si], 80h	;@02D3A
 	sbb	si, -2	;@02D3D
-	jmp	short L02D67	;@02D40
-L02D42:	sub	bx, bx	;@02D42
+	jmp	short E6_STORE_ADDRESS	;@02D40
+; E6_SEGMENT_ADDRESS: class 1, a segment index and an offset (the segment's base added).
+E6_SEGMENT_ADDRESS:	sub	bx, bx	;@02D42
 	add	bl, byte ptr [si]	;@02D44
 	jge	@@1	;@02D46
 	inc	si	;@02D48
@@ -4302,28 +4360,32 @@ L02D42:	sub	bx, bx	;@02D42
 	mov	bl, byte ptr [si]	;@02D4E
 @@1:	inc	si	;@02D50
 	push	si	;@02D51
-	call	L02BE2	;@02D52
+	call	SEGMENT_INDEX_BASE	;@02D52
 	pop	si	;@02D55
 	cmp	bx, 1	;@02D56
-	jne	L02D67	;@02D59
+	jne	E6_STORE_ADDRESS	;@02D59
 	mov	bl, byte ptr [di+8]	;@02D5B
 	and	bl, 0F8h	;@02D5E
 	or	bl, 1	;@02D61
 	or	byte ptr [di+8], bl	;@02D64
-L02D67:	mov	word ptr [di+6], ax	;@02D67
+E6_STORE_ADDRESS:	mov	word ptr [di+6], ax	;@02D67
 	lodsw	;@02D6A
 	add	ax, cx	;@02D6B
 	mov	word ptr [di+4], ax	;@02D6D
-L02D70:	ret	;@02D70
-L02D71:	lodsw	;@02D71
-L02D72:	mov	word ptr [di+6], 0	;@02D72
+; E6_NOTHING: classes 6 and 7, no value.
+E6_NOTHING:	ret	;@02D70
+; E6_WORD: classes 2 and 3, one word.
+E6_WORD:	lodsw	;@02D71
+E6_STORE_WORD:	mov	word ptr [di+6], 0	;@02D72
 	mov	word ptr [di+4], ax	;@02D77
 	ret	;@02D7A
-L02D7B:	lodsb	;@02D7B
+; E6_BYTE: class 4, one signed byte.
+E6_BYTE:	lodsb	;@02D7B
 	cbw	;@02D7C
-	jmp	L02D72	;@02D7D
-L02D7F:	mov	si, word ptr ds:[3E0h]	;@02D7F
-	jmp	L02CBC	;@02D83
+	jmp	E6_STORE_WORD	;@02D7D
+; E6_SKIP: skip the rest of the record.
+E6_SKIP:	mov	si, word ptr ds:[3E0h]	;@02D7F
+	jmp	E6_DONE	;@02D83
 ; P2_COMENT_E7: pass 2, Borland COMENT class E7h (debug information).
 P2_COMENT_E7:	push	si	;@02D86
 	call	SORT_DEBUG_ENTRIES	;@02D87
@@ -4366,7 +4428,9 @@ P2_COMENT_E7:	push	si	;@02D86
 @@4:	dec	word ptr ds:[178h]	;@02DF8
 	mov	si, word ptr ds:[3E0h]	;@02DFC
 	jmp	@@2	;@02E00
-L02E02:	inc	word ptr ds:[4F2h]	;@02E02
+; WRITE_SCOPE_ENTRY: write a 6-byte debug entry, numbered by 4F2h (also kept in 39Bh): AX and
+; the two words at SI.
+WRITE_SCOPE_ENTRY:	inc	word ptr ds:[4F2h]	;@02E02
 	mov	bx, word ptr ds:[4F2h]	;@02E06
 	mov	word ptr ds:[39Bh], bx	;@02E0A
 	mov	di, 290h	;@02E0E
@@ -4397,8 +4461,8 @@ P2_COMENT_E8:	mov	word ptr ds:[17Ah], 0FFFFh	;@02E29
 	and	bx, bx	;@02E3E
 	jne	@@2	;@02E40
 	mov	ax, 1	;@02E42
-	call	L026BB	;@02E45
-	call	L02E02	;@02E48
+	call	LOOKUP_NAME_SKIP	;@02E45
+	call	WRITE_SCOPE_ENTRY	;@02E48
 	jmp	short @@3	;@02E4B
 @@2:	add	bx, word ptr ds:[39Fh]	;@02E4D
 	mov	word ptr ds:[39Bh], bx	;@02E51
@@ -4438,7 +4502,7 @@ P2_COMENT_ED:	lodsb	;@02E5F
 	stosw	;@02E8E
 	push	cx	;@02E8F
 	xor	ax, ax	;@02E90
-	call	L026BB	;@02E92
+	call	LOOKUP_NAME_SKIP	;@02E92
 	push	si	;@02E95
 	mov	si, 290h	;@02E96
 	mov	word ptr [si+6], ax	;@02E99
@@ -4605,7 +4669,9 @@ P2_COMENT:	lodsw	;@03006
 	je	@@1	;@0302F
 	call	BAD_OBJECT	;@03031
 @@1:	jmp	SKIP_RECORD	;@03034
-L03037:	push	ax	;@03037
+; EXPAND_LIDATA_BLOCK: expand one iterated data block of a LIDATA record (a repeat count, then
+; nested blocks or the data), recursively.
+EXPAND_LIDATA_BLOCK:	push	ax	;@03037
 	lodsw	;@03038
 	xchg	ax, bx	;@03039
 	mov	di, word ptr ds:[3ECh]	;@0303A
@@ -4621,7 +4687,7 @@ L03037:	push	ax	;@03037
 	je	@@5	;@0304B
 	push	di	;@0304D
 	push	bx	;@0304E
-@@3:	call	L03037	;@0304F
+@@3:	call	EXPAND_LIDATA_BLOCK	;@0304F
 	dec	ax	;@03052
 	jne	@@3	;@03053
 	pop	bx	;@03055
@@ -4697,13 +4763,16 @@ P2_FLUSH_DATA:	push	si	;@03083
 @@2:	xchg	ax, cx	;@030F0
 	add	ax, 0C4Eh	;@030F1
 	jmp	short @@4	;@030F4
-@@3:	call	L03037	;@030F6
+@@3:	call	EXPAND_LIDATA_BLOCK	;@030F6
 @@4:	cmp	si, ax	;@030F9
 	jb	@@3	;@030FB
 	jmp	@@1	;@030FD
 @@5:	mov	word ptr ds:[210h], 0FFFFh	;@030FF
 	jmp	@@1	;@03105
-L03107:	push	di	;@03107
+; CHECK_FAR_CALL: a fixup on the target of a far call or jump (9Ah, EAh) in the record buffer
+; (C4Dh) that refers to segment BX: decides from the segment's kind (1 or 3) whether the
+; instruction is rewritten; a rewritten call keeps a NOP pair (9090h).
+CHECK_FAR_CALL:	push	di	;@03107
 	push	si	;@03108
 	push	ax	;@03109
 	mov	di, word ptr ds:[3E6h]	;@0310A
@@ -4754,7 +4823,9 @@ L03107:	push	di	;@03107
 	pop	si	;@0319A
 	pop	di	;@0319B
 	ret	;@0319C
-L0319D:	mov	di, 3FFh	;@0319D
+; TARGET_OFFSET: the target offset of the fixup at DX in the record buffer: CX plus the word
+; already there (or the default in 21Ch), with the target's segment entry BX.
+TARGET_OFFSET:	mov	di, 3FFh	;@0319D
 	and	di, dx	;@031A0
 	mov	es, word ptr ds:[77Eh]	;@031A2
 	mov	bx, word ptr es:[bx+4]	;@031A6
@@ -4816,11 +4887,11 @@ FIX_OFFSET:	mov	ax, word ptr ds:[450h]	;@03215
 FIX_POINTER:	mov	ax, word ptr ds:[450h]	;@03247
 	mov	es, word ptr ds:[776h]	;@0324A
 	cmp	ax, word ptr es:[bx+2]	;@0324E
-	je	L03278	;@03252
-	call	L03107	;@03254
+	je	FIX_LOBYTE_SEGMENT	;@03252
+	call	CHECK_FAR_CALL	;@03254
 	jb	FIX_LOBYTE	;@03257
 ; FIX_LOADER_OFFSET: the fixup handler for a loader-resolved offset location.
-FIX_LOADER_OFFSET:	call	L0319D	;@03259
+FIX_LOADER_OFFSET:	call	TARGET_OFFSET	;@03259
 	cmp	si, -1	;@0325C
 	je	FIXUP_OVERLAY_STUB	;@0325F
 ; FIX_LOBYTE: the fixup handler for a low-byte (also high-byte and unknown) location.
@@ -4832,9 +4903,10 @@ FIX_LOBYTE:	pop	ax	;@03261
 FIX_BASE:	mov	ax, word ptr ds:[450h]	;@03265
 	mov	es, word ptr ds:[776h]	;@03268
 	cmp	ax, word ptr es:[bx+2]	;@0326C
-	jne	L03278	;@03270
+	jne	FIX_LOBYTE_SEGMENT	;@03270
 	mov	word ptr ds:[216h], 0FFFFh	;@03272
-L03278:	mov	es, word ptr ds:[77Eh]	;@03278
+; FIX_LOBYTE_SEGMENT: load the target's segment entry and go on as FIX_LOBYTE.
+FIX_LOBYTE_SEGMENT:	mov	es, word ptr ds:[77Eh]	;@03278
 	mov	bx, word ptr es:[bx+4]	;@0327C
 	jmp	FIX_LOBYTE	;@03280
 ; FIXUP_OVERLAY_STUB: a far fixup into an overlay needs its stub ("No stub for fixup").
@@ -5156,7 +5228,7 @@ DECODE_FIXUP:	mov	word ptr ds:[224h], dx	;@032FC
 	jmp	short @@36	;@035B9
 @@32:	mov	cx, word ptr es:[bx+2]	;@035BB
 	mov	bx, 0FFFDh	;@035BF
-	jmp	L0384F	;@035C2
+	jmp	DECODE_DONE	;@035C2
 @@33:	cmp	byte ptr ds:[17h], 0	;@035C5
 	je	@@34	;@035CA
 	call	FIND_LOCATION_KIND	;@035CC
@@ -5235,7 +5307,7 @@ DECODE_FIXUP:	mov	word ptr ds:[224h], dx	;@032FC
 @@46:	pop	di	;@0369E
 	test	byte ptr ds:[215h], 1	;@0369F
 	je	@@47	;@036A4
-	jmp	L0388B	;@036A6
+	jmp	DECODE_OVERFLOW	;@036A6
 @@47:	mov	bx, word ptr es:[bx]	;@036A9
 	mov	es, word ptr ds:[79Eh]	;@036AC
 	mov	bx, word ptr es:[bx+4]	;@036B0
@@ -5312,13 +5384,13 @@ DECODE_FIXUP:	mov	word ptr ds:[224h], dx	;@032FC
 @@59:	mov	al, byte ptr ds:[215h]	;@03785
 	test	al, 3	;@03788
 	je	@@60	;@0378A
-	jmp	L0388E	;@0378C
+	jmp	DECODE_NO_FRAME	;@0378C
 @@60:	mov	es, word ptr ds:[77Eh]	;@0378F
 	cmp	bx, di	;@03793
 	je	@@61	;@03795
-	jmp	L038B0	;@03797
+	jmp	DECODE_OTHER_FRAME	;@03797
 @@61:	cmp	byte ptr ds:[17h], 0	;@0379A
-	je	L037C4	;@0379F
+	je	DECODE_SELF_RELATIVE	;@0379F
 	sub	cx, word ptr ds:[21Eh]	;@037A1
 	push	dx	;@037A5
 	mov	dx, word ptr ds:[420h]	;@037A6
@@ -5329,10 +5401,12 @@ DECODE_FIXUP:	mov	word ptr ds:[224h], dx	;@032FC
 	and	al, dh	;@037B5
 	cmp	al, 0Ch	;@037B7
 	je	@@62	;@037B9
-	jmp	L0384F	;@037BB
-@@62:	call	L03107	;@037BE
-	jmp	L0384F	;@037C1
-L037C4:	sub	cx, word ptr ds:[21Eh]	;@037C4
+	jmp	DECODE_DONE	;@037BB
+@@62:	call	CHECK_FAR_CALL	;@037BE
+	jmp	DECODE_DONE	;@037C1
+; DECODE_SELF_RELATIVE: (part of DECODE_FIXUP) a self-relative fixup: subtract the location
+; (21Eh/220h) from the target; a frame more than 64K away overflows.
+DECODE_SELF_RELATIVE:	sub	cx, word ptr ds:[21Eh]	;@037C4
 	push	dx	;@037C8
 	mov	dx, word ptr ds:[420h]	;@037C9
 	sbb	dx, word ptr ds:[220h]	;@037CD
@@ -5356,7 +5430,7 @@ L037C4:	sub	cx, word ptr ds:[21Eh]	;@037C4
 	pop	bx	;@03800
 	pop	di	;@03801
 	jb	@@1	;@03802
-	jmp	L0388B	;@03804
+	jmp	DECODE_OVERFLOW	;@03804
 @@1:	cmp	byte ptr ds:[125h], 0	;@03807
 	je	@@2	;@0380C
 	mov	word ptr ds:[21Ch], 0FFFFh	;@0380E
@@ -5365,24 +5439,27 @@ L037C4:	sub	cx, word ptr ds:[21Eh]	;@037C4
 	cmp	di, word ptr ds:[450h]	;@0381C
 	je	@@3	;@03820
 	cmp	word ptr ds:[21Ch], -1	;@03822
-	je	L0384F	;@03827
+	je	DECODE_DONE	;@03827
 	mov	di, word ptr es:[bx+2]	;@03829
 	cmp	di, word ptr ds:[44Eh]	;@0382D
 	je	@@3	;@03831
 	cmp	di, word ptr ds:[450h]	;@03833
-	jne	L0384F	;@03837
+	jne	DECODE_DONE	;@03837
 @@3:	test	al, 4	;@03839
 	je	@@4	;@0383B
 	mov	es, word ptr ds:[77Eh]	;@0383D
 	test	word ptr es:[bx+6], 0FFF0h	;@03841
 	je	@@4	;@03847
-	call	L03856	;@03849
+	call	ADD_FRAME_BASE	;@03849
 @@4:	call	FIXUP_BY_LOCATION	;@0384C
-L0384F:	mov	di, 3FFh	;@0384F
+; DECODE_DONE: DI = the fixup's offset in the record buffer, carry clear.
+DECODE_DONE:	mov	di, 3FFh	;@0384F
 	and	di, dx	;@03852
 	clc	;@03854
 	ret	;@03855
-L03856:	mov	es, word ptr ds:[77Eh]	;@03856
+; ADD_FRAME_BASE: the target's segment lies in a group or overlay: add the segment's offset in
+; its frame to CX (420h takes the carry) and continue with the frame's entry.
+ADD_FRAME_BASE:	mov	es, word ptr ds:[77Eh]	;@03856
 	mov	di, word ptr es:[bx]	;@0385A
 	mov	es, word ptr ds:[79Eh]	;@0385D
 	cmp	byte ptr es:[di+1], 1	;@03861
@@ -5399,25 +5476,31 @@ L03856:	mov	es, word ptr ds:[77Eh]	;@03856
 	mov	bx, di	;@03887
 	ret	;@03889
 @@1:	pop	di	;@0388A
-L0388B:	jmp	FIXUP_OVERFLOW	;@0388B
-L0388E:	sub	bp, bp	;@0388E
+; DECODE_OVERFLOW: the fixup does not fit (FIXUP_OVERFLOW).
+DECODE_OVERFLOW:	jmp	FIXUP_OVERFLOW	;@0388B
+; DECODE_NO_FRAME: the frame is not a segment: an error for method 2, else nothing to do.
+DECODE_NO_FRAME:	sub	bp, bp	;@0388E
 	and	al, 3	;@03890
 	cmp	al, 2	;@03892
-	je	L0388B	;@03894
-	jmp	L0384F	;@03896
-L03898:	cmp	bx, di	;@03898
-	jne	L038B0	;@0389A
+	je	DECODE_OVERFLOW	;@03894
+	jmp	DECODE_DONE	;@03896
+; DECODE_SAME_FRAME: target and frame are one segment: subtract the location (nothing refers
+; to this entry).
+DECODE_SAME_FRAME:	cmp	bx, di	;@03898
+	jne	DECODE_OTHER_FRAME	;@0389A
 	sub	cx, word ptr ds:[21Eh]	;@0389C
 	push	dx	;@038A0
 	mov	dx, word ptr ds:[420h]	;@038A1
 	sbb	dx, word ptr ds:[220h]	;@038A5
 	mov	word ptr ds:[420h], dx	;@038A9
 	pop	dx	;@038AD
-	jmp	L0384F	;@038AE
-L038B0:	cmp	byte ptr ds:[17h], 0	;@038B0
-	jne	L0388B	;@038B5
+	jmp	DECODE_DONE	;@038AE
+; DECODE_OTHER_FRAME: the target is in another segment than the frame: allowed only when the
+; frame's segment holds the target within 64K.
+DECODE_OTHER_FRAME:	cmp	byte ptr ds:[17h], 0	;@038B0
+	jne	DECODE_OVERFLOW	;@038B5
 	cmp	word ptr es:[di+4], -1	;@038B7
-	jne	L0388B	;@038BC
+	jne	DECODE_OVERFLOW	;@038BC
 	mov	ax, word ptr es:[bx]	;@038BE
 	cmp	ax, word ptr es:[di]	;@038C1
 	jne	@@2	;@038C4
@@ -5426,12 +5509,12 @@ L038B0:	cmp	byte ptr ds:[17h], 0	;@038B0
 	mov	al, byte ptr es:[di+8]	;@038CE
 	sbb	al, byte ptr es:[bx+8]	;@038D2
 	jb	@@1	;@038D6
-	jmp	L037C4	;@038D8
+	jmp	DECODE_SELF_RELATIVE	;@038D8
 @@1:	add	cx, word ptr es:[bx+6]	;@038DB
 	sub	cx, word ptr es:[di+6]	;@038DF
 	adc	cl, byte ptr es:[bx+8]	;@038E3
 	sbb	cl, byte ptr es:[di+8]	;@038E7
-	jmp	L0388B	;@038EB
+	jmp	DECODE_OVERFLOW	;@038EB
 @@2:	push	bx	;@038ED
 	push	di	;@038EE
 	mov	di, word ptr es:[di]	;@038EF
@@ -5442,15 +5525,15 @@ L038B0:	cmp	byte ptr ds:[17h], 0	;@038B0
 	pop	di	;@03901
 	pop	bx	;@03902
 	test	ah, 0F0h	;@03903
-	jne	L0388B	;@03906
+	jne	DECODE_OVERFLOW	;@03906
 	shl	ax, 1	;@03908
 	shl	ax, 1	;@0390A
 	shl	ax, 1	;@0390C
 	shl	ax, 1	;@0390E
 	add	cx, ax	;@03910
 	jb	@@3	;@03912
-	jmp	L037C4	;@03914
-@@3:	jmp	L0388B	;@03917
+	jmp	DECODE_SELF_RELATIVE	;@03914
+@@3:	jmp	DECODE_OVERFLOW	;@03917
 ; FIXUP_OVERFLOW: report a fixup whose value does not fit ("Fixup overflow at ...").
 FIXUP_OVERFLOW:	push	dx	;@0391A
 	push	si	;@0391B
@@ -5731,7 +5814,7 @@ L03A47:	push	bp	;@03A47
 	push	si	;@03BC8
 	mov	dx, bx	;@03BC9
 	push	dx	;@03BCB
-	call	L02A54	;@03BCC
+	call	FIND_DEBUG_SEGMENT	;@03BCC
 	xor	dx, dx	;@03BCF
 	mov	ax, si	;@03BD1
 	mov	bx, 10h	;@03BD3
@@ -5889,7 +5972,7 @@ L03D3B:	push	si	;@03D3B
 	push	si	;@03D46
 	mov	word ptr ds:[17Ah], 0FFFFh	;@03D47
 	mov	ax, word ptr ds:[22Ah]	;@03D4D
-	call	L02E02	;@03D50
+	call	WRITE_SCOPE_ENTRY	;@03D50
 	pop	si	;@03D53
 	pop	dx	;@03D54
 	pop	cx	;@03D55
@@ -5928,7 +6011,7 @@ L03D3B:	push	si	;@03D3B
 	mul	ah	;@03DA1
 	xchg	ax, bx	;@03DA3
 	add	bx, word ptr ds:[52Ah]	;@03DA4
-@@4:	call	L02A54	;@03DA8
+@@4:	call	FIND_DEBUG_SEGMENT	;@03DA8
 	mov	si, word ptr ds:[385h]	;@03DAB
 	add	word ptr ds:[385h], 8	;@03DAF
 	mov	es, word ptr ds:[375h]	;@03DB4
@@ -6980,7 +7063,7 @@ L04580:	push	ds	;@04580
 @@24:	pop	bx	;@047A4
 	pop	dx	;@047A5
 	mov	es, word ptr ds:[776h]	;@047A6
-	call	L01BD2	;@047AA
+	call	STORE_NAME_PAIR	;@047AA
 	push	ds	;@047AD
 	pop	es	;@047AE
 	mov	ds, word ptr ds:[282h]	;@047AF
@@ -7085,7 +7168,7 @@ L04580:	push	ds	;@04580
 	mov	es, word ptr [bx+716h]	;@04875
 	pop	bx	;@04879
 	mov	dl, 10h	;@0487A
-	call	L0180F	;@0487C
+	call	ADD_EXTERN	;@0487C
 	push	ds	;@0487F
 	pop	es	;@04880
 	mov	ds, word ptr ds:[282h]	;@04881
@@ -7957,7 +8040,9 @@ WRITE_AT:	mov	ax, word ptr [bx]	;@051DC
 	mov	bx, bp	;@051E7
 	call IMAGE_WRITE_FAR	;@051E9
 	ret	;@051EC
-L051ED:	push	si	;@051ED
+; FIND_NAME_ENTRY: look the name at ES:SI up in the hash table, and if it is not there in
+; the chained lists at 2B8h; returns its entry in AX (0 when not found).
+FIND_NAME_ENTRY:	push	si	;@051ED
 	mov	word ptr ds:[3450h], es	;@051EE
 	call HASH_NAME	;@051F2
 	pop	dx	;@051F5
@@ -8084,7 +8169,10 @@ L051ED:	push	si	;@051ED
 	push	ax	;@0531F
 	call	far ptr POOL_INIT	;@05320
 	jmp	@@7	;@05325
-L05327:	push	bp	;@05327
+; NAME_LOOKUP_COPY: copy the length-prefixed name at ES:SI to the buffer at 2C5h, upper-cased
+; when AL is not 0, and look it up (FIND_NAME_ENTRY). A C++ name (`@...$...`) is first
+; looked up by the part before the `$`.
+NAME_LOOKUP_COPY:	push	bp	;@05327
 	push	ax	;@05328
 	push	ds	;@05329
 	push	es	;@0532A
@@ -8138,13 +8226,13 @@ L05327:	push	bp	;@05327
 	dec	bl	;@0538A
 	mov	byte ptr es:[si], bl	;@0538C
 	xor	ah, ah	;@0538F
-	call	L051ED	;@05391
+	call	FIND_NAME_ENTRY	;@05391
 	pop	ax	;@05394
 	pop	es	;@05395
 	pop	si	;@05396
 	mov	byte ptr es:[si], al	;@05397
 @@6:	pop	ax	;@0539A
-	call	L051ED	;@0539B
+	call	FIND_NAME_ENTRY	;@0539B
 	pop	bp	;@0539E
 	ret	;@0539F
 L053A0:	push	bx	;@053A0
@@ -8182,7 +8270,7 @@ L053D5:	mov	word ptr [di+6], ax	;@053D5
 	pop	si	;@053F1
 	add	si, 2	;@053F2
 	xor	ax, ax	;@053F5
-	call	L05327	;@053F7
+	call	NAME_LOOKUP_COPY	;@053F7
 @@1:	mov	si, 290h	;@053FA
 	mov	word ptr [si], ax	;@053FD
 	mov	cx, 9	;@053FF
@@ -8216,7 +8304,7 @@ L05411:	push	di	;@05411
 	pop	si	;@05442
 	add	si, 2	;@05443
 	mov	ax, 0C000h	;@05446
-	call	L05327	;@05449
+	call	NAME_LOOKUP_COPY	;@05449
 	mov	cx, ax	;@0544C
 	pop	ax	;@0544E
 	pop	di	;@0544F
